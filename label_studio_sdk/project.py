@@ -76,10 +76,10 @@ class Project(Client):
             raise LabelStudioException('Project not created')
 
     @classmethod
-    def get_from_id(cls, client, id) -> "Project":
+    def get_from_id(cls, client, project_id) -> "Project":
         """Class factory to create Project instance from project ID"""
         project = cls(url=client.url, api_key=client.api_key, session=client.session)
-        project.params['id'] = id
+        project.params['id'] = project_id
         project.update_params()
         return project
 
@@ -151,7 +151,7 @@ class Project(Client):
         """
         Get tasks slice based on filters, orders or view id specified
         :param filters: JSON objects represents DataManager filters
-        :param order: JSON objects represents DataManager orderings
+        :param ordering: JSON objects represents DataManager orderings
         :param view_id: existed View ID
         :param selected_ids:
         :param only_ids:

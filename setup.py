@@ -2,6 +2,12 @@
 """
 import setuptools
 
+# Module dependencies
+requirements, dependency_links = [], []
+with open('requirements.txt') as f:
+    for line in f.read().splitlines():
+        requirements.append(line)
+
 setuptools.setup(
     name='label_studio_sdk',
     version='0.0.1',
@@ -18,5 +24,6 @@ setuptools.setup(
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.6'
+    python_requires='>=3.6',
+    install_requires=requirements
 )
