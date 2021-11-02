@@ -2,9 +2,6 @@ import requests
 import logging
 
 from requests.adapters import HTTPAdapter
-from enum import Enum
-from typing import List, Optional
-from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
 
