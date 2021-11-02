@@ -28,7 +28,7 @@ project = ls.start_project(
     '''
 )
 
-project.create_google_storage_connection(
+project.connect_google_import_storage(
     bucket=BUCKET_NAME,
     google_application_credentials=GOOGLE_APPLICATION_CREDENTIALS
 )
