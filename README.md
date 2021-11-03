@@ -23,7 +23,7 @@ This is the first release of the Label Studio SDK. It supports Label Studio Ente
 
 To start using the SDK in your machine learning and data science projects and pipelines, do the following:
 1. Clone this repository.
-2. Import the label_studio_sdk in your Python script. 
+2. Import `label_studio_sdk` in your Python script.  
 
 ## Available classes and methods
 
