@@ -35,14 +35,50 @@ class Project(Client):
 
     @property
     def id(self):
+        """ Get project ID
+
+        Returns
+        -------
+        int
+
+        """
         return self._get_param('id')
 
     @property
     def label_config(self):
+        """ Project labeling config
+
+        Returns
+        -------
+        str
+            XML string with the labeling config
+
+        """
         return self._get_param('label_config')
 
     @property
     def parsed_label_config(self):
+        """
+
+        Returns
+        -------
+        dict
+            Object and control tags from the project labeling config.
+        Example with structured config of the form:
+        ```
+        {
+            "<ControlTag>.name": {
+                "type": "ControlTag",
+                "to_name": ["<ObjectTag1>.name", "<ObjectTag2>.name"],
+                "inputs: [
+                    {"type": "ObjectTag1", "value": "<ObjectTag1>.value"},
+                    {"type": "ObjectTag2", "value": "<ObjectTag2>.value"}
+                ],
+                "labels": ["Label1", "Label2", "Label3"] // taken from "alias" if exists or "value"
+        }
+        ```
+
+        """
         return parse_config(self.label_config)
 
     def _get_param(self, param_name):
@@ -53,21 +89,37 @@ class Project(Client):
         return self.params[param_name]
 
     def get_params(self):
+        """ Get all parameter from the project info
+
+        Returns
+        -------
+        dict
+        """
         response = self.make_request('GET', f'/api/projects/{self.id}')
         return response.json()
 
     def get_model_versions(self):
+        """ Get the list of ML model versions
+
+        Returns
+        -------
+        list of strings
+             Model versions
+
+        """
         response = self.make_request('GET', f'/api/projects/{self.id}/model-versions')
         return response.json()
 
     def update_params(self):
+        """ Get all project params and cache it
+        """
         self.params = self.get_params()
 
     def start_project(self, **kwargs):
-        """
-        Start new project
-        :param kwargs:
-        :return:
+        """ Create a new project
+
+        Raise LabelStudioException in case of errors
+
         """
         response = self.make_request('POST', '/api/projects', json=kwargs)
         if response.status_code == 201:
@@ -77,13 +129,40 @@ class Project(Client):
 
     @classmethod
     def get_from_id(cls, client, project_id) -> "Project":
-        """Class factory to create Project instance from project ID"""
+        """ Class factory to create Project instance from project ID
+
+        Parameters
+        ----------
+        client: class Client
+        project_id: project ID
+
+        Returns
+        -------
+        class Project
+        """
         project = cls(url=client.url, api_key=client.api_key, session=client.session)
         project.params['id'] = project_id
         project.update_params()
         return project
 
     def import_tasks(self, tasks, preannotated_from_fields: List = None):
+        """ Import tasks
+
+        Parameters
+        ----------
+        tasks: list of dicts | dict | path to file
+            Tasks in <a href="https://labelstud.io/guide/tasks.html#Basic-Label-Studio-JSON-format">
+            Label Studio Format</a>
+
+        preannotated_from_fields: list of strings
+            Turn flat task JSONs `{"column1": value, "column2": value}` into `{"data": {"column1"..}, "predictions": [{..."column2"}]`
+
+        Returns
+        -------
+        list of int
+            Imported task ids
+
+        """
         params = {'return_task_ids': '1'}
         if preannotated_from_fields:
             params['preannotated_from_fields'] = ','.join(preannotated_from_fields)
@@ -107,38 +186,59 @@ class Project(Client):
                 )
         return response.json()['task_ids']
 
-    def set_options(self, **kwargs):
+    def export_tasks(self, export_type='JSON'):
+        """ Simple export for tasks with annotations
+
+        Parameters
+        ----------
+        export_type: string
+            Format type as  <a href="https://github.com/heartexlabs/label-studio-converter/blob/master/label_studio_converter/converter.py#L32">
+            in the converter</a>
+
+        Returns
+        -------
+        list of dicts
+            Tasks with annotations
+
         """
-        Low level function to set project options
-        :param kwargs:
-        :return:
+        response = self.make_request(
+            method='POST',
+            url=f'/api/projects/{self.id}/export?exportType={export_type}'
+        )
+        return response.json()
+
+    def set_params(self, **kwargs):
+        """ Low level function to set project parameters
         """
         response = self.make_request('PATCH', f'/api/projects/{self.id}', json=kwargs)
         assert response.status_code == 200
 
     def set_sampling(self, sampling: ProjectSampling):
+        """ Set the project sampling for the labeling stream
         """
-        Set project sampling
-        :param sampling:
-        :return:
-        """
-        self.set_options(sampling=sampling.value)
+        self.set_params(sampling=sampling.value)
 
     def set_published(self, is_published: bool):
+        """ Set project publishing state
+
+        Parameters
+        ----------
+        is_published: bool
+            Project publish state for reviewers and annotators
+
         """
-        Set project publishing state
-        :param is_published:
-        :return:
-        """
-        self.set_options(is_published=is_published)
+        self.set_params(is_published=is_published)
 
     def set_model_version(self, model_version: str):
+        """ Set active model version
+
+        Parameters
+        ----------
+        model_version: string
+            It can be any string you want
+
         """
-        Set active model version
-        :param model_version: any string
-        :return:
-        """
-        self.set_options(model_version=model_version)
+        self.set_params(model_version=model_version)
 
     def get_tasks(
         self,
@@ -146,16 +246,61 @@ class Project(Client):
         ordering=None,
         view_id=None,
         selected_ids=None,
-        only_ids: bool = False
+        page: int = 1,
+        page_size: int = -1,
+        only_ids: bool = False,
     ):
-        """
-        Get tasks slice based on filters, orders or view id specified
-        :param filters: JSON objects represents DataManager filters
-        :param ordering: JSON objects represents DataManager orderings
-        :param view_id: existed View ID
-        :param selected_ids:
-        :param only_ids:
-        :return:
+        """ Get tasks slice based on filters, orders or view id specified
+
+        Parameters
+        ----------
+        filters: dict
+            JSON objects represents DataManager filters.
+            Example:
+        ```json
+        {
+          "conjunction": "and",
+          "items": [
+            {
+              "filter": "filter:tasks:id",
+              "operator": "equal",
+              "type": "Number",
+              "value": 1
+            }
+          ]
+        }
+        ```
+        ordering: list
+            list with one string representing DataManager orderings. Example:
+            ```["tasks:total_annotations"]```
+        view_id: int
+            Tab ID to retrieve filters, ordering and selected items
+        selected_ids: list of ints
+            Task IDs
+        page: int
+            Page (by default 1)
+        page_size: int
+            Page size (by default -1, means all tasks in the project)
+        only_ids: bool
+            Return IDs only
+
+        Returns
+        -------
+        if page_size == -1 => list
+            Task list with task data, annotations, predictions and other fields from the Data Manager
+
+        if page_size > 0 => dict
+            Example: ```{"tasks":[...], "total_annotations": 0, "total_predictions": 0, "total": 0}```
+
+        tasks: list of dicts
+            Tasks with task data, annotations, predictions and other fields from the Data Manager
+        total: int
+            Total number of tasks in filtered result
+        total_annotations: int
+            Total number of annotations in filtered tasks
+        total_predictions: int
+            Total number of predictions in filtered tasks
+
         """
         # TODO: implement filter-based tasks selection
         query = {
@@ -167,34 +312,41 @@ class Project(Client):
             'GET', '/api/dm/tasks', params={
                 'project': {self.id},
                 'only_ids': only_ids,
-                'page_size': None,          # TODO: disable pagination
+                'page': page,
+                'page_size': page_size,
                 'query': json.dumps(query)
             })
-        tasks = response.json()['tasks']
+
+        data = response.json()
+        tasks = data['tasks']
         if only_ids:
-            return [task['id'] for task in tasks]
-        return tasks
+            data['tasks'] = [task['id'] for task in tasks]
+
+        if page_size == -1:
+            return data['tasks']
+        else:
+            return data
 
     @property
     def tasks(self):
+        """ All tasks from project. This call can be very slow if the project has tons of tasks
+        """
         return self.get_tasks()
 
-    def get_tasks_ids(
-        self,
-        filters: Optional[List[Dict]] = None,
-        order: Optional[List[Dict]] = None,
-        view_id: Optional[int] = None,
-    ):
-        """
-        Returns tasks IDs, filtered and ordered according to the specified rules
-        :param filters:
-        :param order:
-        :param view_id:
-        :return:
-        """
-        return self.get_tasks(filters, order, view_id, only_ids=True)
-
     def get_labeled_tasks(self, only_ids=False):
+        """ All tasks with finished state (is_labeled=True)
+
+        Parameters
+        ----------
+        only_ids: bool
+            Return IDs only
+
+        Returns
+        -------
+        list
+            List of task dicts (the same as for `get_tasks`)
+
+        """
         return self.get_tasks(filters={
             'conjunction': 'and',
             'items': [{
@@ -206,9 +358,29 @@ class Project(Client):
         }, only_ids=only_ids)
 
     def get_labeled_tasks_ids(self):
+        """ All task ids with finished state (is_labeled=True)
+
+        Returns
+        -------
+        list
+            List of task ids
+        """
         return self.get_labeled_tasks(only_ids=True)
 
     def get_unlabeled_tasks(self, only_ids=False):
+        """ All tasks with <b>not</b> finished state (is_labeled=False)
+
+        Parameters
+        ----------
+        only_ids: bool
+            Return IDs only
+
+        Returns
+        -------
+        list
+            List of task dicts (the same as for `get_tasks`)
+
+        """
         return self.get_tasks(filters={
             'conjunction': 'and',
             'items': [{
@@ -220,9 +392,28 @@ class Project(Client):
         }, only_ids=only_ids)
 
     def get_unlabeled_tasks_ids(self):
+        """ All task ids with <b>not</b> finished state (is_labeled=False)
+
+        Returns
+        -------
+        list
+            List of task ids
+        """
         return self.get_unlabeled_tasks(only_ids=True)
 
     def get_task(self, task_id):
+        """ Get specific task by ID
+
+        Parameters
+        ----------
+        task_id: int
+            Task ID you want to retrieve
+
+        Returns
+        -------
+        dict
+
+        """
         response = self.make_request('GET', f'/api/tasks/{task_id}')
         return response.json()
 
@@ -233,13 +424,20 @@ class Project(Client):
         score: Optional[float] = 0,
         model_version: Optional[str] = None
     ):
-        """
-        Create prediction for a specific task
-        :param task_id: task ID
-        :param result:
-        :param score:
-        :param model_version:
-        :return:
+        """ Create prediction for a specific task
+
+        Parameters
+        ----------
+        task_id: int
+        result: result in the <a href="https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks"
+            format as for annotations</a>
+        score: model score
+        model_version: any string identifying your model
+
+        Returns
+        -------
+
+
         """
         response = self.make_request('POST', '/api/predictions', json={
             'task': task_id, 'result': result, 'score': score, 'model_version': model_version

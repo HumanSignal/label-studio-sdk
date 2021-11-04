@@ -11,8 +11,17 @@ _NOT_CONTROL_TAGS = {'Filter', }
 
 def parse_config(config_string):
     """
-    :param config_string: Label config string
-    :return: structured config of the form:
+
+    Parameters
+    ----------
+    config_string: str
+        Label config string
+
+    Returns
+    -------
+    dict
+        structured config of the form:
+    ```json
     {
         "<ControlTag>.name": {
             "type": "ControlTag",
@@ -23,6 +32,12 @@ def parse_config(config_string):
             ],
             "labels": ["Label1", "Label2", "Label3"] // taken from "alias" if exists or "value"
     }
+    ```
+
+    """
+    """
+    :param config_string: 
+    
     """
     if not config_string:
         return {}

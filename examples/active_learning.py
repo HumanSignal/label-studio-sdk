@@ -62,8 +62,6 @@ project = ls.get_project(50)
 # tasks = pd.read_csv('amazon_cells_labelled.tsv', sep='\t').to_dict('records')
 # tasks_ids = project.import_tasks(tasks)
 
-# tasks_ids = project.get_tasks_ids()
-
 model = get_model()
 
 labeled_tasks = project.get_labeled_tasks()
