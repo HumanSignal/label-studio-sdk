@@ -68,7 +68,7 @@
 </%def>
 
 <%def name="show_module_list(modules)">
-<h1>Python module list</h1>
+<h1>Label Studio SDK</h1>
 
 % if not modules:
   <p>No modules found.</p>
@@ -270,7 +270,8 @@
       <%include file="_lunr_search.inc.mako"/>
     % endif
 
-    ${extract_toc(module.docstring) if extract_module_toc_into_sidebar else ''}
+    ${'<h3></h3>' + extract_toc(module.docstring) if extract_module_toc_into_sidebar and 'Examples' in module.docstring else ''}
+
     <ul id="index">
     % if supermodule:
     <li><h3>Super-module</h3>
