@@ -1,4 +1,4 @@
-""" .. include::../README.md
+""" .. include::../docs/index.md
 """
 from .client import Client
 from .project import Project

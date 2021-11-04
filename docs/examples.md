@@ -1,4 +1,9 @@
-# Usage Examples
+# Usage Examples for the Label Studio SDK
+
+This page details the available usage examples for the Label Studio SDK. 
+
+- To reference the available modules, classes, and methods, see the **[client](/label_studio_sdk/client.html), [project](label_studio_sdk/project.html), or [utils](label_studio_sdk/utils.html) modules**.
+- For details abouts how and why to use this SDK, see the [**SDK tutorial** in the Label Studio documentation](https://labelstud.io/guide/sdk.html).
 
 ## Jupyter Notebooks
 
