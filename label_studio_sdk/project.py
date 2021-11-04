@@ -11,8 +11,7 @@ from .utils import parse_config
 
 
 class LabelStudioException(Exception):
-    """ .. include::../docs/project_exceptions.md
-    """
+
     pass
 
 
@@ -160,7 +159,8 @@ class Project(Client):
         Parameters
         ----------
         client: class Client
-        project_id: project ID
+        project_id: int
+            Project ID
 
         Returns
         -------
