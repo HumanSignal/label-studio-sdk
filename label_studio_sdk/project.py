@@ -49,6 +49,12 @@ class ProjectStorage(Enum):
 class Project(Client):
 
     def __init__(self, *args, **kwargs):
+        """ Initialize project class.
+
+        Parameters
+        ----------
+
+        """
         super(Project, self).__init__(*args, **kwargs)
         self.params = {}
 
@@ -77,7 +83,8 @@ class Project(Client):
 
     @property
     def parsed_label_config(self):
-        """
+        """ Get the parsed labeling configuration for the project. You can use this version to more easily construct
+        annotation or prediction results based on your labeling configuration.
 
         Returns
         -------
@@ -93,7 +100,7 @@ class Project(Client):
                     {"type": "ObjectTag1", "value": "<ObjectTag1>.value"},
                     {"type": "ObjectTag2", "value": "<ObjectTag2>.value"}
                 ],
-                "labels": ["Label1", "Label2", "Label3"] // taken from "alias" if exists or "value"
+                "labels": ["Label1", "Label2", "Label3"] // taken from "alias" if it exists else "value"
         }
         ```
 
@@ -108,7 +115,7 @@ class Project(Client):
         return self.params[param_name]
 
     def get_params(self):
-        """ Get all parameter from the project info
+        """ Get all parameters from the project info
 
         Returns
         -------
