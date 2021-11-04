@@ -9,19 +9,19 @@ from .utils import parse_config
 
 
 class ProjectSampling(Enum):
-    """ Enumeration for task sampling modes
+    """ Enumerate the available task sampling modes for labeling.
     """
 
     RANDOM = 'Uniform sampling'
-    """ Uniform random sampling """
+    """ Uniform random sampling of tasks """
     SEQUENCE = 'Sequential sampling'
-    """ By task ids """
+    """ Sequential sampling of tasks using task IDs """
     UNCERTAINTY = 'Uncertainty sampling'
-    """ Using prediction scores like in active learning """
+    """ Sample tasks based on prediction scores, such as for active learning """
 
 
 class ProjectStorage(Enum):
-    """ Enumeration for project storages
+    """ Enumerate the available types of external source and target storage for labeling projects.
     """
 
     GOOGLE = 'gcs'
@@ -29,13 +29,13 @@ class ProjectStorage(Enum):
     S3 = 's3'
     """ Amazon S3 Storage """
     AZURE = 'azure_blob'
-    """ Azure Storage """
+    """ Microsoft Azure Blob Storage """
     LOCAL = 'localfiles'
-    """ Label Studio Local Storage """
+    """ Label Studio Local File Storage """
     REDIS = 'redis'
     """ Redis Storage """
     S3_SECURED = 's3s'
-    """ Amazon S3 Secured Storage """
+    """ Amazon S3 Storage secured by IAM roles (Enterprise only)"""
 
 
 class LabelStudioException(Exception):
@@ -50,7 +50,7 @@ class Project(Client):
 
     @property
     def id(self):
-        """ Get project ID
+        """ Get the project ID.
 
         Returns
         -------
@@ -61,12 +61,12 @@ class Project(Client):
 
     @property
     def label_config(self):
-        """ Project labeling config
+        """ Get the labeling configuration for the project.
 
         Returns
         -------
         str
-            XML string with the labeling config
+            Labeling configuration in XML format
 
         """
         return self._get_param('label_config')
@@ -446,8 +446,8 @@ class Project(Client):
         task_id: int
             Task ID
         result: dict
-            Result in the <a href="https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks"
-            format as for annotations</a>
+            Result in the <a href="https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks">
+            Label Studio JSON format as for annotations</a>
         score: float
             Model score
         model_version: str
@@ -475,7 +475,7 @@ class Project(Client):
         Parameters
         ----------
         model_version: string
-            Predictions with this model_version will be converted to annotations
+            Convert predictions with this model_version to annotations
 
         Returns
         -------
