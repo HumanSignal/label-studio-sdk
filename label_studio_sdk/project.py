@@ -1,3 +1,5 @@
+""" .. include::project.md
+"""
 import os
 import time
 import json
@@ -6,6 +8,12 @@ from enum import Enum
 from typing import Optional, Union, List, Dict
 from .client import Client
 from .utils import parse_config
+
+
+class LabelStudioException(Exception):
+    """ .. include::project_exceptions.md
+    """
+    pass
 
 
 class ProjectSampling(Enum):
@@ -36,10 +44,6 @@ class ProjectStorage(Enum):
     """ Redis Storage """
     S3_SECURED = 's3s'
     """ Amazon S3 Storage secured by IAM roles (Enterprise only)"""
-
-
-class LabelStudioException(Exception):
-    pass
 
 
 class Project(Client):
