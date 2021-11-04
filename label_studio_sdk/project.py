@@ -1,4 +1,4 @@
-""" .. include::project.md
+""" .. include::../docs/project.md
 """
 import os
 import time
@@ -11,7 +11,7 @@ from .utils import parse_config
 
 
 class LabelStudioException(Exception):
-    """ .. include::project_exceptions.md
+    """ .. include::../docs/project_exceptions.md
     """
     pass
 

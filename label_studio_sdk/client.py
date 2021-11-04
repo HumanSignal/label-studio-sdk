@@ -1,4 +1,4 @@
-""" .. include::client.md
+""" .. include::../docs/client.md
 """
 import requests
 import logging
