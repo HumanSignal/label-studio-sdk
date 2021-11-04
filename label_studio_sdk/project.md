@@ -1,4 +1,4 @@
-## Project is the main module
+# Project is the main module
 
 This section contains project operations.
 

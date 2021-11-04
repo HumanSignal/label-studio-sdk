@@ -1,3 +1,5 @@
+""" .. include::client.md
+"""
 import requests
 import logging
 
