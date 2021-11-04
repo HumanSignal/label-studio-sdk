@@ -12,17 +12,18 @@ _NOT_CONTROL_TAGS = {'Filter', }
 
 
 def parse_config(config_string):
-    """
+    """Parse a given Label Studio labeling configuration and return a structured version of the configuration.
+    Useful for formatting results for predicted annotations.
 
     Parameters
     ----------
     config_string: str
-        Label config string
+        Label configuration XML as a string
 
     Returns
     -------
     dict
-        structured config of the form:
+        structured config with the form:
     ```json
     {
         "<ControlTag>.name": {
@@ -32,7 +33,7 @@ def parse_config(config_string):
                 {"type": "ObjectTag1", "value": "<ObjectTag1>.value"},
                 {"type": "ObjectTag2", "value": "<ObjectTag2>.value"}
             ],
-            "labels": ["Label1", "Label2", "Label3"] // taken from "alias" if exists or "value"
+            "labels": ["Label1", "Label2", "Label3"] // taken from "alias" if it exists, else "value"
     }
     ```
 
