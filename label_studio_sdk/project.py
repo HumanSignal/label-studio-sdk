@@ -24,7 +24,7 @@ class ProjectSampling(Enum):
     SEQUENCE = 'Sequential sampling'
     """ Sequential sampling of tasks using task IDs """
     UNCERTAINTY = 'Uncertainty sampling'
-    """ Sample tasks based on prediction scores, such as for active learning """
+    """ Sample tasks based on prediction scores, such as for active learning (Enterprise only)"""
 
 
 class ProjectStorage(Enum):
@@ -64,7 +64,7 @@ class Project(Client):
         Returns
         -------
         int
-
+            Project ID
         """
         return self._get_param('id')
 
@@ -88,8 +88,8 @@ class Project(Client):
         Returns
         -------
         dict
-            Object and control tags from the project labeling config.
-            Example with structured config of the form:
+            Object and control tags from the project labeling configuration.
+            Example with structured configuration of the form:
         ```
         {
             "<ControlTag>.name": {
@@ -143,7 +143,7 @@ class Project(Client):
     def start_project(self, **kwargs):
         """ Create a labeling project in Label Studio.
 
-        Raises LabelStudioException in case of errors
+        Raises LabelStudioException in case of errors.
 
         """
         response = self.make_request('POST', '/api/projects', json=kwargs)
@@ -278,7 +278,8 @@ class Project(Client):
         page_size: int = -1,
         only_ids: bool = False,
     ):
-        """ Retrieve a subset of tasks from the Data Manager based on a filter, ordering mechanism, or a predefined view ID.
+        """ Retrieve a subset of tasks from the Data Manager based on a filter, ordering mechanism, or a
+        predefined view ID.
 
         Parameters
         ----------
@@ -423,9 +424,9 @@ class Project(Client):
         }, only_ids=only_ids)
 
     def get_unlabeled_tasks_ids(self):
-        """ Retrieve all task IDs for tasks that are <b>not</b> completed, tasks where is_labeled=False. If using Label Studio Enterprise,
-        this can include tasks that have been labeled one or more times, but not the full number of times defined in the
-        project labeling settings.
+        """ Retrieve all task IDs for tasks that are <b>not</b> completed, tasks where is_labeled=False. If using
+        Label Studio Enterprise, this can include tasks that have been labeled one or more times, but not the full
+        number of times defined in the project labeling settings.
 
         Returns
         -------
@@ -435,7 +436,7 @@ class Project(Client):
         return self.get_unlabeled_tasks(only_ids=True)
 
     def get_task(self, task_id):
-        """ Get specific task by ID
+        """ Get specific task by ID.
 
         Parameters
         ----------
@@ -457,7 +458,7 @@ class Project(Client):
         score: Optional[float] = 0,
         model_version: Optional[str] = None
     ):
-        """ Create a prediction for a specific task
+        """ Create a prediction for a specific task.
 
         Parameters
         ----------
@@ -493,7 +494,7 @@ class Project(Client):
         Parameters
         ----------
         model_version: string
-            Convert predictions with this model_version to annotations
+            Convert predictions with this model_version to annotations.
 
         Returns
         -------
