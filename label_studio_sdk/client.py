@@ -15,23 +15,24 @@ HEADERS = {}
 class Client(object):
 
     def __init__(self, url, api_key, session=None):
-        """ Initialize client
+        """ Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
         Parameters
         ----------
         url: str
-            Label Studio host address, e.g.: http://localhost:8080
+            Label Studio host address.
+            Example: http://localhost:8080
         api_key: str
-            User token, you can find it on the account page
+            User token for the API. You can find this on your user account page in Label Studio.
         session: requests.Session()
-            If None, the new one will be created
+            If None, a new one is created.
         """
         self.url = url.rstrip('/')
         self.api_key = api_key
         self.session = session or self.get_session()
 
     def check_connection(self):
-        """ Call Label Studio /health endpoint
+        """ Call Label Studio /health endpoint to check the connection to the server.
 
         Returns
         -------
@@ -42,7 +43,7 @@ class Client(object):
         return response.json()
 
     def start_project(self, **kwargs):
-        """ Create new project instance
+        """ Create a project instance
 
         Parameters
         ----------
@@ -64,10 +65,12 @@ class Client(object):
 
         Parameters
         ----------
-        id
+        id: int
+            Project ID for the project you want to retrieve.
 
         Returns
         -------
+        class Project
 
         """
         from .project import Project
@@ -82,7 +85,7 @@ class Client(object):
     #     return LabelConfig(self, *args, **kwargs)
 
     def get_session(self):
-        """ Create a new requests.Session()
+        """ Create a session with requests.Session()
 
         Returns
         -------
@@ -96,16 +99,24 @@ class Client(object):
         return session
 
     def get_url(self, suffix):
+        """ Get the URL of the Label Studio server
+
+        Returns
+        -------
+        String with the URL
+
+        """
         return f'{self.url}/{suffix.lstrip("/")}'
 
     def make_request(self, method, url, *args, **kwargs):
-        """ Make a request with API key to Label Studio instance
+        """ Make a request with an API key to Label Studio instance
 
         Parameters
         ----------
         method: str
-            HTTP method like POST, PATCH, GET, DELETE. etc
+            HTTP method like POST, PATCH, GET, DELETE.
         url: str
+            URL of the API endpoint that you want to make a request to.
 
         args
             session.request(*args)
@@ -114,7 +125,7 @@ class Client(object):
 
         Returns
         -------
-        Response object
+        Response object for the relevant endpoint.
 
         """
         if 'timeout' not in kwargs:
