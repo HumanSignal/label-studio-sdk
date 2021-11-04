@@ -1,9 +1,9 @@
 # Usage Examples
 
-## IPyhon Notebooks
+## Jupyter Notebooks
 
-* <a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Active%20Learning.ipynb">Active Learning</a><br>
-* <a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Weak%20Supervision.ipynb">Weak Supervision</a><br>
+* <a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Active%20Learning.ipynb">Active Learning Example</a><br>
+* <a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Weak%20Supervision.ipynb">Weak Supervision Example</a><br>
 
 
 ## Active Learning
