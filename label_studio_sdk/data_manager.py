@@ -3,24 +3,24 @@
 
     Example:
 
-    ```json
-        Filters.create(Filters.OR, [
-            Filters.item(
-                Columns.id,
-                Operator.GREATER,
-                Type.Number,
-                Filters.value(42)
-            ),
-            Filters.item(
-                Columns.completed_at,
-                Operator.IN,
-                Type.Datetime,
-                Filters.value(
-                    datetime(2021, 11, 1),
-                    datetime.now()
-                )
+    ```python
+    Filters.create(Filters.OR, [
+        Filters.item(
+            Column.id,
+            Operator.GREATER,
+            Type.Number,
+            Filters.value(42)
+        ),
+        Filters.item(
+            Column.completed_at,
+            Operator.IN,
+            Type.Datetime,
+            Filters.value(
+                datetime(2021, 11, 1),
+                datetime.now()
             )
-        ])
+        )
+    ])
     ```
 """
 from datetime import datetime
@@ -133,7 +133,7 @@ class Type:
     """ Unknown will be explicitly converter to String """
 
 
-class Columns:
+class Column:
 
     # TODO: @sarah some of these fields are enterprise only, please mark them somehow;
     #  also we need desc for the each enumeration
@@ -177,13 +177,13 @@ class Columns:
 def test():
     filters = Filters.create(Filters.OR, [
         Filters.item(
-            Columns.id,
+            Column.id,
             Operator.GREATER,
             Type.Number,
             Filters.value(42)
         ),
         Filters.item(
-            Columns.completed_at,
+            Column.completed_at,
             Operator.IN,
             Type.Datetime,
             Filters.value(

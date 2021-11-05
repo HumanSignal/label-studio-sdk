@@ -301,11 +301,11 @@ class Project(Client):
           ]
         }
         ```
-        ordering: list of label_studio_sdk.data_manager.Columns
+        ordering: list of label_studio_sdk.data_manager.Column
             List with <b>one</b> string representing Data Manager ordering.
-            Use `label_studio_sdk.data_manager.Columns` helper class.
+            Use `label_studio_sdk.data_manager.Column` helper class.
             Example:
-            ```[Columns.total_annotations]```
+            ```[Column.total_annotations]```
         view_id: int
             View ID, visible as a Data Manager tab, for which to retrieve filters, ordering, and selected items
         selected_ids: list of ints
