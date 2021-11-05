@@ -1,3 +1,5 @@
+""" .. include::../docs/utils.md
+"""
 import logging
 
 from lxml import etree

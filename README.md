@@ -28,9 +28,11 @@ To start using the SDK in your machine learning and data science projects and pi
 ## Available classes and methods
 
 The Label Studio SDK includes the following:
-- a Client class to handle authentication
-- a Project class to take actions related to Label Studio labeling projects 
-- Utils for working with the labeling configuration. 
+- a Client module to handle authentication
+- a Data Manager module for filtering tasks in Label Studio
+- a Project module to take actions related to Label Studio labeling projects 
+- a Utils module for working with the labeling configuration
+
 
 For all the details, see the [reference documentation](https://labelstud.io/sdk) or [review the code directly](https://github.com/heartexlabs/label-studio-sdk/tree/master/label_studio_sdk). 
 
@@ -45,3 +47,5 @@ If you want to write a Python script to set up an active learning workflow for l
 ### Weak supervision example
 
 If you want to write a Python script to perform programmatic labeling and use weak supervision to correct the noisy labels, refer to this [working weak supervision example as a Jupyter notebook](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Weak%20Supervision.ipynb) or start with the [weak supervision python script example](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/weak_supervision.py).
+
+<img src="https://labelstud.io/images/opossum/other/5.svg" width="400px">

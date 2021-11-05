@@ -100,7 +100,7 @@
     margin-top: 2em;
   }
   .ident {
-    color: #900;
+    color: #e57a38;
   }
 
   pre code {

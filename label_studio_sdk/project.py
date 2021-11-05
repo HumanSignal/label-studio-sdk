@@ -1,3 +1,5 @@
+""" .. include::../docs/project.md
+"""
 import os
 import time
 import json
@@ -8,23 +10,40 @@ from .client import Client
 from .utils import parse_config
 
 
+class LabelStudioException(Exception):
+    """ .. include::../docs/project_exceptions.md
+    """
+    pass
+
+
 class ProjectSampling(Enum):
+    """ Enumeration for task sampling modes
+    """
+
     RANDOM = 'Uniform sampling'
+    """ Uniform random sampling """
     SEQUENCE = 'Sequential sampling'
+    """ By task ids """
     UNCERTAINTY = 'Uncertainty sampling'
+    """ Using prediction scores like in active learning """
 
 
 class ProjectStorage(Enum):
+    """ Enumeration for project storages
+    """
+
     GOOGLE = 'gcs'
+    """ Google Cloud Storage """
     S3 = 's3'
+    """ Amazon S3 Storage """
     AZURE = 'azure_blob'
+    """ Azure Storage """
     LOCAL = 'localfiles'
+    """ Label Studio Local Storage """
     REDIS = 'redis'
+    """ Redis Storage """
     S3_SECURED = 's3s'
-
-
-class LabelStudioException(Exception):
-    pass
+    """ Amazon S3 Secured Storage """
 
 
 class Project(Client):
@@ -64,7 +83,7 @@ class Project(Client):
         -------
         dict
             Object and control tags from the project labeling config.
-        Example with structured config of the form:
+            Example with structured config of the form:
         ```
         {
             "<ControlTag>.name": {
@@ -429,15 +448,14 @@ class Project(Client):
         Parameters
         ----------
         task_id: int
-        result: result in the <a href="https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks"
+            Task ID
+        result: dict
+            Result in the <a href="https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks"
             format as for annotations</a>
-        score: model score
-        model_version: any string identifying your model
-
-        Returns
-        -------
-
-
+        score: float
+            Model score
+        model_version: str
+            Any string identifying your model
         """
         response = self.make_request('POST', '/api/predictions', json={
             'task': task_id, 'result': result, 'score': score, 'model_version': model_version
@@ -445,14 +463,33 @@ class Project(Client):
         return response.json()
 
     def create_predictions(self, predictions):
+        """ Bulk create predictions
+
+        Parameters
+        ----------
+        predictions: list of dicts
+            List of dicts with predictions
+        """
         response = self.make_request('POST', f'/api/projects/{self.id}/import/predictions', json=predictions)
         return response.json()
 
-    def create_annotations_from_predictions(self, model_versions=None):
-        model_versions = model_versions or []
+    def create_annotations_from_predictions(self, model_version=None):
+        """ Create annotation from all existing predictions
+
+        Parameters
+        ----------
+        model_version: string
+            Predictions with this model_version will be converted to annotations
+
+        Returns
+        -------
+        dict
+            Dict with counter of created predictions
+
+        """
         payload = {
             'filters': {'conjunction': 'and', 'items': []},
-            'model_version': model_versions,
+            'model_version': model_version,
             'ordering': [],
             'project': self.id,
             'selectedItems': {'all': True, 'excluded': []}
@@ -464,6 +501,15 @@ class Project(Client):
         return response.json()
 
     def get_predictions_coverage(self):
+        """ Prediction coverage per model version for the project
+
+        Returns
+        -------
+        dict
+            Example: {"2021-01-01": 0.9, "2021-02-01": 0.7},
+            0.9 means that 90% of project tasks is covered by predictions with model_version "2021-01-01"
+
+        """
         model_versions = self.get_model_versions()
         params = self.get_params()
         tasks_number = params['task_number']
@@ -482,6 +528,29 @@ class Project(Client):
         title: Optional[str] = '',
         description: Optional[str] = ''
     ):
+        """ Create import connection to Google Cloud Storage
+
+        Parameters
+        ----------
+        bucket: str
+            GCS bucket
+        prefix: str
+            Bucket prefix
+        regex_filter: str
+            Regular expression to filter files
+        use_blob_urls: bool
+            If true, all tasks are interpreted as BLOBs, otherwise JSONs in Label Studio format
+        google_application_credentials: str
+            Google Application Credentials JSON string or file
+        presign: bool
+            Expose presigned URLs
+        presign_ttl: int
+            TTL in minutes for presigned URLs
+        title: str
+            Storage connection title
+        description: str
+            Storage connection description
+        """
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
                 google_application_credentials = f.read()
@@ -584,4 +653,54 @@ class Project(Client):
             'can_delete_objects': can_delete_objects
         }
         response = self.make_request('POST', '/api/storages/s3/export', json=payload)
+        return response.json()
+
+    def connect_azure_import_storage(
+        self,
+        container: str,
+        prefix: Optional[str] = None,
+        regex_filter: Optional[str] = None,
+        use_blob_urls: Optional[bool] = True,
+        presign: Optional[bool] = True,
+        presign_ttl: Optional[int] = 1,
+        title: Optional[str] = '',
+        description: Optional[str] = '',
+        account_name: Optional[str] = None,
+        account_key: Optional[str] = None
+    ):
+        payload = {
+            'container': container,
+            'prefix': prefix,
+            'regex_filter': regex_filter,
+            'use_blob_urls': use_blob_urls,
+            'account_name': account_name,
+            'account_key': account_key,
+            'presign': presign,
+            'presign_ttl': presign_ttl,
+            'title': title,
+            'description': description
+        }
+        response = self.make_request('POST', '/api/storages/azure', json=payload)
+        return response.json()
+
+    def connect_azure_export_storage(
+        self,
+        container: str,
+        prefix: Optional[str] = None,
+        title: Optional[str] = '',
+        description: Optional[str] = '',
+        account_name: Optional[str] = None,
+        account_key: Optional[str] = None,
+        can_delete_objects: bool = False
+    ):
+        payload = {
+            'container': container,
+            'prefix': prefix,
+            'account_name': account_name,
+            'account_key': account_key,
+            'title': title,
+            'description': description,
+            'can_delete_objects': can_delete_objects
+        }
+        response = self.make_request('POST', '/api/storages/azure/export', json=payload)
         return response.json()
