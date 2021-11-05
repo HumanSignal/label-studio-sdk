@@ -11,20 +11,26 @@ For the reference documentation for the available SDK modules, see the following
 
 For details abouts how and why to use this SDK, see the [**SDK tutorial** in the Label Studio documentation](https://labelstud.io/guide/sdk.html).
 
-## Active Learning Example
+## Example: Active Learning 
 
-Refer to this Jupyter notebook with an example active learning workflow using the Label Studio SDK: 
+Refer to this Jupyter notebook for a full example active learning workflow using the Label Studio SDK: 
 
-<a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Active%20Learning.ipynb">Active Learning Example</a><br>
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Active%20Learning.ipynb">Active Learning example</a></b>
 
-## Weak Supervision Example
+## Example: Weak Supervision 
 
-Refer to this Jupyter notebook with an example weak supervision workflow using the Label Studio SDK:
+Refer to this Jupyter notebook for a full example weak supervision workflow using the Label Studio SDK:
 
-<a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Weak%20Supervision.ipynb">Weak Supervision Example</a><br>
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Weak%20Supervision.ipynb">Weak Supervision example</a></b>
 
-## Annotate data from GCS
+## Example: Import data from Google Cloud Storage
 
-## Import pre-annotations
+Refer to this Jupyter notebook for an example of continuously importing task data from a Google Cloud Storage (GCS) bucket:
 
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Import%20data%20from%20Cloud%20Storage.ipynb">Import data from cloud storage example</a></b>
 
+##Example: Import pre-annotations
+
+Refer to this Jupyter notebook for an example of importing pre-annotated tasks into Label Studio for image classification predictions:
+
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Import%20preannotations.ipynb">Import pre-annotations example</a></b>
