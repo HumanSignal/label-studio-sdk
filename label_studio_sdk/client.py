@@ -43,7 +43,7 @@ class Client(object):
         return response.json()
 
     def start_project(self, **kwargs):
-        """ Create a project instance
+        """ Create a project instance.
 
         Parameters
         ----------
@@ -61,7 +61,7 @@ class Client(object):
         return project
 
     def get_project(self, id):
-        """ Return project SDK object by ID
+        """ Return project SDK object by ID.
 
         Parameters
         ----------
