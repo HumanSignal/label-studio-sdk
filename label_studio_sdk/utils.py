@@ -13,7 +13,8 @@ _NOT_CONTROL_TAGS = {'Filter', }
 
 def parse_config(config_string):
     """Parse a given Label Studio labeling configuration and return a structured version of the configuration.
-    Useful for formatting results for predicted annotations.
+    Useful for formatting results for predicted annotations and determining the type(s) of ML models that might
+    be relevant to the labeling project.
 
     Parameters
     ----------

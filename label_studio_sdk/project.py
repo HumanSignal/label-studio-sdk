@@ -82,7 +82,7 @@ class Project(Client):
 
     @property
     def parsed_label_config(self):
-        """ Get the parsed labeling configuration for the project. You can use this version to more easily construct
+        """ Get the parsed labeling configuration for the project. You can use this to more easily construct
         annotation or prediction results based on your labeling configuration.
 
         Returns
@@ -258,7 +258,8 @@ class Project(Client):
         self.set_params(is_published=is_published)
 
     def set_model_version(self, model_version: str):
-        """ Set the active model version to use for displaying predictions to annotators.
+        """ Set the current model version to use for displaying predictions to annotators, perform uncertainty sampling
+        and annotation evaluations in Label Studio Enterprise, and other operations.
 
         Parameters
         ----------
@@ -568,6 +569,19 @@ class Project(Client):
 
         Returns
         -------
+        dict containing the same fields as in the request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+
         """
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
@@ -615,6 +629,19 @@ class Project(Client):
 
         Returns
         -------
+        dict containing the same fields as in the request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+
         """
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
@@ -680,8 +707,19 @@ class Project(Client):
 
         Returns
         -------
-        """
+        dict containing the same fields as in the request and:
 
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+        """
         payload = {
             'bucket': bucket,
             'prefix': prefix,
@@ -740,6 +778,18 @@ class Project(Client):
 
         Returns
         -------
+        dict containing the same fields as in the request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
         """
         payload = {
             'bucket': bucket,
