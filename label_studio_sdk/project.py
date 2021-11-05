@@ -528,6 +528,29 @@ class Project(Client):
         title: Optional[str] = '',
         description: Optional[str] = ''
     ):
+        """ Create import connection to Google Cloud Storage
+
+        Parameters
+        ----------
+        bucket: str
+            GCS bucket
+        prefix: str
+            Bucket prefix
+        regex_filter: str
+            Regular expression to filter files
+        use_blob_urls: bool
+            If true, all tasks are interpreted as BLOBs, otherwise JSONs in Label Studio format
+        google_application_credentials: str
+            Google Application Credentials JSON string or file
+        presign: bool
+            Expose presigned URLs
+        presign_ttl: int
+            TTL in minutes for presigned URLs
+        title: str
+            Storage connection title
+        description: str
+            Storage connection description
+        """
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
                 google_application_credentials = f.read()
@@ -630,4 +653,54 @@ class Project(Client):
             'can_delete_objects': can_delete_objects
         }
         response = self.make_request('POST', '/api/storages/s3/export', json=payload)
+        return response.json()
+
+    def connect_azure_import_storage(
+        self,
+        container: str,
+        prefix: Optional[str] = None,
+        regex_filter: Optional[str] = None,
+        use_blob_urls: Optional[bool] = True,
+        presign: Optional[bool] = True,
+        presign_ttl: Optional[int] = 1,
+        title: Optional[str] = '',
+        description: Optional[str] = '',
+        account_name: Optional[str] = None,
+        account_key: Optional[str] = None
+    ):
+        payload = {
+            'container': container,
+            'prefix': prefix,
+            'regex_filter': regex_filter,
+            'use_blob_urls': use_blob_urls,
+            'account_name': account_name,
+            'account_key': account_key,
+            'presign': presign,
+            'presign_ttl': presign_ttl,
+            'title': title,
+            'description': description
+        }
+        response = self.make_request('POST', '/api/storages/azure', json=payload)
+        return response.json()
+
+    def connect_azure_export_storage(
+        self,
+        container: str,
+        prefix: Optional[str] = None,
+        title: Optional[str] = '',
+        description: Optional[str] = '',
+        account_name: Optional[str] = None,
+        account_key: Optional[str] = None,
+        can_delete_objects: bool = False
+    ):
+        payload = {
+            'container': container,
+            'prefix': prefix,
+            'account_name': account_name,
+            'account_key': account_key,
+            'title': title,
+            'description': description,
+            'can_delete_objects': can_delete_objects
+        }
+        response = self.make_request('POST', '/api/storages/azure/export', json=payload)
         return response.json()
