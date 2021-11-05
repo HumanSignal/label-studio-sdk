@@ -1,12 +1,13 @@
 from google.cloud import storage as google_storage
 
-BUCKET_NAME = ''  # specify your bucket name here
+BUCKET_NAME = 'heartex-test-images'  # specify your bucket name here
 GOOGLE_APPLICATION_CREDENTIALS = '/Users/nik/aqueous-cortex-307813-870df09fe8c2.json'
 
 google_client = google_storage.Client()
 bucket = google_client.get_bucket(BUCKET_NAME)
-blobs = bucket.list_blobs()
-
+tasks = []
+for filename in bucket.list_blobs():
+    tasks.append({'image': f'gs://{BUCKET_NAME}/{filename}'})
 
 from label_studio_sdk import Client
 LABEL_STUDIO_URL = 'http://localhost:8000'
@@ -32,3 +33,5 @@ project.connect_google_import_storage(
     bucket=BUCKET_NAME,
     google_application_credentials=GOOGLE_APPLICATION_CREDENTIALS
 )
+
+project.import_tasks(tasks)
