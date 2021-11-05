@@ -1,5 +1,10 @@
-""" Data Manager classes can be used to filter, order, and select items in `label_studio_sdk.project.Project.get_tasks`
-    and provides enumeration for all column names available in the Data Manager for the task, and other helpers.
+""" # Data Manager module for the Label Studio SDK
+
+    Classes can be used to filter, order, and select items in `label_studio_sdk.project.Project.get_tasks`
+    and provides enumeration for all column names available in the Data Manager for tasks, and other helpers.
+
+    See the [client](client.html), [project](project.html) or [utils](utils.html) modules for other operations you
+    might want to perform.
 
     Example:
 

@@ -6,8 +6,8 @@ For the reference documentation for the available SDK modules, see the following
 
 - **[client](/sdk/client.html)**
 - **[data manager](/sdk/data_manager.html)**
-- **[project](sdk/project.html)**
-- **[utils](sdk/utils.html)**
+- **[project](/sdk/project.html)**
+- **[utils](/sdk/utils.html)**
 
 For details abouts how and why to use this SDK, see the [**SDK tutorial** in the Label Studio documentation](https://labelstud.io/guide/sdk.html).
 
