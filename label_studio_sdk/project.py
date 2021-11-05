@@ -283,8 +283,9 @@ class Project(Client):
 
         Parameters
         ----------
-        filters: dict
-            JSON objects representing Data Manager filters.
+        filters: label_studio_sdk.data_manager.Filters.create()
+            JSON objects representing Data Manager filters. Use `label_studio_sdk.data_manager.Filters.create()`
+            helper to create it.
             Example:
         ```json
         {
@@ -299,10 +300,11 @@ class Project(Client):
           ]
         }
         ```
-        ordering: list
-            List with one string representing Data Manager ordering options.
+        ordering: list of label_studio_sdk.data_manager.Columns
+            List with <b>one</b> string representing Data Manager ordering.
+            Use `label_studio_sdk.data_manager.Columns` helper class.
             Example:
-            ```["tasks:total_annotations"]```
+            ```[Columns.total_annotations]```
         view_id: int
             View ID, visible as a Data Manager tab, for which to retrieve filters, ordering, and selected items
         selected_ids: list of ints
