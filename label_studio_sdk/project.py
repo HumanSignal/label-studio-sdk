@@ -346,11 +346,23 @@ class Project(Client):
         else:
             return data
 
+    def get_tasks_ids(self, *args, **kwargs):
+        """Same as [get_task()](link) but return only task IDs
+        """
+        kwargs['only_ids'] = True
+        return self.get_tasks(*args, **kwargs)
+
     @property
     def tasks(self):
         """ All tasks from project. This call can be very slow if the project has tons of tasks
         """
         return self.get_tasks()
+
+    @property
+    def tasks_ids(self):
+        """ All tasks' IDs from project. This call can be very slow if the project has tons of tasks
+        """
+        return self.get_tasks_ids()
 
     def get_labeled_tasks(self, only_ids=False):
         """ All tasks with finished state (is_labeled=True)
