@@ -99,10 +99,10 @@ class Project(Client):
                     {"type": "ObjectTag1", "value": "<ObjectTag1>.value"},
                     {"type": "ObjectTag2", "value": "<ObjectTag2>.value"}
                 ],
-                "labels": ["Label1", "Label2", "Label3"] // taken from "alias" if it exists, else "value"
+                "labels": ["Label1", "Label2", "Label3"]
         }
         ```
-
+        `"labels"` are taken from "alias" attribute if it exists, else "value"
         """
         return parse_config(self.label_config)
 
@@ -154,7 +154,7 @@ class Project(Client):
 
     @classmethod
     def get_from_id(cls, client, project_id) -> "Project":
-        """ Class factory to create a project instance from project ID.
+        """ Class factory to create a project instance from existed project ID.
 
         Parameters
         ----------
@@ -571,7 +571,7 @@ class Project(Client):
         use_blob_urls: bool
             Optional, true by default. Specify whether your data is raw image or video data, or JSON tasks.
         google_application_credentials: string
-            Optional, provide a file with your Google application credentials.
+            Optional, provide a file with your Google application credentials. If not specified, it will use path stored in `GOOGLE_APPLICATION_CREDENTIALS` environmental variable. Read more about [Google Cloud authentication](https://cloud.google.com/docs/authentication/getting-started)
         presign: bool
             Optional, true by default. Specify whether or not to create presigned URLs.
         presign_ttl: int
@@ -633,7 +633,7 @@ class Project(Client):
         prefix: string
             Optional, specify the prefix or folder within the GCS bucket to export your data to
         google_application_credentials: string
-            Optional, provide a file with your Google application credentials.
+            Optional, provide a file with your Google application credentials. If not specified, it will use path stored in `GOOGLE_APPLICATION_CREDENTIALS` environmental variable. Read more about [Google Cloud authentication](https://cloud.google.com/docs/authentication/getting-started)
         title: string
             Optional, specify a title for your GCS export storage that appears in Label Studio.
         description: string
