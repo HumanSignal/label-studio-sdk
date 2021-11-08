@@ -43,7 +43,7 @@ class Client(object):
         return response.json()
 
     def start_project(self, **kwargs):
-        """ Create a project instance.
+        """ Create a new project instance.
 
         Parameters
         ----------
@@ -61,7 +61,7 @@ class Client(object):
         return project
 
     def get_project(self, id):
-        """ Return project SDK object by ID.
+        """ Return project SDK object by ID existed in Label Studio
 
         Parameters
         ----------
@@ -75,14 +75,6 @@ class Client(object):
         """
         from .project import Project
         return Project.get_from_id(self, id)
-
-    # def create_project(self, *args, **kwargs):
-    #     from .project import Project
-    #     return Project(self, *args, **kwargs)
-    #
-    # def create_config(self, *args, **kwargs):
-    #     from .label_config import LabelConfig
-    #     return LabelConfig(self, *args, **kwargs)
 
     def get_session(self):
         """ Create a session with requests.Session()

@@ -141,7 +141,7 @@ class Project(Client):
         self.params = self.get_params()
 
     def start_project(self, **kwargs):
-        """ Create a labeling project in Label Studio.
+        """ Create a new labeling project in Label Studio.
 
         Raises LabelStudioException in case of errors.
 
@@ -183,6 +183,7 @@ class Project(Client):
         preannotated_from_fields: list of strings
             Turns flat task JSON formatted like: `{"column1": value, "column2": value}` into Label Studio prediction
             data format: `{"data": {"column1"..}, "predictions": [{..."column2"}]`
+            Useful when all your data is stored in tabular format with one column dedicated to model predictions.
 
         Returns
         -------
@@ -275,8 +276,6 @@ class Project(Client):
         ordering=None,
         view_id=None,
         selected_ids=None,
-        page: int = 1,
-        page_size: int = -1,
         only_ids: bool = False,
     ):
         """ Retrieve a subset of tasks from the Data Manager based on a filter, ordering mechanism, or a
@@ -310,6 +309,67 @@ class Project(Client):
             View ID, visible as a Data Manager tab, for which to retrieve filters, ordering, and selected items
         selected_ids: list of ints
             Task IDs
+        only_ids: bool
+            If true, return only task IDs
+
+        Returns
+        -------
+        list
+            Task list with task data, annotations, predictions and other fields from the Data Manager
+
+        """
+        data = self.get_paginated_tasks(
+            filters=filters,
+            ordering=ordering,
+            view_id=view_id,
+            selected_ids=selected_ids,
+            only_ids=only_ids,
+            page=1,
+            page_size=-1
+        )
+        return data['tasks']
+
+    def get_paginated_tasks(
+        self,
+        filters=None,
+        ordering=None,
+        view_id=None,
+        selected_ids=None,
+        page: int = 1,
+        page_size: int = -1,
+        only_ids: bool = False,
+    ):
+        """ Retrieve a subset of tasks from the Data Manager based on a filter, ordering mechanism, or a
+        predefined view ID.
+
+        Parameters
+        ----------
+        filters: label_studio_sdk.data_manager.Filters.create()
+            JSON objects representing Data Manager filters. Use `label_studio_sdk.data_manager.Filters.create()`
+            helper to create it.
+            Example:
+
+                {
+                  "conjunction": "and",
+                  "items": [
+                    {
+                      "filter": "filter:tasks:id",
+                      "operator": "equal",
+                      "type": "Number",
+                      "value": 1
+                    }
+                  ]
+                }
+
+        ordering: list of label_studio_sdk.data_manager.Column
+            List with <b>one</b> string representing Data Manager ordering.
+            Use `label_studio_sdk.data_manager.Column` helper class.
+            Example:
+            ```[Column.total_annotations]```
+        view_id: int
+            View ID, visible as a Data Manager tab, for which to retrieve filters, ordering, and selected items
+        selected_ids: list of ints
+            Task IDs
         page: int
             Page. Default is 1.
         page_size: int
@@ -319,11 +379,16 @@ class Project(Client):
 
         Returns
         -------
-        if page_size == -1 => list
-            Task list with task data, annotations, predictions and other fields from the Data Manager
 
-        if page_size > 0 => dict
-            Example: ```{"tasks":[...], "total_annotations": 0, "total_predictions": 0, "total": 0}```
+        dict
+            Example:
+
+                {
+                    "tasks": [{...}],
+                    "total_annotations": 50,
+                    "total_predictions": 100,
+                    "total": 100
+                }
 
         tasks: list of dicts
             Tasks with task data, annotations, predictions and other fields from the Data Manager
@@ -335,7 +400,6 @@ class Project(Client):
             Total number of predictions in filtered tasks
 
         """
-        # TODO: implement filter-based tasks selection
         query = {
             'filters': filters,
             'ordering': ordering or [],
@@ -347,6 +411,7 @@ class Project(Client):
                 'only_ids': only_ids,
                 'page': page,
                 'page_size': page_size,
+                'view': view_id,
                 'query': json.dumps(query)
             })
 
@@ -355,16 +420,19 @@ class Project(Client):
         if only_ids:
             data['tasks'] = [task['id'] for task in tasks]
 
-        if page_size == -1:
-            return data['tasks']
-        else:
-            return data
+        return data
 
     def get_tasks_ids(self, *args, **kwargs):
         """Same as [get_task()](link) but return only task IDs
         """
         kwargs['only_ids'] = True
         return self.get_tasks(*args, **kwargs)
+
+    def get_paginated_tasks_ids(self, *args, **kwargs):
+        """Same as [get_paginated_task()](link) but return only task IDs
+        """
+        kwargs['only_ids'] = True
+        return self.get_paginated_tasks(*args, **kwargs)
 
     @property
     def tasks(self):
@@ -379,7 +447,7 @@ class Project(Client):
         return self.get_tasks_ids()
 
     def get_labeled_tasks(self, only_ids=False):
-        """ Retrieve all tasks that have been completed, tasks where is_labeled=true.
+        """ Retrieve all tasks that have been completed, i.e. where requested number of annotations have been created
 
         Parameters
         ----------
@@ -403,7 +471,7 @@ class Project(Client):
         }, only_ids=only_ids)
 
     def get_labeled_tasks_ids(self):
-        """ Retrieve all task IDs for completed tasks, tasks where is_labeled=True.
+        """ Retrieve all task IDs for completed tasks, i.e. where requested number of annotations have been created
 
         Returns
         -------
@@ -413,8 +481,8 @@ class Project(Client):
         return self.get_labeled_tasks(only_ids=True)
 
     def get_unlabeled_tasks(self, only_ids=False):
-        """ Retrieve all tasks that are <b>not</b> completed, tasks where is_labeled=False. If using Label Studio Enterprise,
-        this can include tasks that have been labeled one or more times, but not the full number of times defined in the
+        """ Retrieve all tasks that are <b>not</b> completed.
+         If using Label Studio Enterprise, this can include tasks that have been labeled one or more times, but not the full number of times defined in the
         project labeling settings.
 
         Parameters
@@ -439,7 +507,7 @@ class Project(Client):
         }, only_ids=only_ids)
 
     def get_unlabeled_tasks_ids(self):
-        """ Retrieve all task IDs for tasks that are <b>not</b> completed, tasks where is_labeled=False. If using
+        """ Retrieve all task IDs for tasks that are <b>not</b> completed. If using
         Label Studio Enterprise, this can include tasks that have been labeled one or more times, but not the full
         number of times defined in the project labeling settings.
 
@@ -469,7 +537,7 @@ class Project(Client):
     def create_prediction(
         self,
         task_id: int,
-        result: Optional[List[Dict]] = None,
+        result: Optional[Union[List[Dict], Dict, str]] = None,
         score: Optional[float] = 0,
         model_version: Optional[str] = None
     ):
@@ -479,9 +547,38 @@ class Project(Client):
         ----------
         task_id: int
             Task ID
-        result: dict
+        result: list or dict or str
             Result in the <a href="https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks">
-            Label Studio JSON format as for annotations</a>
+            Label Studio JSON format as for annotations</a>.
+            For the labeling config:
+
+                <View>
+                <Image name="image" value="$value"/>
+                <Choices name="class_name" toName="image">
+                    <Choice value="Class A"/>
+                    <Choice value="Class B"/>
+                </Choices>
+                </View>
+
+            The following inputs are equivalent, result could be either full `"predictions"`:
+
+                [{
+                    "from_name": "class_name",
+                    "to_name": "image",
+                    "type": "choices",
+                    "value": {
+                        "choices": ["Class A"]
+                    }
+                }]
+
+            or just `"value"` payload
+
+                {"choices": ["Class A"]}
+
+            or just the class name:
+
+                "Class A"
+
         score: float
             Model prediction score
         model_version: str
@@ -493,23 +590,24 @@ class Project(Client):
         return response.json()
 
     def create_predictions(self, predictions):
-        """ Bulk create predictions for tasks (Enterprise only).
+        """ Bulk create predictions for tasks
 
         Parameters
         ----------
         predictions: list of dicts
-            List of dicts with predictions
+            List of dicts with predictions in the <a href="https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks">
+            Label Studio JSON format as for annotations</a>.
         """
         response = self.make_request('POST', f'/api/projects/{self.id}/import/predictions', json=predictions)
         return response.json()
 
     def create_annotations_from_predictions(self, model_versions=None):
-        """ Create annotations from all predictions that exist for project tasks from a specific ML model version.
+        """ Create annotations from all predictions that exist for project tasks from specific ML model versions.
 
         Parameters
         ----------
-        model_versions: list
-            Convert predictions with this model_version to annotations.
+        model_versions: list or None
+            Convert predictions with these model versions to annotations. If `None`, all existed model versions are used
 
         Returns
         -------
@@ -536,8 +634,14 @@ class Project(Client):
         Returns
         -------
         dict
-            Example: {"2021-01-01": 0.9, "2021-02-01": 0.7},
-            0.9 means that 90% of project tasks is covered by predictions with model_version "2021-01-01"
+            Example:
+
+                {
+                    "2021-01-01": 0.9,
+                     "2021-02-01": 0.7
+                }
+
+            `0.9` means that 90% of project tasks is covered by predictions with model_version `"2021-01-01"`
 
         """
         model_versions = self.get_model_versions()
@@ -583,7 +687,8 @@ class Project(Client):
 
         Returns
         -------
-        dict containing the same fields as in the request and:
+        dict
+            containing the same fields as in the request and:
 
         id: int
             Storage ID
@@ -643,7 +748,8 @@ class Project(Client):
 
         Returns
         -------
-        dict containing the same fields as in the request and:
+        dict
+            containing the same fields as in the request and:
 
         id: int
             Storage ID
@@ -721,7 +827,8 @@ class Project(Client):
 
         Returns
         -------
-        dict containing the same fields as in the request and:
+        dict
+            containing the same fields as in the request and:
 
         id: int
             Storage ID
@@ -792,7 +899,8 @@ class Project(Client):
 
         Returns
         -------
-        dict containing the same fields as in the request and:
+        dict
+            containing the same fields as in the request and:
 
         id: int
             Storage ID
