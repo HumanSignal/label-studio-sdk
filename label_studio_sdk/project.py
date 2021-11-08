@@ -11,7 +11,6 @@ from .utils import parse_config
 
 
 class LabelStudioException(Exception):
-
     pass
 
 
@@ -270,14 +269,14 @@ class Project(Client):
         self.set_params(model_version=model_version)
 
     def get_tasks(
-        self,
-        filters=None,
-        ordering=None,
-        view_id=None,
-        selected_ids=None,
-        page: int = 1,
-        page_size: int = -1,
-        only_ids: bool = False,
+            self,
+            filters=None,
+            ordering=None,
+            view_id=None,
+            selected_ids=None,
+            page: int = 1,
+            page_size: int = -1,
+            only_ids: bool = False,
     ):
         """ Retrieve a subset of tasks from the Data Manager based on a filter, ordering mechanism, or a
         predefined view ID.
@@ -455,11 +454,11 @@ class Project(Client):
         return response.json()
 
     def create_prediction(
-        self,
-        task_id: int,
-        result: Optional[List[Dict]] = None,
-        score: Optional[float] = 0,
-        model_version: Optional[str] = None
+            self,
+            task_id: int,
+            result: Optional[List[Dict]] = None,
+            score: Optional[float] = 0,
+            model_version: Optional[str] = None
     ):
         """ Create a prediction for a specific task.
 
@@ -535,16 +534,16 @@ class Project(Client):
         return coverage
 
     def connect_google_import_storage(
-        self,
-        bucket: str,
-        prefix: Optional[str] = None,
-        regex_filter: Optional[str] = None,
-        use_blob_urls: Optional[bool] = True,
-        google_application_credentials: Optional[str] = None,
-        presign: Optional[bool] = True,
-        presign_ttl: Optional[int] = 1,
-        title: Optional[str] = '',
-        description: Optional[str] = ''
+            self,
+            bucket: str,
+            prefix: Optional[str] = None,
+            regex_filter: Optional[str] = None,
+            use_blob_urls: Optional[bool] = True,
+            google_application_credentials: Optional[str] = None,
+            presign: Optional[bool] = True,
+            presign_ttl: Optional[int] = 1,
+            title: Optional[str] = '',
+            description: Optional[str] = ''
     ):
         """Connect a Google Cloud Storage (GCS) bucket to Label Studio to use as source storage and import tasks.
 
@@ -571,8 +570,10 @@ class Project(Client):
 
         Returns
         -------
-        dict containing the same fields as in the request and:
+        dict:
+            containing the same fields as in the request and:
 
+        ```
         id: int
             Storage ID
         type: str
@@ -583,8 +584,8 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
-		"""
-
+        ```
+        """
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
                 google_application_credentials = f.read()
@@ -604,13 +605,13 @@ class Project(Client):
         return response.json()
 
     def connect_google_export_storage(
-        self,
-        bucket: str,
-        prefix: Optional[str] = None,
-        google_application_credentials: Optional[str] = None,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
-        can_delete_objects: bool = False
+            self,
+            bucket: str,
+            prefix: Optional[str] = None,
+            google_application_credentials: Optional[str] = None,
+            title: Optional[str] = '',
+            description: Optional[str] = '',
+            can_delete_objects: bool = False
     ):
         """Connect a Google Cloud Storage (GCS) bucket to Label Studio to use as target storage and export tasks.
 
@@ -631,8 +632,10 @@ class Project(Client):
 
         Returns
         -------
-        dict containing the same fields as in the request and:
+        dict:
+            containing the same fields as in the request and:
 
+        ```
         id: int
             Storage ID
         type: str
@@ -643,7 +646,7 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
-
+        ```
         """
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
@@ -661,20 +664,20 @@ class Project(Client):
         return response.json()
 
     def connect_s3_import_storage(
-        self,
-        bucket: str,
-        prefix: Optional[str] = None,
-        regex_filter: Optional[str] = None,
-        use_blob_urls: Optional[bool] = True,
-        presign: Optional[bool] = True,
-        presign_ttl: Optional[int] = 1,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
-        aws_access_key_id: Optional[str] = None,
-        aws_secret_access_key: Optional[str] = None,
-        aws_session_token: Optional[str] = None,
-        region_name: Optional[str] = None,
-        s3_endpoint: Optional[str] = None
+            self,
+            bucket: str,
+            prefix: Optional[str] = None,
+            regex_filter: Optional[str] = None,
+            use_blob_urls: Optional[bool] = True,
+            presign: Optional[bool] = True,
+            presign_ttl: Optional[int] = 1,
+            title: Optional[str] = '',
+            description: Optional[str] = '',
+            aws_access_key_id: Optional[str] = None,
+            aws_secret_access_key: Optional[str] = None,
+            aws_session_token: Optional[str] = None,
+            region_name: Optional[str] = None,
+            s3_endpoint: Optional[str] = None
     ):
         """Connect an Amazon S3 bucket to Label Studio to use as source storage and import tasks.
 
@@ -709,8 +712,10 @@ class Project(Client):
 
         Returns
         -------
-        dict containing the same fields as in the request and:
+        dict:
+            containing the same fields as in the request and:
 
+        ```
         id: int
             Storage ID
         type: str
@@ -721,6 +726,7 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
+        ```
         """
         payload = {
             'bucket': bucket,
@@ -741,17 +747,17 @@ class Project(Client):
         return response.json()
 
     def connect_s3_export_storage(
-        self,
-        bucket: str,
-        prefix: Optional[str] = None,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
-        aws_access_key_id: Optional[str] = None,
-        aws_secret_access_key: Optional[str] = None,
-        aws_session_token: Optional[str] = None,
-        region_name: Optional[str] = None,
-        s3_endpoint: Optional[str] = None,
-        can_delete_objects: bool = False
+            self,
+            bucket: str,
+            prefix: Optional[str] = None,
+            title: Optional[str] = '',
+            description: Optional[str] = '',
+            aws_access_key_id: Optional[str] = None,
+            aws_secret_access_key: Optional[str] = None,
+            aws_session_token: Optional[str] = None,
+            region_name: Optional[str] = None,
+            s3_endpoint: Optional[str] = None,
+            can_delete_objects: bool = False
     ):
         """Connect an Amazon S3 bucket to Label Studio to use as target storage and export tasks.
 
@@ -780,8 +786,10 @@ class Project(Client):
 
         Returns
         -------
-        dict containing the same fields as in the request and:
+        dict:
+            containing the same fields as in the request and:
 
+        ```
         id: int
             Storage ID
         type: str
@@ -792,8 +800,9 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
+        ```
         """
-        
+
         payload = {
             'bucket': bucket,
             'prefix': prefix,
@@ -810,17 +819,17 @@ class Project(Client):
         return response.json()
 
     def connect_azure_import_storage(
-        self,
-        container: str,
-        prefix: Optional[str] = None,
-        regex_filter: Optional[str] = None,
-        use_blob_urls: Optional[bool] = True,
-        presign: Optional[bool] = True,
-        presign_ttl: Optional[int] = 1,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
-        account_name: Optional[str] = None,
-        account_key: Optional[str] = None
+            self,
+            container: str,
+            prefix: Optional[str] = None,
+            regex_filter: Optional[str] = None,
+            use_blob_urls: Optional[bool] = True,
+            presign: Optional[bool] = True,
+            presign_ttl: Optional[int] = 1,
+            title: Optional[str] = '',
+            description: Optional[str] = '',
+            account_name: Optional[str] = None,
+            account_key: Optional[str] = None
     ):
         payload = {
             'container': container,
@@ -838,14 +847,14 @@ class Project(Client):
         return response.json()
 
     def connect_azure_export_storage(
-        self,
-        container: str,
-        prefix: Optional[str] = None,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
-        account_name: Optional[str] = None,
-        account_key: Optional[str] = None,
-        can_delete_objects: bool = False
+            self,
+            container: str,
+            prefix: Optional[str] = None,
+            title: Optional[str] = '',
+            description: Optional[str] = '',
+            account_name: Optional[str] = None,
+            account_key: Optional[str] = None,
+            can_delete_objects: bool = False
     ):
         payload = {
             'container': container,

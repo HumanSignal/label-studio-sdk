@@ -51,7 +51,7 @@ class Filters:
         conjunction: str
             The conjunction operator between filters ('or' or 'and')
         items: list
-            What to filter, use item() method to build it
+            What to filter, use `Filter.item()` method to build it
 
         Returns
         -------
@@ -67,6 +67,21 @@ class Filters:
     @staticmethod
     def item(name, operator, column_type, value):
         """Use in combination with other classes to specify the contents of a filter.
+
+        Parameters
+        ----------
+        name: `Column`
+            Column.id, Column.completed_at, Column.data('my_field'), etc
+        operator: `Operator`
+            Operator.EQUAL, Operator.GREATER_OR_EQUAL, Operator.IN, etc
+        column_type: `Type`
+            Type.Number, Type.Boolean, Type.String, etc
+        value: `Filters.value()`
+            Filters.value(42), Filters.value('test'), Filters.value(datetime(2021, 01, 01), datetime.now())
+
+        Returns
+        -------
+        dict
         """
         return {
             "filter": name,

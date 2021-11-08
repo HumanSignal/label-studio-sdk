@@ -183,6 +183,9 @@
     #header-classes + dl > dd {
       margin-bottom: 3em;
     }
+    dd h3 {
+      margin-top: 3em;
+    }
     dd dd {
       margin-left: 2em;
     }
