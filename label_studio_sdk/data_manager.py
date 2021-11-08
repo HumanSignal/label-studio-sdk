@@ -49,10 +49,9 @@ class Filters:
         Parameters
         ----------
         conjunction: str
-            Operator to use as the conjunction between filters.
-            Example: "contains", ">="
-        items: str
-            What to filter
+            The conjunction operator between filters ('or' or 'and')
+        items: list
+            What to filter, use item() method to build it
 
         Returns
         -------
@@ -124,7 +123,9 @@ class Filters:
 
 
 class Operator:
-    """Specify the operator to use when creating a filter."""
+    """Specify the operator to use when creating a filter.
+    """
+
     EQUAL = "equal"
     NOT_EQUAL = "not_equal"
     LESS = "less"
@@ -144,6 +145,7 @@ class Operator:
 class Type:
     """Specify the type of data in a column.
     """
+
     Number = 'Number'
     Datetime = 'Datetime'
     Boolean = 'Boolean'
@@ -177,21 +179,21 @@ class Column:
     created_at = "filter:tasks:created_at"
     """Time the task was created at"""
     annotators = "filter:tasks:annotators"
-    """Annotators that completed the task. Can include assigned annotators (Enterprise only)."""
+    """Annotators that completed the task (Community). Can include assigned annotators (Enterprise only)"""
     total_predictions = "filter:tasks:total_predictions"
     """Total number of predictions for the task"""
     cancelled_annotations = "filter: tasks:cancelled_annotations"
     """Number of cancelled or skipped annotations for the task"""
     total_annotations = "filter:tasks:total_annotations"
-    """Total number of annotations on a task."""
+    """Total number of annotations on a task"""
     completed_at = "filter:tasks:completed_at"
-    """Time when a task was fully annotated """
+    """Time when a task was fully annotated"""
     agreement = "filter:tasks:agreement"
-    """Agreement for annotation results for a specific task (Enterprise only) """
+    """Agreement for annotation results for a specific task (Enterprise only)"""
     reviewers = "filter:tasks:reviewers"
-    """Reviewers that reviewed the task, or assigned reviewers (Enterprise only) """
+    """Reviewers that reviewed the task, or assigned reviewers (Enterprise only)"""
     reviews_rejected = "filter:tasks:reviews_rejected"
-    """Number of annotations rejected for a task in review (Enterprise only) """
+    """Number of annotations rejected for a task in review (Enterprise only)"""
     reviews_accepted = "filter:tasks:reviews_accepted"
     """Number of annotations accepted for a task in review (Enterprise only)"""
 
@@ -212,7 +214,7 @@ class Column:
         return "filter:tasks:data." + task_field
 
 
-def test():
+def _test():
     """Test it"""
     filters = Filters.create(Filters.OR, [
         Filters.item(

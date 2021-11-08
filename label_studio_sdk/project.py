@@ -496,7 +496,7 @@ class Project(Client):
 
         Parameters
         ----------
-        model_versions: string
+        model_versions: list
             Convert predictions with this model_version to annotations.
 
         Returns
