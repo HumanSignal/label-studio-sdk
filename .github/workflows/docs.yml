@@ -1,0 +1,35 @@
+name: deploy:docs
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy_docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache pip deps
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-pip-packages
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ env.cache-name }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ env.cache-name }}-
+            ${{ runner.os }}-pip-
+            ${{ runner.os }}-
+
+      - name: Install pdoc with dependencies
+        run: make install
+
+      - name: Build HTML for deployment
+        run: make build
+
+      - name: Publish docs to AWS S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.DOCS_DEPLOY_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.DOCS_DEPLOY_AWS_SECRET_ACCESS_KEY }}
+        run: make deploy
