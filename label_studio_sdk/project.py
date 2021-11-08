@@ -491,12 +491,12 @@ class Project(Client):
         response = self.make_request('POST', f'/api/projects/{self.id}/import/predictions', json=predictions)
         return response.json()
 
-    def create_annotations_from_predictions(self, model_version=None):
+    def create_annotations_from_predictions(self, model_versions=None):
         """ Create annotations from all predictions that exist for project tasks from a specific ML model version.
 
         Parameters
         ----------
-        model_version: string
+        model_versions: string
             Convert predictions with this model_version to annotations.
 
         Returns
@@ -507,7 +507,7 @@ class Project(Client):
         """
         payload = {
             'filters': {'conjunction': 'and', 'items': []},
-            'model_version': model_version,
+            'model_version': model_versions,
             'ordering': [],
             'project': self.id,
             'selectedItems': {'all': True, 'excluded': []}
