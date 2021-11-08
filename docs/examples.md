@@ -2,37 +2,35 @@
 
 This page details the available usage examples for the Label Studio SDK. 
 
-- To reference the available modules, classes, and methods, see the **[client](/label_studio_sdk/client.html), [project](label_studio_sdk/project.html), or [utils](label_studio_sdk/utils.html) modules**.
-- For details abouts how and why to use this SDK, see the [**SDK tutorial** in the Label Studio documentation](https://labelstud.io/guide/sdk.html).
+For the reference documentation for the available SDK modules, see the following:
 
-## Jupyter Notebooks
+- **[client](/sdk/client.html)**
+- **[data manager](/sdk/data_manager.html)**
+- **[project](/sdk/project.html)**
+- **[utils](/sdk/utils.html)**
 
-* <a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Active%20Learning.ipynb">Active Learning Example</a><br>
-* <a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Weak%20Supervision.ipynb">Weak Supervision Example</a><br>
+For details abouts how and why to use this SDK, see the [**SDK tutorial** in the Label Studio documentation](https://labelstud.io/guide/sdk.html).
 
+## Example: Active Learning 
 
-## Active Learning
-```
-.. include::../examples/active_learning.py
-```
+Refer to this Jupyter notebook for a full example active learning workflow using the Label Studio SDK: 
 
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Active%20Learning.ipynb">Active Learning example</a></b>
 
-## Annotate data from GCS
+## Example: Weak Supervision 
 
-```
-.. include::../examples/annotate_data_from_gcs.py
-```
+Refer to this Jupyter notebook for a full example weak supervision workflow using the Label Studio SDK:
 
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Weak%20Supervision.ipynb">Weak Supervision example</a></b>
 
-## Import pre-annotations
+## Example: Import data from Google Cloud Storage
 
-```
-.. include::../examples/annotate_data_from_gcs.py
-```
+Refer to this Jupyter notebook for an example of continuously importing task data from a Google Cloud Storage (GCS) bucket:
 
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Import%20data%20from%20Cloud%20Storage.ipynb">Import data from cloud storage example</a></b>
 
-## Weak supervision
+##Example: Import pre-annotations
 
-```
-.. include::../examples/weak_supervision.py
-```
+Refer to this Jupyter notebook for an example of importing pre-annotated tasks into Label Studio for image classification predictions:
+
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Import%20preannotations.ipynb">Import pre-annotations example</a></b>

@@ -1,5 +1,10 @@
-""" Data manager classes help to operate with filtering, ordering and selected items in `label_studio_sdk.project.Project.get_tasks`
-    and provides enumeration for all column names in the task available in the Data Manager and other helpers.
+""" # Data Manager module for the Label Studio SDK
+
+    Classes can be used to filter, order, and select items in `label_studio_sdk.project.Project.get_tasks`
+    and provides enumeration for all column names available in the Data Manager for tasks, and other helpers.
+
+    See the [client](client.html), [project](project.html) or [utils](utils.html) modules for other operations you
+    might want to perform.
 
     Example:
 
@@ -29,20 +34,30 @@ DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 
 
 class Filters:
+    """
+    Use the methods and variables in this class to create and combine filters for tasks on the Label Studio Data Manager.
+    """
     OR = 'or'
+    """Combine filters with an OR"""
     AND = 'and'
+    """Combine filters with an AND"""
 
     @staticmethod
     def create(conjunction, items):
-        """ Create filters parameter for `label_studio_sdk.project.Project.get_tasks()`
+        """ Create a filter for `label_studio_sdk.project.Project.get_tasks()`
 
         Parameters
         ----------
-        conjunction
-        items
+        conjunction: str
+            Operator to use as the conjunction between filters.
+            Example: "contains", ">="
+        items: str
+            What to filter
 
         Returns
         -------
+        dict
+            containing specified parameters
 
         """
         return {
@@ -52,6 +67,8 @@ class Filters:
 
     @staticmethod
     def item(name, operator, column_type, value):
+        """Use in combination with other classes to specify the contents of a filter.
+        """
         return {
             "filter": name,
             "operator": operator,
@@ -61,7 +78,8 @@ class Filters:
 
     @staticmethod
     def datetime(dt):
-        """ Date time string format for filters
+        """ Date time string format for filtering the Data Manager.
+
         Parameters
         ----------
         dt
@@ -70,7 +88,7 @@ class Filters:
         Returns
         -------
         str
-           datetime in '%Y-%m-%dT%H:%M:%S.%fZ' format
+            datetime in `'%Y-%m-%dT%H:%M:%S.%fZ'` format
 
         """
         assert isinstance(dt, datetime), 'dt must be datetime type'
@@ -78,15 +96,15 @@ class Filters:
 
     @classmethod
     def value(cls, value, maximum=None):
-        """
+        """Set a filter value in the Data Manager.
 
         Parameters
         ----------
         value: str | int | float | datetime | boolean
-            value for filtering, if maximum is passed then value is minimum
+            value to use for filtering. If the maximum parameter is passed, then this value field is the minimum.
 
         maximum: int | float  | datetime
-            Range for IN, NOT_IN operators
+            Specify a maximum for a filtering range with IN, NOT_IN operators.
 
         Returns
         -------
@@ -106,6 +124,7 @@ class Filters:
 
 
 class Operator:
+    """Specify the operator to use when creating a filter."""
     EQUAL = "equal"
     NOT_EQUAL = "not_equal"
     LESS = "less"
@@ -123,6 +142,8 @@ class Operator:
 
 
 class Type:
+    """Specify the type of data in a column.
+    """
     Number = 'Number'
     Datetime = 'Datetime'
     Boolean = 'Boolean'
@@ -130,36 +151,53 @@ class Type:
     List = "List"
 
     Unknown = 'Unknown'
-    """ Unknown will be explicitly converter to String """
+    """ Unknown is explicitly converted to string format. """
 
 
 class Column:
-
-    # TODO: @sarah some of these fields are enterprise only, please mark them somehow;
-    #  also we need desc for the each enumeration
+    """Specify the column on the Data Manager in Label Studio UI to use in the filter.
+    """
 
     id = "filter:tasks:id"
+    """Task ID"""
     ground_truth = "filter:tasks:ground_truth"
+    """Ground truth status of the tasks"""
     annotations_results = "filter:tasks:annotations_results"
+    """Annotation results for the tasks"""
     reviewed = "filter:tasks:reviewed"
+    """Whether the tasks have been reviewed (Enterprise only)"""
     predictions_score = "filter:tasks:predictions_score"
+    """Prediction score for the task"""
     predictions_model_versions = "filter:tasks:predictions_model_versions"
+    """Model version used for the predictions"""
     predictions_results = "filter:tasks:predictions_results"
+    """Prediction results for the tasks"""
     file_upload = "filter:tasks:file_upload"
+    """Name of the file uploaded to create the tasks"""
     created_at = "filter:tasks:created_at"
+    """Time the task was created at"""
     annotators = "filter:tasks:annotators"
+    """Annotators that completed the task. Can include assigned annotators (Enterprise only)."""
     total_predictions = "filter:tasks:total_predictions"
+    """Total number of predictions for the task"""
     cancelled_annotations = "filter: tasks:cancelled_annotations"
+    """Number of cancelled or skipped annotations for the task"""
     total_annotations = "filter:tasks:total_annotations"
+    """Total number of annotations on a task."""
     completed_at = "filter:tasks:completed_at"
+    """Time when a task was fully annotated """
     agreement = "filter:tasks:agreement"
+    """Agreement for annotation results for a specific task (Enterprise only) """
     reviewers = "filter:tasks:reviewers"
+    """Reviewers that reviewed the task, or assigned reviewers (Enterprise only) """
     reviews_rejected = "filter:tasks:reviews_rejected"
+    """Number of annotations rejected for a task in review (Enterprise only) """
     reviews_accepted = "filter:tasks:reviews_accepted"
+    """Number of annotations accepted for a task in review (Enterprise only)"""
 
     @staticmethod
     def data(task_field):
-        """ Generate filter name for task data field
+        """ Create a filter name for the task data field
 
         Parameters
         ----------
@@ -175,6 +213,7 @@ class Column:
 
 
 def test():
+    """Test it"""
     filters = Filters.create(Filters.OR, [
         Filters.item(
             Column.id,
