@@ -29,7 +29,7 @@
 
     # A prefix to use for every HTML hyperlink in the generated documentation.
     # No prefix results in all links being relative.
-    link_prefix = 'sdk'
+    link_prefix = ''
 
     # Enable syntax highlighting for code/source blocks by including Highlight.js
     syntax_highlighting = True

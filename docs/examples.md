@@ -1,33 +1,36 @@
-# Usage Examples
+# Usage Examples for the Label Studio SDK
 
-## IPyhon Notebooks
+This page details the available usage examples for the Label Studio SDK. 
 
-* <a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Active%20Learning.ipynb">Active Learning</a><br>
-* <a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Weak%20Supervision.ipynb">Weak Supervision</a><br>
+For the reference documentation for the available SDK modules, see the following:
 
+- **[client](/sdk/client.html)**
+- **[data manager](/sdk/data_manager.html)**
+- **[project](/sdk/project.html)**
+- **[utils](/sdk/utils.html)**
 
-## Active Learning
-```
-.. include::../examples/active_learning.py
-```
+For details abouts how and why to use this SDK, see the [**SDK tutorial** in the Label Studio documentation](https://labelstud.io/guide/sdk.html).
 
+## Example: Active Learning 
 
-## Annotate data from GCS
+Refer to this Jupyter notebook for a full example active learning workflow using the Label Studio SDK: 
 
-```
-.. include::../examples/annotate_data_from_gcs.py
-```
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Active%20Learning.ipynb">Active Learning example</a></b>
 
+## Example: Weak Supervision 
 
-## Import pre-annotations
+Refer to this Jupyter notebook for a full example weak supervision workflow using the Label Studio SDK:
 
-```
-.. include::../examples/annotate_data_from_gcs.py
-```
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Weak%20Supervision.ipynb">Weak Supervision example</a></b>
 
+## Example: Import data from Google Cloud Storage
 
-## Weak supervision
+Refer to this Jupyter notebook for an example of continuously importing task data from a Google Cloud Storage (GCS) bucket:
 
-```
-.. include::../examples/weak_supervision.py
-```
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Import%20data%20from%20Cloud%20Storage.ipynb">Import data from cloud storage example</a></b>
+
+##Example: Import pre-annotations
+
+Refer to this Jupyter notebook for an example of importing pre-annotated tasks into Label Studio for image classification predictions:
+
+<b><a href="https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/Import%20preannotations.ipynb">Import pre-annotations example</a></b>

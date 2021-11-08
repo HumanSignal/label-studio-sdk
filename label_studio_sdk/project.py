@@ -11,25 +11,24 @@ from .utils import parse_config
 
 
 class LabelStudioException(Exception):
-    """ .. include::../docs/project_exceptions.md
-    """
+
     pass
 
 
 class ProjectSampling(Enum):
-    """ Enumeration for task sampling modes
+    """ Enumerate the available task sampling modes for labeling.
     """
 
     RANDOM = 'Uniform sampling'
-    """ Uniform random sampling """
+    """ Uniform random sampling of tasks """
     SEQUENCE = 'Sequential sampling'
-    """ By task ids """
+    """ Sequential sampling of tasks using task IDs """
     UNCERTAINTY = 'Uncertainty sampling'
-    """ Using prediction scores like in active learning """
+    """ Sample tasks based on prediction scores, such as for active learning (Enterprise only)"""
 
 
 class ProjectStorage(Enum):
-    """ Enumeration for project storages
+    """ Enumerate the available types of external source and target storage for labeling projects.
     """
 
     GOOGLE = 'gcs'
@@ -37,53 +36,60 @@ class ProjectStorage(Enum):
     S3 = 's3'
     """ Amazon S3 Storage """
     AZURE = 'azure_blob'
-    """ Azure Storage """
+    """ Microsoft Azure Blob Storage """
     LOCAL = 'localfiles'
-    """ Label Studio Local Storage """
+    """ Label Studio Local File Storage """
     REDIS = 'redis'
     """ Redis Storage """
     S3_SECURED = 's3s'
-    """ Amazon S3 Secured Storage """
+    """ Amazon S3 Storage secured by IAM roles (Enterprise only)"""
 
 
 class Project(Client):
 
     def __init__(self, *args, **kwargs):
+        """ Initialize project class.
+
+        Parameters
+        ----------
+
+        """
         super(Project, self).__init__(*args, **kwargs)
         self.params = {}
 
     @property
     def id(self):
-        """ Get project ID
+        """ Get the project ID.
 
         Returns
         -------
         int
-
+            Project ID
         """
         return self._get_param('id')
 
     @property
     def label_config(self):
-        """ Project labeling config
+        """ Get the labeling configuration for the project.
 
         Returns
         -------
         str
-            XML string with the labeling config
+            Labeling configuration in XML format
 
         """
         return self._get_param('label_config')
 
     @property
     def parsed_label_config(self):
-        """
+        """ Get the parsed labeling configuration for the project. You can use this to more easily construct
+        annotation or prediction results based on your labeling configuration.
 
         Returns
         -------
         dict
-            Object and control tags from the project labeling config.
-            Example with structured config of the form:
+            Object and control tags from the project labeling configuration.
+            Example with structured configuration of the form:
         ```
         {
             "<ControlTag>.name": {
@@ -93,7 +99,7 @@ class Project(Client):
                     {"type": "ObjectTag1", "value": "<ObjectTag1>.value"},
                     {"type": "ObjectTag2", "value": "<ObjectTag2>.value"}
                 ],
-                "labels": ["Label1", "Label2", "Label3"] // taken from "alias" if exists or "value"
+                "labels": ["Label1", "Label2", "Label3"] // taken from "alias" if it exists, else "value"
         }
         ```
 
@@ -108,7 +114,7 @@ class Project(Client):
         return self.params[param_name]
 
     def get_params(self):
-        """ Get all parameter from the project info
+        """ Get all available project parameters.
 
         Returns
         -------
@@ -118,7 +124,7 @@ class Project(Client):
         return response.json()
 
     def get_model_versions(self):
-        """ Get the list of ML model versions
+        """ Get the list of available ML model versions from pre-annotations or connected ML backends.
 
         Returns
         -------
@@ -130,14 +136,14 @@ class Project(Client):
         return response.json()
 
     def update_params(self):
-        """ Get all project params and cache it
+        """ Get all available project parameters and cache them.
         """
         self.params = self.get_params()
 
     def start_project(self, **kwargs):
-        """ Create a new project
+        """ Create a labeling project in Label Studio.
 
-        Raise LabelStudioException in case of errors
+        Raises LabelStudioException in case of errors.
 
         """
         response = self.make_request('POST', '/api/projects', json=kwargs)
@@ -148,12 +154,13 @@ class Project(Client):
 
     @classmethod
     def get_from_id(cls, client, project_id) -> "Project":
-        """ Class factory to create Project instance from project ID
+        """ Class factory to create a project instance from project ID.
 
         Parameters
         ----------
         client: class Client
-        project_id: project ID
+        project_id: int
+            Project ID
 
         Returns
         -------
@@ -165,21 +172,22 @@ class Project(Client):
         return project
 
     def import_tasks(self, tasks, preannotated_from_fields: List = None):
-        """ Import tasks
+        """ Import JSON-formatted labeling tasks. Tasks can be unlabeled or contain predictions.
 
         Parameters
         ----------
         tasks: list of dicts | dict | path to file
             Tasks in <a href="https://labelstud.io/guide/tasks.html#Basic-Label-Studio-JSON-format">
-            Label Studio Format</a>
+            Label Studio JSON format</a>
 
         preannotated_from_fields: list of strings
-            Turn flat task JSONs `{"column1": value, "column2": value}` into `{"data": {"column1"..}, "predictions": [{..."column2"}]`
+            Turns flat task JSON formatted like: `{"column1": value, "column2": value}` into Label Studio prediction
+            data format: `{"data": {"column1"..}, "predictions": [{..."column2"}]`
 
         Returns
         -------
         list of int
-            Imported task ids
+            Imported task IDs
 
         """
         params = {'return_task_ids': '1'}
@@ -206,13 +214,14 @@ class Project(Client):
         return response.json()['task_ids']
 
     def export_tasks(self, export_type='JSON'):
-        """ Simple export for tasks with annotations
+        """ Export annotated tasks.
 
         Parameters
         ----------
         export_type: string
-            Format type as  <a href="https://github.com/heartexlabs/label-studio-converter/blob/master/label_studio_converter/converter.py#L32">
-            in the converter</a>
+            Default export_type is JSON.
+            Specify another format type as referenced in <a href="https://github.com/heartexlabs/label-studio-converter/blob/master/label_studio_converter/converter.py#L32">
+            the Label Studio converter code</a>.
 
         Returns
         -------
@@ -227,29 +236,30 @@ class Project(Client):
         return response.json()
 
     def set_params(self, **kwargs):
-        """ Low level function to set project parameters
+        """ Low level function to set project parameters.
         """
         response = self.make_request('PATCH', f'/api/projects/{self.id}', json=kwargs)
         assert response.status_code == 200
 
     def set_sampling(self, sampling: ProjectSampling):
-        """ Set the project sampling for the labeling stream
+        """ Set the project sampling method for the labeling stream.
         """
         self.set_params(sampling=sampling.value)
 
     def set_published(self, is_published: bool):
-        """ Set project publishing state
+        """ Set the project publication state. (Enterprise only)
 
         Parameters
         ----------
         is_published: bool
-            Project publish state for reviewers and annotators
+            Project publication state for reviewers and annotators
 
         """
         self.set_params(is_published=is_published)
 
     def set_model_version(self, model_version: str):
-        """ Set active model version
+        """ Set the current model version to use for displaying predictions to annotators, perform uncertainty sampling
+        and annotation evaluations in Label Studio Enterprise, and other operations.
 
         Parameters
         ----------
@@ -269,12 +279,14 @@ class Project(Client):
         page_size: int = -1,
         only_ids: bool = False,
     ):
-        """ Get tasks slice based on filters, orders or view id specified
+        """ Retrieve a subset of tasks from the Data Manager based on a filter, ordering mechanism, or a
+        predefined view ID.
 
         Parameters
         ----------
-        filters: dict
-            JSON objects represents DataManager filters.
+        filters: label_studio_sdk.data_manager.Filters.create()
+            JSON objects representing Data Manager filters. Use `label_studio_sdk.data_manager.Filters.create()`
+            helper to create it.
             Example:
         ```json
         {
@@ -289,19 +301,21 @@ class Project(Client):
           ]
         }
         ```
-        ordering: list
-            list with one string representing DataManager orderings. Example:
-            ```["tasks:total_annotations"]```
+        ordering: list of label_studio_sdk.data_manager.Column
+            List with <b>one</b> string representing Data Manager ordering.
+            Use `label_studio_sdk.data_manager.Column` helper class.
+            Example:
+            ```[Column.total_annotations]```
         view_id: int
-            Tab ID to retrieve filters, ordering and selected items
+            View ID, visible as a Data Manager tab, for which to retrieve filters, ordering, and selected items
         selected_ids: list of ints
             Task IDs
         page: int
-            Page (by default 1)
+            Page. Default is 1.
         page_size: int
-            Page size (by default -1, means all tasks in the project)
+            Page size. Default is -1, to retrieve all tasks in the project.
         only_ids: bool
-            Return IDs only
+            If true, return only task IDs
 
         Returns
         -------
@@ -348,22 +362,22 @@ class Project(Client):
 
     @property
     def tasks(self):
-        """ All tasks from project. This call can be very slow if the project has tons of tasks
+        """ Retrieve all tasks from the project. This call can be very slow if the project has a lot of tasks.
         """
         return self.get_tasks()
 
     def get_labeled_tasks(self, only_ids=False):
-        """ All tasks with finished state (is_labeled=True)
+        """ Retrieve all tasks that have been completed, tasks where is_labeled=true.
 
         Parameters
         ----------
         only_ids: bool
-            Return IDs only
+            Return only task IDs.
 
         Returns
         -------
         list
-            List of task dicts (the same as for `get_tasks`)
+            List of task dicts, the same as in `get_tasks`.
 
         """
         return self.get_tasks(filters={
@@ -377,27 +391,29 @@ class Project(Client):
         }, only_ids=only_ids)
 
     def get_labeled_tasks_ids(self):
-        """ All task ids with finished state (is_labeled=True)
+        """ Retrieve all task IDs for completed tasks, tasks where is_labeled=True.
 
         Returns
         -------
         list
-            List of task ids
+            List of task IDs
         """
         return self.get_labeled_tasks(only_ids=True)
 
     def get_unlabeled_tasks(self, only_ids=False):
-        """ All tasks with <b>not</b> finished state (is_labeled=False)
+        """ Retrieve all tasks that are <b>not</b> completed, tasks where is_labeled=False. If using Label Studio Enterprise,
+        this can include tasks that have been labeled one or more times, but not the full number of times defined in the
+        project labeling settings.
 
         Parameters
         ----------
         only_ids: bool
-            Return IDs only
+            Return only task IDs
 
         Returns
         -------
         list
-            List of task dicts (the same as for `get_tasks`)
+            List of task dicts, the same as in `get_tasks`.
 
         """
         return self.get_tasks(filters={
@@ -411,17 +427,19 @@ class Project(Client):
         }, only_ids=only_ids)
 
     def get_unlabeled_tasks_ids(self):
-        """ All task ids with <b>not</b> finished state (is_labeled=False)
+        """ Retrieve all task IDs for tasks that are <b>not</b> completed, tasks where is_labeled=False. If using
+        Label Studio Enterprise, this can include tasks that have been labeled one or more times, but not the full
+        number of times defined in the project labeling settings.
 
         Returns
         -------
         list
-            List of task ids
+            List of task IDs
         """
         return self.get_unlabeled_tasks(only_ids=True)
 
     def get_task(self, task_id):
-        """ Get specific task by ID
+        """ Get specific task by ID.
 
         Parameters
         ----------
@@ -443,17 +461,17 @@ class Project(Client):
         score: Optional[float] = 0,
         model_version: Optional[str] = None
     ):
-        """ Create prediction for a specific task
+        """ Create a prediction for a specific task.
 
         Parameters
         ----------
         task_id: int
             Task ID
         result: dict
-            Result in the <a href="https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks"
-            format as for annotations</a>
+            Result in the <a href="https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks">
+            Label Studio JSON format as for annotations</a>
         score: float
-            Model score
+            Model prediction score
         model_version: str
             Any string identifying your model
         """
@@ -463,7 +481,7 @@ class Project(Client):
         return response.json()
 
     def create_predictions(self, predictions):
-        """ Bulk create predictions
+        """ Bulk create predictions for tasks (Enterprise only).
 
         Parameters
         ----------
@@ -473,13 +491,13 @@ class Project(Client):
         response = self.make_request('POST', f'/api/projects/{self.id}/import/predictions', json=predictions)
         return response.json()
 
-    def create_annotations_from_predictions(self, model_version=None):
-        """ Create annotation from all existing predictions
+    def create_annotations_from_predictions(self, model_versions=None):
+        """ Create annotations from all predictions that exist for project tasks from a specific ML model version.
 
         Parameters
         ----------
-        model_version: string
-            Predictions with this model_version will be converted to annotations
+        model_versions: list
+            Convert predictions with this model_version to annotations.
 
         Returns
         -------
@@ -489,7 +507,7 @@ class Project(Client):
         """
         payload = {
             'filters': {'conjunction': 'and', 'items': []},
-            'model_version': model_version,
+            'model_version': model_versions,
             'ordering': [],
             'project': self.id,
             'selectedItems': {'all': True, 'excluded': []}
@@ -501,7 +519,7 @@ class Project(Client):
         return response.json()
 
     def get_predictions_coverage(self):
-        """ Prediction coverage per model version for the project
+        """ Prediction coverage stats for all model versions for the project.
 
         Returns
         -------
@@ -528,29 +546,45 @@ class Project(Client):
         title: Optional[str] = '',
         description: Optional[str] = ''
     ):
-        """ Create import connection to Google Cloud Storage
+        """Connect a Google Cloud Storage (GCS) bucket to Label Studio to use as source storage and import tasks.
 
         Parameters
         ----------
-        bucket: str
-            GCS bucket
-        prefix: str
-            Bucket prefix
-        regex_filter: str
-            Regular expression to filter files
+        bucket: string
+            Specify the name of the GCS bucket
+        prefix: string
+            Optional, specify the prefix or folder within the GCS bucket with your data
+        regex_filter: string
+            Optional, specify a regex filter to use to match the file types of your data
         use_blob_urls: bool
-            If true, all tasks are interpreted as BLOBs, otherwise JSONs in Label Studio format
-        google_application_credentials: str
-            Google Application Credentials JSON string or file
+            Optional, true by default. Specify whether your data is raw image or video data, or JSON tasks.
+        google_application_credentials: string
+            Optional, provide a file with your Google application credentials.
         presign: bool
-            Expose presigned URLs
+            Optional, true by default. Specify whether or not to create presigned URLs.
         presign_ttl: int
-            TTL in minutes for presigned URLs
-        title: str
-            Storage connection title
-        description: str
-            Storage connection description
-        """
+            Optional, 1 by default. Specify how long to keep presigned URLs active.
+        title: string
+            Optional, specify a title for your GCS import storage that appears in Label Studio.
+        description: string
+            Optional, specify a description for your GCS import storage.
+
+        Returns
+        -------
+        dict containing the same fields as in the request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+		"""
+
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
                 google_application_credentials = f.read()
@@ -578,6 +612,39 @@ class Project(Client):
         description: Optional[str] = '',
         can_delete_objects: bool = False
     ):
+        """Connect a Google Cloud Storage (GCS) bucket to Label Studio to use as target storage and export tasks.
+
+        Parameters
+        ----------
+        bucket: string
+            Specify the name of the GCS bucket
+        prefix: string
+            Optional, specify the prefix or folder within the GCS bucket to export your data to
+        google_application_credentials: string
+            Optional, provide a file with your Google application credentials.
+        title: string
+            Optional, specify a title for your GCS export storage that appears in Label Studio.
+        description: string
+            Optional, specify a description for your GCS export storage.
+        can_delete_objects: bool
+            False by default. Specify whether to delete tasks in the GCS bucket if they are deleted in Label Studio.
+
+        Returns
+        -------
+        dict containing the same fields as in the request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+
+        """
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
                 google_application_credentials = f.read()
@@ -609,6 +676,52 @@ class Project(Client):
         region_name: Optional[str] = None,
         s3_endpoint: Optional[str] = None
     ):
+        """Connect an Amazon S3 bucket to Label Studio to use as source storage and import tasks.
+
+        Parameters
+        ----------
+        bucket: string
+            Specify the name of the S3 bucket.
+        prefix: string
+            Optional, specify the prefix within the S3 bucket to import your data from.
+        regex_filter: string
+            Optional, specify a regex filter to use to match the file types of your data.
+        use_blob_urls: bool
+            Optional, true by default. Specify whether your data is raw image or video data, or JSON tasks.
+        presign: bool
+            Optional, true by default. Specify whether or not to create presigned URLs.
+        presign_ttl: int
+            Optional, 1 by default. Specify how long to keep presigned URLs active.
+        title: string
+            Optional, specify a title for your S3 import storage that appears in Label Studio.
+        description: string
+            Optional, specify a description for your S3 import storage.
+        aws_access_key_id: string
+            Optional, specify the access key ID for your bucket.
+        aws_secret_access_key: string
+            Optional, specify the secret access key for your bucket.
+        aws_session_token: string
+            Optional, specify a session token to use to access your bucket.
+        region_name: string
+            Optional, specify the AWS region of your S3 bucket.
+        s3_endpoint: string
+            Optional, specify an S3 endpoint URL to use to access your bucket instead of the standard access method.
+
+        Returns
+        -------
+        dict containing the same fields as in the request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+        """
         payload = {
             'bucket': bucket,
             'prefix': prefix,
@@ -640,6 +753,47 @@ class Project(Client):
         s3_endpoint: Optional[str] = None,
         can_delete_objects: bool = False
     ):
+        """Connect an Amazon S3 bucket to Label Studio to use as target storage and export tasks.
+
+        Parameters
+        ----------
+        bucket: string
+            Specify the name of the S3 bucket
+        prefix: string
+            Optional, specify the prefix or folder within the S3 bucket to export your data to
+        title: string
+            Optional, specify a title for your S3 import storage that appears in Label Studio.
+        description: string
+            Optional, specify a description for your S3 import storage.
+        aws_access_key_id: string
+            Optional, specify the access key ID for your bucket.
+        aws_secret_access_key: string
+            Optional, specify the secret access key for your bucket.
+        aws_session_token: string
+            Optional, specify a session token to use to access your bucket.
+        region_name: string
+            Optional, specify the AWS region of your S3 bucket.
+        s3_endpoint: string
+            Optional, specify an S3 endpoint URL to use to access your bucket instead of the standard access method.
+        can_delete_objects: bool
+            False by default. Specify whether to delete tasks in the S3 bucket if they are deleted in Label Studio.
+
+        Returns
+        -------
+        dict containing the same fields as in the request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+        """
+        
         payload = {
             'bucket': bucket,
             'prefix': prefix,
