@@ -1112,22 +1112,22 @@ class Project(Client):
          account_key: string
              Optional, specify the key for the account with access to the container.
 
-         Returns
-         -------
-         dict:
+        Returns
+        -------
+        dict:
             containing the same fields as in the request and:
 
-         id: int
-             Storage ID
-         type: str
-             Type of storage
-         created_at: str
-             Creation time
-         last_sync: str
-             Time last sync finished, can be empty.
-         last_sync_count: int
-             Number of tasks synced in the last sync
-         """
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+        """
         payload = {
             'container': container,
             'prefix': prefix,
