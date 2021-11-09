@@ -120,7 +120,7 @@ class Project(Client):
         --------
         dict
             containing all following params:
-        ```
+
         title: str
             Project name.
         description: str
@@ -160,6 +160,7 @@ class Project(Client):
             Type of sampling to use for task labeling. Uncertainty sampling is Enterprise only.
             Enum: "Sequential sampling" "Uniform sampling" "Uncertainty sampling"
         show_ground_truth_first: bool
+            Whether to show tasks with ground truth annotations first (Enterprise only)
         show_overlap_first: bool
             Whether to show tasks with overlap first (Enterprise only)
         overlap_cohort_percentage: int
@@ -172,7 +173,7 @@ class Project(Client):
             Weights for control tags used when calculating agreement metrics. (Enterprise only)
         evaluate_predictions_automatically: bool
             Retrieve and display predictions when loading a task
-        ```
+
         """
         response = self.make_request('GET', f'/api/projects/{self.id}')
         return response.json()
@@ -583,13 +584,16 @@ class Project(Client):
 
         Returns
         -------
-        dict of task data containing:
+        dict of task data containing all initial data and annotation results in [Label Studio JSON format](https://labelstud.io/guide/tasks.html#Basic-Label-Studio-JSON-format)
 
-        ```
-        id:int
-        predictions: str
-        annotations: str
-        drafts: str
+        id: int
+            Task ID
+        predictions: dict
+            Predictions object
+        annotations: dict
+            Annotations object
+        drafts: dict
+            Drafts object
         data: object
             User imported or uploaded data for a task. Data is formatted according to the project label config.
         meta: object
@@ -609,7 +613,7 @@ class Project(Client):
             Project ID for this task
         file_upload: str
             Uploaded file used as data source for this task
-        ```
+
         """
         response = self.make_request('GET', f'/api/tasks/{task_id}')
         return response.json()
@@ -771,7 +775,6 @@ class Project(Client):
         dict:
             containing the same fields as in the request and:
 
-        ```
         id: int
             Storage ID
         type: str
@@ -782,7 +785,7 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
-        ```
+
         """
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
@@ -833,7 +836,6 @@ class Project(Client):
         dict:
             containing the same fields as in the request and:
 
-        ```
         id: int
             Storage ID
         type: str
@@ -844,7 +846,7 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
-        ```
+
         """
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
@@ -913,7 +915,6 @@ class Project(Client):
         dict:
             containing the same fields as in the request and:
 
-        ```
         id: int
             Storage ID
         type: str
@@ -924,7 +925,6 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
-        ```
         """
         payload = {
             'bucket': bucket,
@@ -987,7 +987,6 @@ class Project(Client):
         dict:
             containing the same fields as in the request and:
 
-        ```
         id: int
             Storage ID
         type: str
@@ -998,7 +997,6 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
-        ```
         """
 
         payload = {
@@ -1059,7 +1057,6 @@ class Project(Client):
         dict:
             containing the same fields as in the request and:
 
-        ```
         id: int
             Storage ID
         type: str
@@ -1070,7 +1067,6 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
-        ```
         """
         payload = {
             'container': container,
@@ -1121,7 +1117,6 @@ class Project(Client):
          dict:
             containing the same fields as in the request and:
 
-         ```
          id: int
              Storage ID
          type: str
@@ -1132,7 +1127,6 @@ class Project(Client):
              Time last sync finished, can be empty.
          last_sync_count: int
              Number of tasks synced in the last sync
-         ```
          """
         payload = {
             'container': container,
