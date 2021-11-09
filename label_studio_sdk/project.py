@@ -584,8 +584,10 @@ class Project(Client):
 
         Returns
         -------
-        dict of task data containing all initial data and annotation results in [Label Studio JSON format](https://labelstud.io/guide/tasks.html#Basic-Label-Studio-JSON-format)
+        dict:
+            dict of task data containing all initial data and annotation results in [Label Studio JSON format](https://labelstud.io/guide/tasks.html#Basic-Label-Studio-JSON-format)
 
+        ```
         id: int
             Task ID
         predictions: dict
@@ -613,7 +615,7 @@ class Project(Client):
             Project ID for this task
         file_upload: str
             Uploaded file used as data source for this task
-
+        ```
         """
         response = self.make_request('GET', f'/api/tasks/{task_id}')
         return response.json()
