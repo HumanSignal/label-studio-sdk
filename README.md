@@ -18,12 +18,18 @@ This is the first release of the Label Studio SDK. It supports Label Studio Ente
 
 - **Find a bug?** [Create a GitHub issue](https://github.com/heartexlabs/label-studio-sdk/issues)!
 - **Have a question?** [Join the Slack Community](http://slack.labelstud.io.s3-website-us-east-1.amazonaws.com/?source=github-sdk)!
+- **Want to contribute?** [See the contributing guide](https://github.com/heartexlabs/label-studio-sdk/CONTRIBUTING.md)
 
-## Start using the SDK
-
+## Quickstart
 To start using the SDK in your machine learning and data science projects and pipelines, do the following:
-1. Clone this repository.
-2. Import `label_studio_sdk` in your Python script.  
+
+1. Install the SDK using pip: `pip install label-studio-sdk`
+2. Import `label_studio_sdk` in your Python script.
+3. Connect to the API and create a project:
+```python
+ls = Client(url='http://localhost:8080, api_key='YOUR-API-KEY')
+ls.start_project('New Project', label_config='<View></View>')
+```
 
 ## Available classes and methods
 
@@ -33,8 +39,15 @@ The Label Studio SDK includes the following:
 - a Project module to take actions related to Label Studio labeling projects 
 - a Utils module for working with the labeling configuration
 
-
 For all the details, see the [reference documentation](https://labelstud.io/sdk) or [review the code directly](https://github.com/heartexlabs/label-studio-sdk/tree/master/label_studio_sdk). 
+
+## Contribute to the SDK
+
+If you want to extend the SDK:
+
+1. Pull this repository. 
+2. Install the SDK locally 
+3. Follow the [contributing guidance](CONTRIBUTING.md) 
 
 ## Examples
 
