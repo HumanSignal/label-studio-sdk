@@ -49,7 +49,7 @@
 <%def name="show_desc(d, short=False)">
   <%
   inherits = ' inherited' if d.inherits else ''
-  docstring = glimpse(d.docstring) if short or inherits else d.docstring
+  docstring = glimpse(d.docstring, max_length=1000, paragraph=True) if short or inherits else d.docstring
   %>
   % if d.inherits:
       <p class="inheritance">
@@ -121,11 +121,13 @@
 
   <section>
     % if submodules:
-    <h2 class="section-title" id="header-submodules">Sub-modules</h2>
+    <h2 style="text-align: center; margin: 3em 0" class="section-title" id="header-submodules">Sub-modules</h2></center>
+
     <dl>
     % for m in submodules:
-      <dt><code class="name">${link(m)}</code></dt>
-      <dd>${show_desc(m, short=False)}</dd>
+      <dt style=""><code class="name">${link(m)}</code></dt>
+      <dd style="">${show_desc(m, short=True)}</dd>
+      <br>
     % endfor
     </dl>
     % endif
