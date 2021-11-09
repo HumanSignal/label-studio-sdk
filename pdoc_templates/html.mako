@@ -360,7 +360,9 @@
   <%include file="head.mako"/>
 </head>
 <body>
-  <%include file="menu.mako"/>
+% if not http_server:
+  <%include file="menu.mako" />
+% endif %
 
 <main>
   % if module_list:
