@@ -203,7 +203,7 @@
           </ul>
       % endif
       % if class_vars:
-          <h3>Class variables</h3>
+          <h3>Constants</h3>
           <dl>
           % for v in class_vars:
               <% return_type = get_annotation(v.type_annotation) %>
@@ -344,10 +344,10 @@
 %>
 
   % if module_list:
-    <title>Python module list</title>
-    <meta name="description" content="A list of documented Python modules." />
+    <title>Label Studio SDK — Python module list</title>
+    <meta name="description" content="Label Studio SDK - integrate Label Studio with your pipelines easily" />
   % else:
-    <title>${module.name} API documentation</title>
+    <title>Label Studio SDK — ${module.name}</title>
     <meta name="description" content="${module.docstring | glimpse, trim, h}" />
   % endif
 
@@ -361,22 +361,6 @@
   <style>${css.mobile()}</style>
   <style media="screen and (min-width: 700px)">${css.desktop()}</style>
   <style media="print">${css.print()}</style>
-
-  % if google_analytics:
-    <script>
-    window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-    ga('create', '${google_analytics}', 'auto'); ga('send', 'pageview');
-    </script><script async src='https://www.google-analytics.com/analytics.js'></script>
-  % endif
-
-  % if google_search_query:
-    <link rel="preconnect" href="https://www.google.com">
-    <script async src="https://cse.google.com/cse.js?cx=017837193012385208679:pey8ky8gdqw"></script>
-    <style>
-        .gsc-control-cse {padding:0 !important;margin-top:1em}
-        body.gsc-overflow-hidden #sidebar {overflow: visible;}
-    </style>
-  % endif
 
   % if latex_math:
     <script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
