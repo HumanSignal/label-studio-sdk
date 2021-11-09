@@ -478,14 +478,14 @@ class Project(Client):
         return data
 
     def get_tasks_ids(self, *args, **kwargs):
-        """Same as [get_tasks()](#label_studio_sdk.project.Project.get_tasks) but returns only task IDs.
+        """Same as `label_studio_sdk.project.Project.get_tasks()` but returns only task IDs.
         """
         kwargs['only_ids'] = True
         return self.get_tasks(*args, **kwargs)
 
     def get_paginated_tasks_ids(self, *args, **kwargs):
-        """Same as [get_paginated_tasks()](#label_studio_sdk.project.Project.get_paginated_tasks) but returns
-        only task IDs.
+        """Same as `label_studio_sdk.project.Project.get_paginated_tasks()` but returns
+           only task IDs.
         """
         kwargs['only_ids'] = True
         return self.get_paginated_tasks(*args, **kwargs)
