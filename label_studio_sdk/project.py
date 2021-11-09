@@ -117,8 +117,63 @@ class Project(Client):
         """ Get all available project parameters.
 
         Returns
-        -------
+        --------
         dict
+            containing all following params:
+
+        title: str
+            Project name.
+        description: str
+            Project description
+        label_config: str
+            Label config in XML format.
+        expert_instruction: str
+            Labeling instructions in HTML format
+        show_instruction: bool
+            Whether to display instructions to annotators before they start
+        show_skip_button: bool
+            Whether to show a skip button in the Label Studio UI and let annotators skip the task
+        enable_empty_annotation: bool
+            Allow annotators to submit empty annotations
+        show_annotation_history: bool
+            Show annotation history to annotator
+        organization: int
+            Organization ID
+        color: str
+            Color to decorate the project card in the Label Studio UI
+        maximum_annotations: int
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater
+            to this value, the task is finished and is_labeled=True is set. (Enterprise only)
+        is_published: bool
+            Whether or not the project is published to annotators (Enterprise only)
+        model_version: str
+            Machine learning model version for predictions or pre-annotations
+        is_draft: bool
+            Whether or not the project is in the middle of being created (Enterprise only)
+        created_by: object
+            Details about the user that created the project
+        min_annotations_to_start_training: int
+            Minimum number of completed tasks after which model training is started
+        show_collab_predictions: bool
+            Whether to show model predictions to the annotator, allowing them to collaborate with the ML model
+        sampling: str
+            Type of sampling to use for task labeling. Uncertainty sampling is Enterprise only.
+            Enum: "Sequential sampling" "Uniform sampling" "Uncertainty sampling"
+        show_ground_truth_first: bool
+            Whether to show tasks with ground truth annotations first (Enterprise only)
+        show_overlap_first: bool
+            Whether to show tasks with overlap first (Enterprise only)
+        overlap_cohort_percentage: int
+            Percentage of tasks that must be annotated multiple times. (Enterprise only)
+        task_data_login: str
+            User credentials for accessing task data. (Enterprise only)
+        task_data_password: str
+            Password credentials for accessing task data. (Enterprise only)
+        control_weights: object
+            Weights for control tags used when calculating agreement metrics. (Enterprise only)
+        evaluate_predictions_automatically: bool
+            Retrieve and display predictions when loading a task
+
         """
         response = self.make_request('GET', f'/api/projects/{self.id}')
         return response.json()
@@ -136,7 +191,7 @@ class Project(Client):
         return response.json()
 
     def update_params(self):
-        """ Get all available project parameters and cache them.
+        """ Get [all available project parameters](#label_studio_sdk.project.Project.get_params) and cache them.
         """
         self.params = self.get_params()
 
@@ -154,7 +209,7 @@ class Project(Client):
 
     @classmethod
     def get_from_id(cls, client, project_id) -> "Project":
-        """ Class factory to create a project instance from existed project ID.
+        """ Class factory to create a project instance from an existing project ID.
 
         Parameters
         ----------
@@ -423,13 +478,14 @@ class Project(Client):
         return data
 
     def get_tasks_ids(self, *args, **kwargs):
-        """Same as [get_task()](link) but return only task IDs
+        """Same as `label_studio_sdk.project.Project.get_tasks()` but returns only task IDs.
         """
         kwargs['only_ids'] = True
         return self.get_tasks(*args, **kwargs)
 
     def get_paginated_tasks_ids(self, *args, **kwargs):
-        """Same as [get_paginated_task()](link) but return only task IDs
+        """Same as `label_studio_sdk.project.Project.get_paginated_tasks()` but returns
+           only task IDs.
         """
         kwargs['only_ids'] = True
         return self.get_paginated_tasks(*args, **kwargs)
@@ -442,7 +498,7 @@ class Project(Client):
 
     @property
     def tasks_ids(self):
-        """ All tasks' IDs from project. This call can be very slow if the project has tons of tasks
+        """ IDs for all tasks for a project. This call can be very slow if the project has lots of tasks.
         """
         return self.get_tasks_ids()
 
@@ -528,7 +584,35 @@ class Project(Client):
 
         Returns
         -------
-        dict
+        dict of task data containing all initial data and annotation results in [Label Studio JSON format](https://labelstud.io/guide/tasks.html#Basic-Label-Studio-JSON-format)
+
+        id: int
+            Task ID
+        predictions: dict
+            Predictions object
+        annotations: dict
+            Annotations object
+        drafts: dict
+            Drafts object
+        data: object
+            User imported or uploaded data for a task. Data is formatted according to the project label config.
+        meta: object
+            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for
+            embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
+            (Deprecated)
+        created_at: str
+            Date time string representing the time a task was created.
+        updated_at: str
+            Date time string representing the last time a task was updated.
+        is_labeled: bool
+            True if the number of annotations for this task is greater than or equal to the number of
+            maximum_completions for the project.
+        overlap: int
+            Number of distinct annotators that processed the current task.
+        project: int
+            Project ID for this task
+        file_upload: str
+            Uploaded file used as data source for this task
 
         """
         response = self.make_request('GET', f'/api/tasks/{task_id}')
@@ -590,7 +674,8 @@ class Project(Client):
         return response.json()
 
     def create_predictions(self, predictions):
-        """ Bulk create predictions for tasks
+        """ Bulk create predictions for tasks. See <a href="https://labelstud.io/guide/predictions.html">more
+        details about pre-annotated tasks</a>.
 
         Parameters
         ----------
@@ -690,7 +775,6 @@ class Project(Client):
         dict:
             containing the same fields as in the request and:
 
-        ```
         id: int
             Storage ID
         type: str
@@ -701,7 +785,7 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
-        ```
+
         """
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
@@ -752,7 +836,6 @@ class Project(Client):
         dict:
             containing the same fields as in the request and:
 
-        ```
         id: int
             Storage ID
         type: str
@@ -763,7 +846,7 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
-        ```
+
         """
         if os.path.isfile(google_application_credentials):
             with open(google_application_credentials) as f:
@@ -832,7 +915,6 @@ class Project(Client):
         dict:
             containing the same fields as in the request and:
 
-        ```
         id: int
             Storage ID
         type: str
@@ -843,7 +925,6 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
-        ```
         """
         payload = {
             'bucket': bucket,
@@ -881,13 +962,13 @@ class Project(Client):
         Parameters
         ----------
         bucket: string
-            Specify the name of the S3 bucket
+            Specify the name of the S3 bucket.
         prefix: string
-            Optional, specify the prefix or folder within the S3 bucket to export your data to
+            Optional, specify the prefix or folder within the S3 bucket to export your data to.
         title: string
-            Optional, specify a title for your S3 import storage that appears in Label Studio.
+            Optional, specify a title for your S3 export storage that appears in Label Studio.
         description: string
-            Optional, specify a description for your S3 import storage.
+            Optional, specify a description for your S3 export storage.
         aws_access_key_id: string
             Optional, specify the access key ID for your bucket.
         aws_secret_access_key: string
@@ -906,7 +987,6 @@ class Project(Client):
         dict:
             containing the same fields as in the request and:
 
-        ```
         id: int
             Storage ID
         type: str
@@ -917,7 +997,6 @@ class Project(Client):
             Time last sync finished, can be empty.
         last_sync_count: int
             Number of tasks synced in the last sync
-        ```
         """
 
         payload = {
@@ -948,6 +1027,47 @@ class Project(Client):
             account_name: Optional[str] = None,
             account_key: Optional[str] = None
     ):
+        """Connect a Microsoft Azure BLOB storage container to Label Studio to use as source storage and import tasks.
+
+        Parameters
+        ----------
+        container: string
+            Specify the name of the Azure container.
+        prefix: string
+            Optional, specify the prefix or folder within the Azure container with your data.
+        regex_filter: string
+            Optional, specify a regex filter to use to match the file types of your data.
+        use_blob_urls: bool
+            Optional, true by default. Specify whether your data is raw image or video data, or JSON tasks.
+        presign: bool
+            Optional, true by default. Specify whether or not to create presigned URLs.
+        presign_ttl: int
+            Optional, 1 by default. Specify how long to keep presigned URLs active.
+        title: string
+            Optional, specify a title for your Azure import storage that appears in Label Studio.
+        description: string
+            Optional, specify a description for your Azure import storage.
+        account_name: string
+            Optional, specify the name of the account with access to the container.
+        account_key: string
+            Optional, specify the key for the account with access to the container.
+
+        Returns
+        -------
+        dict:
+            containing the same fields as in the request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+        """
         payload = {
             'container': container,
             'prefix': prefix,
@@ -973,6 +1093,41 @@ class Project(Client):
             account_key: Optional[str] = None,
             can_delete_objects: bool = False
     ):
+        """Connect Microsoft Azure BLOB storage to Label Studio to use as target storage and export tasks.
+
+         Parameters
+         ----------
+         container: string
+             Specify the name of the Azure storage container.
+         prefix: string
+             Optional, specify the prefix or folder within the Azure container to export your data to.
+         title: string
+             Optional, specify a title for your Azure export storage that appears in Label Studio.
+         description: string
+             Optional, specify a description for your Azure export storage.
+         can_delete_objects: bool
+             False by default. Specify whether to delete tasks in the Azure container if they are deleted in Label Studio.
+         account_name: string
+             Optional, specify the name of the account with access to the container.
+         account_key: string
+             Optional, specify the key for the account with access to the container.
+
+        Returns
+        -------
+        dict:
+            containing the same fields as in the request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+        """
         payload = {
             'container': container,
             'prefix': prefix,
