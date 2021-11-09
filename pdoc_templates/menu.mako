@@ -124,7 +124,7 @@
       });
     });
 
-    $(document).bind('keydown', function (e) {
+    /*$(document).bind('keydown', function (e) {
       console.log(e)
       if (document.activeElement.localName === 'body'
           && e.code !== "Space"
@@ -133,7 +133,7 @@
         $('#docsearch-input').focus();
         $(document).unbind('keydown');
       }
-    });
+    });*/
   </script>
 </div>
 

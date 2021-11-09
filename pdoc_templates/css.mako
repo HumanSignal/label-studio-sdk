@@ -348,7 +348,7 @@ code {
     #content {
       width: 70%;
       max-width: 900px;
-      padding: 3em 4em;
+      padding: 3em 4em 3em 0;
       margin: 0 auto;
     }
     pre code {
