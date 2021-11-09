@@ -347,9 +347,9 @@ code {
     }
     #content {
       width: 70%;
-      max-width: 100ch;
+      max-width: 900px;
       padding: 3em 4em;
-      border-left: 1px solid #ddd;
+      margin: 0 auto;
     }
     pre code {
       font-size: 1em;
