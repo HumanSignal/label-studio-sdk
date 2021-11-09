@@ -599,16 +599,14 @@ class Project(Client):
         data: object
             User imported or uploaded data for a task. Data is formatted according to the project label config.
         meta: object
-            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for
-            embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
+            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
             (Deprecated)
         created_at: str
             Date time string representing the time a task was created.
         updated_at: str
             Date time string representing the last time a task was updated.
         is_labeled: bool
-            True if the number of annotations for this task is greater than or equal to the number of
-            maximum_completions for the project.
+            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project.
         overlap: int
             Number of distinct annotators that processed the current task.
         project: int
