@@ -164,7 +164,7 @@ class Project(Client):
 
         Returns
         -------
-        class Project
+        `Project`
         """
         project = cls(url=client.url, api_key=client.api_key, session=client.session)
         project.params['id'] = project_id

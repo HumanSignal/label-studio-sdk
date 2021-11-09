@@ -52,7 +52,7 @@ class Client(object):
 
         Returns
         -------
-        class Project
+        `label_studio_sdk.project.Project`
 
         """
         from .project import Project
@@ -70,7 +70,7 @@ class Client(object):
 
         Returns
         -------
-        class Project
+        `label_studio_sdk.project.Project`
 
         """
         from .project import Project
