@@ -117,8 +117,62 @@ class Project(Client):
         """ Get all available project parameters.
 
         Returns
-        -------
+        --------
         dict
+            containing all following params:
+        ```
+        title: str
+            Project name.
+        description: str
+            Project description
+        label_config: str
+            Label config in XML format.
+        expert_instruction: str
+            Labeling instructions in HTML format
+        show_instruction: bool
+            Whether to display instructions to annotators before they start
+        show_skip_button: bool
+            Whether to show a skip button in the Label Studio UI and let annotators skip the task
+        enable_empty_annotation: bool
+            Allow annotators to submit empty annotations
+        show_annotation_history: bool
+            Show annotation history to annotator
+        organization: int
+            Organization ID
+        color: str
+            Color to decorate the project card in the Label Studio UI
+        maximum_annotations: int
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater
+            to this value, the task is finished and is_labeled=True is set. (Enterprise only)
+        is_published: bool
+            Whether or not the project is published to annotators (Enterprise only)
+        model_version: str
+            Machine learning model version for predictions or pre-annotations
+        is_draft: bool
+            Whether or not the project is in the middle of being created (Enterprise only)
+        created_by: object
+            Details about the user that created the project
+        min_annotations_to_start_training: int
+            Minimum number of completed tasks after which model training is started
+        show_collab_predictions: bool
+            Whether to show model predictions to the annotator, allowing them to collaborate with the ML model
+        sampling: str
+            Type of sampling to use for task labeling. Uncertainty sampling is Enterprise only.
+            Enum: "Sequential sampling" "Uniform sampling" "Uncertainty sampling"
+        show_ground_truth_first: bool
+        show_overlap_first: bool
+            Whether to show tasks with overlap first (Enterprise only)
+        overlap_cohort_percentage: int
+            Percentage of tasks that must be annotated multiple times. (Enterprise only)
+        task_data_login: str
+            User credentials for accessing task data. (Enterprise only)
+        task_data_password: str
+            Password credentials for accessing task data. (Enterprise only)
+        control_weights: object
+            Weights for control tags used when calculating agreement metrics. (Enterprise only)
+        evaluate_predictions_automatically: bool
+            Retrieve and display predictions when loading a task
+        ```
         """
         response = self.make_request('GET', f'/api/projects/{self.id}')
         return response.json()
@@ -136,7 +190,7 @@ class Project(Client):
         return response.json()
 
     def update_params(self):
-        """ Get all available project parameters and cache them.
+        """ Get [all available project parameters](#label_studio_sdk.project.Project.get_params) and cache them.
         """
         self.params = self.get_params()
 
@@ -154,7 +208,7 @@ class Project(Client):
 
     @classmethod
     def get_from_id(cls, client, project_id) -> "Project":
-        """ Class factory to create a project instance from existed project ID.
+        """ Class factory to create a project instance from an existing project ID.
 
         Parameters
         ----------
@@ -443,7 +497,7 @@ class Project(Client):
 
     @property
     def tasks_ids(self):
-        """ All tasks' IDs from project. This call can be very slow if the project has tons of tasks
+        """ IDs for all tasks for a project. This call can be very slow if the project has lots of tasks.
         """
         return self.get_tasks_ids()
 
@@ -529,8 +583,33 @@ class Project(Client):
 
         Returns
         -------
-        dict
+        dict of task data containing:
 
+        ```
+        id:int
+        predictions: str
+        annotations: str
+        drafts: str
+        data: object
+            User imported or uploaded data for a task. Data is formatted according to the project label config.
+        meta: object
+            Meta is user imported (uploaded) data and can be useful as input for an ML Backend for
+            embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
+            (Deprecated)
+        created_at: str
+            Date time string representing the time a task was created.
+        updated_at: str
+            Date time string representing the last time a task was updated.
+        is_labeled: bool
+            True if the number of annotations for this task is greater than or equal to the number of
+            maximum_completions for the project.
+        overlap: int
+            Number of distinct annotators that processed the current task.
+        project: int
+            Project ID for this task
+        file_upload: str
+            Uploaded file used as data source for this task
+        ```
         """
         response = self.make_request('GET', f'/api/tasks/{task_id}')
         return response.json()
@@ -591,7 +670,8 @@ class Project(Client):
         return response.json()
 
     def create_predictions(self, predictions):
-        """ Bulk create predictions for tasks
+        """ Bulk create predictions for tasks. See <a href="https://labelstud.io/guide/predictions.html">more
+        details about pre-annotated tasks</a>.
 
         Parameters
         ----------
