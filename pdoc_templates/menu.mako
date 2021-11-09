@@ -76,6 +76,8 @@
           <a href="/guide/install.html" class="w-dropdown-link">Install</a>
           <a href="/guide/tasks.html" class="w-dropdown-link">Import Data</a>
           <a href="/api" class="w-dropdown-link">API Reference</a>
+          <a href="/sdk" class="w-dropdown-link">SDK Reference</a>
+          <div style="margin-top: 7px; margin-bottom:7px; border-bottom:1px solid #ccc"></div>
           <a href="/tags" class="w-dropdown-link ">Customizable Tags</a>
           <a href="/templates" class="w-dropdown-link ">Labeling Templates</a>
         </nav>

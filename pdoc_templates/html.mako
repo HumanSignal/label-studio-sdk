@@ -121,7 +121,7 @@
 
   <section>
     % if submodules:
-    
+
 
     <dl>
     % for m in submodules:
