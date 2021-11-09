@@ -116,6 +116,8 @@ code {
     background: #f2f2f1;
     padding: 1px 4px;
     overflow-wrap: break-word;
+    white-space: pre-wrap !important;
+    color: unset !important;
   }
   h1 code { background: transparent }
 

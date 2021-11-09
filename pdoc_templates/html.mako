@@ -114,20 +114,6 @@
     <dd>${show_desc(f)}</dd>
   </%def>
 
-  <header>
-  % if http_server:
-    <nav class="http-server-breadcrumbs">
-      <a href="/">All packages</a>
-      <% parts = module.name.split('.')[:-1] %>
-      % for i, m in enumerate(parts):
-        <% parent = '.'.join(parts[:i+1]) %>
-        :: <a href="/${parent.replace('.', '/')}/">${parent}</a>
-      % endfor
-    </nav>
-  % endif
-
-  </header>
-
   <section id="section-intro">
   ${module.docstring | to_html}
   ${show_source(module)}
