@@ -423,13 +423,14 @@ class Project(Client):
         return data
 
     def get_tasks_ids(self, *args, **kwargs):
-        """Same as [get_task()](link) but return only task IDs
+        """Same as [get_tasks()](#label_studio_sdk.project.Project.get_tasks) but returns only task IDs.
         """
         kwargs['only_ids'] = True
         return self.get_tasks(*args, **kwargs)
 
     def get_paginated_tasks_ids(self, *args, **kwargs):
-        """Same as [get_paginated_task()](link) but return only task IDs
+        """Same as [get_paginated_tasks()](#label_studio_sdk.project.Project.get_paginated_tasks) but returns
+        only task IDs.
         """
         kwargs['only_ids'] = True
         return self.get_paginated_tasks(*args, **kwargs)
@@ -881,13 +882,13 @@ class Project(Client):
         Parameters
         ----------
         bucket: string
-            Specify the name of the S3 bucket
+            Specify the name of the S3 bucket.
         prefix: string
-            Optional, specify the prefix or folder within the S3 bucket to export your data to
+            Optional, specify the prefix or folder within the S3 bucket to export your data to.
         title: string
-            Optional, specify a title for your S3 import storage that appears in Label Studio.
+            Optional, specify a title for your S3 export storage that appears in Label Studio.
         description: string
-            Optional, specify a description for your S3 import storage.
+            Optional, specify a description for your S3 export storage.
         aws_access_key_id: string
             Optional, specify the access key ID for your bucket.
         aws_secret_access_key: string
@@ -948,6 +949,49 @@ class Project(Client):
             account_name: Optional[str] = None,
             account_key: Optional[str] = None
     ):
+        """Connect a Microsoft Azure BLOB storage container to Label Studio to use as source storage and import tasks.
+
+        Parameters
+        ----------
+        container: string
+            Specify the name of the Azure container.
+        prefix: string
+            Optional, specify the prefix or folder within the Azure container with your data.
+        regex_filter: string
+            Optional, specify a regex filter to use to match the file types of your data.
+        use_blob_urls: bool
+            Optional, true by default. Specify whether your data is raw image or video data, or JSON tasks.
+        presign: bool
+            Optional, true by default. Specify whether or not to create presigned URLs.
+        presign_ttl: int
+            Optional, 1 by default. Specify how long to keep presigned URLs active.
+        title: string
+            Optional, specify a title for your Azure import storage that appears in Label Studio.
+        description: string
+            Optional, specify a description for your Azure import storage.
+        account_name: string
+            Optional, specify the name of the account with access to the container.
+        account_key: string
+            Optional, specify the key for the account with access to the container.
+
+        Returns
+        -------
+        dict:
+            containing the same fields as in the request and:
+
+        ```
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+        ```
+        """
         payload = {
             'container': container,
             'prefix': prefix,
@@ -973,6 +1017,43 @@ class Project(Client):
             account_key: Optional[str] = None,
             can_delete_objects: bool = False
     ):
+        """Connect Microsoft Azure BLOB storage to Label Studio to use as target storage and export tasks.
+
+         Parameters
+         ----------
+         container: string
+             Specify the name of the Azure storage container.
+         prefix: string
+             Optional, specify the prefix or folder within the Azure container to export your data to.
+         title: string
+             Optional, specify a title for your Azure export storage that appears in Label Studio.
+         description: string
+             Optional, specify a description for your Azure export storage.
+         can_delete_objects: bool
+             False by default. Specify whether to delete tasks in the Azure container if they are deleted in Label Studio.
+         account_name: string
+             Optional, specify the name of the account with access to the container.
+         account_key: string
+             Optional, specify the key for the account with access to the container.
+
+         Returns
+         -------
+         dict:
+            containing the same fields as in the request and:
+
+         ```
+         id: int
+             Storage ID
+         type: str
+             Type of storage
+         created_at: str
+             Creation time
+         last_sync: str
+             Time last sync finished, can be empty.
+         last_sync_count: int
+             Number of tasks synced in the last sync
+         ```
+         """
         payload = {
             'container': container,
             'prefix': prefix,
