@@ -1095,22 +1095,22 @@ class Project(Client):
     ):
         """Connect Microsoft Azure BLOB storage to Label Studio to use as target storage and export tasks.
 
-         Parameters
-         ----------
-         container: string
-             Specify the name of the Azure storage container.
-         prefix: string
-             Optional, specify the prefix or folder within the Azure container to export your data to.
-         title: string
-             Optional, specify a title for your Azure export storage that appears in Label Studio.
-         description: string
-             Optional, specify a description for your Azure export storage.
-         can_delete_objects: bool
-             False by default. Specify whether to delete tasks in the Azure container if they are deleted in Label Studio.
-         account_name: string
-             Optional, specify the name of the account with access to the container.
-         account_key: string
-             Optional, specify the key for the account with access to the container.
+        Parameters
+        ----------
+        container: string
+            Specify the name of the Azure storage container.
+        prefix: string
+            Optional, specify the prefix or folder within the Azure container to export your data to.
+        title: string
+            Optional, specify a title for your Azure export storage that appears in Label Studio.
+        description: string
+            Optional, specify a description for your Azure export storage.
+        can_delete_objects: bool
+            False by default. Specify whether to delete tasks in the Azure container if they are deleted in Label Studio.
+        account_name: string
+            Optional, specify the name of the account with access to the container.
+        account_key: string
+            Optional, specify the key for the account with access to the container.
 
         Returns
         -------
