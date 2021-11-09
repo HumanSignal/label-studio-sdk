@@ -371,9 +371,12 @@
     <script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
   % endif
 
-  <%include file="head.mako"/>
+
 </head>
 <body>
+
+<%include file="head.mako"/>
+
 <main>
   % if module_list:
     <article id="content">

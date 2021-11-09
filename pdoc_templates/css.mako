@@ -2,6 +2,10 @@
     from pdoc.html_helpers import minify_css
 %>
 
+code {
+  color: unset !important;
+}
+
 <%def name="mobile()" filter="minify_css">
   :root {
     --highlight-color: #fe9;
