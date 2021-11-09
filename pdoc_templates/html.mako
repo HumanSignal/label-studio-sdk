@@ -121,7 +121,7 @@
 
   <section>
     % if submodules:
-    <h2 style="text-align: center; margin: 3em 0" class="section-title" id="header-submodules">Sub-modules</h2></center>
+    
 
     <dl>
     % for m in submodules:
