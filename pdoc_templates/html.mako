@@ -125,7 +125,7 @@
     <dl>
     % for m in submodules:
       <dt><code class="name">${link(m)}</code></dt>
-      <dd>${show_desc(m, short=True)}</dd>
+      <dd>${show_desc(m, short=False)}</dd>
     % endfor
     </dl>
     % endif
