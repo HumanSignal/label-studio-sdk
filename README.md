@@ -27,8 +27,10 @@ To start using the SDK in your machine learning and data science projects and pi
 2. Import `label_studio_sdk` in your Python script.
 3. Connect to the API and create a project:
 ```python
-ls = Client(url='http://localhost:8080, api_key='YOUR-API-KEY')
-ls.start_project('New Project', label_config='<View></View>')
+from label_studio_sdk import Client
+
+ls = Client(url='http://localhost:8080', api_key='YOUR-API-KEY')
+ls.start_project(title='New Project', label_config='<View></View>')
 ```
 
 ## Available classes and methods
