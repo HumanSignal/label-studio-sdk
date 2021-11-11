@@ -735,6 +735,12 @@ class Project(Client):
         coverage = {model_version: count / tasks_number for model_version, count in model_versions.items()}
         return coverage
 
+    def get_predictions_conflict(self):
+        raise NotImplementedError
+
+    def get_predictions_precision(self):
+        raise NotImplementedError
+
     def connect_google_import_storage(
             self,
             bucket: str,
