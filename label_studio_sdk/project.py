@@ -799,6 +799,7 @@ class Project(Client):
 
         payload = {
             'bucket': bucket,
+            'project': self.id,
             'prefix': prefix,
             'regex_filter': regex_filter,
             'use_blob_urls': use_blob_urls,
