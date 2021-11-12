@@ -1,7 +1,11 @@
-from google.cloud import storage as google_storage
+import os
 
-BUCKET_NAME = 'heartex-test-images'  # specify your bucket name here
-GOOGLE_APPLICATION_CREDENTIALS = '/Users/nik/aqueous-cortex-307813-870df09fe8c2.json'
+from google.cloud import storage as google_storage
+from label_studio_sdk import Client
+
+BUCKET_NAME = 'my-bucket'  # specify your bucket name here
+GOOGLE_APPLICATION_CREDENTIALS = 'my-service-account-credentials.json'  # specify your GCS credentials
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = GOOGLE_APPLICATION_CREDENTIALS
 
 google_client = google_storage.Client()
 bucket = google_client.get_bucket(BUCKET_NAME)
@@ -9,12 +13,13 @@ tasks = []
 for filename in bucket.list_blobs():
     tasks.append({'image': f'gs://{BUCKET_NAME}/{filename}'})
 
-from label_studio_sdk import Client
+
 LABEL_STUDIO_URL = 'http://localhost:8000'
-API_KEY = 'd6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3'
+API_KEY = '91b3b61589784ed069b138eae3d5a5fe1e909f57'
 
 ls = Client(url=LABEL_STUDIO_URL, api_key=API_KEY)
 ls.check_connection()
+
 
 project = ls.start_project(
     title='Image Annotation Project from SDK',
@@ -26,12 +31,13 @@ project = ls.start_project(
             <Choice value="Car"/>
         </RectangleLabels>
     </View>
-    '''
+    ''',
 )
 
+
 project.connect_google_import_storage(
-    bucket=BUCKET_NAME,
-    google_application_credentials=GOOGLE_APPLICATION_CREDENTIALS
+    bucket=BUCKET_NAME, google_application_credentials=GOOGLE_APPLICATION_CREDENTIALS
 )
+
 
 project.import_tasks(tasks)
