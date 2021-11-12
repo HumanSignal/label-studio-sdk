@@ -13,14 +13,14 @@ with open('label_studio_sdk/__init__.py') as f:
     version = re.search("__version__ ?= ?'(.*?)'", f.read()).group(1)
 
 setuptools.setup(
-    name='label_studio_sdk',
+    name='label-studio-sdk',
     version=version,
     author='Heartex',
     author_email="hello@heartex.ai",
     description='Label Studio annotation tool',
     long_description='Label Studio Python SDK',
     long_description_content_type='text/markdown',
-    url='https://github.com/heartexlabs/label-studio',
+    url='https://github.com/heartexlabs/label-studio-sdk',
     packages=setuptools.find_packages(),
     include_package_data=True,
     classifiers=[

@@ -16,7 +16,7 @@ make watch
 ```
 or
 ```
-pdoc label_studio_sdk docs --http localhost:9999 --template-dir pdoc_templates/ --html
+pdoc label_studio_sdk docs --http localhost:9999 --template-dir docs/pdoc_templates/ --html
 ```
 
 ## Build HTML for deployment
@@ -26,7 +26,7 @@ make build
 ```
 or
 ```
-pdoc label_studio_sdk docs --template-dir pdoc_templates/ --html --force
+pdoc label_studio_sdk docs --template-dir docs/pdoc_templates/ --html --force
 ```
 
 ## Deployment
