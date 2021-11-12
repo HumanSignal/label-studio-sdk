@@ -7,7 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
-LABEL_STUDIO_URL = 'http://localhost:8000'
+LABEL_STUDIO_URL = 'http://localhost:8080'
 API_KEY = '91b3b61589784ed069b138eae3d5a5fe1e909f57'
 
 

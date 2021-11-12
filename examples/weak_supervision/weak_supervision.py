@@ -4,7 +4,7 @@ import re
 from label_studio_sdk import Client
 import pandas as pd
 
-ls = Client(url='http://localhost:8000', api_key='d6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3')
+ls = Client(url='http://localhost:8080', api_key='d6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3')
 ls.check_connection()
 
 
