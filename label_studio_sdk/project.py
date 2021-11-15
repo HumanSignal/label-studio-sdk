@@ -1146,3 +1146,10 @@ class Project(Client):
         }
         response = self.make_request('POST', '/api/storages/azure/export', json=payload)
         return response.json()
+
+    def get_project_tasks(self):
+        """ Retrieve all tasks from the project from project API
+        This call can be very slow if the project has a lot of tasks.
+        """
+        response = self.make_request('GET', f'/api/projects/{self.id}/tasks')
+        return response.json()

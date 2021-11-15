@@ -2,8 +2,8 @@ from evalme.metrics import get_agreement
 from label_studio_sdk import Client
 import pandas as pd
 
-LABEL_STUDIO_URL = 'http://localhost:8080'
-API_KEY = '91b3b61589784ed069b138eae3d5a5fe1e909f57'
+LABEL_STUDIO_URL = 'http://localhost:8081'
+API_KEY = '67cd883ccb099c9d476e7d7601cd9a6e5fdfe323'
 
 ls = Client(url=LABEL_STUDIO_URL, api_key=API_KEY)
 
@@ -88,7 +88,7 @@ print('Pre-annotation agreement scores:')
 
 total_score = 0
 n = 0
-for task in project.tasks:
+for task in project.get_project_tasks():
     score = get_agreement(task['annotations'][0], task['predictions'][0])
     print(f'{task["id"]} ==> {score}')
     total_score += score

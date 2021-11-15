@@ -1,0 +1,2 @@
+pandas
+https://github.com/heartexlabs/label-studio-evalme/archive/9b52b8e21275cf8ea3bfc3773e3abc4725182b5f.zip
