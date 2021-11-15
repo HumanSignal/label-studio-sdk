@@ -2,8 +2,8 @@ from evalme.metrics import get_agreement
 from label_studio_sdk import Client
 import pandas as pd
 
-LABEL_STUDIO_URL = 'http://localhost:8081'
-API_KEY = '67cd883ccb099c9d476e7d7601cd9a6e5fdfe323'
+LABEL_STUDIO_URL = 'http://localhost:8080'
+API_KEY = '91b3b61589784ed069b138eae3d5a5fe1e909f57'
 
 ls = Client(url=LABEL_STUDIO_URL, api_key=API_KEY)
 
