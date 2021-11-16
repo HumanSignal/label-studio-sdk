@@ -467,7 +467,8 @@ class Project(Client):
                 'page': page,
                 'page_size': page_size,
                 'view': view_id,
-                'query': json.dumps(query)
+                'query': json.dumps(query),
+                'fields': 'all'
             })
 
         data = response.json()
