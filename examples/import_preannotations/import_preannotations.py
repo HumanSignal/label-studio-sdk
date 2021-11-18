@@ -1,4 +1,4 @@
-from evalme.metrics import get_agreement
+from evalme.metrics import get_agreement  # run first `pip install label-studio-evalme` to use this package
 from label_studio_sdk import Client
 import pandas as pd
 
