@@ -9,7 +9,7 @@
     Example:
 
     ```python
-    Filters.create(Filters.OR, [
+    filters = Filters.create(Filters.OR, [
         Filters.item(
             Column.id,
             Operator.GREATER,
@@ -26,6 +26,7 @@
             )
         )
     ])
+    tasks = project.get_tasks(filters=filters)
     ```
 """
 from datetime import datetime
