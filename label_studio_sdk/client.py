@@ -42,6 +42,23 @@ class Client(object):
         response = self.make_request('GET', '/health')
         return response.json()
 
+    def list_projects(self):
+        """ List all projects in Label Studio.
+
+        Returns
+        -------
+        list or `label_studio_sdk.project.Project` instances
+
+        """
+        from .project import Project
+        response = self.make_request('GET', '/api/projects', params={'page_size': 10000000})
+        response.raise_for_status()
+        if response.status_code == 200:
+            projects = []
+            for data in response.json()['results']:
+                projects.append(Project._create_from_id(client=self, project_id=data['id'], params=data))
+            return projects
+
     def start_project(self, **kwargs):
         """ Create a new project instance.
 
