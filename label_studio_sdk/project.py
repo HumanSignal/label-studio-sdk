@@ -708,6 +708,29 @@ class Project(Client):
         }, json=payload)
         return response.json()
 
+    def update_annotation(self, annotation_id, **kwargs):
+        """ Update specific annotation with new annotation parameters, e.g.
+            ```
+            project.update_annotation(annotation_id=123, ground_truth=True)
+            ```
+
+        Parameters
+        ----------
+        annotation_id: int
+            Existing annotation ID from current project. Could be retrieved from `project.get_tasks()` response
+        kwargs: kwargs parameters
+            List of annotation parameters. Check all available parameters [here](https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks)
+
+        Returns
+        -------
+        dict
+            Dict with updated annotation
+
+        """
+        response = self.make_request('PATCH', f'/api/annotations/{annotation_id}', json=kwargs)
+        response.raise_for_status()
+        return response.json()
+
     def get_predictions_coverage(self):
         """ Prediction coverage stats for all model versions for the project.
 
