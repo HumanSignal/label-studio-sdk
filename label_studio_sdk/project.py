@@ -451,16 +451,19 @@ class Project(Client):
             'ordering': ordering or [],
             'selectedItems': {'all': False, 'included': selected_ids} if selected_ids else {'all': True, "excluded": []}
         }
+        params={
+            'project': self.id,
+            'page': page,
+            'page_size': page_size,
+            'view': view_id,
+            'query': json.dumps(query),
+            'fields': 'all'
+        }
+        if only_ids:
+            params['include'] = 'id'
+
         response = self.make_request(
-            'GET', '/api/dm/tasks', params={
-                'project': {self.id},
-                'only_ids': only_ids,
-                'page': page,
-                'page_size': page_size,
-                'view': view_id,
-                'query': json.dumps(query),
-                'fields': 'all'
-            })
+            'GET', '/api/dm/tasks', params)
 
         data = response.json()
         tasks = data['tasks']
