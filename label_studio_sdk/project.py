@@ -11,7 +11,10 @@ from .utils import parse_config
 
 
 class LabelStudioException(Exception):
+    pass
 
+
+class LabelStudioAttributeError(LabelStudioException):
     pass
 
 
@@ -57,28 +60,8 @@ class Project(Client):
         super(Project, self).__init__(*args, **kwargs)
         self.params = {}
 
-    @property
-    def id(self):
-        """ Get the project ID.
-
-        Returns
-        -------
-        int
-            Project ID
-        """
-        return self._get_param('id')
-
-    @property
-    def label_config(self):
-        """ Get the labeling configuration for the project.
-
-        Returns
-        -------
-        str
-            Labeling configuration in XML format
-
-        """
-        return self._get_param('label_config')
+    def __getattr__(self, item):
+        return self._get_param(item)
 
     @property
     def parsed_label_config(self):
@@ -110,7 +93,7 @@ class Project(Client):
         if param_name not in self.params:
             self.update_params()
             if param_name not in self.params:
-                raise LabelStudioException(f'Project "{param_name}" field is not set')
+                raise LabelStudioAttributeError(f'Project "{param_name}" field is not set')
         return self.params[param_name]
 
     def get_params(self):
@@ -208,6 +191,15 @@ class Project(Client):
             raise LabelStudioException('Project not created')
 
     @classmethod
+    def _create_from_id(cls, client, project_id, params=None):
+        project = cls(url=client.url, api_key=client.api_key, session=client.session)
+        if params and isinstance(params, dict):
+            # TODO: validate project parameters
+            project.params = params
+        project.params['id'] = project_id
+        return project
+
+    @classmethod
     def get_from_id(cls, client, project_id) -> "Project":
         """ Class factory to create a project instance from an existing project ID.
 
@@ -221,8 +213,7 @@ class Project(Client):
         -------
         `Project`
         """
-        project = cls(url=client.url, api_key=client.api_key, session=client.session)
-        project.params['id'] = project_id
+        project = cls._create_from_id(client, project_id)
         project.update_params()
         return project
 
@@ -715,6 +706,29 @@ class Project(Client):
             'id': 'predictions_to_annotations',
             'project': self.id
         }, json=payload)
+        return response.json()
+
+    def update_annotation(self, annotation_id, **kwargs):
+        """ Update specific annotation with new annotation parameters, e.g.
+            ```
+            project.update_annotation(annotation_id=123, ground_truth=True)
+            ```
+
+        Parameters
+        ----------
+        annotation_id: int
+            Existing annotation ID from current project. Could be retrieved from `project.get_tasks()` response
+        kwargs: kwargs parameters
+            List of annotation parameters. Check all available parameters [here](https://labelstud.io/guide/export.html#Label-Studio-JSON-format-of-annotated-tasks)
+
+        Returns
+        -------
+        dict
+            Dict with updated annotation
+
+        """
+        response = self.make_request('PATCH', f'/api/annotations/{annotation_id}', json=kwargs)
+        response.raise_for_status()
         return response.json()
 
     def get_predictions_coverage(self):
