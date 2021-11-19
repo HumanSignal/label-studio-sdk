@@ -461,7 +461,7 @@ class Project(Client):
             'selectedItems': {'all': False, 'included': selected_ids} if selected_ids else {'all': True, "excluded": []}
         }
         params={
-            'project': {self.id},
+            'project': self.id,
             'page': page,
             'page_size': page_size,
             'view': view_id,
