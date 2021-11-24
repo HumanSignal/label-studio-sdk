@@ -181,6 +181,61 @@ class Project(Client):
     def start_project(self, **kwargs):
         """ Create a new labeling project in Label Studio.
 
+        Parameters
+        ----------
+        title: str
+            Project name.
+        description: str
+            Project description
+        label_config: str
+            Label config in XML format.
+        expert_instruction: str
+            Labeling instructions in HTML format
+        show_instruction: bool
+            Whether to display instructions to annotators before they start
+        show_skip_button: bool
+            Whether to show a skip button in the Label Studio UI and let annotators skip the task
+        enable_empty_annotation: bool
+            Allow annotators to submit empty annotations
+        show_annotation_history: bool
+            Show annotation history to annotator
+        organization: int
+            Organization ID
+        color: str
+            Color to decorate the project card in the Label Studio UI
+        maximum_annotations: int
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater
+            to this value, the task is finished and is_labeled=True is set. (Enterprise only)
+        is_published: bool
+            Whether or not the project is published to annotators (Enterprise only)
+        model_version: str
+            Machine learning model version for predictions or pre-annotations
+        is_draft: bool
+            Whether or not the project is in the middle of being created (Enterprise only)
+        created_by: object
+            Details about the user that created the project
+        min_annotations_to_start_training: int
+            Minimum number of completed tasks after which model training is started
+        show_collab_predictions: bool
+            Whether to show model predictions to the annotator, allowing them to collaborate with the ML model
+        sampling: str
+            Type of sampling to use for task labeling. Uncertainty sampling is Enterprise only.
+            Enum: "Sequential sampling" "Uniform sampling" "Uncertainty sampling"
+        show_ground_truth_first: bool
+            Whether to show tasks with ground truth annotations first (Enterprise only)
+        show_overlap_first: bool
+            Whether to show tasks with overlap first (Enterprise only)
+        overlap_cohort_percentage: int
+            Percentage of tasks that must be annotated multiple times. (Enterprise only)
+        task_data_login: str
+            User credentials for accessing task data. (Enterprise only)
+        task_data_password: str
+            Password credentials for accessing task data. (Enterprise only)
+        control_weights: object
+            Weights for control tags used when calculating agreement metrics. (Enterprise only)
+        evaluate_predictions_automatically: bool
+            Retrieve and display predictions when loading a task
+
         Raises LabelStudioException in case of errors.
 
         """
@@ -663,9 +718,10 @@ class Project(Client):
         model_version: str
             Any string identifying your model
         """
-        response = self.make_request('POST', '/api/predictions', json={
-            'task': task_id, 'result': result, 'score': score, 'model_version': model_version
-        })
+        data = {'task': task_id, 'result': result, 'score': score}
+        if model_version is not None:
+            data['model_version'] = model_version
+        response = self.make_request('POST', '/api/predictions', json=data)
         return response.json()
 
     def create_predictions(self, predictions):
