@@ -881,7 +881,8 @@ class Project(Client):
             'presign': presign,
             'presign_ttl': presign_ttl,
             'title': title,
-            'description': description
+            'description': description,
+            'project': self.id
         }
         response = self.make_request('POST', '/api/storages/gcs', json=payload)
         return response.json()
@@ -939,7 +940,8 @@ class Project(Client):
             'google_application_credentials': google_application_credentials,
             'title': title,
             'description': description,
-            'can_delete_objects': can_delete_objects
+            'can_delete_objects': can_delete_objects,
+            'project': self.id
         }
         response = self.make_request('POST', '/api/storages/gcs/export', json=payload)
         return response.json()
@@ -1020,7 +1022,8 @@ class Project(Client):
             'presign': presign,
             'presign_ttl': presign_ttl,
             'title': title,
-            'description': description
+            'description': description,
+            'project': self.id
         }
         response = self.make_request('POST', '/api/storages/s3', json=payload)
         return response.json()
@@ -1090,7 +1093,8 @@ class Project(Client):
             's3_endpoint': s3_endpoint,
             'title': title,
             'description': description,
-            'can_delete_objects': can_delete_objects
+            'can_delete_objects': can_delete_objects,
+            'project': self.id
         }
         response = self.make_request('POST', '/api/storages/s3/export', json=payload)
         return response.json()
@@ -1159,7 +1163,8 @@ class Project(Client):
             'presign': presign,
             'presign_ttl': presign_ttl,
             'title': title,
-            'description': description
+            'description': description,
+            'project': self.id
         }
         response = self.make_request('POST', '/api/storages/azure', json=payload)
         return response.json()
@@ -1216,7 +1221,8 @@ class Project(Client):
             'account_key': account_key,
             'title': title,
             'description': description,
-            'can_delete_objects': can_delete_objects
+            'can_delete_objects': can_delete_objects,
+            'project': self.id
         }
         response = self.make_request('POST', '/api/storages/azure/export', json=payload)
         return response.json()
