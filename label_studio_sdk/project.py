@@ -943,7 +943,7 @@ class Project(Client):
             'can_delete_objects': can_delete_objects,
             'project': self.id
         }
-        response = self.make_request('POST', '/api/storages/gcs/export', json=payload)
+        response = self.make_request('POST', '/api/storages/export/gcs', json=payload)
         return response.json()
 
     def connect_s3_import_storage(
@@ -1096,7 +1096,7 @@ class Project(Client):
             'can_delete_objects': can_delete_objects,
             'project': self.id
         }
-        response = self.make_request('POST', '/api/storages/s3/export', json=payload)
+        response = self.make_request('POST', '/api/storages/export/s3', json=payload)
         return response.json()
 
     def connect_azure_import_storage(
@@ -1224,5 +1224,5 @@ class Project(Client):
             'can_delete_objects': can_delete_objects,
             'project': self.id
         }
-        response = self.make_request('POST', '/api/storages/azure/export', json=payload)
+        response = self.make_request('POST', '/api/storages/export/azure', json=payload)
         return response.json()
