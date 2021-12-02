@@ -42,6 +42,16 @@ class Client(object):
         response = self.make_request('GET', '/health')
         return response.json()
 
+    def get_projects(self):
+        """ List all projects in Label Studio.
+
+        Returns
+        -------
+        list or `label_studio_sdk.project.Project` instances
+
+        """
+        return self.list_projects()
+
     def list_projects(self):
         """ List all projects in Label Studio.
 
@@ -52,7 +62,6 @@ class Client(object):
         """
         from .project import Project
         response = self.make_request('GET', '/api/projects', params={'page_size': 10000000})
-        response.raise_for_status()
         if response.status_code == 200:
             projects = []
             for data in response.json()['results']:
@@ -92,6 +101,44 @@ class Client(object):
         """
         from .project import Project
         return Project.get_from_id(self, id)
+
+    def get_users(self):
+        """ Return all users from the current organization account
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        list of `label_studio_sdk.users.User`
+
+        """
+        from .users import User
+        response = self.make_request('GET', '/api/users')
+        users = []
+        for user_data in response.json():
+            user_data['client'] = self
+            users.append(User(**user_data))
+        return users
+
+    def get_workspaces(self):
+        """ Return all workspaces from the current organization account
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        list of `label_studio_sdk.workspaces.Workspace`
+
+        """
+        from .workspaces import Workspace
+        response = self.make_request('GET', '/api/workspaces')
+        workspaces = []
+        for workspace_data in response.json():
+            workspace_data['client'] = self
+            workspaces.append(Workspace(**workspace_data))
+        return workspaces
 
     def get_session(self):
         """ Create a session with requests.Session()
