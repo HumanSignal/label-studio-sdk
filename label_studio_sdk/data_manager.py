@@ -9,6 +9,8 @@
     Example:
 
     ```python
+    from label_studio_sdk.data_manager import Filters
+
     filters = Filters.create(Filters.OR, [
         Filters.item(
             Column.id,
