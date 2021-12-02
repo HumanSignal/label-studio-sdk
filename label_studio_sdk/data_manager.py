@@ -9,7 +9,7 @@
     Example:
 
     ```python
-    from label_studio_sdk.data_manager import Filters
+    from label_studio_sdk.data_manager import Filters, Column, Operator, Type
 
     filters = Filters.create(Filters.OR, [
         Filters.item(
