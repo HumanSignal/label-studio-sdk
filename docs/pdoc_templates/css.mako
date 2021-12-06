@@ -5,11 +5,6 @@
 code {
   color: unset !important;
 }
-/* Add virtual space above the definition to see it after scroll */
-dt[id] {
-  padding-top: 100px;
-  margin-top: -100px;
-}
 
 <%def name="mobile()" filter="minify_css">
   :root {
@@ -187,6 +182,12 @@ dt[id] {
       margin-top: 1em;
       margin-bottom: 4em;
     }
+    
+  /* Add virtual space above the definition to see it after scroll */
+  dt[id] {
+    padding-top: 100px;
+    margin-top: -100px;
+  }
 
   dd {
     margin: 0 0 1em 2em;
