@@ -7,7 +7,7 @@ import label_studio_converter.brush as brush
 from label_studio_sdk import Client
 
 LABEL_STUDIO_URL = 'http://localhost:8080'
-LABEL_STUDIO_API_KEY = '92263ad5544e90d0c730aa088187994ba4cc3626'
+LABEL_STUDIO_API_KEY = '<your-token>'
 LABEL = 'Mitochondria'
 
 ls = Client(url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
