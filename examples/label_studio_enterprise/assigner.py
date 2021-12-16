@@ -37,7 +37,7 @@ class BatchAssigner:
                 Filters.value(filter_value)
             )
         ])
-        return self.project.get_paginated_tasks(filters=filters, page=page, page_size=page_size)
+        return self.project.get_paginated_tasks(filters=filters, page=page, page_size=page_size, only_ids=True)
 
     def get_page_total(self, filter_column, filter_value, page_size):
         """ Total page number for tasks with filter by column and specified page size
@@ -80,7 +80,7 @@ class BatchAssigner:
         """
 
         result = self.get_tasks(filter_column, filter_value, page, page_size)
-        task_ids = [task['id'] for task in result['tasks']]
+        task_ids = result['tasks']
 
         if not task_ids:
             print(f'No tasks found')
