@@ -1,4 +1,4 @@
-""" This script assign annotators to tasks using a task filter and pagination
+""" This script runs every 10 seconds and assigns users to a new batch of tasks filtered by the specified column.
 
 1. Don't forget to enable Manual mode in Annotation settings
 2. Be careful when using email users: users who are not members of the project or workspace will break Data Manager
@@ -7,7 +7,7 @@ Install:
     git clone https://github.com/heartexlabs/label-studio-sdk.git
     cd label-studio-sdk
     pip install -e .
-    python /examples/label_studio_enterprise/assigner.py
+    python examples/label_studio_enterprise/assigner.py
 """
 import time
 import math
