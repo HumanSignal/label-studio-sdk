@@ -1,13 +1,17 @@
 """ This script runs every 10 seconds and assigns users to a new batch of tasks filtered by the specified column.
 
-1. Don't forget to enable Manual mode in Annotation settings
-2. Be careful when using email users: users who are not members of the project or workspace will break Data Manager
+Notes:
+    1. Don't forget to enable Manual mode in Annotation settings
+    2. Be careful when using email users: users who are not members of the project or workspace will break Data Manager
 
 Install:
     git clone https://github.com/heartexlabs/label-studio-sdk.git
     cd label-studio-sdk
     pip install -e .
     python examples/label_studio_enterprise/assigner.py
+
+Demo video:
+    https://www.youtube.com/watch?v=IeqrsCYYQ8k
 """
 import time
 import math
