@@ -332,7 +332,7 @@ class Project(Client):
 
         """
         response = self.make_request(
-            method='POST',
+            method='GET',
             url=f'/api/projects/{self.id}/export?exportType={export_type}'
         )
         return response.json()
