@@ -90,7 +90,7 @@ class Project(Client):
         return parse_config(self.label_config)
 
     def add_member(self, user):
-        """ Add member to project.
+        """ Add a user to a project.
 
         Parameters
         ----------
@@ -109,12 +109,12 @@ class Project(Client):
         return response.json()
 
     def assign_annotators(self, users, tasks_ids):
-        """ Assign annotators to the tasks
+        """ Assign annotators to tasks
 
         Parameters
         ----------
-        users: list of User
-        tasks_ids: list of int
+        users: list of user IDs
+        tasks_ids: list of integer task IDs to assign users to
 
         Returns
         -------
@@ -131,7 +131,7 @@ class Project(Client):
         return response.json()
 
     def delete_annotators_assignment(self, tasks_ids):
-        """ Clear assigned annotators for tasks
+        """ Remove all assigned annotators for tasks
 
         Parameters
         ----------
@@ -140,7 +140,7 @@ class Project(Client):
         Returns
         -------
         dict
-            Dict with counter of deleted assignments
+            Dict with counter of deleted annotator assignments
 
         """
         payload = {
@@ -150,7 +150,7 @@ class Project(Client):
         return response.json()
 
     def delete_reviewers_assignment(self, tasks_ids):
-        """ Clear assigned annotators for tasks
+        """ Clear all assigned reviewers for tasks
 
         Parameters
         ----------
@@ -159,7 +159,7 @@ class Project(Client):
         Returns
         -------
         dict
-            Dict with counter of deleted assignments
+            Dict with counter of deleted reviewer assignments
 
         """
         payload = {
@@ -169,12 +169,12 @@ class Project(Client):
         return response.json()
 
     def assign_reviewers(self, users, tasks_ids):
-        """ Assign reviewers to the tasks
+        """ Assign reviewers to tasks
 
         Parameters
         ----------
-        users: list of User
-        tasks_ids: list of int
+        users: list of user IDs
+        tasks_ids: list of integer task IDs to assign reviewers to
 
         Returns
         -------
