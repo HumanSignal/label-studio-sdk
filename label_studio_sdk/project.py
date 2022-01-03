@@ -3,12 +3,20 @@
 import os
 import time
 import json
+import logging
 
+from operator import itemgetter
 from enum import Enum
 from typing import Optional, Union, List, Dict
-from .client import Client
-from .utils import parse_config
 
+from requests.exceptions import InvalidSchema, MissingSchema
+
+from .client import Client
+
+from label_studio_tools.core.utils.io import get_local_path
+from label_studio_tools.core.label_config import parse_config
+
+logger = logging.getLogger(__name__)
 
 class LabelStudioException(Exception):
     pass
@@ -1226,3 +1234,34 @@ class Project(Client):
         }
         response = self.make_request('POST', '/api/storages/export/azure', json=payload)
         return response.json()
+
+    def get_files_from_tasks(self,
+                             tasks: Dict,
+                             get_tasks: bool = False
+                             ):
+        """ Copy files from tasks to cache folder
+
+        Parameters
+        ----------
+        tasks: Dict
+        Tasks to download to local storage
+        get_tasks: bool
+        Get all tasks from current project
+
+        Returns
+        -------
+        list
+            List of filenames
+        """
+        if get_tasks:
+            tasks = self.get_tasks()
+        filenames = []
+        if tasks:
+            for task in tasks:
+                for key in task['data']:
+                    try:
+                        filename = get_local_path(task['data'][key])
+                        filenames.append(filename)
+                    except (FileNotFoundError, InvalidSchema, MissingSchema, IOError):
+                        logger.debug(f"Couldn't copy file {task['data'][key]}.")
+        return filenames
