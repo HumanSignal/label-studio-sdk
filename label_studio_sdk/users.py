@@ -31,7 +31,7 @@ class User(BaseModel):
     initials: str
     phone: str
     active_organization: int
-    org_membership: List[OrgMembership]
+    org_membership: Optional[List[OrgMembership]]
     client: Client
 
     class Config:
