@@ -14,7 +14,7 @@ HEADERS = {}
 
 class Client(object):
 
-    def __init__(self, url, api_key, session=None):
+    def __init__(self, url, api_key, session=None, extra_headers: dict = None):
         """ Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
         Parameters
@@ -26,10 +26,15 @@ class Client(object):
             User token for the API. You can find this on your user account page in Label Studio.
         session: requests.Session()
             If None, a new one is created.
+        extra_headers: dict
+            Additional headers that will be passed to each http request
         """
         self.url = url.rstrip('/')
         self.api_key = api_key
         self.session = session or self.get_session()
+        self.headers = {'Authorization': f'Token {self.api_key}'}
+        if extra_headers:
+            self.headers.update(extra_headers)
 
     def check_connection(self):
         """ Call Label Studio /health endpoint to check the connection to the server.
@@ -187,7 +192,6 @@ class Client(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = TIMEOUT
         logger.debug(f'{method}: {url} with args={args}, kwargs={kwargs}')
-        headers = {'Authorization': f'Token {self.api_key}'}
-        response = self.session.request(method, self.get_url(url), headers=headers, *args, **kwargs)
+        response = self.session.request(method, self.get_url(url), headers=self.headers, *args, **kwargs)
         response.raise_for_status()
         return response
