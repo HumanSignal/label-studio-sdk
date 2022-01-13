@@ -1,16 +1,22 @@
-# -------------------------------  Copyright ---------------------------------
-# This software has been developed by Orange TGI/DATA-IA/AITT/aRod
-# Copyright (c) Orange TGI Data/IA 2021
-#
-# COPYRIGHT: This file is the property of Orange TGI.
-# Copyright Orange TGI 2021, All Rights Reserved
-#
-# This software is the confidential and proprietary information of Orange TGI.
-#
-# You shall not disclose such Confidential Information and shall use it only
-# in accordance with the terms of the license agreement you entered into with
-# Orange TGI.
-#
-# AUTHORS      : Orange TGI  TGI/DATA-IA/AITT/aRod
-# EMAIL        : data-ia.aitt-dev-rennes@orange.com
-# ----------------------------------------------------------------------------
+from unittest.mock import patch
+
+from label_studio_sdk import Client
+
+
+def test_client_headers():
+    client = Client(url='http://fake.url', api_key='fake_key',
+                    extra_headers={'Proxy-Authorization': 'Bearer fake_bearer'})
+    with patch('requests.Session.request') as mocked_get:
+        mocked_get.return_value.status_code = 200
+        client.check_connection()
+        args, kwargs = mocked_get.call_args
+        assert kwargs['headers'] == {'Authorization': f'Token fake_key', 'Proxy-Authorization': 'Bearer fake_bearer'}
+
+
+def test_client_no_extra_headers():
+    client = Client(url='http://fake.url', api_key='fake_key')
+    with patch('requests.Session.request') as mocked_get:
+        mocked_get.return_value.status_code = 200
+        client.check_connection()
+        args, kwargs = mocked_get.call_args
+        assert kwargs['headers'] == {'Authorization': f'Token fake_key'}
