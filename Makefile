@@ -13,3 +13,6 @@ build:
 
 deploy:
 	python3 deploy.py
+
+test:
+	pytest tests
