@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from label_studio_sdk import Client
+from label_studio_sdk.client import Client
 
 
 def test_client_headers():
