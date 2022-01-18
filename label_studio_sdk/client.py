@@ -195,3 +195,35 @@ class Client(object):
         response = self.session.request(method, self.get_url(url), headers=self.headers, *args, **kwargs)
         response.raise_for_status()
         return response
+
+    def sync_storage(self, storage_type, storage_id):
+        """Synchronize Cloud Storage.
+
+        Parameters
+        ----------
+        storage_type: string
+            Specify the type of the storage container.
+        storage_id: int
+            Specify the storage ID of the storage container.
+
+        Returns
+        -------
+        dict:
+            containing the same fields as in the original storage request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+        """
+
+        response = self.make_request(
+            "POST", f"/api/storages/{storage_type}/{str(storage_id)}/sync"
+        )
+        return response.json()
