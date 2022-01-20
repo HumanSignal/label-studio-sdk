@@ -29,7 +29,7 @@ class ClientCredentials(BaseModel):
 
 class Client(object):
 
-    def __init__(self, url, api_key=None, credentials=None, session=None):
+    def __init__(self, url, api_key, credentials=None, session=None, extra_headers: dict = None):
         """ Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
         Parameters
@@ -43,9 +43,18 @@ class Client(object):
             User email and password or api_key.
         session: requests.Session()
             If None, a new one is created.
+        extra_headers: dict
+            Additional headers that will be passed to each http request
         """
         self.url = url.rstrip('/')
         self.session = session or self.get_session()
+        
+        # set headers 
+        self.headers = {'Authorization': f'Token {self.api_key}'}
+        if extra_headers:
+            self.headers.update(extra_headers)
+         
+        # set api key or get it using credentials (username and password)
         if api_key is not None:
             warnings.warn("A deprecation warning to fit accordingly to your deprecation policy", DeprecationWarning)
             credentials = ClientCredentials(api_key=api_key)
@@ -217,7 +226,38 @@ class Client(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = TIMEOUT
         logger.debug(f'{method}: {url} with args={args}, kwargs={kwargs}')
-        headers = {'Authorization': f'Token {self.api_key}'}
-        response = self.session.request(method, self.get_url(url), headers=headers, *args, **kwargs)
+        response = self.session.request(method, self.get_url(url), headers=self.headers, *args, **kwargs)
         response.raise_for_status()
         return response
+
+    def sync_storage(self, storage_type, storage_id):
+        """Synchronize Cloud Storage.
+
+        Parameters
+        ----------
+        storage_type: string
+            Specify the type of the storage container.
+        storage_id: int
+            Specify the storage ID of the storage container.
+
+        Returns
+        -------
+        dict:
+            containing the same fields as in the original storage request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+        """
+
+        response = self.make_request(
+            "POST", f"/api/storages/{storage_type}/{str(storage_id)}/sync"
+        )
+        return response.json()
