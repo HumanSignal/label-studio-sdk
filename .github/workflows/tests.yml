@@ -16,7 +16,7 @@ env:
 
 jobs:
   run_pytest_sqlite:
-    name: LS SQLite Ubuntu
+    name: LS SDK
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
