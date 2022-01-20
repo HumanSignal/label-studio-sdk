@@ -18,7 +18,7 @@ HEADERS = {}
 class ClientCredentials(BaseModel):
     email: Optional[str]
     password: Optional[str]
-    api_key: Optional[constr(regex=r"^[a-zA-Z0-9]{40}$")] = None
+    api_key: Optional[constr()] = None
 
     @root_validator(pre=True)
     def either_key_or_email_password(cls, values):
@@ -48,17 +48,17 @@ class Client(object):
         """
         self.url = url.rstrip('/')
         self.session = session or self.get_session()
-        
-        # set headers 
-        self.headers = {'Authorization': f'Token {self.api_key}'}
-        if extra_headers:
-            self.headers.update(extra_headers)
          
         # set api key or get it using credentials (username and password)
         if api_key is not None:
             warnings.warn("A deprecation warning to fit accordingly to your deprecation policy", DeprecationWarning)
             credentials = ClientCredentials(api_key=api_key)
         self.api_key = credentials.api_key if credentials.api_key else self.get_api_key(credentials)
+
+        # set headers
+        self.headers = {'Authorization': f'Token {self.api_key}'}
+        if extra_headers:
+            self.headers.update(extra_headers)
 
     def get_api_key(self, credentials: ClientCredentials):
         login_url = self.get_url("/user/login")
