@@ -4,17 +4,20 @@ import os
 import time
 import json
 import logging
+import requests
+import shutil
 
 from operator import itemgetter
 from enum import Enum
 from typing import Optional, Union, List, Dict
-
 from requests.exceptions import InvalidSchema, MissingSchema
+from urllib.parse import urlparse
 
 from .client import Client
 
-from label_studio_tools.core.utils.io import get_local_path
+from label_studio_tools.core.utils.io import get_local_path, get_data_dir, get_temp_dir, get_all_files_from_dir
 from label_studio_tools.core.label_config import parse_config
+from label_studio_converter import Converter
 
 logger = logging.getLogger(__name__)
 
@@ -445,6 +448,65 @@ class Project(Client):
             url=f'/api/projects/{self.id}/export?exportType={export_type}'
         )
         return response.json()
+
+    def export_tasks_with_download(self,
+                                   export_type='JSON',
+                                   input_json=None,
+                                   export_file='export'):
+        """ Export annotated tasks with downloading
+
+        Parameters
+        ----------
+        export_type: string
+            Default export_type is JSON.
+            Specify another format type as referenced in <a href="https://github.com/heartexlabs/label-studio-converter/blob/master/label_studio_converter/converter.py#L32">
+            the Label Studio converter code</a>.
+
+        Returns
+        -------
+        list of dicts
+            Tasks with annotations
+
+        """
+        # Load tasks from file
+        if input_json:
+            tasks = json.load(open(input_json, mode='r'))
+        # or from API
+        else:
+            tasks = self.export_tasks(export_type='JSON')
+
+        # download texts for CONLL2003
+        if export_type == 'CONLL2003' and 'valueType="url"' in self.label_config:
+            # download texts to tasks
+            for each in tasks:
+                url = each['data'][list(each['data'].keys())[0]]
+                parsed_url = urlparse(url)
+                if all([parsed_url.scheme, parsed_url.netloc]):
+                    r = requests.get(url)
+                    each['data'][list(each['data'].keys())[0]] = r.text
+
+        # label studio params
+        BASE_DATA_DIR = os.getenv('BASE_DATA_DIR', get_data_dir())
+        MEDIA_ROOT = os.path.join(BASE_DATA_DIR, 'media')
+        UPLOAD_DIR = 'upload'
+
+        converter = Converter(
+            config=self.parsed_label_config,
+            project_dir=None,
+            upload_dir=os.path.join(MEDIA_ROOT, UPLOAD_DIR),
+            download_resources=True,
+        )
+        # Create files in temp dir
+        with get_temp_dir() as tmp_dir:
+            temp_file = str(time.time()) + ".json"
+            with open(temp_file, mode='w') as f:
+                json.dump(tasks, f)
+            converter.convert(temp_file, tmp_dir, export_type, is_dir=False)
+            # pack output directory into archive
+            filename = shutil.make_archive(export_file, 'zip', tmp_dir)
+            # delete temp_file
+            os.remove(temp_file)
+            return filename
 
     def set_params(self, **kwargs):
         """ Low level function to set project parameters.
@@ -1335,34 +1397,3 @@ class Project(Client):
         }
         response = self.make_request('POST', '/api/storages/export/azure', json=payload)
         return response.json()
-
-    def get_files_from_tasks(self,
-                             tasks: Dict,
-                             get_tasks: bool = False
-                             ):
-        """ Copy files from tasks to cache folder
-
-        Parameters
-        ----------
-        tasks: Dict
-        Tasks to download to local storage
-        get_tasks: bool
-        Get all tasks from current project
-
-        Returns
-        -------
-        list
-            List of filenames
-        """
-        if get_tasks:
-            tasks = self.get_tasks()
-        filenames = []
-        if tasks:
-            for task in tasks:
-                for key in task['data']:
-                    try:
-                        filename = get_local_path(task['data'][key])
-                        filenames.append(filename)
-                    except (FileNotFoundError, InvalidSchema, MissingSchema, IOError):
-                        logger.debug(f"Couldn't copy file {task['data'][key]}.")
-        return filenames
