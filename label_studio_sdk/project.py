@@ -7,15 +7,13 @@ import logging
 import requests
 import shutil
 
-from operator import itemgetter
 from enum import Enum
 from typing import Optional, Union, List, Dict
-from requests.exceptions import InvalidSchema, MissingSchema
 from urllib.parse import urlparse
 
 from .client import Client
 
-from label_studio_tools.core.utils.io import get_local_path, get_data_dir, get_temp_dir, get_all_files_from_dir
+from label_studio_tools.core.utils.io import get_data_dir, get_temp_dir
 from label_studio_tools.core.label_config import parse_config
 from label_studio_converter import Converter
 

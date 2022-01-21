@@ -1,5 +1,5 @@
 lxml>=4.2.5
 requests>=2.22.0,<3
 pydantic==1.8.2
-label-studio-tools
+label-studio-tools==0.0.0.dev12
 label-studio-converter==0.0.37
