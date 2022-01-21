@@ -2,7 +2,7 @@
 
 Notes:
     1. Don't forget to enable Manual mode in Annotation settings
-    2. Be careful when using email users: users who are not members of the project or workspace will break Data Manager
+    2. Be careful when adding email users: users who are not members of the project or workspace will break Data Manager
 
 Install:
     git clone https://github.com/heartexlabs/label-studio-sdk.git
@@ -46,10 +46,10 @@ class BatchAssigner:
         return math.ceil(result['total'] / float(page_size))
 
     def get_user_ids(self, emails):
-        """ Get user ids by emails with order saving
+        """ Get user IDs by email and preserve the order
 
-        :param emails: list of strings with emails
-        :return: user ids in the same order as emails
+        :param emails: list of strings with email addresses
+        :return: user IDs in the same order as email addresses
         """
         # get all users
         user_ids = []
@@ -71,7 +71,7 @@ class BatchAssigner:
                               page_size=100):
         """ Assign annotators to filter by specified column and paginated tasks
 
-        :param user_ids: list of user emails
+        :param user_ids: list of user email addresses
         :param filter_column: str with data column name from Data Manager
         :param filter_value: str with data value to filter as equal
         :param page: current page

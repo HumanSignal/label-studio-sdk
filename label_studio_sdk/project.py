@@ -97,6 +97,107 @@ class Project(Client):
         """
         return parse_config(self.label_config)
 
+    def add_member(self, user):
+        """ Add a user to a project.
+
+        Parameters
+        ----------
+        user: User
+
+        Returns
+        -------
+        dict
+            Dict with created member
+
+        """
+        payload = {
+            'user': user.id
+        }
+        response = self.make_request('POST', f'/api/projects/{self.id}/members', json=payload)
+        return response.json()
+
+    def assign_annotators(self, users, tasks_ids):
+        """ Assign annotators to tasks
+
+        Parameters
+        ----------
+        users: list of user IDs
+        tasks_ids: list of integer task IDs to assign users to
+
+        Returns
+        -------
+        dict
+            Dict with counter of created assignments
+
+        """
+        payload = {
+            'users': [user.id for user in users],
+            'selectedItems': {'all': False, 'included': tasks_ids},
+            'type': 'AN',
+        }
+        response = self.make_request('POST', f'/api/projects/{self.id}/tasks/assignees', json=payload)
+        return response.json()
+
+    def delete_annotators_assignment(self, tasks_ids):
+        """ Remove all assigned annotators for tasks
+
+        Parameters
+        ----------
+        tasks_ids: list of int
+
+        Returns
+        -------
+        dict
+            Dict with counter of deleted annotator assignments
+
+        """
+        payload = {
+            'selectedItems': {'all': False, 'included': tasks_ids},
+        }
+        response = self.make_request('POST', f'/api/dm/actions?id=delete_annotators&project={self.id}', json=payload)
+        return response.json()
+
+    def delete_reviewers_assignment(self, tasks_ids):
+        """ Clear all assigned reviewers for tasks
+
+        Parameters
+        ----------
+        tasks_ids: list of int
+
+        Returns
+        -------
+        dict
+            Dict with counter of deleted reviewer assignments
+
+        """
+        payload = {
+            'selectedItems': {'all': False, 'included': tasks_ids},
+        }
+        response = self.make_request('POST', f'/api/dm/actions?id=delete_reviewers&project={self.id}', json=payload)
+        return response.json()
+
+    def assign_reviewers(self, users, tasks_ids):
+        """ Assign reviewers to tasks
+
+        Parameters
+        ----------
+        users: list of user IDs
+        tasks_ids: list of integer task IDs to assign reviewers to
+
+        Returns
+        -------
+        dict
+            Dict with counter of created assignments
+
+        """
+        payload = {
+            'users': [user.id for user in users],
+            'selectedItems': {'all': False, 'included': tasks_ids},
+            'type': 'RE',
+        }
+        response = self.make_request('POST', f'/api/projects/{self.id}/tasks/assignees', json=payload)
+        return response.json()
+
     def _get_param(self, param_name):
         if param_name not in self.params:
             self.update_params()
@@ -340,7 +441,7 @@ class Project(Client):
 
         """
         response = self.make_request(
-            method='POST',
+            method='GET',
             url=f'/api/projects/{self.id}/export?exportType={export_type}'
         )
         return response.json()

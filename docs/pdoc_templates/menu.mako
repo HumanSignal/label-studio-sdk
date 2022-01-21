@@ -12,8 +12,7 @@
           <img src="/images/new/htx_white.svg" alt="logo">
         </a>
       </div>
-      <a target="_blank" rel="noopener" href="https://heartex.com/company/introducing-heartex-label-studio-teams"
-         class="new-product-link">Label Studio Teams Edition</a>
+      
       <a class="join__slack" target="_blank"
          href="http://slack.labelstud.io.s3-website-us-east-1.amazonaws.com?source=site-header">
         <img src="/images/new/logoslack.svg" alt="logoslack"/>
