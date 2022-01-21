@@ -5,6 +5,7 @@ import time
 import json
 
 from enum import Enum
+from requests.exceptions import HTTPError
 from typing import Optional, Union, List, Dict
 from .client import Client
 from .utils import parse_config
@@ -520,16 +521,26 @@ class Project(Client):
             Task list with task data, annotations, predictions and other fields from the Data Manager
 
         """
-        data = self.get_paginated_tasks(
-            filters=filters,
-            ordering=ordering,
-            view_id=view_id,
-            selected_ids=selected_ids,
-            only_ids=only_ids,
-            page=1,
-            page_size=-1
-        )
-        return data['tasks']
+
+        page = 1
+        result = []
+        while True:
+            try:
+                data = self.get_paginated_tasks(
+                    filters=filters,
+                    ordering=ordering,
+                    view_id=view_id,
+                    selected_ids=selected_ids,
+                    only_ids=only_ids,
+                    page=page,
+                    page_size=100
+                )
+                result += data['tasks']
+                page += 1
+            # we'll get 404 from API on empty page
+            except LabelStudioException:
+                break
+        return result
 
     def get_paginated_tasks(
         self,
@@ -618,8 +629,10 @@ class Project(Client):
         if only_ids:
             params['include'] = 'id'
 
-        response = self.make_request(
-            'GET', '/api/dm/tasks', params)
+        try:
+            response = self.make_request('GET', '/api/tasks', params)
+        except HTTPError as e:
+            raise LabelStudioException('Error loading tasks')
 
         data = response.json()
         tasks = data['tasks']
