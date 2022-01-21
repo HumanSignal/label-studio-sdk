@@ -450,9 +450,9 @@ class Project(Client):
         return response.json()
 
     def export_tasks_with_download(self,
-                                   export_type='JSON',
-                                   input_json=None,
-                                   export_file='export'):
+                                   export_type: str = 'JSON',
+                                   input_json: str = None,
+                                   export_file: str = 'export'):
         """ Export annotated tasks with downloading
 
         Parameters
@@ -461,11 +461,14 @@ class Project(Client):
             Default export_type is JSON.
             Specify another format type as referenced in <a href="https://github.com/heartexlabs/label-studio-converter/blob/master/label_studio_converter/converter.py#L32">
             the Label Studio converter code</a>.
-
+        input_json: string
+            Filename to use as tasks source, if empty tasks will be loaded from LS
+        export_file: string
+            Zip archive file to pack export results
         Returns
         -------
-        list of dicts
-            Tasks with annotations
+        string
+            Export file path
 
         """
         # Load tasks from file
