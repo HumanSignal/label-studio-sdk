@@ -641,6 +641,40 @@ class Project(Client):
         kwargs['only_ids'] = True
         return self.get_paginated_tasks(*args, **kwargs)
 
+    def get_views(self):
+        """Get all views related to the project
+
+        Returns
+        -------
+        list
+            List of view dicts
+        """
+        response = self.make_request('GET', f'/api/dm/views?project={self.id}')
+        return response.json()
+
+    def create_view(self, filters):
+        """Create view
+
+        Parameters
+        ----------
+        filters: dict
+            Specify the filters(`label_studio_sdk.data_manager.Filters`) of the view
+
+        Returns
+        -------
+        dict:
+            dict with created view
+
+        """
+        data = {
+            'project': self.id,
+            'data': {
+                'filters': filters,
+            }
+        }
+        response = self.make_request('POST', '/api/dm/views', json=data)
+        return response.json()
+
     @property
     def tasks(self):
         """ Retrieve all tasks from the project. This call can be very slow if the project has a lot of tasks.
