@@ -1,11 +1,11 @@
 """ .. include::../docs/project.md
 """
 import os
-import time
 import json
 
-from enum import Enum
-from typing import Optional, Union, List, Dict
+from enum import Enum, auto
+from random import sample
+from typing import Optional, Union, List, Dict, Callable
 from .client import Client
 from .utils import parse_config
 
@@ -46,6 +46,10 @@ class ProjectStorage(Enum):
     """ Redis Storage """
     S3_SECURED = 's3s'
     """ Amazon S3 Storage secured by IAM roles (Enterprise only)"""
+
+
+class AssignmentSamplingMethod(Enum):
+    RANDOM = auto()  # produces uniform splits across annotators
 
 
 class Project(Client):
@@ -1361,3 +1365,122 @@ class Project(Client):
         }
         response = self.make_request('POST', '/api/storages/export/azure', json=payload)
         return response.json()
+
+    def assign_by_sampling(
+            self,
+            users: List[int],
+            assign_function: Callable,
+            view_id: int = None,
+            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+            fraction: float = 1.0,
+
+    ):
+        """
+        Assigning tasks to Reviewers or Annotators by assign_function with method by fraction from view_id
+        Parameters
+        ----------
+        users: List[int]
+            users' IDs list
+        assign_function: Callable
+            Function to assign tasks by list of user IDs
+        view_id: int
+            Optional, view ID to filter tasks to assign
+        method: AssignmentSamplingMethod
+            Optional, Assignment method
+        fraction
+            Optional, expresses the size of dataset to be assigned
+        Returns
+        -------
+        list[dict]
+            List of dicts with counter of created assignments
+        """
+        final_results = []
+        # Get tasks to assign
+        tasks = self.get_tasks(view_id=view_id, only_ids=True)
+        # Choice fraction of tasks
+        if fraction != 1.0:
+            k = int(len(tasks) * fraction)
+            tasks = sample(tasks, k)
+        # Check how many tasks for each user
+        n_tasks = max(int(len(tasks) / len(users)), 1)
+        # Assign each user tasks
+        for user in users:
+            if n_tasks > len(tasks):
+                n_tasks = len(tasks)
+            elif n_tasks + 1 == len(tasks):
+                n_tasks = n_tasks + 1
+            if method == AssignmentSamplingMethod.RANDOM:
+                sample_tasks = sample(tasks, n_tasks)
+            else:
+                sample_tasks = tasks[:n_tasks]
+            final_results.append(assign_function(self, [user], sample_tasks))
+            tasks = list(set(tasks) - set(sample_tasks))
+        # check if any tasks left
+        if len(tasks) > 0:
+            final_results.append(assign_function(self, [user], tasks))
+        return final_results
+
+    def assign_reviewers_by_sampling(
+            self,
+            users: List[int],
+            view_id: int = None,
+            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+            fraction: float = 1.0
+    ):
+        """
+        Behaves similarly like `assign_reviewers()` but instead of specify tasks_ids explicitely,
+        it gets users' IDs list and optional view ID and uniformly splits all tasks across reviewers
+        Fraction expresses the size of dataset to be assigned
+        Parameters
+        ----------
+        users: List[int]
+            users' IDs list
+        view_id: int
+            Optional, view ID to filter tasks to assign
+        method: AssignmentSamplingMethod
+            Optional, Assignment method
+        fraction
+            Optional, expresses the size of dataset to be assigned
+        Returns
+        -------
+        list[dict]
+            List of dicts with counter of created assignments
+        """
+
+        return self.assign_by_sampling(users=users,
+                                       assign_function=self.assign_reviewers,
+                                       view_id=view_id,
+                                       method=method,
+                                       fraction=fraction)
+
+    def assign_annotators_by_sampling(
+            self,
+            users: List[int],
+            view_id: int = None,
+            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+            fraction: float = 1.0
+    ):
+        """
+        Behaves similarly like `assign_annotators()` but instead of specify tasks_ids explicitely,
+        it gets users' IDs list and optional view ID and splits all tasks across annotators.
+        Fraction expresses the size of dataset to be assigned.
+        Parameters
+        ----------
+        users: List[int]
+            users' IDs list
+        view_id: int
+            Optional, view ID to filter tasks to assign
+        method: AssignmentSamplingMethod
+            Optional, Assignment method
+        fraction
+            Optional, expresses the size of dataset to be assigned
+        Returns
+        -------
+        list[dict]
+            List of dicts with counter of created assignments
+        """
+        return self.assign_by_sampling(users=users,
+                                       assign_function=self.assign_annotators,
+                                       view_id=view_id,
+                                       method=method,
+                                       fraction=fraction)
