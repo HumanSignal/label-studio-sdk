@@ -1,6 +1,7 @@
 """ .. include::../docs/project.md
 """
 import os
+import shutil
 import time
 import json
 
@@ -1361,3 +1362,154 @@ class Project(Client):
         }
         response = self.make_request('POST', '/api/storages/export/azure', json=payload)
         return response.json()
+
+    def exports(self):
+        """
+        Get current project exports
+        Returns
+        -------
+        List of dict with export snapshots with status:
+        id: int
+            Export ID
+        created_at: str
+            Creation time
+        status: str
+            Export status
+        created_by: dict
+            User data
+        finished_at: str
+            Finished time
+        """
+        response = self.make_request('GET', f'/api/projects/{self.id}/exports')
+        return response.json()
+
+    def create_export(self,
+                      title: str,
+                      task_filter_options: dict,
+                      serialization_options_drafts: bool = True,
+                      serialization_options_predictions: bool = True,
+                      serialization_options_annotations__completed_by: bool = True,
+                      annotation_filter_options_usual: bool = True,
+                      annotation_filter_options_ground_truth: bool = True,
+                      annotation_filter_options_skipped: bool = True,
+                      interpolate_key_frames: bool = False
+                      ):
+        """
+        Create export snapshot
+
+        Parameters
+        ----------
+        title: str
+            Export title
+        task_filter_options: dict
+
+        serialization_options_drafts: bool
+
+        serialization_options_predictions: bool
+
+        serialization_options_annotations__completed_by: bool
+
+        annotation_filter_options_usual: bool
+
+        annotation_filter_options_ground_truth: bool
+
+        annotation_filter_options_skipped: bool
+
+        interpolate_key_frames: bool
+            Interpolate key frames into sequence
+
+        Returns
+        -------
+        dict:
+            containing the same fields as in the request and the created export fields:
+        id: int
+            Export ID
+        created_at: str
+            Creation time
+        status: str
+            Export status
+        created_by: dict
+            User data
+        finished_at: str
+            Finished time
+
+        """
+        payload = {
+            "title": title,
+            "serialization_options": {
+                "drafts": {
+                    "only_id": serialization_options_drafts
+                },
+                "predictions": {
+                    "only_id": serialization_options_predictions
+                },
+                "annotations__completed_by": {
+                    "only_id": serialization_options_annotations__completed_by
+                }
+            },
+            "task_filter_options": task_filter_options,
+            "annotation_filter_options": {
+                "usual": annotation_filter_options_usual,
+                "ground_truth": annotation_filter_options_ground_truth,
+                "skipped": annotation_filter_options_skipped
+            }
+        }
+        response = self.make_request('POST', f'/api/projects/{self.id}/exports?interpolate_key_frames={interpolate_key_frames}', json=payload)
+        return response.json()
+
+    def get_export_status(self, export_id: int):
+        """
+        Get export status by ID
+
+        Parameters
+        ----------
+        export_id: int
+            Existing Export ID from current project. Can be referred as id from self.exports()
+
+        Returns
+        -------
+        dict:
+            containing the Export fields:
+        id: int
+            Export ID
+        created_at: str
+            Creation time
+        status: str
+            Export status
+        created_by: dict
+            User data
+        finished_at: str
+            Finished time
+        """
+        response = self.make_request('GET',
+                                     f'/api/projects/{self.id}/exports/{export_id}')
+        return response.json()
+
+    def download_export_snapshot(self,
+                                 export_id: int,
+                                 export_type: str = 'JSON',
+                                 path: str = "."):
+        """
+        Download export snapshot in provided format
+        Parameters
+        ----------
+        export_id: int
+            Existing Export ID from current project. Can be referred as id from self.exports()
+        export_type: str
+            Default export_type is JSON.
+            Specify another format type as referenced in <a href="https://github.com/heartexlabs/label-studio-converter/blob/master/label_studio_converter/converter.py#L32">
+            the Label Studio converter code</a>.
+        path: str
+            Default path to store downloaded files
+        Returns
+        -------
+        Status code for operation
+        """
+        response = self.make_request('GET',
+                                     f'/api/projects/{self.id}/exports/{export_id}/download?exportType={export_type}')
+        if response.status_code == 200:
+            filename = response.headers.get('filename')
+            with open(os.path.join(path, filename), 'wb') as f:
+                response.raw.decode_content = True
+                shutil.copyfileobj(response.raw, f)
+        return response.status_code
