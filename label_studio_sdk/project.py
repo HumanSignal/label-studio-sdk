@@ -1366,6 +1366,7 @@ class Project(Client):
     def exports(self):
         """
         Get current project exports
+        -------
         Returns
         -------
         List of dict with export snapshots with status:
@@ -1396,25 +1397,25 @@ class Project(Client):
                       ):
         """
         Create export snapshot
-
+        ----------
         Parameters
         ----------
         title: str
             Export title
         task_filter_options: dict
-
+            Task filter options
         serialization_options_drafts: bool
-
+            Expand drafts or include only ID
         serialization_options_predictions: bool
-
+            Expand predictions or include only ID
         serialization_options_annotations__completed_by: bool
-
+            Expand user that completed_by or include only ID
         annotation_filter_options_usual: bool
-
+            Include not cancelled and not ground truth annotations
         annotation_filter_options_ground_truth: bool
-
+            Filter ground truth annotations
         annotation_filter_options_skipped: bool
-
+            Filter skipped annotations
         interpolate_key_frames: bool
             Interpolate key frames into sequence
 
@@ -1459,8 +1460,8 @@ class Project(Client):
 
     def get_export_status(self, export_id: int):
         """
-        Get export status by ID
-
+        Get export status by Export ID
+        ----------
         Parameters
         ----------
         export_id: int
@@ -1491,6 +1492,7 @@ class Project(Client):
                                  path: str = "."):
         """
         Download export snapshot in provided format
+        ----------
         Parameters
         ----------
         export_id: int
@@ -1503,13 +1505,15 @@ class Project(Client):
             Default path to store downloaded files
         Returns
         -------
-        Status code for operation
+        Status code for operation and downloaded filename
         """
         response = self.make_request('GET',
                                      f'/api/projects/{self.id}/exports/{export_id}/download?exportType={export_type}')
+        filename = None
         if response.status_code == 200:
             filename = response.headers.get('filename')
-            with open(os.path.join(path, filename), 'wb') as f:
+            filename = os.path.join(path, filename)
+            with open(filename, 'wb') as f:
                 response.raw.decode_content = True
                 shutil.copyfileobj(response.raw, f)
-        return response.status_code
+        return response.status_code, filename
