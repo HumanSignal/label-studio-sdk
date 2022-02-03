@@ -1512,8 +1512,7 @@ class Project(Client):
         filename = None
         if response.status_code == 200:
             filename = response.headers.get('filename')
-            filename = os.path.join(path, filename)
-            with open(filename, 'wb') as f:
-                response.raw.decode_content = True
-                shutil.copyfileobj(response.raw, f)
+            with open(os.path.join(path, filename), 'wb') as f:
+                for chunk in response:
+                    f.write(chunk)
         return response.status_code, filename
