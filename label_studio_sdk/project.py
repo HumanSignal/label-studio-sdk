@@ -1366,7 +1366,7 @@ class Project(Client):
         response = self.make_request('POST', '/api/storages/export/azure', json=payload)
         return response.json()
 
-    def assign_by_sampling(
+    def _assign_by_sampling(
             self,
             users: List[int],
             assign_function: Callable,
@@ -1416,12 +1416,12 @@ class Project(Client):
             if method == AssignmentSamplingMethod.RANDOM:
                 sample_tasks = sample(tasks, n_tasks)
             else:
-                sample_tasks = tasks[:n_tasks]
-            final_results.append(assign_function(self, [user], sample_tasks))
+                raise ValueError(f"Sampling method {method} is not allowed")
+            final_results.append(assign_function([user], sample_tasks))
             tasks = list(set(tasks) - set(sample_tasks))
         # check if any tasks left
         if len(tasks) > 0:
-            final_results.append(assign_function(self, [user], tasks))
+            final_results.append(assign_function([users[-1]], tasks))
         return final_results
 
     def assign_reviewers_by_sampling(
@@ -1451,11 +1451,11 @@ class Project(Client):
             List of dicts with counter of created assignments
         """
 
-        return self.assign_by_sampling(users=users,
-                                       assign_function=self.assign_reviewers,
-                                       view_id=view_id,
-                                       method=method,
-                                       fraction=fraction)
+        return self._assign_by_sampling(users=users,
+                                        assign_function=self.assign_reviewers,
+                                        view_id=view_id,
+                                        method=method,
+                                        fraction=fraction)
 
     def assign_annotators_by_sampling(
             self,
@@ -1483,8 +1483,8 @@ class Project(Client):
         list[dict]
             List of dicts with counter of created assignments
         """
-        return self.assign_by_sampling(users=users,
-                                       assign_function=self.assign_annotators,
-                                       view_id=view_id,
-                                       method=method,
-                                       fraction=fraction)
+        return self._assign_by_sampling(users=users,
+                                        assign_function=self.assign_annotators,
+                                        view_id=view_id,
+                                        method=method,
+                                        fraction=fraction)
