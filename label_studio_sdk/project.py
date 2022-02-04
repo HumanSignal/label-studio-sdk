@@ -93,6 +93,25 @@ class Project(Client):
         """
         return parse_config(self.label_config)
 
+    def get_members(self):
+        """ Get members from this project.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        list of `label_studio_sdk.users.User`
+
+        """
+        from .users import User
+        response = self.make_request('GET', f'/api/projects/{self.id}/members')
+        users = []
+        for user_data in response.json():
+            user_data['client'] = self
+            users.append(User(**user_data))
+        return users
+
     def add_member(self, user):
         """ Add a user to a project.
 
