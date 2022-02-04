@@ -1394,9 +1394,11 @@ class Project(Client):
         list[dict]
             List of dicts with counter of created assignments
         """
+        assert len(users) > 0, 'Users list is empty.'
         final_results = []
         # Get tasks to assign
         tasks = self.get_tasks(view_id=view_id, only_ids=True)
+        assert len(tasks) > 0, 'Tasks list is empty.'
         # Choice fraction of tasks
         if fraction != 1.0:
             k = int(len(tasks) * fraction)
@@ -1405,8 +1407,10 @@ class Project(Client):
         n_tasks = max(int(len(tasks) / len(users)), 1)
         # Assign each user tasks
         for user in users:
+            # check if last chunk of tasks is less than average chunk
             if n_tasks > len(tasks):
                 n_tasks = len(tasks)
+            # check if last chunk of tasks is more than average chunk + 1 (covers rounding issue in line 1407)
             elif n_tasks + 1 == len(tasks):
                 n_tasks = n_tasks + 1
             if method == AssignmentSamplingMethod.RANDOM:
