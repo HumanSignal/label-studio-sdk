@@ -1,21 +1,13 @@
 """ .. include::../docs/project.md
 """
 import os
-import time
 import json
 
 from enum import Enum
 from typing import Optional, Union, List, Dict
 from .client import Client
 from .utils import parse_config
-
-
-class LabelStudioException(Exception):
-    pass
-
-
-class LabelStudioAttributeError(LabelStudioException):
-    pass
+from .errors import LabelStudioAttributeError, LabelStudioError
 
 
 class ProjectSampling(Enum):
@@ -337,14 +329,14 @@ class Project(Client):
         evaluate_predictions_automatically: bool
             Retrieve and display predictions when loading a task
 
-        Raises LabelStudioException in case of errors.
+        Raises LabelStudioError in case of errors.
 
         """
         response = self.make_request('POST', '/api/projects', json=kwargs)
         if response.status_code == 201:
             self.params = response.json()
         else:
-            raise LabelStudioException('Project not created')
+            raise LabelStudioError('Project not created')
 
     @classmethod
     def _create_from_id(cls, client, project_id, params=None):
@@ -406,7 +398,7 @@ class Project(Client):
         elif isinstance(tasks, str):
             # try import from file
             if not os.path.isfile(tasks):
-                raise LabelStudioException(f'Not found import tasks file {tasks}')
+                raise LabelStudioError(f'Not found import tasks file {tasks}')
             with open(tasks, mode='rb') as f:
                 response = self.make_request(
                     method='POST',
