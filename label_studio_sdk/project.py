@@ -104,7 +104,7 @@ class Project(Client):
         list of `label_studio_sdk.users.User`
 
         """
-        from users import User
+        from .users import User
         response = self.make_request('GET', f'/api/projects/{self.id}/members')
         users = []
         for user_data in response.json():
