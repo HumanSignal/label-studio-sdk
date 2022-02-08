@@ -4,7 +4,7 @@ import os
 import json
 
 from enum import Enum, auto
-from random import sample
+from random import sample, shuffle
 from typing import Optional, Union, List, Dict, Callable
 from .client import Client
 from .utils import parse_config
@@ -104,7 +104,7 @@ class Project(Client):
         list of `label_studio_sdk.users.User`
 
         """
-        from .users import User
+        from users import User
         response = self.make_request('GET', f'/api/projects/{self.id}/members')
         users = []
         for user_data in response.json():
@@ -1392,7 +1392,7 @@ class Project(Client):
             view_id: int = None,
             method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
             fraction: float = 1.0,
-
+            overlap: int = 1
     ):
         """
         Assigning tasks to Reviewers or Annotators by assign_function with method by fraction from view_id
@@ -1406,14 +1406,17 @@ class Project(Client):
             Optional, view ID to filter tasks to assign
         method: AssignmentSamplingMethod
             Optional, Assignment method
-        fraction
+        fraction:
             Optional, expresses the size of dataset to be assigned
+        overlap:
+            Optional, expresses the count of assignments for each task
         Returns
         -------
         list[dict]
             List of dicts with counter of created assignments
         """
         assert len(users) > 0, 'Users list is empty.'
+        assert len(users) >= overlap, 'Overlap is more than number of users.'
         final_results = []
         # Get tasks to assign
         tasks = self.get_tasks(view_id=view_id, only_ids=True)
@@ -1422,6 +1425,10 @@ class Project(Client):
         if fraction != 1.0:
             k = int(len(tasks) * fraction)
             tasks = sample(tasks, k)
+        # prepare random list of tasks for overlap > 1
+        if overlap > 1:
+            shuffle(tasks)
+            tasks = tasks * overlap
         # Check how many tasks for each user
         n_tasks = max(int(len(tasks) / len(users)), 1)
         # Assign each user tasks
@@ -1429,15 +1436,23 @@ class Project(Client):
             # check if last chunk of tasks is less than average chunk
             if n_tasks > len(tasks):
                 n_tasks = len(tasks)
-            # check if last chunk of tasks is more than average chunk + 1 (covers rounding issue in line 1407)
-            elif n_tasks + 1 == len(tasks):
+            # check if last chunk of tasks is more than average chunk + 1
+            # (covers rounding issue in line 1407)
+            elif n_tasks + 1 == len(tasks) and n_tasks != 1:
                 n_tasks = n_tasks + 1
-            if method == AssignmentSamplingMethod.RANDOM:
+            if method == AssignmentSamplingMethod.RANDOM and overlap == 1:
                 sample_tasks = sample(tasks, n_tasks)
+            elif method == AssignmentSamplingMethod.RANDOM and overlap > 1:
+                sample_tasks = tasks[:n_tasks]
             else:
                 raise ValueError(f"Sampling method {method} is not allowed")
             final_results.append(assign_function([user], sample_tasks))
-            tasks = list(set(tasks) - set(sample_tasks))
+            if overlap > 1:
+                tasks = tasks[n_tasks:]
+            else:
+                tasks = list(set(tasks) - set(sample_tasks))
+            if len(tasks) == 0:
+                break
         # check if any tasks left
         if len(tasks) > 0:
             final_results.append(assign_function([users[-1]], tasks))
@@ -1448,7 +1463,8 @@ class Project(Client):
             users: List[int],
             view_id: int = None,
             method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
-            fraction: float = 1.0
+            fraction: float = 1.0,
+            overlap: int = 1
     ):
         """
         Behaves similarly like `assign_reviewers()` but instead of specify tasks_ids explicitely,
@@ -1462,8 +1478,10 @@ class Project(Client):
             Optional, view ID to filter tasks to assign
         method: AssignmentSamplingMethod
             Optional, Assignment method
-        fraction
+        fraction:
             Optional, expresses the size of dataset to be assigned
+        overlap:
+            Optional, expresses the count of assignments for each task
         Returns
         -------
         list[dict]
@@ -1474,14 +1492,16 @@ class Project(Client):
                                         assign_function=self.assign_reviewers,
                                         view_id=view_id,
                                         method=method,
-                                        fraction=fraction)
+                                        fraction=fraction,
+                                        overlap=overlap)
 
     def assign_annotators_by_sampling(
             self,
             users: List[int],
             view_id: int = None,
             method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
-            fraction: float = 1.0
+            fraction: float = 1.0,
+            overlap: int = 1
     ):
         """
         Behaves similarly like `assign_annotators()` but instead of specify tasks_ids explicitely,
@@ -1495,8 +1515,10 @@ class Project(Client):
             Optional, view ID to filter tasks to assign
         method: AssignmentSamplingMethod
             Optional, Assignment method
-        fraction
+        fraction:
             Optional, expresses the size of dataset to be assigned
+        overlap:
+            Optional, expresses the count of assignments for each task
         Returns
         -------
         list[dict]
@@ -1506,4 +1528,5 @@ class Project(Client):
                                         assign_function=self.assign_annotators,
                                         view_id=view_id,
                                         method=method,
-                                        fraction=fraction)
+                                        fraction=fraction,
+                                        overlap=overlap)
