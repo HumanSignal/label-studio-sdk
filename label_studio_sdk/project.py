@@ -1406,9 +1406,9 @@ class Project(Client):
             Optional, view ID to filter tasks to assign
         method: AssignmentSamplingMethod
             Optional, Assignment method
-        fraction:
+        fraction: float
             Optional, expresses the size of dataset to be assigned
-        overlap:
+        overlap: int
             Optional, expresses the count of assignments for each task
         Returns
         -------
@@ -1478,9 +1478,9 @@ class Project(Client):
             Optional, view ID to filter tasks to assign
         method: AssignmentSamplingMethod
             Optional, Assignment method
-        fraction:
+        fraction: float
             Optional, expresses the size of dataset to be assigned
-        overlap:
+        overlap: int
             Optional, expresses the count of assignments for each task
         Returns
         -------
@@ -1515,9 +1515,9 @@ class Project(Client):
             Optional, view ID to filter tasks to assign
         method: AssignmentSamplingMethod
             Optional, Assignment method
-        fraction:
+        fraction: float
             Optional, expresses the size of dataset to be assigned
-        overlap:
+        overlap: int
             Optional, expresses the count of assignments for each task
         Returns
         -------
