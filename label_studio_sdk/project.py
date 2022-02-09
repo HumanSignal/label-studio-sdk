@@ -5,6 +5,7 @@ import json
 
 from enum import Enum, auto
 from random import sample, shuffle
+from pathlib import Path
 from typing import Optional, Union, List, Dict, Callable
 from .client import Client
 from .utils import parse_config
@@ -426,7 +427,7 @@ class Project(Client):
                 json=tasks,
                 params=params
             )
-        elif isinstance(tasks, str):
+        elif isinstance(tasks, (str, Path)):
             # try import from file
             if not os.path.isfile(tasks):
                 raise LabelStudioException(f'Not found import tasks file {tasks}')
@@ -437,6 +438,8 @@ class Project(Client):
                     files={'file': f},
                     params=params
                 )
+        else:
+            raise TypeError(f'Not supported type provided as "tasks" argument: {type(tasks)}')
         return response.json()['task_ids']
 
     def export_tasks(self, export_type='JSON'):
