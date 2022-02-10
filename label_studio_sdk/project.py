@@ -1260,7 +1260,9 @@ class Project(Client):
             for task in tasks:
                 for key in task['data']:
                     try:
-                        filename = get_local_path(task['data'][key])
+                        filename = get_local_path(task['data'][key],
+                                                  access_token=self.api_key,
+                                                  hostname=self.url)
                         filenames.append(filename)
                     except (FileNotFoundError, InvalidSchema, MissingSchema, IOError):
                         logger.debug(f"Couldn't copy file {task['data'][key]}.")
