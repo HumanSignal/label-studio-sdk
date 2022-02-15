@@ -20,7 +20,7 @@ class ClientCredentials(BaseModel):
     password: Optional[str]
     api_key: Optional[constr()] = None
 
-    @root_validator(pre=True)
+    @root_validator(pre=True, allow_reuse=True)
     def either_key_or_email_password(cls, values):
         assert 'email' in values or 'api_key' in values, 'At least one of email or api_key should be included'
         assert 'email' not in values or 'password' in values, 'Provide both email and password for login auth'

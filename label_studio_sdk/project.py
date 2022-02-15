@@ -3,8 +3,10 @@
 import os
 import json
 
-from enum import Enum
-from typing import Optional, Union, List, Dict
+from enum import Enum, auto
+from random import sample, shuffle
+from pathlib import Path
+from typing import Optional, Union, List, Dict, Callable
 from .client import Client
 from .utils import parse_config
 from .errors import LabelStudioAttributeError, LabelStudioError
@@ -38,6 +40,10 @@ class ProjectStorage(Enum):
     """ Redis Storage """
     S3_SECURED = 's3s'
     """ Amazon S3 Storage secured by IAM roles (Enterprise only)"""
+
+
+class AssignmentSamplingMethod(Enum):
+    RANDOM = auto()  # produces uniform splits across annotators
 
 
 class Project(Client):
@@ -80,6 +86,25 @@ class Project(Client):
         `"labels"` are taken from "alias" attribute if it exists, else "value"
         """
         return parse_config(self.label_config)
+
+    def get_members(self):
+        """ Get members from this project.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        list of `label_studio_sdk.users.User`
+
+        """
+        from .users import User
+        response = self.make_request('GET', f'/api/projects/{self.id}/members')
+        users = []
+        for user_data in response.json():
+            user_data['client'] = self
+            users.append(User(**user_data))
+        return users
 
     def add_member(self, user):
         """ Add a user to a project.
@@ -395,7 +420,7 @@ class Project(Client):
                 json=tasks,
                 params=params
             )
-        elif isinstance(tasks, str):
+        elif isinstance(tasks, (str, Path)):
             # try import from file
             if not os.path.isfile(tasks):
                 raise LabelStudioError(f'Not found import tasks file {tasks}')
@@ -406,6 +431,8 @@ class Project(Client):
                     files={'file': f},
                     params=params
                 )
+        else:
+            raise TypeError(f'Not supported type provided as "tasks" argument: {type(tasks)}')
         return response.json()['task_ids']
 
     def export_tasks(self, export_type='JSON'):
@@ -1353,3 +1380,149 @@ class Project(Client):
         }
         response = self.make_request('POST', '/api/storages/export/azure', json=payload)
         return response.json()
+
+    def _assign_by_sampling(
+            self,
+            users: List[int],
+            assign_function: Callable,
+            view_id: int = None,
+            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+            fraction: float = 1.0,
+            overlap: int = 1
+    ):
+        """
+        Assigning tasks to Reviewers or Annotators by assign_function with method by fraction from view_id
+        Parameters
+        ----------
+        users: List[int]
+            users' IDs list
+        assign_function: Callable
+            Function to assign tasks by list of user IDs
+        view_id: int
+            Optional, view ID to filter tasks to assign
+        method: AssignmentSamplingMethod
+            Optional, Assignment method
+        fraction: float
+            Optional, expresses the size of dataset to be assigned
+        overlap: int
+            Optional, expresses the count of assignments for each task
+        Returns
+        -------
+        list[dict]
+            List of dicts with counter of created assignments
+        """
+        assert len(users) > 0, 'Users list is empty.'
+        assert len(users) >= overlap, 'Overlap is more than number of users.'
+        final_results = []
+        # Get tasks to assign
+        tasks = self.get_tasks(view_id=view_id, only_ids=True)
+        assert len(tasks) > 0, 'Tasks list is empty.'
+        # Choice fraction of tasks
+        if fraction != 1.0:
+            k = int(len(tasks) * fraction)
+            tasks = sample(tasks, k)
+        # prepare random list of tasks for overlap > 1
+        if overlap > 1:
+            shuffle(tasks)
+            tasks = tasks * overlap
+        # Check how many tasks for each user
+        n_tasks = max(int(len(tasks) / len(users)), 1)
+        # Assign each user tasks
+        for user in users:
+            # check if last chunk of tasks is less than average chunk
+            if n_tasks > len(tasks):
+                n_tasks = len(tasks)
+            # check if last chunk of tasks is more than average chunk + 1
+            # (covers rounding issue in line 1407)
+            elif n_tasks + 1 == len(tasks) and n_tasks != 1:
+                n_tasks = n_tasks + 1
+            if method == AssignmentSamplingMethod.RANDOM and overlap == 1:
+                sample_tasks = sample(tasks, n_tasks)
+            elif method == AssignmentSamplingMethod.RANDOM and overlap > 1:
+                sample_tasks = tasks[:n_tasks]
+            else:
+                raise ValueError(f"Sampling method {method} is not allowed")
+            final_results.append(assign_function([user], sample_tasks))
+            if overlap > 1:
+                tasks = tasks[n_tasks:]
+            else:
+                tasks = list(set(tasks) - set(sample_tasks))
+            if len(tasks) == 0:
+                break
+        # check if any tasks left
+        if len(tasks) > 0:
+            final_results.append(assign_function([users[-1]], tasks))
+        return final_results
+
+    def assign_reviewers_by_sampling(
+            self,
+            users: List[int],
+            view_id: int = None,
+            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+            fraction: float = 1.0,
+            overlap: int = 1
+    ):
+        """
+        Behaves similarly like `assign_reviewers()` but instead of specify tasks_ids explicitely,
+        it gets users' IDs list and optional view ID and uniformly splits all tasks across reviewers
+        Fraction expresses the size of dataset to be assigned
+        Parameters
+        ----------
+        users: List[int]
+            users' IDs list
+        view_id: int
+            Optional, view ID to filter tasks to assign
+        method: AssignmentSamplingMethod
+            Optional, Assignment method
+        fraction: float
+            Optional, expresses the size of dataset to be assigned
+        overlap: int
+            Optional, expresses the count of assignments for each task
+        Returns
+        -------
+        list[dict]
+            List of dicts with counter of created assignments
+        """
+
+        return self._assign_by_sampling(users=users,
+                                        assign_function=self.assign_reviewers,
+                                        view_id=view_id,
+                                        method=method,
+                                        fraction=fraction,
+                                        overlap=overlap)
+
+    def assign_annotators_by_sampling(
+            self,
+            users: List[int],
+            view_id: int = None,
+            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+            fraction: float = 1.0,
+            overlap: int = 1
+    ):
+        """
+        Behaves similarly like `assign_annotators()` but instead of specify tasks_ids explicitely,
+        it gets users' IDs list and optional view ID and splits all tasks across annotators.
+        Fraction expresses the size of dataset to be assigned.
+        Parameters
+        ----------
+        users: List[int]
+            users' IDs list
+        view_id: int
+            Optional, view ID to filter tasks to assign
+        method: AssignmentSamplingMethod
+            Optional, Assignment method
+        fraction: float
+            Optional, expresses the size of dataset to be assigned
+        overlap: int
+            Optional, expresses the count of assignments for each task
+        Returns
+        -------
+        list[dict]
+            List of dicts with counter of created assignments
+        """
+        return self._assign_by_sampling(users=users,
+                                        assign_function=self.assign_annotators,
+                                        view_id=view_id,
+                                        method=method,
+                                        fraction=fraction,
+                                        overlap=overlap)
