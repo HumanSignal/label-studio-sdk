@@ -23,6 +23,13 @@ class LabelOps(BaseModel):
     api_key: str
     project_id: int = None
 
+    def _handle_errors(self, response):
+        try:
+            response.raise_for_status()
+        except Exception as exc:
+            print(f'Error response: {exc}, Content: {response.content}')
+            return True
+
     @validator('api_key')
     def valid_api_key(cls, v, values, **kwargs):
         response = requests.get(f'{values["base_url"]}', headers={'API_KEY': v})
@@ -32,7 +39,8 @@ class LabelOps(BaseModel):
     def initialize_project(self, project_id):
         self.project_id = project_id
         response = requests.get(f'{self.base_url}/{self.project_id}/process', headers={'API_KEY': self.api_key})
-        return f'Project {self.project_id} has been successfully initialized!'
+        if not self._handle_errors(response):
+            return f'Project {self.project_id} has been successfully initialized!'
 
     def check_project_status(self):
         response = requests.get(f'{self.base_url}/{self.project_id}/status', headers={'API_KEY': self.api_key})
@@ -40,8 +48,10 @@ class LabelOps(BaseModel):
 
     def apply(self, parameters):
         response = requests.post(f'{self.base_url}/{self.project_id}/labelops', json=parameters, headers={'API_KEY': self.api_key})
-        return LabelOpsResult.parse_obj(response.json())
+        if not self._handle_errors(response):
+            return LabelOpsResult.parse_obj(response.json())
 
     def commit(self, result, model_version):
         response = requests.post(f'{self.base_url}/{self.project_id}/commit/{model_version}', json=result.dict(), headers={'API_KEY': self.api_key})
-        return response.json()
+        if not self._handle_errors(response):
+            return response.json()
