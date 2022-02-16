@@ -18,6 +18,7 @@ class Label(BaseModel):
     indexed_tags: Optional[list]
     approved: Optional[bool]
     approved_by: Optional[int]
+    annotations_count: Optional[int]
     client: Optional[Client]
 
     class Config:

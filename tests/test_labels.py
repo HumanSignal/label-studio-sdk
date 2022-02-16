@@ -117,3 +117,10 @@ def test_delete_label():
         label = client.get_label(label_id)
         m.delete(f'{LS_URL}/api/labels/{label.id}')
         label.delete()
+
+def test_bulk_update_labels():
+    client = Client(url=LS_URL, api_key='fake_key')
+    with requests_mock.Mocker() as m:
+        m.post(f'{LS_URL}/api/labels/bulk', json={'annotations_updated': 1})
+        annotations_updated = client.bulk_update_labels(old_label=['Positive'], new_label=['Negative'], project=1)
+        assert annotations_updated == 1

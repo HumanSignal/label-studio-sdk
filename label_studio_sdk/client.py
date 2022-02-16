@@ -224,6 +224,28 @@ class Client(object):
             labels.append(LabelLink(**label_data))
         return labels
 
+    def bulk_update_labels(self, old_label, new_label, project=None):
+        """ Update labels in annotations results
+
+        Parameters
+        ----------
+        project: ID of project for annotations filtering
+
+        Returns
+        -------
+        count of updated annotations
+
+        """
+        params = {
+            'old_label': old_label,
+            'new_label': new_label,
+        }
+        if project is not None:
+            params['project'] = project
+
+        response = self.make_request('POST', '/api/labels/bulk', json=params)
+        return response.json()['annotations_updated']
+
     def create_labels(self, data):
         """Create label
 
