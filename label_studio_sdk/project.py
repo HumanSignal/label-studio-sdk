@@ -2,6 +2,7 @@
 """
 import os
 import json
+import logging
 
 from enum import Enum, auto
 from random import sample, shuffle
@@ -10,6 +11,8 @@ from pathlib import Path
 from typing import Optional, Union, List, Dict, Callable
 from .client import Client
 from .utils import parse_config
+
+logger = logging.getLogger(__name__)
 
 
 class LabelStudioException(Exception):
@@ -564,7 +567,8 @@ class Project(Client):
                 result += data['tasks']
                 page += 1
             # we'll get 404 from API on empty page
-            except LabelStudioException:
+            except LabelStudioException as e:
+                logger.debug(f'End of pagination: {e}')
                 break
         return result
 
