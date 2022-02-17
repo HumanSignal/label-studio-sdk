@@ -14,7 +14,7 @@
       </div>
       
       <a class="join__slack" target="_blank"
-         href="http://slack.labelstud.io.s3-website-us-east-1.amazonaws.com?source=site-header">
+         href="https://slack.labelstudio.heartex.com?source=site-header">
         <img src="/images/new/logoslack.svg" alt="logoslack"/>
         Join Community
       </a>

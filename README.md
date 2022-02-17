@@ -17,7 +17,7 @@ If you want to take action not supported natively by the SDK, you can [call the 
 This is the first release of the Label Studio SDK. It supports Label Studio Enterprise, Label Studio Teams, and Label Studio Community.
 
 - **Find a bug?** [Create a GitHub issue](https://github.com/heartexlabs/label-studio-sdk/issues)!
-- **Have a question?** [Join the Slack Community](http://slack.labelstud.io.s3-website-us-east-1.amazonaws.com/?source=github-sdk)!
+- **Have a question?** [Join the Slack Community](https://slack.labelstudio.heartex.com/?source=github-sdk)!
 - **Want to contribute?** [See the contributing guide](https://github.com/heartexlabs/label-studio-sdk/CONTRIBUTING.md)
 
 ## Quickstart
