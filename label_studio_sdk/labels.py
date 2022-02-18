@@ -1,7 +1,7 @@
 import datetime
 
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, Union
 from .client import Client
 from .errors import LabelStudioValidationError
 
@@ -11,7 +11,7 @@ class Label(BaseModel):
     created_by: int
     created_at: Optional[datetime.datetime]
     updated_at: Optional[datetime.datetime]
-    value: dict
+    value: Union[list, dict]
     label_config_tags: Optional[list]
     title: str
     description: Optional[str]
