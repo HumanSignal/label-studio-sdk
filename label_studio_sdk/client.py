@@ -247,7 +247,7 @@ class Client(object):
         return response.json()['annotations_updated']
 
     def create_labels(self, data):
-        """Create label
+        """Create labels
 
         Parameters
         ----------

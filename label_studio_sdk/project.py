@@ -435,6 +435,17 @@ class Project(Client):
             raise TypeError(f'Not supported type provided as "tasks" argument: {type(tasks)}')
         return response.json()['task_ids']
 
+    def get_labels(self):
+        """ Return all labels for this project
+
+        Returns
+        -------
+        list of `label_studio_sdk.labels.Label`
+
+        """
+        links = self.get_label_links(project=self.id)
+        return [link.label for link in links]
+
     def export_tasks(self, export_type='JSON'):
         """ Export annotated tasks.
 
