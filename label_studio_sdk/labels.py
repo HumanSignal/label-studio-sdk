@@ -35,13 +35,16 @@ class Label(BaseModel):
     def delete(self):
         self.client.make_request('DELETE', f'/api/labels/{self.id}')
 
+    def __str__(self):
+        return f'{self.title}'
+
 
 class LabelLink(BaseModel):
     id: int
     label: Label
     from_name: str
     project: int
-    client: Client
+    client: Optional[Client]
 
     class Config:
         arbitrary_types_allowed = True

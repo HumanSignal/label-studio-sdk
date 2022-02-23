@@ -221,6 +221,7 @@ class Client(object):
         labels = []
         for label_data in response.json()['results']:
             label_data['client'] = self
+            label_data['label']['client'] = self
             labels.append(LabelLink(**label_data))
         return labels
 
