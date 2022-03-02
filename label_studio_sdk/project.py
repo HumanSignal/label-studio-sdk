@@ -141,7 +141,7 @@ class Project(Client):
 
         Parameters
         ----------
-        users: list of user IDs
+        users: list of user's objects
         tasks_ids: list of integer task IDs to assign users to
 
         Returns
@@ -201,7 +201,7 @@ class Project(Client):
 
         Parameters
         ----------
-        users: list of user IDs
+        users: list of user's objects
         tasks_ids: list of integer task IDs to assign reviewers to
 
         Returns
@@ -1544,6 +1544,10 @@ class Project(Client):
         list[dict]
             List of dicts with counter of created assignments
         """
+        # get users from project
+        project_users = self.get_members()
+        # User objects list
+        users = [us for us in project_users if us.id in users]
         return self._assign_by_sampling(users=users,
                                         assign_function=self.assign_annotators,
                                         view_id=view_id,
