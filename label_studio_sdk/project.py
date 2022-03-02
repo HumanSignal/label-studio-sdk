@@ -141,7 +141,7 @@ class Project(Client):
 
         Parameters
         ----------
-        users: list of user IDs
+        users: list of user's objects
         tasks_ids: list of integer task IDs to assign users to
 
         Returns
@@ -201,7 +201,7 @@ class Project(Client):
 
         Parameters
         ----------
-        users: list of user IDs
+        users: list of user's objects
         tasks_ids: list of integer task IDs to assign reviewers to
 
         Returns
@@ -1437,6 +1437,12 @@ class Project(Client):
         """
         assert len(users) > 0, 'Users list is empty.'
         assert len(users) >= overlap, 'Overlap is more than number of users.'
+        # check if users are int and not User objects
+        if isinstance(users[0], int):
+            # get users from project
+            project_users = self.get_members()
+            # User objects list
+            users = [user for user in project_users if user.id in users]
         final_results = []
         # Get tasks to assign
         tasks = self.get_tasks(view_id=view_id, only_ids=True)
@@ -1507,7 +1513,6 @@ class Project(Client):
         list[dict]
             List of dicts with counter of created assignments
         """
-
         return self._assign_by_sampling(users=users,
                                         assign_function=self.assign_reviewers,
                                         view_id=view_id,
