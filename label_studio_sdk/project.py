@@ -1547,7 +1547,7 @@ class Project(Client):
         # get users from project
         project_users = self.get_members()
         # User objects list
-        users = [us for us in project_users if us.id in users]
+        users = [user for user in project_users if user.id in users]
         return self._assign_by_sampling(users=users,
                                         assign_function=self.assign_annotators,
                                         view_id=view_id,
