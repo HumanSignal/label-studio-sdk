@@ -2,13 +2,18 @@
 """
 import os
 import json
+import logging
 
 from enum import Enum, auto
 from random import sample, shuffle
+from requests.exceptions import HTTPError
 from pathlib import Path
 from typing import Optional, Union, List, Dict, Callable
 from .client import Client
 from .utils import parse_config
+
+logger = logging.getLogger(__name__)
+
 from .errors import LabelStudioAttributeError, LabelStudioError
 
 
@@ -130,7 +135,7 @@ class Project(Client):
 
         Parameters
         ----------
-        users: list of user IDs
+        users: list of user's objects
         tasks_ids: list of integer task IDs to assign users to
 
         Returns
@@ -190,7 +195,7 @@ class Project(Client):
 
         Parameters
         ----------
-        users: list of user IDs
+        users: list of user's objects
         tasks_ids: list of integer task IDs to assign reviewers to
 
         Returns
@@ -550,16 +555,27 @@ class Project(Client):
             Task list with task data, annotations, predictions and other fields from the Data Manager
 
         """
-        data = self.get_paginated_tasks(
-            filters=filters,
-            ordering=ordering,
-            view_id=view_id,
-            selected_ids=selected_ids,
-            only_ids=only_ids,
-            page=1,
-            page_size=-1
-        )
-        return data['tasks']
+
+        page = 1
+        result = []
+        while True:
+            try:
+                data = self.get_paginated_tasks(
+                    filters=filters,
+                    ordering=ordering,
+                    view_id=view_id,
+                    selected_ids=selected_ids,
+                    only_ids=only_ids,
+                    page=page,
+                    page_size=100
+                )
+                result += data['tasks']
+                page += 1
+            # we'll get 404 from API on empty page
+            except LabelStudioException as e:
+                logger.debug(f'End of pagination: {e}')
+                break
+        return result
 
     def get_paginated_tasks(
         self,
@@ -648,8 +664,10 @@ class Project(Client):
         if only_ids:
             params['include'] = 'id'
 
-        response = self.make_request(
-            'GET', '/api/dm/tasks', params)
+        try:
+            response = self.make_request('GET', '/api/tasks', params)
+        except HTTPError as e:
+            raise LabelStudioException('Error loading tasks')
 
         data = response.json()
         tasks = data['tasks']
@@ -1424,6 +1442,12 @@ class Project(Client):
         """
         assert len(users) > 0, 'Users list is empty.'
         assert len(users) >= overlap, 'Overlap is more than number of users.'
+        # check if users are int and not User objects
+        if isinstance(users[0], int):
+            # get users from project
+            project_users = self.get_members()
+            # User objects list
+            users = [user for user in project_users if user.id in users]
         final_results = []
         # Get tasks to assign
         tasks = self.get_tasks(view_id=view_id, only_ids=True)
@@ -1494,7 +1518,6 @@ class Project(Client):
         list[dict]
             List of dicts with counter of created assignments
         """
-
         return self._assign_by_sampling(users=users,
                                         assign_function=self.assign_reviewers,
                                         view_id=view_id,
