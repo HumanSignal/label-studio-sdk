@@ -5,4 +5,4 @@ from .project import Project
 from .utils import parse_config
 
 
-__version__ = '0.0.6'
+__version__ = '0.0.10'
