@@ -1,8 +1,6 @@
 """ .. include::../docs/project.md
 """
 import os
-import shutil
-import time
 import json
 import logging
 
@@ -53,6 +51,10 @@ class ProjectStorage(Enum):
     """ Redis Storage """
     S3_SECURED = 's3s'
     """ Amazon S3 Storage secured by IAM roles (Enterprise only)"""
+
+
+class AssignmentSamplingMethod(Enum):
+    RANDOM = auto()  # produces uniform splits across annotators
 
 
 class Project(Client):
@@ -1549,7 +1551,7 @@ class Project(Client):
         """
         return self._assign_by_sampling(users=users,
                                         assign_function=self.assign_annotators,
-                           view_id=view_id,
+                                        view_id=view_id,
                                         method=method,
                                         fraction=fraction,
                                         overlap=overlap)
@@ -1637,14 +1639,15 @@ class Project(Client):
                 },
                 "annotations__completed_by": {
                     "only_id": serialization_options_annotations__completed_by
-                }
+                },
+                "interpolate_key_frames": interpolate_key_frames
             },
             "task_filter_options": task_filter_options,
             "annotation_filter_options": {
                 "usual": annotation_filter_options_usual,
                 "ground_truth": annotation_filter_options_ground_truth,
                 "skipped": annotation_filter_options_skipped
-            }
+            },
         }
         response = self.make_request('POST', f'/api/projects/{self.id}/exports?interpolate_key_frames={interpolate_key_frames}', json=payload)
         return response.json()
