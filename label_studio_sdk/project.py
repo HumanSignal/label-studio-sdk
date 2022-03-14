@@ -1556,9 +1556,9 @@ class Project(Client):
                                         fraction=fraction,
                                         overlap=overlap)
 
-    def exports(self):
+    def export_snapshot_list(self):
         """
-        Get current project exports
+        Get list of export snapshots for the current project
         -------
         Returns
         -------
@@ -1577,7 +1577,7 @@ class Project(Client):
         response = self.make_request('GET', f'/api/projects/{self.id}/exports')
         return response.json()
 
-    def create_export(self,
+    def export_snapshot_create(self,
                       title: str,
                       task_filter_options: dict,
                       serialization_options_drafts: bool = True,
@@ -1589,7 +1589,7 @@ class Project(Client):
                       interpolate_key_frames: bool = False
                       ):
         """
-        Create export snapshot
+        Create new export snapshot
         ----------
         Parameters
         ----------
@@ -1652,9 +1652,9 @@ class Project(Client):
         response = self.make_request('POST', f'/api/projects/{self.id}/exports?interpolate_key_frames={interpolate_key_frames}', json=payload)
         return response.json()
 
-    def get_export_status(self, export_id: int):
+    def export_snapshot_status(self, export_id: int):
         """
-        Get export status by Export ID
+        Get export snapshot status by Export ID
         ----------
         Parameters
         ----------
@@ -1680,12 +1680,12 @@ class Project(Client):
                                      f'/api/projects/{self.id}/exports/{export_id}')
         return response.json()
 
-    def download_export_snapshot(self,
+    def export_snapshot_download(self,
                                  export_id: int,
                                  export_type: str = 'JSON',
                                  path: str = "."):
         """
-        Download export snapshot in provided format
+        Download file with export snapshot in provided format
         ----------
         Parameters
         ----------
