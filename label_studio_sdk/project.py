@@ -1623,7 +1623,7 @@ class Project(Client):
 
     def export_snapshot_create(self,
                                title: str,
-                               task_filter_options: dict = {},
+                               task_filter_options: dict = None,
                                serialization_options_drafts: bool = True,
                                serialization_options_predictions: bool = True,
                                serialization_options_annotations__completed_by: bool = True,
@@ -1672,6 +1672,9 @@ class Project(Client):
             Finished time
 
         """
+        if task_filter_options is None:
+            task_filter_options = {}
+
         payload = {
             "title": title,
             "serialization_options": {
