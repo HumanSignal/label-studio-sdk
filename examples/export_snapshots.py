@@ -2,8 +2,8 @@ import time
 from label_studio_sdk import Client
 
 LABEL_STUDIO_URL = 'http://localhost:8080'
-# API_KEY = '<MY_API_KEY>'
-API_KEY = 'b3ee3f157555c90c1d4f8d9216ffca069f19be3b'
+API_KEY = '<MY_API_KEY>'
+PROJECT_ID = 42
 
 # connect to Label Studio
 ls = Client(url=LABEL_STUDIO_URL, api_key=API_KEY)
@@ -23,7 +23,7 @@ ls.check_connection()
     ''',
 )"""
 # get existing project
-project = ls.get_project(17)
+project = ls.get_project(PROJECT_ID)
 
 # get the first tab
 views = project.get_views()
