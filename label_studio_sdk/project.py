@@ -50,11 +50,45 @@ class ProjectStorage(Enum):
     REDIS = 'redis'
     """ Redis Storage """
     S3_SECURED = 's3s'
-    """ Amazon S3 Storage secured by IAM roles (Enterprise only)"""
+    """ Amazon S3 Storage secured by IAM roles (Enterprise only) """
 
 
 class AssignmentSamplingMethod(Enum):
     RANDOM = auto()  # produces uniform splits across annotators
+
+
+class ExportSnapshotStatus:
+    CREATED = 'created'
+    """ Export snapshot is created """
+    IN_PROGRESS = 'in_progress'
+    """ Export snapshot is in progress  """
+    FAILED = 'failed'
+    """ Export snapshot failed with errors """
+    COMPLETED = 'completed'
+    """ Export snapshot was created and can be downloaded """
+
+    def __init__(self, response):
+        self.response = response
+
+    def is_created(self):
+        """ Export snapshot is created """
+        assert 'status' in self.response, '"status" field not found in export snapshot status response'
+        return self.response['status'] == self.CREATED
+
+    def is_in_progress(self):
+        """ Export snapshot is in progress  """
+        assert 'status' in self.response, '"status" field not found in export_snapshot_status response'
+        return self.response['status'] == self.IN_PROGRESS
+
+    def is_failed(self):
+        """ Export snapshot failed with errors """
+        assert 'status' in self.response, '"status" field not found in export_snapshot_status response'
+        return self.response['status'] == self.FAILED
+
+    def is_completed(self):
+        """ Export snapshot was created and can be downloaded """
+        assert 'status' in self.response, '"status" field not found in export_snapshot_status response'
+        return self.response['status'] == self.COMPLETED
 
 
 class Project(Client):
@@ -691,6 +725,16 @@ class Project(Client):
         -------
         list
             List of view dicts
+
+        The each dict contains the following fields:
+        id: int
+            View ID
+        project: int
+            Project ID
+        user: int
+            User ID who created this tab
+        data: dict
+            Filters, orderings and other visual settings
         """
         response = self.make_request('GET', f'/api/dm/views?project={self.id}')
         return response.json()
@@ -1578,16 +1622,16 @@ class Project(Client):
         return response.json()
 
     def export_snapshot_create(self,
-                      title: str,
-                      task_filter_options: dict,
-                      serialization_options_drafts: bool = True,
-                      serialization_options_predictions: bool = True,
-                      serialization_options_annotations__completed_by: bool = True,
-                      annotation_filter_options_usual: bool = True,
-                      annotation_filter_options_ground_truth: bool = True,
-                      annotation_filter_options_skipped: bool = True,
-                      interpolate_key_frames: bool = False
-                      ):
+                               title: str,
+                               task_filter_options: dict = {},
+                               serialization_options_drafts: bool = True,
+                               serialization_options_predictions: bool = True,
+                               serialization_options_annotations__completed_by: bool = True,
+                               annotation_filter_options_usual: bool = True,
+                               annotation_filter_options_ground_truth: bool = True,
+                               annotation_filter_options_skipped: bool = True,
+                               interpolate_key_frames: bool = False
+                               ):
         """
         Create new export snapshot
         ----------
@@ -1596,7 +1640,7 @@ class Project(Client):
         title: str
             Export title
         task_filter_options: dict
-            Task filter options
+            Task filter options, use {"view": <tab_id>} to apply filter from this tab
         serialization_options_drafts: bool
             Expand drafts or include only ID
         serialization_options_predictions: bool
@@ -1663,14 +1707,15 @@ class Project(Client):
 
         Returns
         -------
-        dict:
-            containing the Export fields:
+        `label_studio_sdk.project.ExportSnapshotStatus`
+
+        ExportSnapshotStatus.response is dict and contains the following fields:
         id: int
             Export ID
         created_at: str
             Creation time
         status: str
-            Export status
+            created, completed, in_progress, failed
         created_by: dict
             User data
         finished_at: str
@@ -1678,7 +1723,7 @@ class Project(Client):
         """
         response = self.make_request('GET',
                                      f'/api/projects/{self.id}/exports/{export_id}')
-        return response.json()
+        return ExportSnapshotStatus(response.json())
 
     def export_snapshot_download(self,
                                  export_id: int,
