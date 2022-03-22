@@ -184,13 +184,23 @@ class Project(Client):
             Dict with counter of created assignments
 
         """
-        payload = {
-            'users': [user.id for user in users],
-            'selectedItems': {'all': False, 'included': tasks_ids},
-            'type': 'AN',
-        }
-        response = self.make_request('POST', f'/api/projects/{self.id}/tasks/assignees', json=payload)
-        return response.json()
+
+        # chunk tasks in batch size
+        def chunk(tasks, batch_size):
+            from itertools import islice
+            tasks = iter(tasks)
+            return iter(lambda: list(islice(tasks, batch_size)), [])
+        final_response = {'assignments': 0}
+        # Assign tasks to users with batches
+        for c in chunk(tasks_ids, 1000):
+            payload = {
+                'users': [user.id for user in users],
+                'selectedItems': {'all': False, 'included': c},
+                'type': 'AN',
+            }
+            response = self.make_request('POST', f'/api/projects/{self.id}/tasks/assignees', json=payload)
+            final_response['assignments'] += response.json()['assignments']
+        return final_response
 
     def delete_annotators_assignment(self, tasks_ids):
         """ Remove all assigned annotators for tasks
