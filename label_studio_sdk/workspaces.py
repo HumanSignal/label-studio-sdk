@@ -42,3 +42,24 @@ class Workspace(BaseModel):
             json={'workspace': self.id, 'user': user.id})
         if response.status_code != 204:
             raise ValueError(str(response.content))
+
+    def get_projects(self):
+        """ Get projects in current workspace
+
+        Returns
+        -------
+        project: label_studio_sdk.project.Project
+            Project
+        """
+        from .project import Project
+        final_results = []
+        response = self.client.make_request(
+            'GET', f'/api/workspaces/{self.id}/projects'
+        )
+        projects = response.json()
+        for project_data in projects:
+            project_id = project_data['id']
+            final_results.append(Project.get_from_id(client=self.client,
+                                                     project_id=project_id,
+                                                     ))
+        return final_results
