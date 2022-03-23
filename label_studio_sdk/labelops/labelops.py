@@ -58,9 +58,19 @@ class LabelOps(BaseModel):
             return response.json()
 
     def initialize_project(self, project_id):
-        response = requests.post(f'{self.base_url}/api/project', headers={'API_KEY': self.api_key}, json={'project_id': project_id})
+        response = requests.post(f'{self.base_url}/api/project/', headers={'API_KEY': self.api_key}, json={'project_id': project_id})
         if not self._handle_errors(response):
             return f'Project {project_id} has been successfully initialized!'
+
+    def run(self, id, project_id):
+        response = requests.post(f'{self.base_url}/api/run/', headers={'API_KEY': self.api_key}, json={'id': id, 'project_id': project_id})
+        if not self._handle_errors(response):
+            return response.json()
+
+    def get_labels(self, project_id):
+        response = requests.get(f'{self.base_url}/api/labels/', headers={'API_KEY': self.api_key}, json={'project_id': project_id})
+        if not self._handle_errors(response):
+            return response.json()
 
 
 # class LabelOps(BaseModel):
