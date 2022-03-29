@@ -48,7 +48,7 @@ class Workspace(BaseModel):
 
         Returns
         -------
-        project: label_studio_sdk.project.Project
+        projects: list of label_studio_sdk.project.Project
             Project
         """
         from .project import Project
