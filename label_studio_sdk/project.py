@@ -410,7 +410,7 @@ class Project(Client):
 
     @classmethod
     def _create_from_id(cls, client, project_id, params=None):
-        project = cls(url=client.url, api_key=client.api_key, session=client.session)
+        project = cls(url=client.url, api_key=client.api_key, session=client.session, extra_headers=client.headers)
         if params and isinstance(params, dict):
             # TODO: validate project parameters
             project.params = params
