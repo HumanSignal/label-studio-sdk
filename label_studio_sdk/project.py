@@ -694,7 +694,7 @@ class Project(Client):
             params['include'] = 'id'
 
         try:
-            response = self.make_request('GET', '/api/tasks', params)
+            response = self.make_request('GET', '/api/dm/tasks', params)
         except HTTPError as e:
             raise LabelStudioException('Error loading tasks')
 
