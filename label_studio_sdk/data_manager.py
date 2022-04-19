@@ -200,7 +200,7 @@ class Column:
     """Annotators that completed the task (Community). Can include assigned annotators (Enterprise only)"""
     total_predictions = "filter:tasks:total_predictions"
     """Total number of predictions for the task"""
-    cancelled_annotations = "filter: tasks:cancelled_annotations"
+    cancelled_annotations = "filter:tasks:cancelled_annotations"
     """Number of cancelled or skipped annotations for the task"""
     total_annotations = "filter:tasks:total_annotations"
     """Total number of annotations on a task"""
