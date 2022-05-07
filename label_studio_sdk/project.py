@@ -570,7 +570,7 @@ class Project(Client):
             List with <b>one</b> string representing Data Manager ordering.
             Use `label_studio_sdk.data_manager.Column` helper class.
             Example:
-            ```[Column.total_annotations]```
+            ```[Column.total_annotations]```, ```['-' + Column.total_annotations]``` - inverted order
         view_id: int
             View ID, visible as a Data Manager tab, for which to retrieve filters, ordering, and selected items
         selected_ids: list of ints
@@ -642,7 +642,7 @@ class Project(Client):
             List with <b>one</b> string representing Data Manager ordering.
             Use `label_studio_sdk.data_manager.Column` helper class.
             Example:
-            ```[Column.total_annotations]```
+            ```[Column.total_annotations]```, ```['-' + Column.total_annotations]``` - inverted order
         view_id: int
             View ID, visible as a Data Manager tab, for which to retrieve filters, ordering, and selected items
         selected_ids: list of ints
@@ -739,14 +739,20 @@ class Project(Client):
         response = self.make_request('GET', f'/api/dm/views?project={self.id}')
         return response.json()
 
-    def create_view(self, filters):
+    def create_view(self, filters, ordering=None, title='Tasks'):
         """Create view
 
         Parameters
         ----------
         filters: dict
             Specify the filters(`label_studio_sdk.data_manager.Filters`) of the view
-
+        ordering: list of label_studio_sdk.data_manager.Column
+            List with <b>one</b> string representing Data Manager ordering.
+            Use `label_studio_sdk.data_manager.Column` helper class.
+            Example:
+            ```[Column.total_annotations]```, ```['-' + Column.total_annotations]``` - inverted order
+        title: str
+            Tab name
         Returns
         -------
         dict:
@@ -756,6 +762,8 @@ class Project(Client):
         data = {
             'project': self.id,
             'data': {
+                'title': title,
+                'ordering': ordering,
                 'filters': filters,
             }
         }
