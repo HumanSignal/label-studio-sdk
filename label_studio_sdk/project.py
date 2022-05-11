@@ -10,7 +10,7 @@ from requests.exceptions import HTTPError
 from pathlib import Path
 from typing import Optional, Union, List, Dict, Callable
 from .client import Client
-from .utils import parse_config
+from .utils import parse_config, chunk
 
 logger = logging.getLogger(__name__)
 
@@ -184,17 +184,13 @@ class Project(Client):
             Dict with counter of created assignments
 
         """
-
-        # chunk tasks in batch size
-        def chunk(tasks, batch_size):
-            from itertools import islice
-            tasks = iter(tasks)
-            return iter(lambda: list(islice(tasks, batch_size)), [])
         final_response = {'assignments': 0}
+        users_ids = [user.id for user in users]
         # Assign tasks to users with batches
         for c in chunk(tasks_ids, 1000):
+            logger.debug(f"Starting assignment for: {users_ids}")
             payload = {
-                'users': [user.id for user in users],
+                'users': users_ids,
                 'selectedItems': {'all': False, 'included': c},
                 'type': 'AN',
             }
