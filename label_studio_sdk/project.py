@@ -1508,7 +1508,7 @@ class Project(Client):
             shuffle(tasks)
             tasks = tasks * overlap
         # Check how many tasks for each user
-        n_tasks = max(int(len(tasks) / len(users)), 1)
+        n_tasks = max(int(len(tasks) // len(users)), 1)
         # Assign each user tasks
         for user in users:
             # check if last chunk of tasks is less than average chunk
@@ -1533,7 +1533,11 @@ class Project(Client):
                 break
         # check if any tasks left
         if len(tasks) > 0:
-            final_results.append(assign_function([users[-1]], tasks))
+            for user in users:
+                if not tasks:
+                    break
+                task = tasks.pop()
+                final_results.append(assign_function([user], [task]))
         return final_results
 
     def assign_reviewers_by_sampling(
