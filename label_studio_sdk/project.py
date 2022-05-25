@@ -598,6 +598,9 @@ class Project(Client):
                     page=page,
                     page_size=100
                 )
+                if not data.get('tasks'):
+                    logger.debug('Nothing to retrieve')
+                    break
                 result += data['tasks']
                 page += 1
             # we'll get 404 from API on empty page
