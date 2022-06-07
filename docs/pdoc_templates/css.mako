@@ -7,6 +7,11 @@ code {
 }
 
 <%def name="mobile()" filter="minify_css">
+
+   dl dd a {
+     color: #fe9 !important;
+   }
+
   :root {
     --highlight-color: #fe9;
   }
@@ -456,10 +461,6 @@ code {
     h5,
     h6 {
         page-break-after: avoid;
-    }
-    
-    dl dd a {
-      color: #fe9 !important;
     }
 }
 </%def>
