@@ -457,5 +457,9 @@ code {
     h6 {
         page-break-after: avoid;
     }
+    
+    dl dd a {
+      color: #fe9 !important;
+    }
 }
 </%def>
