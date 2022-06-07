@@ -9,7 +9,7 @@ code {
 <%def name="mobile()" filter="minify_css">
 
    dl dd a {
-     color: #fe9 !important;
+     color: rgb(229, 122, 56) !important;
    }
 
   :root {
