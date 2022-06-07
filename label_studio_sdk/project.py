@@ -1652,7 +1652,8 @@ class Project(Client):
         title: str
             Export title
         task_filter_options: dict
-            Task filter options, use {"view": <tab_id>} to apply filter from this tab
+            Task filter options, use {"view": tab_id} to apply filter from this tab, 
+            <a href="https://api.labelstud.io/#operation/api_projects_exports_create">check the API parameters for more details</a>
         serialization_options_drafts: bool
             Expand drafts or include only ID
         serialization_options_predictions: bool
