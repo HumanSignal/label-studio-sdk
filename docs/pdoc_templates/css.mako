@@ -6,10 +6,6 @@ code {
   color: unset !important;
 }
 
-dl dd a {
-  color: #fe9;
-}
-
 <%def name="mobile()" filter="minify_css">
   :root {
     --highlight-color: #fe9;
