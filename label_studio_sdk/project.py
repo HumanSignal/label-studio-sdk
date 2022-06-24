@@ -898,6 +898,26 @@ class Project(Client):
         response = self.make_request('GET', f'/api/tasks/{task_id}')
         return response.json()
 
+    def update_task(self, task_id, **kwargs):
+        """ Update specific task by ID.
+
+        Parameters
+        ----------
+        task_id: int
+            Task ID you want to update
+        kwargs: kwargs parameters
+            List of parameters to update. Check all available parameters [here](https://labelstud.io/api#operation/api_tasks_partial_update)
+
+        Returns
+        -------
+        dict:
+            Dict with updated task
+
+        """
+        response = self.make_request('PATCH', f'/api/tasks/{task_id}', json=kwargs)
+        response.raise_for_status()
+        return response.json()
+
     def create_prediction(
         self,
         task_id: int,
