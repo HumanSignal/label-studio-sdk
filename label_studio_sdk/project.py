@@ -993,7 +993,7 @@ class Project(Client):
         Parameters
         ----------
         model_versions: list or None
-            Convert predictions with these model versions to annotations. If `None`, all existed model versions are used
+            Convert predictions with these model versions to annotations. If `None`, all existing model versions are used
 
         Returns
         -------
