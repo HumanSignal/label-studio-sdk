@@ -102,7 +102,7 @@ class Client(object):
         response = self.make_request('DELETE', f'/api/projects/{id}/')
         return response.json()
 
-    def delete_projects(self):
+    def delete_all_projects(self):
         """ Deletes all projects in Label Studio.
 
         Returns
