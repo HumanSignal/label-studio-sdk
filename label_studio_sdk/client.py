@@ -91,6 +91,32 @@ class Client(object):
         """
         return self.list_projects()
 
+    def delete_project(self, project_id: int):
+        """ Delete a project in Label Studio.
+
+        Returns
+        -------
+        dict
+            Status string
+        """
+        response = self.make_request('DELETE', f'/api/projects/{id}/')
+        return response.json()
+
+    def delete_all_projects(self):
+        """ Deletes all projects in Label Studio.
+
+        Returns
+        -------
+        List
+            List of (dict) status strings
+        """
+        responses = []
+        project_ids = [project.get_params()['id'] for project in self.list_projects()]
+        for project_id in project_ids:
+            response = self.delete_project(project_id)
+            responses.append(response)
+        return responses
+
     def list_projects(self):
         """ List all projects in Label Studio.
 
