@@ -73,7 +73,7 @@ class Filters:
 
         Parameters
         ----------
-        name: `Column` | str
+        name: `Column` or str
             Column.id, Column.completed_at, Column.data('my_field'), etc
         operator: `Operator`
             Operator.EQUAL, Operator.GREATER_OR_EQUAL, Operator.IN, etc
