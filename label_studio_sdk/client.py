@@ -99,8 +99,8 @@ class Client(object):
         dict
             Status string
         """
-        response = self.make_request('DELETE', f'/api/projects/{id}/')
-        return response.json()
+        response = self.make_request('DELETE', f'/api/projects/{project_id}/')
+        return response
 
     def delete_all_projects(self):
         """ Deletes all projects in Label Studio.
