@@ -368,11 +368,11 @@
 
 <main>
   % if module_list:
-    <article id="content">
+    <article id="content" class="content">
       ${show_module_list(modules)}
     </article>
   % else:
-    <article id="content">
+    <article id="content" class="content">
       ${show_module(module)}
     </article>
     ${module_index(module)}
