@@ -51,7 +51,6 @@ class Client(object):
          
         # set api key or get it using credentials (username and password)
         if api_key is not None:
-            warnings.warn("A deprecation warning to fit accordingly to your deprecation policy", DeprecationWarning)
             credentials = ClientCredentials(api_key=api_key)
         self.api_key = credentials.api_key if credentials.api_key else self.get_api_key(credentials)
 
