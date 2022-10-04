@@ -4,9 +4,7 @@ import os
 import json
 import logging
 
-from operator import itemgetter
 from enum import Enum, auto
-from typing import Optional, Union, List, Dict
 from random import sample, shuffle
 from requests.exceptions import HTTPError, InvalidSchema, MissingSchema
 from pathlib import Path
