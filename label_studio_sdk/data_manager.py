@@ -87,7 +87,7 @@ class Filters:
         dict
         """
         return {
-            "filter": name,
+            "filter": 'filter:' + name,
             "operator": operator,
             "type": column_type,
             "value": value
@@ -178,41 +178,41 @@ class Column:
     """Specify the column on the Data Manager in Label Studio UI to use in the filter.
     """
 
-    id = "filter:tasks:id"
+    id = "tasks:id"
     """Task ID"""
-    ground_truth = "filter:tasks:ground_truth"
+    ground_truth = "tasks:ground_truth"
     """Ground truth status of the tasks"""
-    annotations_results = "filter:tasks:annotations_results"
+    annotations_results = "tasks:annotations_results"
     """Annotation results for the tasks"""
-    reviewed = "filter:tasks:reviewed"
+    reviewed = "tasks:reviewed"
     """Whether the tasks have been reviewed (Enterprise only)"""
-    predictions_score = "filter:tasks:predictions_score"
+    predictions_score = "tasks:predictions_score"
     """Prediction score for the task"""
-    predictions_model_versions = "filter:tasks:predictions_model_versions"
+    predictions_model_versions = "tasks:predictions_model_versions"
     """Model version used for the predictions"""
-    predictions_results = "filter:tasks:predictions_results"
+    predictions_results = "tasks:predictions_results"
     """Prediction results for the tasks"""
-    file_upload = "filter:tasks:file_upload"
+    file_upload = "tasks:file_upload"
     """Name of the file uploaded to create the tasks"""
-    created_at = "filter:tasks:created_at"
+    created_at = "tasks:created_at"
     """Time the task was created at"""
-    annotators = "filter:tasks:annotators"
+    annotators = "tasks:annotators"
     """Annotators that completed the task (Community). Can include assigned annotators (Enterprise only)"""
-    total_predictions = "filter:tasks:total_predictions"
+    total_predictions = "tasks:total_predictions"
     """Total number of predictions for the task"""
-    cancelled_annotations = "filter: tasks:cancelled_annotations"
+    cancelled_annotations = "tasks:cancelled_annotations"
     """Number of cancelled or skipped annotations for the task"""
-    total_annotations = "filter:tasks:total_annotations"
+    total_annotations = "tasks:total_annotations"
     """Total number of annotations on a task"""
-    completed_at = "filter:tasks:completed_at"
+    completed_at = "tasks:completed_at"
     """Time when a task was fully annotated"""
-    agreement = "filter:tasks:agreement"
+    agreement = "tasks:agreement"
     """Agreement for annotation results for a specific task (Enterprise only)"""
-    reviewers = "filter:tasks:reviewers"
+    reviewers = "tasks:reviewers"
     """Reviewers that reviewed the task, or assigned reviewers (Enterprise only)"""
-    reviews_rejected = "filter:tasks:reviews_rejected"
+    reviews_rejected = "tasks:reviews_rejected"
     """Number of annotations rejected for a task in review (Enterprise only)"""
-    reviews_accepted = "filter:tasks:reviews_accepted"
+    reviews_accepted = "tasks:reviews_accepted"
     """Number of annotations accepted for a task in review (Enterprise only)"""
 
     @staticmethod
@@ -229,7 +229,7 @@ class Column:
             Filter name for task data
 
         """
-        return "filter:tasks:data." + task_field
+        return "tasks:data." + task_field
 
 
 def _test():

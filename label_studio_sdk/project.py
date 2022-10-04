@@ -1,22 +1,25 @@
 """ .. include::../docs/project.md
 """
 import os
-import time
 import json
 import logging
 
 from operator import itemgetter
-from enum import Enum
+from enum import Enum, auto
 from typing import Optional, Union, List, Dict
-
-from requests.exceptions import InvalidSchema, MissingSchema
-
+from random import sample, shuffle
+from requests.exceptions import HTTPError, InvalidSchema, MissingSchema
+from pathlib import Path
+from typing import Optional, Union, List, Dict, Callable
 from .client import Client
+from .utils import parse_config
 
 from label_studio_tools.core.utils.io import get_local_path
 from label_studio_tools.core.label_config import parse_config
 
+
 logger = logging.getLogger(__name__)
+
 
 class LabelStudioException(Exception):
     pass
@@ -53,7 +56,45 @@ class ProjectStorage(Enum):
     REDIS = 'redis'
     """ Redis Storage """
     S3_SECURED = 's3s'
-    """ Amazon S3 Storage secured by IAM roles (Enterprise only)"""
+    """ Amazon S3 Storage secured by IAM roles (Enterprise only) """
+
+
+class AssignmentSamplingMethod(Enum):
+    RANDOM = auto()  # produces uniform splits across annotators
+
+
+class ExportSnapshotStatus:
+    CREATED = 'created'
+    """ Export snapshot is created """
+    IN_PROGRESS = 'in_progress'
+    """ Export snapshot is in progress  """
+    FAILED = 'failed'
+    """ Export snapshot failed with errors """
+    COMPLETED = 'completed'
+    """ Export snapshot was created and can be downloaded """
+
+    def __init__(self, response):
+        self.response = response
+
+    def is_created(self):
+        """ Export snapshot is created """
+        assert 'status' in self.response, '"status" field not found in export snapshot status response'
+        return self.response['status'] == self.CREATED
+
+    def is_in_progress(self):
+        """ Export snapshot is in progress  """
+        assert 'status' in self.response, '"status" field not found in export_snapshot_status response'
+        return self.response['status'] == self.IN_PROGRESS
+
+    def is_failed(self):
+        """ Export snapshot failed with errors """
+        assert 'status' in self.response, '"status" field not found in export_snapshot_status response'
+        return self.response['status'] == self.FAILED
+
+    def is_completed(self):
+        """ Export snapshot was created and can be downloaded """
+        assert 'status' in self.response, '"status" field not found in export_snapshot_status response'
+        return self.response['status'] == self.COMPLETED
 
 
 class Project(Client):
@@ -96,6 +137,126 @@ class Project(Client):
         `"labels"` are taken from "alias" attribute if it exists, else "value"
         """
         return parse_config(self.label_config)
+
+    def get_members(self):
+        """ Get members from this project.
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        list of `label_studio_sdk.users.User`
+
+        """
+        from .users import User
+        response = self.make_request('GET', f'/api/projects/{self.id}/members')
+        users = []
+        for user_data in response.json():
+            user_data['client'] = self
+            users.append(User(**user_data))
+        return users
+
+    def add_member(self, user):
+        """ Add a user to a project.
+
+        Parameters
+        ----------
+        user: User
+
+        Returns
+        -------
+        dict
+            Dict with created member
+
+        """
+        payload = {
+            'user': user.id
+        }
+        response = self.make_request('POST', f'/api/projects/{self.id}/members', json=payload)
+        return response.json()
+
+    def assign_annotators(self, users, tasks_ids):
+        """ Assign annotators to tasks
+
+        Parameters
+        ----------
+        users: list of user's objects
+        tasks_ids: list of integer task IDs to assign users to
+
+        Returns
+        -------
+        dict
+            Dict with counter of created assignments
+
+        """
+        payload = {
+            'users': [user.id for user in users],
+            'selectedItems': {'all': False, 'included': tasks_ids},
+            'type': 'AN',
+        }
+        response = self.make_request('POST', f'/api/projects/{self.id}/tasks/assignees', json=payload)
+        return response.json()
+
+    def delete_annotators_assignment(self, tasks_ids):
+        """ Remove all assigned annotators for tasks
+
+        Parameters
+        ----------
+        tasks_ids: list of int
+
+        Returns
+        -------
+        dict
+            Dict with counter of deleted annotator assignments
+
+        """
+        payload = {
+            'selectedItems': {'all': False, 'included': tasks_ids},
+        }
+        response = self.make_request('POST', f'/api/dm/actions?id=delete_annotators&project={self.id}', json=payload)
+        return response.json()
+
+    def delete_reviewers_assignment(self, tasks_ids):
+        """ Clear all assigned reviewers for tasks
+
+        Parameters
+        ----------
+        tasks_ids: list of int
+
+        Returns
+        -------
+        dict
+            Dict with counter of deleted reviewer assignments
+
+        """
+        payload = {
+            'selectedItems': {'all': False, 'included': tasks_ids},
+        }
+        response = self.make_request('POST', f'/api/dm/actions?id=delete_reviewers&project={self.id}', json=payload)
+        return response.json()
+
+    def assign_reviewers(self, users, tasks_ids):
+        """ Assign reviewers to tasks
+
+        Parameters
+        ----------
+        users: list of user's objects
+        tasks_ids: list of integer task IDs to assign reviewers to
+
+        Returns
+        -------
+        dict
+            Dict with counter of created assignments
+
+        """
+        payload = {
+            'users': [user.id for user in users],
+            'selectedItems': {'all': False, 'included': tasks_ids},
+            'type': 'RE',
+        }
+        response = self.make_request('POST', f'/api/projects/{self.id}/tasks/assignees', json=payload)
+        return response.json()
 
     def _get_param(self, param_name):
         if param_name not in self.params:
@@ -255,7 +416,7 @@ class Project(Client):
 
     @classmethod
     def _create_from_id(cls, client, project_id, params=None):
-        project = cls(url=client.url, api_key=client.api_key, session=client.session)
+        project = cls(url=client.url, api_key=client.api_key, session=client.session, extra_headers=client.headers)
         if params and isinstance(params, dict):
             # TODO: validate project parameters
             project.params = params
@@ -310,7 +471,7 @@ class Project(Client):
                 json=tasks,
                 params=params
             )
-        elif isinstance(tasks, str):
+        elif isinstance(tasks, (str, Path)):
             # try import from file
             if not os.path.isfile(tasks):
                 raise LabelStudioException(f'Not found import tasks file {tasks}')
@@ -321,6 +482,8 @@ class Project(Client):
                     files={'file': f},
                     params=params
                 )
+        else:
+            raise TypeError(f'Not supported type provided as "tasks" argument: {type(tasks)}')
         return response.json()['task_ids']
 
     def export_tasks(self, export_type='JSON'):
@@ -340,7 +503,7 @@ class Project(Client):
 
         """
         response = self.make_request(
-            method='POST',
+            method='GET',
             url=f'/api/projects/{self.id}/export?exportType={export_type}'
         )
         return response.json()
@@ -413,7 +576,7 @@ class Project(Client):
             List with <b>one</b> string representing Data Manager ordering.
             Use `label_studio_sdk.data_manager.Column` helper class.
             Example:
-            ```[Column.total_annotations]```
+            ```[Column.total_annotations]```, ```['-' + Column.total_annotations]``` - inverted order
         view_id: int
             View ID, visible as a Data Manager tab, for which to retrieve filters, ordering, and selected items
         selected_ids: list of ints
@@ -427,16 +590,27 @@ class Project(Client):
             Task list with task data, annotations, predictions and other fields from the Data Manager
 
         """
-        data = self.get_paginated_tasks(
-            filters=filters,
-            ordering=ordering,
-            view_id=view_id,
-            selected_ids=selected_ids,
-            only_ids=only_ids,
-            page=1,
-            page_size=-1
-        )
-        return data['tasks']
+
+        page = 1
+        result = []
+        while True:
+            try:
+                data = self.get_paginated_tasks(
+                    filters=filters,
+                    ordering=ordering,
+                    view_id=view_id,
+                    selected_ids=selected_ids,
+                    only_ids=only_ids,
+                    page=page,
+                    page_size=100
+                )
+                result += data['tasks']
+                page += 1
+            # we'll get 404 from API on empty page
+            except LabelStudioException as e:
+                logger.debug(f'End of pagination: {e}')
+                break
+        return result
 
     def get_paginated_tasks(
         self,
@@ -474,7 +648,7 @@ class Project(Client):
             List with <b>one</b> string representing Data Manager ordering.
             Use `label_studio_sdk.data_manager.Column` helper class.
             Example:
-            ```[Column.total_annotations]```
+            ```[Column.total_annotations]```, ```['-' + Column.total_annotations]``` - inverted order
         view_id: int
             View ID, visible as a Data Manager tab, for which to retrieve filters, ordering, and selected items
         selected_ids: list of ints
@@ -525,8 +699,10 @@ class Project(Client):
         if only_ids:
             params['include'] = 'id'
 
-        response = self.make_request(
-            'GET', '/api/dm/tasks', params)
+        try:
+            response = self.make_request('GET', '/api/tasks', params)
+        except HTTPError as e:
+            raise LabelStudioException('Error loading tasks')
 
         data = response.json()
         tasks = data['tasks']
@@ -547,6 +723,58 @@ class Project(Client):
         """
         kwargs['only_ids'] = True
         return self.get_paginated_tasks(*args, **kwargs)
+
+    def get_views(self):
+        """Get all views related to the project
+
+        Returns
+        -------
+        list
+            List of view dicts
+
+        The each dict contains the following fields:
+        id: int
+            View ID
+        project: int
+            Project ID
+        user: int
+            User ID who created this tab
+        data: dict
+            Filters, orderings and other visual settings
+        """
+        response = self.make_request('GET', f'/api/dm/views?project={self.id}')
+        return response.json()
+
+    def create_view(self, filters, ordering=None, title='Tasks'):
+        """Create view
+
+        Parameters
+        ----------
+        filters: dict
+            Specify the filters(`label_studio_sdk.data_manager.Filters`) of the view
+        ordering: list of label_studio_sdk.data_manager.Column
+            List with <b>one</b> string representing Data Manager ordering.
+            Use `label_studio_sdk.data_manager.Column` helper class.
+            Example:
+            ```[Column.total_annotations]```, ```['-' + Column.total_annotations]``` - inverted order
+        title: str
+            Tab name
+        Returns
+        -------
+        dict:
+            dict with created view
+
+        """
+        data = {
+            'project': self.id,
+            'data': {
+                'title': title,
+                'ordering': ordering,
+                'filters': filters,
+            }
+        }
+        response = self.make_request('POST', '/api/dm/views', json=data)
+        return response.json()
 
     @property
     def tasks(self):
@@ -1234,6 +1462,320 @@ class Project(Client):
         }
         response = self.make_request('POST', '/api/storages/export/azure', json=payload)
         return response.json()
+
+    def _assign_by_sampling(
+            self,
+            users: List[int],
+            assign_function: Callable,
+            view_id: int = None,
+            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+            fraction: float = 1.0,
+            overlap: int = 1
+    ):
+        """
+        Assigning tasks to Reviewers or Annotators by assign_function with method by fraction from view_id
+        Parameters
+        ----------
+        users: List[int]
+            users' IDs list
+        assign_function: Callable
+            Function to assign tasks by list of user IDs
+        view_id: int
+            Optional, view ID to filter tasks to assign
+        method: AssignmentSamplingMethod
+            Optional, Assignment method
+        fraction: float
+            Optional, expresses the size of dataset to be assigned
+        overlap: int
+            Optional, expresses the count of assignments for each task
+        Returns
+        -------
+        list[dict]
+            List of dicts with counter of created assignments
+        """
+        assert len(users) > 0, 'Users list is empty.'
+        assert len(users) >= overlap, 'Overlap is more than number of users.'
+        # check if users are int and not User objects
+        if isinstance(users[0], int):
+            # get users from project
+            project_users = self.get_members()
+            # User objects list
+            users = [user for user in project_users if user.id in users]
+        final_results = []
+        # Get tasks to assign
+        tasks = self.get_tasks(view_id=view_id, only_ids=True)
+        assert len(tasks) > 0, 'Tasks list is empty.'
+        # Choice fraction of tasks
+        if fraction != 1.0:
+            k = int(len(tasks) * fraction)
+            tasks = sample(tasks, k)
+        # prepare random list of tasks for overlap > 1
+        if overlap > 1:
+            shuffle(tasks)
+            tasks = tasks * overlap
+        # Check how many tasks for each user
+        n_tasks = max(int(len(tasks) // len(users)), 1)
+        # Assign each user tasks
+        for user in users:
+            # check if last chunk of tasks is less than average chunk
+            if n_tasks > len(tasks):
+                n_tasks = len(tasks)
+            # check if last chunk of tasks is more than average chunk + 1
+            # (covers rounding issue in line 1407)
+            elif n_tasks + 1 == len(tasks) and n_tasks != 1:
+                n_tasks = n_tasks + 1
+            if method == AssignmentSamplingMethod.RANDOM and overlap == 1:
+                sample_tasks = sample(tasks, n_tasks)
+            elif method == AssignmentSamplingMethod.RANDOM and overlap > 1:
+                sample_tasks = tasks[:n_tasks]
+            else:
+                raise ValueError(f"Sampling method {method} is not allowed")
+            final_results.append(assign_function([user], sample_tasks))
+            if overlap > 1:
+                tasks = tasks[n_tasks:]
+            else:
+                tasks = list(set(tasks) - set(sample_tasks))
+            if len(tasks) == 0:
+                break
+        # check if any tasks left
+        if len(tasks) > 0:
+            for user in users:
+                if not tasks:
+                    break
+                task = tasks.pop()
+                final_results.append(assign_function([user], [task]))
+        return final_results
+
+    def assign_reviewers_by_sampling(
+            self,
+            users: List[int],
+            view_id: int = None,
+            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+            fraction: float = 1.0,
+            overlap: int = 1
+    ):
+        """
+        Behaves similarly like `assign_reviewers()` but instead of specify tasks_ids explicitely,
+        it gets users' IDs list and optional view ID and uniformly splits all tasks across reviewers
+        Fraction expresses the size of dataset to be assigned
+        Parameters
+        ----------
+        users: List[int]
+            users' IDs list
+        view_id: int
+            Optional, view ID to filter tasks to assign
+        method: AssignmentSamplingMethod
+            Optional, Assignment method
+        fraction: float
+            Optional, expresses the size of dataset to be assigned
+        overlap: int
+            Optional, expresses the count of assignments for each task
+        Returns
+        -------
+        list[dict]
+            List of dicts with counter of created assignments
+        """
+        return self._assign_by_sampling(users=users,
+                                        assign_function=self.assign_reviewers,
+                                        view_id=view_id,
+                                        method=method,
+                                        fraction=fraction,
+                                        overlap=overlap)
+
+    def assign_annotators_by_sampling(
+            self,
+            users: List[int],
+            view_id: int = None,
+            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+            fraction: float = 1.0,
+            overlap: int = 1
+    ):
+        """
+        Behaves similarly like `assign_annotators()` but instead of specify tasks_ids explicitely,
+        it gets users' IDs list and optional view ID and splits all tasks across annotators.
+        Fraction expresses the size of dataset to be assigned.
+        Parameters
+        ----------
+        users: List[int]
+            users' IDs list
+        view_id: int
+            Optional, view ID to filter tasks to assign
+        method: AssignmentSamplingMethod
+            Optional, Assignment method
+        fraction: float
+            Optional, expresses the size of dataset to be assigned
+        overlap: int
+            Optional, expresses the count of assignments for each task
+        Returns
+        -------
+        list[dict]
+            List of dicts with counter of created assignments
+        """
+        return self._assign_by_sampling(users=users,
+                                        assign_function=self.assign_annotators,
+                                        view_id=view_id,
+                                        method=method,
+                                        fraction=fraction,
+                                        overlap=overlap)
+
+    def export_snapshot_list(self):
+        """
+        Get list of export snapshots for the current project
+        -------
+        Returns
+        -------
+        List of dict with export snapshots with status:
+        id: int
+            Export ID
+        created_at: str
+            Creation time
+        status: str
+            Export status
+        created_by: dict
+            User data
+        finished_at: str
+            Finished time
+        """
+        response = self.make_request('GET', f'/api/projects/{self.id}/exports')
+        return response.json()
+
+    def export_snapshot_create(self,
+                               title: str,
+                               task_filter_options: dict = None,
+                               serialization_options_drafts: bool = True,
+                               serialization_options_predictions: bool = True,
+                               serialization_options_annotations__completed_by: bool = True,
+                               annotation_filter_options_usual: bool = True,
+                               annotation_filter_options_ground_truth: bool = True,
+                               annotation_filter_options_skipped: bool = True,
+                               interpolate_key_frames: bool = False
+                               ):
+        """
+        Create new export snapshot
+        ----------
+        Parameters
+        ----------
+        title: str
+            Export title
+        task_filter_options: dict
+            Task filter options, use {"view": <tab_id>} to apply filter from this tab
+        serialization_options_drafts: bool
+            Expand drafts or include only ID
+        serialization_options_predictions: bool
+            Expand predictions or include only ID
+        serialization_options_annotations__completed_by: bool
+            Expand user that completed_by or include only ID
+        annotation_filter_options_usual: bool
+            Include not cancelled and not ground truth annotations
+        annotation_filter_options_ground_truth: bool
+            Filter ground truth annotations
+        annotation_filter_options_skipped: bool
+            Filter skipped annotations
+        interpolate_key_frames: bool
+            Interpolate key frames into sequence
+
+        Returns
+        -------
+        dict:
+            containing the same fields as in the request and the created export fields:
+        id: int
+            Export ID
+        created_at: str
+            Creation time
+        status: str
+            Export status
+        created_by: dict
+            User data
+        finished_at: str
+            Finished time
+
+        """
+        if task_filter_options is None:
+            task_filter_options = {}
+
+        payload = {
+            "title": title,
+            "serialization_options": {
+                "drafts": {
+                    "only_id": serialization_options_drafts
+                },
+                "predictions": {
+                    "only_id": serialization_options_predictions
+                },
+                "annotations__completed_by": {
+                    "only_id": serialization_options_annotations__completed_by
+                },
+                "interpolate_key_frames": interpolate_key_frames
+            },
+            "task_filter_options": task_filter_options,
+            "annotation_filter_options": {
+                "usual": annotation_filter_options_usual,
+                "ground_truth": annotation_filter_options_ground_truth,
+                "skipped": annotation_filter_options_skipped
+            },
+        }
+        response = self.make_request('POST', f'/api/projects/{self.id}/exports?interpolate_key_frames={interpolate_key_frames}', json=payload)
+        return response.json()
+
+    def export_snapshot_status(self, export_id: int):
+        """
+        Get export snapshot status by Export ID
+        ----------
+        Parameters
+        ----------
+        export_id: int
+            Existing Export ID from current project. Can be referred as id from self.exports()
+
+        Returns
+        -------
+        `label_studio_sdk.project.ExportSnapshotStatus`
+
+        ExportSnapshotStatus.response is dict and contains the following fields:
+        id: int
+            Export ID
+        created_at: str
+            Creation time
+        status: str
+            created, completed, in_progress, failed
+        created_by: dict
+            User data
+        finished_at: str
+            Finished time
+        """
+        response = self.make_request('GET',
+                                     f'/api/projects/{self.id}/exports/{export_id}')
+        return ExportSnapshotStatus(response.json())
+
+    def export_snapshot_download(self,
+                                 export_id: int,
+                                 export_type: str = 'JSON',
+                                 path: str = "."):
+        """
+        Download file with export snapshot in provided format
+        ----------
+        Parameters
+        ----------
+        export_id: int
+            Existing Export ID from current project. Can be referred as id from self.exports()
+        export_type: str
+            Default export_type is JSON.
+            Specify another format type as referenced in <a href="https://github.com/heartexlabs/label-studio-converter/blob/master/label_studio_converter/converter.py#L32">
+            the Label Studio converter code</a>.
+        path: str
+            Default path to store downloaded files
+        Returns
+        -------
+        Status code for operation and downloaded filename
+        """
+        response = self.make_request('GET',
+                                     f'/api/projects/{self.id}/exports/{export_id}/download?exportType={export_type}')
+        filename = None
+        if response.status_code == 200:
+            filename = response.headers.get('filename')
+            with open(os.path.join(path, filename), 'wb') as f:
+                for chunk in response:
+                    f.write(chunk)
+        return response.status_code, filename
 
     def get_files_from_tasks(self,
                              tasks: Dict,
