@@ -10,7 +10,7 @@ from requests.exceptions import HTTPError
 from pathlib import Path
 from typing import Optional, Union, List, Dict, Callable
 from .client import Client
-from .utils import parse_config
+from .utils import parse_config, chunk
 
 logger = logging.getLogger(__name__)
 
@@ -184,13 +184,19 @@ class Project(Client):
             Dict with counter of created assignments
 
         """
-        payload = {
-            'users': [user.id for user in users],
-            'selectedItems': {'all': False, 'included': tasks_ids},
-            'type': 'AN',
-        }
-        response = self.make_request('POST', f'/api/projects/{self.id}/tasks/assignees', json=payload)
-        return response.json()
+        final_response = {'assignments': 0}
+        users_ids = [user.id for user in users]
+        # Assign tasks to users with batches
+        for c in chunk(tasks_ids, 1000):
+            logger.debug(f"Starting assignment for: {users_ids}")
+            payload = {
+                'users': users_ids,
+                'selectedItems': {'all': False, 'included': c},
+                'type': 'AN',
+            }
+            response = self.make_request('POST', f'/api/projects/{self.id}/tasks/assignees', json=payload)
+            final_response['assignments'] += response.json()['assignments']
+        return final_response
 
     def delete_annotators_assignment(self, tasks_ids):
         """ Remove all assigned annotators for tasks

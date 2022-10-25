@@ -11,7 +11,7 @@ from requests.adapters import HTTPAdapter
 logger = logging.getLogger(__name__)
 
 MAX_RETRIES = 3
-TIMEOUT = (1.0, 60.0)
+TIMEOUT = (1.0, 180.0)
 HEADERS = {}
 
 

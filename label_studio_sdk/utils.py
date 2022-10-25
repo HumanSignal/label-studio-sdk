@@ -106,3 +106,9 @@ def parse_config(config_string):
         tag_info['labels'] = list(labels[output_tag])
         tag_info['labels_attrs'] = labels[output_tag]
     return outputs
+
+
+def chunk(lst, n):
+    """Yield successive n-sized chunks from lst."""
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
