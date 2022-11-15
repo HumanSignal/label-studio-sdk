@@ -40,6 +40,7 @@ class Filters:
     """
     Use the methods and variables in this class to create and combine filters for tasks on the Label Studio Data Manager.
     """
+
     OR = 'or'
     """Combine filters with an OR"""
     AND = 'and'
@@ -62,10 +63,7 @@ class Filters:
             containing specified parameters
 
         """
-        return {
-          "conjunction": conjunction,
-          "items": items
-        }
+        return {"conjunction": conjunction, "items": items}
 
     @staticmethod
     def item(name, operator, column_type, value):
@@ -90,7 +88,7 @@ class Filters:
             "filter": 'filter:' + name,
             "operator": operator,
             "type": column_type,
-            "value": value
+            "value": value,
         }
 
     @staticmethod
@@ -234,31 +232,36 @@ class Column:
 
 def _test():
     """Test it"""
-    filters = Filters.create(Filters.OR, [
-        Filters.item(
-            Column.id,
-            Operator.GREATER,
-            Type.Number,
-            Filters.value(42)
-        ),
-        Filters.item(
-            Column.completed_at,
-            Operator.IN,
-            Type.Datetime,
-            Filters.value(
-                datetime(2021, 11, 1),
-                datetime(2021, 11, 5),
-            )
-        )
-    ])
+    filters = Filters.create(
+        Filters.OR,
+        [
+            Filters.item(Column.id, Operator.GREATER, Type.Number, Filters.value(42)),
+            Filters.item(
+                Column.completed_at,
+                Operator.IN,
+                Type.Datetime,
+                Filters.value(datetime(2021, 11, 1), datetime(2021, 11, 5),),
+            ),
+        ],
+    )
 
-    assert filters == {'conjunction': 'or',
-                       'items': [
-                           {'filter': 'filter:tasks:id', 'operator': 'greater', 'type': 'Number', 'value': 42},
-                           {'filter': 'filter:tasks:completed_at', 'operator': 'in', 'type': 'Datetime',
-                            'value': {
-                                'min': '2021-11-01T00:00:00.000000Z',
-                                'max': '2021-11-05T00:00:00.000000Z'}
-                            }
-                         ]
-                       }
+    assert filters == {
+        'conjunction': 'or',
+        'items': [
+            {
+                'filter': 'filter:tasks:id',
+                'operator': 'greater',
+                'type': 'Number',
+                'value': 42,
+            },
+            {
+                'filter': 'filter:tasks:completed_at',
+                'operator': 'in',
+                'type': 'Datetime',
+                'value': {
+                    'min': '2021-11-01T00:00:00.000000Z',
+                    'max': '2021-11-05T00:00:00.000000Z',
+                },
+            },
+        ],
+    }

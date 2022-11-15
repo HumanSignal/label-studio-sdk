@@ -22,14 +22,25 @@ class ClientCredentials(BaseModel):
 
     @root_validator(pre=True, allow_reuse=True)
     def either_key_or_email_password(cls, values):
-        assert 'email' in values or 'api_key' in values, 'At least one of email or api_key should be included'
-        assert 'email' not in values or 'password' in values, 'Provide both email and password for login auth'
+        assert (
+            'email' in values or 'api_key' in values
+        ), 'At least one of email or api_key should be included'
+        assert (
+            'email' not in values or 'password' in values
+        ), 'Provide both email and password for login auth'
         return values
 
 
 class Client(object):
-
-    def __init__(self, url, api_key, credentials=None, session=None, extra_headers: dict = None, cookies: dict = None):
+    def __init__(
+        self,
+        url,
+        api_key,
+        credentials=None,
+        session=None,
+        extra_headers: dict = None,
+        cookies: dict = None,
+    ):
         """ Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
         Parameters
@@ -54,7 +65,11 @@ class Client(object):
         # set api key or get it using credentials (username and password)
         if api_key is not None:
             credentials = ClientCredentials(api_key=api_key)
-        self.api_key = credentials.api_key if credentials.api_key else self.get_api_key(credentials)
+        self.api_key = (
+            credentials.api_key
+            if credentials.api_key
+            else self.get_api_key(credentials)
+        )
 
         # set headers
         self.headers = {'Authorization': f'Token {self.api_key}'}
@@ -70,8 +85,17 @@ class Client(object):
         self.session.get(login_url)
         csrf_token = self.session.cookies.get('csrftoken', None)
         login_data = dict(**credentials.dict(), csrfmiddlewaretoken=csrf_token)
-        self.session.post(login_url, data=login_data, headers=dict(Referer=self.url), cookies=self.cookies).raise_for_status()
-        api_key = self.session.get(self.get_url("/api/current-user/token")).json().get("token")
+        self.session.post(
+            login_url,
+            data=login_data,
+            headers=dict(Referer=self.url),
+            cookies=self.cookies,
+        ).raise_for_status()
+        api_key = (
+            self.session.get(self.get_url("/api/current-user/token"))
+            .json()
+            .get("token")
+        )
         return api_key
 
     def check_connection(self):
@@ -130,11 +154,18 @@ class Client(object):
 
         """
         from .project import Project
-        response = self.make_request('GET', '/api/projects', params={'page_size': 10000000})
+
+        response = self.make_request(
+            'GET', '/api/projects', params={'page_size': 10000000}
+        )
         if response.status_code == 200:
             projects = []
             for data in response.json()['results']:
-                projects.append(Project._create_from_id(client=self, project_id=data['id'], params=data))
+                projects.append(
+                    Project._create_from_id(
+                        client=self, project_id=data['id'], params=data
+                    )
+                )
             return projects
 
     def start_project(self, **kwargs):
@@ -151,6 +182,7 @@ class Client(object):
 
         """
         from .project import Project
+
         project = Project(url=self.url, api_key=self.api_key, session=self.session)
         project.start_project(**kwargs)
         return project
@@ -169,6 +201,7 @@ class Client(object):
 
         """
         from .project import Project
+
         return Project.get_from_id(self, id)
 
     def get_users(self):
@@ -183,6 +216,7 @@ class Client(object):
 
         """
         from .users import User
+
         response = self.make_request('GET', '/api/users')
         users = []
         for user_data in response.json():
@@ -202,6 +236,7 @@ class Client(object):
 
         """
         from .workspaces import Workspace
+
         response = self.make_request('GET', '/api/workspaces')
         workspaces = []
         for workspace_data in response.json():
@@ -256,7 +291,14 @@ class Client(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = TIMEOUT
         logger.debug(f'{method}: {url} with args={args}, kwargs={kwargs}')
-        response = self.session.request(method, self.get_url(url), headers=self.headers, cookies=self.cookies, *args, **kwargs)
+        response = self.session.request(
+            method,
+            self.get_url(url),
+            headers=self.headers,
+            cookies=self.cookies,
+            *args,
+            **kwargs,
+        )
         response.raise_for_status()
         return response
 

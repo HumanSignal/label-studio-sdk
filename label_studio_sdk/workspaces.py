@@ -25,8 +25,10 @@ class Workspace(BaseModel):
             User
         """
         response = self.client.make_request(
-            'POST', f'/api/workspaces/{self.id}/memberships',
-            json={'workspace': self.id, 'user': user.id})
+            'POST',
+            f'/api/workspaces/{self.id}/memberships',
+            json={'workspace': self.id, 'user': user.id},
+        )
         return response.json()
 
     def remove_user(self, user: User):
@@ -38,8 +40,10 @@ class Workspace(BaseModel):
             User
         """
         response = self.client.make_request(
-            'DELETE', f'/api/workspaces/{self.id}/memberships',
-            json={'workspace': self.id, 'user': user.id})
+            'DELETE',
+            f'/api/workspaces/{self.id}/memberships',
+            json={'workspace': self.id, 'user': user.id},
+        )
         if response.status_code != 204:
             raise ValueError(str(response.content))
 
@@ -52,6 +56,7 @@ class Workspace(BaseModel):
             Project
         """
         from .project import Project
+
         final_results = []
         response = self.client.make_request(
             'GET', f'/api/workspaces/{self.id}/projects'
@@ -59,7 +64,7 @@ class Workspace(BaseModel):
         projects = response.json()
         for project_data in projects:
             project_id = project_data['id']
-            final_results.append(Project.get_from_id(client=self.client,
-                                                     project_id=project_id,
-                                                     ))
+            final_results.append(
+                Project.get_from_id(client=self.client, project_id=project_id,)
+            )
         return final_results
