@@ -619,11 +619,11 @@ class Project(Client):
         view_id=None,
         selected_ids=None,
         page: int = 1,
-        page_size: int = -1,
+        page_size: by default, it retrieves 100 tasks from each page
         only_ids: bool = False,
     ):
         """ Retrieve a subset of tasks from the Data Manager based on a filter, ordering mechanism, or a
-        predefined view ID.
+        predefined view ID. For non-existent pages it returns 404 error.
 
         Parameters
         ----------
