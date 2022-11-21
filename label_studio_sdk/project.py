@@ -620,6 +620,7 @@ class Project(Client):
         selected_ids=None,
         page: int = 1,
         page_size: by default, it retrieves 100 tasks from each page
+        # page_size: by default, it retrieves 100 tasks from each page
         only_ids: bool = False,
     ):
         """ Retrieve a subset of tasks from the Data Manager based on a filter, ordering mechanism, or a
