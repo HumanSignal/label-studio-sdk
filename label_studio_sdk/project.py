@@ -1644,17 +1644,18 @@ class Project(Client):
         -------
         Returns
         -------
-        List of dict with export snapshots with status:
-        id: int
-            Export ID
-        created_at: str
-            Creation time
-        status: str
-            Export status
-        created_by: dict
-            User data
-        finished_at: str
-            Finished time
+        List[dict]
+            List of dict with export snapshots with status:
+            id: int
+                Export ID
+            created_at: str
+                Creation time
+            status: str
+                Export status
+            created_by: dict
+                User data
+            finished_at: str
+                Finished time
         """
         response = self.make_request('GET', f'/api/projects/{self.id}/exports')
         return response.json()
