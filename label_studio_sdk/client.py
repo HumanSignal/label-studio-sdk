@@ -29,7 +29,7 @@ class ClientCredentials(BaseModel):
 
 class Client(object):
 
-    def __init__(self, url, api_key, credentials=None, session=None, extra_headers: dict = None):
+    def __init__(self, url, api_key, credentials=None, session=None, extra_headers: dict = None, cookies: dict = None):
         """ Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
         Parameters
@@ -45,10 +45,12 @@ class Client(object):
             If None, a new one is created.
         extra_headers: dict
             Additional headers that will be passed to each http request
+        cookies: dict
+            Cookies that will be passed to each http request.
         """
         self.url = url.rstrip('/')
         self.session = session or self.get_session()
-         
+
         # set api key or get it using credentials (username and password)
         if api_key is not None:
             credentials = ClientCredentials(api_key=api_key)
@@ -59,13 +61,16 @@ class Client(object):
         if extra_headers:
             self.headers.update(extra_headers)
 
+        # Set cookies
+        self.cookies = cookies
+
     def get_api_key(self, credentials: ClientCredentials):
         login_url = self.get_url("/user/login")
         # Retrieve and set the CSRF token first
         self.session.get(login_url)
         csrf_token = self.session.cookies.get('csrftoken', None)
         login_data = dict(**credentials.dict(), csrfmiddlewaretoken=csrf_token)
-        self.session.post(login_url, data=login_data, headers=dict(Referer=self.url)).raise_for_status()
+        self.session.post(login_url, data=login_data, headers=dict(Referer=self.url), cookies=self.cookies).raise_for_status()
         api_key = self.session.get(self.get_url("/api/current-user/token")).json().get("token")
         return api_key
 
@@ -251,7 +256,7 @@ class Client(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = TIMEOUT
         logger.debug(f'{method}: {url} with args={args}, kwargs={kwargs}')
-        response = self.session.request(method, self.get_url(url), headers=self.headers, *args, **kwargs)
+        response = self.session.request(method, self.get_url(url), headers=self.headers, cookies=self.cookies, *args, **kwargs)
         response.raise_for_status()
         return response
 
