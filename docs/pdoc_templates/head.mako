@@ -21,7 +21,7 @@
       type="text/css">
 
 <!-- Place this tag in your head or just before your close body tag. -->
-<script src=/js/redirects.js"></script>
+<script src="/js/redirects.js"></script>
 <script src="/js/jquery.min.js"></script>
 <script src="/js/search.js"></script>
 <script src="/js/highlightjs-badge.min.js"></script>
