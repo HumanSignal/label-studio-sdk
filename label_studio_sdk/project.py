@@ -702,7 +702,7 @@ class Project(Client):
         try:
             response = self.make_request('GET', '/api/tasks', params)
         except HTTPError as e:
-            raise LabelStudioException('Error loading tasks')
+            raise LabelStudioException(f'Error loading tasks: {e}')
 
         data = response.json()
         tasks = data['tasks']
