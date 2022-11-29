@@ -8,6 +8,44 @@ code {
 
 <%def name="mobile()" filter="minify_css">
 
+  html {
+    --color-main-accent: var(--color-orange-90);
+    --font-family-primary: "Space Grotesk", sans-serif !important;
+  }
+
+  .Button,
+  .page-header-content-switcher {
+    font-weight: 700;
+  }
+
+  .page-header-content-switcher ul {
+    white-space: nowrap;
+  }
+
+  .page-header {
+    -webkit-font-smoothing: auto!important;
+  }
+
+  .page-header .Button:hover {
+    color: #fff;
+  }
+
+  .page-header a:not(.Button) {
+    transition: none;
+  }
+
+  .page-header nav > ul > li > ul {
+    top: 97.5% !important;
+  }
+
+  .page-header-logo {
+    white-space: nowrap;
+  }
+
+  .content a {
+    color: var(--color-orange-90) !important;
+  }
+
    dl dd a {
      color: rgb(229, 122, 56) !important;
    }
@@ -99,7 +137,7 @@ code {
     transition: color .3s ease-in-out;
   }
   a:hover {
-    color: #e82;
+    color: var(--color-orange-90);
   }
 
   .title code {
@@ -348,6 +386,7 @@ code {
 </%def>
 
 <%def name="desktop()" filter="minify_css">
+
   @media screen and (min-width: 700px) {
     #sidebar {
       min-width: 270px;
