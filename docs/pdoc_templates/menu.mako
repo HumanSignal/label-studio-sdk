@@ -22,7 +22,7 @@
         <svg width="12" height="7" viewBox="0 0 12 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 1L6 6L1 1" stroke="#8B8D9E"></path></svg>
       </div>
       <ul>
-        <li><a href="/docs/">Docs</a></li>
+        <li><a href="/guide/">Docs</a></li>
         <li><a href="/playground/">Playground</a></li>
         <li><a href="/templates/">Templates</a></li>
         <li><a href="/tags/">Tags</a></li>
