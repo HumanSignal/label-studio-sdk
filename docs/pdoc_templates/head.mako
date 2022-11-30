@@ -23,7 +23,6 @@
 <!-- Place this tag in your head or just before your close body tag. -->
 <script src="/js/redirects.js"></script>
 <script src="/js/jquery.min.js"></script>
-<script async defer src="https://buttons.github.io/buttons.js"></script>
 <script src="/js/search.js"></script>
 <script src="/js/highlightjs-badge.min.js"></script>
 <script src="/js/smooth-scroll.min.js"></script>
@@ -33,6 +32,7 @@
 
 <!-- main page styles -->
 <link rel="stylesheet" href="/css/page.css">
+
 
 
 <!-- this needs to be loaded before guide's inline scripts -->
@@ -64,8 +64,3 @@
     ce(ss);
   })(document, 'script', 'https://sc.lfeeder.com/lftracker_v1_lYNOR8xWxQQaWQJZ.js');
 })(); </script>
-
-
-<!-- docsearch -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css"/>
-<meta name="generator" content="Hexo 5.4.0">
