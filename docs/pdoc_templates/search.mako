@@ -21,6 +21,7 @@
             text-decoration: none;
             transition: color .3s ease-in-out;
         }
+        a:hover {color: #e82;}
 
         li {padding-top: 10px;}
     </style>

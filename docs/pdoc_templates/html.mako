@@ -360,8 +360,6 @@
   % endif
 
   <%include file="head.mako"/>
-
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" defer></script>
 </head>
 <body>
 % if not http_server:
