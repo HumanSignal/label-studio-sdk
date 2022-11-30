@@ -1,4 +1,4 @@
-<!-- ------- -->
+
 <link rel="stylesheet" href="https://label-studio-docs-new-theme.netlify.app/css/styles.css">
 
 
@@ -491,4 +491,4 @@
 
 <script src="/js/css.escape.js"></script>
 <script src="/js/common.js"></script>
-<script src="https://label-studio-docs-new-theme.netlify.app/js/header.js" />
+<script src="https://label-studio-docs-new-theme.netlify.app/js/header.js"></script>
