@@ -32,7 +32,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - uses: actions/cache@v3.0.11
+      - uses: actions/cache@v3.2.2
         name: Configure pip cache
         id: pip-cache
         with:
