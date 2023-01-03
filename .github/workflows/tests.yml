@@ -3,7 +3,7 @@ on:
   push:
     branches: ['*', '*/*', '*/**', master]
     paths:
-      - 'label_studio/**'
+      - 'label_studio_sdk/**'
       - '!label_studio/frontend/**'
       - '.github/workflows/tests.yml'
       - 'deploy/requirements.txt'

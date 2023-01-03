@@ -209,6 +209,91 @@ class Client(object):
             workspaces.append(Workspace(**workspace_data))
         return workspaces
 
+    def get_label(self, label_id):
+        """ Return label by id
+
+        Parameters
+        ----------
+        label_id: ID of label
+
+        Returns
+        -------
+        `label_studio_sdk.labels.Label`
+
+        """
+        from .labels import Label
+
+        response = self.make_request('GET', f'/api/labels/{label_id}')
+        label_data = response.json()
+        label_data['client'] = self
+        return Label(**label_data)
+
+    def get_label_links(self, project=None):
+        """ Return all label links from the current organization account
+
+        Parameters
+        ----------
+        project: ID of project for labels filtering
+
+        Returns
+        -------
+        list of `label_studio_sdk.labels.Label`
+
+        """
+        from .labels import LabelLink
+        params = {
+            'expand': 'label',
+        }
+        if project is not None:
+            params['project'] = project
+
+        response = self.make_request('GET', '/api/label_links', params=params)
+        labels = []
+        for label_data in response.json()['results']:
+            label_data['client'] = self
+            label_data['label']['client'] = self
+            labels.append(LabelLink(**label_data))
+        return labels
+
+    def bulk_update_labels(self, old_label, new_label, project=None):
+        """ Update labels in annotations results
+
+        Parameters
+        ----------
+        project: ID of project for annotations filtering
+
+        Returns
+        -------
+        count of updated annotations
+
+        """
+        params = {
+            'old_label': old_label,
+            'new_label': new_label,
+        }
+        if project is not None:
+            params['project'] = project
+
+        response = self.make_request('POST', '/api/labels/bulk', json=params)
+        return response.json()['annotations_updated']
+
+    def create_labels(self, data):
+        """Create labels
+
+        Parameters
+        ----------
+        data: list of label dicts
+            Specify the labels
+
+        Returns
+        -------
+        dict:
+            dict with created labels
+
+        """
+        response = self.make_request('POST', '/api/labels', json=data)
+        return response.json()
+
     def get_session(self):
         """ Create a session with requests.Session()
 

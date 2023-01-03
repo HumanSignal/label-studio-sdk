@@ -14,13 +14,7 @@ from .utils import parse_config, chunk
 
 logger = logging.getLogger(__name__)
 
-
-class LabelStudioException(Exception):
-    pass
-
-
-class LabelStudioAttributeError(LabelStudioException):
-    pass
+from .errors import LabelStudioAttributeError, LabelStudioError
 
 
 class ProjectSampling(Enum):
@@ -405,14 +399,14 @@ class Project(Client):
         evaluate_predictions_automatically: bool
             Retrieve and display predictions when loading a task
 
-        Raises LabelStudioException in case of errors.
+        Raises LabelStudioError in case of errors.
 
         """
         response = self.make_request('POST', '/api/projects', json=kwargs)
         if response.status_code == 201:
             self.params = response.json()
         else:
-            raise LabelStudioException('Project not created')
+            raise LabelStudioError('Project not created')
 
     @classmethod
     def _create_from_id(cls, client, project_id, params=None):
@@ -474,7 +468,7 @@ class Project(Client):
         elif isinstance(tasks, (str, Path)):
             # try import from file
             if not os.path.isfile(tasks):
-                raise LabelStudioException(f'Not found import tasks file {tasks}')
+                raise LabelStudioError(f'Not found import tasks file {tasks}')
             with open(tasks, mode='rb') as f:
                 response = self.make_request(
                     method='POST',
@@ -485,6 +479,17 @@ class Project(Client):
         else:
             raise TypeError(f'Not supported type provided as "tasks" argument: {type(tasks)}')
         return response.json()['task_ids']
+
+    def get_labels(self):
+        """ Return all labels for this project
+
+        Returns
+        -------
+        list of `label_studio_sdk.labels.Label`
+
+        """
+        links = self.get_label_links(project=self.id)
+        return [link.label for link in links]
 
     def export_tasks(self, export_type='JSON'):
         """ Export annotated tasks.
