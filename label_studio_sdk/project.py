@@ -486,8 +486,14 @@ class Project(Client):
             raise TypeError(f'Not supported type provided as "tasks" argument: {type(tasks)}')
         return response.json()['task_ids']
 
-    def export_tasks(self, export_type='JSON'):
-        """ Export annotated tasks.
+    def export_tasks(
+        self,
+        export_type: str = 'JSON',
+        download_all_tasks: bool = False,
+        download_resources: bool = False,
+        ids: Optional[List[int]] = None,
+    ):
+        """Export annotated tasks.
 
         Parameters
         ----------
@@ -496,15 +502,32 @@ class Project(Client):
             Specify another format type as referenced in <a href="https://github.com/heartexlabs/label-studio-converter/blob/master/label_studio_converter/converter.py#L32">
             the Label Studio converter code</a>.
 
+        download_all_tasks: bool
+            Default download_all_tasks is False.
+            If true, download all tasks regardless of status. If false, download only annotated tasks.
+
+        download_resources: bool
+            Default download_resources is False.
+            If true, download all resource files such as images, audio, and others relevant to the tasks.
+
+        ids: list of ints
+            Optional, specify a list of task IDs to retrieve only the details for those tasks.
+
         Returns
         -------
         list of dicts
             Tasks with annotations
 
         """
+        params = {
+            'exportType': export_type,
+            'download_all_tasks': download_all_tasks,
+            'download_resources': download_resources,
+        }
+        if ids:
+            params['ids'] = ids
         response = self.make_request(
-            method='GET',
-            url=f'/api/projects/{self.id}/export?exportType={export_type}'
+            method='GET', url=f'/api/projects/{self.id}/export', params=params
         )
         return response.json()
 
