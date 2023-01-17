@@ -2,10 +2,6 @@
     from pdoc.html_helpers import minify_css
 %>
 
-code {
-  color: unset !important;
-}
-
 <%def name="mobile()" filter="minify_css">
 
   html {
@@ -160,7 +156,6 @@ code {
     padding: 1px 4px;
     overflow-wrap: break-word;
     white-space: pre-wrap !important;
-    color: unset !important;
   }
   h1 code { background: transparent }
 
