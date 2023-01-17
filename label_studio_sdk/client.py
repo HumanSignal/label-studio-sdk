@@ -29,7 +29,7 @@ class ClientCredentials(BaseModel):
 
 class Client(object):
 
-    def __init__(self, url, api_key, credentials=None, session=None, extra_headers: dict = None, cookies: dict = None):
+    def __init__(self, url, api_key, oidc_token=None, credentials=None, session=None, extra_headers: dict = None, cookies: dict = None):
         """ Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
         Parameters
@@ -39,6 +39,8 @@ class Client(object):
             Example: http://localhost:8080
         api_key: str
             User token for the API. You can find this on your user account page in Label Studio.
+        oidc_token: str
+            Token for proxy authentication - in case the server is behind an authenticating proxy.
         credentials: ClientCredentials
             User email and password or api_key.
         session: requests.Session()
@@ -58,6 +60,8 @@ class Client(object):
 
         # set headers
         self.headers = {'Authorization': f'Token {self.api_key}'}
+        if oidc_token:
+            self.headers.update({'Proxy-Authorization': f'Bearer {oidc_token}'})
         if extra_headers:
             self.headers.update(extra_headers)
 
