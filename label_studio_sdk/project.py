@@ -1506,6 +1506,67 @@ class Project(Client):
         response = self.make_request('POST', '/api/storages/export/azure', json=payload)
         return response.json()
 
+    def connect_local_import_storage(
+            self,
+            local_store_path: [str],
+            regex_filter: Optional[str] = None,
+            use_blob_urls: Optional[bool] = True,
+            title: Optional[str] = '',
+            description: Optional[str] = ''
+    ):
+        """Connect a Local storage to Label Studio to use as source storage and import tasks.
+        Parameters
+        ----------
+        local_store_path: string
+            Path to declare as local storage.
+        regex_filter: string
+            Optional, specify a regex filter to use to match the file types of your data
+        use_blob_urls: bool
+            Optional, true by default. Specify whether your data is raw image or video data, or JSON tasks.
+        title: string
+            Optional, specify a title for your GCS import storage that appears in Label Studio.
+        description: string
+            Optional, specify a description for your GCS import storage.
+        Returns
+        -------
+        dict:
+            containing the same fields as in the request and:
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+        """
+        if 'LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT' not in os.environ:
+            raise ValueError('To use connect_local_import_storage() you should set '
+                             'LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT environment variable, '
+                             'read more: https://labelstud.io/guide/storage.html#Prerequisites-2')
+        root = os.environ['LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT']
+
+        if not os.path.isdir(local_store_path):
+            raise ValueError(f'{local_store_path} is not a directory')
+        if (Path(root) in Path(local_store_path).parents) is False:
+            raise ValueError(f'{str(Path(root))} is not presented in local_store_path parents: '
+                             f'{str(Path(local_store_path).parents)}')
+
+        payload = {
+            'regex_filter': regex_filter,
+            'use_blob_urls': use_blob_urls,
+            'path': local_store_path,
+            'presign': False,
+            'presign_ttl': 1,
+            'title': title,
+            'description': description,
+            'project': self.id
+        }
+        response = self.make_request('POST', f'/api/storages/localfiles?project={self.id}', json=payload)
+        return response.json()
+
     def _assign_by_sampling(
             self,
             users: List[int],
