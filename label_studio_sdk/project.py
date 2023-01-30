@@ -1043,6 +1043,26 @@ class Project(Client):
         }, json=payload)
         return response.json()
 
+    def create_annotation(self, task_id: int, **kwargs) -> Dict:
+        """ Add annotations to a task like an annotator does.
+
+        Parameters
+        ----------
+        task_id: int
+            Task ID you want to update
+        kwargs: kwargs parameters
+            List of parameters to create. Check all available parameters [here](https://labelstud.io/api#operation/api_tasks_annotations_create)
+
+        Returns
+        -------
+        dict:
+            Dict with created annotation
+        
+        """
+        response = self.make_request('POST', f'/api/tasks/{task_id}/annotations/', json=kwargs)
+        response.raise_for_status()
+        return response.json()
+
     def update_annotation(self, annotation_id, **kwargs):
         """ Update specific annotation with new annotation parameters, e.g.
             ```
