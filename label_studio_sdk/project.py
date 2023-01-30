@@ -1051,7 +1051,8 @@ class Project(Client):
         task_id: int
             Task ID you want to update
         kwargs: kwargs parameters
-            List of parameters to create. Check all available parameters [here](https://labelstud.io/api#operation/api_tasks_annotations_create)
+            List of parameters to create. Check all available parameters [here](https://labelstud.io/api#operation/api_tasks_annotations_create). 
+            Labeling is stored in the `result` field as a list of dicionaries, [{...}, {...}, ...]
 
         Returns
         -------
