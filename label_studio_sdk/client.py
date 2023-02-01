@@ -1,7 +1,35 @@
 """ .. include::../docs/client.md
 """
+import os
+
 import warnings
 import logging
+import logging.config
+
+logging.config.dictConfig({
+  "version": 1,
+  "formatters": {
+    "standard": {
+      "format": "[%(asctime)s] [%(levelname)s] [%(name)s::%(funcName)s::%(lineno)d] %(message)s"
+    }
+  },
+  "handlers": {
+    "console": {
+      "class": "logging.StreamHandler",
+      "level": "DEBUG",
+      "stream": "ext://sys.stdout",
+      "formatter": "standard"
+    }
+  },
+  "root": {
+    "level": os.getenv('LOG_LEVEL', 'ERROR'),
+    "handlers": [
+      "console"
+    ],
+    "propagate": True
+  }
+})
+
 import requests
 
 from typing import Optional
