@@ -8,7 +8,9 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 _LABEL_TAGS = {'Label', 'Choice'}
-_NOT_CONTROL_TAGS = {'Filter', }
+_NOT_CONTROL_TAGS = {
+    'Filter',
+}
 
 
 def parse_config(config_string):
@@ -50,7 +52,11 @@ def parse_config(config_string):
         return tag.attrib.get('name') and tag.attrib.get('value')
 
     def _is_output_tag(tag):
-        return tag.attrib.get('name') and tag.attrib.get('toName') and tag.tag not in _NOT_CONTROL_TAGS
+        return (
+            tag.attrib.get('name')
+            and tag.attrib.get('toName')
+            and tag.tag not in _NOT_CONTROL_TAGS
+        )
 
     def _get_parent_output_tag_name(tag, outputs):
         # Find parental <Choices> tag for nested tags like <Choices><View><View><Choice>...
@@ -75,14 +81,23 @@ def parse_config(config_string):
                 if tag.attrib.get('whenTagName'):
                     conditionals = {'type': 'tag', 'name': tag.attrib['whenTagName']}
                 elif tag.attrib.get('whenLabelValue'):
-                    conditionals = {'type': 'label', 'name': tag.attrib['whenLabelValue']}
+                    conditionals = {
+                        'type': 'label',
+                        'name': tag.attrib['whenLabelValue'],
+                    }
                 elif tag.attrib.get('whenChoiceValue'):
-                    conditionals = {'type': 'choice', 'name': tag.attrib['whenChoiceValue']}
+                    conditionals = {
+                        'type': 'choice',
+                        'name': tag.attrib['whenChoiceValue'],
+                    }
             if conditionals:
                 tag_info['conditionals'] = conditionals
             outputs[tag.attrib['name']] = tag_info
         elif _is_input_tag(tag):
-            inputs[tag.attrib['name']] = {'type': tag.tag, 'value': tag.attrib['value'].lstrip('$')}
+            inputs[tag.attrib['name']] = {
+                'type': tag.tag,
+                'value': tag.attrib['value'].lstrip('$'),
+            }
         if tag.tag not in _LABEL_TAGS:
             continue
         parent_name = _get_parent_output_tag_name(tag, outputs)
@@ -91,7 +106,9 @@ def parse_config(config_string):
             if not actual_value:
                 logger.debug(
                     'Inspecting tag {tag_name}... found no "value" or "alias" attributes.'.format(
-                        tag_name=etree.tostring(tag, encoding='unicode').strip()[:50]))
+                        tag_name=etree.tostring(tag, encoding='unicode').strip()[:50]
+                    )
+                )
             else:
                 labels[parent_name][actual_value] = dict(tag.attrib)
     for output_tag, tag_info in outputs.items():
@@ -100,7 +117,8 @@ def parse_config(config_string):
             if input_tag_name not in inputs:
                 logger.warning(
                     f'to_name={input_tag_name} is specified for output tag name={output_tag}, '
-                    'but we can\'t find it among input tags')
+                    'but we can\'t find it among input tags'
+                )
                 continue
             tag_info['inputs'].append(inputs[input_tag_name])
         tag_info['labels'] = list(labels[output_tag])
@@ -111,4 +129,4 @@ def parse_config(config_string):
 def chunk(lst, n):
     """Yield successive n-sized chunks from lst."""
     for i in range(0, len(lst), n):
-        yield lst[i:i + n]
+        yield lst[i : i + n]
