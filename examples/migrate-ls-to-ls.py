@@ -1,5 +1,6 @@
 """ This migration helps to copy projects from one LS instance to another.
 Users, projects, tasks and annotations will be copied, other entities are not supported.
+Each new run of this script will generate new projects on the destination instance.
 
 Usage:
 python3 migrate-ls-to-ls.py --src-url https://app.heartex.com --src-key <src-token> --dst-url http://localhost:8000 --dst-key <dst-token> --project-ids=123,456
@@ -59,6 +60,9 @@ class Migration:
 
             logger.info(f'Going to import {filename} to project {new_project.id}')
             new_project.import_tasks(filename)
+            logger.info(f'Import {filename} finished for project {new_project.id}')
+
+        logger.info('All projects are processed, finish')
 
     def create_project(self, project):
         logger.info(f'Going to create a new project "{project.params["title"]}" from old project {project.id}')
