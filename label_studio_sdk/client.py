@@ -138,7 +138,9 @@ class Client(object):
         if response.status_code == 200:
             projects = []
             for data in response.json()['results']:
-                projects.append(Project._create_from_id(client=self, project_id=data['id'], params=data))
+                project = Project._create_from_id(client=self, project_id=data['id'], params=data)
+                projects.append(project)
+                logger.debug(f'Project {project.id} "{project.get_params().get("title")}" is retrieved')
             return projects
 
     def start_project(self, **kwargs):
@@ -193,6 +195,40 @@ class Client(object):
             user_data['client'] = self
             users.append(User(**user_data))
         return users
+
+    def create_user(self, user):
+        """ Create a new user
+
+        Parameters
+        ----------
+        user: User or dict
+            User instance, you can initialize it this way:
+            User(username='x', email='x@x.xx', first_name='X', last_name='Z')
+
+        Returns
+        -------
+        `label_studio_sdk.users.User`
+            Created user
+
+        """
+        from .users import User
+
+        payload = {
+            'username': user.username,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'phone': user.phone
+        } if isinstance(user, User) else user
+
+        try:
+            response = self.make_request('POST', '/api/users', json=payload)
+            user_data = response.json()
+            user_data['client'] = self
+            return User(**user_data)
+        except requests.HTTPError as e:
+            logger.error('Create user error:' + str(e.response.json()))
+            return None
 
     def get_workspaces(self):
         """ Return all workspaces from the current organization account

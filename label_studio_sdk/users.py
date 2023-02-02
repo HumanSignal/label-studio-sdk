@@ -30,7 +30,7 @@ class User(BaseModel):
     last_activity: datetime
     initials: str
     phone: str
-    active_organization: int
+    active_organization: Optional[int]
     org_membership: Optional[List[OrgMembership]]
     client: Client
 
