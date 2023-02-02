@@ -8,6 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: psf/black@stable
-      with:
-        options: "--skip-string-normalization"
-        src: "./label_studio_sdk"
+        with:
+          options: "--skip-string-normalization"
+          src: "./label_studio_sdk"
