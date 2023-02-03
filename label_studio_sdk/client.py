@@ -23,24 +23,24 @@ class ClientCredentials(BaseModel):
     @root_validator(pre=True, allow_reuse=True)
     def either_key_or_email_password(cls, values):
         assert (
-                'email' in values or 'api_key' in values
+            'email' in values or 'api_key' in values
         ), 'At least one of email or api_key should be included'
         assert (
-                'email' not in values or 'password' in values
+            'email' not in values or 'password' in values
         ), 'Provide both email and password for login auth'
         return values
 
 
 class Client(object):
     def __init__(
-            self,
-            url,
-            api_key,
-            credentials=None,
-            session=None,
-            extra_headers: dict = None,
-            cookies: dict = None,
-            oidc_token=None,
+        self,
+        url,
+        api_key,
+        credentials=None,
+        session=None,
+        extra_headers: dict = None,
+        cookies: dict = None,
+        oidc_token=None,
     ):
         """Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
@@ -98,8 +98,8 @@ class Client(object):
         ).raise_for_status()
         api_key = (
             self.session.get(self.get_url("/api/current-user/token"))
-                .json()
-                .get("token")
+            .json()
+            .get("token")
         )
         return api_key
 
@@ -166,9 +166,13 @@ class Client(object):
         if response.status_code == 200:
             projects = []
             for data in response.json()['results']:
-                project = Project._create_from_id(client=self, project_id=data['id'], params=data)
+                project = Project._create_from_id(
+                    client=self, project_id=data['id'], params=data
+                )
                 projects.append(project)
-                logger.debug(f'Project {project.id} "{project.get_params().get("title")}" is retrieved')
+                logger.debug(
+                    f'Project {project.id} "{project.get_params().get("title")}" is retrieved'
+                )
             return projects
 
     def start_project(self, **kwargs):
@@ -228,7 +232,7 @@ class Client(object):
         return users
 
     def create_user(self, user):
-        """ Create a new user
+        """Create a new user
 
         Parameters
         ----------
@@ -244,13 +248,17 @@ class Client(object):
         """
         from .users import User
 
-        payload = {
-            'username': user.username,
-            'email': user.email,
-            'first_name': user.first_name,
-            'last_name': user.last_name,
-            'phone': user.phone
-        } if isinstance(user, User) else user
+        payload = (
+            {
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'phone': user.phone,
+            }
+            if isinstance(user, User)
+            else user
+        )
 
         try:
             response = self.make_request('POST', '/api/users', json=payload)
