@@ -28,14 +28,19 @@ Each new run of this script will generate new projects on the destination instan
 
 # Usage
 
-Install Label Studio SDK:
+1. Install Label Studio SDK:
 
 ```
 pip install -U label-studio-sdk
 ```
 
+2. Go to source (src) and target (dst) LS instances. Open Account pages (/user/account), copy your Access tokens. 
 
-Migrate all projects from the organization:
+> Attention: be careful not to mix up the tokens, otherwise you have a change to create a big mess of projects and users. 
+
+> Note: User token must have Administrator or Owner privileges.
+
+3. Migrate all projects from the organization:
 
 ```bash
 python3 migrate-ls-to-ls.py --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token>
