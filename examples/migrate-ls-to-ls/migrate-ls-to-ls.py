@@ -17,7 +17,7 @@ logger = logging.getLogger('migration-ls-to-ls')
 
 class Migration:
     def __init__(self, src_url, src_key, dst_url, dst_key):
-        """ Initialize migration that copy projects from one LS instance to another
+        """Initialize migration that copy projects from one LS instance to another
 
         :param src_url: source Label Studio instance
         :param src_key: source Label Studio token
@@ -30,7 +30,7 @@ class Migration:
         self.users = self.projects = self.project_ids = None
 
     def set_project_ids(self, project_ids=None):
-        """ Set projects you need to migrate
+        """Set projects you need to migrate
 
         :param project_ids: List of project ids to copy, set None if you need to copy all projects
         """
@@ -43,9 +43,13 @@ class Migration:
 
         # start exporting projects
         for project in projects:
-            logger.info(f'Going to create export snapshot for project {project.id} {project.params["title"]}')
+            logger.info(
+                f'Going to create export snapshot for project {project.id} {project.params["title"]}'
+            )
             status, filename = self.export_snapshot(project)
-            logger.info(f'Snapshot for project {project.id} created with status {status} and filename {filename}')
+            logger.info(
+                f'Snapshot for project {project.id} created with status {status} and filename {filename}'
+            )
 
             if status != 200:
                 logger.info(f'Skipping project {project.id} because of errors {status}')
@@ -60,7 +64,9 @@ class Migration:
         logger.info('All projects are processed, finish')
 
     def create_project(self, project):
-        logger.info(f'Going to create a new project "{project.params["title"]}" from old project {project.id}')
+        logger.info(
+            f'Going to create a new project "{project.params["title"]}" from old project {project.id}'
+        )
         copied_fields = {
             'title',
             'description',
@@ -90,18 +96,23 @@ class Migration:
             'config_has_control_tags',
             'skip_queue',
             'reveal_preannotations_interactively',
-            'require_comment_on_skip'
+            'require_comment_on_skip',
         }
-        params = {field: project.params[field] for field in project.params if field in copied_fields}
+        params = {
+            field: project.params[field]
+            for field in project.params
+            if field in copied_fields
+        }
         new_project = self.dst_ls.start_project(**params)
         self.read_and_update_project_mapping(project, new_project)
-        logger.info(f'New project {new_project.id} {new_project.params["title"]} is created')
+        logger.info(
+            f'New project {new_project.id} {new_project.params["title"]} is created'
+        )
         return new_project
 
     @staticmethod
     def read_and_update_project_mapping(old_project, new_project):
-        """ Project mapping for ids: old project id => new project id
-        """
+        """Project mapping for ids: old project id => new project id"""
         mapping = {}
         path = 'project_mapping.json'
         if os.path.exists(path):
@@ -121,13 +132,14 @@ class Migration:
         if self.project_ids is None:
             self.projects = self.src_ls.get_projects()
         else:
-            self.projects = [self.src_ls.get_project(id=pid) for pid in self.project_ids]
+            self.projects = [
+                self.src_ls.get_project(id=pid) for pid in self.project_ids
+            ]
 
         return self.projects
 
     def get_users(self, projects: [Project]) -> [User]:
-        """ Get users that are members of all projects
-        """
+        """Get users that are members of all projects"""
         users = {}
         for project in projects:
             members = project.get_members()
@@ -151,14 +163,13 @@ class Migration:
         return new_users
 
     def export_snapshot(self, project):
-        """ Export all tasks from the project
-        """
+        """Export all tasks from the project"""
         # create new export snapshot
         export_result = project.export_snapshot_create(
             title='Migration snapshot',
-            serialization_options_annotations__completed_by=False
+            serialization_options_annotations__completed_by=False,
         )
-        assert ('id' in export_result)
+        assert 'id' in export_result
         export_id = export_result['id']
 
         # wait until snapshot is ready
@@ -166,9 +177,11 @@ class Migration:
             time.sleep(1.0)
 
         # download snapshot file
-        status, file_name = project.export_snapshot_download(export_id, export_type='JSON')
-        assert (status == 200)
-        assert (file_name is not None)
+        status, file_name = project.export_snapshot_download(
+            export_id, export_type='JSON'
+        )
+        assert status == 200
+        assert file_name is not None
         logger.info(f"Status of the export is {status}. File name is {file_name}")
         return status, file_name
 
@@ -177,41 +190,43 @@ def run():
     import sys
     import argparse
 
-    parser = argparse.ArgumentParser(description='Label Studio Project Migration Script')
+    parser = argparse.ArgumentParser(
+        description='Label Studio Project Migration Script'
+    )
     parser.add_argument(
         '--src-url',
         dest='src_url',
         type=str,
         default='',
-        help='Source Label Studio instance'
+        help='Source Label Studio instance',
     )
     parser.add_argument(
         '--src-key',
         dest='src_key',
         type=str,
         default='',
-        help='Source Label Studio token, it should be owner or administrator token'
+        help='Source Label Studio token, it should be owner or administrator token',
     )
     parser.add_argument(
         '--dst-url',
         dest='dst_url',
         type=str,
         default='',
-        help='Destination Label Studio instance'
+        help='Destination Label Studio instance',
     )
     parser.add_argument(
         '--dst-key',
         dest='dst_key',
         type=str,
         default='',
-        help='Destination Label Studio token, it should be owner or administrator token'
+        help='Destination Label Studio token, it should be owner or administrator token',
     )
     parser.add_argument(
         '--project-ids',
         dest='project_ids',
         type=str,
         default=None,
-        help='Project ids separated by comma, e.g.: 54,78,98'
+        help='Project ids separated by comma, e.g.: 54,78,98',
     )
     args = parser.parse_args(sys.argv[1:])
 
@@ -219,11 +234,13 @@ def run():
         src_url=args.src_url,
         src_key=args.src_key,
         dst_url=args.dst_url,
-        dst_key=args.dst_key
+        dst_key=args.dst_key,
     )
     logging.basicConfig(level=logging.INFO)
 
-    project_ids = [int(i) for i in args.project_ids.split(',')] if args.project_ids else None
+    project_ids = (
+        [int(i) for i in args.project_ids.split(',')] if args.project_ids else None
+    )
     migration.run(project_ids)
 
 
