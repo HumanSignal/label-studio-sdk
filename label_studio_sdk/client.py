@@ -23,24 +23,24 @@ class ClientCredentials(BaseModel):
     @root_validator(pre=True, allow_reuse=True)
     def either_key_or_email_password(cls, values):
         assert (
-            'email' in values or 'api_key' in values
+                'email' in values or 'api_key' in values
         ), 'At least one of email or api_key should be included'
         assert (
-            'email' not in values or 'password' in values
+                'email' not in values or 'password' in values
         ), 'Provide both email and password for login auth'
         return values
 
 
 class Client(object):
     def __init__(
-        self,
-        url,
-        api_key,
-        credentials=None,
-        session=None,
-        extra_headers: dict = None,
-        cookies: dict = None,
-        oidc_token=None,
+            self,
+            url,
+            api_key,
+            credentials=None,
+            session=None,
+            extra_headers: dict = None,
+            cookies: dict = None,
+            oidc_token=None,
     ):
         """Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
@@ -98,8 +98,8 @@ class Client(object):
         ).raise_for_status()
         api_key = (
             self.session.get(self.get_url("/api/current-user/token"))
-            .json()
-            .get("token")
+                .json()
+                .get("token")
         )
         return api_key
 
