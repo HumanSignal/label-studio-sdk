@@ -1,17 +1,7 @@
 """ This migration helps to copy projects from one LS instance to another.
-* Users,
-* Projects,
-* Tasks and
-* Annotations
-will be copied, other entities are not supported. Storages are not yet supported.
-
-Each new run of this script will generate new projects on the destination instance.
 
 Usage:
-> python3 migrate-ls-to-ls.py --src-url https://app.heartex.com --src-key <src-token> --dst-url http://localhost:8000 --dst-key <dst-token> --project-ids=123,456
-or
-> python3 migrate-ls-to-ls.py --src-url https://app.heartex.com --src-key <src-token> --dst-url http://localhost:8000 --dst-key <dst-token>
-to copy all projects
+> python3 migrate-ls-to-ls.py --src-url src-ls.com --src-key <src-token> --dst-url dst-ls.com --dst-key <dst-token> --project-ids=123,456
 """
 import os
 import time
