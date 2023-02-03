@@ -22,15 +22,27 @@ class ClientCredentials(BaseModel):
 
     @root_validator(pre=True, allow_reuse=True)
     def either_key_or_email_password(cls, values):
-        assert 'email' in values or 'api_key' in values, 'At least one of email or api_key should be included'
-        assert 'email' not in values or 'password' in values, 'Provide both email and password for login auth'
+        assert (
+            'email' in values or 'api_key' in values
+        ), 'At least one of email or api_key should be included'
+        assert (
+            'email' not in values or 'password' in values
+        ), 'Provide both email and password for login auth'
         return values
 
 
 class Client(object):
-
-    def __init__(self, url, api_key, credentials=None, session=None, extra_headers: dict = None, cookies: dict = None, oidc_token=None):
-        """ Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
+    def __init__(
+        self,
+        url,
+        api_key,
+        credentials=None,
+        session=None,
+        extra_headers: dict = None,
+        cookies: dict = None,
+        oidc_token=None,
+    ):
+        """Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
         Parameters
         ----------
@@ -48,7 +60,7 @@ class Client(object):
         cookies: dict
             Cookies that will be passed to each http request.
         oidc_token: str
-            Bearer token for proxy authentication - in case the server is behind an authenticating proxy.            
+            Bearer token for proxy authentication - in case the server is behind an authenticating proxy.
         """
         self.url = url.rstrip('/')
         self.session = session or self.get_session()
@@ -56,7 +68,11 @@ class Client(object):
         # set api key or get it using credentials (username and password)
         if api_key is not None:
             credentials = ClientCredentials(api_key=api_key)
-        self.api_key = credentials.api_key if credentials.api_key else self.get_api_key(credentials)
+        self.api_key = (
+            credentials.api_key
+            if credentials.api_key
+            else self.get_api_key(credentials)
+        )
 
         # set headers
         self.headers = {'Authorization': f'Token {self.api_key}'}
@@ -74,12 +90,21 @@ class Client(object):
         self.session.get(login_url)
         csrf_token = self.session.cookies.get('csrftoken', None)
         login_data = dict(**credentials.dict(), csrfmiddlewaretoken=csrf_token)
-        self.session.post(login_url, data=login_data, headers=dict(Referer=self.url), cookies=self.cookies).raise_for_status()
-        api_key = self.session.get(self.get_url("/api/current-user/token")).json().get("token")
+        self.session.post(
+            login_url,
+            data=login_data,
+            headers=dict(Referer=self.url),
+            cookies=self.cookies,
+        ).raise_for_status()
+        api_key = (
+            self.session.get(self.get_url("/api/current-user/token"))
+            .json()
+            .get("token")
+        )
         return api_key
 
     def check_connection(self):
-        """ Call Label Studio /health endpoint to check the connection to the server.
+        """Call Label Studio /health endpoint to check the connection to the server.
 
         Returns
         -------
@@ -90,7 +115,7 @@ class Client(object):
         return response.json()
 
     def get_projects(self):
-        """ List all projects in Label Studio.
+        """List all projects in Label Studio.
 
         Returns
         -------
@@ -100,7 +125,7 @@ class Client(object):
         return self.list_projects()
 
     def delete_project(self, project_id: int):
-        """ Delete a project in Label Studio.
+        """Delete a project in Label Studio.
 
         Returns
         -------
@@ -111,7 +136,7 @@ class Client(object):
         return response
 
     def delete_all_projects(self):
-        """ Deletes all projects in Label Studio.
+        """Deletes all projects in Label Studio.
 
         Returns
         -------
@@ -126,7 +151,7 @@ class Client(object):
         return responses
 
     def list_projects(self):
-        """ List all projects in Label Studio.
+        """List all projects in Label Studio.
 
         Returns
         -------
@@ -134,7 +159,10 @@ class Client(object):
 
         """
         from .project import Project
-        response = self.make_request('GET', '/api/projects', params={'page_size': 10000000})
+
+        response = self.make_request(
+            'GET', '/api/projects', params={'page_size': 10000000}
+        )
         if response.status_code == 200:
             projects = []
             for data in response.json()['results']:
@@ -144,7 +172,7 @@ class Client(object):
             return projects
 
     def start_project(self, **kwargs):
-        """ Create a new project instance.
+        """Create a new project instance.
 
         Parameters
         ----------
@@ -157,12 +185,13 @@ class Client(object):
 
         """
         from .project import Project
+
         project = Project(url=self.url, api_key=self.api_key, session=self.session)
         project.start_project(**kwargs)
         return project
 
     def get_project(self, id):
-        """ Return project SDK object by ID existed in Label Studio
+        """Return project SDK object by ID existed in Label Studio
 
         Parameters
         ----------
@@ -175,10 +204,11 @@ class Client(object):
 
         """
         from .project import Project
+
         return Project.get_from_id(self, id)
 
     def get_users(self):
-        """ Return all users from the current organization account
+        """Return all users from the current organization account
 
         Parameters
         ----------
@@ -189,6 +219,7 @@ class Client(object):
 
         """
         from .users import User
+
         response = self.make_request('GET', '/api/users')
         users = []
         for user_data in response.json():
@@ -231,7 +262,7 @@ class Client(object):
             return None
 
     def get_workspaces(self):
-        """ Return all workspaces from the current organization account
+        """Return all workspaces from the current organization account
 
         Parameters
         ----------
@@ -242,6 +273,7 @@ class Client(object):
 
         """
         from .workspaces import Workspace
+
         response = self.make_request('GET', '/api/workspaces')
         workspaces = []
         for workspace_data in response.json():
@@ -250,7 +282,7 @@ class Client(object):
         return workspaces
 
     def get_session(self):
-        """ Create a session with requests.Session()
+        """Create a session with requests.Session()
 
         Returns
         -------
@@ -264,7 +296,7 @@ class Client(object):
         return session
 
     def get_url(self, suffix):
-        """ Get the URL of the Label Studio server
+        """Get the URL of the Label Studio server
 
         Returns
         -------
@@ -274,7 +306,7 @@ class Client(object):
         return f'{self.url}/{suffix.lstrip("/")}'
 
     def make_request(self, method, url, *args, **kwargs):
-        """ Make a request with an API key to Label Studio instance
+        """Make a request with an API key to Label Studio instance
 
         Parameters
         ----------
@@ -296,7 +328,14 @@ class Client(object):
         if 'timeout' not in kwargs:
             kwargs['timeout'] = TIMEOUT
         logger.debug(f'{method}: {url} with args={args}, kwargs={kwargs}')
-        response = self.session.request(method, self.get_url(url), headers=self.headers, cookies=self.cookies, *args, **kwargs)
+        response = self.session.request(
+            method,
+            self.get_url(url),
+            headers=self.headers,
+            cookies=self.cookies,
+            *args,
+            **kwargs,
+        )
         response.raise_for_status()
         return response
 
