@@ -36,9 +36,9 @@ pip install -U label-studio-sdk
 
 2. Go to source (src) and target (dst) LS instances. Open Account pages (/user/account), copy your Access tokens. 
 
-> Attention: be careful not to mix up the tokens, otherwise you have a change to create a big mess of projects and users. 
+    > Attention: be careful not to mix up the tokens, otherwise you have a change to create a big mess of projects and users. 
 
-> Note: User token must have Administrator or Owner privileges.
+    > Note: User token must have Administrator or Owner privileges.
 
 3. Migrate all projects from the organization:
 
@@ -46,7 +46,7 @@ pip install -U label-studio-sdk
 python3 migrate-ls-to-ls.py --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token>
 ```
 
-Migrate only specific projects:
+Or migrate specific projects only:
 
 ```bash
 python3 migrate-ls-to-ls.py --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token> --project-ids=123,456
