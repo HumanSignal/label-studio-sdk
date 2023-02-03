@@ -20,7 +20,7 @@ Each new run of this script will generate new projects on the destination instan
     > Note: if there is an export error, skip this project
     
     4.2. create a new project on the target LS instance with the same params as on source instance, except review settings and assignment settings (enterprise only) 
-    > Note: Cloud storages, ML backends, Members, Webhooks are not copied. Data manager and other advanced things are not copied too
+    > Note: Cloud storages, ML backends, Members, Webhooks are not copied. Data manager tabs and other advanced things are not copied too
  
     4.3. import **tasks**, **annotations** and **predictions** from the exported file
  
