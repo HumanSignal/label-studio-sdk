@@ -42,12 +42,12 @@ pip install -U label-studio-sdk
 
 3. Migrate all projects from the organization:
 
-```bash
-python3 migrate-ls-to-ls.py --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token>
-```
-
-Or migrate specific projects only:
-
-```bash
-python3 migrate-ls-to-ls.py --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token> --project-ids=123,456
-```
+    ```bash
+    python3 migrate-ls-to-ls.py --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token>
+    ```
+    
+    Or migrate specific projects only:
+    
+    ```bash
+    python3 migrate-ls-to-ls.py --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token> --project-ids=123,456
+    ```
