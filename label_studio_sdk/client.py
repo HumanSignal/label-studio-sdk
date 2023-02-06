@@ -11,7 +11,7 @@ from requests.adapters import HTTPAdapter
 logger = logging.getLogger(__name__)
 
 MAX_RETRIES = 3
-TIMEOUT = (1.0, 60.0)
+TIMEOUT = (1.0, 180.0)
 HEADERS = {}
 
 
@@ -51,7 +51,6 @@ class Client(object):
          
         # set api key or get it using credentials (username and password)
         if api_key is not None:
-            warnings.warn("A deprecation warning to fit accordingly to your deprecation policy", DeprecationWarning)
             credentials = ClientCredentials(api_key=api_key)
         self.api_key = credentials.api_key if credentials.api_key else self.get_api_key(credentials)
 
@@ -90,6 +89,32 @@ class Client(object):
 
         """
         return self.list_projects()
+
+    def delete_project(self, project_id: int):
+        """ Delete a project in Label Studio.
+
+        Returns
+        -------
+        dict
+            Status string
+        """
+        response = self.make_request('DELETE', f'/api/projects/{project_id}/')
+        return response
+
+    def delete_all_projects(self):
+        """ Deletes all projects in Label Studio.
+
+        Returns
+        -------
+        List
+            List of (dict) status strings
+        """
+        responses = []
+        project_ids = [project.get_params()['id'] for project in self.list_projects()]
+        for project_id in project_ids:
+            response = self.delete_project(project_id)
+            responses.append(response)
+        return responses
 
     def list_projects(self):
         """ List all projects in Label Studio.

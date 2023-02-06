@@ -10,6 +10,7 @@ from requests.exceptions import HTTPError, InvalidSchema, MissingSchema
 from pathlib import Path
 from typing import Optional, Union, List, Dict, Callable
 from .client import Client
+from .utils import parse_config, chunk
 
 from label_studio_tools.core.utils.io import get_local_path
 from label_studio_tools.core.label_config import parse_config
@@ -187,13 +188,19 @@ class Project(Client):
             Dict with counter of created assignments
 
         """
-        payload = {
-            'users': [user.id for user in users],
-            'selectedItems': {'all': False, 'included': tasks_ids},
-            'type': 'AN',
-        }
-        response = self.make_request('POST', f'/api/projects/{self.id}/tasks/assignees', json=payload)
-        return response.json()
+        final_response = {'assignments': 0}
+        users_ids = [user.id for user in users]
+        # Assign tasks to users with batches
+        for c in chunk(tasks_ids, 1000):
+            logger.debug(f"Starting assignment for: {users_ids}")
+            payload = {
+                'users': users_ids,
+                'selectedItems': {'all': False, 'included': c},
+                'type': 'AN',
+            }
+            response = self.make_request('POST', f'/api/projects/{self.id}/tasks/assignees', json=payload)
+            final_response['assignments'] += response.json()['assignments']
+        return final_response
 
     def delete_annotators_assignment(self, tasks_ids):
         """ Remove all assigned annotators for tasks
@@ -901,6 +908,26 @@ class Project(Client):
         response = self.make_request('GET', f'/api/tasks/{task_id}')
         return response.json()
 
+    def update_task(self, task_id, **kwargs):
+        """ Update specific task by ID.
+
+        Parameters
+        ----------
+        task_id: int
+            Task ID you want to update
+        kwargs: kwargs parameters
+            List of parameters to update. Check all available parameters [here](https://labelstud.io/api#operation/api_tasks_partial_update)
+
+        Returns
+        -------
+        dict:
+            Dict with updated task
+
+        """
+        response = self.make_request('PATCH', f'/api/tasks/{task_id}', json=kwargs)
+        response.raise_for_status()
+        return response.json()
+
     def create_prediction(
         self,
         task_id: int,
@@ -976,7 +1003,7 @@ class Project(Client):
         Parameters
         ----------
         model_versions: list or None
-            Convert predictions with these model versions to annotations. If `None`, all existed model versions are used
+            Convert predictions with these model versions to annotations. If `None`, all existing model versions are used
 
         Returns
         -------
@@ -1655,7 +1682,8 @@ class Project(Client):
         title: str
             Export title
         task_filter_options: dict
-            Task filter options, use {"view": <tab_id>} to apply filter from this tab
+            Task filter options, use {"view": tab_id} to apply filter from this tab,
+            <a href="https://api.labelstud.io/#operation/api_projects_exports_create">check the API parameters for more details</a>
         serialization_options_drafts: bool
             Expand drafts or include only ID
         serialization_options_predictions: bool

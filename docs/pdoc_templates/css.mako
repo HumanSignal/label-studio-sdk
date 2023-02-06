@@ -7,6 +7,11 @@ code {
 }
 
 <%def name="mobile()" filter="minify_css">
+
+   dl dd a {
+     color: rgb(229, 122, 56) !important;
+   }
+
   :root {
     --highlight-color: #fe9;
   }
