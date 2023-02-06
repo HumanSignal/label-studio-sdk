@@ -40,6 +40,7 @@ class Filters:
     """
     Use the methods and variables in this class to create and combine filters for tasks on the Label Studio Data Manager.
     """
+
     OR = 'or'
     """Combine filters with an OR"""
     AND = 'and'
@@ -47,7 +48,7 @@ class Filters:
 
     @staticmethod
     def create(conjunction, items):
-        """ Create a filter for `label_studio_sdk.project.Project.get_tasks()`
+        """Create a filter for `label_studio_sdk.project.Project.get_tasks()`
 
         Parameters
         ----------
@@ -62,10 +63,7 @@ class Filters:
             containing specified parameters
 
         """
-        return {
-          "conjunction": conjunction,
-          "items": items
-        }
+        return {"conjunction": conjunction, "items": items}
 
     @staticmethod
     def item(name, operator, column_type, value):
@@ -90,12 +88,12 @@ class Filters:
             "filter": 'filter:' + name,
             "operator": operator,
             "type": column_type,
-            "value": value
+            "value": value,
         }
 
     @staticmethod
     def datetime(dt):
-        """ Date time string format for filtering the Data Manager.
+        """Date time string format for filtering the Data Manager.
 
         Parameters
         ----------
@@ -141,8 +139,7 @@ class Filters:
 
 
 class Operator:
-    """Specify the operator to use when creating a filter.
-    """
+    """Specify the operator to use when creating a filter."""
 
     EQUAL = "equal"
     NOT_EQUAL = "not_equal"
@@ -161,8 +158,7 @@ class Operator:
 
 
 class Type:
-    """Specify the type of data in a column.
-    """
+    """Specify the type of data in a column."""
 
     Number = 'Number'
     Datetime = 'Datetime'
@@ -175,8 +171,7 @@ class Type:
 
 
 class Column:
-    """Specify the column on the Data Manager in Label Studio UI to use in the filter.
-    """
+    """Specify the column on the Data Manager in Label Studio UI to use in the filter."""
 
     id = "tasks:id"
     """Task ID"""
@@ -217,7 +212,7 @@ class Column:
 
     @staticmethod
     def data(task_field):
-        """ Create a filter name for the task data field
+        """Create a filter name for the task data field
 
         Parameters
         ----------
@@ -234,31 +229,39 @@ class Column:
 
 def _test():
     """Test it"""
-    filters = Filters.create(Filters.OR, [
-        Filters.item(
-            Column.id,
-            Operator.GREATER,
-            Type.Number,
-            Filters.value(42)
-        ),
-        Filters.item(
-            Column.completed_at,
-            Operator.IN,
-            Type.Datetime,
-            Filters.value(
-                datetime(2021, 11, 1),
-                datetime(2021, 11, 5),
-            )
-        )
-    ])
+    filters = Filters.create(
+        Filters.OR,
+        [
+            Filters.item(Column.id, Operator.GREATER, Type.Number, Filters.value(42)),
+            Filters.item(
+                Column.completed_at,
+                Operator.IN,
+                Type.Datetime,
+                Filters.value(
+                    datetime(2021, 11, 1),
+                    datetime(2021, 11, 5),
+                ),
+            ),
+        ],
+    )
 
-    assert filters == {'conjunction': 'or',
-                       'items': [
-                           {'filter': 'filter:tasks:id', 'operator': 'greater', 'type': 'Number', 'value': 42},
-                           {'filter': 'filter:tasks:completed_at', 'operator': 'in', 'type': 'Datetime',
-                            'value': {
-                                'min': '2021-11-01T00:00:00.000000Z',
-                                'max': '2021-11-05T00:00:00.000000Z'}
-                            }
-                         ]
-                       }
+    assert filters == {
+        'conjunction': 'or',
+        'items': [
+            {
+                'filter': 'filter:tasks:id',
+                'operator': 'greater',
+                'type': 'Number',
+                'value': 42,
+            },
+            {
+                'filter': 'filter:tasks:completed_at',
+                'operator': 'in',
+                'type': 'Datetime',
+                'value': {
+                    'min': '2021-11-01T00:00:00.000000Z',
+                    'max': '2021-11-05T00:00:00.000000Z',
+                },
+            },
+        ],
+    }

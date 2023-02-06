@@ -8,10 +8,10 @@ jobs:
   deploy_docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cache pip deps
-        uses: actions/cache@v2
+        uses: actions/cache@v3.2.3
         env:
           cache-name: cache-pip-packages
         with:

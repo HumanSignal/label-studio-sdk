@@ -18,7 +18,7 @@ project = ls.start_project(
     label_config=f"""
     <View>
     <Image name="image" value="$image" zoom="true"/>
-    <BrushLabels name="tag" toName="image">
+    <BrushLabels name="brush_labels_tag" toName="image">
         <Label value="{LABEL}" background="#8ff0a4"/>
     </BrushLabels>
     </View>
@@ -34,7 +34,7 @@ mask = (mask > 128).astype(np.uint8) * 255  # better to threshold, it reduces ou
 rle = brush.mask2rle(mask)  # mask image in RLE format
 
 project.create_prediction(task_id=ids[0], model_version=None, result = [{
-    "from_name": "tag",
+    "from_name": "brush_labels_tag",
     "to_name": "image",
     "type": "brushlabels",
     'value': {
