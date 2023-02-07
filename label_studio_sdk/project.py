@@ -6,11 +6,15 @@ import logging
 
 from enum import Enum, auto
 from random import sample, shuffle
-from requests.exceptions import HTTPError
+from requests.exceptions import HTTPError, InvalidSchema, MissingSchema
 from pathlib import Path
 from typing import Optional, Union, List, Dict, Callable
 from .client import Client
 from .utils import parse_config, chunk
+
+from label_studio_tools.core.utils.io import get_local_path
+from label_studio_tools.core.label_config import parse_config
+
 
 logger = logging.getLogger(__name__)
 
@@ -1961,3 +1965,35 @@ class Project(Client):
                 for chunk in response:
                     f.write(chunk)
         return response.status_code, filename
+
+    def get_files_from_tasks(self, tasks: Dict, get_tasks: bool = False):
+        """Copy files from tasks to cache folder
+
+        Parameters
+        ----------
+        tasks: Dict
+        Tasks to download to local storage
+        get_tasks: bool
+        Get all tasks from current project
+
+        Returns
+        -------
+        list
+            List of filenames
+        """
+        if get_tasks:
+            tasks = self.get_tasks()
+        filenames = []
+        if tasks:
+            for task in tasks:
+                for key in task['data']:
+                    try:
+                        filename = get_local_path(
+                            task['data'][key],
+                            access_token=self.api_key,
+                            hostname=self.url,
+                        )
+                        filenames.append(filename)
+                    except (FileNotFoundError, InvalidSchema, MissingSchema, IOError):
+                        logger.debug(f"Couldn't copy file {task['data'][key]}.")
+        return filenames
