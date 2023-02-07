@@ -1966,11 +1966,8 @@ class Project(Client):
                     f.write(chunk)
         return response.status_code, filename
 
-    def get_files_from_tasks(self,
-                             tasks: Dict,
-                             get_tasks: bool = False
-                             ):
-        """ Copy files from tasks to cache folder
+    def get_files_from_tasks(self, tasks: Dict, get_tasks: bool = False):
+        """Copy files from tasks to cache folder
 
         Parameters
         ----------
@@ -1991,9 +1988,11 @@ class Project(Client):
             for task in tasks:
                 for key in task['data']:
                     try:
-                        filename = get_local_path(task['data'][key],
-                                                  access_token=self.api_key,
-                                                  hostname=self.url)
+                        filename = get_local_path(
+                            task['data'][key],
+                            access_token=self.api_key,
+                            hostname=self.url,
+                        )
                         filenames.append(filename)
                     except (FileNotFoundError, InvalidSchema, MissingSchema, IOError):
                         logger.debug(f"Couldn't copy file {task['data'][key]}.")
