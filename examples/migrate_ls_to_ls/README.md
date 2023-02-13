@@ -1,11 +1,12 @@
 # Migrate from one Label Studio instance to another 
 
-This migration helps to copy projects from one LS instance to another.
+This migration helps to copy projects from one LS instance to another. To be copied:
 * Users,
 * Projects,
 * Tasks and
 * Annotations
-will be copied, other entities are not supported. Storages are not yet supported.
+
+Other entities are not supported. Cloud Storages are not yet supported.
 
 Each new run of this script will generate new projects on the destination instance.
 
