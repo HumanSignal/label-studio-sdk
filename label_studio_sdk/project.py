@@ -1965,18 +1965,15 @@ class Project(Client):
                 for chunk in response:
                     f.write(chunk)
         return response.status_code, filename
-    
-    def export_snapshot_delete(
-            self,
-            export_id: int
-    ):
+
+    def export_snapshot_delete(self, export_id: int):
         """Delete an export file by specified export ID
-        
+
         Parameters
         ----------
         export_id: int
             Existing Export ID from current project
-        
+
         Returns
         ----------
         Status code for operation
@@ -1985,7 +1982,7 @@ class Project(Client):
             'DELETE',
             f'/api/projects/{self.id}/exports/{export_id}',
         )
-        return response.status_code
+        return response.status_codee
 
     def get_files_from_tasks(self, tasks: Dict, get_tasks: bool = False):
         """Copy files from tasks to cache folder
