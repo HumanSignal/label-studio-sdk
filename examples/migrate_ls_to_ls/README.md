@@ -15,7 +15,7 @@ Each new run of this script will generate new projects on the destination instan
 1. Get all projects from source LS (or specific projects)
 2. Get all users from these projects
 3. Create all users with the same emails, first names and last names on the target LS instance 
-4. For each project run
+4. For each project:
 
     4.1. export on the source LS instance, wait until export is done
     > Note: if there is an export error, skip this project
