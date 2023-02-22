@@ -35,7 +35,7 @@ Each new run of this script will generate new projects on the destination instan
     pip install -U label-studio-sdk
     ```
 
-2. Go to source (src) and target (dst) LS instances. Open Account pages (/user/account), copy your Access tokens. 
+2. Go to source (src) and destination (dst) LS instances. Open Account pages (/user/account), copy your Access tokens. 
 
     > **Attention**: Be careful not to mix up the tokens, otherwise there is a chance you will create a big mess of projects and users.
 
@@ -50,5 +50,5 @@ Each new run of this script will generate new projects on the destination instan
     Or migrate specific projects only:
     
     ```bash
-    python3 migrate-ls-to-ls.py --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token> --project-ids=123,456
+    python3 migrate-ls-to-ls.py --project-ids=123,456 --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token>
     ```
