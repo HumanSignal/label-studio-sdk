@@ -1982,7 +1982,7 @@ class Project(Client):
             'DELETE',
             f'/api/projects/{self.id}/exports/{export_id}',
         )
-        return response.status_codee
+        return response.status_code
 
     def get_files_from_tasks(self, tasks: Dict, get_tasks: bool = False):
         """Copy files from tasks to cache folder
