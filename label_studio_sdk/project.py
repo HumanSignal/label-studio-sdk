@@ -2015,3 +2015,13 @@ class Project(Client):
                     except (FileNotFoundError, InvalidSchema, MissingSchema, IOError):
                         logger.debug(f"Couldn't copy file {task['data'][key]}.")
         return filenames
+
+    def delete_task(self, task_id: int) -> None:
+        """Delete a task.
+        
+        Parameters
+        ----------
+        task_id: int
+            Task id.
+        """
+        self.make_request("DELETE", f"/api/tasks/{task_id}")
