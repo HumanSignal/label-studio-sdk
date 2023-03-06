@@ -489,6 +489,6 @@
   </nav>
 </header>
 
-<script src="/js/css.escape.js"></script>
-<script src="/js/common.js"></script>
+<script src="http://labelstud.io.s3-website-us-east-1.amazonaws.com/js/css.escape.js"></script>
+<script src="http://labelstud.io.s3-website-us-east-1.amazonaws.com/js/common.js"></script>
 <script src="https://label-studio-docs-new-theme.netlify.app/js/header.js"></script>
