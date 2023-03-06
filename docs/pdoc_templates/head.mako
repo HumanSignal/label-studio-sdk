@@ -21,17 +21,17 @@
       type="text/css">
 
 <!-- Place this tag in your head or just before your close body tag. -->
-<script src="/js/redirects.js"></script>
-<script src="/js/jquery.min.js"></script>
-<script src="/js/search.js"></script>
-<script src="/js/highlightjs-badge.min.js"></script>
-<script src="/js/smooth-scroll.min.js"></script>
+<script src="http://labelstud.io.s3-website-us-east-1.amazonaws.com/js/redirects.js"></script>
+<script src="http://labelstud.io.s3-website-us-east-1.amazonaws.com/js/jquery.min.js"></script>
+<script src="/http://labelstud.io.s3-website-us-east-1.amazonaws.comjs/search.js"></script>
+<script src="http://labelstud.io.s3-website-us-east-1.amazonaws.com/js/highlightjs-badge.min.js"></script>
+<script src="http://labelstud.io.s3-website-us-east-1.amazonaws.com/js/smooth-scroll.min.js"></script>
 
-<link rel="stylesheet" href="/css/new-styles.css">
-<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="http://labelstud.io.s3-website-us-east-1.amazonaws.com/css/new-styles.css">
+<link rel="stylesheet" href="http://labelstud.io.s3-website-us-east-1.amazonaws.com/css/search.css">
 
 <!-- main page styles -->
-<link rel="stylesheet" href="/css/page.css">
+<link rel="stylesheet" href="http://labelstud.io.s3-website-us-east-1.amazonaws.com/css/page.css">
 
 
 
