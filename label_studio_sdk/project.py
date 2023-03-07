@@ -7,6 +7,7 @@ import logging
 from enum import Enum, auto
 from random import sample, shuffle
 from requests.exceptions import HTTPError, InvalidSchema, MissingSchema
+from requests import Response
 from pathlib import Path
 from typing import Optional, Union, List, Dict, Callable
 from .client import Client
@@ -1230,7 +1231,6 @@ class Project(Client):
             'presign_ttl': presign_ttl,
             'title': title,
             'description': description,
-            'project': self.id,
         }
         response = self.make_request('POST', '/api/storages/gcs', json=payload)
         return response.json()
@@ -1801,7 +1801,7 @@ class Project(Client):
             overlap=overlap,
         )
 
-    def export_snapshot_list(self):
+    def export_snapshot_list(self) -> list:
         """
         Get list of export snapshots for the current project
         -------
@@ -1835,7 +1835,7 @@ class Project(Client):
         annotation_filter_options_ground_truth: bool = True,
         annotation_filter_options_skipped: bool = True,
         interpolate_key_frames: bool = False,
-    ):
+    ) -> dict:
         """
         Create new export snapshot
         ----------
@@ -1904,7 +1904,7 @@ class Project(Client):
         )
         return response.json()
 
-    def export_snapshot_status(self, export_id: int):
+    def export_snapshot_status(self, export_id: int) -> ExportSnapshotStatus:
         """
         Get export snapshot status by Export ID
         ----------
@@ -1936,7 +1936,7 @@ class Project(Client):
 
     def export_snapshot_download(
         self, export_id: int, export_type: str = 'JSON', path: str = "."
-    ):
+    ) -> (int, str):
         """
         Download file with export snapshot in provided format
         ----------
@@ -1966,7 +1966,7 @@ class Project(Client):
                     f.write(chunk)
         return response.status_code, filename
 
-    def export_snapshot_delete(self, export_id: int):
+    def export_snapshot_delete(self, export_id: int) -> int:
         """Delete an export file by specified export ID
 
         Parameters
@@ -2016,12 +2016,39 @@ class Project(Client):
                         logger.debug(f"Couldn't copy file {task['data'][key]}.")
         return filenames
 
-    def delete_task(self, task_id: int) -> None:
-        """Delete a task.
+    def delete_task(self, task_id: int) -> Response:
+        """Delete a task. To remove multiple tasks `use delete_tasks()`.
         
         Parameters
         ----------
         task_id: int
             Task id.
         """
-        self.make_request("DELETE", f"/api/tasks/{task_id}")
+        assert isinstance(task_id, int), 'task_id should be int'
+        return self.make_request("DELETE", f"/api/tasks/{task_id}")
+
+    def delete_tasks(self, task_ids: list) -> Response:
+        """Delete multiple tasks by IDs.
+
+        Parameters
+        ----------
+        task_ids: list of int
+            Task ids.
+        """
+        assert isinstance(task_ids, list), 'task_ids should be list of int'
+        payload = {"selectedItems": {"all": False, "included": task_ids}, "project": self.id}
+        return self.make_request("POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload)
+
+    def delete_all_tasks(self, excluded_ids: list = None) -> Response:
+        """Delete all tasks from the project.
+
+        Parameters
+        ----------
+        excluded_ids: list of int
+            Task ids that should be excluded from the deletion.
+        """
+        assert isinstance(excluded_ids, list) or excluded_ids is None, 'excluded_ids should be list of int or None'
+        if excluded_ids is None:
+            excluded_ids = []
+        payload = {"selectedItems": {"all": True, "excluded": excluded_ids}, "project": self.id}
+        return self.make_request("POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload)
