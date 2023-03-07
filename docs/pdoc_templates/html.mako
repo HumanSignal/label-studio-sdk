@@ -326,6 +326,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
   <meta name="generator" content="pdoc ${pdoc.__version__}" />
+  <base href="https://labelstud.io/sdk" target="_blank">
 
 <%
     module_list = 'modules' in context.keys()  # Whether we're showing module list in server mode
