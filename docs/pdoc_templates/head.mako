@@ -23,7 +23,7 @@
 <!-- Place this tag in your head or just before your close body tag. -->
 <script src="http://labelstud.io.s3-website-us-east-1.amazonaws.com/js/redirects.js"></script>
 <script src="http://labelstud.io.s3-website-us-east-1.amazonaws.com/js/jquery.min.js"></script>
-<script src="/http://labelstud.io.s3-website-us-east-1.amazonaws.comjs/search.js"></script>
+<script src="http://labelstud.io.s3-website-us-east-1.amazonaws.com/js/search.js"></script>
 <script src="http://labelstud.io.s3-website-us-east-1.amazonaws.com/js/highlightjs-badge.min.js"></script>
 <script src="http://labelstud.io.s3-website-us-east-1.amazonaws.com/js/smooth-scroll.min.js"></script>
 
