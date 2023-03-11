@@ -2036,6 +2036,8 @@ class Project(Client):
             Task ids.
         """
         assert isinstance(task_ids, list), 'task_ids should be list of int'
+        if not task_ids:  # avoid deletion of all tasks when task_ids = []
+            return Response()
         payload = {"selectedItems": {"all": False, "included": task_ids}, "project": self.id}
         return self.make_request("POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload)
 
