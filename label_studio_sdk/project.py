@@ -566,9 +566,9 @@ class Project(Client):
             method='GET', url=f'/api/projects/{self.id}/export', params=params
         )
         if export_location is None:
-            if export_type == 'YOLO':
+            if 'JSON' not in export_type.upper():
                 raise ValueError(
-                    'YOLO export type requires an export location to be specified'
+                    f'{export_type} export type requires an export location to be specified'
                 )
             return response.json()
 
