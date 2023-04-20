@@ -88,10 +88,17 @@ class Client(object):
         self.cookies = cookies
 
         # set versions from /version endpoint
-        self.versions = versions if versions else self.get_version()
+        self.versions = versions if versions else self.get_versions()
         self.is_enterprise = 'label-studio-enterprise-backend' in self.versions
 
-    def get_version(self):
+    def get_versions(self):
+        """Call /version api and get all Label Studio component versions
+        
+        Returns
+        -------
+        dict with Label Studio component names and their versions
+
+        """
         self.versions = self.make_request('GET', '/api/version').json()
         return self.versions
 
