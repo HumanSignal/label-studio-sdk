@@ -154,6 +154,8 @@ class Project(Client):
 
         """
         from .users import User
+        assert self.is_enterprise, "Project members are available in the Enterprise edition of Label Studio only. " \
+                                   "Use get_users() instead."
 
         response = self.make_request('GET', f'/api/projects/{self.id}/members')
         users = []
@@ -445,6 +447,7 @@ class Project(Client):
             api_key=client.api_key,
             session=client.session,
             extra_headers=client.headers,
+            versions=client.versions
         )
         if params and isinstance(params, dict):
             # TODO: validate project parameters

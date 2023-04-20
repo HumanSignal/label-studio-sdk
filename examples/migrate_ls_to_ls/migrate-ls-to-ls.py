@@ -139,19 +139,29 @@ class Migration:
         return self.projects
 
     def get_users(self, projects: [Project]) -> [User]:
-        """Get users that are members of all projects"""
-        users = {}
-        for project in projects:
-            members = project.get_members()
-            id_members = {member.id: member for member in members}
-            logger.info(f'Get {len(members)} users from project {project.id}')
-            users.update(id_members)
+        """Get users that are members of all projects at the source instance"""
+        # enterprise instance
+        if self.src_ls.is_enterprise:
+            users = {}
+            for project in projects:
+                members = project.get_members()
+                id_members = {member.id: member for member in members}
+                logger.info(f'Get {len(members)} users from project {project.id}')
+                users.update(id_members)
 
-        self.users = list(users.values())
+            self.users = list(users.values())
+
+        # community instance doesn't have per-project members, all users have access to all projects
+        else:
+            users = self.src_ls.get_users()
+            id_users = {user.id: user for user in users}
+            self.users = list(id_users.values())
+
         return self.users
 
     def create_users(self, users: [User]):
-        logger.info(f'Going to create {len(users)} users on {self.dst_ls}')
+        logger.info(f'Going to create {len(users)} users on {self.dst_ls}. '
+                    f'It is normal to see errors here if a user already exists.')
         new_users = []
         for user in users:
             new_user = self.dst_ls.create_user(user)
