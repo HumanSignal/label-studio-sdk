@@ -43,9 +43,13 @@ class Migration:
 
         # start exporting projects
         for project in projects:
-            logger.info(f'Going to create export snapshot for project {project.id} {project.params["title"]}')
+            logger.info(
+                f'Going to create export snapshot for project {project.id} {project.params["title"]}'
+            )
             status, filename = self.export_snapshot(project)
-            logger.info(f'Snapshot for project {project.id} created with status {status} and filename {filename}')
+            logger.info(
+                f'Snapshot for project {project.id} created with status {status} and filename {filename}'
+            )
             self.patch_snapshot_users(filename)
 
             if status != 200:
@@ -155,8 +159,10 @@ class Migration:
         return self.users
 
     def create_users(self, users: [User]):
-        logger.info(f'Going to create {len(users)} users on {self.dst_ls}. '
-                    f'It is normal to see errors here if a user already exists.')
+        logger.info(
+            f'Going to create {len(users)} users on {self.dst_ls}. '
+            f'It is normal to see errors here if a user already exists.'
+        )
         new_users = []
         for user in users:
             new_user = self.dst_ls.create_user(user)
@@ -211,7 +217,10 @@ class Migration:
             for annotation in task['annotations']:
                 user = annotation['completed_by']
                 if isinstance(user, int):
-                    annotation['completed_by'] = {"id": user, 'email': id_users[user].email}
+                    annotation['completed_by'] = {
+                        "id": user,
+                        'email': id_users[user].email,
+                    }
                 else:
                     return  # completed_by is not int, exiting
 
@@ -219,6 +228,7 @@ class Migration:
             json.dump(tasks, out)
 
         logger.info(f'Completed_by patch is applied to {filename}')
+
 
 def run():
     import sys

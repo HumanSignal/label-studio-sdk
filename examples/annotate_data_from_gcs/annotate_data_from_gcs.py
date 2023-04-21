@@ -4,7 +4,9 @@ from google.cloud import storage as google_storage
 from label_studio_sdk import Client
 
 BUCKET_NAME = 'my-bucket'  # specify your bucket name here
-GOOGLE_APPLICATION_CREDENTIALS = 'my-service-account-credentials.json'  # specify your GCS credentials
+GOOGLE_APPLICATION_CREDENTIALS = (
+    'my-service-account-credentials.json'  # specify your GCS credentials
+)
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = GOOGLE_APPLICATION_CREDENTIALS
 
 google_client = google_storage.Client()

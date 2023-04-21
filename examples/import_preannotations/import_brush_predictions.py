@@ -22,24 +22,28 @@ project = ls.start_project(
         <Label value="{LABEL}" background="#8ff0a4"/>
     </BrushLabels>
     </View>
-    """
+    """,
 )
 
-ids = project.import_tasks([
-    {'image': f'http://example.com/data_{i:04}.png'} for i in range(64)
-])
+ids = project.import_tasks(
+    [{'image': f'http://example.com/data_{i:04}.png'} for i in range(64)]
+)
 
 mask = (np.random.random([512, 512]) * 255).astype(np.uint8)  # just a random 2D mask
-mask = (mask > 128).astype(np.uint8) * 255  # better to threshold, it reduces output annotation size
+mask = (mask > 128).astype(
+    np.uint8
+) * 255  # better to threshold, it reduces output annotation size
 rle = brush.mask2rle(mask)  # mask image in RLE format
 
-project.create_prediction(task_id=ids[0], model_version=None, result = [{
-    "from_name": "brush_labels_tag",
-    "to_name": "image",
-    "type": "brushlabels",
-    'value': {
-        "format": "rle",
-        "rle": rle,
-        "brushlabels": [LABEL]
-    }
-}])
+project.create_prediction(
+    task_id=ids[0],
+    model_version=None,
+    result=[
+        {
+            "from_name": "brush_labels_tag",
+            "to_name": "image",
+            "type": "brushlabels",
+            'value': {"format": "rle", "rle": rle, "brushlabels": [LABEL]},
+        }
+    ],
+)
