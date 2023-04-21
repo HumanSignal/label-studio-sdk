@@ -224,9 +224,7 @@ class Project(Client):
             Dict with counter of deleted annotator assignments
 
         """
-        payload = {
-            'selectedItems': {'all': False, 'included': tasks_ids},
-        }
+        payload = {'selectedItems': {'all': False, 'included': tasks_ids}}
         response = self.make_request(
             'POST',
             f'/api/dm/actions?id=delete_annotators&project={self.id}',
@@ -247,9 +245,7 @@ class Project(Client):
             Dict with counter of deleted reviewer assignments
 
         """
-        payload = {
-            'selectedItems': {'all': False, 'included': tasks_ids},
-        }
+        payload = {'selectedItems': {'all': False, 'included': tasks_ids}}
         response = self.make_request(
             'POST',
             f'/api/dm/actions?id=delete_reviewers&project={self.id}',
@@ -820,11 +816,7 @@ class Project(Client):
         """
         data = {
             'project': self.id,
-            'data': {
-                'title': title,
-                'ordering': ordering,
-                'filters': filters,
-            },
+            'data': {'title': title, 'ordering': ordering, 'filters': filters},
         }
         response = self.make_request('POST', '/api/dm/views', json=data)
         return response.json()
@@ -1960,7 +1952,11 @@ class Project(Client):
         )
         filename = None
         if response.status_code == 200:
-            filename = response.headers.get('filename')
+            content_disposition = response.headers.get("Content-Disposition")
+            if content_disposition:
+                filename = content_disposition.split("filename=")[-1].strip("\"'")
+            else:
+                raise LabelStudioException('No filename in response')
             with open(os.path.join(path, filename), 'wb') as f:
                 for chunk in response:
                     f.write(chunk)
@@ -1979,8 +1975,7 @@ class Project(Client):
         Status code for operation
         """
         response = self.make_request(
-            'DELETE',
-            f'/api/projects/{self.id}/exports/{export_id}',
+            'DELETE', f'/api/projects/{self.id}/exports/{export_id}'
         )
         return response.status_code
 
@@ -2018,7 +2013,7 @@ class Project(Client):
 
     def delete_task(self, task_id: int) -> Response:
         """Delete a task. To remove multiple tasks `use delete_tasks()`.
-        
+
         Parameters
         ----------
         task_id: int
@@ -2038,8 +2033,13 @@ class Project(Client):
         assert isinstance(task_ids, list), 'task_ids should be list of int'
         if not task_ids:  # avoid deletion of all tasks when task_ids = []
             return Response()
-        payload = {"selectedItems": {"all": False, "included": task_ids}, "project": self.id}
-        return self.make_request("POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload)
+        payload = {
+            "selectedItems": {"all": False, "included": task_ids},
+            "project": self.id,
+        }
+        return self.make_request(
+            "POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload
+        )
 
     def delete_all_tasks(self, excluded_ids: list = None) -> Response:
         """Delete all tasks from the project.
@@ -2049,8 +2049,15 @@ class Project(Client):
         excluded_ids: list of int
             Task ids that should be excluded from the deletion.
         """
-        assert isinstance(excluded_ids, list) or excluded_ids is None, 'excluded_ids should be list of int or None'
+        assert (
+            isinstance(excluded_ids, list) or excluded_ids is None
+        ), 'excluded_ids should be list of int or None'
         if excluded_ids is None:
             excluded_ids = []
-        payload = {"selectedItems": {"all": True, "excluded": excluded_ids}, "project": self.id}
-        return self.make_request("POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload)
+        payload = {
+            "selectedItems": {"all": True, "excluded": excluded_ids},
+            "project": self.id,
+        }
+        return self.make_request(
+            "POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload
+        )
