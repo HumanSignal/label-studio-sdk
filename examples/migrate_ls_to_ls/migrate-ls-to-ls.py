@@ -50,6 +50,7 @@ class Migration:
             logger.info(
                 f'Snapshot for project {project.id} created with status {status} and filename {filename}'
             )
+            self.patch_snapshot_users(filename)
 
             if status != 200:
                 logger.info(f'Skipping project {project.id} because of errors {status}')
@@ -139,19 +140,29 @@ class Migration:
         return self.projects
 
     def get_users(self, projects: [Project]) -> [User]:
-        """Get users that are members of all projects"""
-        users = {}
-        for project in projects:
-            members = project.get_members()
-            id_members = {member.id: member for member in members}
-            logger.info(f'Get {len(members)} users from project {project.id}')
-            users.update(id_members)
+        """Get users that are members of all projects at the source instance"""
+        # enterprise instance
+        if self.src_ls.is_enterprise:
+            users = {}
+            for project in projects:
+                members = project.get_members()
+                id_members = {member.id: member for member in members}
+                logger.info(f'Get {len(members)} users from project {project.id}')
+                users.update(id_members)
 
-        self.users = list(users.values())
+            self.users = list(users.values())
+
+        # community instance doesn't have per-project members, all users have access to all projects
+        else:
+            self.users = self.src_ls.get_users()
+
         return self.users
 
     def create_users(self, users: [User]):
-        logger.info(f'Going to create {len(users)} users on {self.dst_ls}')
+        logger.info(
+            f'Going to create {len(users)} users on {self.dst_ls}. '
+            f'It is normal to see errors here if a user already exists.'
+        )
         new_users = []
         for user in users:
             new_user = self.dst_ls.create_user(user)
@@ -184,6 +195,39 @@ class Migration:
         assert file_name is not None
         logger.info(f"Status of the export is {status}. File name is {file_name}")
         return status, file_name
+
+    def patch_snapshot_users(self, filename):
+        """
+        Community LS versions export completed_by as int instead of dict with email,
+        this patch converts int to dict with email in all annotations
+
+        :param filename: path to json snapshot
+        :returns rewrite source file with the patched version of json snapshot
+        """
+        # LSE versions don't need this patch
+        if self.src_ls.is_enterprise:
+            return
+
+        id_users = {user.id: user for user in self.users}
+
+        with open(filename, 'r', encoding='utf8') as f:
+            tasks = json.load(f)
+
+        for task in tasks:
+            for annotation in task['annotations']:
+                user = annotation['completed_by']
+                if isinstance(user, int):
+                    annotation['completed_by'] = {
+                        "id": user,
+                        'email': id_users[user].email,
+                    }
+                else:
+                    return  # completed_by is not int, exiting
+
+        with open(filename, 'w') as out:
+            json.dump(tasks, out)
+
+        logger.info(f'Completed_by patch is applied to {filename}')
 
 
 def run():

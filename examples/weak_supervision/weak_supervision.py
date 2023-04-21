@@ -4,7 +4,9 @@ import re
 from label_studio_sdk import Client
 import pandas as pd
 
-ls = Client(url='http://localhost:8080', api_key='d6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3')
+ls = Client(
+    url='http://localhost:8080', api_key='d6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3'
+)
 ls.check_connection()
 
 
@@ -50,7 +52,12 @@ for label_regex, label in label_ops.items():
                 {
                     'task': task_id,
                     'result': [
-                        {'from_name': 'sentiment', 'to_name': 'text', 'type': 'choices', 'value': {'choices': [label]}}
+                        {
+                            'from_name': 'sentiment',
+                            'to_name': 'text',
+                            'type': 'choices',
+                            'value': {'choices': [label]},
+                        }
                     ],
                     'score': random.random(),
                     'model_version': model_version,
@@ -67,4 +74,3 @@ pd.Series(project.get_predictions_coverage(), name='Coverage')
 
 
 print(project.create_annotations_from_predictions(model_versions=list(model_versions)))
-

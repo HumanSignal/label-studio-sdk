@@ -1,4 +1,6 @@
-from evalme.metrics import get_agreement  # run first `pip install label-studio-evalme` to use this package
+from evalme.metrics import (
+    get_agreement,
+)  # run first `pip install label-studio-evalme` to use this package
 from label_studio_sdk import Client
 import pandas as pd
 
@@ -25,7 +27,9 @@ project = ls.start_project(
 project.import_tasks(
     [
         {
-            'data': {'image': 'https://data.heartex.net/open-images/train_0/mini/0045dd96bf73936c.jpg'},
+            'data': {
+                'image': 'https://data.heartex.net/open-images/train_0/mini/0045dd96bf73936c.jpg'
+            },
             'predictions': [
                 {
                     'result': [
@@ -41,7 +45,9 @@ project.import_tasks(
             ],
         },
         {
-            'data': {'image': 'https://data.heartex.net/open-images/train_0/mini/0083d02f6ad18b38.jpg'},
+            'data': {
+                'image': 'https://data.heartex.net/open-images/train_0/mini/0083d02f6ad18b38.jpg'
+            },
             'predictions': [
                 {
                     'result': [
@@ -62,8 +68,14 @@ project.import_tasks(
 
 project.import_tasks(
     [
-        {'image': f'https://data.heartex.net/open-images/train_0/mini/0045dd96bf73936c.jpg', 'pet': 'Dog'},
-        {'image': f'https://data.heartex.net/open-images/train_0/mini/0083d02f6ad18b38.jpg', 'pet': 'Cat'},
+        {
+            'image': f'https://data.heartex.net/open-images/train_0/mini/0045dd96bf73936c.jpg',
+            'pet': 'Dog',
+        },
+        {
+            'image': f'https://data.heartex.net/open-images/train_0/mini/0083d02f6ad18b38.jpg',
+            'pet': 'Cat',
+        },
     ],
     preannotated_from_fields=['pet'],
 )
@@ -95,4 +107,3 @@ for task in project.tasks:
     n += 1
 
 print(f'Pre-annotation accuracy: {100 * total_score / n: .0f}%')
-

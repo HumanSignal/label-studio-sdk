@@ -155,6 +155,11 @@ class Project(Client):
         """
         from .users import User
 
+        assert self.is_enterprise, (
+            "Project members are available in the Enterprise edition of Label Studio only. "
+            "Use get_users() instead."
+        )
+
         response = self.make_request('GET', f'/api/projects/{self.id}/members')
         users = []
         for user_data in response.json():
@@ -441,6 +446,7 @@ class Project(Client):
             api_key=client.api_key,
             session=client.session,
             extra_headers=client.headers,
+            versions=client.versions,
         )
         if params and isinstance(params, dict):
             # TODO: validate project parameters
@@ -1843,7 +1849,7 @@ class Project(Client):
         serialization_options_predictions: bool
             Expand predictions or include only ID
         serialization_options_annotations__completed_by: bool
-            Expand user that completed_by or include only ID
+            Expand user that completed_by (False) or include only ID (True)
         annotation_filter_options_usual: bool
             Include not cancelled and not ground truth annotations
         annotation_filter_options_ground_truth: bool

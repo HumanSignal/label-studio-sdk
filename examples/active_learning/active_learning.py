@@ -51,7 +51,9 @@ def get_model_predictions(model, input_texts):
     # Make model inference and return predicted labels and associated prediction scores
     probabilities = model.predict_proba(input_texts)
     predicted_label_indices = np.argmax(probabilities, axis=1)
-    predicted_scores = probabilities[np.arange(len(predicted_label_indices)), predicted_label_indices]
+    predicted_scores = probabilities[
+        np.arange(len(predicted_label_indices)), predicted_label_indices
+    ]
     return [inv_labels_map[i] for i in predicted_label_indices], predicted_scores
 
 
@@ -84,7 +86,14 @@ for task, pred_label, pred_score in zip(unlabeled_tasks, pred_labels, pred_score
         task_id=task['id'],
         # alternatively you can use a simple form here:
         # result=pred_label,
-        result=[{'from_name': 'sentiment', 'to_name': 'text', 'type': 'choices', 'value': {'choices': [pred_label]}}],
+        result=[
+            {
+                'from_name': 'sentiment',
+                'to_name': 'text',
+                'type': 'choices',
+                'value': {'choices': [pred_label]},
+            }
+        ],
         score=pred_score,
         model_version=model_version,
     )

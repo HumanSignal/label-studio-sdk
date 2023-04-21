@@ -21,32 +21,34 @@ from label_studio_sdk.data_manager import Filters, Column, Operator, Type
 
 
 class BatchAssigner:
-
     def __init__(self, host, api_key, project_id):
         self.ls = label_studio_sdk.Client(url=host, api_key=api_key)
         self.project = self.ls.get_project(id=project_id)
 
     def get_tasks(self, filter_column, filter_value, page, page_size):
-        """ Get tasks with filter by column and page number
-        """
-        filters = Filters.create(Filters.OR, [
-            Filters.item(
-                Column.data(filter_column),
-                Operator.EQUAL,
-                Type.String,
-                Filters.value(filter_value)
-            )
-        ])
-        return self.project.get_paginated_tasks(filters=filters, page=page, page_size=page_size, only_ids=True)
+        """Get tasks with filter by column and page number"""
+        filters = Filters.create(
+            Filters.OR,
+            [
+                Filters.item(
+                    Column.data(filter_column),
+                    Operator.EQUAL,
+                    Type.String,
+                    Filters.value(filter_value),
+                )
+            ],
+        )
+        return self.project.get_paginated_tasks(
+            filters=filters, page=page, page_size=page_size, only_ids=True
+        )
 
     def get_page_total(self, filter_column, filter_value, page_size):
-        """ Total page number for tasks with filter by column and specified page size
-        """
+        """Total page number for tasks with filter by column and specified page size"""
         result = self.get_tasks(filter_column, filter_value, 1, page_size)
         return math.ceil(result['total'] / float(page_size))
 
     def get_user_ids(self, emails):
-        """ Get user IDs by email and preserve the order
+        """Get user IDs by email and preserve the order
 
         :param emails: list of strings with email addresses
         :return: user IDs in the same order as email addresses
@@ -63,13 +65,15 @@ class BatchAssigner:
 
         return user_ids
 
-    def assign_users_to_tasks(self,
-                              user_ids,
-                              filter_column='organization',
-                              filter_value='name',
-                              page=1,
-                              page_size=100):
-        """ Assign annotators to filter by specified column and paginated tasks
+    def assign_users_to_tasks(
+        self,
+        user_ids,
+        filter_column='organization',
+        filter_value='name',
+        page=1,
+        page_size=100,
+    ):
+        """Assign annotators to filter by specified column and paginated tasks
 
         :param user_ids: list of user email addresses
         :param filter_column: str with data column name from Data Manager
@@ -90,14 +94,15 @@ class BatchAssigner:
         body = {
             "type": "AN",
             "users": user_ids,
-            "selectedItems": {
-                "all": False,
-                "included": task_ids
-            }
+            "selectedItems": {"all": False, "included": task_ids},
         }
-        self.ls.make_request('post', f'/api/projects/{self.project.id}/tasks/assignees', json=body)
-        print(f'Users {user_ids} were assigned to {len(task_ids)} tasks '
-              f'from id={task_ids[0]} to id={task_ids[-1]}')
+        self.ls.make_request(
+            'post', f'/api/projects/{self.project.id}/tasks/assignees', json=body
+        )
+        print(
+            f'Users {user_ids} were assigned to {len(task_ids)} tasks '
+            f'from id={task_ids[0]} to id={task_ids[-1]}'
+        )
         return True
 
 
@@ -120,13 +125,13 @@ def start():
     page_total = assigner.get_page_total(filter_column, filter_value, page_size)
     print(f'Total pages for {filter_column}={filter_value} => {page_total}')
 
-    for current_page in range(1, page_total+1):
+    for current_page in range(1, page_total + 1):
         assigner.assign_users_to_tasks(
             filter_column=filter_column,
             filter_value=filter_value,
             user_ids=user_ids,
             page=current_page,
-            page_size=page_size
+            page_size=page_size,
         )
 
         time.sleep(10)

@@ -41,6 +41,7 @@ class Client(object):
         extra_headers: dict = None,
         cookies: dict = None,
         oidc_token=None,
+        versions=None,
     ):
         """Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
@@ -61,6 +62,8 @@ class Client(object):
             Cookies that will be passed to each http request.
         oidc_token: str
             Bearer token for proxy authentication - in case the server is behind an authenticating proxy.
+        versions: dict
+            Versions of Label Studio components for the connected instance
         """
         self.url = url.rstrip('/')
         self.session = session or self.get_session()
@@ -81,8 +84,23 @@ class Client(object):
         if extra_headers:
             self.headers.update(extra_headers)
 
-        # Set cookies
+        # set cookies
         self.cookies = cookies
+
+        # set versions from /version endpoint
+        self.versions = versions if versions else self.get_versions()
+        self.is_enterprise = 'label-studio-enterprise-backend' in self.versions
+
+    def get_versions(self):
+        """Call /version api and get all Label Studio component versions
+
+        Returns
+        -------
+        dict with Label Studio component names and their versions
+
+        """
+        self.versions = self.make_request('GET', '/api/version').json()
+        return self.versions
 
     def get_api_key(self, credentials: ClientCredentials):
         login_url = self.get_url("/user/login")
@@ -190,7 +208,12 @@ class Client(object):
         """
         from .project import Project
 
-        project = Project(url=self.url, api_key=self.api_key, session=self.session)
+        project = Project(
+            url=self.url,
+            api_key=self.api_key,
+            session=self.session,
+            versions=self.versions,
+        )
         project.start_project(**kwargs)
         return project
 
@@ -281,6 +304,10 @@ class Client(object):
 
         """
         from .workspaces import Workspace
+
+        assert (
+            self.is_enterprise
+        ), "Workspaces are available only for Enterprise instance of Label Studio"
 
         response = self.make_request('GET', '/api/workspaces')
         workspaces = []
