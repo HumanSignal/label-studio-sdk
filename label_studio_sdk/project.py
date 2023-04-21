@@ -1854,7 +1854,7 @@ class Project(Client):
         serialization_options_predictions: bool
             Expand predictions or include only ID
         serialization_options_annotations__completed_by: bool
-            Expand user that completed_by or include only ID
+            Expand user that completed_by (False) or include only ID (True)
         annotation_filter_options_usual: bool
             Include not cancelled and not ground truth annotations
         annotation_filter_options_ground_truth: bool

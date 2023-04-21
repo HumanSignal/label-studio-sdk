@@ -43,13 +43,10 @@ class Migration:
 
         # start exporting projects
         for project in projects:
-            logger.info(
-                f'Going to create export snapshot for project {project.id} {project.params["title"]}'
-            )
+            logger.info(f'Going to create export snapshot for project {project.id} {project.params["title"]}')
             status, filename = self.export_snapshot(project)
-            logger.info(
-                f'Snapshot for project {project.id} created with status {status} and filename {filename}'
-            )
+            logger.info(f'Snapshot for project {project.id} created with status {status} and filename {filename}')
+            self.patch_snapshot_users(filename)
 
             if status != 200:
                 logger.info(f'Skipping project {project.id} because of errors {status}')
@@ -153,9 +150,7 @@ class Migration:
 
         # community instance doesn't have per-project members, all users have access to all projects
         else:
-            users = self.src_ls.get_users()
-            id_users = {user.id: user for user in users}
-            self.users = list(id_users.values())
+            self.users = self.src_ls.get_users()
 
         return self.users
 
@@ -195,6 +190,35 @@ class Migration:
         logger.info(f"Status of the export is {status}. File name is {file_name}")
         return status, file_name
 
+    def patch_snapshot_users(self, filename):
+        """
+        Community LS versions export completed_by as int instead of dict with email,
+        this patch converts int to dict with email in all annotations
+
+        :param filename: path to json snapshot
+        :returns rewrite source file with the patched version of json snapshot
+        """
+        # LSE versions don't need this patch
+        if self.src_ls.is_enterprise:
+            return
+
+        id_users = {user.id: user for user in self.users}
+
+        with open(filename, 'r', encoding='utf8') as f:
+            tasks = json.load(f)
+
+        for task in tasks:
+            for annotation in task['annotations']:
+                user = annotation['completed_by']
+                if isinstance(user, int):
+                    annotation['completed_by'] = {"id": user, 'email': id_users[user].email}
+                else:
+                    return  # completed_by is not int, exiting
+
+        with open(filename, 'w') as out:
+            json.dump(tasks, out)
+
+        logger.info(f'Completed_by patch is applied to {filename}')
 
 def run():
     import sys

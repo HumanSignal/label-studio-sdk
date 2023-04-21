@@ -93,7 +93,7 @@ class Client(object):
 
     def get_versions(self):
         """Call /version api and get all Label Studio component versions
-        
+
         Returns
         -------
         dict with Label Studio component names and their versions
