@@ -154,8 +154,11 @@ class Project(Client):
 
         """
         from .users import User
-        assert self.is_enterprise, "Project members are available in the Enterprise edition of Label Studio only. " \
-                                   "Use get_users() instead."
+
+        assert self.is_enterprise, (
+            "Project members are available in the Enterprise edition of Label Studio only. "
+            "Use get_users() instead."
+        )
 
         response = self.make_request('GET', f'/api/projects/{self.id}/members')
         users = []
@@ -447,7 +450,7 @@ class Project(Client):
             api_key=client.api_key,
             session=client.session,
             extra_headers=client.headers,
-            versions=client.versions
+            versions=client.versions,
         )
         if params and isinstance(params, dict):
             # TODO: validate project parameters
@@ -2021,7 +2024,7 @@ class Project(Client):
 
     def delete_task(self, task_id: int) -> Response:
         """Delete a task. To remove multiple tasks `use delete_tasks()`.
-        
+
         Parameters
         ----------
         task_id: int
@@ -2041,8 +2044,13 @@ class Project(Client):
         assert isinstance(task_ids, list), 'task_ids should be list of int'
         if not task_ids:  # avoid deletion of all tasks when task_ids = []
             return Response()
-        payload = {"selectedItems": {"all": False, "included": task_ids}, "project": self.id}
-        return self.make_request("POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload)
+        payload = {
+            "selectedItems": {"all": False, "included": task_ids},
+            "project": self.id,
+        }
+        return self.make_request(
+            "POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload
+        )
 
     def delete_all_tasks(self, excluded_ids: list = None) -> Response:
         """Delete all tasks from the project.
@@ -2052,8 +2060,15 @@ class Project(Client):
         excluded_ids: list of int
             Task ids that should be excluded from the deletion.
         """
-        assert isinstance(excluded_ids, list) or excluded_ids is None, 'excluded_ids should be list of int or None'
+        assert (
+            isinstance(excluded_ids, list) or excluded_ids is None
+        ), 'excluded_ids should be list of int or None'
         if excluded_ids is None:
             excluded_ids = []
-        payload = {"selectedItems": {"all": True, "excluded": excluded_ids}, "project": self.id}
-        return self.make_request("POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload)
+        payload = {
+            "selectedItems": {"all": True, "excluded": excluded_ids},
+            "project": self.id,
+        }
+        return self.make_request(
+            "POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload
+        )

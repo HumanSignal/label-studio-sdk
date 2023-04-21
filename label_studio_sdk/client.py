@@ -41,7 +41,7 @@ class Client(object):
         extra_headers: dict = None,
         cookies: dict = None,
         oidc_token=None,
-        versions=None
+        versions=None,
     ):
         """Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
@@ -101,7 +101,6 @@ class Client(object):
         """
         self.versions = self.make_request('GET', '/api/version').json()
         return self.versions
-
 
     def get_api_key(self, credentials: ClientCredentials):
         login_url = self.get_url("/user/login")
@@ -209,7 +208,12 @@ class Client(object):
         """
         from .project import Project
 
-        project = Project(url=self.url, api_key=self.api_key, session=self.session, versions=self.versions)
+        project = Project(
+            url=self.url,
+            api_key=self.api_key,
+            session=self.session,
+            versions=self.versions,
+        )
         project.start_project(**kwargs)
         return project
 
@@ -300,7 +304,10 @@ class Client(object):
 
         """
         from .workspaces import Workspace
-        assert self.is_enterprise, "Workspaces are available only for Enterprise instance of Label Studio"
+
+        assert (
+            self.is_enterprise
+        ), "Workspaces are available only for Enterprise instance of Label Studio"
 
         response = self.make_request('GET', '/api/workspaces')
         workspaces = []
