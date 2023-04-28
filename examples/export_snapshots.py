@@ -1,9 +1,10 @@
+import os
 import time
 from label_studio_sdk import Client
 
-LABEL_STUDIO_URL = 'http://localhost:8080'
-API_KEY = '<MY_API_KEY>'
-PROJECT_ID = 42
+LABEL_STUDIO_URL = os.getenv('LABEL_STUDIO_URL', default='http://localhost:8080')
+API_KEY = os.getenv('LABEL_STUDIO_API_KEY')
+PROJECT_ID = int(os.getenv('LABEL_STUDIO_PROJECT_ID'))
 
 # connect to Label Studio
 ls = Client(url=LABEL_STUDIO_URL, api_key=API_KEY)

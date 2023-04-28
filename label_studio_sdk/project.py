@@ -1961,11 +1961,12 @@ class Project(Client):
             content_disposition = response.headers.get("Content-Disposition")
             if content_disposition:
                 filename = content_disposition.split("filename=")[-1].strip("\"'")
+                filename = os.path.basename(filename)
             else:
                 raise LabelStudioException('No filename in response')
             with open(os.path.join(path, filename), 'wb') as f:
-                for chunk in response:
-                    f.write(chunk)
+                for chk in response:
+                    f.write(chk)
         return response.status_code, filename
 
     def export_snapshot_delete(self, export_id: int) -> int:
