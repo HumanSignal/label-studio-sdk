@@ -76,28 +76,28 @@ class ExportSnapshotStatus:
     def is_created(self):
         """Export snapshot is created"""
         assert (
-                'status' in self.response
+            'status' in self.response
         ), '"status" field not found in export snapshot status response'
         return self.response['status'] == self.CREATED
 
     def is_in_progress(self):
         """Export snapshot is in progress"""
         assert (
-                'status' in self.response
+            'status' in self.response
         ), '"status" field not found in export_snapshot_status response'
         return self.response['status'] == self.IN_PROGRESS
 
     def is_failed(self):
         """Export snapshot failed with errors"""
         assert (
-                'status' in self.response
+            'status' in self.response
         ), '"status" field not found in export_snapshot_status response'
         return self.response['status'] == self.FAILED
 
     def is_completed(self):
         """Export snapshot was created and can be downloaded"""
         assert (
-                'status' in self.response
+            'status' in self.response
         ), '"status" field not found in export_snapshot_status response'
         return self.response['status'] == self.COMPLETED
 
@@ -518,12 +518,12 @@ class Project(Client):
         return response.json()['task_ids']
 
     def export_tasks(
-            self,
-            export_type: str = 'JSON',
-            download_all_tasks: bool = False,
-            download_resources: bool = False,
-            ids: Optional[List[int]] = None,
-            export_location: Optional[str] = None,
+        self,
+        export_type: str = 'JSON',
+        download_all_tasks: bool = False,
+        download_resources: bool = False,
+        ids: Optional[List[int]] = None,
+        export_location: Optional[str] = None,
     ) -> Union[list, pathlib.Path]:
         """Export annotated tasks.
 
@@ -578,7 +578,9 @@ class Project(Client):
         export_path.parent.mkdir(parents=True, exist_ok=True)
 
         with open(export_path, "wb") as out_file:
-            for chunk in response.iter_content(chunk_size=1024):  # 1 kib seems reasonable
+            for chunk in response.iter_content(
+                chunk_size=1024
+            ):  # 1 kib seems reasonable
                 out_file.write(chunk)
 
         return export_path
@@ -616,12 +618,12 @@ class Project(Client):
         self.set_params(model_version=model_version)
 
     def get_tasks(
-            self,
-            filters=None,
-            ordering=None,
-            view_id=None,
-            selected_ids=None,
-            only_ids: bool = False,
+        self,
+        filters=None,
+        ordering=None,
+        view_id=None,
+        selected_ids=None,
+        only_ids: bool = False,
     ):
         """Retrieve a subset of tasks from the Data Manager based on a filter, ordering mechanism, or a
         predefined view ID.
@@ -686,14 +688,14 @@ class Project(Client):
         return result
 
     def get_paginated_tasks(
-            self,
-            filters=None,
-            ordering=None,
-            view_id=None,
-            selected_ids=None,
-            page: int = 1,
-            page_size: int = -1,
-            only_ids: bool = False,
+        self,
+        filters=None,
+        ordering=None,
+        view_id=None,
+        selected_ids=None,
+        page: int = 1,
+        page_size: int = -1,
+        only_ids: bool = False,
     ):
         """Retrieve a subset of tasks from the Data Manager based on a filter, ordering mechanism, or a
         predefined view ID. For non-existent pages it returns 404 error.
@@ -1007,11 +1009,11 @@ class Project(Client):
         return response.json()
 
     def create_prediction(
-            self,
-            task_id: int,
-            result: Optional[Union[List[Dict], Dict, str]] = None,
-            score: Optional[float] = 0,
-            model_version: Optional[str] = None,
+        self,
+        task_id: int,
+        result: Optional[Union[List[Dict], Dict, str]] = None,
+        score: Optional[float] = 0,
+        model_version: Optional[str] = None,
     ):
         """Create a prediction for a specific task.
 
@@ -1186,16 +1188,16 @@ class Project(Client):
         raise NotImplementedError
 
     def connect_google_import_storage(
-            self,
-            bucket: str,
-            prefix: Optional[str] = None,
-            regex_filter: Optional[str] = None,
-            use_blob_urls: Optional[bool] = True,
-            google_application_credentials: Optional[str] = None,
-            presign: Optional[bool] = True,
-            presign_ttl: Optional[int] = 1,
-            title: Optional[str] = '',
-            description: Optional[str] = '',
+        self,
+        bucket: str,
+        prefix: Optional[str] = None,
+        regex_filter: Optional[str] = None,
+        use_blob_urls: Optional[bool] = True,
+        google_application_credentials: Optional[str] = None,
+        presign: Optional[bool] = True,
+        presign_ttl: Optional[int] = 1,
+        title: Optional[str] = '',
+        description: Optional[str] = '',
     ):
         """Connect a Google Cloud Storage (GCS) bucket to Label Studio to use as source storage and import tasks.
 
@@ -1257,13 +1259,13 @@ class Project(Client):
         return response.json()
 
     def connect_google_export_storage(
-            self,
-            bucket: str,
-            prefix: Optional[str] = None,
-            google_application_credentials: Optional[str] = None,
-            title: Optional[str] = '',
-            description: Optional[str] = '',
-            can_delete_objects: bool = False,
+        self,
+        bucket: str,
+        prefix: Optional[str] = None,
+        google_application_credentials: Optional[str] = None,
+        title: Optional[str] = '',
+        description: Optional[str] = '',
+        can_delete_objects: bool = False,
     ):
         """Connect a Google Cloud Storage (GCS) bucket to Label Studio to use as target storage and export tasks.
 
@@ -1316,20 +1318,20 @@ class Project(Client):
         return response.json()
 
     def connect_s3_import_storage(
-            self,
-            bucket: str,
-            prefix: Optional[str] = None,
-            regex_filter: Optional[str] = None,
-            use_blob_urls: Optional[bool] = True,
-            presign: Optional[bool] = True,
-            presign_ttl: Optional[int] = 1,
-            title: Optional[str] = '',
-            description: Optional[str] = '',
-            aws_access_key_id: Optional[str] = None,
-            aws_secret_access_key: Optional[str] = None,
-            aws_session_token: Optional[str] = None,
-            region_name: Optional[str] = None,
-            s3_endpoint: Optional[str] = None,
+        self,
+        bucket: str,
+        prefix: Optional[str] = None,
+        regex_filter: Optional[str] = None,
+        use_blob_urls: Optional[bool] = True,
+        presign: Optional[bool] = True,
+        presign_ttl: Optional[int] = 1,
+        title: Optional[str] = '',
+        description: Optional[str] = '',
+        aws_access_key_id: Optional[str] = None,
+        aws_secret_access_key: Optional[str] = None,
+        aws_session_token: Optional[str] = None,
+        region_name: Optional[str] = None,
+        s3_endpoint: Optional[str] = None,
     ):
         """Connect an Amazon S3 bucket to Label Studio to use as source storage and import tasks.
 
@@ -1398,17 +1400,17 @@ class Project(Client):
         return response.json()
 
     def connect_s3_export_storage(
-            self,
-            bucket: str,
-            prefix: Optional[str] = None,
-            title: Optional[str] = '',
-            description: Optional[str] = '',
-            aws_access_key_id: Optional[str] = None,
-            aws_secret_access_key: Optional[str] = None,
-            aws_session_token: Optional[str] = None,
-            region_name: Optional[str] = None,
-            s3_endpoint: Optional[str] = None,
-            can_delete_objects: bool = False,
+        self,
+        bucket: str,
+        prefix: Optional[str] = None,
+        title: Optional[str] = '',
+        description: Optional[str] = '',
+        aws_access_key_id: Optional[str] = None,
+        aws_secret_access_key: Optional[str] = None,
+        aws_session_token: Optional[str] = None,
+        region_name: Optional[str] = None,
+        s3_endpoint: Optional[str] = None,
+        can_delete_objects: bool = False,
     ):
         """Connect an Amazon S3 bucket to Label Studio to use as target storage and export tasks.
 
@@ -1469,17 +1471,17 @@ class Project(Client):
         return response.json()
 
     def connect_azure_import_storage(
-            self,
-            container: str,
-            prefix: Optional[str] = None,
-            regex_filter: Optional[str] = None,
-            use_blob_urls: Optional[bool] = True,
-            presign: Optional[bool] = True,
-            presign_ttl: Optional[int] = 1,
-            title: Optional[str] = '',
-            description: Optional[str] = '',
-            account_name: Optional[str] = None,
-            account_key: Optional[str] = None,
+        self,
+        container: str,
+        prefix: Optional[str] = None,
+        regex_filter: Optional[str] = None,
+        use_blob_urls: Optional[bool] = True,
+        presign: Optional[bool] = True,
+        presign_ttl: Optional[int] = 1,
+        title: Optional[str] = '',
+        description: Optional[str] = '',
+        account_name: Optional[str] = None,
+        account_key: Optional[str] = None,
     ):
         """Connect a Microsoft Azure BLOB storage container to Label Studio to use as source storage and import tasks.
 
@@ -1539,14 +1541,14 @@ class Project(Client):
         return response.json()
 
     def connect_azure_export_storage(
-            self,
-            container: str,
-            prefix: Optional[str] = None,
-            title: Optional[str] = '',
-            description: Optional[str] = '',
-            account_name: Optional[str] = None,
-            account_key: Optional[str] = None,
-            can_delete_objects: bool = False,
+        self,
+        container: str,
+        prefix: Optional[str] = None,
+        title: Optional[str] = '',
+        description: Optional[str] = '',
+        account_name: Optional[str] = None,
+        account_key: Optional[str] = None,
+        can_delete_objects: bool = False,
     ):
         """Connect Microsoft Azure BLOB storage to Label Studio to use as target storage and export tasks.
 
@@ -1597,12 +1599,12 @@ class Project(Client):
         return response.json()
 
     def connect_local_import_storage(
-            self,
-            local_store_path: [str],
-            regex_filter: Optional[str] = None,
-            use_blob_urls: Optional[bool] = True,
-            title: Optional[str] = '',
-            description: Optional[str] = '',
+        self,
+        local_store_path: [str],
+        regex_filter: Optional[str] = None,
+        use_blob_urls: Optional[bool] = True,
+        title: Optional[str] = '',
+        description: Optional[str] = '',
     ):
         """Connect a Local storage to Label Studio to use as source storage and import tasks.
         Parameters
@@ -1664,13 +1666,13 @@ class Project(Client):
         return response.json()
 
     def _assign_by_sampling(
-            self,
-            users: List[int],
-            assign_function: Callable,
-            view_id: int = None,
-            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
-            fraction: float = 1.0,
-            overlap: int = 1,
+        self,
+        users: List[int],
+        assign_function: Callable,
+        view_id: int = None,
+        method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+        fraction: float = 1.0,
+        overlap: int = 1,
     ):
         """
         Assigning tasks to Reviewers or Annotators by assign_function with method by fraction from view_id
@@ -1747,12 +1749,12 @@ class Project(Client):
         return final_results
 
     def assign_reviewers_by_sampling(
-            self,
-            users: List[int],
-            view_id: int = None,
-            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
-            fraction: float = 1.0,
-            overlap: int = 1,
+        self,
+        users: List[int],
+        view_id: int = None,
+        method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+        fraction: float = 1.0,
+        overlap: int = 1,
     ):
         """
         Behaves similarly like `assign_reviewers()` but instead of specify tasks_ids explicitely,
@@ -1785,12 +1787,12 @@ class Project(Client):
         )
 
     def assign_annotators_by_sampling(
-            self,
-            users: List[int],
-            view_id: int = None,
-            method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
-            fraction: float = 1.0,
-            overlap: int = 1,
+        self,
+        users: List[int],
+        view_id: int = None,
+        method: AssignmentSamplingMethod = AssignmentSamplingMethod.RANDOM,
+        fraction: float = 1.0,
+        overlap: int = 1,
     ):
         """
         Behaves similarly like `assign_annotators()` but instead of specify tasks_ids explicitely,
@@ -1846,16 +1848,16 @@ class Project(Client):
         return response.json()
 
     def export_snapshot_create(
-            self,
-            title: str,
-            task_filter_options: dict = None,
-            serialization_options_drafts: bool = True,
-            serialization_options_predictions: bool = True,
-            serialization_options_annotations__completed_by: bool = True,
-            annotation_filter_options_usual: bool = True,
-            annotation_filter_options_ground_truth: bool = True,
-            annotation_filter_options_skipped: bool = True,
-            interpolate_key_frames: bool = False,
+        self,
+        title: str,
+        task_filter_options: dict = None,
+        serialization_options_drafts: bool = True,
+        serialization_options_predictions: bool = True,
+        serialization_options_annotations__completed_by: bool = True,
+        annotation_filter_options_usual: bool = True,
+        annotation_filter_options_ground_truth: bool = True,
+        annotation_filter_options_skipped: bool = True,
+        interpolate_key_frames: bool = False,
     ) -> dict:
         """
         Create new export snapshot
@@ -1956,7 +1958,7 @@ class Project(Client):
         return ExportSnapshotStatus(response.json())
 
     def export_snapshot_download(
-            self, export_id: int, export_type: str = 'JSON', path: str = "."
+        self, export_id: int, export_type: str = 'JSON', path: str = "."
     ) -> (int, str):
         """
         Download file with export snapshot in provided format
@@ -2039,7 +2041,7 @@ class Project(Client):
 
     def delete_task(self, task_id: int) -> Response:
         """Delete a task. To remove multiple tasks `use delete_tasks()`.
-        
+
         Parameters
         ----------
         task_id: int
@@ -2059,8 +2061,13 @@ class Project(Client):
         assert isinstance(task_ids, list), 'task_ids should be list of int'
         if not task_ids:  # avoid deletion of all tasks when task_ids = []
             return Response()
-        payload = {"selectedItems": {"all": False, "included": task_ids}, "project": self.id}
-        return self.make_request("POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload)
+        payload = {
+            "selectedItems": {"all": False, "included": task_ids},
+            "project": self.id,
+        }
+        return self.make_request(
+            "POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload
+        )
 
     def delete_all_tasks(self, excluded_ids: list = None) -> Response:
         """Delete all tasks from the project.
@@ -2070,8 +2077,15 @@ class Project(Client):
         excluded_ids: list of int
             Task ids that should be excluded from the deletion.
         """
-        assert isinstance(excluded_ids, list) or excluded_ids is None, 'excluded_ids should be list of int or None'
+        assert (
+            isinstance(excluded_ids, list) or excluded_ids is None
+        ), 'excluded_ids should be list of int or None'
         if excluded_ids is None:
             excluded_ids = []
-        payload = {"selectedItems": {"all": True, "excluded": excluded_ids}, "project": self.id}
-        return self.make_request("POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload)
+        payload = {
+            "selectedItems": {"all": True, "excluded": excluded_ids},
+            "project": self.id,
+        }
+        return self.make_request(
+            "POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload
+        )
