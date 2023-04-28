@@ -3,6 +3,7 @@
 import os
 import json
 import logging
+import pathlib
 
 from enum import Enum, auto
 from random import sample, shuffle
@@ -15,7 +16,6 @@ from .utils import parse_config, chunk
 
 from label_studio_tools.core.utils.io import get_local_path
 from label_studio_tools.core.label_config import parse_config
-
 
 logger = logging.getLogger(__name__)
 
@@ -525,7 +525,8 @@ class Project(Client):
         download_all_tasks: bool = False,
         download_resources: bool = False,
         ids: Optional[List[int]] = None,
-    ):
+        export_location: Optional[str] = None,
+    ) -> Union[list, pathlib.Path]:
         """Export annotated tasks.
 
         Parameters
@@ -545,11 +546,15 @@ class Project(Client):
 
         ids: list of ints
             Optional, specify a list of task IDs to retrieve only the details for those tasks.
-
+        export_location: str or path
+            Optional, specify a location to save the export to, this is mandatory for the YOLO export.
+            A pathlib.Path object will be returned instead of the deserialized json.
         Returns
         -------
-        list of dicts
+        list of dicts if export_location is None
             Tasks with annotations
+        pathlib.Path if export_location is not None
+            Path to the export
 
         """
         params = {
@@ -562,7 +567,25 @@ class Project(Client):
         response = self.make_request(
             method='GET', url=f'/api/projects/{self.id}/export', params=params
         )
-        return response.json()
+        if export_location is None:
+            if 'JSON' not in export_type.upper():
+                raise ValueError(
+                    f'{export_type} export type requires an export location to be specified'
+                )
+            return response.json()
+
+        export_path = pathlib.Path(export_location)
+
+        # ensure that parent location exists even if it is in some subdirectory
+        export_path.parent.mkdir(parents=True, exist_ok=True)
+
+        with open(export_path, "wb") as out_file:
+            for chunk in response.iter_content(
+                chunk_size=1024
+            ):  # 1 kib seems reasonable
+                out_file.write(chunk)
+
+        return export_path
 
     def set_params(self, **kwargs):
         """Low level function to set project parameters."""
