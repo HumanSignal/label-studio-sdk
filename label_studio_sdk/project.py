@@ -698,6 +698,7 @@ class Project(Client):
         page: int = 1,
         page_size: int = -1,
         only_ids: bool = False,
+        resolve_uri: bool = True
     ):
         """Retrieve a subset of tasks from the Data Manager based on a filter, ordering mechanism, or a
         predefined view ID. For non-existent pages it returns 404 error.
@@ -736,6 +737,8 @@ class Project(Client):
             Page size. Default is -1, to retrieve all tasks in the project.
         only_ids: bool
             If true, return only task IDs
+        resolve_uri: bool
+            Resolve pre-sign urls to https links
 
         Returns
         -------
@@ -774,6 +777,7 @@ class Project(Client):
             'view': view_id,
             'query': json.dumps(query),
             'fields': 'all',
+            'resolve_uri': resolve_uri
         }
         if only_ids:
             params['include'] = 'id'
