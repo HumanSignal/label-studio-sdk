@@ -1334,6 +1334,7 @@ class Project(Client):
         aws_session_token: Optional[str] = None,
         region_name: Optional[str] = None,
         s3_endpoint: Optional[str] = None,
+        recursive_scan: Optional[bool] = False,
     ):
         """Connect an Amazon S3 bucket to Label Studio to use as source storage and import tasks.
 
@@ -1365,6 +1366,8 @@ class Project(Client):
             Optional, specify the AWS region of your S3 bucket.
         s3_endpoint: string
             Optional, specify an S3 endpoint URL to use to access your bucket instead of the standard access method.
+        recursive_scan: bool
+            Optional, specify whether to perform recursive scan over the bucket content.
 
         Returns
         -------
@@ -1397,6 +1400,7 @@ class Project(Client):
             'title': title,
             'description': description,
             'project': self.id,
+            'recursive_scan': recursive_scan,
         }
         response = self.make_request('POST', '/api/storages/s3', json=payload)
         return response.json()
