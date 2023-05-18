@@ -42,6 +42,7 @@ class Client(object):
         cookies: dict = None,
         oidc_token=None,
         versions=None,
+        make_request_raise=True
     ):
         """Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
@@ -64,6 +65,8 @@ class Client(object):
             Bearer token for proxy authentication - in case the server is behind an authenticating proxy.
         versions: dict
             Versions of Label Studio components for the connected instance
+        make_request_raise: bool
+            If true, make_request will raise exceptions on request errors
         """
         self.url = url.rstrip('/')
         self.session = session or self.get_session()
@@ -90,6 +93,7 @@ class Client(object):
         # set versions from /version endpoint
         self.versions = versions if versions else self.get_versions()
         self.is_enterprise = 'label-studio-enterprise-backend' in self.versions
+        self.make_request_raise = make_request_raise
 
     def get_versions(self):
         """Call /version api and get all Label Studio component versions
@@ -371,7 +375,8 @@ class Client(object):
             *args,
             **kwargs,
         )
-        response.raise_for_status()
+        if self.make_request_raise:
+            response.raise_for_status()
         return response
 
     def sync_storage(self, storage_type, storage_id):
