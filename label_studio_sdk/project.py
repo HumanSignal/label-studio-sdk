@@ -447,6 +447,7 @@ class Project(Client):
             session=client.session,
             extra_headers=client.headers,
             versions=client.versions,
+            make_request_raise=client.make_request_raise
         )
         if params and isinstance(params, dict):
             # TODO: validate project parameters
