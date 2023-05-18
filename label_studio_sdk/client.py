@@ -69,6 +69,7 @@ class Client(object):
             If true, make_request will raise exceptions on request errors
         """
         self.url = url.rstrip('/')
+        self.make_request_raise = make_request_raise
         self.session = session or self.get_session()
 
         # set api key or get it using credentials (username and password)
@@ -93,7 +94,7 @@ class Client(object):
         # set versions from /version endpoint
         self.versions = versions if versions else self.get_versions()
         self.is_enterprise = 'label-studio-enterprise-backend' in self.versions
-        self.make_request_raise = make_request_raise
+
 
     def get_versions(self):
         """Call /version api and get all Label Studio component versions
