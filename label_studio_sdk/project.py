@@ -4,6 +4,7 @@ import os
 import json
 import logging
 import pathlib
+import time
 
 from enum import Enum, auto
 from random import sample, shuffle
@@ -447,7 +448,7 @@ class Project(Client):
             session=client.session,
             extra_headers=client.headers,
             versions=client.versions,
-            make_request_raise=client.make_request_raise
+            make_request_raise=client.make_request_raise,
         )
         if params and isinstance(params, dict):
             # TODO: validate project parameters
@@ -518,7 +519,37 @@ class Project(Client):
             raise TypeError(
                 f'Not supported type provided as "tasks" argument: {type(tasks)}'
             )
-        return response.json()['task_ids']
+        response = response.json()
+
+        if 'import' in response:
+            # check import status
+            timeout = 300
+            fibonacci_backoff = [1, 1]
+
+            start_time = time.time()
+
+            while True:
+                import_status = self.make_request(
+                    method='GET',
+                    url=f'/api/projects/{self.id}/imports/{response["import"]}',
+                ).json()
+
+                if import_status['status'] == 'completed':
+                    return import_status['task_ids']
+
+                if import_status['status'] == 'failed':
+                    raise LabelStudioException(import_status['error'])
+
+                if time.time() - start_time >= timeout:
+                    raise LabelStudioException('Import timeout')
+
+                time.sleep(fibonacci_backoff[0])
+                fibonacci_backoff = [
+                    fibonacci_backoff[1],
+                    fibonacci_backoff[0] + fibonacci_backoff[1],
+                ]
+
+        return response['task_ids']
 
     def export_tasks(
         self,
