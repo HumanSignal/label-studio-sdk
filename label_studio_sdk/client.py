@@ -42,7 +42,7 @@ class Client(object):
         cookies: dict = None,
         oidc_token=None,
         versions=None,
-        make_request_raise=True
+        make_request_raise=True,
     ):
         """Initialize the client. Do this before using other Label Studio SDK classes and methods in your script.
 
@@ -94,7 +94,6 @@ class Client(object):
         # set versions from /version endpoint
         self.versions = versions if versions else self.get_versions()
         self.is_enterprise = 'label-studio-enterprise-backend' in self.versions
-
 
     def get_versions(self):
         """Call /version api and get all Label Studio component versions
