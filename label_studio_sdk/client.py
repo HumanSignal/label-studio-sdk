@@ -8,6 +8,7 @@ import requests
 from typing import Optional
 from pydantic import BaseModel, constr, root_validator
 from requests.adapters import HTTPAdapter
+from types import SimpleNamespace
 
 logger = logging.getLogger(__name__)
 
@@ -259,7 +260,7 @@ class Client(object):
             users.append(User(**user_data))
         return users
 
-    def create_user(self, user):
+    def create_user(self, user, exist_ok=True):
         """Create a new user
 
         Parameters
@@ -267,6 +268,8 @@ class Client(object):
         user: User or dict
             User instance, you can initialize it this way:
             User(username='x', email='x@x.xx', first_name='X', last_name='Z')
+        exist_ok: bool
+            True by default, it won't print error if user exists and exist_ok=True
 
         Returns
         -------
@@ -288,13 +291,16 @@ class Client(object):
             else user
         )
 
-        try:
-            response = self.make_request('POST', '/api/users', json=payload)
-            user_data = response.json()
-            user_data['client'] = self
+        response = self.make_request('POST', '/api/users', json=payload, raise_exceptions=False)
+        user_data = response.json()
+        user_data['client'] = self
+
+        if response.status_code < 400:
             return User(**user_data)
-        except requests.HTTPError as e:
-            logger.error('Create user error: ' + str(e.response.json()))
+        else:
+            if 'already exists' in response.text and exist_ok is True:
+                return None
+            logger.error('Create user error: ' + str(response.json()))
             return None
 
     def get_workspaces(self):
@@ -367,6 +373,11 @@ class Client(object):
         """
         if 'timeout' not in kwargs:
             kwargs['timeout'] = TIMEOUT
+
+        raise_exceptions = self.make_request_raise
+        if 'raise_exceptions' in kwargs:  # kwargs have higher priority
+            raise_exceptions = kwargs.pop('raise_exceptions')
+
         logger.debug(f'{method}: {url} with args={args}, kwargs={kwargs}')
         response = self.session.request(
             method,
@@ -376,7 +387,8 @@ class Client(object):
             *args,
             **kwargs,
         )
-        if self.make_request_raise:
+
+        if raise_exceptions:
             if response.status_code >= 400:
                 try:
                     content = json.dumps(json.loads(response.content), indent=2)
