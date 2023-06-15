@@ -1,5 +1,6 @@
 """ .. include::../docs/client.md
 """
+import json
 import warnings
 import logging
 import requests
@@ -293,7 +294,7 @@ class Client(object):
             user_data['client'] = self
             return User(**user_data)
         except requests.HTTPError as e:
-            logger.error('Create user error:' + str(e.response.json()))
+            logger.error('Create user error: ' + str(e.response.json()))
             return None
 
     def get_workspaces(self):
@@ -376,7 +377,20 @@ class Client(object):
             **kwargs,
         )
         if self.make_request_raise:
-            response.raise_for_status()
+            if response.status_code >= 400:
+                try:
+                    content = json.dumps(json.loads(response.content), indent=2)
+                except:
+                    content = response.text
+
+                logger.error(
+                    f'\n--------------------------------------------\n'
+                    f'Request URL: {response.url}\n'
+                    f'Response status code: {response.status_code}\n'
+                    f'Response content:\n{content}\n\n'
+                    f'SDK error traceback:')
+                response.raise_for_status()
+
         return response
 
     def sync_storage(self, storage_type, storage_id):
