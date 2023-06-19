@@ -74,6 +74,9 @@ class Client(object):
         self.make_request_raise = make_request_raise
         self.session = session or self.get_session()
 
+        # set cookies
+        self.cookies = cookies
+
         # set api key or get it using credentials (username and password)
         if api_key is not None:
             credentials = ClientCredentials(api_key=api_key)
@@ -89,9 +92,6 @@ class Client(object):
             self.headers.update({'Proxy-Authorization': f'Bearer {oidc_token}'})
         if extra_headers:
             self.headers.update(extra_headers)
-
-        # set cookies
-        self.cookies = cookies
 
         # set versions from /version endpoint
         self.versions = versions if versions else self.get_versions()
