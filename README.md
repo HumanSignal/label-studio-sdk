@@ -43,6 +43,10 @@ The Label Studio SDK includes the following:
 
 For all the details, see the [reference documentation](https://labelstud.io/sdk) or [review the code directly](https://github.com/heartexlabs/label-studio-sdk/tree/master/label_studio_sdk). 
 
+## Error logging
+
+To see error logs, you can use `stderr` (we use `logger.error()` for error output). If you use console to run SDK commands, you will see all errors there. 
+
 ## Contribute to the SDK
 
 If you want to extend the SDK:
