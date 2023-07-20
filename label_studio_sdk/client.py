@@ -15,6 +15,7 @@ logger = logging.getLogger(__name__)
 MAX_RETRIES = 3
 TIMEOUT = (10.0, 180.0)
 HEADERS = {}
+LABEL_STUDIO_DEFAULT_URL = 'http://localhost:8080'
 
 
 class ClientCredentials(BaseModel):
@@ -138,7 +139,7 @@ class Client(object):
         response = self.make_request('GET', '/health')
         return response.json()
 
-    def get_projects(self):
+    def get_projects(self, **query_params):
         """List all projects in Label Studio.
 
         Returns
@@ -146,7 +147,7 @@ class Client(object):
         list or `label_studio_sdk.project.Project` instances
 
         """
-        return self.list_projects()
+        return self.list_projects(**query_params)
 
     def delete_project(self, project_id: int):
         """Delete a project in Label Studio.
@@ -174,7 +175,7 @@ class Client(object):
             responses.append(response)
         return responses
 
-    def list_projects(self):
+    def list_projects(self, **query_params):
         """List all projects in Label Studio.
 
         Returns
@@ -184,8 +185,10 @@ class Client(object):
         """
         from .project import Project
 
+        params = {'page_size': 10000000}
+        params.update(query_params)
         response = self.make_request(
-            'GET', '/api/projects', params={'page_size': 10000000}
+            'GET', '/api/projects', params=params
         )
         if response.status_code == 200:
             projects = []
@@ -198,6 +201,9 @@ class Client(object):
                     f'Project {project.id} "{project.get_params().get("title")}" is retrieved'
                 )
             return projects
+
+    def create_project(self, **kwargs):
+        return self.start_project(**kwargs)
 
     def start_project(self, **kwargs):
         """Create a new project instance.
