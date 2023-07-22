@@ -178,6 +178,7 @@ class Migration:
         # create new export snapshot
         export_result = project.export_snapshot_create(
             title='Migration snapshot',
+            serialization_options_drafts=False,
             serialization_options_annotations__completed_by=False,
         )
         assert 'id' in export_result
