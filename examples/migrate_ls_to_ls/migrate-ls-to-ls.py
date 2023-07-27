@@ -16,7 +16,7 @@ logger = logging.getLogger('migration-ls-to-ls')
 
 
 class Migration:
-    def __init__(self, src_url, src_key, dst_url, dst_key):
+    def __init__(self, src_url, src_key, dst_url, dst_key, dest_workspace):
         """Initialize migration that copy projects from one LS instance to another
 
         :param src_url: source Label Studio instance
@@ -28,6 +28,7 @@ class Migration:
         self.src_ls = Client(url=src_url, api_key=src_key)
         self.dst_ls = Client(url=dst_url, api_key=dst_key)
         self.users = self.projects = self.project_ids = None
+        self.dest_workspace = dest_workspace
 
     def set_project_ids(self, project_ids=None):
         """Set projects you need to migrate
@@ -56,6 +57,7 @@ class Migration:
                 logger.info(f'Skipping project {project.id} because of errors {status}')
                 continue
 
+            project.params['workspace'] = self.dest_workspace
             new_project = self.create_project(project)
 
             logger.info(f'Going to import {filename} to project {new_project.id}')
@@ -98,6 +100,7 @@ class Migration:
             'skip_queue',
             'reveal_preannotations_interactively',
             'require_comment_on_skip',
+            'workspace'
         }
         params = {
             field: project.params[field]
@@ -273,6 +276,13 @@ def run():
         default=None,
         help='Project ids separated by comma, e.g.: 54,78,98',
     )
+    parser.add_argument(
+        '--dest-workspace',
+        dest='dest_workspace',
+        type=str,
+        default=None,
+        help='Workspace where to store projects, e.g.: 42',
+    )
     args = parser.parse_args(sys.argv[1:])
 
     migration = Migration(
@@ -280,6 +290,7 @@ def run():
         src_key=args.src_key,
         dst_url=args.dst_url,
         dst_key=args.dst_key,
+        dest_workspace=args.dest_workspace,
     )
     logging.basicConfig(level=logging.INFO)
 
