@@ -5,6 +5,8 @@ This migration helps to copy projects from one LS instance to another. To be cop
 * Projects,
 * Tasks and
 * Annotations
+* Reviews (you should request our team to enable it on SaaS side for your organization)
+* Drafts (you should request our team to enable it on SaaS side for your organization)
 
 Other entities are not supported. Cloud Storages are not yet supported.
 
