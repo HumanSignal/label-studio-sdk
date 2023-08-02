@@ -19,8 +19,8 @@ LABEL_STUDIO_DEFAULT_URL = 'http://localhost:8080'
 
 
 class ClientCredentials(BaseModel):
-    email: Optional[str]
-    password: Optional[str]
+    email: Optional[str] = None
+    password: Optional[str] = None
     api_key: Optional[constr()] = None
 
     @root_validator(pre=True, allow_reuse=True)
