@@ -187,9 +187,7 @@ class Client(object):
 
         params = {'page_size': 10000000}
         params.update(query_params)
-        response = self.make_request(
-            'GET', '/api/projects', params=params
-        )
+        response = self.make_request('GET', '/api/projects', params=params)
         if response.status_code == 200:
             projects = []
             for data in response.json()['results']:
@@ -297,7 +295,9 @@ class Client(object):
             else user
         )
 
-        response = self.make_request('POST', '/api/users', json=payload, raise_exceptions=False)
+        response = self.make_request(
+            'POST', '/api/users', json=payload, raise_exceptions=False
+        )
         user_data = response.json()
         user_data['client'] = self
 
@@ -406,7 +406,8 @@ class Client(object):
                     f'Request URL: {response.url}\n'
                     f'Response status code: {response.status_code}\n'
                     f'Response content:\n{content}\n\n'
-                    f'SDK error traceback:')
+                    f'SDK error traceback:'
+                )
                 response.raise_for_status()
 
         return response
