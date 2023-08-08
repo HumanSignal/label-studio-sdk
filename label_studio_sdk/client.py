@@ -1,5 +1,7 @@
 """ .. include::../docs/client.md
 """
+import os
+
 import json
 import warnings
 import logging
@@ -37,8 +39,8 @@ class ClientCredentials(BaseModel):
 class Client(object):
     def __init__(
         self,
-        url,
-        api_key,
+        url: str = None,
+        api_key: str = None,
         credentials=None,
         session=None,
         extra_headers: dict = None,
@@ -71,11 +73,16 @@ class Client(object):
         make_request_raise: bool
             If true, make_request will raise exceptions on request errors
         """
+        if not url:
+            url = os.getenv('LABEL_STUDIO_URL', LABEL_STUDIO_DEFAULT_URL)
         self.url = url.rstrip('/')
         self.make_request_raise = make_request_raise
         self.session = session or self.get_session()
 
         # set api key or get it using credentials (username and password)
+        if api_key is None and credentials is None:
+            api_key = os.getenv('LABEL_STUDIO_API_KEY')
+
         if api_key is not None:
             credentials = ClientCredentials(api_key=api_key)
         self.api_key = (
