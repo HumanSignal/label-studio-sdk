@@ -38,7 +38,7 @@ class Migration:
 
     def run(self, project_ids=None):
         projects = self.get_projects(project_ids)
-        users = self.get_users(projects)
+        users = self.get_users()  # self.get_users(projects)
         self.create_users(users)
 
         # start exporting projects
@@ -139,10 +139,10 @@ class Migration:
 
         return self.projects
 
-    def get_users(self, projects: [Project]) -> [User]:
+    def get_users(self, projects) -> [User]:
         """Get users that are members of all projects at the source instance"""
         # enterprise instance
-        if self.src_ls.is_enterprise:
+        if self.src_ls.is_enterprise and projects:
             users = {}
             for project in projects:
                 members = project.get_members()
