@@ -12,6 +12,10 @@ Other entities are not supported. Cloud Storages are not yet supported.
 
 Each new run of this script will generate new projects on the destination instance.
 
+# Prerequisites
+
+**Attention:** You must use Administrator or better Owner auth token on both LSE instances to run this script. 
+
 # How it works? 
 
 1. Get all projects from source LS (or specific projects)
