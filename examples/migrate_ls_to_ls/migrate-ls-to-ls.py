@@ -56,8 +56,9 @@ class Migration:
             if status != 200:
                 logger.info(f'Skipping project {project.id} because of errors {status}')
                 continue
-
-            project.params['workspace'] = self.dest_workspace
+                
+            if self.dest_workspace is not None:
+                project.params['workspace'] = self.dest_workspace
             new_project = self.create_project(project)
 
             logger.info(f'Going to import {filename} to project {new_project.id}')
