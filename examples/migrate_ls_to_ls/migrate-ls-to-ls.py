@@ -184,6 +184,7 @@ class Migration:
             title='Migration snapshot',
             serialization_options_drafts=False,
             serialization_options_annotations__completed_by=False,
+            serialization_options_predictions=False
         )
         assert 'id' in export_result
         export_id = export_result['id']
