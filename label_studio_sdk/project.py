@@ -1904,9 +1904,9 @@ class Project(Client):
             Task filter options, use {"view": tab_id} to apply filter from this tab,
             <a href="https://api.labelstud.io/#operation/api_projects_exports_create">check the API parameters for more details</a>
         serialization_options_drafts: bool
-            Expand drafts or include only ID
+            Expand drafts (False) or include only ID (True)
         serialization_options_predictions: bool
-            Expand predictions or include only ID
+            Expand predictions (False) or include only ID (True)
         serialization_options_annotations__completed_by: bool
             Expand user that completed_by (False) or include only ID (True)
         annotation_filter_options_usual: bool
