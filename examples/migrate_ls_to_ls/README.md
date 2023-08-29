@@ -19,7 +19,7 @@ Each new run of this script will generate new projects on the destination instan
 # How it works? 
 
 1. Get all projects from source LS (or specific projects)
-2. Get all users from these projects
+2. Get all users from the organization
 3. Create all users with the same emails, first names and last names on the target LS instance 
 4. For each project:
 
