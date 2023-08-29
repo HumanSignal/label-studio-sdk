@@ -17,6 +17,8 @@ Each new run of this script will generate new projects on the destination instan
 
 **Attention:** You must use Administrator or better Owner auth token on both LSE instances to run this script. 
 
+**Note:** Create a new workspace and get its ID for projects to be mgiratated. 
+
 # How it works? 
 
 1. Get all projects from source LS (or specific projects)
