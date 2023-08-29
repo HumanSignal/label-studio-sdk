@@ -47,19 +47,30 @@ Each new run of this script will generate new projects on the destination instan
 
     > Note: User token must have Administrator or Owner privileges.
 
-3a. Migrate all projects from the organization:
+3. Migrate all projects from the organization:
+
 
     ```
-    python3 migrate-ls-to-ls.py --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token>
+    python3 migrate-ls-to-ls.py \
+        --src-url http://localhost:8000 --src-key <src-token> \
+        --dst-url https://app.heartex.com --dst-key <dst-token>
     ```
+
 
     Or migrate specific projects only:
 
+
     ```
-    python3 migrate-ls-to-ls.py --project-ids=123,456 --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token>
+    python3 migrate-ls-to-ls.py --project-ids=123,456 \
+        --src-url http://localhost:8000 --src-key <src-token> \
+        --dst-url https://app.heartex.com --dst-key <dst-token>
     ```
 
-3b. Migrate all projects to the specific workspace
+
+4. Migrate all projects to the specific workspace (optional)
+
+   It's recommended to create a new workspace on the destination machine and migrate projects there.
+
 
     ```
     python3 migrate-ls-to-ls.py --project-ids=123,456 \ 
@@ -67,5 +78,6 @@ Each new run of this script will generate new projects on the destination instan
         --dst-url https://app.heartex.com --dst-key <dst-token> \
         --dest-workspace <workspace-id>
     ```
+
 
      To know workspace ID you should open a network console, select a newly created workspace or refresh the page fully, and find `/api/workspaces/**<id>**/memberships` call in the network console. 
