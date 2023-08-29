@@ -49,19 +49,19 @@ Each new run of this script will generate new projects on the destination instan
 
 3a. Migrate all projects from the organization:
 
-    ```bash
+    ```
     python3 migrate-ls-to-ls.py --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token>
     ```
-    
+
     Or migrate specific projects only:
-    
-    ```bash
+
+    ```
     python3 migrate-ls-to-ls.py --project-ids=123,456 --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token>
     ```
-    
+
 3b. Migrate all projects to the specific workspace
 
-    ```bash
+    ```
     python3 migrate-ls-to-ls.py --project-ids=123,456 \ 
         --src-url http://localhost:8000 --src-key <src-token> \ 
         --dst-url https://app.heartex.com --dst-key <dst-token> \
