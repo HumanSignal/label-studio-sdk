@@ -403,21 +403,24 @@ class Client(object):
 
         if raise_exceptions:
             if response.status_code >= 400:
-                try:
-                    content = json.dumps(json.loads(response.content), indent=2)
-                except:
-                    content = response.text
-
-                logger.error(
-                    f'\n--------------------------------------------\n'
-                    f'Request URL: {response.url}\n'
-                    f'Response status code: {response.status_code}\n'
-                    f'Response content:\n{content}\n\n'
-                    f'SDK error traceback:'
-                )
+                self.log_response_error(response)
                 response.raise_for_status()
 
         return response
+
+    def log_response_error(self, response):
+        try:
+            content = json.dumps(json.loads(response.content), indent=2)
+        except:
+            content = response.text
+
+        logger.error(
+            f'\n--------------------------------------------\n'
+            f'Request URL: {response.url}\n'
+            f'Response status code: {response.status_code}\n'
+            f'Response content:\n{content}\n\n'
+            f'SDK error traceback:'
+        )
 
     def sync_storage(self, storage_type, storage_id):
         """Synchronize Cloud Storage.

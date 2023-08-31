@@ -704,7 +704,8 @@ class Project(Client):
 
         page = 1
         result = []
-        while True:
+        data = {}
+        while not data.get('end_pagination'):
             try:
                 data = self.get_paginated_tasks(
                     filters=filters,
@@ -717,9 +718,8 @@ class Project(Client):
                 )
                 result += data['tasks']
                 page += 1
-            # we'll get 404 from API on empty page
             except LabelStudioException as e:
-                logger.debug(f'End of pagination: {e}')
+                logger.debug(f'Error during pagination: {e}')
                 break
         return result
 
@@ -816,10 +816,16 @@ class Project(Client):
         if only_ids:
             params['include'] = 'id'
 
-        try:
-            response = self.make_request('GET', '/api/tasks', params)
-        except HTTPError as e:
-            raise LabelStudioException(f'Error loading tasks: {e}')
+        response = self.make_request('GET', '/api/tasks', params, raise_exceptions=False)
+        # we'll get 404 from API on empty page
+        if response.status_code == 404:
+            return {'tasks': [], 'end_pagination': True}
+        elif response.status_code != 200:
+            self.log_response_error(response)
+            try:
+                response.raise_for_status()
+            except HTTPError as e:
+                raise LabelStudioException(f'Error loading tasks: {e}')
 
         data = response.json()
         tasks = data['tasks']
