@@ -408,7 +408,7 @@ class Client(object):
                 except:
                     content = response.text
 
-                logger.error(
+                logger.debug(
                     f'\n--------------------------------------------\n'
                     f'Request URL: {response.url}\n'
                     f'Response status code: {response.status_code}\n'
