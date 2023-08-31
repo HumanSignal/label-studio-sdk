@@ -3,6 +3,7 @@
 import os
 import json
 import logging
+import pandas as pd
 import pathlib
 import time
 
@@ -474,7 +475,7 @@ class Project(Client):
         project.update_params()
         return project
 
-    def import_tasks(self, tasks, preannotated_from_fields: List = None):
+    def import_tasks(self, tasks, preannotated_from_fields: Optional[List] = None):
         """Import JSON-formatted labeling tasks. Tasks can be unlabeled or contain predictions.
 
         Parameters
@@ -2129,3 +2130,65 @@ class Project(Client):
         return self.make_request(
             "POST", f"/api/dm/actions?project={self.id}&id=delete_tasks", json=payload
         )
+
+    def get_dataframe(self):
+        labeled_tasks = self.get_labeled_tasks()
+        if not labeled_tasks:
+            return pd.DataFrame()
+        records = []
+        for labeled_task in labeled_tasks:
+            annotation = labeled_task['annotations'][0]
+            label = annotation['result'][0]['value']['choices'][0]
+            if 'predictions' in labeled_task:
+                prediction = labeled_task['predictions'][0]
+                prediction_label = prediction['result'][0]['value']['choices'][0]
+            else:
+                prediction_label = None
+            data = labeled_task['data']
+            data.update({'ground_truth': label, 'predictions': prediction_label})
+            records.append(data)
+        return pd.DataFrame.from_records(records)
+
+    def label_dataframe(
+        self,
+        df: pd.DataFrame,
+        inplace=False,
+        polling_interval=10,
+        output_column='ground_truth',
+        preannotated_from_fields=None,
+    ):
+
+        if not inplace:
+            df = df.copy()
+
+        tasks = df.reset_index().to_dict(orient='records')
+        num_tasks = len(tasks)
+        unlabeled_indices = set(df.index)
+
+        self.import_tasks(tasks, preannotated_from_fields=preannotated_from_fields)
+
+        while True:
+            try:
+                labeled_tasks = self.get_labeled_tasks()
+                labeled_tasks = [task for task in labeled_tasks if task['data']['index'] in unlabeled_indices]
+
+                if len(labeled_tasks) >= num_tasks:
+                    logger.info(f'All {len(unlabeled_indices)} tasks have been annotated.')
+                    break
+
+                logger.info(
+                    f'Waiting for the user to annotate the tasks. '
+                    f'{len(labeled_tasks)} out of {num_tasks} tasks have been annotated...')
+                time.sleep(polling_interval)
+            except Exception as e:
+                logger.error(f"Error while fetching labeled tasks: {e}")
+                time.sleep(polling_interval)
+
+        for labeled_task in labeled_tasks:
+            index = labeled_task['data']['index']
+            annotation = labeled_task['annotations'][0]
+            # TODO: support other types of tasks
+            label = annotation['result'][0]['value']['choices'][0]
+            df.loc[index, output_column] = label
+
+        return df

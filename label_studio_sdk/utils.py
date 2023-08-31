@@ -1,9 +1,12 @@
 """ .. include::../docs/utils.md
 """
 import logging
+import time
 
+from datetime import datetime
 from lxml import etree
 from collections import defaultdict
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -130,3 +133,38 @@ def chunk(lst, n):
     """Yield successive n-sized chunks from lst."""
     for i in range(0, len(lst), n):
         yield lst[i : i + n]
+
+
+def get_or_create_project(
+    project_id: Optional[int] = None,
+    title: Optional[str] = None,
+    url: Optional[str] = None,
+    api_key: Optional[str] = None
+):
+    """Get or create a Label Studio project.
+
+    Parameters:
+    -----------
+    project_id: int
+        ID of the Label Studio project to get or create if it doesn't exist
+    title: str
+        Title of the Label Studio project (if not provided, will be set to the current timestamp)
+    url: str
+        URL of the Label Studio instance (environment variable `LABEL_STUDIO_URL` if not provided)
+    api_key: str
+        API key for the Label Studio instance (environment variable `LABEL_STUDIO_API_KEY` if not provided)
+    """
+
+    from .client import Client
+
+    client = Client(url=url, api_key=api_key)
+    if project_id is None:
+        title = title or f'SDK [{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}]'
+        existing_projects = client.get_projects(title=title)
+        if existing_projects:
+            project = existing_projects[0]
+        else:
+            project = client.create_project(title=title)
+        return project
+    project = client.get_project(id=project_id)
+    return project
