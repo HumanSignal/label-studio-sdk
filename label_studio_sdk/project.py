@@ -503,7 +503,7 @@ class Project(Client):
                 url=f'/api/projects/{self.id}/import',
                 json=tasks,
                 params=params,
-                timeout=(10, 600)
+                timeout=(10, 600),
             )
         elif isinstance(tasks, (str, Path)):
             # try import from file
@@ -515,7 +515,7 @@ class Project(Client):
                     url=f'/api/projects/{self.id}/import',
                     files={'file': f},
                     params=params,
-                    timeout=(10, 600)
+                    timeout=(10, 600),
                 )
         else:
             raise TypeError(
@@ -816,7 +816,9 @@ class Project(Client):
         if only_ids:
             params['include'] = 'id'
 
-        response = self.make_request('GET', '/api/tasks', params, raise_exceptions=False)
+        response = self.make_request(
+            'GET', '/api/tasks', params, raise_exceptions=False
+        )
         # we'll get 404 from API on empty page
         if response.status_code == 404:
             return {'tasks': [], 'end_pagination': True}
