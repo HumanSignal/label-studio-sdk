@@ -2139,13 +2139,8 @@ class Project(Client):
         for labeled_task in labeled_tasks:
             annotation = labeled_task['annotations'][0]
             label = annotation['result'][0]['value']['choices'][0]
-            if 'predictions' in labeled_task:
-                prediction = labeled_task['predictions'][0]
-                prediction_label = prediction['result'][0]['value']['choices'][0]
-            else:
-                prediction_label = None
             data = labeled_task['data']
-            data.update({'ground_truth': label, 'predictions': prediction_label})
+            data.update({'ground_truth': label})
             records.append(data)
         return pd.DataFrame.from_records(records)
 
