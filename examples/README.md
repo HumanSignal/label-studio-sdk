@@ -1,3 +1,5 @@
+# Example scripts for Label Studio SDK
+
 These end-to-end examples demonstrate how to use the SDK for specific use cases.
 
 ### [Active learning example](active_learning)
@@ -29,5 +31,10 @@ This script does the migration from one Label Studio instance to another (enterp
 ### [Weak supervision example](weak_supervision)
 
 If you want to write a Python script to perform programmatic labeling and use weak supervision to correct the noisy labels, refer to this [working weak supervision example as a Jupyter notebook](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/weak_supervision/weak_supervision.ipynb) or start with the [weak supervision python script example](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/weak_supervision/weak_supervision.py).
+
+### Others
+* [Adding new labels to the project](Adding new labels to the project.ipynb) - This tutorial demonstrates how to add new labels to an ongoing project in real-time. The included example showcases the use of the <Taxonomy> tag, which can be applied to the entire document. However, this same principle can also be used for other cases, such as modifying labels for computer vision applications (bounding boxes, polygons, etc.), or segments in text and audio using nested <Taxonomy> tags.
+* [Export snapshots](export_snapshots.py) - This example shows how to export, check export status and download JSON shapshots from Label Studio.
+* [View management](view_management.ipynb) - This tutorial describes the basics of managing views (tabs) in Label Studio Data Manager using the Python SDK.
 
 <img src="https://labelstud.io/images/opossum/other/5.svg" width="400px">
