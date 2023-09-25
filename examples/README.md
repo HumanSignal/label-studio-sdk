@@ -1,4 +1,4 @@
-# Example scripts for Label Studio SDK
+# Label Studio SDK Use Case Examples
 
 These end-to-end examples demonstrate how to use the SDK for specific use cases.
 
