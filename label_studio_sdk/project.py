@@ -730,7 +730,7 @@ class Project(Client):
         view_id=None,
         selected_ids=None,
         page: int = 1,
-        page_size: int = -1,
+        page_size: int = 100,
         only_ids: bool = False,
         resolve_uri: bool = True,
     ):
@@ -768,7 +768,7 @@ class Project(Client):
         page: int
             Page. Default is 1.
         page_size: int
-            Page size. Default is -1, to retrieve all tasks in the project.
+            Page size. Default is 100, to retrieve all tasks in the project you can use get_tasks().
         only_ids: bool
             If true, return only task IDs
         resolve_uri: bool
