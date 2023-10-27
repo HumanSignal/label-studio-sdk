@@ -1335,7 +1335,9 @@ class Project(Client):
             Number of tasks synced in the last sync
 
         """
-        if google_application_credentials and os.path.isfile(google_application_credentials):
+        if google_application_credentials and os.path.isfile(
+            google_application_credentials
+        ):
             with open(google_application_credentials) as f:
                 google_application_credentials = f.read()
 
