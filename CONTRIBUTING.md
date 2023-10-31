@@ -43,6 +43,18 @@ Follow these code formatting guidelines:
 - Include unit tests when you contribute bug fixes and new features. Unit tests help prove that your code works correctly and protects against future breaking changes.
 - Make sure that the code coverage checks and automatic tests for pull requests pass. 
 
+### Pull Request naming
+Use one of the following prefixes for the title of your PR:
+- `fix: `
+- `feat: `
+- `docs: `
+- `chore: `
+- `ci: `
+- `perf: `
+- `refactor: `
+- `style: `
+- `test: `
+
 ### Additional questions
 
 If you have any questions that aren't answered in these guidelines, please find us in the #contributor channel of the [Label Studio Slack Community](https://slack.labelstud.io/?source=github-sdk-contrib).
