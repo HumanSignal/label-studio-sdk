@@ -14,6 +14,17 @@ from label_studio_sdk.users import User
 
 logger = logging.getLogger('migration-ls-to-ls')
 
+DEFAULT_STORAGE = os.getenv('DEFAULT_STORAGE',  '')  # 's3', 'gcs' or 'azure'
+DEFAULT_STORAGE_NAME = os.getenv('DEFAULT_STORAGE_NAME', '')  # azure key
+DEFAULT_STORAGE_KEY = os.getenv('DEFAULT_STORAGE_KEY', '')  # aws or azure key
+DEFAULT_STORAGE_SECRET = os.getenv('DEFAULT_STORAGE_SECRET', '')  # aws secret
+DEFAULT_STORAGE_TOKEN = os.getenv('DEFAULT_STORAGE_TOKEN', '')  # aws session token
+DEFAULT_STORAGE_CREDENTIALS = os.getenv('DEFAULT_STORAGE_CREDENTIALS', '{}')  # google credentials, you should use it instead of key and secret
+DEFAULT_STORAGE_TREAT_AS_SOURCE = os.getenv('DEFAULT_STORAGE_TREAT_AS_SOURCE', 'yes') == 'yes' # for all
+DEFAULT_STORAGE_REGION = os.getenv('DEFAULT_STORAGE_REGION', None)  # aws 
+DEFAULT_STORAGE_ENDPOINT = os.getenv('DEFAULT_STORAGE_REGION', None)  # aws 
+DEFAULT_STORAGE_PRESIGN = os.getenv('DEFAULT_STORAGE_PRESIGN', 'yes') == 'yes'  # for all
+
 
 class Migration:
     def __init__(self, src_url, src_key, dst_url, dst_key, dest_workspace):
@@ -30,12 +41,84 @@ class Migration:
         self.users = self.projects = self.project_ids = None
         self.dest_workspace = dest_workspace
 
+                    google_application_credentials=DEFAULT_STORAGE_CREDENTIALS, 
+                presign=DEFAULT_STORAGE_PRESIGN, 
+
     def set_project_ids(self, project_ids=None):
         """Set projects you need to migrate
 
         :param project_ids: List of project ids to copy, set None if you need to copy all projects
         """
         self.project_ids = project_ids
+
+    def add_default_import_storage(project):
+        if DEFAULT_STORAGE == 's3':
+            storage = project.connect_s3_import_storage(
+                bucket, 
+                regex_filter, 
+                use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE, 
+                aws_access_key_id=DEFAULT_STORAGE_KEY, 
+                aws_secret_access_key=DEFAULT_STORAGE_SECRET, 
+                aws_session_token=DEFAULT_STORAGE_TOKEN, 
+                region_name=DEFAULT_STORAGE_REGION, 
+                s3_endpoint=DEFAULT_STORAGE_ENDPOINT, 
+                presign=DEFAULT_STORAGE_PRESIGN, 
+                presign_ttl=15,
+                title='S3 storage', 
+                description='migration'
+            )
+            logger.debug('GCS storage was connected')
+            
+        elif DEFAULT_STORAGE == 'gcs':
+            storage = project.connect_google_import_storage(
+                bucket, 
+                regex_filter, 
+                use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE, 
+                google_application_credentials=DEFAULT_STORAGE_CREDENTIALS, 
+                presign=DEFAULT_STORAGE_PRESIGN, 
+                presign_ttl=15, 
+                title='GCS storage', 
+                description='migration'
+            )
+            logger.debug('Azure storage was connected')
+
+        elif DEFAULT_STORAGE == 'azure':
+            storage = project.connect_azure_import_storage(
+                container, 
+                regex_filter, 
+                use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE, 
+                account_name=DEFAULT_STORAGE_NAME, 
+                account_key=DEFAULT_STORAGE_KEY, 
+                presign=DEFAULT_STORAGE_PRESIGN, 
+                presign_ttl=1, 
+                title='Azure storage', 
+                description='migration'
+            )
+            logger.debug('Azure storage was connected')
+            
+        else:
+            storage = None
+            logger.debug('No import storage to connect')
+
+        if storage:
+            storage_type = DEFAULT_STORAGE
+            project.sync_storage(storage_type, storage['id'])
+
+            # if you need to remove duplicated tasks from your project, 
+            # you have to call an experimental DM action 'remove_duplicates' in this place
+            # when storage sync is finished. It may look like this:
+            """
+            completed = False
+            while not completed:
+                status = project.make_request('get', f'/api/storages/s3/{storage["id"]}').json()['status']
+                completed = status == 'completed'
+                if status == 'failed':
+                    logger.error(f'Sync failed for storage {storage}')
+                    break
+            if completed:
+                project.make_request('post', f'api/actions?project={project.id}&id=remove_duplicates')
+            """
+    
 
     def run(self, project_ids=None):
         projects = self.get_projects(project_ids)
@@ -65,6 +148,7 @@ class Migration:
             new_project.import_tasks(filename)
             logger.info(f'Import {filename} finished for project {new_project.id}')
 
+            self.add_default_import_storage(new_project)
         logger.info('All projects are processed, finish')
 
     def create_project(self, project):
