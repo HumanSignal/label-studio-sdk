@@ -209,10 +209,10 @@ class Column:
     """Number of annotations rejected for a task in review (Enterprise only)"""
     reviews_accepted = "tasks:reviews_accepted"
     """Number of annotations accepted for a task in review (Enterprise only)"""
-    """Number of comments in a task"""
     comments = "tasks:comments"
-    """Number of unresolved comments in a task"""
+    """Number of comments in a task"""
     unresolved_comment_count = "tasks:unresolved_comment_count"
+    """Number of unresolved comments in a task"""
 
     @staticmethod
     def data(task_field):
