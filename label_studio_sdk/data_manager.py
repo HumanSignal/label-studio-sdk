@@ -31,6 +31,7 @@
     tasks = project.get_tasks(filters=filters)
     ```
 """
+
 from datetime import datetime
 
 DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'

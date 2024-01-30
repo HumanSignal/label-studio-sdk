@@ -1,5 +1,6 @@
 """ .. include::../docs/project.md
 """
+
 import os
 import json
 import logging
@@ -800,9 +801,11 @@ class Project(Client):
         query = {
             'filters': filters,
             'ordering': ordering or [],
-            'selectedItems': {'all': False, 'included': selected_ids}
-            if selected_ids
-            else {'all': True, "excluded": []},
+            'selectedItems': (
+                {'all': False, 'included': selected_ids}
+                if selected_ids
+                else {'all': True, "excluded": []}
+            ),
         }
         params = {
             'project': self.id,
@@ -1283,7 +1286,9 @@ class Project(Client):
             Number of tasks synced in the last sync
 
         """
-        if google_application_credentials and os.path.isfile(google_application_credentials):
+        if google_application_credentials and os.path.isfile(
+            google_application_credentials
+        ):
             with open(google_application_credentials) as f:
                 google_application_credentials = f.read()
 
