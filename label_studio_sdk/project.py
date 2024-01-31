@@ -1,5 +1,6 @@
 """ .. include::../docs/project.md
 """
+
 import os
 import json
 import logging
@@ -800,9 +801,11 @@ class Project(Client):
         query = {
             'filters': filters,
             'ordering': ordering or [],
-            'selectedItems': {'all': False, 'included': selected_ids}
-            if selected_ids
-            else {'all': True, "excluded": []},
+            'selectedItems': (
+                {'all': False, 'included': selected_ids}
+                if selected_ids
+                else {'all': True, "excluded": []}
+            ),
         }
         params = {
             'project': self.id,
