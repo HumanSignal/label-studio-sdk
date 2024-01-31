@@ -1152,6 +1152,23 @@ class Project(Client):
         )
         return response.json()
 
+    def list_annotations(self, task_id: int) -> List:
+        """List all annotations for a task.
+
+        Parameters
+        ----------
+        task_id: int
+            Task ID
+
+        Returns
+        -------
+        list of dict:
+            List of annotations objects
+        """
+        response = self.make_request('GET', f'/api/tasks/{task_id}/annotations')
+        response.raise_for_status()
+        return response.json()
+
     def create_annotation(self, task_id: int, **kwargs) -> Dict:
         """Add annotations to a task like an annotator does.
 
@@ -1172,6 +1189,23 @@ class Project(Client):
         response = self.make_request(
             'POST', f'/api/tasks/{task_id}/annotations/', json=kwargs
         )
+        response.raise_for_status()
+        return response.json()
+
+    def get_annotation(self, annotation_id: int) -> dict:
+        """Retrieve a specific annotation for a task using the annotation ID.
+
+        Parameters
+        ----------
+        annotation_id: int
+            A unique integer value identifying this annotation.
+
+        Returns
+        ----------
+        dict
+            Retreived annotation object
+        """
+        response = self.make_request('GET', f'/api/annotations/{annotation_id}')
         response.raise_for_status()
         return response.json()
 
@@ -1199,6 +1233,24 @@ class Project(Client):
         )
         response.raise_for_status()
         return response.json()
+
+    def delete_annotation(self, annotation_id: int) -> int:
+        """Delete an annotation using the annotation ID. This action can't be undone!
+
+        Parameters
+        ----------
+        annotation_id: int
+            A unique integer value identifying this annotation.
+
+        Returns
+        ----------
+        int
+            Status code for operation
+
+        """
+        response = self.make_request('DELETE', f'/api/annotations/{annotation_id}')
+        response.raise_for_status()
+        return response.status_code
 
     def get_predictions_coverage(self):
         """Prediction coverage stats for all model versions for the project.
@@ -1283,7 +1335,9 @@ class Project(Client):
             Number of tasks synced in the last sync
 
         """
-        if google_application_credentials and os.path.isfile(google_application_credentials):
+        if google_application_credentials and os.path.isfile(
+            google_application_credentials
+        ):
             with open(google_application_credentials) as f:
                 google_application_credentials = f.read()
 
