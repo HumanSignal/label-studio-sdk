@@ -1,7 +1,9 @@
 from datetime import datetime
-from pydantic import BaseModel
 from enum import Enum
 from typing import List, Optional
+
+from pydantic import BaseModel, Field
+
 from .client import Client
 
 
@@ -30,8 +32,8 @@ class User(BaseModel):
     last_activity: datetime
     initials: str
     phone: str
-    active_organization: Optional[int]
-    org_membership: Optional[List[OrgMembership]]
+    active_organization: Optional[int] = None
+    org_membership: Optional[List[OrgMembership]] = Field(default_factory=list)
     client: Client
 
     class Config:
