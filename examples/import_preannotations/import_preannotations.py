@@ -1,3 +1,6 @@
+# Import tasks with pre-annotations (predictions) using SDK,
+# then calculate agreement scores (accuracy) per tasks.
+
 from evalme.metrics import (
     get_agreement,
 )  # run first `pip install label-studio-evalme` to use this package
