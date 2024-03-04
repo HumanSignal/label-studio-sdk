@@ -165,17 +165,20 @@ class LabelInterface():
 
     @property
     def controls(self):
-        """ """
+        """Returns list of control tags
+        """
         return self._controls and self._controls.values()
 
     @property
     def objects(self):
-        """ """
+        """Returns list of object tags
+        """
         return self._objects and self._objects.values()
 
     @property
     def labels(self):
-        """ """
+        """Returns list of label tags
+        """
         return self._labels and self._labels.values()
     
     def _link_controls(self, controls: Dict, objects: Dict, labels: Dict) -> Dict:
@@ -214,7 +217,22 @@ class LabelInterface():
         return list(tag_store.values())[0]
 
     def get_tag(self, name):
-        """
+        """Method to retrieve the tag object by its name from the current instance.
+    
+        The method checks if the tag with the provided name exists in
+        either `_controls` or `_objects` attributes of the current
+        instance.  If a match is found, it returns the tag. If the tag
+        is not found an exception is raised.
+    
+        Args:
+            name (str): Name of the tag to be retrieved. 
+
+        Returns:
+            object: The tag object if it exists in either `_controls` or `_objects`.
+
+        Raises:
+            Exception: If the tag with the given name does not exist in both `_controls` and `_objects`.
+
         """
         if name in self._controls:
             return self._controls[name]
@@ -225,22 +243,51 @@ class LabelInterface():
         raise Exception(f"Tag with name {name} not found")
     
     def get_object(self, name=None):
-        """
+        """Retrieves the object with the given name from `_objects`.
+
+        This utilizes the `_get_tag` method to obtain the named object.
+
+        Args:
+            name (str, optional): The name of the object to be retrieved from `_objects`.
+
+        Returns: object: The corresponding object if it exists in
+            `_objects`.
+
         """
         return self._get_tag(name, self._objects)
     
     def get_output(self, name=None):
-        """Alias for below
+        """Provides an alias for the `get_control` method.
         """
         return self.get_control(name)
     
     def get_control(self, name=None):
-        """Returns the control tag that control tag maps to
+        """Retrieves the control tag that the control tag maps to.
+
+        This uses the `_get_tag` method to obtain the named control.
+
+        Args:
+            name (str, optional): The name of the control to be retrieved.
+
+        Returns: object: The corresponding control if it exists in
+            `_controls`.
+
         """
         return self._get_tag(name, self._controls)        
     
     def find_tags_by_class(self, tag_class) -> List:
-        """Find tags by tag type
+        """Finds tags by their class type.
+
+        The function looks into both `self.objects` and
+        `self.controls` to find tags that are instances of the
+        provided class(es)
+
+        Args:
+            tag_class (class or list of classes): The class type(s) of the tags to be found.
+
+        Returns:
+            list: A list of tags that are instances of the provided `tag_class`(es).
+
         """
         lst = list(self.objects) + list(self.controls)
         tag_classes = [tag_class] if not isinstance(tag_class, list) else tag_class
@@ -249,7 +296,25 @@ class LabelInterface():
         
     def find_tags(self, tag_type: Optional[str] = None,
                   match_fn: Optional[Callable] = None) -> List:
-        """Find tags that match_fn in entire parsed tree
+        """Finds tags that match the given function in the entire parsed tree.
+
+        This function searches through both `objects` and `controls`
+        based on `tag_type`, and applies the `match_fn` (if provided)
+        to filter matching tags.
+
+        Args:
+            tag_type (str, optional): The type of tags to be
+                searched. Categories include 'objects', 'controls',
+                'inputs' (alias for 'objects'), 'outputs' (alias for
+                'controls'). If not specified, searches both 'objects'
+                and 'controls'.       
+            match_fn (Callable, optional): A function that takes a tag
+                as an input and returns a boolean value indicating
+                whether the tag matches the required condition.
+
+        Returns: list: A list of tags that match the given type and
+        satisfy `match_fn`.
+
         """
         tag_types = {
             'objects': self.objects,
@@ -361,7 +426,17 @@ class LabelInterface():
             raise LabelStudioValidationErrorSentryIgnored('Label config contains non-unique names')
     
     def validate(self):
-        """
+        """Validates the provided configuration string against various validation criteria.
+
+        This method applies a series of validation checks to
+        `_config`, including schema validation, checking for
+        uniqueness of names used in the configuration, and the
+        "to_name" validation. It throws exceptions if any of these
+        validations fail.
+
+        Raises:
+            Exception: If any validation fails, specific to the type of validation.
+
         """
         config_string = self._config
         
@@ -386,10 +461,25 @@ class LabelInterface():
         raise NotImplemented()
     
     def load_task(self, task):
-        """When you load the task, it would replace the value in each
-        object tag with actual data found in task. It returns a copy
-        of the LabelConfig object
+        """Loads a task and substitutes the value in each object tag
+        with actual data from the task, returning a copy of the
+        LabelConfig object.
 
+        If the `value` field in an object tag is designed to take
+        variable input (i.e., `value_is_variable` is True), the
+        function replaces this value with the corresponding value from
+        the task dictionary.
+
+        Args:
+            task (dict): Dictionary representing the task, where
+            each key-value pair denotes an attribute-value of the
+            task.
+
+        Returns:
+            LabelInterface: A deep copy of the current LabelIntreface
+            instance with the object tags' value fields populated with
+            data from the task.
+        
         """
         tree = copy.deepcopy(self)
         for obj in tree.objects:
@@ -422,21 +512,52 @@ class LabelInterface():
         return True
         
     def validate_annotation(self, annotation):
-        """Given the annotation, match it to the config and return
-        False if it's not valid
+        """Validates the given annotation against the current configuration.
+
+        This method applies the `validate_region` method to each
+        region in the annotation and returns False if any of these
+        validations fail. If all the regions pass the validation, it
+        returns True.
+
+        Args:
+            annotation (dict): The annotation to be validated, where
+            each key-value pair denotes an attribute-value of the
+            annotation.
+
+        Returns:
+            bool: True if all regions in the annotation pass the
+            validation, False otherwise.
 
         """
         return all(self.validate_region(r) for r in annotation.get(RESULT_KEY))
         
         
     def validate_prediction(self, prediction):
-        """
+        """Same as validate_annotation right now
         """
         return all(self.validate_region(r) for r in prediction.get(RESULT_KEY))
         
         
     def validate_region(self, region) -> bool:
-        """
+        """Validates a region from the annotation against the current
+        configuration.
+    
+        The validation checks the following:
+        - Both control and object items are present in the labeling configuration.
+        - The type of the region matches the control tag name.
+        - The 'to_name' in the region data connects to the same tag as in the configuration.
+        - The actual value for example in <Labels /> tag is producing start, end, and labels.
+    
+        If any of these validations fail, the function immediately
+        returns False. If all validations pass for a region, it
+        returns True.
+
+        Args:
+            region (dict): The region to be validated.
+
+        Returns:
+            bool: True if all checks pass for the region, False otherwise.
+
         """
         control = self.get_control(region["from_name"])
         obj = self.get_object(region["to_name"])
@@ -476,14 +597,22 @@ class LabelInterface():
 
     
     def generate_sample_task(self, mode='upload', secure_mode=False):
-        """This function generates a sample task based on the mode and secure_mode specified.
+        """Generates a sample task based on the provided mode and
+        secure_mode.
 
-        :param mode: mode of operation, defaults to 'upload'
-        :type mode: str
-        :param secure_mode: mode specifying security, defaults to False
-        :type secure_mode: bool
-        :return: a dictionary representing the sample task
-        :rtype: dict
+        This function generates an example value for each object in
+        `self.objects` using the specified `mode` and
+        `secure_mode`. The resulting task is a dictionary where each
+        key-value pair denotes an object's value-name and example
+        value.
+
+        Args:
+            mode (str, optional): The operation mode. Accepts any string but defaults to 'upload'.
+            secure_mode (bool, optional): The security mode. Defaults to False.
+
+        Returns:
+            dict: A dictionary representing the sample task.
+
         """
         task = {obj.value_name: obj.generate_example_value(mode=mode, secure_mode=secure_mode)
                 for obj in self.objects}
