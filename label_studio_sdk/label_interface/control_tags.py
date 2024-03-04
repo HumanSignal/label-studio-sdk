@@ -152,11 +152,7 @@ class ControlTag(LabelStudioTag):
     def find_object_by_name(self, name):
         """
         """
-        print(self.objects)
-        
         for obj in self.objects:
-            print(obj)
-            
             if obj.name == name:
                 return obj
 
