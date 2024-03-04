@@ -1,5 +1,5 @@
 
-from label_studio_sdk.label_config.object_tags import ObjectTag
+from label_studio_sdk.label_interface.object_tags import ObjectTag
 from lxml.etree import Element
 
 def test_parse():

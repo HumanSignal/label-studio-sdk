@@ -116,11 +116,12 @@ class ControlTag(LabelStudioTag):
         """Returns the object tag that control tag maps to
         """        
         if name is not None:
-            if name not in self.to_name or \
-               name not in self.objects:
+            if name not in self.to_name:
                 raise Exception(f"Object name {name} is not found")
-            else:                
-                return self.objects[name]
+            
+            for tag in self.objects:
+                if tag.name == name:
+                    return tag                
         
         if len(self.objects) > 1:
             raise Exception("Multiple object tags connected, you should specify name")

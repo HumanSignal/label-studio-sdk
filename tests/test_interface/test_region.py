@@ -1,7 +1,7 @@
 
 from lxml.etree import Element
 
-from label_studio_sdk.config import LabelingConfig
+from label_studio_sdk.label_interface import LabelInterface
 from . import configs as c
 
 def test_region():
@@ -12,7 +12,7 @@ def test_region():
     HVAL=20
     RVAL=0
     
-    lpi = LabelingConfig(c.RECT_CONFIG)
+    lpi = LabelInterface(c.RECT_CONFIG)
     
     rect = lpi.get_control(c.FROM_NAME)
     img = rect.get_object()

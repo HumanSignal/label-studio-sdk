@@ -1,6 +1,10 @@
 
-from label_studio_sdk.label_config.control_tags import ControlTag
 from lxml.etree import Element
+
+from label_studio_sdk.label_interface import LabelInterface
+from label_studio_sdk.label_interface.control_tags import ControlTag
+
+import tests.test_interface.configs as c
 
 
 def test_parse():
@@ -24,3 +28,8 @@ def test_validate():
 
     assert is_control_tag2 == False
     
+
+def test_textarea_label():
+    conf = LabelInterface(c.TEXTAREA_CONF)
+
+    region = conf.get_control(c.FROM_NAME).label(text=["Hello", "World"])

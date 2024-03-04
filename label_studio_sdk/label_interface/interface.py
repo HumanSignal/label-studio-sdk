@@ -1,6 +1,10 @@
+"""
+"""
+import os
 import copy
 import logging
 import re
+import json
 import jsonschema
 
 from typing import Dict, Optional, List, Tuple, Any, Callable, Union
@@ -15,43 +19,24 @@ from label_studio_sdk.exceptions import (
     LabelStudioXMLSyntaxErrorSentryIgnored,
     LabelStudioValidationErrorSentryIgnored)
 
-from label_studio_sdk.label_config.control_tags import ControlTag, ChoicesTag, LabelsTag
-from label_studio_sdk.label_config.object_tags import ObjectTag
-from label_studio_sdk.label_config.label_tags import LabelTag
+from label_studio_sdk.label_interface.control_tags import ControlTag, ChoicesTag, LabelsTag
+from label_studio_sdk.label_interface.object_tags import ObjectTag
+from label_studio_sdk.label_interface.label_tags import LabelTag
+from label_studio_sdk.objects import AnnotationValue, TaskValue, PredictionValue
 
-RESULT_KEY = "result"
 
-_LABEL_CONFIG_SCHEMA = ""
-# = find_file('schema/label_config_schema.json')
-# with open(_LABEL_CONFIG_SCHEMA) as f:
-#     _LABEL_CONFIG_SCHEMA_DATA = json.load(f)
+dir_path = os.path.dirname(os.path.realpath(__file__))
+file_path = os.path.join(dir_path, '..', 'schema', 'label_config_schema.json')
+
+with open(file_path) as f:
+    _LABEL_CONFIG_SCHEMA_DATA = json.load(f)
 
 _LABEL_TAGS = {'Label', 'Choice', 'Relation'}
 
 _DIR_APP_NAME = 'label-studio'
-_VIDEO_TRACKING_TAGS = set('videorectangle')
+_VIDEO_TRACKING_TAGS = {'videorectangle'}
 
-
-class AnnotationValue(BaseModel):
-    """
-    """
-    result: Optional[List[dict]]
-    
-        
-class PredictionValue(BaseModel):
-    """
-    """
-    model_version: Optional[str]
-    score: Optional[float]
-    result: Optional[List[dict]]
-
-
-class TaskValue(BaseModel):
-    """
-    """
-    data: Optional[dict]
-    annotations: Optional[List[AnnotationValue]]
-    predictions: Optional[List[PredictionValue]]
+RESULT_KEY = "result"
 
 ############ core/label_config.py
 
@@ -144,7 +129,7 @@ def display_count(count: int, type: str) -> Optional[str]:
 
 ######################
 
-class LabelingConfig():
+class LabelInterface():
     """This class parses the config into more logical OOP based
     representation. Since labeling config includes both presentation
     and logic combined, in its parsed form we care only about the
@@ -156,7 +141,7 @@ class LabelingConfig():
         self._config = config
 
         # extract predefined task from the config
-        _task_data, _ann, _pred = LabelingConfig.get_task_from_labeling_config(config)
+        _task_data, _ann, _pred = LabelInterface.get_task_from_labeling_config(config)
         self._sample_config_task = _task_data
         self._sample_config_ann = _ann
         self._sample_config_pred = _pred
@@ -200,10 +185,10 @@ class LabelingConfig():
             inputs = []
             for object_tag_name in tag.to_name:
                 if object_tag_name not in objects:
-                    logger.info(
-                        f'to_name={object_tag_name} is specified for output tag name={name}, '
-                        'but we can\'t find it among input tags'
-                    )
+                    # logger.info(
+                    #     f'to_name={object_tag_name} is specified for output tag name={name}, '
+                    #     'but we can\'t find it among input tags'
+                    # )
                     continue
                 
                 inputs.append(objects[object_tag_name])
@@ -252,8 +237,8 @@ class LabelingConfig():
     def get_control(self, name=None):
         """Returns the control tag that control tag maps to
         """
-        return self._get_tag(name, self._controls)
-
+        return self._get_tag(name, self._controls)        
+    
     def find_tags_by_class(self, tag_class) -> List:
         """Find tags by tag type
         """
@@ -343,7 +328,7 @@ class LabelingConfig():
         """
         """
         try:
-            config = LabelingConfig.parse_config_to_json(config_string)
+            config = LabelInterface.parse_config_to_json(config_string)
             jsonschema.validate(config, _LABEL_CONFIG_SCHEMA_DATA)
         except (etree.ParseError, ValueError) as exc:
             raise LabelStudioValidationErrorSentryIgnored(str(exc))
@@ -380,7 +365,7 @@ class LabelingConfig():
         """
         config_string = self._config
         
-        # self._schema_validation(config_string)
+        self._schema_validation(config_string)
         self._unique_names_validation(config_string)
         self._to_name_validation(config_string)
 
@@ -436,7 +421,7 @@ class LabelingConfig():
 
         return True
         
-    def validate_annotation(self, annotation: "AnnotationValue"):
+    def validate_annotation(self, annotation):
         """Given the annotation, match it to the config and return
         False if it's not valid
 
@@ -444,7 +429,7 @@ class LabelingConfig():
         return all(self.validate_region(r) for r in annotation.get(RESULT_KEY))
         
         
-    def validate_prediction(self, prediction: "PredictionValue"):
+    def validate_prediction(self, prediction):
         """
         """
         return all(self.validate_region(r) for r in prediction.get(RESULT_KEY))
@@ -513,10 +498,14 @@ class LabelingConfig():
     #####
     ##### COMPATIBILITY LAYER
     #####
-        
+    ##### This are re-implmenetation of functions found in different
+    ##### label_config.py files across the repo. Not all of this were
+    ##### tested, therefore I suggest to write a test first, and then
+    ##### replace where it's being used in the repo.
+    
     def config_essential_data_has_changed(self, new_config_str):
         """Detect essential changes of the labeling config"""
-        new_obj = LabelingConfig(config=new_config_str)
+        new_obj = LabelInterface(config=new_config_str)
         
         for new_tag_name, new_tag in new_obj._controls.items():
             if new_tag_name not in self._controls:
@@ -537,6 +526,7 @@ class LabelingConfig():
     def generate_sample_task_without_check(label_config, mode='upload', secure_mode=False):
         """
         """
+        raise NotImplemented()
         
     @classmethod
     def get_task_from_labeling_config(cls, config):
@@ -578,17 +568,12 @@ class LabelingConfig():
             c = etree.tostring(tree, method='html').decode('utf-8')
         
         return c.replace('\n', '').replace('\r', '')
-
     
     def get_all_control_tag_tuples(label_config):
-        """ """
+        """
+        """
         return [ tag.as_tuple() for tag in self.controls ]
-        # outputs = parse_config(label_config)
-        # out = []
-        # for control_name, info in outputs.items():
-        #     out.append(get_annotation_tuple(control_name, info['to_name'], info['type']))
-        # return out
-        
+                
     def get_first_tag_occurence(
         self,
         control_type: Union[str, Tuple],
@@ -611,11 +596,11 @@ class LabelingConfig():
           tuple: (from_name, to_name, value), representing control tag, object tag and input value.        
         """
         
-        for tag in self._objects.values():
-            if tag.match(control_type, name_filter_fn=name_filter):
+        for tag in self.controls:
+            if tag.match(control_type, name_filter_fn=name_filter):                
                 for object_tag in tag.objects:
                     if object_tag.match(object_type, to_name_filter_fn=to_name_filter):
-                        return tag.name, object_tag.name, object_tag.value
+                        return tag.name, object_tag.name, object_tag.value_name
                     
         raise ValueError(f'No control tag of type {control_type} and object tag of type {object_type} found in label config')
 
@@ -628,119 +613,33 @@ class LabelingConfig():
     def get_all_object_tag_names(self):
         """
         """
-        return set(self.extract_data_types)
+        return self._objects.keys()
     
     def extract_data_types(self):
         """
         """
-        # label_config = self._config
-        # xml = etree.fromstring(label_config, forbid_dtd=False)
-        # if xml is None:
-        #     raise etree.ParseError('Project config is empty or incorrect')
-
-        # TODO check if not implementing that regex match is an issue
-        data_type = {}
-        value_tags = self.find_tags(match_fn=lambda tag: bool(tag.name and tag.value))
-        
-        for tag in value_tags:
-            value = tag.value
-            if data_type.get(value) != 'Video':
-                data_type[value] = tag.tag
-
-        return data_type
+        return self._objects
     
-        # take all tags with values attribute and fit them to tag types
-        # data_type = {}
-        # parent = xml.findall('.//*[@value]')
-        # for match in parent:
-        #     if not match.get('name'):
-        #         continue
-        #     name = match.get('value')
-
-        #     # simple one
-        #     if len(name) > 1 and (name[0] == '$'):
-        #         name = name[1:]
-        #         # video has highest priority, e.g.
-        #         # for <Video value="url"/> <Audio value="url"> it must be data_type[url] = Video
-        #         if data_type.get(name) != 'Video':
-        #             data_type[name] = match.tag
-
-                    
-        #     # regex
-        #     else:
-        #         pattern = r'\$\w+'  # simple one: r'\$\w+'
-        #         regex = re.findall(pattern, name)
-        #         first = regex[0][1:] if len(regex) > 0 else ''
-
-        #         if first:
-        #             if data_type.get(first) != 'Video':
-        #                 data_type[first] = match.tag
-
-        # return data_type
-
-    
-    ##### OLD API 
-        
-    
-        # for component in parsed_config:
-        #     if parsed_config[component]['type'].lower() in _VIDEO_TRACKING_TAGS:
-        #         return True
-
-
-    # def extract_data_types(self):
-    #     """
-    #     """
-    #     label_config = self._config
-    #     xml = etree.fromstring(label_config, forbid_dtd=False)
-    #     if xml is None:
-    #         raise etree.ParseError('Project config is empty or incorrect')
-
-    #     # take all tags with values attribute and fit them to tag types
-    #     data_type = {}
-    #     parent = xml.findall('.//*[@value]')
-    #     for match in parent:
-    #         if not match.get('name'):
-    #             continue
-    #         name = match.get('value')
-
-    #         # simple one
-    #         if len(name) > 1 and (name[0] == '$'):
-    #             name = name[1:]
-    #             # video has highest priority, e.g.
-    #             # for <Video value="url"/> <Audio value="url"> it must be data_type[url] = Video
-    #             if data_type.get(name) != 'Video':
-    #                 data_type[name] = match.tag
-
-    #         # regex
-    #         else:
-    #             pattern = r'\$\w+'  # simple one: r'\$\w+'
-    #             regex = re.findall(pattern, name)
-    #             first = regex[0][1:] if len(regex) > 0 else ''
-
-    #             if first:
-    #                 if data_type.get(first) != 'Video':
-    #                     data_type[first] = match.tag
-
-    #     return data_type
-
-    def is_video_object_tracking(parsed_config):
+    def is_video_object_tracking(self):
         """
         """
-        match_fn = lambda tag: tag in _VIDEO_TRACKING_TAGS
-        return bool(self.find_tags(match_fn=match_fn))
+        match_fn = lambda tag: tag.tag.lower() in _VIDEO_TRACKING_TAGS
+        tags = self.find_tags(match_fn=match_fn)
+        
+        return bool(tags)
         
     def is_type(self, tag_type=None):
         """
         """
+        raise NotImplemented
 
-    def validate_label_config(self, config_string):
-        # xml and schema
-        self._schema_validation(config_string)
-        self._unique_names_validation(config_string)
-        self._to_name_validation(config_string)
+    # NOTE: you can use validate() instead
+    # def validate_label_config(self, config_string):
+    #     # xml and schema
+    #     self._schema_validation(config_string)
+    #     self._unique_names_validation(config_string)
+    #     self._to_name_validation(config_string)
         
-
-    @classmethod
     def validate_config_using_summary(self, summary, strict=False):
         """Validate current config using LS Project Summary
         """
@@ -754,8 +653,8 @@ class LabelingConfig():
         annotations_summary = summary.created_annotations
         
         self.validate_annotations_consistency(annotations_summary)
-        self.validate_lables_consistency(created_labels, created_labels_drafts)    
-
+        self.validate_lables_consistency(created_labels, created_labels_drafts)
+        
     def validate_lables_consistency(self, created_labels, created_labels_drafts):
         """
         """
@@ -769,9 +668,9 @@ class LabelingConfig():
         
         for control_tag_from_data, labels_from_data in created_labels.items():
             # Check if labels created in annotations, and their control tag has been removed
-            control_from_config = self.get_object(control_tag_from_data)
+            control_from_config = self.get_control(control_tag_from_data)
             
-            if labels_from_data and not self.get_object(control_tag_from_data):
+            if labels_from_data and not control_from_config:
                 raise LabelStudioValidationErrorSentryIgnored(
                     f'There are {sum(labels_from_data.values(), 0)} annotation(s) created with tag '
                     f'"{control_tag_from_data}", you can\'t remove it'
@@ -779,9 +678,9 @@ class LabelingConfig():
 
             removed_labels = []
             # Check that labels themselves were not removed
-            for label_name, label_value in labels_from_data.items:
+            for label_name, label_value in labels_from_data.items():
                 if label_value > 0 and \
-                   not control_from_config.label_attrs.get(label_name, None):
+                   not control_from_config.labels_attrs.get(label_name, None):
                     # that label was used in labeling before, but not
                     # present in the current config
                     removed_labels.append(label_name)
@@ -819,14 +718,19 @@ class LabelingConfig():
             # avoid textarea to_name check (see DEV-1598)
             if tag_type.lower() == 'textarea':
                 continue
+
+            try:
+                control = self.get_control(from_name)
+                if not control or not control.get_object(to_name):
+                    err.append(f'with from_name={from_name}, to_name={to_name}, type={tag_type}')
+            except Exception as ex:
+                err.append(f'Error occurred while processing from_name={from_name}, to_name={to_name}, type={tag_type}, error: {str(ex)}')
             
-            control = self.get_control(from_name)
-            if not control or not control.get_object(to_name):
-                err.append(f'with from_name={from_name}, to_name={to_name}, type={tag_type}')
+            # control = self.get_control(from_name)
+            # if not control or not control.get_object(to_name):
+            #     err.append(f'with from_name={from_name}, to_name={to_name}, type={tag_type}')
 
         if err:
             diff_str = '\n'.join(err)
             raise LabelStudioValidationErrorSentryIgnored(
                 f'Created annotations are incompatible with provided labeling schema, we found:\n{diff_str}')        
-
-    

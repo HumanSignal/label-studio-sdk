@@ -1,5 +1,6 @@
 
 FROM_NAME="from_name"
+FROM_NAME_PREFIX="from"
 TO_NAME="to_name"
 ANOTHER_NAME="another_name"
 ANOTHER_TO_NAME="another_to_name"
@@ -43,7 +44,26 @@ SIMPLE_WRONG_CONF = f"""
     </View>
 """
 
-CONF_WITH_COMMENT='<!-- {"data": "some_data", "predictions": "some_predictions", "annotations": "some_annotations"} -->' + f"""{SIMPLE_CONF}"""
+CONF_WITH_COMMENT='<!-- {"data": { "hello": "world" }, "predictions": [], "annotations": [] } -->' + f"""{SIMPLE_CONF}"""
+
+CONF_COMPLEX=f"""
+<View>
+  <Labels name="label" toName="text">
+    <Label value="PER" background="red"/>
+    <Label value="ORG" background="darkorange"/>
+    <Label value="LOC" background="orange"/>
+    <Label value="MISC" background="green"/>
+  </Labels>
+
+  <Text name="text" value="$text"/>
+  <Choices name="sentiment" toName="text"
+             choice="single" showInLine="true">
+      <Choice value="Positive"/>
+      <Choice value="Negative"/>
+      <Choice value="Neutral"/>
+    </Choices>
+</View>
+"""
 
 TWO_TONAMES = f"""
     <View>
@@ -56,6 +76,17 @@ TWO_TONAMES = f"""
     </View>
 """
 
+TEXTAREA_CONF = f"""
+<View>
+  <Textarea name="{FROM_NAME}" toName="{TO_NAME}" />
+  <Text name="{TO_NAME}" value="{VALUE}" />
+
+  <Choices name="{ANOTHER_NAME}" toName="{TO_NAME}">
+    <Choice value="{LABEL1}" />
+    <Choice value="{LABEL2}" />
+  </Choices>
+</View>
+"""
 
 VIDEO_CONF = f"""
 <View>

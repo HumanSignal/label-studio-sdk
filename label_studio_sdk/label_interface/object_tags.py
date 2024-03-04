@@ -44,7 +44,7 @@ def generate_time_series_json(time_column, value_columns, time_format=None):
         ts[value_col] = np.random.randn(n).tolist()
     return ts    
 
-def data_examples(mode):
+def data_examples(mode, hostname="https://example.com/"):
     """Data examples for editor preview and task upload examples"""
     global _DATA_EXAMPLES
 
@@ -59,7 +59,7 @@ def data_examples(mode):
         for root in roots:
             for key, value in _DATA_EXAMPLES[root].items():
                 if isinstance(value, str):
-                    _DATA_EXAMPLES[root][key] = value.replace('<HOSTNAME>', "https://example.com/") # TODO settings.HOSTNAME
+                    _DATA_EXAMPLES[root][key] = value.replace('<HOSTNAME>', hostname) # TODO settings.HOSTNAME
 
     return _DATA_EXAMPLES[mode]
 
