@@ -74,8 +74,8 @@ class ObjectTag(LabelStudioTag):
     """
     Class that represents a ObjectTag in Label Studio
     """
-    name: Optional[str] = None,
-    value: Optional[str] = None,
+    name: Optional[str] = None
+    value: Optional[str] = None
     # value_type: Optional[str] = None,
 
     # TODO needs to set during parsing

@@ -424,42 +424,7 @@ class LabelInterface():
         all_names = re.findall(r'name="([^"]*)"', config_string)
         if len(set(all_names)) != len(all_names):
             raise LabelStudioValidationErrorSentryIgnored('Label config contains non-unique names')
-    
-    def validate(self):
-        """Validates the provided configuration string against various validation criteria.
 
-        This method applies a series of validation checks to
-        `_config`, including schema validation, checking for
-        uniqueness of names used in the configuration, and the
-        "to_name" validation. It throws exceptions if any of these
-        validations fail.
-
-        Raises:
-            Exception: If any validation fails, specific to the type of validation.
-
-        """
-        config_string = self._config
-        
-        self._schema_validation(config_string)
-        self._unique_names_validation(config_string)
-        self._to_name_validation(config_string)
-
-    @property
-    def is_valid(self):
-        """
-        """
-        try:
-            self.validate()
-            return True
-        except LabelStudioValidationErrorSentryIgnored:
-            return False
-        
-    @classmethod
-    def validate_with_data(cls, config):
-        """        
-        """
-        raise NotImplemented()
-    
     def load_task(self, task):
         """Loads a task and substitutes the value in each object tag
         with actual data from the task, returning a copy of the
@@ -487,7 +452,42 @@ class LabelInterface():
                 obj.value = task.get(obj.value_name)
         
         return tree
-                
+        
+    @property
+    def is_valid(self):
+        """
+        """
+        try:
+            self.validate()
+            return True
+        except LabelStudioValidationErrorSentryIgnored:
+            return False
+
+    def validate(self):
+        """Validates the provided configuration string against various validation criteria.
+
+        This method applies a series of validation checks to
+        `_config`, including schema validation, checking for
+        uniqueness of names used in the configuration, and the
+        "to_name" validation. It throws exceptions if any of these
+        validations fail.
+
+        Raises:
+            Exception: If any validation fails, specific to the type of validation.
+
+        """
+        config_string = self._config
+        
+        self._schema_validation(config_string)
+        self._unique_names_validation(config_string)
+        self._to_name_validation(config_string)
+        
+    @classmethod
+    def validate_with_data(cls, config):
+        """        
+        """
+        raise NotImplemented()
+                    
     def validate_task(self, task: "TaskValue", validate_regions_only=False):
         """
         """
