@@ -6,9 +6,9 @@ import numpy as np
 import label_studio_converter.brush as brush
 from label_studio_sdk import Client
 
-LABEL_STUDIO_URL = 'http://localhost:8080'
-LABEL_STUDIO_API_KEY = '<your-token>'
-LABEL = 'Mitochondria'
+LABEL_STUDIO_URL = "http://localhost:8080"
+LABEL_STUDIO_API_KEY = "<your-token>"
+LABEL = "Mitochondria"
 
 ls = Client(url=LABEL_STUDIO_URL, api_key=LABEL_STUDIO_API_KEY)
 ls.check_connection()
@@ -26,7 +26,7 @@ project = ls.start_project(
 )
 
 ids = project.import_tasks(
-    [{'image': f'http://example.com/data_{i:04}.png'} for i in range(64)]
+    [{"image": f"http://example.com/data_{i:04}.png"} for i in range(64)]
 )
 
 mask = (np.random.random([512, 512]) * 255).astype(np.uint8)  # just a random 2D mask
@@ -43,7 +43,7 @@ project.create_prediction(
             "from_name": "brush_labels_tag",
             "to_name": "image",
             "type": "brushlabels",
-            'value': {"format": "rle", "rle": rle, "brushlabels": [LABEL]},
+            "value": {"format": "rle", "rle": rle, "brushlabels": [LABEL]},
         }
     ],
 )

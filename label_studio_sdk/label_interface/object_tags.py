@@ -27,23 +27,25 @@ _DATA_EXAMPLES = None
 def _is_strftime_string(s):
     """simple way to detect strftime format
     """
-    return '%' in s
+    return "%" in s
 
 
 def generate_time_series_json(time_column, value_columns, time_format=None):
     """Generate sample for time series
     """
     import numpy as np
-    
+
     n = 100
     if time_format is not None and not _is_strftime_string(time_format):
-        time_fmt_map = {'yyyy-MM-dd': '%Y-%m-%d'}
+        time_fmt_map = {"yyyy-MM-dd": "%Y-%m-%d"}
         time_format = time_fmt_map.get(time_format)
 
     if time_format is None:
         times = np.arange(n).tolist()
     else:
-        raise NotImplementedError("time_format is not implemented yet - you need to install pandas for this.")
+        raise NotImplementedError(
+            "time_format is not implemented yet - you need to install pandas for this."
+        )
         # import pandas as pd
         # times = pd.date_range('2020-01-01', periods=n, freq='D').strftime(time_format).tolist()
     ts = {time_column: times}
@@ -52,22 +54,26 @@ def generate_time_series_json(time_column, value_columns, time_format=None):
     return ts
 
 
-def data_examples(mode: str = "upload", hostname: str = "http://localhost:8080") -> dict:
+def data_examples(
+    mode: str = "upload", hostname: str = "http://localhost:8080"
+) -> dict:
     """Data examples for editor preview and task upload examples"""
     global _DATA_EXAMPLES
 
     if _DATA_EXAMPLES is None:
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        file_path = os.path.join(base_dir, 'data_examples.json')
+        file_path = os.path.join(base_dir, "data_examples.json")
 
-        with open(file_path, encoding='utf-8') as f:
+        with open(file_path, encoding="utf-8") as f:
             _DATA_EXAMPLES = json.load(f)
 
-        roots = ['editor_preview', 'upload']
+        roots = ["editor_preview", "upload"]
         for root in roots:
             for key, value in _DATA_EXAMPLES[root].items():
                 if isinstance(value, str):
-                    _DATA_EXAMPLES[root][key] = value.replace('<HOSTNAME>', hostname)  # TODO settings.HOSTNAME
+                    _DATA_EXAMPLES[root][key] = value.replace(
+                        "<HOSTNAME>", hostname
+                    )  # TODO settings.HOSTNAME
 
     return _DATA_EXAMPLES[mode]
 
@@ -90,6 +96,7 @@ class ObjectTag(LabelStudioTag):
     value: Optional[str]
         The value of the tag
     """
+
     name: Optional[str] = None
     value: Optional[str] = None
     # value_type: Optional[str] = None,
@@ -98,7 +105,7 @@ class ObjectTag(LabelStudioTag):
     # self._value_type = value_type
 
     @classmethod
-    def parse_node(cls, tag: xml.etree.ElementTree.Element) -> 'ObjectTag':
+    def parse_node(cls, tag: xml.etree.ElementTree.Element) -> "ObjectTag":
         """
         This class method parses a node and returns a ObjectTag object if the node has a name and a value.
 
@@ -114,20 +121,23 @@ class ObjectTag(LabelStudioTag):
         """
         tag_class = get_tag_class(tag.tag) or cls
 
-        return tag_class(tag=tag.tag, attr=tag.attrib,
-                         name=tag.attrib.get('name'),
-                         value=tag.attrib['value'])
+        return tag_class(
+            tag=tag.tag,
+            attr=tag.attrib,
+            name=tag.attrib.get("name"),
+            value=tag.attrib["value"],
+        )
 
     @classmethod
     def validate_node(cls, tag: xml.etree.ElementTree.Element) -> bool:
         """
         Check if tag is input
         """
-        return bool(tag.attrib.get('name') and tag.attrib.get('value'))
+        return bool(tag.attrib.get("name") and tag.attrib.get("value"))
 
     @property
     def value_type(self):
-        return self.attr.get('valueType') or self.attr.get('valuetype')
+        return self.attr.get("valueType") or self.attr.get("valuetype")
 
     @property
     def value_name(self):
@@ -150,143 +160,156 @@ class ObjectTag(LabelStudioTag):
         """
         """
         examples = data_examples(mode=mode)
-        only_urls = secure_mode or self.value_type == 'url'
+        only_urls = secure_mode or self.value_type == "url"
         if hasattr(self, "_generate_example"):
             return self._generate_example(examples, only_urls=only_urls)
-        example_from_field_name = examples.get('$' + self.value, None)
+        example_from_field_name = examples.get("$" + self.value, None)
         if example_from_field_name:
             return example_from_field_name
 
-        if self.tag.lower().endswith('labels'):
-            return examples['Labels']
+        if self.tag.lower().endswith("labels"):
+            return examples["Labels"]
 
-        if self.tag.lower() == 'choices':
-            allow_nested = self.attr.get('allowNested') or self.attr.get('allownested') or 'false'
-            return examples['NestedChoices' if allow_nested == 'true' else 'Choices']
+        if self.tag.lower() == "choices":
+            allow_nested = (
+                self.attr.get("allowNested") or self.attr.get("allownested") or "false"
+            )
+            return examples["NestedChoices" if allow_nested == "true" else "Choices"]
 
         # patch for valueType="url"
-        examples['Text'] = examples['TextUrl'] if only_urls else examples['TextRaw']
+        examples["Text"] = examples["TextUrl"] if only_urls else examples["TextRaw"]
         # not found by name, try get example by type
-        return examples.get(self.tag, 'Something')
+        return examples.get(self.tag, "Something")
 
 
 class AudioTag(ObjectTag):
     """
     """
+
     def _generate_example(self, examples, only_urls=False):
         """
         """
-        return examples.get('Audio')
+        return examples.get("Audio")
 
-    
+
 class ImageTag(ObjectTag):
     """
     """
+
     def _generate_example(self, examples, only_urls=False):
         """
         """
-        return examples.get('Image')
+        return examples.get("Image")
 
-    
+
 class TableTag(ObjectTag):
     """
     """
+
     def _generate_example(self, examples, only_urls=False):
         """
         """
-        return examples.get('Table')
-    
-    
+        return examples.get("Table")
+
+
 class TextTag(ObjectTag):
     """
     """
+
     def _generate_example(self, examples, only_urls=False):
         """
         """
         if only_urls:
-            return examples.get('TextUrl')            
+            return examples.get("TextUrl")
         else:
-            return examples.get('TextRaw')
+            return examples.get("TextRaw")
 
 
 class VideoTag(ObjectTag):
     """
     """
+
     def _generate_example(self, examples, only_urls=False):
         """
         """
-        return examples.get('Video')
+        return examples.get("Video")
 
 
 class HyperTextTag(ObjectTag):
     """
     """
+
     def _generate_example(self, examples, only_urls=False):
         """
         """
         examples = data_examples(mode="upload")
-        if self.value == 'video':
-            return examples.get('$videoHack')
+        if self.value == "video":
+            return examples.get("$videoHack")
         else:
-            return examples['HyperTextUrl' if only_urls else 'HyperText']
+            return examples["HyperTextUrl" if only_urls else "HyperText"]
 
 
 class ListTag(ObjectTag):
     """
     """
+
     def _generate_example(self, examples, only_urls=False):
         """
         """
         examples = data_examples(mode="upload")
-        return examples.get('List')
+        return examples.get("List")
 
 
 class ParagraphsTag(ObjectTag):
     """
     """
+
     def _generate_example(self, examples, only_urls=False):
         """
         """
         # Paragraphs special case - replace nameKey/textKey if presented
         p = self.attr
-        
+
         name_key = p.get("nameKey") or p.get("namekey") or "author"
         text_key = p.get("textKey") or p.get("textkey") or "text"
-        
+
         if only_urls:
-            params = { "nameKey": name_key, "textKey": text_key }
+            params = {"nameKey": name_key, "textKey": text_key}
             return examples.get("ParagraphsUrl") + urlencode(params)
 
-        return [{ name_key: item["author"], text_key: item["text"] }
-                for item in examples.get("Paragraphs")]
+        return [
+            {name_key: item["author"], text_key: item["text"]}
+            for item in examples.get("Paragraphs")
+        ]
 
 
 class TimeSeriesTag(ObjectTag):
     """
     """
+
     def _generate_example(self, examples, only_urls=False):
         """
         """
         p = self.attr
-        
-        time_column = p.get('timeColumn', 'time')
+
+        time_column = p.get("timeColumn", "time")
         value_columns = []
         for ts_child in p:
-            if ts_child.tag != 'Channel':
+            if ts_child.tag != "Channel":
                 continue
-            value_columns.append(ts_child.get('column'))
-        sep = p.get('sep')
-        time_format = p.get('timeFormat')
+            value_columns.append(ts_child.get("column"))
+        sep = p.get("sep")
+        time_format = p.get("timeFormat")
 
         if only_urls:
             # data is URL
-            params = {'time': time_column, 'values': ','.join(value_columns)}
+            params = {"time": time_column, "values": ",".join(value_columns)}
             if sep:
-                params['sep'] = sep
+                params["sep"] = sep
             if time_format:
-                params['tf'] = time_format
-                
-            return '/samples/time-series.csv?' + urlencode(params)
+                params["tf"] = time_format
+
+            return "/samples/time-series.csv?" + urlencode(params)
         else:
             # data is JSON
             return generate_time_series_json(time_column, value_columns, time_format)

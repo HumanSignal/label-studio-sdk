@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel
 from typing import Dict, Optional, List, Tuple, Any, Callable
 
@@ -14,15 +13,18 @@ class LabelStudioTag(BaseModel):
     tag: Optional[str]
         The tag name
     """
+
     attr: Optional[Dict]
     tag: Optional[str]
-        
-    def match(self,
-              tag_type: str,
-              name: Optional[str] = None,
-              name_filter_fn: Optional[Callable] = None,
-              to_name: Optional[str] = None,
-              to_name_filter_fn: Optional[Callable] = None) -> bool:
+
+    def match(
+        self,
+        tag_type: str,
+        name: Optional[str] = None,
+        name_filter_fn: Optional[Callable] = None,
+        to_name: Optional[str] = None,
+        to_name_filter_fn: Optional[Callable] = None,
+    ) -> bool:
         """
         This method checks if the current instance of LabelStudioTag matches the provided parameters.
 
@@ -55,8 +57,9 @@ class LabelStudioTag(BaseModel):
         if to_name:
             to_name = to_name.lower()
 
-        if (isinstance(tag_type, str) and self.tag.lower() != tag_type) or \
-           (isinstance(tag_type, tuple) and self.tag.lower() not in tag_type):
+        if (isinstance(tag_type, str) and self.tag.lower() != tag_type) or (
+            isinstance(tag_type, tuple) and self.tag.lower() not in tag_type
+        ):
             return False
 
         if name and self.name.lower() != name:

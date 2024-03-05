@@ -1,4 +1,3 @@
-
 import pytest
 
 from label_studio_sdk.label_interface import LabelInterface
@@ -20,17 +19,17 @@ def test_validate_summary():
 
     with pytest.raises(LabelStudioValidationErrorSentryIgnored):
         li.validate_config_using_summary(summary)
-    
+
     # lets replace control name
     c3 = c.CONF_COMPLEX.replace("label", "DOESNOTEXIST")
     li = LabelInterface(c3)
-    
+
     with pytest.raises(LabelStudioValidationErrorSentryIgnored):
         li.validate_config_using_summary(summary)
-    
+
     # lets replace object name
     c4 = c.CONF_COMPLEX.replace("text", "DOESNOTEXIST")
     li = LabelInterface(c4)
-    
+
     with pytest.raises(LabelStudioValidationErrorSentryIgnored):
         li.validate_config_using_summary(summary)

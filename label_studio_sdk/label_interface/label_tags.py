@@ -6,7 +6,7 @@ from .base import LabelStudioTag
 from .region import Region
 
 
-_LABEL_TAGS = {'Label', 'Choice', 'Relation'}
+_LABEL_TAGS = {"Label", "Choice", "Relation"}
 
 
 def _get_parent_control_tag_name(tag, controls):
@@ -18,15 +18,16 @@ def _get_parent_control_tag_name(tag, controls):
         parent = parent.getparent()
         if parent is None:
             return
-        name = parent.attrib.get('name')
+        name = parent.attrib.get("name")
         if name in controls:
-            return name        
+            return name
 
 
 class LabelTag(LabelStudioTag):
     """
     Class for Label Tag
     """
+
     value: Optional[str] = None
     parent_name: Optional[str] = None
 
@@ -36,7 +37,11 @@ class LabelTag(LabelStudioTag):
         return tag.tag in _LABEL_TAGS
 
     @classmethod
-    def parse_node(cls, tag: xml.etree.ElementTree.Element, controls_context: Dict[str, 'ControlTag']) -> 'LabelTag':
+    def parse_node(
+        cls,
+        tag: xml.etree.ElementTree.Element,
+        controls_context: Dict[str, "ControlTag"],
+    ) -> "LabelTag":
         """
         This class method parses a node and returns a LabelTag object if the node has a parent control tag and a value.
         It first gets the name of the parent control tag.
@@ -57,7 +62,11 @@ class LabelTag(LabelStudioTag):
         """
         parent_name = _get_parent_control_tag_name(tag, controls_context)
         if parent_name is not None:
-            actual_value = tag.attrib.get('alias') or tag.attrib.get('value')
+            actual_value = tag.attrib.get("alias") or tag.attrib.get("value")
             if actual_value:
-                return LabelTag(tag=tag.tag, attr=tag.attrib,
-                                parent_name=parent_name, value=actual_value)
+                return LabelTag(
+                    tag=tag.tag,
+                    attr=tag.attrib,
+                    parent_name=parent_name,
+                    value=actual_value,
+                )

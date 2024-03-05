@@ -7,13 +7,20 @@ import copy
 
 from label_studio_sdk.objects import PredictionValue
 from label_studio_sdk.label_interface import LabelInterface
-from label_studio_sdk.label_interface.control_tags import ControlTag, ChoicesTag, LabelsTag, Region
+from label_studio_sdk.label_interface.control_tags import (
+    ControlTag,
+    ChoicesTag,
+    LabelsTag,
+    Region,
+)
 from label_studio_sdk.exceptions import LabelStudioValidationErrorSentryIgnored
+
 # from label_studio_sdk.label_config.regions import Region
 import tests.test_interface.configs as c
 
 
 ## testing basic functionality
+
 
 def test_parse_configs():
     conf1 = LabelInterface(c.SIMPLE_CONF)
@@ -60,6 +67,7 @@ def test_parse_textarea():
 # def test_parse_config_to_json():
 #     json = LabelInterface.parse_config_to_json(c.SIMPLE_CONF)
 
+
 def test_to_name_validation():
     LabelInterface._to_name_validation(None, c.SIMPLE_CONF)
 
@@ -83,6 +91,7 @@ def test_get_sample_task():
 
 ## various edge cases
 
+
 def test_config_essential_data_has_changed():
     conf = LabelInterface(c.SIMPLE_CONF)
     assert conf.config_essential_data_has_changed(c.SIMPLE_CONF) is False
@@ -95,7 +104,9 @@ def test_config_essential_data_has_changed():
 
 
 def test_get_task_from_labeling_config():
-    task_data, annotations, predictions = LabelInterface.get_task_from_labeling_config(c.CONF_WITH_COMMENT)
+    task_data, annotations, predictions = LabelInterface.get_task_from_labeling_config(
+        c.CONF_WITH_COMMENT
+    )
 
     # assert task_data == "some_data"
     # assert annotations == "some_annotations"
@@ -123,6 +134,7 @@ def test_find_tags_by_class():
 
 ## testing generation
 
+
 def test_task_generation():
     val = c.VALUE[1:]
     conf = LabelInterface(c.SIMPLE_CONF)
@@ -136,6 +148,7 @@ def test_task_generation():
 ## testing object tags
 
 ## testing control tags
+
 
 def test_label_with_choices():
     conf = LabelInterface(c.SIMPLE_CONF)
@@ -158,6 +171,7 @@ def test_label_with_choices():
 ## testing all other tags
 
 ## test other method
+
 
 def test_load_task():
     conf = LabelInterface(c.SIMPLE_CONF)

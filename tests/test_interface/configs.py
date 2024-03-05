@@ -1,26 +1,23 @@
+FROM_NAME = "from_name"
+FROM_NAME_PREFIX = "from"
+TO_NAME = "to_name"
+ANOTHER_NAME = "another_name"
+ANOTHER_TO_NAME = "another_to_name"
 
-FROM_NAME="from_name"
-FROM_NAME_PREFIX="from"
-TO_NAME="to_name"
-ANOTHER_NAME="another_name"
-ANOTHER_TO_NAME="another_to_name"
+VALUE = "$var"
+VALUE_KEY = "var"
+ANOTHER_VALUE = "$var2"
 
-VALUE="$var"
-VALUE_KEY="var"
-ANOTHER_VALUE="$var2"
+LABEL1 = "yes"
+LABEL2 = "no"
 
-LABEL1="yes"
-LABEL2="no"
+CORRECT_TASK = {VALUE_KEY: "value"}
 
-CORRECT_TASK={
-    VALUE_KEY: "value"
-}
-
-CORRECT_REGION={
+CORRECT_REGION = {
     "from_name": FROM_NAME,
     "to_name": TO_NAME,
     "type": "choices",
-    "value": { "choices": [ LABEL1 ] }
+    "value": {"choices": [LABEL1]},
 }
 
 SIMPLE_CONF = f"""
@@ -44,9 +41,12 @@ SIMPLE_WRONG_CONF = f"""
     </View>
 """
 
-CONF_WITH_COMMENT='<!-- {"data": { "hello": "world" }, "predictions": [], "annotations": [] } -->' + f"""{SIMPLE_CONF}"""
+CONF_WITH_COMMENT = (
+    '<!-- {"data": { "hello": "world" }, "predictions": [], "annotations": [] } -->'
+    + f"""{SIMPLE_CONF}"""
+)
 
-CONF_COMPLEX=f"""
+CONF_COMPLEX = f"""
 <View>
   <Labels name="label" toName="text">
     <Label value="PER" background="red"/>
@@ -119,7 +119,7 @@ DYNAMIC_LABELS_CONF = f"""
 </View>
 """
 
-RECT_CONFIG=f"""
+RECT_CONFIG = f"""
 <View>
   <Image name="{TO_NAME}" value="{VALUE}" />
   <Rectangle name="{FROM_NAME}" toName="{TO_NAME}"></Rectangle>

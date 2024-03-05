@@ -20,6 +20,7 @@ class Region(BaseModel):
     y: int
 
     """
+
     id: str = Field(default_factory=lambda: str(uuid4()))
     from_tag: Any
     to_tag: Any
@@ -34,7 +35,7 @@ class Region(BaseModel):
             "to_name": self.to_tag.name,
             "type": self.from_tag.tag.lower(),
             # TODO This needs to be improved
-            "value": self.value.dict()
+            "value": self.value.dict(),
         }
 
     def to_json(self):

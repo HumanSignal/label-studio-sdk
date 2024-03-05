@@ -17,28 +17,34 @@ from lxml import etree
 from label_studio_sdk.exceptions import (
     LSConfigParseException,
     LabelStudioXMLSyntaxErrorSentryIgnored,
-    LabelStudioValidationErrorSentryIgnored)
+    LabelStudioValidationErrorSentryIgnored,
+)
 
-from label_studio_sdk.label_interface.control_tags import ControlTag, ChoicesTag, LabelsTag
+from label_studio_sdk.label_interface.control_tags import (
+    ControlTag,
+    ChoicesTag,
+    LabelsTag,
+)
 from label_studio_sdk.label_interface.object_tags import ObjectTag
 from label_studio_sdk.label_interface.label_tags import LabelTag
 from label_studio_sdk.objects import AnnotationValue, TaskValue, PredictionValue
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(dir_path, '..', 'schema', 'label_config_schema.json')
+file_path = os.path.join(dir_path, "..", "schema", "label_config_schema.json")
 
 with open(file_path) as f:
     _LABEL_CONFIG_SCHEMA_DATA = json.load(f)
 
-_LABEL_TAGS = {'Label', 'Choice', 'Relation'}
+_LABEL_TAGS = {"Label", "Choice", "Relation"}
 
-_DIR_APP_NAME = 'label-studio'
-_VIDEO_TRACKING_TAGS = {'videorectangle'}
+_DIR_APP_NAME = "label-studio"
+_VIDEO_TRACKING_TAGS = {"videorectangle"}
 
 RESULT_KEY = "result"
 
 ############ core/label_config.py
+
 
 def merge_labels_counters(dict1, dict2):
     """
@@ -73,40 +79,48 @@ def merge_labels_counters(dict1, dict2):
 
     return result_dict
 
+
 def _fix_choices(config):
     """
     workaround for single choice
     https://github.com/heartexlabs/label-studio/issues/1259
     """
-    if 'Choices' in config:
+    if "Choices" in config:
         # for single Choices tag in View
-        if 'Choice' in config['Choices'] and not isinstance(config['Choices']['Choice'], list):
-            config['Choices']['Choice'] = [config['Choices']['Choice']]
+        if "Choice" in config["Choices"] and not isinstance(
+            config["Choices"]["Choice"], list
+        ):
+            config["Choices"]["Choice"] = [config["Choices"]["Choice"]]
         # for several Choices tags in View
-        elif isinstance(config['Choices'], list) and all('Choice' in tag_choices for tag_choices in config['Choices']):
-            for n in range(len(config['Choices'])):
+        elif isinstance(config["Choices"], list) and all(
+            "Choice" in tag_choices for tag_choices in config["Choices"]
+        ):
+            for n in range(len(config["Choices"])):
                 # check that Choices tag has only 1 choice
-                if not isinstance(config['Choices'][n]['Choice'], list):
-                    config['Choices'][n]['Choice'] = [config['Choices'][n]['Choice']]
-    if 'View' in config:
-        if isinstance(config['View'], OrderedDict):
-            config['View'] = _fix_choices(config['View'])
+                if not isinstance(config["Choices"][n]["Choice"], list):
+                    config["Choices"][n]["Choice"] = [config["Choices"][n]["Choice"]]
+    if "View" in config:
+        if isinstance(config["View"], OrderedDict):
+            config["View"] = _fix_choices(config["View"])
         else:
-            config['View'] = [_fix_choices(view) for view in config['View']]
+            config["View"] = [_fix_choices(view) for view in config["View"]]
     return config
+
 
 def get_annotation_tuple(from_name, to_name, type):
     if isinstance(to_name, list):
-        to_name = ','.join(to_name)
-    return '|'.join([from_name, to_name, type.lower()])
+        to_name = ",".join(to_name)
+    return "|".join([from_name, to_name, type.lower()])
+
 
 def get_all_control_tag_tuples(label_config):
     # "chc|text|choices"
     outputs = parse_config(label_config)
     out = []
     for control_name, info in outputs.items():
-        out.append(get_annotation_tuple(control_name, info['to_name'], info['type']))
+        out.append(get_annotation_tuple(control_name, info["to_name"], info["type"]))
     return out
+
 
 def get_all_types(label_config):
     """
@@ -115,8 +129,9 @@ def get_all_types(label_config):
     outputs = parse_config(label_config)
     out = []
     for control_name, info in outputs.items():
-        out.append(info['type'].lower())
+        out.append(info["type"].lower())
     return out
+
 
 def display_count(count: int, type: str) -> Optional[str]:
     """Helper for displaying pluralized sources of validation errors,
@@ -127,9 +142,11 @@ def display_count(count: int, type: str) -> Optional[str]:
 
     return f'{count} {type}{"s" if count > 1 else ""}'
 
+
 ######################
 
-class LabelInterface():
+
+class LabelInterface:
     """The LabelInterface class serves as an interface to parse and
     validate labeling configurations, annotations, and predictions
     within the Label Studio ecosystem. 
@@ -168,7 +185,8 @@ class LabelInterface():
       }]
     })
     ```
-    """    
+    """
+
     def __init__(self, config: str, *args, **kwargs):
         """
         Create LabelInterface instance from the config string
@@ -191,22 +209,20 @@ class LabelInterface():
         self._sample_config_task = _task_data
         self._sample_config_ann = _ann
         self._sample_config_pred = _pred
-        
-        
+
         controls, objects, labels, tree = self.parse(config)
         controls = self._link_controls(controls, objects, labels)
 
-        
         # list of control tags that this config has
         self._control_tags = set(controls.keys())
         self._object_tags = set(objects.keys())
         # self._label_names = set(labels.keys())
-        
+
         self._controls = controls
         self._objects = objects
         self._labels = labels
         self._tree = tree
-        
+
     ##### NEW API
 
     @property
@@ -226,7 +242,7 @@ class LabelInterface():
         """Returns list of label tags
         """
         return self._labels and self._labels.values()
-    
+
     def _link_controls(self, controls: Dict, objects: Dict, labels: Dict) -> Dict:
         """
         """
@@ -239,7 +255,7 @@ class LabelInterface():
                     #     'but we can\'t find it among input tags'
                     # )
                     continue
-                
+
                 inputs.append(objects[object_tag_name])
 
             tag.set_objects(inputs)
@@ -253,13 +269,15 @@ class LabelInterface():
         """
         if name is not None:
             if name not in tag_store:
-                raise Exception(f"Name {name} is not found, available names: {tag_store.keys()}")
+                raise Exception(
+                    f"Name {name} is not found, available names: {tag_store.keys()}"
+                )
             else:
                 return tag_store[name]
-        
+
         if tag_store and len(tag_store.keys()) > 1:
             raise Exception("Multiple object tags connected, you should specify name")
-        
+
         return list(tag_store.values())[0]
 
     def get_tag(self, name):
@@ -287,7 +305,7 @@ class LabelInterface():
             return self._objects[name]
 
         raise Exception(f"Tag with name {name} not found")
-    
+
     def get_object(self, name=None):
         """Retrieves the object with the given name from `_objects`.
 
@@ -301,12 +319,12 @@ class LabelInterface():
 
         """
         return self._get_tag(name, self._objects)
-    
+
     def get_output(self, name=None):
         """Provides an alias for the `get_control` method.
         """
         return self.get_control(name)
-    
+
     def get_control(self, name=None):
         """Retrieves the control tag that the control tag maps to.
 
@@ -319,8 +337,8 @@ class LabelInterface():
             `_controls`.
 
         """
-        return self._get_tag(name, self._controls)        
-    
+        return self._get_tag(name, self._controls)
+
     def find_tags_by_class(self, tag_class) -> List:
         """Finds tags by their class type.
 
@@ -337,11 +355,12 @@ class LabelInterface():
         """
         lst = list(self.objects) + list(self.controls)
         tag_classes = [tag_class] if not isinstance(tag_class, list) else tag_class
-        
-        return [tag for tag in lst for cls in tag_classes if isinstance(tag, cls)]            
-        
-    def find_tags(self, tag_type: Optional[str] = None,
-                  match_fn: Optional[Callable] = None) -> List:
+
+        return [tag for tag in lst for cls in tag_classes if isinstance(tag, cls)]
+
+    def find_tags(
+        self, tag_type: Optional[str] = None, match_fn: Optional[Callable] = None
+    ) -> List:
         """Finds tags that match the given function in the entire parsed tree.
 
         This function searches through both `objects` and `controls`
@@ -363,21 +382,20 @@ class LabelInterface():
 
         """
         tag_types = {
-            'objects': self.objects,
-            'controls': self.controls,
+            "objects": self.objects,
+            "controls": self.controls,
             # aliases
-            'inputs': self.objects,
-            'outputs': self.controls,
+            "inputs": self.objects,
+            "outputs": self.controls,
         }
-        
-        lst = tag_types.get(tag_type,
-                            list(self.objects) + list(self.controls))
-        
+
+        lst = tag_types.get(tag_type, list(self.objects) + list(self.controls))
+
         if match_fn is not None:
             lst = list(filter(match_fn, lst))
-        
-        return lst    
-    
+
+        return lst
+
     def parse(self, config_string: str) -> Tuple[Dict, Dict, Dict, etree._Element]:
         """Parses the received configuration string into dictionaries
         of ControlTags, ObjectTags, and Labels, along with an XML tree
@@ -398,25 +416,25 @@ class LabelInterface():
             xml_tree = etree.fromstring(config_string)
         except etree.XMLSyntaxError as e:
             raise LabelStudioXMLSyntaxErrorSentryIgnored(str(e))
-        
+
         objects, controls, labels = {}, {}, defaultdict(dict)
 
         variables = []
 
         for tag in xml_tree.iter():
-            if tag.attrib and 'indexFlag' in tag.attrib:
-                variables.append(tag.attrib['indexFlag'])
+            if tag.attrib and "indexFlag" in tag.attrib:
+                variables.append(tag.attrib["indexFlag"])
 
             if ControlTag.validate_node(tag):
-                controls[tag.attrib['name']] = ControlTag.parse_node(tag)
-                
+                controls[tag.attrib["name"]] = ControlTag.parse_node(tag)
+
             elif ObjectTag.validate_node(tag):
-                objects[tag.attrib['name']] = ObjectTag.parse_node(tag)
+                objects[tag.attrib["name"]] = ObjectTag.parse_node(tag)
 
             elif LabelTag.validate_node(tag):
                 lb = LabelTag.parse_node(tag, controls)
                 labels[lb.parent_name][lb.value] = lb
-                        
+
         return controls, objects, labels, xml_tree
 
     @classmethod
@@ -426,15 +444,15 @@ class LabelInterface():
         try:
             xml = etree.fromstring(config_string)
         except TypeError:
-            raise etree.ParseError('can only parse strings')
+            raise etree.ParseError("can only parse strings")
         if xml is None:
-            raise etree.ParseError('xml is empty or incorrect')
+            raise etree.ParseError("xml is empty or incorrect")
 
         config = xmljson.badgerfish.data(xml)
         config = _fix_choices(config)
 
         return config
-    
+
     def _schema_validation(self, config_string):
         """
         """
@@ -445,31 +463,35 @@ class LabelInterface():
             raise LabelStudioValidationErrorSentryIgnored(str(exc))
         except jsonschema.exceptions.ValidationError as exc:
             error_message = exc.context[-1].message if len(exc.context) else exc.message
-            error_message = 'Validation failed on {}: {}'.format(
-                '/'.join(map(str, exc.path)), error_message.replace('@', '')
+            error_message = "Validation failed on {}: {}".format(
+                "/".join(map(str, exc.path)), error_message.replace("@", "")
             )
             raise LabelStudioValidationErrorSentryIgnored(error_message)
-    
+
     def _to_name_validation(self, config_string):
         """
         """
         # toName points to existent name
         all_names = re.findall(r'name="([^"]*)"', config_string)
-        
+
         names = set(all_names)
         toNames = re.findall(r'toName="([^"]*)"', config_string)
         for toName_ in toNames:
-            for toName in toName_.split(','):
+            for toName in toName_.split(","):
                 if toName not in names:
-                    raise LabelStudioValidationErrorSentryIgnored(f'toName="{toName}" not found in names: {sorted(names)}')
-    
+                    raise LabelStudioValidationErrorSentryIgnored(
+                        f'toName="{toName}" not found in names: {sorted(names)}'
+                    )
+
     def _unique_names_validation(self, config_string):
         """
         """
         # unique names in config # FIXME: 'name =' (with spaces) won't work
         all_names = re.findall(r'name="([^"]*)"', config_string)
         if len(set(all_names)) != len(all_names):
-            raise LabelStudioValidationErrorSentryIgnored('Label config contains non-unique names')
+            raise LabelStudioValidationErrorSentryIgnored(
+                "Label config contains non-unique names"
+            )
 
     def load_task(self, task):
         """Loads a task and substitutes the value in each object tag
@@ -496,9 +518,9 @@ class LabelInterface():
         for obj in tree.objects:
             if obj.value_is_variable and obj.value_name in task:
                 obj.value = task.get(obj.value_name)
-        
+
         return tree
-        
+
     @property
     def is_valid(self):
         """
@@ -523,17 +545,17 @@ class LabelInterface():
 
         """
         config_string = self._config
-        
+
         self._schema_validation(config_string)
         self._unique_names_validation(config_string)
         self._to_name_validation(config_string)
-        
+
     @classmethod
     def validate_with_data(cls, config):
         """        
         """
         raise NotImplemented()
-                    
+
     def validate_task(self, task: "TaskValue", validate_regions_only=False):
         """
         """
@@ -543,20 +565,17 @@ class LabelInterface():
         # for every object tag we've got that has value as it's
         # variable we need to have an associated item in the task data
         for obj in self.objects:
-            if obj.value_is_variable and \
-               task["data"].get(obj.value_name, None) is None:
+            if obj.value_is_variable and task["data"].get(obj.value_name, None) is None:
                 return False
-        
-        if "annotations" in task and \
-           not self.validate_annotation():
+
+        if "annotations" in task and not self.validate_annotation():
             return False
-        
-        if "predictions" in task and \
-           not self.validate_prediction():
+
+        if "predictions" in task and not self.validate_prediction():
             return False
 
         return True
-        
+
     def validate_annotation(self, annotation):
         """Validates the given annotation against the current configuration.
 
@@ -576,14 +595,12 @@ class LabelInterface():
 
         """
         return all(self.validate_region(r) for r in annotation.get(RESULT_KEY))
-        
-        
+
     def validate_prediction(self, prediction):
         """Same as validate_annotation right now
         """
         return all(self.validate_region(r) for r in prediction.get(RESULT_KEY))
-        
-        
+
     def validate_region(self, region) -> bool:
         """Validates a region from the annotation against the current
         configuration.
@@ -627,22 +644,23 @@ class LabelInterface():
             return False
 
         return True
-        
+
     ### Generation
 
     def _sample_task(self, secure_mode=False):
         """
         """
         # predefined_task, annotations, predictions = get_task_from_labeling_config(label_config)
-        generated_task = self.generate_sample_task(mode='editor_preview', secure_mode=secure_mode)
-        
+        generated_task = self.generate_sample_task(
+            mode="editor_preview", secure_mode=secure_mode
+        )
+
         if self._sample_config_task is not None:
             generated_task.update(self._sample_config_task)
-        
+
         return generated_task, self._sample_config_ann, self._sample_config_pred
 
-    
-    def generate_sample_task(self, mode='upload', secure_mode=False):
+    def generate_sample_task(self, mode="upload", secure_mode=False):
         """Generates a sample task based on the provided mode and
         secure_mode.
 
@@ -660,11 +678,15 @@ class LabelInterface():
             dict: A dictionary representing the sample task.
 
         """
-        task = {obj.value_name: obj.generate_example_value(mode=mode, secure_mode=secure_mode)
-                for obj in self.objects}
-        
-        return task        
-    
+        task = {
+            obj.value_name: obj.generate_example_value(
+                mode=mode, secure_mode=secure_mode
+            )
+            for obj in self.objects
+        }
+
+        return task
+
     def generate_sample_annotation(self):
         """
         """
@@ -677,17 +699,17 @@ class LabelInterface():
     ##### label_config.py files across the repo. Not all of this were
     ##### tested, therefore I suggest to write a test first, and then
     ##### replace where it's being used in the repo.
-    
+
     def config_essential_data_has_changed(self, new_config_str):
         """Detect essential changes of the labeling config"""
         new_obj = LabelInterface(config=new_config_str)
-        
+
         for new_tag_name, new_tag in new_obj._controls.items():
             if new_tag_name not in self._controls:
                 return True
 
             old_tag = self._controls[new_tag_name]
-            
+
             if new_tag.tag != old_tag.tag:
                 return True
             if new_tag.objects != old_tag.objects:
@@ -697,12 +719,13 @@ class LabelInterface():
 
         return False
 
-    
-    def generate_sample_task_without_check(label_config, mode='upload', secure_mode=False):
+    def generate_sample_task_without_check(
+        label_config, mode="upload", secure_mode=False
+    ):
         """
         """
         raise NotImplemented()
-        
+
     @classmethod
     def get_task_from_labeling_config(cls, config):
         """Get task, annotations and predictions from labeling config comment,
@@ -710,10 +733,10 @@ class LabelInterface():
         """
         # try to get task data, annotations & predictions from config comment
         task_data, annotations, predictions = {}, None, None
-        start = config.find('<!-- {')
-        start = start if start >= 0 else config.find('<!--{')
+        start = config.find("<!-- {")
+        start = start if start >= 0 else config.find("<!--{")
         start += 4
-        end = config[start:].find('-->') if start >= 0 else -1
+        end = config[start:].find("-->") if start >= 0 else -1
 
         if 3 < start < start + end:
             try:
@@ -724,37 +747,41 @@ class LabelInterface():
                 pass
             else:
                 # logger.debug(json.dumps(body, indent=2))
-                dont_use_root = 'predictions' in body or 'annotations' in body
-                task_data = body['data'] if 'data' in body else (None if dont_use_root else body)
-                predictions = body['predictions'] if 'predictions' in body else None
-                annotations = body['annotations'] if 'annotations' in body else None
-        
+                dont_use_root = "predictions" in body or "annotations" in body
+                task_data = (
+                    body["data"]
+                    if "data" in body
+                    else (None if dont_use_root else body)
+                )
+                predictions = body["predictions"] if "predictions" in body else None
+                annotations = body["annotations"] if "annotations" in body else None
+
         return task_data, annotations, predictions
-    
+
     @classmethod
     def config_line_stipped(self, c):
         tree = etree.fromstring(c, forbid_dtd=False)
-        comments = tree.xpath('//comment()')
+        comments = tree.xpath("//comment()")
 
         for c in comments:
             p = c.getparent()
             if p is not None:
                 p.remove(c)
-            c = etree.tostring(tree, method='html').decode('utf-8')
-        
-        return c.replace('\n', '').replace('\r', '')
-    
+            c = etree.tostring(tree, method="html").decode("utf-8")
+
+        return c.replace("\n", "").replace("\r", "")
+
     def get_all_control_tag_tuples(label_config):
         """
         """
-        return [ tag.as_tuple() for tag in self.controls ]
-                
+        return [tag.as_tuple() for tag in self.controls]
+
     def get_first_tag_occurence(
         self,
         control_type: Union[str, Tuple],
         object_type: Union[str, Tuple],
         name_filter: Optional[Callable] = None,
-        to_name_filter: Optional[Callable] = None
+        to_name_filter: Optional[Callable] = None,
     ) -> Tuple[str, str, str]:
         """
         Reads config and fetches the first control tag along with first object tag that matches the type.
@@ -770,14 +797,16 @@ class LabelInterface():
         Returns:
           tuple: (from_name, to_name, value), representing control tag, object tag and input value.        
         """
-        
+
         for tag in self.controls:
-            if tag.match(control_type, name_filter_fn=name_filter):                
+            if tag.match(control_type, name_filter_fn=name_filter):
                 for object_tag in tag.objects:
                     if object_tag.match(object_type, to_name_filter_fn=to_name_filter):
                         return tag.name, object_tag.name, object_tag.value_name
-                    
-        raise ValueError(f'No control tag of type {control_type} and object tag of type {object_type} found in label config')
+
+        raise ValueError(
+            f"No control tag of type {control_type} and object tag of type {object_type} found in label config"
+        )
 
     def get_all_labels(self):
         """
@@ -789,20 +818,20 @@ class LabelInterface():
         """
         """
         return self._objects.keys()
-    
+
     def extract_data_types(self):
         """
         """
         return self._objects
-    
+
     def is_video_object_tracking(self):
         """
         """
         match_fn = lambda tag: tag.tag.lower() in _VIDEO_TRACKING_TAGS
         tags = self.find_tags(match_fn=match_fn)
-        
+
         return bool(tags)
-        
+
     def is_type(self, tag_type=None):
         """
         """
@@ -814,7 +843,7 @@ class LabelInterface():
     #     self._schema_validation(config_string)
     #     self._unique_names_validation(config_string)
     #     self._to_name_validation(config_string)
-        
+
     def validate_config_using_summary(self, summary, strict=False):
         """Validate current config using LS Project Summary
         """
@@ -822,40 +851,41 @@ class LabelInterface():
         # self.validate_label_config(config_string)
         if not self._objects:
             return False
-        
+
         created_labels = summary.created_labels
         created_labels_drafts = summary.created_labels_drafts
         annotations_summary = summary.created_annotations
-        
+
         self.validate_annotations_consistency(annotations_summary)
         self.validate_lables_consistency(created_labels, created_labels_drafts)
-        
+
     def validate_lables_consistency(self, created_labels, created_labels_drafts):
         """
         """
         # validate labels consistency
         # labels_from_config, dynamic_values_tags = self.get_all_labels(config_string)
-        
+
         created_labels = merge_labels_counters(created_labels, created_labels_drafts)
 
         # <Labels name="sentinement" ...><Label value="Negative" ... />
         # {'sentiment': {'Negative': 1, 'Positive': 3, 'Neutral': 1}}
-        
+
         for control_tag_from_data, labels_from_data in created_labels.items():
             # Check if labels created in annotations, and their control tag has been removed
             control_from_config = self.get_control(control_tag_from_data)
-            
+
             if labels_from_data and not control_from_config:
                 raise LabelStudioValidationErrorSentryIgnored(
-                    f'There are {sum(labels_from_data.values(), 0)} annotation(s) created with tag '
+                    f"There are {sum(labels_from_data.values(), 0)} annotation(s) created with tag "
                     f'"{control_tag_from_data}", you can\'t remove it'
                 )
 
             removed_labels = []
             # Check that labels themselves were not removed
             for label_name, label_value in labels_from_data.items():
-                if label_value > 0 and \
-                   not control_from_config.labels_attrs.get(label_name, None):
+                if label_value > 0 and not control_from_config.labels_attrs.get(
+                    label_name, None
+                ):
                     # that label was used in labeling before, but not
                     # present in the current config
                     removed_labels.append(label_name)
@@ -869,12 +899,12 @@ class LabelInterface():
             #     custom_tags = Label.objects.filter(links__project=self).values_list('value', flat=True)
             #     flat_custom_tags = set([item for sublist in custom_tags for item in sublist])
             #     labels_from_config_by_tag |= flat_custom_tags
-                    
+
             if len(removed_labels):
                 raise LabelStudioValidationErrorSentryIgnored(
                     f'These labels still exist in annotations or drafts:\n{",".join(removed_labels)}'
                     f'Please add labels to tag with name="{str(control_tag_from_data)}".'
-                )        
+                )
 
     def validate_annotations_consistency(self, annotations_summary):
         """
@@ -883,29 +913,34 @@ class LabelInterface():
         # format is: { "chc|text|choices": 10 }
         # which means that there are two tags, Choices, and one of
         # object tags and there are 10 annotations
-        
+
         err = []
         annotations_from_data = set(annotations_summary)
-        
+
         for ann in annotations_from_data:
             from_name, to_name, tag_type = ann.split("|")
 
             # avoid textarea to_name check (see DEV-1598)
-            if tag_type.lower() == 'textarea':
+            if tag_type.lower() == "textarea":
                 continue
 
             try:
                 control = self.get_control(from_name)
                 if not control or not control.get_object(to_name):
-                    err.append(f'with from_name={from_name}, to_name={to_name}, type={tag_type}')
+                    err.append(
+                        f"with from_name={from_name}, to_name={to_name}, type={tag_type}"
+                    )
             except Exception as ex:
-                err.append(f'Error occurred while processing from_name={from_name}, to_name={to_name}, type={tag_type}, error: {str(ex)}')
-            
+                err.append(
+                    f"Error occurred while processing from_name={from_name}, to_name={to_name}, type={tag_type}, error: {str(ex)}"
+                )
+
             # control = self.get_control(from_name)
             # if not control or not control.get_object(to_name):
             #     err.append(f'with from_name={from_name}, to_name={to_name}, type={tag_type}')
 
         if err:
-            diff_str = '\n'.join(err)
+            diff_str = "\n".join(err)
             raise LabelStudioValidationErrorSentryIgnored(
-                f'Created annotations are incompatible with provided labeling schema, we found:\n{diff_str}')        
+                f"Created annotations are incompatible with provided labeling schema, we found:\n{diff_str}"
+            )
