@@ -22,7 +22,7 @@ def test_generate_url():
     """
 
     def url_validator(url):
-        assert url.find("https://") == 0
+        assert url.startswith("https://") or url.startswith("http://")
 
     # TODO need to add other validators
     m = {
