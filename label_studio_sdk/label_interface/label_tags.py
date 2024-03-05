@@ -1,5 +1,6 @@
 """
 """
+import xml.etree.ElementTree
 from typing import Dict, Optional, List, Tuple, Any
 from .base import LabelStudioTag
 from .region import Region
