@@ -114,6 +114,13 @@ class Client(object):
 
         if api_key is not None:
             credentials = ClientCredentials(api_key=api_key)
+
+        if api_key is None and credentials is None:
+            raise RuntimeError(
+                "If neither 'api_key' nor 'credentials' are provided, 'LABEL_STUDIO_API_KEY' environment variable must "
+                "be set"
+            )
+
         self.api_key = (
             credentials.api_key
             if credentials.api_key
