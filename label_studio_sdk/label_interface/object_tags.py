@@ -6,7 +6,6 @@ import re
 import xml.etree.ElementTree
 from urllib.parse import urlencode
 from typing import Optional
-import pandas as pd
 
 from .base import LabelStudioTag
 
@@ -44,7 +43,9 @@ def generate_time_series_json(time_column, value_columns, time_format=None):
     if time_format is None:
         times = np.arange(n).tolist()
     else:
-        times = pd.date_range('2020-01-01', periods=n, freq='D').strftime(time_format).tolist()
+        raise NotImplementedError("time_format is not implemented yet - you need to install pandas for this.")
+        # import pandas as pd
+        # times = pd.date_range('2020-01-01', periods=n, freq='D').strftime(time_format).tolist()
     ts = {time_column: times}
     for value_col in value_columns:
         ts[value_col] = np.random.randn(n).tolist()
