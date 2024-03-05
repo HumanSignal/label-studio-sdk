@@ -3,6 +3,7 @@
 import re
 import os
 import json
+from urllib.parse import urlencode
 
 from typing import Dict, Optional, List, Tuple, Any
 from .base import LabelStudioTag
@@ -30,6 +31,8 @@ def _is_strftime_string(s):
 def generate_time_series_json(time_column, value_columns, time_format=None):
     """Generate sample for time series
     """
+    import numpy as np
+    
     n = 100
     if time_format is not None and not _is_strftime_string(time_format):
         time_fmt_map = {'yyyy-MM-dd': '%Y-%m-%d'}
@@ -125,8 +128,8 @@ class ObjectTag(LabelStudioTag):
         examples = data_examples(mode=mode)
         only_urls = secure_mode or self.value_type == 'url'
         
-        if hasattr(self, "generate_example"):
-            return self.generate_example(only_urls=only_urls)
+        if hasattr(self, "_generate_example"):
+            return self._generate_example(examples, only_urls=only_urls)
         
         example_from_field_name = examples.get('$' + self.value, None)
         if example_from_field_name:
@@ -148,53 +151,55 @@ class ObjectTag(LabelStudioTag):
 class AudioTag(ObjectTag):
     """
     """
-    def generate_example(self, only_urls=False):
+    def _generate_example(self, examples, only_urls=False):
         """
         """
-        return examples.get('List')
+        return examples.get('Audio')
+
     
 class ImageTag(ObjectTag):
     """
     """
-    def generate_example(self, only_urls=False):
+    def _generate_example(self, examples, only_urls=False):
         """
         """
-        return examples.get('List')
+        return examples.get('Image')
+
     
 class TableTag(ObjectTag):
     """
     """
-    def generate_example(self, only_urls=False):
+    def _generate_example(self, examples, only_urls=False):
         """
         """
-        return examples.get('List')
+        return examples.get('Table')
     
     
 class TextTag(ObjectTag):
     """
     """
-    def generate_example(self, only_urls=False):
+    def _generate_example(self, examples, only_urls=False):
         """
         """
         if only_urls:
-            return "https://htx-pub.s3.amazonaws.com/example.txt"
+            return examples.get('TextUrl')            
         else:
-            return "To have faith is to trust yourself to the water"
+            return examples.get('TextRaw')
 
     
 class VideoTag(ObjectTag):
     """
     """
-    def generate_example(self, only_urls=False):
+    def _generate_example(self, examples, only_urls=False):
         """
         """
-        return examples.get('List')
+        return examples.get('Video')
 
     
 class HyperTextTag(ObjectTag):
     """
     """
-    def generate_example(self, only_urls=False):
+    def _generate_example(self, examples, only_urls=False):
         """
         """
         if self.value == 'video':
@@ -206,7 +211,7 @@ class HyperTextTag(ObjectTag):
 class ListTag(ObjectTag):
     """
     """
-    def generate_example(self, only_urls=False):
+    def _generate_example(self, examples, only_urls=False):
         """
         """
         return examples.get('List')
@@ -215,28 +220,32 @@ class ListTag(ObjectTag):
 class ParagraphsTag(ObjectTag):
     """
     """
-    def generate_example(self, only_urls=False):
+    def _generate_example(self, examples, only_urls=False):
         """
         """
         # Paragraphs special case - replace nameKey/textKey if presented
-        name_key = p.get('nameKey') or p.get('namekey') or 'author'
-        text_key = p.get('textKey') or p.get('textkey') or 'text'
+        p = self.attr
+        
+        name_key = p.get("nameKey") or p.get("namekey") or "author"
+        text_key = p.get("textKey") or p.get("textkey") or "text"
         
         if only_urls:
-            params = {'nameKey': name_key, 'textKey': text_key}
-            return examples['ParagraphsUrl'] + urlencode(params)
+            params = { "nameKey": name_key, "textKey": text_key }
+            return examples.get("ParagraphsUrl") + urlencode(params)
 
-        return [{ name_key: item['author'], text_key: item['text'] }
-                for item in examples[p.tag]]
+        return [{ name_key: item["author"], text_key: item["text"] }
+                for item in examples.get("Paragraphs")]
 
 
 class TimeSeriesTag(ObjectTag):
     """
     """
-    def generate_example(self):
+    def _generate_example(self, examples, only_urls=False):
         """
         """
-        time_column = self.attr.get('timeColumn')
+        p = self.attr
+        
+        time_column = p.get('timeColumn', 'time')
         value_columns = []
         for ts_child in p:
             if ts_child.tag != 'Channel':
@@ -252,7 +261,8 @@ class TimeSeriesTag(ObjectTag):
                 params['sep'] = sep
             if time_format:
                 params['tf'] = time_format
-            task[value] = '/samples/time-series.csv?' + urlencode(params)
+                
+            return '/samples/time-series.csv?' + urlencode(params)
         else:
             # data is JSON
-            task[value] = generate_time_series_json(time_column, value_columns, time_format)
+            return generate_time_series_json(time_column, value_columns, time_format)

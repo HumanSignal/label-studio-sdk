@@ -1,4 +1,4 @@
-
+import json
 from lxml.etree import Element
 
 from label_studio_sdk.label_interface import LabelInterface
@@ -33,3 +33,19 @@ def test_textarea_label():
     conf = LabelInterface(c.TEXTAREA_CONF)
 
     region = conf.get_control(c.FROM_NAME).label(text=["Hello", "World"])
+
+
+def test_label_with_choices():
+    conf = LabelInterface(c.SIMPLE_CONF)
+    region = conf.get_control().label(label=c.LABEL1)
+    
+    rjs = region.as_json()    
+    assert isinstance(rjs, str)
+
+    rpy = json.loads(rjs)    
+    assert rpy["from_name"] == c.FROM_NAME
+    assert rpy["to_name"] == c.TO_NAME
+    assert "value" in rpy
+    
+    assert "choices" in rpy.get("value")
+    assert c.LABEL1 in rpy["value"]["choices"]

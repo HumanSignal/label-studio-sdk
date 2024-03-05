@@ -130,12 +130,45 @@ def display_count(count: int, type: str) -> Optional[str]:
 ######################
 
 class LabelInterface():
-    """This class parses the config into more logical OOP based
-    representation. Since labeling config includes both presentation
-    and logic combined, in its parsed form we care only about the
-    logic, and less so about the presentation
+    """The LabelInterface class serves as an interface to parse and
+    validate labeling configurations, annotations, and predictions
+    within the Label Studio ecosystem. 
+    
+    It is designed to be compatible at the data structure level with 
+    an existing parser widely used within the Label Studio ecosystem. 
+    This ensures that it works seamlessly with most of the existing functions, 
+    either by directly supporting them or by offering re-implemented versions 
+    through the new interface.
 
-    """
+    Moreover, the parser adds value by offering functionality to
+    validate predictions and annotations against the specified
+    labeling configuration. Below is a simple example of how to use
+    the new API:
+
+    ```python
+    from label_studio_sdk.label_interface import LabelInterface
+
+    config = "<View><Text name='txt' value='$val' /><Choices name='chc' toName='txt'><Choice value='one'/> <Choice value='two'/></Choices></View>"
+
+    li = LabelInterface(config)
+    region = li.get_tag("chc").label("one")
+
+    # returns a JSON representing a Label Studio region
+    region.as_json()
+
+    # returns True
+    li.validate_prediction({ 
+      "model_version": "0.0.1",  
+      "score": 0.90,
+      "result": [{
+          "from_name": "chc",
+          "to_name": "txt",
+          "type": "choices",
+          "value": { "choices": ["one"] }
+      }]
+    })
+    ```
+    """    
     def __init__(self, config: str, *args, **kwargs):
         """ """
         self._config = config

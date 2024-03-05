@@ -75,13 +75,6 @@ def test_get_sample_task():
     assert value in task
     assert len(task[value])
 
-def test_generate_sample_task():
-    conf = LabelInterface(c.SIMPLE_CONF)
-    task = conf.generate_sample_task()
-    value = c.VALUE[1:]
-    
-    assert value in task
-    assert len(task[value])
 
 ## various edge cases
     
@@ -121,37 +114,6 @@ def test_find_tags_by_class():
     tags2 = conf.find_tags_by_class(LabelsTag)
     assert len(tags2) == 0
     
-## testing generation
-
-def test_task_generation():
-    val = c.VALUE[1:]
-    conf = LabelInterface(c.SIMPLE_CONF)
-    task = conf.generate_sample_task()
-
-    assert val in task
-    print(task)
-    assert len(task.get(val))
-
-## testing object tags
-
-## testing control tags
-
-def test_label_with_choices():
-    conf = LabelInterface(c.SIMPLE_CONF)
-    region = conf.get_control().label(label=c.LABEL1)
-    
-    rjs = region.as_json()    
-    assert isinstance(rjs, str)
-
-    rpy = json.loads(rjs)    
-    assert rpy["from_name"] == c.FROM_NAME
-    assert rpy["to_name"] == c.TO_NAME
-    assert "value" in rpy
-
-    print(rpy)
-    
-    assert "choices" in rpy.get("value")
-    assert c.LABEL1 in rpy["value"]["choices"]
 
 ## testing all other tags
 
