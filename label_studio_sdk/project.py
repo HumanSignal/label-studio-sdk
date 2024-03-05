@@ -1107,9 +1107,11 @@ class Project(Client):
         """
         data = {"task": task_id, "result": result, "score": score}
         if model_version is not None:
-            data["model_version"] = model_version
-        response = self.make_request("POST", "/api/predictions", json=data)
-        return response.json()
+            data['model_version'] = model_version
+        response = self.make_request('POST', "/api/predictions", json=data)
+        json = response.json()
+        logger.debug(f'Response: {json}')
+        return json
 
     def create_predictions(self, predictions):
         """Bulk create predictions for tasks. See <a href="https://labelstud.io/guide/predictions.html">more
