@@ -31,9 +31,10 @@
     tasks = project.get_tasks(filters=filters)
     ```
 """
+
 from datetime import datetime
 
-DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
+DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
 
 
 class Filters:
@@ -41,9 +42,9 @@ class Filters:
     Use the methods and variables in this class to create and combine filters for tasks on the Label Studio Data Manager.
     """
 
-    OR = 'or'
+    OR = "or"
     """Combine filters with an OR"""
-    AND = 'and'
+    AND = "and"
     """Combine filters with an AND"""
 
     @staticmethod
@@ -85,7 +86,7 @@ class Filters:
         dict
         """
         return {
-            "filter": 'filter:' + name,
+            "filter": "filter:" + name,
             "operator": operator,
             "type": column_type,
             "value": value,
@@ -106,7 +107,7 @@ class Filters:
             datetime in `'%Y-%m-%dT%H:%M:%S.%fZ'` format
 
         """
-        assert isinstance(dt, datetime), 'dt must be datetime type'
+        assert isinstance(dt, datetime), "dt must be datetime type"
         return dt.strftime(DATETIME_FORMAT)
 
     @classmethod
@@ -133,7 +134,7 @@ class Filters:
         if maximum is not None:
             if isinstance(maximum, datetime):
                 maximum = cls.datetime(maximum)
-            return {'min': value, 'max': maximum}
+            return {"min": value, "max": maximum}
 
         return value
 
@@ -160,13 +161,13 @@ class Operator:
 class Type:
     """Specify the type of data in a column."""
 
-    Number = 'Number'
-    Datetime = 'Datetime'
-    Boolean = 'Boolean'
-    String = 'String'
+    Number = "Number"
+    Datetime = "Datetime"
+    Boolean = "Boolean"
+    String = "String"
     List = "List"
 
-    Unknown = 'Unknown'
+    Unknown = "Unknown"
     """ Unknown is explicitly converted to string format. """
 
 
@@ -209,6 +210,10 @@ class Column:
     """Number of annotations rejected for a task in review (Enterprise only)"""
     reviews_accepted = "tasks:reviews_accepted"
     """Number of annotations accepted for a task in review (Enterprise only)"""
+    comments = "tasks:comments"
+    """Number of comments in a task"""
+    unresolved_comment_count = "tasks:unresolved_comment_count"
+    """Number of unresolved comments in a task"""
 
     @staticmethod
     def data(task_field):
@@ -246,21 +251,21 @@ def _test():
     )
 
     assert filters == {
-        'conjunction': 'or',
-        'items': [
+        "conjunction": "or",
+        "items": [
             {
-                'filter': 'filter:tasks:id',
-                'operator': 'greater',
-                'type': 'Number',
-                'value': 42,
+                "filter": "filter:tasks:id",
+                "operator": "greater",
+                "type": "Number",
+                "value": 42,
             },
             {
-                'filter': 'filter:tasks:completed_at',
-                'operator': 'in',
-                'type': 'Datetime',
-                'value': {
-                    'min': '2021-11-01T00:00:00.000000Z',
-                    'max': '2021-11-05T00:00:00.000000Z',
+                "filter": "filter:tasks:completed_at",
+                "operator": "in",
+                "type": "Datetime",
+                "value": {
+                    "min": "2021-11-01T00:00:00.000000Z",
+                    "max": "2021-11-05T00:00:00.000000Z",
                 },
             },
         ],

@@ -28,17 +28,16 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
-          - 3.7
           - 3.9
 
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4.7.0
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
-      - uses: actions/cache@v3.3.1
+      - uses: actions/cache@v4
         name: Configure pip cache
         id: pip-cache
         with:

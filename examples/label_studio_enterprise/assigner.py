@@ -45,7 +45,7 @@ class BatchAssigner:
     def get_page_total(self, filter_column, filter_value, page_size):
         """Total page number for tasks with filter by column and specified page size"""
         result = self.get_tasks(filter_column, filter_value, 1, page_size)
-        return math.ceil(result['total'] / float(page_size))
+        return math.ceil(result["total"] / float(page_size))
 
     def get_user_ids(self, emails):
         """Get user IDs by email and preserve the order
@@ -59,7 +59,7 @@ class BatchAssigner:
         for email in emails:
             for user in users:
                 if email == user.email:
-                    print(user.email, '=>', user.id)
+                    print(user.email, "=>", user.id)
                     user_ids.append(user.id)
                     break
 
@@ -68,8 +68,8 @@ class BatchAssigner:
     def assign_users_to_tasks(
         self,
         user_ids,
-        filter_column='organization',
-        filter_value='name',
+        filter_column="organization",
+        filter_value="name",
         page=1,
         page_size=100,
     ):
@@ -84,10 +84,10 @@ class BatchAssigner:
         """
 
         result = self.get_tasks(filter_column, filter_value, page, page_size)
-        task_ids = result['tasks']
+        task_ids = result["tasks"]
 
         if not task_ids:
-            print(f'No tasks found')
+            print(f"No tasks found")
             return False
 
         # call assign API
@@ -97,24 +97,24 @@ class BatchAssigner:
             "selectedItems": {"all": False, "included": task_ids},
         }
         self.ls.make_request(
-            'post', f'/api/projects/{self.project.id}/tasks/assignees', json=body
+            "post", f"/api/projects/{self.project.id}/tasks/assignees", json=body
         )
         print(
-            f'Users {user_ids} were assigned to {len(task_ids)} tasks '
-            f'from id={task_ids[0]} to id={task_ids[-1]}'
+            f"Users {user_ids} were assigned to {len(task_ids)} tasks "
+            f"from id={task_ids[0]} to id={task_ids[-1]}"
         )
         return True
 
 
 def start():
-    host = 'http://localhost:8000'
-    api_key = 'e0b7751e84a059b0accaf14392e5e9fd4abe3de7'
+    host = "http://localhost:8000"
+    api_key = "e0b7751e84a059b0accaf14392e5e9fd4abe3de7"
     project_id = 182
 
-    filter_column = 'shortname'
-    filter_value = 'opossum'
+    filter_column = "shortname"
+    filter_value = "opossum"
     page_size = 10
-    emails = ['makseq@gmail.com', 'test@test.ru']
+    emails = ["makseq@gmail.com", "test@test.ru"]
 
     assigner = BatchAssigner(host, api_key, project_id)
 
@@ -123,7 +123,7 @@ def start():
     user_ids = assigner.get_user_ids(emails=emails)
 
     page_total = assigner.get_page_total(filter_column, filter_value, page_size)
-    print(f'Total pages for {filter_column}={filter_value} => {page_total}')
+    print(f"Total pages for {filter_column}={filter_value} => {page_total}")
 
     for current_page in range(1, page_total + 1):
         assigner.assign_users_to_tasks(
@@ -137,5 +137,5 @@ def start():
         time.sleep(10)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     start()

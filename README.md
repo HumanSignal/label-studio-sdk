@@ -18,7 +18,7 @@ This is the first release of the Label Studio SDK. It supports Label Studio Ente
 
 - **Find a bug?** [Create a GitHub issue](https://github.com/heartexlabs/label-studio-sdk/issues)!
 - **Have a question?** [Join the Slack Community](https://slack.labelstud.io/?source=github-sdk)!
-- **Want to contribute?** [See the contributing guide](https://github.com/heartexlabs/label-studio-sdk/CONTRIBUTING.md)
+- **Want to contribute?** [See the contributing guide](CONTRIBUTING.md)
 
 ## Quickstart
 To start using the SDK in your machine learning and data science projects and pipelines, do the following:
