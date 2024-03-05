@@ -9,8 +9,8 @@ with open("requirements.txt") as f:
     for line in f.read().splitlines():
         requirements.append(line)
 
-with open("label_studio_sdk/__init__.py") as f:
-    version = re.search("__version__ ?= ?'(.*?)'", f.read()).group(1)
+from label_studio_sdk import __version__
+version = __version__
 
 setuptools.setup(
     name="label-studio-sdk",
