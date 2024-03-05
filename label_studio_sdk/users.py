@@ -6,13 +6,13 @@ from .client import Client
 
 
 class UserRole(Enum):
-    ANNOTATOR = 'AN'
-    REVIEWER = 'RE'
-    MANAGER = 'MA'
-    ADMINISTRATOR = 'AD'
-    OWNER = 'OW'
-    NOT_ACTIVATED = 'NO'
-    DISABLED = 'DI'
+    ANNOTATOR = "AN"
+    REVIEWER = "RE"
+    MANAGER = "MA"
+    ADMINISTRATOR = "AD"
+    OWNER = "OW"
+    NOT_ACTIVATED = "NO"
+    DISABLED = "DI"
 
 
 class OrgMembership(BaseModel):
@@ -30,7 +30,7 @@ class User(BaseModel):
     last_activity: datetime
     initials: str
     phone: str
-    active_organization: int
+    active_organization: Optional[int]
     org_membership: Optional[List[OrgMembership]]
     client: Client
 
@@ -38,7 +38,7 @@ class User(BaseModel):
         arbitrary_types_allowed = True
 
     def set_role(self, role: UserRole):
-        """ Set user role in current active organization
+        """Set user role in current active organization
 
         Parameters
         ----------
@@ -46,8 +46,10 @@ class User(BaseModel):
             User role
         """
         response = self.client.make_request(
-            'PATCH', f'/api/organizations/{self.active_organization}/memberships',
-            json={'user_id': self.id, 'role': role.value})
+            "PATCH",
+            f"/api/organizations/{self.active_organization}/memberships",
+            json={"user_id": self.id, "role": role.value},
+        )
         for membership in self.org_membership:
             if membership.organization_id == self.active_organization:
                 membership.role = UserRole
