@@ -1,9 +1,11 @@
 """ .. include::../docs/project.md
 """
+
 import os
 import json
 import logging
 import pathlib
+import time
 
 from enum import Enum, auto
 from random import sample, shuffle
@@ -31,28 +33,28 @@ class LabelStudioAttributeError(LabelStudioException):
 class ProjectSampling(Enum):
     """Enumerate the available task sampling modes for labeling."""
 
-    RANDOM = 'Uniform sampling'
+    RANDOM = "Uniform sampling"
     """ Uniform random sampling of tasks """
-    SEQUENCE = 'Sequential sampling'
+    SEQUENCE = "Sequential sampling"
     """ Sequential sampling of tasks using task IDs """
-    UNCERTAINTY = 'Uncertainty sampling'
+    UNCERTAINTY = "Uncertainty sampling"
     """ Sample tasks based on prediction scores, such as for active learning (Enterprise only)"""
 
 
 class ProjectStorage(Enum):
     """Enumerate the available types of external source and target storage for labeling projects."""
 
-    GOOGLE = 'gcs'
+    GOOGLE = "gcs"
     """ Google Cloud Storage """
-    S3 = 's3'
+    S3 = "s3"
     """ Amazon S3 Storage """
-    AZURE = 'azure_blob'
+    AZURE = "azure_blob"
     """ Microsoft Azure Blob Storage """
-    LOCAL = 'localfiles'
+    LOCAL = "localfiles"
     """ Label Studio Local File Storage """
-    REDIS = 'redis'
+    REDIS = "redis"
     """ Redis Storage """
-    S3_SECURED = 's3s'
+    S3_SECURED = "s3s"
     """ Amazon S3 Storage secured by IAM roles (Enterprise only) """
 
 
@@ -61,13 +63,13 @@ class AssignmentSamplingMethod(Enum):
 
 
 class ExportSnapshotStatus:
-    CREATED = 'created'
+    CREATED = "created"
     """ Export snapshot is created """
-    IN_PROGRESS = 'in_progress'
+    IN_PROGRESS = "in_progress"
     """ Export snapshot is in progress  """
-    FAILED = 'failed'
+    FAILED = "failed"
     """ Export snapshot failed with errors """
-    COMPLETED = 'completed'
+    COMPLETED = "completed"
     """ Export snapshot was created and can be downloaded """
 
     def __init__(self, response):
@@ -76,30 +78,30 @@ class ExportSnapshotStatus:
     def is_created(self):
         """Export snapshot is created"""
         assert (
-            'status' in self.response
+            "status" in self.response
         ), '"status" field not found in export snapshot status response'
-        return self.response['status'] == self.CREATED
+        return self.response["status"] == self.CREATED
 
     def is_in_progress(self):
         """Export snapshot is in progress"""
         assert (
-            'status' in self.response
+            "status" in self.response
         ), '"status" field not found in export_snapshot_status response'
-        return self.response['status'] == self.IN_PROGRESS
+        return self.response["status"] == self.IN_PROGRESS
 
     def is_failed(self):
         """Export snapshot failed with errors"""
         assert (
-            'status' in self.response
+            "status" in self.response
         ), '"status" field not found in export_snapshot_status response'
-        return self.response['status'] == self.FAILED
+        return self.response["status"] == self.FAILED
 
     def is_completed(self):
         """Export snapshot was created and can be downloaded"""
         assert (
-            'status' in self.response
+            "status" in self.response
         ), '"status" field not found in export_snapshot_status response'
-        return self.response['status'] == self.COMPLETED
+        return self.response["status"] == self.COMPLETED
 
 
 class Project(Client):
@@ -160,10 +162,10 @@ class Project(Client):
             "Use get_users() instead."
         )
 
-        response = self.make_request('GET', f'/api/projects/{self.id}/members')
+        response = self.make_request("GET", f"/api/projects/{self.id}/members")
         users = []
         for user_data in response.json():
-            user_data['client'] = self
+            user_data["client"] = self
             users.append(User(**user_data))
         return users
 
@@ -180,9 +182,9 @@ class Project(Client):
             Dict with created member
 
         """
-        payload = {'user': user.id}
+        payload = {"user": user.id}
         response = self.make_request(
-            'POST', f'/api/projects/{self.id}/members', json=payload
+            "POST", f"/api/projects/{self.id}/members", json=payload
         )
         return response.json()
 
@@ -200,20 +202,20 @@ class Project(Client):
             Dict with counter of created assignments
 
         """
-        final_response = {'assignments': 0}
+        final_response = {"assignments": 0}
         users_ids = [user.id for user in users]
         # Assign tasks to users with batches
         for c in chunk(tasks_ids, 1000):
             logger.debug(f"Starting assignment for: {users_ids}")
             payload = {
-                'users': users_ids,
-                'selectedItems': {'all': False, 'included': c},
-                'type': 'AN',
+                "users": users_ids,
+                "selectedItems": {"all": False, "included": c},
+                "type": "AN",
             }
             response = self.make_request(
-                'POST', f'/api/projects/{self.id}/tasks/assignees', json=payload
+                "POST", f"/api/projects/{self.id}/tasks/assignees", json=payload
             )
-            final_response['assignments'] += response.json()['assignments']
+            final_response["assignments"] += response.json()["assignments"]
         return final_response
 
     def delete_annotators_assignment(self, tasks_ids):
@@ -229,10 +231,10 @@ class Project(Client):
             Dict with counter of deleted annotator assignments
 
         """
-        payload = {'selectedItems': {'all': False, 'included': tasks_ids}}
+        payload = {"selectedItems": {"all": False, "included": tasks_ids}}
         response = self.make_request(
-            'POST',
-            f'/api/dm/actions?id=delete_annotators&project={self.id}',
+            "POST",
+            f"/api/dm/actions?id=delete_annotators&project={self.id}",
             json=payload,
         )
         return response.json()
@@ -250,10 +252,10 @@ class Project(Client):
             Dict with counter of deleted reviewer assignments
 
         """
-        payload = {'selectedItems': {'all': False, 'included': tasks_ids}}
+        payload = {"selectedItems": {"all": False, "included": tasks_ids}}
         response = self.make_request(
-            'POST',
-            f'/api/dm/actions?id=delete_reviewers&project={self.id}',
+            "POST",
+            f"/api/dm/actions?id=delete_reviewers&project={self.id}",
             json=payload,
         )
         return response.json()
@@ -273,12 +275,12 @@ class Project(Client):
 
         """
         payload = {
-            'users': [user.id for user in users],
-            'selectedItems': {'all': False, 'included': tasks_ids},
-            'type': 'RE',
+            "users": [user.id for user in users],
+            "selectedItems": {"all": False, "included": tasks_ids},
+            "type": "RE",
         }
         response = self.make_request(
-            'POST', f'/api/projects/{self.id}/tasks/assignees', json=payload
+            "POST", f"/api/projects/{self.id}/tasks/assignees", json=payload
         )
         return response.json()
 
@@ -353,7 +355,7 @@ class Project(Client):
             Retrieve and display predictions when loading a task
 
         """
-        response = self.make_request('GET', f'/api/projects/{self.id}')
+        response = self.make_request("GET", f"/api/projects/{self.id}")
         return response.json()
 
     def get_model_versions(self):
@@ -365,7 +367,7 @@ class Project(Client):
              Model versions
 
         """
-        response = self.make_request('GET', f'/api/projects/{self.id}/model-versions')
+        response = self.make_request("GET", f"/api/projects/{self.id}/model-versions")
         return response.json()
 
     def update_params(self):
@@ -433,11 +435,11 @@ class Project(Client):
         Raises LabelStudioException in case of errors.
 
         """
-        response = self.make_request('POST', '/api/projects', json=kwargs)
+        response = self.make_request("POST", "/api/projects", json=kwargs)
         if response.status_code == 201:
             self.params = response.json()
         else:
-            raise LabelStudioException('Project not created')
+            raise LabelStudioException("Project not created")
 
     @classmethod
     def _create_from_id(cls, client, project_id, params=None):
@@ -447,11 +449,12 @@ class Project(Client):
             session=client.session,
             extra_headers=client.headers,
             versions=client.versions,
+            make_request_raise=client.make_request_raise,
         )
         if params and isinstance(params, dict):
             # TODO: validate project parameters
             project.params = params
-        project.params['id'] = project_id
+        project.params["id"] = project_id
         return project
 
     @classmethod
@@ -492,36 +495,68 @@ class Project(Client):
             Imported task IDs
 
         """
-        params = {'return_task_ids': '1'}
+        params = {"return_task_ids": "1"}
         if preannotated_from_fields:
-            params['preannotated_from_fields'] = ','.join(preannotated_from_fields)
+            params["preannotated_from_fields"] = ",".join(preannotated_from_fields)
         if isinstance(tasks, (list, dict)):
             response = self.make_request(
-                method='POST',
-                url=f'/api/projects/{self.id}/import',
+                method="POST",
+                url=f"/api/projects/{self.id}/import",
                 json=tasks,
                 params=params,
+                timeout=(10, 600),
             )
         elif isinstance(tasks, (str, Path)):
             # try import from file
             if not os.path.isfile(tasks):
-                raise LabelStudioException(f'Not found import tasks file {tasks}')
-            with open(tasks, mode='rb') as f:
+                raise LabelStudioException(f"Not found import tasks file {tasks}")
+            with open(tasks, mode="rb") as f:
                 response = self.make_request(
-                    method='POST',
-                    url=f'/api/projects/{self.id}/import',
-                    files={'file': f},
+                    method="POST",
+                    url=f"/api/projects/{self.id}/import",
+                    files={"file": f},
                     params=params,
+                    timeout=(10, 600),
                 )
         else:
             raise TypeError(
                 f'Not supported type provided as "tasks" argument: {type(tasks)}'
             )
-        return response.json()['task_ids']
+        response = response.json()
+
+        if "import" in response:
+            # check import status
+            timeout = 300
+            fibonacci_backoff = [1, 1]
+
+            start_time = time.time()
+
+            while True:
+                import_status = self.make_request(
+                    method="GET",
+                    url=f'/api/projects/{self.id}/imports/{response["import"]}',
+                ).json()
+
+                if import_status["status"] == "completed":
+                    return import_status["task_ids"]
+
+                if import_status["status"] == "failed":
+                    raise LabelStudioException(import_status["error"])
+
+                if time.time() - start_time >= timeout:
+                    raise LabelStudioException("Import timeout")
+
+                time.sleep(fibonacci_backoff[0])
+                fibonacci_backoff = [
+                    fibonacci_backoff[1],
+                    fibonacci_backoff[0] + fibonacci_backoff[1],
+                ]
+
+        return response["task_ids"]
 
     def export_tasks(
         self,
-        export_type: str = 'JSON',
+        export_type: str = "JSON",
         download_all_tasks: bool = False,
         download_resources: bool = False,
         ids: Optional[List[int]] = None,
@@ -558,19 +593,19 @@ class Project(Client):
 
         """
         params = {
-            'exportType': export_type,
-            'download_all_tasks': download_all_tasks,
-            'download_resources': download_resources,
+            "exportType": export_type,
+            "download_all_tasks": download_all_tasks,
+            "download_resources": download_resources,
         }
         if ids:
-            params['ids'] = ids
+            params["ids"] = ids
         response = self.make_request(
-            method='GET', url=f'/api/projects/{self.id}/export', params=params
+            method="GET", url=f"/api/projects/{self.id}/export", params=params
         )
         if export_location is None:
-            if 'JSON' not in export_type.upper():
+            if "JSON" not in export_type.upper():
                 raise ValueError(
-                    f'{export_type} export type requires an export location to be specified'
+                    f"{export_type} export type requires an export location to be specified"
                 )
             return response.json()
 
@@ -589,7 +624,7 @@ class Project(Client):
 
     def set_params(self, **kwargs):
         """Low level function to set project parameters."""
-        response = self.make_request('PATCH', f'/api/projects/{self.id}', json=kwargs)
+        response = self.make_request("PATCH", f"/api/projects/{self.id}", json=kwargs)
         assert response.status_code == 200
 
     def set_sampling(self, sampling: ProjectSampling):
@@ -670,7 +705,8 @@ class Project(Client):
 
         page = 1
         result = []
-        while True:
+        data = {}
+        while not data.get("end_pagination"):
             try:
                 data = self.get_paginated_tasks(
                     filters=filters,
@@ -681,11 +717,10 @@ class Project(Client):
                     page=page,
                     page_size=100,
                 )
-                result += data['tasks']
+                result += data["tasks"]
                 page += 1
-            # we'll get 404 from API on empty page
             except LabelStudioException as e:
-                logger.debug(f'End of pagination: {e}')
+                logger.debug(f"Error during pagination: {e}")
                 break
         return result
 
@@ -696,7 +731,7 @@ class Project(Client):
         view_id=None,
         selected_ids=None,
         page: int = 1,
-        page_size: int = -1,
+        page_size: int = 100,
         only_ids: bool = False,
         resolve_uri: bool = True,
     ):
@@ -734,7 +769,7 @@ class Project(Client):
         page: int
             Page. Default is 1.
         page_size: int
-            Page size. Default is -1, to retrieve all tasks in the project.
+            Page size. Default is 100, to retrieve all tasks in the project you can use get_tasks().
         only_ids: bool
             If true, return only task IDs
         resolve_uri: bool
@@ -764,46 +799,56 @@ class Project(Client):
 
         """
         query = {
-            'filters': filters,
-            'ordering': ordering or [],
-            'selectedItems': {'all': False, 'included': selected_ids}
-            if selected_ids
-            else {'all': True, "excluded": []},
+            "filters": filters,
+            "ordering": ordering or [],
+            "selectedItems": (
+                {"all": False, "included": selected_ids}
+                if selected_ids
+                else {"all": True, "excluded": []}
+            ),
         }
         params = {
-            'project': self.id,
-            'page': page,
-            'page_size': page_size,
-            'view': view_id,
-            'query': json.dumps(query),
-            'fields': 'all',
-            'resolve_uri': resolve_uri,
+            "project": self.id,
+            "page": page,
+            "page_size": page_size,
+            "view": view_id,
+            "query": json.dumps(query),
+            "fields": "all",
+            "resolve_uri": resolve_uri,
         }
         if only_ids:
-            params['include'] = 'id'
+            params["include"] = "id"
 
-        try:
-            response = self.make_request('GET', '/api/tasks', params)
-        except HTTPError as e:
-            raise LabelStudioException(f'Error loading tasks: {e}')
+        response = self.make_request(
+            "GET", "/api/tasks", params, raise_exceptions=False
+        )
+        # we'll get 404 from API on empty page
+        if response.status_code == 404:
+            return {"tasks": [], "end_pagination": True}
+        elif response.status_code != 200:
+            self.log_response_error(response)
+            try:
+                response.raise_for_status()
+            except HTTPError as e:
+                raise LabelStudioException(f"Error loading tasks: {e}")
 
         data = response.json()
-        tasks = data['tasks']
+        tasks = data["tasks"]
         if only_ids:
-            data['tasks'] = [task['id'] for task in tasks]
+            data["tasks"] = [task["id"] for task in tasks]
 
         return data
 
     def get_tasks_ids(self, *args, **kwargs):
         """Same as `label_studio_sdk.project.Project.get_tasks()` but returns only task IDs."""
-        kwargs['only_ids'] = True
+        kwargs["only_ids"] = True
         return self.get_tasks(*args, **kwargs)
 
     def get_paginated_tasks_ids(self, *args, **kwargs):
         """Same as `label_studio_sdk.project.Project.get_paginated_tasks()` but returns
         only task IDs.
         """
-        kwargs['only_ids'] = True
+        kwargs["only_ids"] = True
         return self.get_paginated_tasks(*args, **kwargs)
 
     def get_views(self):
@@ -824,10 +869,10 @@ class Project(Client):
         data: dict
             Filters, orderings and other visual settings
         """
-        response = self.make_request('GET', f'/api/dm/views?project={self.id}')
+        response = self.make_request("GET", f"/api/dm/views?project={self.id}")
         return response.json()
 
-    def create_view(self, filters, ordering=None, title='Tasks'):
+    def create_view(self, filters, ordering=None, title="Tasks"):
         """Create view
 
         Parameters
@@ -848,10 +893,10 @@ class Project(Client):
 
         """
         data = {
-            'project': self.id,
-            'data': {'title': title, 'ordering': ordering, 'filters': filters},
+            "project": self.id,
+            "data": {"title": title, "ordering": ordering, "filters": filters},
         }
-        response = self.make_request('POST', '/api/dm/views', json=data)
+        response = self.make_request("POST", "/api/dm/views", json=data)
         return response.json()
 
     @property
@@ -880,13 +925,13 @@ class Project(Client):
         """
         return self.get_tasks(
             filters={
-                'conjunction': 'and',
-                'items': [
+                "conjunction": "and",
+                "items": [
                     {
-                        'filter': 'filter:tasks:completed_at',
-                        'operator': 'empty',
-                        'value': False,
-                        'type': 'Datetime',
+                        "filter": "filter:tasks:completed_at",
+                        "operator": "empty",
+                        "value": False,
+                        "type": "Datetime",
                     }
                 ],
             },
@@ -921,13 +966,13 @@ class Project(Client):
         """
         return self.get_tasks(
             filters={
-                'conjunction': 'and',
-                'items': [
+                "conjunction": "and",
+                "items": [
                     {
-                        'filter': 'filter:tasks:completed_at',
-                        'operator': 'empty',
-                        'value': True,
-                        'type': 'Datetime',
+                        "filter": "filter:tasks:completed_at",
+                        "operator": "empty",
+                        "value": True,
+                        "type": "Datetime",
                     }
                 ],
             },
@@ -987,7 +1032,7 @@ class Project(Client):
             Uploaded file used as data source for this task
         ```
         """
-        response = self.make_request('GET', f'/api/tasks/{task_id}')
+        response = self.make_request("GET", f"/api/tasks/{task_id}")
         return response.json()
 
     def update_task(self, task_id, **kwargs):
@@ -1006,7 +1051,7 @@ class Project(Client):
             Dict with updated task
 
         """
-        response = self.make_request('PATCH', f'/api/tasks/{task_id}', json=kwargs)
+        response = self.make_request("PATCH", f"/api/tasks/{task_id}", json=kwargs)
         response.raise_for_status()
         return response.json()
 
@@ -1060,11 +1105,13 @@ class Project(Client):
         model_version: str
             Any string identifying your model
         """
-        data = {'task': task_id, 'result': result, 'score': score}
+        data = {"task": task_id, "result": result, "score": score}
         if model_version is not None:
             data['model_version'] = model_version
-        response = self.make_request('POST', '/api/predictions', json=data)
-        return response.json()
+        response = self.make_request('POST', "/api/predictions", json=data)
+        json = response.json()
+        logger.debug(f'Response: {json}')
+        return json
 
     def create_predictions(self, predictions):
         """Bulk create predictions for tasks. See <a href="https://labelstud.io/guide/predictions.html">more
@@ -1077,7 +1124,7 @@ class Project(Client):
             Label Studio JSON format as for annotations</a>.
         """
         response = self.make_request(
-            'POST', f'/api/projects/{self.id}/import/predictions', json=predictions
+            "POST", f"/api/projects/{self.id}/import/predictions", json=predictions
         )
         return response.json()
 
@@ -1096,18 +1143,35 @@ class Project(Client):
 
         """
         payload = {
-            'filters': {'conjunction': 'and', 'items': []},
-            'model_version': model_versions,
-            'ordering': [],
-            'project': self.id,
-            'selectedItems': {'all': True, 'excluded': []},
+            "filters": {"conjunction": "and", "items": []},
+            "model_version": model_versions,
+            "ordering": [],
+            "project": self.id,
+            "selectedItems": {"all": True, "excluded": []},
         }
         response = self.make_request(
-            'POST',
-            '/api/dm/actions',
-            params={'id': 'predictions_to_annotations', 'project': self.id},
+            "POST",
+            "/api/dm/actions",
+            params={"id": "predictions_to_annotations", "project": self.id},
             json=payload,
         )
+        return response.json()
+
+    def list_annotations(self, task_id: int) -> List:
+        """List all annotations for a task.
+
+        Parameters
+        ----------
+        task_id: int
+            Task ID
+
+        Returns
+        -------
+        list of dict:
+            List of annotations objects
+        """
+        response = self.make_request("GET", f"/api/tasks/{task_id}/annotations")
+        response.raise_for_status()
         return response.json()
 
     def create_annotation(self, task_id: int, **kwargs) -> Dict:
@@ -1128,8 +1192,25 @@ class Project(Client):
 
         """
         response = self.make_request(
-            'POST', f'/api/tasks/{task_id}/annotations/', json=kwargs
+            "POST", f"/api/tasks/{task_id}/annotations/", json=kwargs
         )
+        response.raise_for_status()
+        return response.json()
+
+    def get_annotation(self, annotation_id: int) -> dict:
+        """Retrieve a specific annotation for a task using the annotation ID.
+
+        Parameters
+        ----------
+        annotation_id: int
+            A unique integer value identifying this annotation.
+
+        Returns
+        ----------
+        dict
+            Retreived annotation object
+        """
+        response = self.make_request("GET", f"/api/annotations/{annotation_id}")
         response.raise_for_status()
         return response.json()
 
@@ -1153,10 +1234,28 @@ class Project(Client):
 
         """
         response = self.make_request(
-            'PATCH', f'/api/annotations/{annotation_id}', json=kwargs
+            "PATCH", f"/api/annotations/{annotation_id}", json=kwargs
         )
         response.raise_for_status()
         return response.json()
+
+    def delete_annotation(self, annotation_id: int) -> int:
+        """Delete an annotation using the annotation ID. This action can't be undone!
+
+        Parameters
+        ----------
+        annotation_id: int
+            A unique integer value identifying this annotation.
+
+        Returns
+        ----------
+        int
+            Status code for operation
+
+        """
+        response = self.make_request("DELETE", f"/api/annotations/{annotation_id}")
+        response.raise_for_status()
+        return response.status_code
 
     def get_predictions_coverage(self):
         """Prediction coverage stats for all model versions for the project.
@@ -1176,7 +1275,7 @@ class Project(Client):
         """
         model_versions = self.get_model_versions()
         params = self.get_params()
-        tasks_number = params['task_number']
+        tasks_number = params["task_number"]
         coverage = {
             model_version: count / tasks_number
             for model_version, count in model_versions.items()
@@ -1198,8 +1297,8 @@ class Project(Client):
         google_application_credentials: Optional[str] = None,
         presign: Optional[bool] = True,
         presign_ttl: Optional[int] = 1,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
+        title: Optional[str] = "",
+        description: Optional[str] = "",
     ):
         """Connect a Google Cloud Storage (GCS) bucket to Label Studio to use as source storage and import tasks.
 
@@ -1241,23 +1340,25 @@ class Project(Client):
             Number of tasks synced in the last sync
 
         """
-        if os.path.isfile(google_application_credentials):
+        if google_application_credentials and os.path.isfile(
+            google_application_credentials
+        ):
             with open(google_application_credentials) as f:
                 google_application_credentials = f.read()
 
         payload = {
-            'bucket': bucket,
-            'project': self.id,
-            'prefix': prefix,
-            'regex_filter': regex_filter,
-            'use_blob_urls': use_blob_urls,
-            'google_application_credentials': google_application_credentials,
-            'presign': presign,
-            'presign_ttl': presign_ttl,
-            'title': title,
-            'description': description,
+            "bucket": bucket,
+            "project": self.id,
+            "prefix": prefix,
+            "regex_filter": regex_filter,
+            "use_blob_urls": use_blob_urls,
+            "google_application_credentials": google_application_credentials,
+            "presign": presign,
+            "presign_ttl": presign_ttl,
+            "title": title,
+            "description": description,
         }
-        response = self.make_request('POST', '/api/storages/gcs', json=payload)
+        response = self.make_request("POST", "/api/storages/gcs", json=payload)
         return response.json()
 
     def connect_google_export_storage(
@@ -1265,8 +1366,8 @@ class Project(Client):
         bucket: str,
         prefix: Optional[str] = None,
         google_application_credentials: Optional[str] = None,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
+        title: Optional[str] = "",
+        description: Optional[str] = "",
         can_delete_objects: bool = False,
     ):
         """Connect a Google Cloud Storage (GCS) bucket to Label Studio to use as target storage and export tasks.
@@ -1308,15 +1409,15 @@ class Project(Client):
                 google_application_credentials = f.read()
 
         payload = {
-            'bucket': bucket,
-            'prefix': prefix,
-            'google_application_credentials': google_application_credentials,
-            'title': title,
-            'description': description,
-            'can_delete_objects': can_delete_objects,
-            'project': self.id,
+            "bucket": bucket,
+            "prefix": prefix,
+            "google_application_credentials": google_application_credentials,
+            "title": title,
+            "description": description,
+            "can_delete_objects": can_delete_objects,
+            "project": self.id,
         }
-        response = self.make_request('POST', '/api/storages/export/gcs', json=payload)
+        response = self.make_request("POST", "/api/storages/export/gcs", json=payload)
         return response.json()
 
     def connect_s3_import_storage(
@@ -1327,8 +1428,8 @@ class Project(Client):
         use_blob_urls: Optional[bool] = True,
         presign: Optional[bool] = True,
         presign_ttl: Optional[int] = 1,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
+        title: Optional[str] = "",
+        description: Optional[str] = "",
         aws_access_key_id: Optional[str] = None,
         aws_secret_access_key: Optional[str] = None,
         aws_session_token: Optional[str] = None,
@@ -1386,31 +1487,31 @@ class Project(Client):
             Number of tasks synced in the last sync
         """
         payload = {
-            'bucket': bucket,
-            'prefix': prefix,
-            'regex_filter': regex_filter,
-            'use_blob_urls': use_blob_urls,
-            'aws_access_key_id': aws_access_key_id,
-            'aws_secret_access_key': aws_secret_access_key,
-            'aws_session_token': aws_session_token,
-            'region_name': region_name,
-            's3_endpoint': s3_endpoint,
-            'presign': presign,
-            'presign_ttl': presign_ttl,
-            'title': title,
-            'description': description,
-            'project': self.id,
-            'recursive_scan': recursive_scan,
+            "bucket": bucket,
+            "prefix": prefix,
+            "regex_filter": regex_filter,
+            "use_blob_urls": use_blob_urls,
+            "aws_access_key_id": aws_access_key_id,
+            "aws_secret_access_key": aws_secret_access_key,
+            "aws_session_token": aws_session_token,
+            "region_name": region_name,
+            "s3_endpoint": s3_endpoint,
+            "presign": presign,
+            "presign_ttl": presign_ttl,
+            "title": title,
+            "description": description,
+            "project": self.id,
+            "recursive_scan": recursive_scan,
         }
-        response = self.make_request('POST', '/api/storages/s3', json=payload)
+        response = self.make_request("POST", "/api/storages/s3", json=payload)
         return response.json()
 
     def connect_s3_export_storage(
         self,
         bucket: str,
         prefix: Optional[str] = None,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
+        title: Optional[str] = "",
+        description: Optional[str] = "",
         aws_access_key_id: Optional[str] = None,
         aws_secret_access_key: Optional[str] = None,
         aws_session_token: Optional[str] = None,
@@ -1461,19 +1562,19 @@ class Project(Client):
         """
 
         payload = {
-            'bucket': bucket,
-            'prefix': prefix,
-            'aws_access_key_id': aws_access_key_id,
-            'aws_secret_access_key': aws_secret_access_key,
-            'aws_session_token': aws_session_token,
-            'region_name': region_name,
-            's3_endpoint': s3_endpoint,
-            'title': title,
-            'description': description,
-            'can_delete_objects': can_delete_objects,
-            'project': self.id,
+            "bucket": bucket,
+            "prefix": prefix,
+            "aws_access_key_id": aws_access_key_id,
+            "aws_secret_access_key": aws_secret_access_key,
+            "aws_session_token": aws_session_token,
+            "region_name": region_name,
+            "s3_endpoint": s3_endpoint,
+            "title": title,
+            "description": description,
+            "can_delete_objects": can_delete_objects,
+            "project": self.id,
         }
-        response = self.make_request('POST', '/api/storages/export/s3', json=payload)
+        response = self.make_request("POST", "/api/storages/export/s3", json=payload)
         return response.json()
 
     def connect_azure_import_storage(
@@ -1484,8 +1585,8 @@ class Project(Client):
         use_blob_urls: Optional[bool] = True,
         presign: Optional[bool] = True,
         presign_ttl: Optional[int] = 1,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
+        title: Optional[str] = "",
+        description: Optional[str] = "",
         account_name: Optional[str] = None,
         account_key: Optional[str] = None,
     ):
@@ -1531,27 +1632,27 @@ class Project(Client):
             Number of tasks synced in the last sync
         """
         payload = {
-            'container': container,
-            'prefix': prefix,
-            'regex_filter': regex_filter,
-            'use_blob_urls': use_blob_urls,
-            'account_name': account_name,
-            'account_key': account_key,
-            'presign': presign,
-            'presign_ttl': presign_ttl,
-            'title': title,
-            'description': description,
-            'project': self.id,
+            "container": container,
+            "prefix": prefix,
+            "regex_filter": regex_filter,
+            "use_blob_urls": use_blob_urls,
+            "account_name": account_name,
+            "account_key": account_key,
+            "presign": presign,
+            "presign_ttl": presign_ttl,
+            "title": title,
+            "description": description,
+            "project": self.id,
         }
-        response = self.make_request('POST', '/api/storages/azure', json=payload)
+        response = self.make_request("POST", "/api/storages/azure", json=payload)
         return response.json()
 
     def connect_azure_export_storage(
         self,
         container: str,
         prefix: Optional[str] = None,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
+        title: Optional[str] = "",
+        description: Optional[str] = "",
         account_name: Optional[str] = None,
         account_key: Optional[str] = None,
         can_delete_objects: bool = False,
@@ -1592,16 +1693,16 @@ class Project(Client):
             Number of tasks synced in the last sync
         """
         payload = {
-            'container': container,
-            'prefix': prefix,
-            'account_name': account_name,
-            'account_key': account_key,
-            'title': title,
-            'description': description,
-            'can_delete_objects': can_delete_objects,
-            'project': self.id,
+            "container": container,
+            "prefix": prefix,
+            "account_name": account_name,
+            "account_key": account_key,
+            "title": title,
+            "description": description,
+            "can_delete_objects": can_delete_objects,
+            "project": self.id,
         }
-        response = self.make_request('POST', '/api/storages/export/azure', json=payload)
+        response = self.make_request("POST", "/api/storages/export/azure", json=payload)
         return response.json()
 
     def connect_local_import_storage(
@@ -1609,8 +1710,8 @@ class Project(Client):
         local_store_path: [str],
         regex_filter: Optional[str] = None,
         use_blob_urls: Optional[bool] = True,
-        title: Optional[str] = '',
-        description: Optional[str] = '',
+        title: Optional[str] = "",
+        description: Optional[str] = "",
     ):
         """Connect a Local storage to Label Studio to use as source storage and import tasks.
         Parameters
@@ -1640,34 +1741,34 @@ class Project(Client):
         last_sync_count: int
             Number of tasks synced in the last sync
         """
-        if 'LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT' not in os.environ:
+        if "LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT" not in os.environ:
             raise ValueError(
-                'To use connect_local_import_storage() you should set '
-                'LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT environment variable, '
-                'read more: https://labelstud.io/guide/storage.html#Prerequisites-2'
+                "To use connect_local_import_storage() you should set "
+                "LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT environment variable, "
+                "read more: https://labelstud.io/guide/storage.html#Prerequisites-2"
             )
-        root = os.environ['LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT']
+        root = os.environ["LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT"]
 
         if not os.path.isdir(local_store_path):
-            raise ValueError(f'{local_store_path} is not a directory')
+            raise ValueError(f"{local_store_path} is not a directory")
         if (Path(root) in Path(local_store_path).parents) is False:
             raise ValueError(
-                f'{str(Path(root))} is not presented in local_store_path parents: '
-                f'{str(Path(local_store_path).parents)}'
+                f"{str(Path(root))} is not presented in local_store_path parents: "
+                f"{str(Path(local_store_path).parents)}"
             )
 
         payload = {
-            'regex_filter': regex_filter,
-            'use_blob_urls': use_blob_urls,
-            'path': local_store_path,
-            'presign': False,
-            'presign_ttl': 1,
-            'title': title,
-            'description': description,
-            'project': self.id,
+            "regex_filter": regex_filter,
+            "use_blob_urls": use_blob_urls,
+            "path": local_store_path,
+            "presign": False,
+            "presign_ttl": 1,
+            "title": title,
+            "description": description,
+            "project": self.id,
         }
         response = self.make_request(
-            'POST', f'/api/storages/localfiles?project={self.id}', json=payload
+            "POST", f"/api/storages/localfiles?project={self.id}", json=payload
         )
         return response.json()
 
@@ -1701,8 +1802,8 @@ class Project(Client):
         list[dict]
             List of dicts with counter of created assignments
         """
-        assert len(users) > 0, 'Users list is empty.'
-        assert len(users) >= overlap, 'Overlap is more than number of users.'
+        assert len(users) > 0, "Users list is empty."
+        assert len(users) >= overlap, "Overlap is more than number of users."
         # check if users are int and not User objects
         if isinstance(users[0], int):
             # get users from project
@@ -1712,7 +1813,7 @@ class Project(Client):
         final_results = []
         # Get tasks to assign
         tasks = self.get_tasks(view_id=view_id, only_ids=True)
-        assert len(tasks) > 0, 'Tasks list is empty.'
+        assert len(tasks) > 0, "Tasks list is empty."
         # Choice fraction of tasks
         if fraction != 1.0:
             k = int(len(tasks) * fraction)
@@ -1850,7 +1951,7 @@ class Project(Client):
         finished_at: str
             Finished time
         """
-        response = self.make_request('GET', f'/api/projects/{self.id}/exports')
+        response = self.make_request("GET", f"/api/projects/{self.id}/exports")
         return response.json()
 
     def export_snapshot_create(
@@ -1876,9 +1977,9 @@ class Project(Client):
             Task filter options, use {"view": tab_id} to apply filter from this tab,
             <a href="https://api.labelstud.io/#operation/api_projects_exports_create">check the API parameters for more details</a>
         serialization_options_drafts: bool
-            Expand drafts or include only ID
+            Expand drafts (False) or include only ID (True)
         serialization_options_predictions: bool
-            Expand predictions or include only ID
+            Expand predictions (False) or include only ID (True)
         serialization_options_annotations__completed_by: bool
             Expand user that completed_by (False) or include only ID (True)
         annotation_filter_options_usual: bool
@@ -1927,8 +2028,8 @@ class Project(Client):
             },
         }
         response = self.make_request(
-            'POST',
-            f'/api/projects/{self.id}/exports?interpolate_key_frames={interpolate_key_frames}',
+            "POST",
+            f"/api/projects/{self.id}/exports?interpolate_key_frames={interpolate_key_frames}",
             json=payload,
         )
         return response.json()
@@ -1959,12 +2060,12 @@ class Project(Client):
             Finished time
         """
         response = self.make_request(
-            'GET', f'/api/projects/{self.id}/exports/{export_id}'
+            "GET", f"/api/projects/{self.id}/exports/{export_id}"
         )
         return ExportSnapshotStatus(response.json())
 
     def export_snapshot_download(
-        self, export_id: int, export_type: str = 'JSON', path: str = "."
+        self, export_id: int, export_type: str = "JSON", path: str = "."
     ) -> (int, str):
         """
         Download file with export snapshot in provided format
@@ -1984,8 +2085,8 @@ class Project(Client):
         Status code for operation and downloaded filename
         """
         response = self.make_request(
-            'GET',
-            f'/api/projects/{self.id}/exports/{export_id}/download?exportType={export_type}',
+            "GET",
+            f"/api/projects/{self.id}/exports/{export_id}/download?exportType={export_type}",
         )
         filename = None
         if response.status_code == 200:
@@ -1994,8 +2095,8 @@ class Project(Client):
                 filename = content_disposition.split("filename=")[-1].strip("\"'")
                 filename = os.path.basename(filename)
             else:
-                raise LabelStudioException('No filename in response')
-            with open(os.path.join(path, filename), 'wb') as f:
+                raise LabelStudioException("No filename in response")
+            with open(os.path.join(path, filename), "wb") as f:
                 for chk in response:
                     f.write(chk)
         return response.status_code, filename
@@ -2013,7 +2114,7 @@ class Project(Client):
         Status code for operation
         """
         response = self.make_request(
-            'DELETE', f'/api/projects/{self.id}/exports/{export_id}'
+            "DELETE", f"/api/projects/{self.id}/exports/{export_id}"
         )
         return response.status_code
 
@@ -2037,10 +2138,10 @@ class Project(Client):
         filenames = []
         if tasks:
             for task in tasks:
-                for key in task['data']:
+                for key in task["data"]:
                     try:
                         filename = get_local_path(
-                            task['data'][key],
+                            task["data"][key],
                             access_token=self.api_key,
                             hostname=self.url,
                         )
@@ -2057,7 +2158,7 @@ class Project(Client):
         task_id: int
             Task id.
         """
-        assert isinstance(task_id, int), 'task_id should be int'
+        assert isinstance(task_id, int), "task_id should be int"
         return self.make_request("DELETE", f"/api/tasks/{task_id}")
 
     def delete_tasks(self, task_ids: list) -> Response:
@@ -2068,7 +2169,7 @@ class Project(Client):
         task_ids: list of int
             Task ids.
         """
-        assert isinstance(task_ids, list), 'task_ids should be list of int'
+        assert isinstance(task_ids, list), "task_ids should be list of int"
         if not task_ids:  # avoid deletion of all tasks when task_ids = []
             return Response()
         payload = {
@@ -2089,7 +2190,7 @@ class Project(Client):
         """
         assert (
             isinstance(excluded_ids, list) or excluded_ids is None
-        ), 'excluded_ids should be list of int or None'
+        ), "excluded_ids should be list of int or None"
         if excluded_ids is None:
             excluded_ids = []
         payload = {

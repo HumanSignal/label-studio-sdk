@@ -17,8 +17,8 @@ If you want to take action not supported natively by the SDK, you can [call the 
 This is the first release of the Label Studio SDK. It supports Label Studio Enterprise, Label Studio Teams, and Label Studio Community.
 
 - **Find a bug?** [Create a GitHub issue](https://github.com/heartexlabs/label-studio-sdk/issues)!
-- **Have a question?** [Join the Slack Community](https://slack.labelstudio.heartex.com/?source=github-sdk)!
-- **Want to contribute?** [See the contributing guide](https://github.com/heartexlabs/label-studio-sdk/CONTRIBUTING.md)
+- **Have a question?** [Join the Slack Community](https://slack.labelstud.io/?source=github-sdk)!
+- **Want to contribute?** [See the contributing guide](CONTRIBUTING.md)
 
 ## Quickstart
 To start using the SDK in your machine learning and data science projects and pipelines, do the following:
@@ -43,6 +43,10 @@ The Label Studio SDK includes the following:
 
 For all the details, see the [reference documentation](https://labelstud.io/sdk) or [review the code directly](https://github.com/heartexlabs/label-studio-sdk/tree/master/label_studio_sdk). 
 
+## Error logging
+
+To see error logs, you can use `stderr` (we use `logger.error()` for error output). If you use console to run SDK commands, you will see all errors there. 
+
 ## Contribute to the SDK
 
 If you want to extend the SDK:
@@ -53,15 +57,4 @@ If you want to extend the SDK:
 
 ## Examples
 
-These end-to-end examples demonstrate how to use the SDK for specific use cases.
-
-### Active learning example
-
-If you want to write a Python script to set up an active learning workflow for labeling and training, review this [working active learning example as a Jupyter notebook](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/active_learning/active_learning.ipynb) or start with the [active learning python script example](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/active_learning/active_learning.py).
-
-### Weak supervision example
-
-If you want to write a Python script to perform programmatic labeling and use weak supervision to correct the noisy labels, refer to this [working weak supervision example as a Jupyter notebook](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/weak_supervision/weak_supervision.ipynb) or start with the [weak supervision python script example](https://github.com/heartexlabs/label-studio-sdk/blob/master/examples/weak_supervision/weak_supervision.py).
-
-<img src="https://labelstud.io/images/opossum/other/5.svg" width="400px">
-
+Please check [the examples folder](examples), there are many of very useful codes that you can learn from. 
