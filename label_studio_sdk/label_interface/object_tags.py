@@ -6,7 +6,6 @@ import re
 import xml.etree.ElementTree
 from urllib.parse import urlencode
 from typing import Optional
-import numpy as np
 import pandas as pd
 
 from .base import LabelStudioTag

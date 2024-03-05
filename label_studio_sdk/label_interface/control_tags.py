@@ -1,10 +1,13 @@
 """
 """
+import xml.etree.ElementTree
 from typing import Type, Dict, Optional, List, Tuple, Any, Union
 from pydantic import BaseModel, confloat
 
 from .base import LabelStudioTag
 from .region import Region
+from .object_tags import ObjectTag
+
 
 _NOT_CONTROL_TAGS = {
     'Filter',
