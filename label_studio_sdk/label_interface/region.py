@@ -36,3 +36,8 @@ class Region(BaseModel):
             # TODO This needs to be improved
             "value": self.value.dict()
         }
+
+    def to_json(self):
+        """
+        """
+        return json.dumps(self._dict())

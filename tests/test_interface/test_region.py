@@ -17,7 +17,7 @@ def test_region():
     rect = lpi.get_control(c.FROM_NAME)
     img = rect.get_object()
     r = rect.label(x=XVAL, y=YVAL, width=WVAL, height=HVAL, rotation=RVAL)
-    d = dict(r)
+    d = r._dict()
     
     assert d["from_name"] == c.FROM_NAME
     assert d["to_name"] == c.TO_NAME
@@ -32,3 +32,4 @@ def test_region():
     
     # out = r.dict()
     
+print(test_region())

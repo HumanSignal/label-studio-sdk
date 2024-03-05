@@ -141,7 +141,7 @@ def test_label_with_choices():
     conf = LabelInterface(c.SIMPLE_CONF)
     region: Region = conf.get_control().label(label=c.LABEL1)
 
-    rjs = region.json()
+    rjs = region.to_json()
     assert isinstance(rjs, str)
 
     rpy = json.loads(rjs)
