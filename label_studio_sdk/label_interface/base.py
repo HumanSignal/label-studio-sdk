@@ -6,6 +6,13 @@ from typing import Dict, Optional, List, Tuple, Any, Callable
 class LabelStudioTag(BaseModel):
     """
     Base class for a LabelStudio Tag
+
+    Attributes:
+    -----------
+    attr: Optional[Dict]
+        A dictionary of attributes for the tag
+    tag: Optional[str]
+        The tag name
     """
     attr: Optional[Dict]
     tag: Optional[str]
@@ -17,6 +24,25 @@ class LabelStudioTag(BaseModel):
               to_name: Optional[str] = None,
               to_name_filter_fn: Optional[Callable] = None) -> bool:
         """
+        This method checks if the current instance of LabelStudioTag matches the provided parameters.
+
+        Parameters:
+        -----------
+        tag_type : str
+            The type of the tag to match. It can be a string or a tuple of strings.
+        name : Optional[str]
+            The name of the tag to match. If provided, it should match the name of the current instance.
+        name_filter_fn : Optional[Callable]
+            A function to filter the name of the tag. If provided, the function should return True for a match.
+        to_name : Optional[str]
+            The 'to_name' attribute of the tag to match. If provided, it should match the 'to_name' of the current instance.
+        to_name_filter_fn : Optional[Callable]
+            A function to filter the 'to_name' of the tag. If provided, the function should return True for a match.
+
+        Returns:
+        --------
+        bool
+            True if the current instance matches the provided parameters, False otherwise.
         """
         if isinstance(tag_type, str):
             tag_type = tag_type.lower()

@@ -48,6 +48,23 @@ def get_tag_class(name):
 class ControlTag(LabelStudioTag):
     """
     Class that represents a ControlTag in Label Studio
+
+    Attributes:
+    -----------
+    name : Optional[str]
+        The name of the tag
+    to_name : Optional[List[str]]
+        The name of the object the tag maps to
+    conditionals : Optional[Dict[str, Any]]
+        Conditional attributes
+    dynamic_value : Optional[bool]
+        A flag to indicate if the value is dynamic
+    objects : Optional[Any]
+        The object tag that the control tag maps to
+    labels : Optional[Any]
+        The labels for the control tag
+    labels_attrs : Optional[Any]
+        The labels attributes for the control tag
     """
     name: Optional[str] = None
     to_name: Optional[List[str]] = None
@@ -58,9 +75,19 @@ class ControlTag(LabelStudioTag):
     labels_attrs: Optional[Any] = None
 
     @classmethod
-    def validate_node(cls, tag) -> bool:
+    def validate_node(cls, tag: xml.etree.ElementTree.Element) -> bool:
         """
         Naive check if tag is a control tag
+
+        Parameters:
+        -----------
+        tag : xml.etree.ElementTree.Element
+            The tag to validate
+
+        Returns:
+        --------
+        bool
+            True if tag is a control tag, False otherwise
         """
         return bool(
             tag.attrib.get('name')
@@ -69,9 +96,19 @@ class ControlTag(LabelStudioTag):
         )
 
     @classmethod
-    def parse_node(cls, tag):
+    def parse_node(cls, tag: xml.etree.ElementTree.Element) -> "ControlTag":
         """
         Parse tag into a tag info
+
+        Parameters:
+        -----------
+        tag : xml.etree.ElementTree.Element
+            The tag to parse
+
+        Returns:
+        --------
+        ControlTag
+            The parsed tag
         """
         tag_class = get_tag_class(tag.tag) or cls
         
@@ -109,12 +146,40 @@ class ControlTag(LabelStudioTag):
     
     def get_object(self, name=None):
         """
+        This method retrieves the object tag that the control tag maps to.
+
+        Parameters:
+        -----------
+        name : Optional[str]
+            The name of the object tag to retrieve. If not provided, the method will return the first object tag.
+
+        Returns:
+        --------
+        Any
+            The object tag that the control tag maps to.
         """
-        return self.get_input(name=name);
-        
+        return self.get_input(name=name)
+
     def get_input(self, name=None):
-        """Returns the object tag that control tag maps to
-        """        
+        """
+        This method retrieves the object tag that the control tag maps to based on the provided name.
+
+        Parameters:
+        -----------
+        name : Optional[str]
+            The name of the object tag to retrieve. If not provided, the method will return the first object tag if there is only one.
+            If there are multiple object tags and no name is provided, an exception will be raised.
+
+        Returns:
+        --------
+        Any
+            The object tag that the control tag maps to.
+
+        Raises:
+        -------
+        Exception
+            If the provided name is not found in the object tags or if there are multiple object tags and no name is provided.
+        """
         if name is not None:
             if name not in self.to_name:
                 raise Exception(f"Object name {name} is not found")
@@ -130,16 +195,34 @@ class ControlTag(LabelStudioTag):
         
     def set_labels_attrs(self, labels_attrs):
         """
+        This method sets the labels attributes for the ControlTag.
+
+        Parameters:
+        -----------
+        labels_attrs : Any
+            The labels attributes to set for the ControlTag.
         """
         self.labels_attrs = labels_attrs
 
-    def set_object(self, tag):
+    def set_object(self, tag: ObjectTag):
         """
+        This method sets the object tag that the control tag maps to.
+
+        Parameters:
+        -----------
+        tag : ObjectTag
+            The object tag to set for the control tag.
         """
-        self.objects = [ tag ]
+        self.set_objects([tag])
         
-    def set_objects(self, objects):
+    def set_objects(self, objects: List[ObjectTag]):
         """
+        This method sets the object tags that the control tag maps to.
+
+        Parameters:
+        -----------
+        objects : List[ObjectTag]
+            The object tags to set for the control tag.
         """
         self.objects = objects
 
@@ -149,8 +232,19 @@ class ControlTag(LabelStudioTag):
         """
         self.labels = labels
 
-    def find_object_by_name(self, name):
+    def find_object_by_name(self, name: str) -> Optional[ObjectTag]:
         """
+        This method finds and returns an object tag with the specified name from the list of object tags.
+
+        Parameters:
+        -----------
+        name : str
+            The name of the object tag to find.
+
+        Returns:
+        --------
+        Optional[ObjectTag]
+            The object tag with the specified name if found, None otherwise.
         """
         for obj in self.objects:
             if obj.name == name:
@@ -176,19 +270,23 @@ class ControlTag(LabelStudioTag):
         return self._validate_labels(value.get(self._label_attr_name))        
     
     def validate_value(self, value: dict) -> bool:
-        """Validate a value of the tag. This method first checks if
-        _label_attr_name is defined. If it is, it calls
-        _validate_value_labels to validate labels of value with the
-        ones defined in the tag. If labels are not valid, it returns
-        False. Then it tries to instantiate self._value_class which is
-        a pydantic definition of the structure of value. If
-        instantiation fails, it returns False, otherwise returns True.
-        
-        :param value: Value to be validated
-        :type value: dict
+        """
+        Given "value" from [annotation result format](https://labelstud.io/guide/task_format),
+        validate if it's a valid value for this control tag.
 
-        :return : True if value is valid; otherwise, False
-        :rtype : bool
+        Parameters:
+        -----------
+        value : dict
+            The value to validate
+            Example:
+            ```python
+            RectangleTag(name="rect", to_name=["img"], tag="rectangle", attr={}).validate_value({"x": 10, "y": 10, "width": 10, "height": 10, "rotation": 10})
+            ```
+
+        Returns:
+        --------
+        bool
+            True if the value is valid, False otherwise
         """
         if hasattr(self, "_label_attr_name"):
             if not self._validate_value_labels(value):
@@ -200,8 +298,27 @@ class ControlTag(LabelStudioTag):
         except Exception as e:
             return False
     
-    def _resolve_to_name(self, to_name):
+    def _resolve_to_name(self, to_name: Optional[str] = None) -> str:
         """
+        This method resolves the name of the object tag that the control tag maps to.
+        If a name is provided and it is found in the control tag, it is returned.
+        If no name is provided and there is only one object tag, its name is returned.
+        If no name is provided and there are multiple object tags, an exception is raised.
+
+        Parameters:
+        -----------
+        to_name : Optional[str]
+            The name of the object tag to resolve. If not provided, the method will return the name of the first object tag if there is only one.
+
+        Returns:
+        --------
+        str
+            The name of the object tag that the control tag maps to.
+
+        Raises:
+        -------
+        Exception
+            If the provided name is not found in the object tags or if there are multiple object tags and no name is provided.
         """
         if to_name:
             if to_name not in self.to_name:
@@ -211,50 +328,103 @@ class ControlTag(LabelStudioTag):
         else:
             if len(self.to_name) > 1:
                 raise Exception("Multiple to_name in control tag, specify to_name in function")
-            
-            return self.to_name[0]        
 
-    def _label_simple(self, to_name=None, *args, **kwargs):
+            return self.to_name[0]
+
+    def _label_simple(self, to_name: Optional[str] = None, *args, **kwargs) -> Region:
         """
-        """        
+        This method creates a new Region object with the specified label applied.
+        It first resolves the name of the object tag that the control tag maps to.
+        Then it finds the object tag with the resolved name.
+        It creates a new instance of the value class with the provided arguments and keyword arguments.
+        Finally, it returns a new Region object with the current control tag, the found object tag, and the created value.
+
+        Parameters:
+        -----------
+        to_name : Optional[str]
+            The name of the object tag to resolve. If not provided, the method will return the name of the first object tag if there is only one.
+        *args : tuple
+            Variable length argument list.
+        **kwargs : dict
+            Arbitrary keyword arguments.
+
+        Returns:
+        --------
+        Region
+            A new Region object with the specified label applied.
+        """
         to_name = self._resolve_to_name(to_name)
         obj = self.find_object_by_name(to_name)
         cls = self._value_class
         value = cls(**kwargs)
-        
+
         return Region(from_tag=self, to_tag=obj, value=value)
         
-    def _label_with_labels(self, label=None, to_name=None, *args, **kwargs):
+    def _label_with_labels(self, label: Union[str, List[str]] = None, to_name: Optional[str] = None, *args, **kwargs) -> Region:
         """
+        This method creates a new Region object with the specified label applied.
+        It first checks if the label is a string and if so, converts it to a list.
+        Then it validates the labels and raises an exception if they are not valid.
+        It adds the labels to the keyword arguments under the attribute name for labels.
+        Finally, it calls the _label_simple method to create and return a new Region object.
+
+        Parameters:
+        -----------
+        label : Union[str, List[str]], optional
+            The label to be applied. If a string is provided, it is converted to a list.
+        to_name : Optional[str], optional
+            The name of the object tag to resolve. If not provided, the method will return the name of the first object tag if there is only one.
+        *args : tuple
+            Variable length argument list.
+        **kwargs : dict
+            Arbitrary keyword arguments.
+
+        Returns:
+        --------
+        Region
+            A new Region object with the specified label applied.
+
+        Raises:
+        -------
+        Exception
+            If the labels are not valid.
         """
         if isinstance(label, str):
             label = [ label ]
 
         if not self._validate_labels(label):
-            raise Exception(f"Using labels not defined in labeling config, possible values: {set(self.labels)}")
+            raise ValueError(f"Using labels not defined in labeling config, possible values: {set(self.labels)}")
 
         kwargs[self._label_attr_name] = label
-        
-        return self._label_simple(to_name=to_name, **kwargs)        
 
-    def label(self, label=None, to_name=None, *args, **kwargs):
-        """This method serves as a general interface for the labeling
-        process. If the `self._label_attr_name` attribute exists in
-        the current object, it labels the object with labels by
-        calling `self._label_with_labels()`. If not, it labels the
-        object simple by calling `self._label_simple()`.
+        return self._label_simple(to_name=to_name, **kwargs)
 
-        :param to_name: The name of the object
-        :type to_name: str, optional
-        :param label: The label to be applied
-        :type label: str or list of strings, optional
+    def label(self, label: Optional[Union[str, List[str]]] = None, to_name: Optional[str] = None, *args, **kwargs) -> Region:
+        """
+        This method creates a new Region object with the specified label applied.
+        If not labels are provided, it creates a new instance of the value class with the provided arguments and keyword arguments.
+        If labels are provided, it creates a new instance of the value class with the provided arguments and keyword arguments and adds the labels to the Region object.
 
-        :return : A new Region object with the specified label applied.
+        Parameters:
+        -----------
+        label : Optional[Union[str, List[str]]]
+            The label to be applied. If a string is provided, it is converted to a list.
+        to_name : Optional[str]
+            The name of the object tag to resolve. If not provided, the method will return the name of the first object tag if there is only one.
+        *args : tuple
+            Variable length argument list.
+        **kwargs : dict
+            Arbitrary keyword arguments.
+
+        Returns:
+        --------
+        Region
+            A new Region object with the specified label applied.
         """
         if hasattr(self, "_label_attr_name"):
             return self._label_with_labels(label=label, to_name=to_name, *args, **kwargs)
         else:
-            return self._label_simple(to_name=to_name, *args, **kwargs)    
+            return self._label_simple(to_name=to_name, *args, **kwargs)
         
     def as_tuple(self):
         """

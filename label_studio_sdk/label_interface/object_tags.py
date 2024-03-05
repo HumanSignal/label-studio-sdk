@@ -1,16 +1,18 @@
 """
 """
-import re
-import os
 import json
+import os
+import re
+import xml.etree.ElementTree
 from urllib.parse import urlencode
+from typing import Optional
+import numpy as np
+import pandas as pd
 
-from typing import Dict, Optional, List, Tuple, Any
 from .base import LabelStudioTag
-from .region import Region
 
 _TAG_TO_CLASS = {
-    "audio":"AudioTag",
+    "audio": "AudioTag",
     "image": "ImageTag",
     "table": "TableTag",
     "text": "TextTag",
@@ -23,10 +25,12 @@ _TAG_TO_CLASS = {
 
 _DATA_EXAMPLES = None
 
+
 def _is_strftime_string(s):
     """simple way to detect strftime format
     """
     return '%' in s
+
 
 def generate_time_series_json(time_column, value_columns, time_format=None):
     """Generate sample for time series
@@ -45,16 +49,17 @@ def generate_time_series_json(time_column, value_columns, time_format=None):
     ts = {time_column: times}
     for value_col in value_columns:
         ts[value_col] = np.random.randn(n).tolist()
-    return ts    
+    return ts
 
-def data_examples(mode, hostname="https://example.com/"):
+
+def data_examples(mode: str = "upload", hostname: str = "http://localhost:8080") -> dict:
     """Data examples for editor preview and task upload examples"""
     global _DATA_EXAMPLES
 
     if _DATA_EXAMPLES is None:
         base_dir = os.path.dirname(os.path.abspath(__file__))
         file_path = os.path.join(base_dir, 'data_examples.json')
-        
+
         with open(file_path, encoding='utf-8') as f:
             _DATA_EXAMPLES = json.load(f)
 
@@ -62,9 +67,10 @@ def data_examples(mode, hostname="https://example.com/"):
         for root in roots:
             for key, value in _DATA_EXAMPLES[root].items():
                 if isinstance(value, str):
-                    _DATA_EXAMPLES[root][key] = value.replace('<HOSTNAME>', hostname) # TODO settings.HOSTNAME
+                    _DATA_EXAMPLES[root][key] = value.replace('<HOSTNAME>', hostname)  # TODO settings.HOSTNAME
 
     return _DATA_EXAMPLES[mode]
+
 
 def get_tag_class(name):
     """
@@ -76,6 +82,13 @@ def get_tag_class(name):
 class ObjectTag(LabelStudioTag):
     """
     Class that represents a ObjectTag in Label Studio
+
+    Attributes:
+    -----------
+    name: Optional[str]
+        The name of the tag
+    value: Optional[str]
+        The value of the tag
     """
     name: Optional[str] = None
     value: Optional[str] = None
@@ -85,17 +98,28 @@ class ObjectTag(LabelStudioTag):
     # self._value_type = value_type
 
     @classmethod
-    def parse_node(cls, tag) -> 'ObjectTag':
+    def parse_node(cls, tag: xml.etree.ElementTree.Element) -> 'ObjectTag':
         """
+        This class method parses a node and returns a ObjectTag object if the node has a name and a value.
+
+        Parameters:
+        -----------
+        tag : xml.etree.ElementTree.Element
+            The node to be parsed.
+
+        Returns:
+        --------
+        ObjectTag
+            A new ObjectTag object with the tag name, attributes, name, and value.
         """
         tag_class = get_tag_class(tag.tag) or cls
-        
+
         return tag_class(tag=tag.tag, attr=tag.attrib,
                          name=tag.attrib.get('name'),
                          value=tag.attrib['value'])
 
     @classmethod
-    def validate_node(cls, tag) -> bool:
+    def validate_node(cls, tag: xml.etree.ElementTree.Element) -> bool:
         """
         Check if tag is input
         """
@@ -103,38 +127,36 @@ class ObjectTag(LabelStudioTag):
 
     @property
     def value_type(self):
-        p = self.attr
-        return p.get('valueType') or p.get('valuetype')
+        return self.attr.get('valueType') or self.attr.get('valuetype')
 
     @property
     def value_name(self):
         """
         """
         # TODO this needs a check for URL
-        return self.value[1:]    
-    
+        return self.value[1:]
+
     @property
     def value_is_variable(self) -> bool:
         """Check if value has variable
         """
         pattern = re.compile(r"^\$[A-Za-z_]+$")
-        return bool(pattern.fullmatch(self.value))    
-    
-    # TODO this should not be here as soon as we cover all the tags
+        return bool(pattern.fullmatch(self.value))
+
+        # TODO this should not be here as soon as we cover all the tags
+
     # and have generate_example in each
     def generate_example_value(self, mode="upload", secure_mode=False):
         """
         """
         examples = data_examples(mode=mode)
         only_urls = secure_mode or self.value_type == 'url'
-        
         if hasattr(self, "_generate_example"):
             return self._generate_example(examples, only_urls=only_urls)
-        
         example_from_field_name = examples.get('$' + self.value, None)
         if example_from_field_name:
             return example_from_field_name
-        
+
         if self.tag.lower().endswith('labels'):
             return examples['Labels']
 
@@ -186,7 +208,7 @@ class TextTag(ObjectTag):
         else:
             return examples.get('TextRaw')
 
-    
+
 class VideoTag(ObjectTag):
     """
     """
@@ -195,13 +217,14 @@ class VideoTag(ObjectTag):
         """
         return examples.get('Video')
 
-    
+
 class HyperTextTag(ObjectTag):
     """
     """
     def _generate_example(self, examples, only_urls=False):
         """
         """
+        examples = data_examples(mode="upload")
         if self.value == 'video':
             return examples.get('$videoHack')
         else:
@@ -214,6 +237,7 @@ class ListTag(ObjectTag):
     def _generate_example(self, examples, only_urls=False):
         """
         """
+        examples = data_examples(mode="upload")
         return examples.get('List')
 
 

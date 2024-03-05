@@ -170,7 +170,20 @@ class LabelInterface():
     ```
     """    
     def __init__(self, config: str, *args, **kwargs):
-        """ """
+        """
+        Create LabelInterface instance from the config string
+        Example:
+        ```
+        label_config = LabelInterface('''
+        <View>
+        <Choices name="sentiment" toName="txt">
+            <Choice value="Positive" />
+            <Choice value="Negative" />
+            <Choice value="Neutral" />
+        </Choices>
+        <Text name="txt" value="$text" />
+        ''')
+        """
         self._config = config
 
         # extract predefined task from the config
