@@ -1,5 +1,6 @@
 """
 """
+
 import xml.etree.ElementTree
 from typing import Dict, Optional, List, Tuple, Any
 from .base import LabelStudioTag
@@ -10,8 +11,7 @@ _LABEL_TAGS = {"Label", "Choice", "Relation"}
 
 
 def _get_parent_control_tag_name(tag, controls):
-    """
-    """
+    """ """
     # Find parental <Choices> tag for nested tags like <Choices><View><View><Choice>...
     parent = tag
     while True:

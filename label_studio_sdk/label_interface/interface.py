@@ -1,5 +1,6 @@
 """
 """
+
 import os
 import copy
 import logging
@@ -149,12 +150,12 @@ def display_count(count: int, type: str) -> Optional[str]:
 class LabelInterface:
     """The LabelInterface class serves as an interface to parse and
     validate labeling configurations, annotations, and predictions
-    within the Label Studio ecosystem. 
-    
-    It is designed to be compatible at the data structure level with 
-    an existing parser widely used within the Label Studio ecosystem. 
-    This ensures that it works seamlessly with most of the existing functions, 
-    either by directly supporting them or by offering re-implemented versions 
+    within the Label Studio ecosystem.
+
+    It is designed to be compatible at the data structure level with
+    an existing parser widely used within the Label Studio ecosystem.
+    This ensures that it works seamlessly with most of the existing functions,
+    either by directly supporting them or by offering re-implemented versions
     through the new interface.
 
     Moreover, the parser adds value by offering functionality to
@@ -174,8 +175,8 @@ class LabelInterface:
     region.as_json()
 
     # returns True
-    li.validate_prediction({ 
-      "model_version": "0.0.1",  
+    li.validate_prediction({
+      "model_version": "0.0.1",
       "score": 0.90,
       "result": [{
           "from_name": "chc",
@@ -227,25 +228,21 @@ class LabelInterface:
 
     @property
     def controls(self):
-        """Returns list of control tags
-        """
+        """Returns list of control tags"""
         return self._controls and self._controls.values()
 
     @property
     def objects(self):
-        """Returns list of object tags
-        """
+        """Returns list of object tags"""
         return self._objects and self._objects.values()
 
     @property
     def labels(self):
-        """Returns list of label tags
-        """
+        """Returns list of label tags"""
         return self._labels and self._labels.values()
 
     def _link_controls(self, controls: Dict, objects: Dict, labels: Dict) -> Dict:
-        """
-        """
+        """ """
         for name, tag in controls.items():
             inputs = []
             for object_tag_name in tag.to_name:
@@ -265,8 +262,7 @@ class LabelInterface:
         return controls
 
     def _get_tag(self, name, tag_store):
-        """
-        """
+        """ """
         if name is not None:
             if name not in tag_store:
                 raise Exception(
@@ -282,14 +278,14 @@ class LabelInterface:
 
     def get_tag(self, name):
         """Method to retrieve the tag object by its name from the current instance.
-    
+
         The method checks if the tag with the provided name exists in
         either `_controls` or `_objects` attributes of the current
         instance.  If a match is found, it returns the tag. If the tag
         is not found an exception is raised.
-    
+
         Args:
-            name (str): Name of the tag to be retrieved. 
+            name (str): Name of the tag to be retrieved.
 
         Returns:
             object: The tag object if it exists in either `_controls` or `_objects`.
@@ -321,8 +317,7 @@ class LabelInterface:
         return self._get_tag(name, self._objects)
 
     def get_output(self, name=None):
-        """Provides an alias for the `get_control` method.
-        """
+        """Provides an alias for the `get_control` method."""
         return self.get_control(name)
 
     def get_control(self, name=None):
@@ -372,7 +367,7 @@ class LabelInterface:
                 searched. Categories include 'objects', 'controls',
                 'inputs' (alias for 'objects'), 'outputs' (alias for
                 'controls'). If not specified, searches both 'objects'
-                and 'controls'.       
+                and 'controls'.
             match_fn (Callable, optional): A function that takes a tag
                 as an input and returns a boolean value indicating
                 whether the tag matches the required condition.
@@ -408,7 +403,7 @@ class LabelInterface:
             Tuple of:
             - Dictionary where keys are control tag names and values are ControlTag instances.
             - Dictionary where keys are object tag names and values are ObjectTag instances.
-            - Dictionary of dictionaries where primary keys are label parent names 
+            - Dictionary of dictionaries where primary keys are label parent names
               and secondary keys are label values and values are LabelTag instances.
             - An XML tree of the configuration.
         """
@@ -439,8 +434,7 @@ class LabelInterface:
 
     @classmethod
     def parse_config_to_json(cls, config_string):
-        """
-        """
+        """ """
         try:
             xml = etree.fromstring(config_string)
         except TypeError:
@@ -454,8 +448,7 @@ class LabelInterface:
         return config
 
     def _schema_validation(self, config_string):
-        """
-        """
+        """ """
         try:
             config = LabelInterface.parse_config_to_json(config_string)
             jsonschema.validate(config, _LABEL_CONFIG_SCHEMA_DATA)
@@ -469,8 +462,7 @@ class LabelInterface:
             raise LabelStudioValidationErrorSentryIgnored(error_message)
 
     def _to_name_validation(self, config_string):
-        """
-        """
+        """ """
         # toName points to existent name
         all_names = re.findall(r'name="([^"]*)"', config_string)
 
@@ -484,8 +476,7 @@ class LabelInterface:
                     )
 
     def _unique_names_validation(self, config_string):
-        """
-        """
+        """ """
         # unique names in config # FIXME: 'name =' (with spaces) won't work
         all_names = re.findall(r'name="([^"]*)"', config_string)
         if len(set(all_names)) != len(all_names):
@@ -512,7 +503,7 @@ class LabelInterface:
             LabelInterface: A deep copy of the current LabelIntreface
             instance with the object tags' value fields populated with
             data from the task.
-        
+
         """
         tree = copy.deepcopy(self)
         for obj in tree.objects:
@@ -523,8 +514,7 @@ class LabelInterface:
 
     @property
     def is_valid(self):
-        """
-        """
+        """ """
         try:
             self.validate()
             return True
@@ -552,13 +542,11 @@ class LabelInterface:
 
     @classmethod
     def validate_with_data(cls, config):
-        """        
-        """
+        """ """
         raise NotImplemented()
 
     def validate_task(self, task: "TaskValue", validate_regions_only=False):
-        """
-        """
+        """ """
         # TODO this might not be always true, and we need to use
         # "strict" param above to be able to configure
 
@@ -597,20 +585,19 @@ class LabelInterface:
         return all(self.validate_region(r) for r in annotation.get(RESULT_KEY))
 
     def validate_prediction(self, prediction):
-        """Same as validate_annotation right now
-        """
+        """Same as validate_annotation right now"""
         return all(self.validate_region(r) for r in prediction.get(RESULT_KEY))
 
     def validate_region(self, region) -> bool:
         """Validates a region from the annotation against the current
         configuration.
-    
+
         The validation checks the following:
         - Both control and object items are present in the labeling configuration.
         - The type of the region matches the control tag name.
         - The 'to_name' in the region data connects to the same tag as in the configuration.
         - The actual value for example in <Labels /> tag is producing start, end, and labels.
-    
+
         If any of these validations fail, the function immediately
         returns False. If all validations pass for a region, it
         returns True.
@@ -648,8 +635,7 @@ class LabelInterface:
     ### Generation
 
     def _sample_task(self, secure_mode=False):
-        """
-        """
+        """ """
         # predefined_task, annotations, predictions = get_task_from_labeling_config(label_config)
         generated_task = self.generate_sample_task(
             mode="editor_preview", secure_mode=secure_mode
@@ -688,8 +674,7 @@ class LabelInterface:
         return task
 
     def generate_sample_annotation(self):
-        """
-        """
+        """ """
         raise NotImplemented()
 
     #####
@@ -722,8 +707,7 @@ class LabelInterface:
     def generate_sample_task_without_check(
         label_config, mode="upload", secure_mode=False
     ):
-        """
-        """
+        """ """
         raise NotImplemented()
 
     @classmethod
@@ -772,8 +756,7 @@ class LabelInterface:
         return c.replace("\n", "").replace("\r", "")
 
     def get_all_control_tag_tuples(label_config):
-        """
-        """
+        """ """
         return [tag.as_tuple() for tag in self.controls]
 
     def get_first_tag_occurence(
@@ -795,7 +778,7 @@ class LabelInterface:
                                               Default is None.
 
         Returns:
-          tuple: (from_name, to_name, value), representing control tag, object tag and input value.        
+          tuple: (from_name, to_name, value), representing control tag, object tag and input value.
         """
 
         for tag in self.controls:
@@ -809,32 +792,27 @@ class LabelInterface:
         )
 
     def get_all_labels(self):
-        """
-        """
+        """ """
         dynamic_values = {c.name: True for c in self.controls if c.dynamic_value}
         return self._labels, dynamic_values
 
     def get_all_object_tag_names(self):
-        """
-        """
+        """ """
         return self._objects.keys()
 
     def extract_data_types(self):
-        """
-        """
+        """ """
         return self._objects
 
     def is_video_object_tracking(self):
-        """
-        """
+        """ """
         match_fn = lambda tag: tag.tag.lower() in _VIDEO_TRACKING_TAGS
         tags = self.find_tags(match_fn=match_fn)
 
         return bool(tags)
 
     def is_type(self, tag_type=None):
-        """
-        """
+        """ """
         raise NotImplemented
 
     # NOTE: you can use validate() instead
@@ -845,8 +823,7 @@ class LabelInterface:
     #     self._to_name_validation(config_string)
 
     def validate_config_using_summary(self, summary, strict=False):
-        """Validate current config using LS Project Summary
-        """
+        """Validate current config using LS Project Summary"""
         # this is a rewrite of project.validate_config function
         # self.validate_label_config(config_string)
         if not self._objects:
@@ -860,8 +837,7 @@ class LabelInterface:
         self.validate_lables_consistency(created_labels, created_labels_drafts)
 
     def validate_lables_consistency(self, created_labels, created_labels_drafts):
-        """
-        """
+        """ """
         # validate labels consistency
         # labels_from_config, dynamic_values_tags = self.get_all_labels(config_string)
 
@@ -907,8 +883,7 @@ class LabelInterface:
                 )
 
     def validate_annotations_consistency(self, annotations_summary):
-        """
-        """
+        """ """
         # annotations_summary is coming from LS Project Summary, it's
         # format is: { "chc|text|choices": 10 }
         # which means that there are two tags, Choices, and one of

@@ -1,5 +1,6 @@
 """
 """
+
 import json
 from uuid import uuid4
 
@@ -27,8 +28,7 @@ class Region(BaseModel):
     value: Any
 
     def _dict(self):
-        """
-        """
+        """ """
         return {
             "id": self.id,
             "from_name": self.from_tag.name,
@@ -39,6 +39,5 @@ class Region(BaseModel):
         }
 
     def to_json(self):
-        """
-        """
+        """ """
         return json.dumps(self._dict())

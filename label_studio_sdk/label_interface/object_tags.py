@@ -1,5 +1,6 @@
 """
 """
+
 import json
 import os
 import re
@@ -25,14 +26,12 @@ _DATA_EXAMPLES = None
 
 
 def _is_strftime_string(s):
-    """simple way to detect strftime format
-    """
+    """simple way to detect strftime format"""
     return "%" in s
 
 
 def generate_time_series_json(time_column, value_columns, time_format=None):
-    """Generate sample for time series
-    """
+    """Generate sample for time series"""
     import numpy as np
 
     n = 100
@@ -79,8 +78,7 @@ def data_examples(
 
 
 def get_tag_class(name):
-    """
-    """
+    """ """
     class_name = _TAG_TO_CLASS.get(name.lower())
     return globals().get(class_name, None)
 
@@ -141,15 +139,13 @@ class ObjectTag(LabelStudioTag):
 
     @property
     def value_name(self):
-        """
-        """
+        """ """
         # TODO this needs a check for URL
         return self.value[1:]
 
     @property
     def value_is_variable(self) -> bool:
-        """Check if value has variable
-        """
+        """Check if value has variable"""
         pattern = re.compile(r"^\$[A-Za-z_]+$")
         return bool(pattern.fullmatch(self.value))
 
@@ -157,8 +153,7 @@ class ObjectTag(LabelStudioTag):
 
     # and have generate_example in each
     def generate_example_value(self, mode="upload", secure_mode=False):
-        """
-        """
+        """ """
         examples = data_examples(mode=mode)
         only_urls = secure_mode or self.value_type == "url"
         if hasattr(self, "_generate_example"):
@@ -183,42 +178,34 @@ class ObjectTag(LabelStudioTag):
 
 
 class AudioTag(ObjectTag):
-    """
-    """
+    """ """
 
     def _generate_example(self, examples, only_urls=False):
-        """
-        """
+        """ """
         return examples.get("Audio")
 
 
 class ImageTag(ObjectTag):
-    """
-    """
+    """ """
 
     def _generate_example(self, examples, only_urls=False):
-        """
-        """
+        """ """
         return examples.get("Image")
 
 
 class TableTag(ObjectTag):
-    """
-    """
+    """ """
 
     def _generate_example(self, examples, only_urls=False):
-        """
-        """
+        """ """
         return examples.get("Table")
 
 
 class TextTag(ObjectTag):
-    """
-    """
+    """ """
 
     def _generate_example(self, examples, only_urls=False):
-        """
-        """
+        """ """
         if only_urls:
             return examples.get("TextUrl")
         else:
@@ -226,22 +213,18 @@ class TextTag(ObjectTag):
 
 
 class VideoTag(ObjectTag):
-    """
-    """
+    """ """
 
     def _generate_example(self, examples, only_urls=False):
-        """
-        """
+        """ """
         return examples.get("Video")
 
 
 class HyperTextTag(ObjectTag):
-    """
-    """
+    """ """
 
     def _generate_example(self, examples, only_urls=False):
-        """
-        """
+        """ """
         examples = data_examples(mode="upload")
         if self.value == "video":
             return examples.get("$videoHack")
@@ -250,23 +233,19 @@ class HyperTextTag(ObjectTag):
 
 
 class ListTag(ObjectTag):
-    """
-    """
+    """ """
 
     def _generate_example(self, examples, only_urls=False):
-        """
-        """
+        """ """
         examples = data_examples(mode="upload")
         return examples.get("List")
 
 
 class ParagraphsTag(ObjectTag):
-    """
-    """
+    """ """
 
     def _generate_example(self, examples, only_urls=False):
-        """
-        """
+        """ """
         # Paragraphs special case - replace nameKey/textKey if presented
         p = self.attr
 
@@ -284,12 +263,10 @@ class ParagraphsTag(ObjectTag):
 
 
 class TimeSeriesTag(ObjectTag):
-    """
-    """
+    """ """
 
     def _generate_example(self, examples, only_urls=False):
-        """
-        """
+        """ """
         p = self.attr
 
         time_column = p.get("timeColumn", "time")

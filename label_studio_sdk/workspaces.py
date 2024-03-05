@@ -65,6 +65,9 @@ class Workspace(BaseModel):
         for project_data in projects:
             project_id = project_data["id"]
             final_results.append(
-                Project.get_from_id(client=self.client, project_id=project_id,)
+                Project.get_from_id(
+                    client=self.client,
+                    project_id=project_id,
+                )
             )
         return final_results

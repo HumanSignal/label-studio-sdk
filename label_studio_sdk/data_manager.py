@@ -242,7 +242,10 @@ def _test():
                 Column.completed_at,
                 Operator.IN,
                 Type.Datetime,
-                Filters.value(datetime(2021, 11, 1), datetime(2021, 11, 5),),
+                Filters.value(
+                    datetime(2021, 11, 1),
+                    datetime(2021, 11, 5),
+                ),
             ),
         ],
     )

@@ -3,8 +3,7 @@ from pydantic import BaseModel, confloat
 
 
 class PredictionValue(BaseModel):
-    """
-    """
+    """ """
 
     model_version: Optional[Any] = None
     score: Optional[float] = 0.00
@@ -23,15 +22,13 @@ class PredictionValue(BaseModel):
 
 
 class AnnotationValue(BaseModel):
-    """
-    """
+    """ """
 
     result: Optional[List[dict]]
 
 
 class TaskValue(BaseModel):
-    """
-    """
+    """ """
 
     data: Optional[dict]
     annotations: Optional[List[AnnotationValue]]
