@@ -1,13 +1,15 @@
+from typing import Optional
+
 from pydantic import BaseModel
-from typing import List, Optional
-from .users import User
+
 from .client import Client
+from .users import User
 
 
 class Workspace(BaseModel):
     id: int
     title: str
-    description: Optional[str]
+    description: Optional[str] = ''
     color: str
     is_personal: bool
     created_by: int
