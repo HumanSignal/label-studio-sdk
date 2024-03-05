@@ -16,7 +16,6 @@ _NOT_CONTROL_TAGS = {
 _TAG_TO_CLASS = {
     "choices": "ChoicesTag",
     "labels": "LabelsTag",
-    "rectangle": "RectangleTag",
     "brush" : "BrushTag",
     "brushlabels" : "BrushLabelsTag",
     "ellipse" : "EllipseTag",
