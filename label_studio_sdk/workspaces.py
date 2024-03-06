@@ -1,13 +1,15 @@
+from typing import Optional
+
 from pydantic import BaseModel
-from typing import List, Optional
-from .users import User
+
 from .client import Client
+from .users import User
 
 
 class Workspace(BaseModel):
     id: int
     title: str
-    description: Optional[str]
+    description: Optional[str] = ''
     color: str
     is_personal: bool
     created_by: int
@@ -25,9 +27,9 @@ class Workspace(BaseModel):
             User
         """
         response = self.client.make_request(
-            'POST',
-            f'/api/workspaces/{self.id}/memberships',
-            json={'workspace': self.id, 'user': user.id},
+            "POST",
+            f"/api/workspaces/{self.id}/memberships",
+            json={"workspace": self.id, "user": user.id},
         )
         return response.json()
 
@@ -40,9 +42,9 @@ class Workspace(BaseModel):
             User
         """
         response = self.client.make_request(
-            'DELETE',
-            f'/api/workspaces/{self.id}/memberships',
-            json={'workspace': self.id, 'user': user.id},
+            "DELETE",
+            f"/api/workspaces/{self.id}/memberships",
+            json={"workspace": self.id, "user": user.id},
         )
         if response.status_code != 204:
             raise ValueError(str(response.content))
@@ -59,11 +61,11 @@ class Workspace(BaseModel):
 
         final_results = []
         response = self.client.make_request(
-            'GET', f'/api/workspaces/{self.id}/projects'
+            "GET", f"/api/workspaces/{self.id}/projects"
         )
         projects = response.json()
         for project_data in projects:
-            project_id = project_data['id']
+            project_id = project_data["id"]
             final_results.append(
                 Project.get_from_id(
                     client=self.client,
