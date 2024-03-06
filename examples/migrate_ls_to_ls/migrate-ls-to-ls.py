@@ -228,11 +228,7 @@ class Migration:
 
         return self.projects
 
-<<<<<<< HEAD
-    def get_users(self, projects) -> [User]:
-=======
     def get_users(self, projects=None) -> [User]:
->>>>>>> 7ec493e6e9ff128e089553c25f866f80dab26023
         """Get users that are members of all projects at the source instance"""
         # enterprise instance
         if self.src_ls.is_enterprise and projects:
