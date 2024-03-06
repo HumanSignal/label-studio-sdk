@@ -121,7 +121,7 @@ class ObjectTag(LabelStudioTag):
 
         return tag_class(
             tag=tag.tag,
-            attr=tag.attrib,
+            attr=dict(tag.attrib),
             name=tag.attrib.get("name"),
             value=tag.attrib["value"],
         )

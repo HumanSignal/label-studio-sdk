@@ -17,7 +17,7 @@ class PredictionValue(BaseModel):
         return {
             "model_version": self.model_version,
             "score": self.score,
-            "result": [dict(r) if isinstance(r, Region) else r for r in self.result],
+            "result": [r._dict() if isinstance(r, Region) else r for r in self.result],
         }
 
 

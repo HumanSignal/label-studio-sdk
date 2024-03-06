@@ -120,7 +120,7 @@ class ControlTag(LabelStudioTag):
             "tag": tag.tag,
             "name": tag.attrib["name"],
             "to_name": tag.attrib["toName"].split(","),
-            "attr": tag.attrib,
+            "attr": dict(tag.attrib),
         }
 
         # Grab conditionals if any
