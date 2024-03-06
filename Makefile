@@ -8,7 +8,6 @@ watch:
 	pdoc label_studio_sdk docs --http localhost:9999 --template-dir docs/pdoc_templates/
 
 build:
-	# wget http://localhost:4000/header.html -O docs/pdoc_templates/head.mako
 	pdoc label_studio_sdk docs --template-dir docs/pdoc_templates/ --html --force
 
 deploy:

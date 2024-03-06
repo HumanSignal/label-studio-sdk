@@ -1,19 +1,28 @@
 # Migrate from one Label Studio instance to another 
 
 This migration helps to copy projects from one LS instance to another. To be copied:
-* Users,
-* Projects,
-* Tasks and
+* Users
+* Projects
+* Tasks
 * Annotations
+* Predictions
+* Reviews (you should request our team to enable it on SaaS side for your organization)
+* Drafts (you should request our team to enable it on SaaS side for your organization)
 
 Other entities are not supported. Cloud Storages are not yet supported.
 
 Each new run of this script will generate new projects on the destination instance.
 
+# Prerequisites
+
+**Attention:** You must use Administrator or better Owner auth token on both LSE instances to run this script. 
+
+**Note:** Create a new workspace and get its ID for projects to be mgiratated. 
+
 # How it works? 
 
 1. Get all projects from source LS (or specific projects)
-2. Get all users from these projects
+2. Get all users from the organization
 3. Create all users with the same emails, first names and last names on the target LS instance 
 4. For each project:
 
@@ -41,14 +50,35 @@ Each new run of this script will generate new projects on the destination instan
 
     > Note: User token must have Administrator or Owner privileges.
 
-3. Migrate all projects from the organization:
+3. Migrate projects from the organization:
 
-    ```bash
-    python3 migrate-ls-to-ls.py --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token>
+    It's highly recommended to start with **one project only**, to achieve this use the `--project-ids` option:
+
     ```
-    
-    Or migrate specific projects only:
-    
-    ```bash
-    python3 migrate-ls-to-ls.py --project-ids=123,456 --src-url http://localhost:8000 --src-key <src-token> --dst-url https://app.heartex.com --dst-key <dst-token>
+    python3 migrate-ls-to-ls.py --project-ids=123,456 \
+        --src-url http://localhost:8000 --src-key <src-token> \
+        --dst-url https://app.heartex.com --dst-key <dst-token>
     ```
+
+    To migrate all projects:
+
+    ```
+    python3 migrate-ls-to-ls.py \
+        --src-url http://localhost:8000 --src-key <src-token> \
+        --dst-url https://app.heartex.com --dst-key <dst-token>
+    ```
+
+5. Migrate all projects to the specific workspace (optional)
+
+   It's recommended to create a new workspace on the destination machine and migrate projects there.
+
+
+    ```
+    python3 migrate-ls-to-ls.py --project-ids=123,456 \ 
+        --src-url http://localhost:8000 --src-key <src-token> \ 
+        --dst-url https://app.heartex.com --dst-key <dst-token> \
+        --dest-workspace <workspace-id>
+    ```
+
+
+     To know workspace ID you should open a network console, select a newly created workspace or refresh the page fully, and find `/api/workspaces/**<id>**/memberships` call in the network console. 

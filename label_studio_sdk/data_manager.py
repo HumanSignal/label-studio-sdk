@@ -31,6 +31,7 @@
     tasks = project.get_tasks(filters=filters)
     ```
 """
+
 from datetime import datetime
 
 DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
@@ -190,6 +191,8 @@ class Column:
     file_upload = "tasks:file_upload"
     """Name of the file uploaded to create the tasks"""
     created_at = "tasks:created_at"
+    """Time the task was updated at (e.g. new annotation was created, review added, etc)"""
+    created_at = "tasks:updated_at"
     """Time the task was created at"""
     annotators = "tasks:annotators"
     """Annotators that completed the task (Community). Can include assigned annotators (Enterprise only)"""
@@ -209,6 +212,10 @@ class Column:
     """Number of annotations rejected for a task in review (Enterprise only)"""
     reviews_accepted = "tasks:reviews_accepted"
     """Number of annotations accepted for a task in review (Enterprise only)"""
+    comments = "tasks:comments"
+    """Number of comments in a task"""
+    unresolved_comment_count = "tasks:unresolved_comment_count"
+    """Number of unresolved comments in a task"""
 
     @staticmethod
     def data(task_field):

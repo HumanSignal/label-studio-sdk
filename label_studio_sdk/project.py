@@ -1,5 +1,6 @@
 """ .. include::../docs/project.md
 """
+
 import os
 import json
 import logging
@@ -503,6 +504,7 @@ class Project(Client):
                 url=f'/api/projects/{self.id}/import',
                 json=tasks,
                 params=params,
+                timeout=(10, 600),
             )
         elif isinstance(tasks, (str, Path)):
             # try import from file
@@ -514,6 +516,7 @@ class Project(Client):
                     url=f'/api/projects/{self.id}/import',
                     files={'file': f},
                     params=params,
+                    timeout=(10, 600),
                 )
         else:
             raise TypeError(
@@ -702,7 +705,8 @@ class Project(Client):
 
         page = 1
         result = []
-        while True:
+        data = {}
+        while not data.get('end_pagination'):
             try:
                 data = self.get_paginated_tasks(
                     filters=filters,
@@ -715,9 +719,8 @@ class Project(Client):
                 )
                 result += data['tasks']
                 page += 1
-            # we'll get 404 from API on empty page
             except LabelStudioException as e:
-                logger.debug(f'End of pagination: {e}')
+                logger.debug(f'Error during pagination: {e}')
                 break
         return result
 
@@ -728,7 +731,7 @@ class Project(Client):
         view_id=None,
         selected_ids=None,
         page: int = 1,
-        page_size: int = -1,
+        page_size: int = 100,
         only_ids: bool = False,
         resolve_uri: bool = True,
     ):
@@ -766,7 +769,7 @@ class Project(Client):
         page: int
             Page. Default is 1.
         page_size: int
-            Page size. Default is -1, to retrieve all tasks in the project.
+            Page size. Default is 100, to retrieve all tasks in the project you can use get_tasks().
         only_ids: bool
             If true, return only task IDs
         resolve_uri: bool
@@ -798,9 +801,11 @@ class Project(Client):
         query = {
             'filters': filters,
             'ordering': ordering or [],
-            'selectedItems': {'all': False, 'included': selected_ids}
-            if selected_ids
-            else {'all': True, "excluded": []},
+            'selectedItems': (
+                {'all': False, 'included': selected_ids}
+                if selected_ids
+                else {'all': True, "excluded": []}
+            ),
         }
         params = {
             'project': self.id,
@@ -814,10 +819,18 @@ class Project(Client):
         if only_ids:
             params['include'] = 'id'
 
-        try:
-            response = self.make_request('GET', '/api/tasks', params)
-        except HTTPError as e:
-            raise LabelStudioException(f'Error loading tasks: {e}')
+        response = self.make_request(
+            'GET', '/api/tasks', params, raise_exceptions=False
+        )
+        # we'll get 404 from API on empty page
+        if response.status_code == 404:
+            return {'tasks': [], 'end_pagination': True}
+        elif response.status_code != 200:
+            self.log_response_error(response)
+            try:
+                response.raise_for_status()
+            except HTTPError as e:
+                raise LabelStudioException(f'Error loading tasks: {e}')
 
         data = response.json()
         tasks = data['tasks']
@@ -1142,6 +1155,23 @@ class Project(Client):
         )
         return response.json()
 
+    def list_annotations(self, task_id: int) -> List:
+        """List all annotations for a task.
+
+        Parameters
+        ----------
+        task_id: int
+            Task ID
+
+        Returns
+        -------
+        list of dict:
+            List of annotations objects
+        """
+        response = self.make_request('GET', f'/api/tasks/{task_id}/annotations')
+        response.raise_for_status()
+        return response.json()
+
     def create_annotation(self, task_id: int, **kwargs) -> Dict:
         """Add annotations to a task like an annotator does.
 
@@ -1162,6 +1192,23 @@ class Project(Client):
         response = self.make_request(
             'POST', f'/api/tasks/{task_id}/annotations/', json=kwargs
         )
+        response.raise_for_status()
+        return response.json()
+
+    def get_annotation(self, annotation_id: int) -> dict:
+        """Retrieve a specific annotation for a task using the annotation ID.
+
+        Parameters
+        ----------
+        annotation_id: int
+            A unique integer value identifying this annotation.
+
+        Returns
+        ----------
+        dict
+            Retreived annotation object
+        """
+        response = self.make_request('GET', f'/api/annotations/{annotation_id}')
         response.raise_for_status()
         return response.json()
 
@@ -1189,6 +1236,24 @@ class Project(Client):
         )
         response.raise_for_status()
         return response.json()
+
+    def delete_annotation(self, annotation_id: int) -> int:
+        """Delete an annotation using the annotation ID. This action can't be undone!
+
+        Parameters
+        ----------
+        annotation_id: int
+            A unique integer value identifying this annotation.
+
+        Returns
+        ----------
+        int
+            Status code for operation
+
+        """
+        response = self.make_request('DELETE', f'/api/annotations/{annotation_id}')
+        response.raise_for_status()
+        return response.status_code
 
     def get_predictions_coverage(self):
         """Prediction coverage stats for all model versions for the project.
@@ -1273,7 +1338,9 @@ class Project(Client):
             Number of tasks synced in the last sync
 
         """
-        if os.path.isfile(google_application_credentials):
+        if google_application_credentials and os.path.isfile(
+            google_application_credentials
+        ):
             with open(google_application_credentials) as f:
                 google_application_credentials = f.read()
 
@@ -1904,9 +1971,9 @@ class Project(Client):
             Task filter options, use {"view": tab_id} to apply filter from this tab,
             <a href="https://api.labelstud.io/#operation/api_projects_exports_create">check the API parameters for more details</a>
         serialization_options_drafts: bool
-            Expand drafts or include only ID
+            Expand drafts (False) or include only ID (True)
         serialization_options_predictions: bool
-            Expand predictions or include only ID
+            Expand predictions (False) or include only ID (True)
         serialization_options_annotations__completed_by: bool
             Expand user that completed_by (False) or include only ID (True)
         annotation_filter_options_usual: bool
