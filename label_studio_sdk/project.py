@@ -1506,6 +1506,98 @@ class Project(Client):
         response = self.make_request("POST", "/api/storages/s3", json=payload)
         return response.json()
 
+    def connect_s3_import_storage_with_iam(
+        self,
+        bucket: Optional[str] = None,
+        prefix: Optional[str] = None,
+        regex_filter: Optional[str] = None,
+        use_blob_urls: Optional[bool] = True,
+        presign: Optional[bool] = True,
+        presign_ttl: Optional[int] = 1,
+        title: Optional[str] = "",
+        description: Optional[str] = "",
+        region_name: Optional[str] = None,
+        s3_endpoint: Optional[str] = None,
+        external_id: Optional[str] = None,
+        role_arn: str,
+        recursive_scan: Optional[bool] = False,
+        aws_sse_kms_key_id: Optional[str] = None,
+        synchronizable: Optional[bool] = True,
+        last_sync: Optional[str] = None,
+        last_sync_count: Optional[int] = None,
+        last_sync_job: Optional[str] = None,
+        status: Optional[str] = None,
+        traceback: Optional[str] = None,
+        meta: Optional[dict] = None,
+        project: int,
+    ):
+        """Create S3 import storage with IAM role access.
+    
+        Parameters
+        ----------
+        bucket: string
+            Specify the name of the S3 bucket.
+        prefix: string
+            Optional, specify the prefix within the S3 bucket to import your data from.
+        regex_filter: string
+            Optional, specify a regex filter to use to match the file types of your data.
+        use_blob_urls: bool
+            Optional, true by default. Specify whether your data is raw image or video data, or JSON tasks.
+        presign: bool
+            Optional, true by default. Specify whether or not to create presigned URLs.
+        presign_ttl: int
+            Optional, 1 by default. Specify how long to keep presigned URLs active.
+        title: string
+            Optional, specify a title for your S3 import storage that appears in Label Studio.
+        description: string
+            Optional, specify a description for your S3 import storage.
+        region_name: string
+            Optional, specify the AWS region of your S3 bucket.
+        s3_endpoint: string
+            Optional, specify an S3 endpoint URL to use to access your bucket instead of the standard access method.
+        recursive_scan: bool
+            Optional, specify whether to perform recursive scan over the bucket content.
+        external_id: string
+            Optional, specify an AWS ExternalId for more secure delegation.
+        role_arn: string
+            Required, specify the AWS Role ARN to assume.
+        aws_sse_kms_key_id: string
+            Optional, specify an AWS SSE KMS Key ID for server-side encryption.
+        synchronizable, last_sync, last_sync_count, last_sync_job, status, traceback, meta:
+            Parameters for synchronization details and storage status.
+    
+        Returns
+        -------
+        dict:
+            containing the response from the API including storage ID and type, among other details.
+        """
+        payload = {
+            "bucket": bucket,
+            "prefix": prefix,
+            "regex_filter": regex_filter,
+            "use_blob_urls": use_blob_urls,
+            "presign": presign,
+            "presign_ttl": presign_ttl,
+            "title": title,
+            "description": description,
+            "project": project,
+            "recursive_scan": recursive_scan,
+            "role_arn": role_arn,
+            "external_id": external_id,
+            "region_name": region_name,
+            "s3_endpoint": s3_endpoint,
+            "aws_sse_kms_key_id": aws_sse_kms_key_id,
+            "synchronizable": synchronizable,
+            "last_sync": last_sync,
+            "last_sync_count": last_sync_count,
+            "last_sync_job": last_sync_job,
+            "status": status,
+            "traceback": traceback,
+            "meta": meta,
+        }
+        response = self.make_request("POST", "/api/storages/s3s/", json=payload)
+        return response.json()    
+
     def connect_s3_export_storage(
         self,
         bucket: str,
