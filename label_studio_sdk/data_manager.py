@@ -191,6 +191,8 @@ class Column:
     file_upload = "tasks:file_upload"
     """Name of the file uploaded to create the tasks"""
     created_at = "tasks:created_at"
+    """Time the task was updated at (e.g. new annotation was created, review added, etc)"""
+    created_at = "tasks:updated_at"
     """Time the task was created at"""
     annotators = "tasks:annotators"
     """Annotators that completed the task (Community). Can include assigned annotators (Enterprise only)"""
