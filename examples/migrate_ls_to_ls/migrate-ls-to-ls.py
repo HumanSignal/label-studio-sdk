@@ -15,11 +15,15 @@ from label_studio_sdk.users import User
 logger = logging.getLogger("migration-ls-to-ls")
 
 DEFAULT_STORAGE = os.getenv('DEFAULT_STORAGE',  '')  # 's3', 'gcs' or 'azure'
+DEFAULT_STORAGE_REGEX = os.getenv('DEFAULT_STORAGE_REGEX',  '.*')  # regex for file search
+DEFAULT_STORAGE_BUCKET = os.getenv('DEFAULT_STORAGE_BUCKET',  'bucket')  # bucket
+DEFAULT_STORAGE_PREFIX = os.getenv('DEFAULT_STORAGE_PREFIX',  '')  # prefix
 DEFAULT_STORAGE_NAME = os.getenv('DEFAULT_STORAGE_NAME', '')  # azure key
 DEFAULT_STORAGE_KEY = os.getenv('DEFAULT_STORAGE_KEY', '')  # aws or azure key
 DEFAULT_STORAGE_SECRET = os.getenv('DEFAULT_STORAGE_SECRET', '')  # aws secret
 DEFAULT_STORAGE_TOKEN = os.getenv('DEFAULT_STORAGE_TOKEN', '')  # aws session token
-DEFAULT_STORAGE_CREDENTIALS = os.getenv('DEFAULT_STORAGE_CREDENTIALS', '{}')  # google credentials, you should use it instead of key and secret
+# for google storage use credentials instead of key and secret
+DEFAULT_STORAGE_CREDENTIALS = os.getenv('DEFAULT_STORAGE_CREDENTIALS', '{}')
 DEFAULT_STORAGE_TREAT_AS_SOURCE = os.getenv('DEFAULT_STORAGE_TREAT_AS_SOURCE', 'yes') == 'yes' # for all
 DEFAULT_STORAGE_REGION = os.getenv('DEFAULT_STORAGE_REGION', None)  # aws 
 DEFAULT_STORAGE_ENDPOINT = os.getenv('DEFAULT_STORAGE_REGION', None)  # aws 
@@ -41,9 +45,6 @@ class Migration:
         self.users = self.projects = self.project_ids = None
         self.dest_workspace = dest_workspace
 
-                    google_application_credentials=DEFAULT_STORAGE_CREDENTIALS, 
-                presign=DEFAULT_STORAGE_PRESIGN, 
-
     def set_project_ids(self, project_ids=None):
         """Set projects you need to migrate
 
@@ -51,11 +52,13 @@ class Migration:
         """
         self.project_ids = project_ids
 
+    @staticmethod
     def add_default_import_storage(project):
         if DEFAULT_STORAGE == 's3':
             storage = project.connect_s3_import_storage(
-                bucket, 
-                regex_filter, 
+                bucket=DEFAULT_STORAGE_BUCKET,
+                regex_filter=DEFAULT_STORAGE_REGEX,
+                prefix=DEFAULT_STORAGE_PREFIX,
                 use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE, 
                 aws_access_key_id=DEFAULT_STORAGE_KEY, 
                 aws_secret_access_key=DEFAULT_STORAGE_SECRET, 
@@ -71,8 +74,9 @@ class Migration:
             
         elif DEFAULT_STORAGE == 'gcs':
             storage = project.connect_google_import_storage(
-                bucket, 
-                regex_filter, 
+                bucket=DEFAULT_STORAGE_BUCKET,
+                regex_filter=DEFAULT_STORAGE_REGEX,
+                prefix=DEFAULT_STORAGE_PREFIX,
                 use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE, 
                 google_application_credentials=DEFAULT_STORAGE_CREDENTIALS, 
                 presign=DEFAULT_STORAGE_PRESIGN, 
@@ -84,8 +88,9 @@ class Migration:
 
         elif DEFAULT_STORAGE == 'azure':
             storage = project.connect_azure_import_storage(
-                container, 
-                regex_filter, 
+                container=DEFAULT_STORAGE_BUCKET,
+                regex_filter=DEFAULT_STORAGE_REGEX,
+                prefix=DEFAULT_STORAGE_PREFIX,
                 use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE, 
                 account_name=DEFAULT_STORAGE_NAME, 
                 account_key=DEFAULT_STORAGE_KEY, 
@@ -118,7 +123,6 @@ class Migration:
             if completed:
                 project.make_request('post', f'api/actions?project={project.id}&id=remove_duplicates')
             """
-    
 
     def run(self, project_ids=None):
         projects = self.get_projects(project_ids)
