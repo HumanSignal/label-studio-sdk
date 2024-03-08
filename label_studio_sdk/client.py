@@ -41,7 +41,7 @@ from types import SimpleNamespace
 logger = logging.getLogger(__name__)
 
 MAX_RETRIES = 3
-TIMEOUT = (10.0, 180.0)
+TIMEOUT = (10.0, int(os.environ.get('TIMEOUT', 180)))
 HEADERS = {}
 LABEL_STUDIO_DEFAULT_URL = "http://localhost:8080"
 

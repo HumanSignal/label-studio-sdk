@@ -1,4 +1,5 @@
-""" This migration helps to copy projects from one LS instance to another.
+""" Migrate LS to LS script.
+This migration helps to copy projects from one LS instance to another.
 
 Usage:
 > python3 migrate-ls-to-ls.py --src-url src-ls.com --src-key <src-token> --dst-url dst-ls.com --dst-key <dst-token> --project-ids=123,456
