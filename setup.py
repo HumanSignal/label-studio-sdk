@@ -23,7 +23,7 @@ setuptools.setup(
     long_description="Label Studio Python SDK",
     long_description_content_type="text/markdown",
     url="https://github.com/heartexlabs/label-studio-sdk",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(exclude=["docs"]),
     include_package_data=True,
     classifiers=[
         "Programming Language :: Python :: 3",
