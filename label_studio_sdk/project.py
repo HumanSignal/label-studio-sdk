@@ -1508,6 +1508,7 @@ class Project(Client):
 
     def connect_s3_import_storage_with_iam(
         self,
+        role_arn: str,
         bucket: Optional[str] = None,
         prefix: Optional[str] = None,
         regex_filter: Optional[str] = None,
@@ -1519,7 +1520,6 @@ class Project(Client):
         region_name: Optional[str] = None,
         s3_endpoint: Optional[str] = None,
         external_id: Optional[str] = None,
-        role_arn: str,
         recursive_scan: Optional[bool] = False,
         aws_sse_kms_key_id: Optional[str] = None,
         synchronizable: Optional[bool] = True,
@@ -1528,8 +1528,7 @@ class Project(Client):
         last_sync_job: Optional[str] = None,
         status: Optional[str] = None,
         traceback: Optional[str] = None,
-        meta: Optional[dict] = None,
-        project: int,
+        meta: Optional[dict] = None
     ):
         """Create S3 import storage with IAM role access.
     
@@ -1594,6 +1593,7 @@ class Project(Client):
             "status": status,
             "traceback": traceback,
             "meta": meta,
+            "project": self.id,
         }
         response = self.make_request("POST", "/api/storages/s3s/", json=payload)
         return response.json()    
