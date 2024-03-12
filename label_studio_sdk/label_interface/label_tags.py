@@ -66,7 +66,7 @@ class LabelTag(LabelStudioTag):
             if actual_value:
                 return LabelTag(
                     tag=tag.tag,
-                    attr=tag.attrib,
+                    attr=dict(tag.attrib),
                     parent_name=parent_name,
                     value=actual_value,
                 )
