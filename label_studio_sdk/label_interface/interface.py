@@ -14,6 +14,7 @@ from pydantic import BaseModel
 # from typing import Dict, Optional, List, Tuple, Any
 from collections import defaultdict
 from lxml import etree
+import xmljson
 
 from label_studio_sdk.exceptions import (
     LSConfigParseException,
