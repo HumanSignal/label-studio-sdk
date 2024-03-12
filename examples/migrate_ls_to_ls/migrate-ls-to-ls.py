@@ -1,33 +1,40 @@
-""" This migration helps to copy projects from one LS instance to another.
+""" Migrate LS to LS script.
+This migration helps to copy projects from one LS instance to another.
 
 Usage:
 > python3 migrate-ls-to-ls.py --src-url src-ls.com --src-key <src-token> --dst-url dst-ls.com --dst-key <dst-token> --project-ids=123,456
 """
-import os
-import time
+
 import json
 import logging
+import os
+import time
 
 from label_studio_sdk import Client
-from label_studio_sdk.project import Project
 from label_studio_sdk.users import User
 
 logger = logging.getLogger("migration-ls-to-ls")
 
-DEFAULT_STORAGE = os.getenv('DEFAULT_STORAGE',  '')  # 's3', 'gcs' or 'azure'
-DEFAULT_STORAGE_REGEX = os.getenv('DEFAULT_STORAGE_REGEX',  '.*')  # regex for file search
-DEFAULT_STORAGE_BUCKET = os.getenv('DEFAULT_STORAGE_BUCKET',  'bucket')  # bucket
-DEFAULT_STORAGE_PREFIX = os.getenv('DEFAULT_STORAGE_PREFIX',  '')  # prefix
+DEFAULT_STORAGE = os.getenv('DEFAULT_STORAGE', '')  # 's3', 'gcs' or 'azure'
+DEFAULT_STORAGE_REGEX = os.getenv(
+    'DEFAULT_STORAGE_REGEX', '.*'
+)  # regex for file search
+DEFAULT_STORAGE_BUCKET = os.getenv('DEFAULT_STORAGE_BUCKET', 'bucket')  # bucket
+DEFAULT_STORAGE_PREFIX = os.getenv('DEFAULT_STORAGE_PREFIX', '')  # prefix
 DEFAULT_STORAGE_NAME = os.getenv('DEFAULT_STORAGE_NAME', '')  # azure key
 DEFAULT_STORAGE_KEY = os.getenv('DEFAULT_STORAGE_KEY', '')  # aws or azure key
 DEFAULT_STORAGE_SECRET = os.getenv('DEFAULT_STORAGE_SECRET', '')  # aws secret
 DEFAULT_STORAGE_TOKEN = os.getenv('DEFAULT_STORAGE_TOKEN', '')  # aws session token
 # for google storage use credentials instead of key and secret
 DEFAULT_STORAGE_CREDENTIALS = os.getenv('DEFAULT_STORAGE_CREDENTIALS', '{}')
-DEFAULT_STORAGE_TREAT_AS_SOURCE = os.getenv('DEFAULT_STORAGE_TREAT_AS_SOURCE', 'yes') == 'yes' # for all
-DEFAULT_STORAGE_REGION = os.getenv('DEFAULT_STORAGE_REGION', None)  # aws 
+DEFAULT_STORAGE_TREAT_AS_SOURCE = (
+    os.getenv('DEFAULT_STORAGE_TREAT_AS_SOURCE', 'yes') == 'yes'
+)  # for all
+DEFAULT_STORAGE_REGION = os.getenv('DEFAULT_STORAGE_REGION', None)  # aws
 DEFAULT_STORAGE_ENDPOINT = os.getenv('DEFAULT_STORAGE_ENDPOINT', None)  # aws
-DEFAULT_STORAGE_PRESIGN = os.getenv('DEFAULT_STORAGE_PRESIGN', 'yes') == 'yes'  # for all
+DEFAULT_STORAGE_PRESIGN = (
+    os.getenv('DEFAULT_STORAGE_PRESIGN', 'yes') == 'yes'
+)  # for all
 
 
 class Migration:
@@ -59,30 +66,30 @@ class Migration:
                 bucket=DEFAULT_STORAGE_BUCKET,
                 regex_filter=DEFAULT_STORAGE_REGEX,
                 prefix=DEFAULT_STORAGE_PREFIX,
-                use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE, 
-                aws_access_key_id=DEFAULT_STORAGE_KEY, 
-                aws_secret_access_key=DEFAULT_STORAGE_SECRET, 
-                aws_session_token=DEFAULT_STORAGE_TOKEN, 
-                region_name=DEFAULT_STORAGE_REGION, 
-                s3_endpoint=DEFAULT_STORAGE_ENDPOINT, 
-                presign=DEFAULT_STORAGE_PRESIGN, 
+                use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE,
+                aws_access_key_id=DEFAULT_STORAGE_KEY,
+                aws_secret_access_key=DEFAULT_STORAGE_SECRET,
+                aws_session_token=DEFAULT_STORAGE_TOKEN,
+                region_name=DEFAULT_STORAGE_REGION,
+                s3_endpoint=DEFAULT_STORAGE_ENDPOINT,
+                presign=DEFAULT_STORAGE_PRESIGN,
                 presign_ttl=15,
-                title='S3 storage', 
-                description='migration'
+                title='S3 storage',
+                description='migration',
             )
             logger.debug('GCS storage was connected')
-            
+
         elif DEFAULT_STORAGE == 'gcs':
             storage = project.connect_google_import_storage(
                 bucket=DEFAULT_STORAGE_BUCKET,
                 regex_filter=DEFAULT_STORAGE_REGEX,
                 prefix=DEFAULT_STORAGE_PREFIX,
-                use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE, 
-                google_application_credentials=DEFAULT_STORAGE_CREDENTIALS, 
-                presign=DEFAULT_STORAGE_PRESIGN, 
-                presign_ttl=15, 
-                title='GCS storage', 
-                description='migration'
+                use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE,
+                google_application_credentials=DEFAULT_STORAGE_CREDENTIALS,
+                presign=DEFAULT_STORAGE_PRESIGN,
+                presign_ttl=15,
+                title='GCS storage',
+                description='migration',
             )
             logger.debug('Azure storage was connected')
 
@@ -91,16 +98,16 @@ class Migration:
                 container=DEFAULT_STORAGE_BUCKET,
                 regex_filter=DEFAULT_STORAGE_REGEX,
                 prefix=DEFAULT_STORAGE_PREFIX,
-                use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE, 
-                account_name=DEFAULT_STORAGE_NAME, 
-                account_key=DEFAULT_STORAGE_KEY, 
-                presign=DEFAULT_STORAGE_PRESIGN, 
-                presign_ttl=1, 
-                title='Azure storage', 
-                description='migration'
+                use_blob_urls=DEFAULT_STORAGE_TREAT_AS_SOURCE,
+                account_name=DEFAULT_STORAGE_NAME,
+                account_key=DEFAULT_STORAGE_KEY,
+                presign=DEFAULT_STORAGE_PRESIGN,
+                presign_ttl=1,
+                title='Azure storage',
+                description='migration',
             )
             logger.debug('Azure storage was connected')
-            
+
         else:
             storage = None
             logger.debug('No import storage to connect')
@@ -109,7 +116,7 @@ class Migration:
             storage_type = DEFAULT_STORAGE
             project.sync_storage(storage_type, storage['id'])
 
-            # if you need to remove duplicated tasks from your project, 
+            # if you need to remove duplicated tasks from your project,
             # you have to call an experimental DM action 'remove_duplicates' in this place
             # when storage sync is finished. It may look like this:
             """
@@ -153,7 +160,7 @@ class Migration:
             logger.info(f"Import {filename} finished for project {new_project.id}")
 
             self.add_default_import_storage(new_project)
-        
+
         logger.info("All projects are processed, finish")
 
     def create_project(self, project):

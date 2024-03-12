@@ -1,47 +1,44 @@
 """ .. include::../docs/client.md
 """
 
-import os
 import json
-import warnings
-import logging
 import logging.config
+import os
 
-logging.config.dictConfig({
-  "version": 1,
-  "formatters": {
-    "standard": {
-      "format": "[%(asctime)s] [%(levelname)s] [%(name)s::%(funcName)s::%(lineno)d] %(message)s"
+logging.config.dictConfig(
+    {
+        "version": 1,
+        "formatters": {
+            "standard": {
+                "format": "[%(asctime)s] [%(levelname)s] [%(name)s::%(funcName)s::%(lineno)d] %(message)s"
+            }
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "level": "DEBUG",
+                "stream": "ext://sys.stdout",
+                "formatter": "standard",
+            }
+        },
+        "root": {
+            "level": os.getenv('LOG_LEVEL', 'ERROR'),
+            "handlers": ["console"],
+            "propagate": True,
+        },
     }
-  },
-  "handlers": {
-    "console": {
-      "class": "logging.StreamHandler",
-      "level": "DEBUG",
-      "stream": "ext://sys.stdout",
-      "formatter": "standard"
-    }
-  },
-  "root": {
-    "level": os.getenv('LOG_LEVEL', 'ERROR'),
-    "handlers": [
-      "console"
-    ],
-    "propagate": True
-  }
-})
+)
 
 import requests
 
 from typing import Optional
 from pydantic import BaseModel, constr, root_validator
 from requests.adapters import HTTPAdapter
-from types import SimpleNamespace
 
 logger = logging.getLogger(__name__)
 
 MAX_RETRIES = 3
-TIMEOUT = (10.0, 180.0)
+TIMEOUT = (10.0, int(os.environ.get('TIMEOUT', 180)))
 HEADERS = {}
 LABEL_STUDIO_DEFAULT_URL = "http://localhost:8080"
 
@@ -373,6 +370,26 @@ class Client(object):
             workspaces.append(Workspace(**workspace_data))
         return workspaces
 
+    # write function get_workspace_by_title
+    def get_workspace_by_title(self, title):
+        """Return workspace by title from the current organization account
+
+        Parameters
+        ----------
+        title: str
+            Workspace title
+
+        Returns
+        -------
+        `label_studio_sdk.workspaces.Workspace` or None
+
+        """
+        workspaces = self.get_workspaces()
+        for workspace in workspaces:
+            if workspace.title == title:
+                return workspace
+        return None
+
     def get_session(self):
         """Create a session with requests.Session()
 
@@ -456,32 +473,7 @@ class Client(object):
         )
 
     def sync_storage(self, storage_type, storage_id):
-        """Synchronize Cloud Storage.
-
-        Parameters
-        ----------
-        storage_type: string
-            Specify the type of the storage container.
-        storage_id: int
-            Specify the storage ID of the storage container.
-
-        Returns
-        -------
-        dict:
-            containing the same fields as in the original storage request and:
-
-        id: int
-            Storage ID
-        type: str
-            Type of storage
-        created_at: str
-            Creation time
-        last_sync: str
-            Time last sync finished, can be empty.
-        last_sync_count: int
-            Number of tasks synced in the last sync
-        """
-
+        """See project.sync_storage for more info"""
         response = self.make_request(
             "POST", f"/api/storages/{storage_type}/{str(storage_id)}/sync"
         )

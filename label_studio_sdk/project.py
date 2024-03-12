@@ -1,23 +1,23 @@
 """ .. include::../docs/project.md
 """
 
-import os
 import json
 import logging
+import os
 import pathlib
 import time
-
 from enum import Enum, auto
-from random import sample, shuffle
-from requests.exceptions import HTTPError, InvalidSchema, MissingSchema
-from requests import Response
 from pathlib import Path
+from random import sample, shuffle
 from typing import Optional, Union, List, Dict, Callable
+
+from label_studio_tools.core.label_config import parse_config
+from label_studio_tools.core.utils.io import get_local_path
+from requests import Response
+from requests.exceptions import HTTPError, InvalidSchema, MissingSchema
+
 from .client import Client
 from .utils import parse_config, chunk
-
-from label_studio_tools.core.utils.io import get_local_path
-from label_studio_tools.core.label_config import parse_config
 
 logger = logging.getLogger(__name__)
 
@@ -1506,7 +1506,7 @@ class Project(Client):
         response = self.make_request("POST", "/api/storages/s3", json=payload)
         return response.json()
 
-    def connect_s3_import_storage_with_iam(
+    def connect_s3s_iam_import_storage(
         self,
         role_arn: str,
         bucket: Optional[str] = None,
@@ -1519,21 +1519,15 @@ class Project(Client):
         description: Optional[str] = "",
         region_name: Optional[str] = None,
         s3_endpoint: Optional[str] = None,
-        external_id: Optional[str] = None,
         recursive_scan: Optional[bool] = False,
         aws_sse_kms_key_id: Optional[str] = None,
-        synchronizable: Optional[bool] = True,
-        last_sync: Optional[str] = None,
-        last_sync_count: Optional[int] = None,
-        last_sync_job: Optional[str] = None,
-        status: Optional[str] = None,
-        traceback: Optional[str] = None,
-        meta: Optional[dict] = None
     ):
-        """Create S3 import storage with IAM role access.
-    
+        """Create S3 secured import storage with IAM role access. Enterprise only.
+
         Parameters
         ----------
+        role_arn: string
+            Required, specify the AWS Role ARN to assume.
         bucket: string
             Specify the name of the S3 bucket.
         prefix: string
@@ -1556,15 +1550,11 @@ class Project(Client):
             Optional, specify an S3 endpoint URL to use to access your bucket instead of the standard access method.
         recursive_scan: bool
             Optional, specify whether to perform recursive scan over the bucket content.
-        external_id: string
-            Optional, specify an AWS ExternalId for more secure delegation.
-        role_arn: string
-            Required, specify the AWS Role ARN to assume.
         aws_sse_kms_key_id: string
             Optional, specify an AWS SSE KMS Key ID for server-side encryption.
         synchronizable, last_sync, last_sync_count, last_sync_job, status, traceback, meta:
             Parameters for synchronization details and storage status.
-    
+
         Returns
         -------
         dict:
@@ -1579,24 +1569,15 @@ class Project(Client):
             "presign_ttl": presign_ttl,
             "title": title,
             "description": description,
-            "project": project,
             "recursive_scan": recursive_scan,
             "role_arn": role_arn,
-            "external_id": external_id,
             "region_name": region_name,
             "s3_endpoint": s3_endpoint,
             "aws_sse_kms_key_id": aws_sse_kms_key_id,
-            "synchronizable": synchronizable,
-            "last_sync": last_sync,
-            "last_sync_count": last_sync_count,
-            "last_sync_job": last_sync_job,
-            "status": status,
-            "traceback": traceback,
-            "meta": meta,
             "project": self.id,
         }
         response = self.make_request("POST", "/api/storages/s3s/", json=payload)
-        return response.json()    
+        return response.json()
 
     def connect_s3_export_storage(
         self,
@@ -1862,6 +1843,202 @@ class Project(Client):
         response = self.make_request(
             "POST", f"/api/storages/localfiles?project={self.id}", json=payload
         )
+        return response.json()
+
+    def sync_import_storage(self, storage_type, storage_id):
+        """Synchronize Import (Source) Cloud Storage.
+
+        Parameters
+        ----------
+        storage_type: string
+            Specify the type of the storage container. See ProjectStorage for available types.
+        storage_id: int
+            Specify the storage ID of the storage container. See get_import_storages() to get ids.
+
+        Returns
+        -------
+        dict:
+            containing the same fields as in the original storage request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        last_sync: str
+            Time last sync finished, can be empty.
+        last_sync_count: int
+            Number of tasks synced in the last sync
+        """
+        # originally syn was implemented in Client class, keep it for compatibility
+        response = self.make_request(
+            "POST", f"/api/storages/{storage_type}/{str(storage_id)}/sync"
+        )
+        return response.json()
+
+    # write func for syn export storage
+    def sync_export_storage(self, storage_type, storage_id):
+        """Synchronize Export (Target) Cloud Storage.
+
+        Parameters
+        ----------
+        storage_type: string
+            Specify the type of the storage container. See ProjectStorage for available types.
+        storage_id: int
+            Specify the storage ID of the storage container. See get_export_storages() to get ids.
+
+        Returns
+        -------
+        dict:
+            containing the same fields as in the original storage request and:
+
+        id: int
+            Storage ID
+        type: str
+            Type of storage
+        created_at: str
+            Creation time
+        other fields:
+            See more https://api.labelstud.io/#tag/Storage:S3/operation/api_storages_export_s3_sync_create
+        """
+        response = self.make_request(
+            "POST", f"/api/storages/export/{storage_type}/{str(storage_id)}/sync"
+        )
+        return response.json()
+
+    # write code for get_import_storages()
+    def get_import_storages(self):
+        """Get Import (Source) Cloud Storage.
+
+        Returns
+        -------
+        list of dicts:
+            List of dicts with source storages, each dict consists of these fields:
+
+        -------
+        Each dict consists of these fields:
+
+        id : int
+            A unique integer value identifying this storage.
+        type : str
+            The type of the storage. Default is "s3".
+        synchronizable : bool
+            Indicates if the storage is synchronizable. Default is True.
+        presign : bool
+            Indicates if the storage is presign. Default is True.
+        last_sync : str or None
+            The last sync finished time. Can be None.
+        last_sync_count : int or None
+            The count of tasks synced last time. Can be None.
+        last_sync_job : str or None
+            The last sync job ID. Can be None.
+        status : str
+            The status of the storage. Can be one of "initialized", "queued", "in_progress", "failed", "completed".
+        traceback : str or None
+            The traceback report for the last failed sync. Can be None.
+        meta : dict or None
+            Meta and debug information about storage processes. Can be None.
+        title : str or None
+            The title of the cloud storage. Can be None.
+        description : str or None
+            The description of the cloud storage. Can be None.
+        created_at : str
+            The creation time of the storage.
+        bucket : str or None
+            The S3 bucket name. Can be None.
+        prefix : str or None
+            The S3 bucket prefix. Can be None.
+        regex_filter : str or None
+            The cloud storage regex for filtering objects. Can be None.
+        use_blob_urls : bool
+            Indicates if objects are interpreted as BLOBs and generate URLs.
+        aws_access_key_id : str or None
+            The AWS_ACCESS_KEY_ID. Can be None.
+        aws_secret_access_key : str or None
+            The AWS_SECRET_ACCESS_KEY. Can be None.
+        aws_session_token : str or None
+            The AWS_SESSION_TOKEN. Can be None.
+        aws_sse_kms_key_id : str or None
+            The AWS SSE KMS Key ID. Can be None.
+        region_name : str or None
+            The AWS Region. Can be None.
+        s3_endpoint : str or None
+            The S3 Endpoint. Can be None.
+        presign_ttl : int
+            The presigned URLs TTL (in minutes).
+        recursive_scan : bool
+            Indicates if a recursive scan over the bucket content is performed.
+        glob_pattern : str or None
+            The glob pattern for syncing from bucket. Can be None.
+        synced : bool
+            Flag indicating if the dataset has been previously synced or not.
+
+        """
+        response = self.make_request("GET", f"/api/storages/?project={self.id}")
+        return response.json()
+
+    def get_export_storages(self):
+        """Get Export (Target) Cloud Storage.
+
+        Returns
+        -------
+        list of dicts:
+            List of dicts with target storages
+
+        -------
+        Each dict consists of these fields:
+
+        id : int
+            A unique integer value identifying this storage.
+        type : str
+            The type of the storage. Default is "s3".
+        synchronizable : bool
+            Indicates if the storage is synchronizable. Default is True.
+        last_sync : str or None
+            The last sync finished time. Can be None.
+        last_sync_count : int or None
+            The count of tasks synced last time. Can be None.
+        last_sync_job : str or None
+            The last sync job ID. Can be None.
+        status : str
+            The status of the storage. Can be one of "initialized", "queued", "in_progress", "failed", "completed".
+        traceback : str or None
+            The traceback report for the last failed sync. Can be None.
+        meta : dict or None
+            Meta and debug information about storage processes. Can be None.
+        title : str or None
+            The title of the cloud storage. Can be None.
+        description : str or None
+            The description of the cloud storage. Can be None.
+        created_at : str
+            The creation time of the storage.
+        can_delete_objects : bool or None
+            Deletion from storage enabled. Can be None.
+        bucket : str or None
+            The S3 bucket name. Can be None.
+        prefix : str or None
+            The S3 bucket prefix. Can be None.
+        regex_filter : str or None
+            The cloud storage regex for filtering objects. Can be None.
+        use_blob_urls : bool
+            Indicates if objects are interpreted as BLOBs and generate URLs.
+        aws_access_key_id : str or None
+            The AWS_ACCESS_KEY_ID. Can be None.
+        aws_secret_access_key : str or None
+            The AWS_SECRET_ACCESS_KEY. Can be None.
+        aws_session_token : str or None
+            The AWS_SESSION_TOKEN. Can be None.
+        aws_sse_kms_key_id : str or None
+            The AWS SSE KMS Key ID. Can be None.
+        region_name : str or None
+            The AWS Region. Can be None.
+        s3_endpoint : str or None
+            The S3 Endpoint. Can be None.
+        project : int
+            A unique integer value identifying this project.
+        """
+        response = self.make_request("GET", f"/api/storages/export?project={self.id}")
         return response.json()
 
     def _assign_by_sampling(
