@@ -1506,7 +1506,7 @@ class Project(Client):
         response = self.make_request("POST", "/api/storages/s3", json=payload)
         return response.json()
 
-    def connect_s3_import_storage_with_iam(
+    def connect_s3s_iam_import_storage(
         self,
         role_arn: str,
         bucket: Optional[str] = None,
@@ -1519,21 +1519,15 @@ class Project(Client):
         description: Optional[str] = "",
         region_name: Optional[str] = None,
         s3_endpoint: Optional[str] = None,
-        external_id: Optional[str] = None,
         recursive_scan: Optional[bool] = False,
         aws_sse_kms_key_id: Optional[str] = None,
-        synchronizable: Optional[bool] = True,
-        last_sync: Optional[str] = None,
-        last_sync_count: Optional[int] = None,
-        last_sync_job: Optional[str] = None,
-        status: Optional[str] = None,
-        traceback: Optional[str] = None,
-        meta: Optional[dict] = None
     ):
-        """Create S3 import storage with IAM role access.
-    
+        """Create S3 secured import storage with IAM role access. Enterprise only.
+
         Parameters
         ----------
+        role_arn: string
+            Required, specify the AWS Role ARN to assume.
         bucket: string
             Specify the name of the S3 bucket.
         prefix: string
@@ -1556,15 +1550,11 @@ class Project(Client):
             Optional, specify an S3 endpoint URL to use to access your bucket instead of the standard access method.
         recursive_scan: bool
             Optional, specify whether to perform recursive scan over the bucket content.
-        external_id: string
-            Optional, specify an AWS ExternalId for more secure delegation.
-        role_arn: string
-            Required, specify the AWS Role ARN to assume.
         aws_sse_kms_key_id: string
             Optional, specify an AWS SSE KMS Key ID for server-side encryption.
         synchronizable, last_sync, last_sync_count, last_sync_job, status, traceback, meta:
             Parameters for synchronization details and storage status.
-    
+
         Returns
         -------
         dict:
@@ -1579,24 +1569,15 @@ class Project(Client):
             "presign_ttl": presign_ttl,
             "title": title,
             "description": description,
-            "project": project,
             "recursive_scan": recursive_scan,
             "role_arn": role_arn,
-            "external_id": external_id,
             "region_name": region_name,
             "s3_endpoint": s3_endpoint,
             "aws_sse_kms_key_id": aws_sse_kms_key_id,
-            "synchronizable": synchronizable,
-            "last_sync": last_sync,
-            "last_sync_count": last_sync_count,
-            "last_sync_job": last_sync_job,
-            "status": status,
-            "traceback": traceback,
-            "meta": meta,
             "project": self.id,
         }
         response = self.make_request("POST", "/api/storages/s3s/", json=payload)
-        return response.json()    
+        return response.json()
 
     def connect_s3_export_storage(
         self,
