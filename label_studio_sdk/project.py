@@ -2320,17 +2320,24 @@ class Project(Client):
         )
         return response.json()
 
-    def export(self, filters=None, export_type='JSON', output_dir='.'):
+    def export(
+        self,
+        filters=None,
+        title="SDK Export",
+        export_type='JSON',
+        output_dir='.',
+        **kwargs,
+    ):
         """
         Export tasks from the project with optional filters,
         and save the exported data to a specified directory.
 
-        This method
-        1. creates a temporary view with the specified filters if they are not None,
-        2. creates a new export snapshot using the view ID,
-        3. checks the status of the snapshot creation while it's in progress,
-        4. and downloads the snapshot file in the specified export format.
-        5. After the export, it cleans up and remove the temporary view.
+        This method:
+        (1) creates a temporary view with the specified filters if they are not None,
+        (2) creates a new export snapshot using the view ID,
+        (3) checks the status of the snapshot creation while it's in progress,
+        (4) and downloads the snapshot file in the specified export format.
+        (5) After the export, it cleans up and remove the temporary view.
 
         Parameters
         ----------
@@ -2341,33 +2348,44 @@ class Project(Client):
             Default is None, which means all tasks are exported.
             Use label_studio_sdk.data_manager.Filters.create() to create filters,
             Example of the filters JSON format:
-            ```json
+        ```json
+        {
+          "conjunction": "and",
+          "items": [
             {
-              "conjunction": "and",
-              "items": [
-                {
-                  "filter": "filter:tasks:id",
-                  "operator": "equal",
-                  "type": "Number",
-                  "value": 1
-                }
-              ]
+              "filter": "filter:tasks:id",
+              "operator": "equal",
+              "type": "Number",
+              "value": 1
             }
-            ```
+          ]
+        }
+        ```
+        titile : str, optional
+            The title of the export snapshot. Default is 'SDK Export'.
         export_type : str, optional
             The format of the exported data. It should be one of the formats supported by Label Studio ('JSON', 'CSV', etc.). Default is 'JSON'.
         output_dir : str, optional
             The directory where the exported file will be saved. Default is the current directory.
+        kwargs : kwargs, optional
+            The same parameters as in the export_snapshot_create method.
 
         Returns
         -------
+        dict
+            containing the status of the export, the filename of the exported file, and the export ID.
+
         filename : str
             Path to the downloaded export file
+        status : int
+            200 is ok
+        export_id : int
+            Export ID, you can retrieve more details about this export using this ID
         """
 
         # Create a temporary view with the specified filters
         if filters:
-            view = self.create_view(title='ID Range Filter', filters=filters)
+            view = self.create_view(title='Temp SDK export', filters=filters)
             task_filter_options = {'view': view['id']}
         else:
             task_filter_options = None
@@ -2375,7 +2393,9 @@ class Project(Client):
 
         # Create a new export snapshot using the view ID
         export_result = self.export_snapshot_create(
-            title='Temporary SDK export', task_filter_options=task_filter_options
+            title=title,
+            task_filter_options=task_filter_options,
+            **kwargs,
         )
 
         # Check the status of the snapshot creation
@@ -2389,11 +2409,11 @@ class Project(Client):
         status, filename = self.export_snapshot_download(
             export_id, export_type=export_type, path=output_dir
         )
-        print('============> !!!!!!!!!!!!!!!!')
+
         # Clean up the view
         if view:
             self.delete_view(view['id'])
-        return filename
+        return {'status': status, 'filename': filename, 'export_id': export_id}
 
     def export_snapshot_status(self, export_id: int) -> ExportSnapshotStatus:
         """

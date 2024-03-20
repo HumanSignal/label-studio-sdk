@@ -12,10 +12,10 @@ from label_studio_sdk.data_manager import Filters, Operator, Type, Column
 
 # Usage example
 host = 'https://app.heartex.com'
-api_key = 'bf258dcb41abc4eea897d394e03e400943064084'
+api_key = '<your_api_key>'
 project_id = 14528
-start_id = 1
-end_id = 1000
+start_id = 10000
+end_id = 20000
 
 # Create a filter for task ID range
 filters = Filters.create(
@@ -39,5 +39,7 @@ filters = Filters.create(
 print('Export started ...')
 ls = Client(url=host, api_key=api_key)
 project = ls.get_project(project_id)
-path = project.export(filters=filters, export_type="JSON", output_dir='exported')
-print(f"Export file saved as: exported/{path}")
+result = project.export(filters=filters, export_type="JSON", output_dir='exported')
+print(
+    f"Export file saved as: exported/{result['filename']}, status: {result['status']}, export_id: {result['export_id']}"
+)

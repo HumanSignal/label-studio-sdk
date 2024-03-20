@@ -18,7 +18,11 @@ If your data is hosted in Google Cloud Storage (GCS), you can write a Python scr
 
 ## Export
 
-* [Export snapshots](export_snapshots.py) - This example shows how to export, check export status and download JSON shapshots from Label Studio.
+* [Export with filters](export_with_filters.py) - This example shows how to use the simplest version of exporting data with filters.
+* [Export snapshots](export_snapshots.py) - This example shows how to export, check export status and download JSON shapshots from Label Studio.  This is detailed code on how to use snapshots. It includes the following steps:
+  * Create a snapshot
+  * Check the snapshot status
+  * Download the snapshot
 
 
 ## Machine Learning
