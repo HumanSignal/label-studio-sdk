@@ -899,6 +899,23 @@ class Project(Client):
         response = self.make_request("POST", "/api/dm/views", json=data)
         return response.json()
 
+    def delete_view(self, view_id):
+        """Delete view
+
+        Parameters
+        ----------
+        view_id: int
+            View ID
+
+        Returns
+        -------
+        dict:
+            dict with deleted view
+
+        """
+        response = self.make_request("DELETE", f"/api/dm/views/{view_id}")
+        return
+
     @property
     def tasks(self):
         """Retrieve all tasks from the project. This call can be very slow if the project has a lot of tasks."""
@@ -2171,7 +2188,7 @@ class Project(Client):
         overlap: int = 1,
     ):
         """
-        Behaves similarly like `assign_annotators()` but instead of specify tasks_ids explicitely,
+        Behaves similarly like `assign_annotators()` but instead of specify tasks_ids explicitly,
         it gets users' IDs list and optional view ID and splits all tasks across annotators.
         Fraction expresses the size of dataset to be assigned.
         Parameters
@@ -2302,6 +2319,81 @@ class Project(Client):
             json=payload,
         )
         return response.json()
+
+    def export(self, filters=None, export_type='JSON', output_dir='.'):
+        """
+        Export tasks from the project with optional filters,
+        and save the exported data to a specified directory.
+
+        This method
+        1. creates a temporary view with the specified filters if they are not None,
+        2. creates a new export snapshot using the view ID,
+        3. checks the status of the snapshot creation while it's in progress,
+        4. and downloads the snapshot file in the specified export format.
+        5. After the export, it cleans up and remove the temporary view.
+
+        Parameters
+        ----------
+        filters : data_manager.Filters, dict, optional
+            Filters to apply when exporting tasks.
+            If provided, a temporary view is created with these filters.
+            The format of the filters should match the Label Studio filter options.
+            Default is None, which means all tasks are exported.
+            Use label_studio_sdk.data_manager.Filters.create() to create filters,
+            Example of the filters JSON format:
+            ```json
+            {
+              "conjunction": "and",
+              "items": [
+                {
+                  "filter": "filter:tasks:id",
+                  "operator": "equal",
+                  "type": "Number",
+                  "value": 1
+                }
+              ]
+            }
+            ```
+        export_type : str, optional
+            The format of the exported data. It should be one of the formats supported by Label Studio ('JSON', 'CSV', etc.). Default is 'JSON'.
+        output_dir : str, optional
+            The directory where the exported file will be saved. Default is the current directory.
+
+        Returns
+        -------
+        filename : str
+            Path to the downloaded export file
+        """
+
+        # Create a temporary view with the specified filters
+        if filters:
+            view = self.create_view(title='ID Range Filter', filters=filters)
+            task_filter_options = {'view': view['id']}
+        else:
+            task_filter_options = None
+            view = None
+
+        # Create a new export snapshot using the view ID
+        export_result = self.export_snapshot_create(
+            title='Temporary SDK export', task_filter_options=task_filter_options
+        )
+
+        # Check the status of the snapshot creation
+        export_id = export_result['id']
+        while self.export_snapshot_status(export_id).is_in_progress():
+            time.sleep(1.0)  # Wait until the snapshot is ready
+
+        os.makedirs(output_dir, exist_ok=True)
+
+        # Download the snapshot file once it's ready
+        status, filename = self.export_snapshot_download(
+            export_id, export_type=export_type, path=output_dir
+        )
+        print('============> !!!!!!!!!!!!!!!!')
+        # Clean up the view
+        if view:
+            self.delete_view(view['id'])
+        return filename
 
     def export_snapshot_status(self, export_id: int) -> ExportSnapshotStatus:
         """

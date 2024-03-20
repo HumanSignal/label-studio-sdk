@@ -137,33 +137,35 @@ class Migration:
         self.create_users(users)
 
         # start exporting projects
+        success = 0
         for project in projects:
-            logger.info(
-                f'Going to create export snapshot for project {project.id} {project.params["title"]}'
-            )
-            status, filename = self.export_snapshot(project)
-            logger.info(
-                f"Snapshot for project {project.id} created with status {status} and filename {filename}"
-            )
-            self.patch_snapshot_users(filename)
+            success += self.migrate_project(project)
 
-            if status != 200:
-                logger.info(f"Skipping project {project.id} because of errors {status}")
-                continue
+        logger.info(
+            f"Projects are processed, finishing with {success} successful and {len(projects)} total projects"
+        )
 
-            if self.dest_workspace is not None:
-                project.params["workspace"] = self.dest_workspace
-            new_project = self.create_project(project)
+    def migrate_project(self, project):
+        status, filename = self.export_snapshot(project)
 
-            logger.info(f"Going to import {filename} to project {new_project.id}")
-            new_project.import_tasks(filename)
-            logger.info(f"Import {filename} finished for project {new_project.id}")
+        self.patch_snapshot_users(filename)
+        if status != 200:
+            logger.info(f"Skipping project {project.id} because of errors {status}")
+            return False
 
-            self.add_default_import_storage(new_project)
+        new_project = self.create_project(project)
+        logger.info(f"Going to import {filename} to project {new_project.id}")
 
-        logger.info("All projects are processed, finish")
+        new_project.import_tasks(filename)
+        logger.info(f"Import {filename} finished for project {new_project.id}")
+        self.add_default_import_storage(new_project)
+
+        return True
 
     def create_project(self, project):
+        if self.dest_workspace is not None:
+            project.params["workspace"] = self.dest_workspace
+
         logger.info(
             f'Going to create a new project "{project.params["title"]}" from old project {project.id}'
         )
@@ -273,14 +275,19 @@ class Migration:
         logger.info(f"Created users: {[u.email for u in new_users]}")
         return new_users
 
-    def export_snapshot(self, project):
+    def export_snapshot(self, project, filters):
         """Export all tasks from the project"""
+        logger.info(
+            f'Creating export snapshot for project {project.id} {project.params["title"]}'
+        )
+
         # create new export snapshot
         export_result = project.export_snapshot_create(
             title="Migration snapshot",
             serialization_options_drafts=False,
             serialization_options_annotations__completed_by=False,
             serialization_options_predictions=False,
+            task_filter_options=filters,
         )
         assert "id" in export_result
         export_id = export_result["id"]
@@ -290,13 +297,15 @@ class Migration:
             time.sleep(1.0)
 
         # download snapshot file
-        status, file_name = project.export_snapshot_download(
+        status, filename = project.export_snapshot_download(
             export_id, export_type="JSON"
         )
         assert status == 200
-        assert file_name is not None
-        logger.info(f"Status of the export is {status}. File name is {file_name}")
-        return status, file_name
+        assert filename is not None
+        logger.info(
+            f"Snapshot for project {project.id} created with status {status} and filename {filename}"
+        )
+        return status, filename
 
     def patch_snapshot_users(self, filename):
         """

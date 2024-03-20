@@ -1,4 +1,4 @@
-from unittest.mock import patch, Mock
+from unittest.mock import Mock
 
 from label_studio_sdk.client import Client
 
