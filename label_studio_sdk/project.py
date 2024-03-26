@@ -1509,6 +1509,7 @@ class Project(Client):
     def connect_s3s_iam_import_storage(
         self,
         role_arn: str,
+        external_id: Optional[str] = None,
         bucket: Optional[str] = None,
         prefix: Optional[str] = None,
         regex_filter: Optional[str] = None,
@@ -1528,6 +1529,9 @@ class Project(Client):
         ----------
         role_arn: string
             Required, specify the AWS Role ARN to assume.
+        external_id: string or None
+            Optional, specify the external ID to use to assume the role. If None, SDK will call api/organizations/<id>
+            and use external_id from the response. You can find this ID on the organization page in the Label Studio UI.
         bucket: string
             Specify the name of the S3 bucket.
         prefix: string
@@ -1560,6 +1564,10 @@ class Project(Client):
         dict:
             containing the response from the API including storage ID and type, among other details.
         """
+        if external_id is None:
+            organization = self.get_organization()
+            external_id = organization["external_id"]
+
         payload = {
             "bucket": bucket,
             "prefix": prefix,
@@ -1575,6 +1583,7 @@ class Project(Client):
             "s3_endpoint": s3_endpoint,
             "aws_sse_kms_key_id": aws_sse_kms_key_id,
             "project": self.id,
+            "external_id": external_id
         }
         response = self.make_request("POST", "/api/storages/s3s/", json=payload)
         return response.json()

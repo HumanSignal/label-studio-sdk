@@ -390,6 +390,21 @@ class Client(object):
                 return workspace
         return None
 
+    def get_organization(self):
+        """Return active organization for the current user
+
+        Returns
+        -------
+        dict
+        """
+        # get organization id from the current user api
+        response = self.make_request('GET', '/api/current-user/whoami').json()
+        organization_id = response['active_organization']
+
+        # get organization data by id
+        response = self.make_request("GET", f"/api/organizations/{organization_id}")
+        return response.json()
+
     def get_session(self):
         """Create a session with requests.Session()
 
