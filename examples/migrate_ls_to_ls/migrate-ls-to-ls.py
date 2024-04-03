@@ -172,6 +172,8 @@ class Migration:
     def create_project(self, project):
         if self.dest_workspace is not None:
             project.params["workspace"] = self.dest_workspace
+        else:
+            project.params.pop("workspace", None)
 
         logger.info(
             f'Going to create a new project "{project.params["title"]}" from old project {project.id}'
