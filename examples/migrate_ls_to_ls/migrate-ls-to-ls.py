@@ -15,6 +15,7 @@ from label_studio_sdk.data_manager import Filters, Operator, Type, Column
 from label_studio_sdk.users import User
 
 logger = logging.getLogger("migration-ls-to-ls")
+logger.setLevel(logging.DEBUG)
 
 CHUNK_SIZE = int(os.getenv('CHUNK_SIZE', 1000))
 DEFAULT_STORAGE = os.getenv('DEFAULT_STORAGE', '')  # 's3', 'gcs' or 'azure'
@@ -47,6 +48,7 @@ class Migration:
         :param src_key: source Label Studio token
         :param dst_url: destination Label Studio instance
         :param dst_key: destination Label Studio token
+        :param dest_workspace: destination workspace id
         """
         # Connect to the Label Studio API and check the connection
         self.src_ls = Client(url=src_url, api_key=src_key)
@@ -150,7 +152,9 @@ class Migration:
     def migrate_project(self, project):
         filenames = self.export_chunked_snapshots(project)
         if not filenames:
-            logger.info(f"Errors while exporting: skipping project {project.id}")
+            logger.error(
+                f"No exported files found: skipping project {project.id}. Maybe project is empty?"
+            )
             return False
 
         logger.info(f"Patching snapshot users for project {project.id}")
@@ -437,7 +441,6 @@ def run():
         dst_key=args.dst_key,
         dest_workspace=args.dest_workspace,
     )
-    logging.basicConfig(level=logging.INFO)
 
     project_ids = (
         [int(i) for i in args.project_ids.split(",")] if args.project_ids else None
