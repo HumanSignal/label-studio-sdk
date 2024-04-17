@@ -162,6 +162,8 @@ class Migration:
             self.patch_snapshot_users(filename)
 
         logger.info(f"New project creation for project {project.id}")
+        label_config = str(project.label_config)
+        project.params["label_config"] = '<View></View>'
         new_project = self.create_project(project)
 
         logger.info(f"Going to import {filenames} to project {new_project.id}")
@@ -170,6 +172,7 @@ class Migration:
             logger.info(f"Import {filename} finished for project {new_project.id}")
             time.sleep(1)
 
+        project.set_params(label_config=label_config)
         self.add_default_import_storage(new_project)
         return True
 
