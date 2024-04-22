@@ -215,27 +215,37 @@ class Client(object):
     def list_projects(self, **query_params):
         """List all projects in Label Studio.
 
+        Parameters
+        ----------
+        page: int
+            Page number
+        page_size: int
+            Number of projects per page
+
         Returns
         -------
         list or `label_studio_sdk.project.Project` instances
 
         """
         from .project import Project
+        page = query_params.get('page', 1)
+        page_size = query_params.get('page_size', 10)
 
-        params = {"page_size": 10000000}
-        params.update(query_params)
-        response = self.make_request("GET", "/api/projects", params=params)
-        if response.status_code == 200:
-            projects = []
-            for data in response.json()["results"]:
-                project = Project._create_from_id(
-                    client=self, project_id=data["id"], params=data
-                )
-                projects.append(project)
-                logger.debug(
-                    f'Project {project.id} "{project.get_params().get("title")}" is retrieved'
-                )
-            return projects
+        projects = []
+        page = 1
+        while True:
+            params = {'page': page, 'page_size': page_size}
+            response = self.make_request('GET', '/api/projects', params=params)
+            data = response.json()
+            if not data['results']:
+                break  # Exit loop if no more projects are returned
+            projects.extend(data['results'])
+            page += 1
+            
+        return [
+            self.Project._create_from_id(client=self, project_id=project['id'], params=project) 
+            for project in projects
+        ]
 
     def create_project(self, **kwargs):
         return self.start_project(**kwargs)
