@@ -22,7 +22,7 @@ logging.config.dictConfig(
             }
         },
         "root": {
-            "level": os.getenv('LOG_LEVEL', 'ERROR'),
+            "level": os.getenv('LOG_LEVEL', 'DEBUG'),
             "handlers": ["console"],
             "propagate": True,
         },
