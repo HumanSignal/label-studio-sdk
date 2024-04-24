@@ -1583,7 +1583,7 @@ class Project(Client):
             "s3_endpoint": s3_endpoint,
             "aws_sse_kms_key_id": aws_sse_kms_key_id,
             "project": self.id,
-            "external_id": external_id
+            "external_id": external_id,
         }
         response = self.make_request("POST", "/api/storages/s3s/", json=payload)
         return response.json()
