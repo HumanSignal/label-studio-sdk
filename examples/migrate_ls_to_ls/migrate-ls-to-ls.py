@@ -11,10 +11,13 @@ import os
 import time
 
 from label_studio_sdk import Client
+from label_studio_sdk.data_manager import Filters, Operator, Type, Column
 from label_studio_sdk.users import User
 
 logger = logging.getLogger("migration-ls-to-ls")
+logger.setLevel(logging.DEBUG)
 
+CHUNK_SIZE = int(os.getenv('CHUNK_SIZE', 1000))
 DEFAULT_STORAGE = os.getenv('DEFAULT_STORAGE', '')  # 's3', 'gcs' or 'azure'
 DEFAULT_STORAGE_REGEX = os.getenv(
     'DEFAULT_STORAGE_REGEX', '.*'
@@ -45,6 +48,7 @@ class Migration:
         :param src_key: source Label Studio token
         :param dst_url: destination Label Studio instance
         :param dst_key: destination Label Studio token
+        :param dest_workspace: destination workspace id
         """
         # Connect to the Label Studio API and check the connection
         self.src_ls = Client(url=src_url, api_key=src_key)
@@ -137,33 +141,47 @@ class Migration:
         self.create_users(users)
 
         # start exporting projects
+        success = 0
         for project in projects:
-            logger.info(
-                f'Going to create export snapshot for project {project.id} {project.params["title"]}'
+            success += self.migrate_project(project)
+
+        logger.info(
+            f"Projects are processed, finishing with {success} successful and {len(projects)} total projects"
+        )
+
+    def migrate_project(self, project):
+        filenames = self.export_chunked_snapshots(project)
+        if not filenames:
+            logger.error(
+                f"No exported files found: skipping project {project.id}. Maybe project is empty?"
             )
-            status, filename = self.export_snapshot(project)
-            logger.info(
-                f"Snapshot for project {project.id} created with status {status} and filename {filename}"
-            )
+            return False
+
+        logger.info(f"Patching snapshot users for project {project.id}")
+        for filename in filenames:
             self.patch_snapshot_users(filename)
 
-            if status != 200:
-                logger.info(f"Skipping project {project.id} because of errors {status}")
-                continue
+        logger.info(f"New project creation for project {project.id}")
+        label_config = str(project.label_config)
+        project.params["label_config"] = '<View></View>'
+        new_project = self.create_project(project)
 
-            if self.dest_workspace is not None:
-                project.params["workspace"] = self.dest_workspace
-            new_project = self.create_project(project)
-
-            logger.info(f"Going to import {filename} to project {new_project.id}")
+        logger.info(f"Going to import {filenames} to project {new_project.id}")
+        for filename in filenames:
             new_project.import_tasks(filename)
             logger.info(f"Import {filename} finished for project {new_project.id}")
+            time.sleep(1)
 
-            self.add_default_import_storage(new_project)
-
-        logger.info("All projects are processed, finish")
+        project.set_params(label_config=label_config)
+        self.add_default_import_storage(new_project)
+        return True
 
     def create_project(self, project):
+        if self.dest_workspace is not None:
+            project.params["workspace"] = self.dest_workspace
+        else:
+            project.params.pop("workspace", None)
+
         logger.info(
             f'Going to create a new project "{project.params["title"]}" from old project {project.id}'
         )
@@ -273,30 +291,66 @@ class Migration:
         logger.info(f"Created users: {[u.email for u in new_users]}")
         return new_users
 
-    def export_snapshot(self, project):
-        """Export all tasks from the project"""
-        # create new export snapshot
-        export_result = project.export_snapshot_create(
-            title="Migration snapshot",
-            serialization_options_drafts=False,
-            serialization_options_annotations__completed_by=False,
-            serialization_options_predictions=False,
-        )
-        assert "id" in export_result
-        export_id = export_result["id"]
+    def export_chunked_snapshots(self, project):
+        """Export all tasks from the project in chunks and return filenames for each chunk"""
 
-        # wait until snapshot is ready
-        while project.export_snapshot_status(export_id).is_in_progress():
-            time.sleep(1.0)
+        logger.info(f'Creating chunked snapshots for project {project.id}')
+        file_size, filenames, chunk_i = 100, [], 0
 
-        # download snapshot file
-        status, file_name = project.export_snapshot_download(
-            export_id, export_type="JSON"
+        while file_size > 2:  # 2 bytes is an empty json file
+            start_id = CHUNK_SIZE * chunk_i
+            end_id = CHUNK_SIZE * (chunk_i + 1)
+            logger.info(
+                f"Exporting chunk {chunk_i} from {start_id} to {end_id} tasks for project {project.id}"
+            )
+
+            # create a filters for inner ID range to split tasks into chunks
+            filters = self.inner_id_range_filter(start_id, end_id)
+
+            # create new export and save to disk
+            output_dir = "snapshots"
+            result = project.export(
+                filters=filters,
+                title=f"Migration snapshot for chunk {chunk_i}",
+                serialization_options_drafts=False,
+                serialization_options_annotations__completed_by=False,
+                serialization_options_predictions=False,
+                output_dir=output_dir,
+            )
+            status, filename = result["status"], result["filename"]
+            if status != 200:
+                logger.info(
+                    f"Error while exporting chunk {chunk_i}: {status}, skipping export"
+                )
+                return []
+
+            chunk_i += 1
+            filename = os.path.join(output_dir, filename)
+            file_size = os.path.getsize(filename)
+            if file_size > 2:
+                filenames.append(filename)
+
+        return filenames
+
+    def inner_id_range_filter(self, start_id, end_id):
+        filters = Filters.create(
+            Filters.AND,
+            [
+                Filters.item(
+                    Column.inner_id,
+                    Operator.GREATER_OR_EQUAL,
+                    Type.Number,
+                    Filters.value(start_id),
+                ),
+                Filters.item(
+                    Column.inner_id,
+                    Operator.LESS,
+                    Type.Number,
+                    Filters.value(end_id),
+                ),
+            ],
         )
-        assert status == 200
-        assert file_name is not None
-        logger.info(f"Status of the export is {status}. File name is {file_name}")
-        return status, file_name
+        return filters
 
     def patch_snapshot_users(self, filename):
         """
@@ -390,7 +444,6 @@ def run():
         dst_key=args.dst_key,
         dest_workspace=args.dest_workspace,
     )
-    logging.basicConfig(level=logging.INFO)
 
     project_ids = (
         [int(i) for i in args.project_ids.split(",")] if args.project_ids else None
