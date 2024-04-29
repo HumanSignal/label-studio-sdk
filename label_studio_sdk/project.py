@@ -1124,10 +1124,10 @@ class Project(Client):
         """
         data = {"task": task_id, "result": result, "score": score}
         if model_version is not None:
-            data['model_version'] = model_version
-        response = self.make_request('POST', "/api/predictions", json=data)
+            data["model_version"] = model_version
+        response = self.make_request("POST", "/api/predictions", json=data)
         json = response.json()
-        logger.debug(f'Response: {json}')
+        logger.debug(f"Response: {json}")
         return json
 
     def create_predictions(self, predictions):
@@ -2324,8 +2324,8 @@ class Project(Client):
         self,
         filters=None,
         title="SDK Export",
-        export_type='JSON',
-        output_dir='.',
+        export_type="JSON",
+        output_dir=".",
         **kwargs,
     ):
         """
@@ -2385,8 +2385,8 @@ class Project(Client):
 
         # Create a temporary view with the specified filters
         if filters:
-            view = self.create_view(title='Temp SDK export', filters=filters)
-            task_filter_options = {'view': view['id']}
+            view = self.create_view(title="Temp SDK export", filters=filters)
+            task_filter_options = {"view": view["id"]}
         else:
             task_filter_options = None
             view = None
@@ -2399,7 +2399,7 @@ class Project(Client):
         )
 
         # Check the status of the snapshot creation
-        export_id = export_result['id']
+        export_id = export_result["id"]
         while self.export_snapshot_status(export_id).is_in_progress():
             time.sleep(1.0)  # Wait until the snapshot is ready
 
@@ -2412,8 +2412,8 @@ class Project(Client):
 
         # Clean up the view
         if view:
-            self.delete_view(view['id'])
-        return {'status': status, 'filename': filename, 'export_id': export_id}
+            self.delete_view(view["id"])
+        return {"status": status, "filename": filename, "export_id": export_id}
 
     def export_snapshot_status(self, export_id: int) -> ExportSnapshotStatus:
         """
