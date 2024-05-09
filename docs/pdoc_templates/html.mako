@@ -361,7 +361,7 @@
 
   <%include file="head.mako"/>
 </head>
-<body>
+<body class="page-tier-opensource">
 % if not http_server:
   <%include file="menu.mako" />
 % endif %
