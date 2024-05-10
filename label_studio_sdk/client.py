@@ -4,6 +4,7 @@
 import json
 import logging.config
 import os
+import time
 
 logging.config.dictConfig(
     {
@@ -229,7 +230,7 @@ class Client(object):
         """
         from .project import Project
         page = query_params.get('page', 1)
-        page_size = query_params.get('page_size', 10)
+        page_size = query_params.get('page_size', 25)
 
         projects = []
         page = 1
@@ -241,6 +242,7 @@ class Client(object):
                 break  # Exit loop if no more projects are returned
             projects.extend(data['results'])
             page += 1
+            time.sleep(0.5)
             
         return [
             self.Project._create_from_id(client=self, project_id=project['id'], params=project) 
