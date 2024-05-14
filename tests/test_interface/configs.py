@@ -126,7 +126,7 @@ RECT_CONFIG = f"""
 </View>
 """
 
-EMPTY_VALUE_CONFIG = f"""
+EMPTY_VALUE_CONF = f"""
 <View>
   <Text name="text" value="$text"/>
   <Labels name="type" toName="text">
