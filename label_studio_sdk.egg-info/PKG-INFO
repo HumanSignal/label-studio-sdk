@@ -1,0 +1,21 @@
+Metadata-Version: 2.1
+Name: label-studio-sdk
+Version: 0.0.34.dev0
+Summary: Label Studio annotation tool
+Home-page: https://github.com/heartexlabs/label-studio-sdk
+Author: Heartex
+Author-email: hello@heartex.ai
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: lxml>=4.2.5
+Requires-Dist: requests<3,>=2.22.0
+Requires-Dist: pydantic<3,>1.7
+Requires-Dist: jsonschema>=3.2.0
+Requires-Dist: xmljson>=0.2.0
+Requires-Dist: label-studio-tools>=0.0.1
+
+Label Studio Python SDK

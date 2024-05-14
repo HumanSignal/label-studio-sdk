@@ -134,3 +134,4 @@ EMPTY_VALUE_CONFIG = f"""
     <Label value="" />
   </Labels>
 </View>
+"""
