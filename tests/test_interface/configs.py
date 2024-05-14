@@ -125,3 +125,13 @@ RECT_CONFIG = f"""
   <Rectangle name="{FROM_NAME}" toName="{TO_NAME}"></Rectangle>
 </View>
 """
+
+EMPTY_VALUE_CONF = f"""
+<View>
+  <Text name="text" value="$text"/>
+  <Labels name="type" toName="text">
+    <Label value="" />
+    <Label value="" />
+  </Labels>
+</View>
+"""

@@ -190,3 +190,7 @@ def test_load_random_task():
 
     tree = conf.load_task(task)
     assert len(tree.get_object(c.TO_NAME).value)
+
+
+def test_empty_value_config():
+    conf = LabelInterface(c.EMPTY_VALUE_CONF)
