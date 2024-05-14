@@ -63,7 +63,7 @@ class LabelTag(LabelStudioTag):
         parent_name = _get_parent_control_tag_name(tag, controls_context)
         if parent_name is not None:
             actual_value = tag.attrib.get("alias") or tag.attrib.get("value")
-            if actual_value:
+            if actual_value is not None:
                 return LabelTag(
                     tag=tag.tag,
                     attr=dict(tag.attrib),
