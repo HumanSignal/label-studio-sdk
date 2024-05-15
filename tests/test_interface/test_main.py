@@ -194,3 +194,4 @@ def test_load_random_task():
 
 def test_empty_value_config():
     conf = LabelInterface(c.EMPTY_VALUE_CONF)
+    conf = LabelInterface(c.NO_VALUE_CONF)

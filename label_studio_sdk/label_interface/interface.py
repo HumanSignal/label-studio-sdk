@@ -429,7 +429,10 @@ class LabelInterface:
 
             elif LabelTag.validate_node(tag):
                 lb = LabelTag.parse_node(tag, controls)
-                labels[lb.parent_name][lb.value] = lb
+                # This case is hit when Label tag is missing `value` and `alias`
+                # For now we will skip that Label, but in future might want to raise an error
+                if lb:
+                    labels[lb.parent_name][lb.value] = lb
 
         return controls, objects, labels, xml_tree
 

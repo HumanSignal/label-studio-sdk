@@ -135,3 +135,13 @@ EMPTY_VALUE_CONF = f"""
   </Labels>
 </View>
 """
+
+NO_VALUE_CONF = f"""
+<View>
+  <Text name="text" value="$text"/>
+  <Labels name="type" toName="text">
+    <Label />
+    <Label value="" />
+  </Labels>
+</View>
+"""
