@@ -1,8 +1,10 @@
 paths:
   /api/projects/:
     get:
+      x-fern-sdk-group-name: projects
       x-fern-sdk-method-name: list
     post:
+      x-fern-sdk-group-name: projects
       x-fern-sdk-method-name: create
 components:
   securitySchemes:

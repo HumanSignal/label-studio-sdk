@@ -9,8 +9,11 @@ groups:
     generators:
       - name: fernapi/fern-python-sdk
         version: 2.2.0
-        output:
-          location: local-file-system
-          path: ../label_studio_python
+        github:
+          repository: HumanSignal/label-studio-sdk
+          mode: pull-request
+#        output:
+#          location: local-file-system
+#          path: ../label_studio_python
         config:
           inline_request_params: false

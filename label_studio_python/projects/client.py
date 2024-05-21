@@ -15,6 +15,7 @@ from ..types.project import Project
 from ..types.project_import import ProjectImport
 from ..types.project_label_config import ProjectLabelConfig
 from ..types.project_reimport import ProjectReimport
+from .types.projects_list_response import ProjectsListResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -23,6 +24,166 @@ OMIT = typing.cast(typing.Any, ...)
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def list(
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsListResponse:
+        """
+        Return a list of the projects that you've created.
+
+        To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`.
+        To retrieve a list of your Label Studio projects, update the following command to match your own environment.
+        Replace the domain name, port, and authorization token, then run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/ -H 'Authorization: Token abc123'
+        ```
+
+        Parameters
+        ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        ids : typing.Optional[str]
+            ids
+
+        title : typing.Optional[str]
+            title
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectsListResponse
+
+
+        Examples
+        --------
+        from label-studio.client import LabelStudioApi
+
+        client = LabelStudioApi(api_key="YOUR_API_KEY", )
+        client.projects.list()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/projects/"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "ordering": ordering,
+                            "ids": ids,
+                            "title": title,
+                            "page": page,
+                            "page_size": page_size,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
+                )
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(ProjectsListResponse, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def create(self, *, request: Project, request_options: typing.Optional[RequestOptions] = None) -> Project:
+        """
+        Create a project and set up the labeling interface in Label Studio using the API.
+
+        ```bash
+        curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"label_config": "<View>[...]</View>"}'
+        ```
+
+        Parameters
+        ----------
+        request : Project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Project
+
+
+        Examples
+        --------
+        from label-studio import Project
+        from label-studio.client import LabelStudioApi
+
+        client = LabelStudioApi(api_key="YOUR_API_KEY", )
+        client.projects.create(request=Project(), )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/projects/"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
+            ),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def api_projects_validate_create(
         self, *, request: ProjectLabelConfig, request_options: typing.Optional[RequestOptions] = None
@@ -593,6 +754,166 @@ class ProjectsClient:
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def list(
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsListResponse:
+        """
+        Return a list of the projects that you've created.
+
+        To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`.
+        To retrieve a list of your Label Studio projects, update the following command to match your own environment.
+        Replace the domain name, port, and authorization token, then run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/ -H 'Authorization: Token abc123'
+        ```
+
+        Parameters
+        ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        ids : typing.Optional[str]
+            ids
+
+        title : typing.Optional[str]
+            title
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectsListResponse
+
+
+        Examples
+        --------
+        from label-studio.client import AsyncLabelStudioApi
+
+        client = AsyncLabelStudioApi(api_key="YOUR_API_KEY", )
+        await client.projects.list()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/projects/"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "ordering": ordering,
+                            "ids": ids,
+                            "title": title,
+                            "page": page,
+                            "page_size": page_size,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
+                )
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(ProjectsListResponse, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def create(self, *, request: Project, request_options: typing.Optional[RequestOptions] = None) -> Project:
+        """
+        Create a project and set up the labeling interface in Label Studio using the API.
+
+        ```bash
+        curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"label_config": "<View>[...]</View>"}'
+        ```
+
+        Parameters
+        ----------
+        request : Project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Project
+
+
+        Examples
+        --------
+        from label-studio import Project
+        from label-studio.client import AsyncLabelStudioApi
+
+        client = AsyncLabelStudioApi(api_key="YOUR_API_KEY", )
+        await client.projects.create(request=Project(), )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/projects/"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
+            ),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def api_projects_validate_create(
         self, *, request: ProjectLabelConfig, request_options: typing.Optional[RequestOptions] = None

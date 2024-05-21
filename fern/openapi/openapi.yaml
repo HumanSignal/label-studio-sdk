@@ -1208,7 +1208,7 @@ paths:
   /api/projects/:
     get:
       # operationId: api_projects_list
-      summary: List your projects
+      summary: List projects
       description: >
         
         Return a list of the projects that you've created.

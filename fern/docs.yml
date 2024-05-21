@@ -1,0 +1,11 @@
+instances:
+  - url: https://label-studio.docs.buildwithfern.com
+title: label-studio | Documentation
+navigation:
+  - api: API Reference
+    snippets:
+      python: label-studio  # <---- needs to match the naming in generators.yml
+
+colors:
+  accentPrimary: '#ffffff'
+  background: '#000000'
