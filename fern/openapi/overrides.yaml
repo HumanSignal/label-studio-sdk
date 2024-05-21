@@ -1,0 +1,20 @@
+paths:
+  /api/projects/:
+    get:
+      x-fern-sdk-method-name: list
+    post:
+      x-fern-sdk-method-name: create
+components:
+  securitySchemes:
+    Token:
+      type: apiKey
+      description: "The token (or API key) must be passed as a request header. You\
+        \ can find your user token on the User Account page in Label Studio. Example:\
+        \ <br><pre><code class=\"language-bash\">curl https://label-studio-host/api/projects\
+        \ -H \"Authorization: Token [your-token]\"</code></pre>"
+      name: Authorization
+      in: header
+      x-fern-header:
+        name: api_key
+        env: LABEL_STUDIO_API_KEY
+        prefix: "Token "
