@@ -4,42 +4,71 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .prediction_neighbors import PredictionNeighbors
-from .prediction_result import PredictionResult
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
-class Prediction(pydantic.BaseModel):
-    id: typing.Optional[int]
-    model_version: typing.Optional[str]
-    created_ago: typing.Optional[str] = pydantic.Field(description="Delta time from creation time")
-    result: typing.Optional[PredictionResult] = pydantic.Field(description="Prediction result")
-    score: typing.Optional[float] = pydantic.Field(description="Prediction score")
-    cluster: typing.Optional[int] = pydantic.Field(description="Cluster for the current prediction")
-    neighbors: typing.Optional[PredictionNeighbors] = pydantic.Field(
-        description="Array of task IDs of the closest neighbors"
-    )
-    mislabeling: typing.Optional[float] = pydantic.Field(description="Related task mislabeling score")
-    created_at: typing.Optional[dt.datetime]
-    updated_at: typing.Optional[dt.datetime]
-    model: typing.Optional[int] = pydantic.Field(description="An ML Backend instance that created the prediction.")
-    model_run: typing.Optional[int] = pydantic.Field(description="A run of a ModelVersion that created the prediction.")
+class Prediction(pydantic_v1.BaseModel):
+    id: typing.Optional[int] = None
+    model_version: typing.Optional[str] = None
+    created_ago: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Delta time from creation time
+    """
+
+    result: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
+    """
+    Prediction result
+    """
+
+    score: typing.Optional[float] = pydantic_v1.Field(default=None)
+    """
+    Prediction score
+    """
+
+    cluster: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    Cluster for the current prediction
+    """
+
+    neighbors: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
+    """
+    Array of task IDs of the closest neighbors
+    """
+
+    mislabeling: typing.Optional[float] = pydantic_v1.Field(default=None)
+    """
+    Related task mislabeling score
+    """
+
+    created_at: typing.Optional[dt.datetime] = None
+    updated_at: typing.Optional[dt.datetime] = None
+    model: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    An ML Backend instance that created the prediction.
+    """
+
+    model_run: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    A run of a ModelVersion that created the prediction.
+    """
+
     task: int
-    project: typing.Optional[int]
+    project: typing.Optional[int] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().dict(**kwargs_with_defaults)
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
 
     class Config:
         frozen = True
         smart_union = True
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

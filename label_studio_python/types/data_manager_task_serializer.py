@@ -4,72 +4,100 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .annotation import Annotation
-from .data_manager_task_serializer_data import DataManagerTaskSerializerData
-from .data_manager_task_serializer_meta import DataManagerTaskSerializerMeta
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 
-class DataManagerTaskSerializer(pydantic.BaseModel):
-    id: typing.Optional[int]
-    predictions: typing.Optional[str]
-    annotations: typing.Optional[typing.List[Annotation]]
-    drafts: typing.Optional[str]
-    annotators: typing.Optional[str]
-    inner_id: typing.Optional[int]
-    cancelled_annotations: typing.Optional[int]
-    total_annotations: typing.Optional[int]
-    total_predictions: typing.Optional[int]
-    completed_at: typing.Optional[dt.datetime]
-    annotations_results: typing.Optional[str]
-    predictions_results: typing.Optional[str]
-    predictions_score: typing.Optional[float]
-    file_upload: typing.Optional[str]
-    storage_filename: typing.Optional[str]
-    annotations_ids: typing.Optional[str]
-    predictions_model_versions: typing.Optional[str]
-    avg_lead_time: typing.Optional[float]
-    draft_exists: typing.Optional[bool]
-    updated_by: typing.Optional[str]
-    data: DataManagerTaskSerializerData = pydantic.Field(
-        description="User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI."
-    )
-    meta: typing.Optional[DataManagerTaskSerializerMeta] = pydantic.Field(
-        description="Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps."
-    )
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(description="Time a task was created")
-    updated_at: typing.Optional[dt.datetime] = pydantic.Field(description="Last time a task was updated")
-    is_labeled: typing.Optional[bool] = pydantic.Field(
-        description="True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project"
-    )
-    overlap: typing.Optional[int] = pydantic.Field(
-        description="Number of distinct annotators that processed the current task"
-    )
-    comment_count: typing.Optional[int] = pydantic.Field(
-        description="Number of comments in the task including all annotations"
-    )
-    unresolved_comment_count: typing.Optional[int] = pydantic.Field(
-        description="Number of unresolved comments in the task including all annotations"
-    )
-    last_comment_updated_at: typing.Optional[dt.datetime] = pydantic.Field(
-        description="When the last comment was updated"
-    )
-    project: typing.Optional[int] = pydantic.Field(description="Project ID for this task")
-    comment_authors: typing.Optional[typing.List[int]] = pydantic.Field(description="Users who wrote comments")
+class DataManagerTaskSerializer(pydantic_v1.BaseModel):
+    id: typing.Optional[int] = None
+    predictions: typing.Optional[str] = None
+    annotations: typing.Optional[typing.List[Annotation]] = None
+    drafts: typing.Optional[str] = None
+    annotators: typing.Optional[str] = None
+    inner_id: typing.Optional[int] = None
+    cancelled_annotations: typing.Optional[int] = None
+    total_annotations: typing.Optional[int] = None
+    total_predictions: typing.Optional[int] = None
+    completed_at: typing.Optional[dt.datetime] = None
+    annotations_results: typing.Optional[str] = None
+    predictions_results: typing.Optional[str] = None
+    predictions_score: typing.Optional[float] = None
+    file_upload: typing.Optional[str] = None
+    storage_filename: typing.Optional[str] = None
+    annotations_ids: typing.Optional[str] = None
+    predictions_model_versions: typing.Optional[str] = None
+    avg_lead_time: typing.Optional[float] = None
+    draft_exists: typing.Optional[bool] = None
+    updated_by: typing.Optional[str] = None
+    data: typing.Dict[str, typing.Any] = pydantic_v1.Field()
+    """
+    User imported or uploaded data for a task. Data is formatted according to the project label config. You can find examples of data for your project on the Import page in the Label Studio Data Manager UI.
+    """
+
+    meta: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
+    """
+    Meta is user imported (uploaded) data and can be useful as input for an ML Backend for embeddings, advanced vectors, and other info. It is passed to ML during training/predicting steps.
+    """
+
+    created_at: typing.Optional[dt.datetime] = pydantic_v1.Field(default=None)
+    """
+    Time a task was created
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic_v1.Field(default=None)
+    """
+    Last time a task was updated
+    """
+
+    is_labeled: typing.Optional[bool] = pydantic_v1.Field(default=None)
+    """
+    True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+    """
+
+    overlap: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    Number of distinct annotators that processed the current task
+    """
+
+    comment_count: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    Number of comments in the task including all annotations
+    """
+
+    unresolved_comment_count: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    Number of unresolved comments in the task including all annotations
+    """
+
+    last_comment_updated_at: typing.Optional[dt.datetime] = pydantic_v1.Field(default=None)
+    """
+    When the last comment was updated
+    """
+
+    project: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    Project ID for this task
+    """
+
+    comment_authors: typing.Optional[typing.List[int]] = pydantic_v1.Field(default=None)
+    """
+    Users who wrote comments
+    """
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().dict(**kwargs_with_defaults)
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
 
     class Config:
         frozen = True
         smart_union = True
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

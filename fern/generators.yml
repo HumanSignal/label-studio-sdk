@@ -2,19 +2,14 @@ api:
   path: ./openapi/openapi.yaml
   settings:
     use-title: false
-default-group: local
+default-group: sdk
 groups:
-  local:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
-        output:
-          location: local-file-system
-          path: ../sdks/typescript
   sdk:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 0.8.1
+        version: 2.2.0
         output:
           location: local-file-system
           path: ../label_studio_python
+        config:
+          inline_request_params: false

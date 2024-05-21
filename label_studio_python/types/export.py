@@ -4,38 +4,47 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .converted_format import ConvertedFormat
-from .export_counters import ExportCounters
 from .export_status import ExportStatus
 from .user_simple import UserSimple
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
+class Export(pydantic_v1.BaseModel):
+    title: typing.Optional[str] = None
+    id: typing.Optional[int] = None
+    created_by: typing.Optional[UserSimple] = None
+    created_at: typing.Optional[dt.datetime] = pydantic_v1.Field(default=None)
+    """
+    Creation time
+    """
 
-class Export(pydantic.BaseModel):
-    title: typing.Optional[str]
-    id: typing.Optional[int]
-    created_by: typing.Optional[UserSimple]
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(description="Creation time")
-    finished_at: typing.Optional[dt.datetime] = pydantic.Field(description="Complete or fail time")
-    status: typing.Optional[ExportStatus]
-    md_5: typing.Optional[str] = pydantic.Field(alias="md5")
-    counters: typing.Optional[ExportCounters]
-    converted_formats: typing.Optional[typing.List[ConvertedFormat]]
+    finished_at: typing.Optional[dt.datetime] = pydantic_v1.Field(default=None)
+    """
+    Complete or fail time
+    """
+
+    status: typing.Optional[ExportStatus] = None
+    md_5: typing.Optional[str] = pydantic_v1.Field(alias="md5", default=None)
+    counters: typing.Optional[typing.Dict[str, typing.Any]] = None
+    converted_formats: typing.Optional[typing.List[ConvertedFormat]] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().dict(**kwargs_with_defaults)
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
 
     class Config:
         frozen = True
         smart_union = True
         allow_population_by_field_name = True
+        populate_by_name = True
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

@@ -4,41 +4,64 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .webhook_serializer_for_update_actions_item import WebhookSerializerForUpdateActionsItem
-from .webhook_serializer_for_update_headers import WebhookSerializerForUpdateHeaders
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 
-class WebhookSerializerForUpdate(pydantic.BaseModel):
-    id: typing.Optional[int]
-    organization: typing.Optional[int]
-    project: typing.Optional[int]
-    url: str = pydantic.Field(description="URL of webhook")
-    send_payload: typing.Optional[bool] = pydantic.Field(description="If value is False send only action")
-    send_for_all_actions: typing.Optional[bool] = pydantic.Field(
-        description="If value is False - used only for actions from WebhookAction"
-    )
-    headers: typing.Optional[WebhookSerializerForUpdateHeaders] = pydantic.Field(
-        description="Key Value Json of headers"
-    )
-    is_active: typing.Optional[bool] = pydantic.Field(description="If value is False the webhook is disabled")
-    actions: typing.Optional[typing.List[WebhookSerializerForUpdateActionsItem]]
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(description="Creation time")
-    updated_at: typing.Optional[dt.datetime] = pydantic.Field(description="Last update time")
+class WebhookSerializerForUpdate(pydantic_v1.BaseModel):
+    id: typing.Optional[int] = None
+    organization: typing.Optional[int] = None
+    project: typing.Optional[int] = None
+    url: str = pydantic_v1.Field()
+    """
+    URL of webhook
+    """
+
+    send_payload: typing.Optional[bool] = pydantic_v1.Field(default=None)
+    """
+    If value is False send only action
+    """
+
+    send_for_all_actions: typing.Optional[bool] = pydantic_v1.Field(default=None)
+    """
+    If value is False - used only for actions from WebhookAction
+    """
+
+    headers: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
+    """
+    Key Value Json of headers
+    """
+
+    is_active: typing.Optional[bool] = pydantic_v1.Field(default=None)
+    """
+    If value is False the webhook is disabled
+    """
+
+    actions: typing.Optional[typing.List[WebhookSerializerForUpdateActionsItem]] = None
+    created_at: typing.Optional[dt.datetime] = pydantic_v1.Field(default=None)
+    """
+    Creation time
+    """
+
+    updated_at: typing.Optional[dt.datetime] = pydantic_v1.Field(default=None)
+    """
+    Last update time
+    """
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().dict(**kwargs_with_defaults)
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
 
     class Config:
         frozen = True
         smart_union = True
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

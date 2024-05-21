@@ -4,40 +4,46 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .task_filter_options_annotated import TaskFilterOptionsAnnotated
-from .task_filter_options_finished import TaskFilterOptionsFinished
-from .task_filter_options_skipped import TaskFilterOptionsSkipped
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
-class TaskFilterOptions(pydantic.BaseModel):
-    view: typing.Optional[int] = pydantic.Field(
-        description="Apply filters from the view ID (a tab from the Data Manager)"
-    )
-    skipped: typing.Optional[TaskFilterOptionsSkipped] = pydantic.Field(
-        description="`only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations"
-    )
-    finished: typing.Optional[TaskFilterOptionsFinished] = pydantic.Field(
-        description="`only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks"
-    )
-    annotated: typing.Optional[TaskFilterOptionsAnnotated] = pydantic.Field(
-        description="`only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation"
-    )
-    only_with_annotations: typing.Optional[bool]
+class TaskFilterOptions(pydantic_v1.BaseModel):
+    view: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    Apply filters from the view ID (a tab from the Data Manager)
+    """
+
+    skipped: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
+    """
+
+    finished: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
+    """
+
+    annotated: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
+    """
+
+    only_with_annotations: typing.Optional[bool] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().dict(**kwargs_with_defaults)
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
 
     class Config:
         frozen = True
         smart_union = True
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

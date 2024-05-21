@@ -4,31 +4,50 @@ import datetime as dt
 import typing
 
 from ..core.datetime_utils import serialize_datetime
-from .filter_value import FilterValue
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
-class Filter(pydantic.BaseModel):
-    id: typing.Optional[int]
-    index: typing.Optional[int] = pydantic.Field(description="To keep filter order")
-    column: str = pydantic.Field(description="Field name")
-    type: str = pydantic.Field(description="Field type")
-    operator: str = pydantic.Field(description="Filter operator")
-    value: typing.Optional[FilterValue] = pydantic.Field(description="Filter value")
+class Filter(pydantic_v1.BaseModel):
+    id: typing.Optional[int] = None
+    index: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    To keep filter order
+    """
+
+    column: str = pydantic_v1.Field()
+    """
+    Field name
+    """
+
+    type: str = pydantic_v1.Field()
+    """
+    Field type
+    """
+
+    operator: str = pydantic_v1.Field()
+    """
+    Filter operator
+    """
+
+    value: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
+    """
+    Filter value
+    """
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().dict(**kwargs_with_defaults)
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
 
     class Config:
         frozen = True
         smart_union = True
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
