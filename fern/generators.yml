@@ -12,8 +12,8 @@ groups:
         github:
           repository: HumanSignal/label-studio-sdk
           mode: pull-request
-#        output:
-#          location: local-file-system
-#          path: ../label_studio_python
+        output:
+          location: pypi
+          package-name: label-studio
         config:
           inline_request_params: false
