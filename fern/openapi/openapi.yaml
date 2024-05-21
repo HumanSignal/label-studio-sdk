@@ -1,5 +1,4 @@
 openapi: 3.0.0
-x-fern-overrides-filepath: overrides.yaml
 info:
   title: Label Studio API
   contact:

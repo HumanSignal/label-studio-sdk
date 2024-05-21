@@ -1,5 +1,6 @@
 api:
   path: ./openapi/openapi.yaml
+  overrides: ./openapi/overrides.yaml
   settings:
     use-title: false
 default-group: sdk
