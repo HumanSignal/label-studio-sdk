@@ -1,0 +1,283 @@
+imports:
+  root: __package__.yml
+types:
+  TasksListResponse:
+    properties:
+      count: integer
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      previous:
+        type: optional<string>
+        validation:
+          format: uri
+      results: list<root.BaseTask>
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/tasks/
+      method: GET
+      auth: true
+      docs: >
+
+        Retrieve a list of tasks with pagination for a specific view or project,
+        by using filters and ordering.
+      pagination:
+        offset: $request.page
+        results: $response.results
+      display-name: Get tasks list
+      request:
+        name: TasksListRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
+          view:
+            type: optional<integer>
+            docs: View ID
+          project:
+            type: optional<integer>
+            docs: Project ID
+          resolve_uri:
+            type: optional<boolean>
+            docs: Resolve task data URIs using Cloud Storage
+      response:
+        docs: ''
+        type: TasksListResponse
+      examples:
+        - response:
+            body:
+              count: 1
+              next: next
+              previous: previous
+              results:
+                - id: 1
+                  data: {}
+                  created_at: '2024-01-15T09:30:00Z'
+                  updated_at: '2024-01-15T09:30:00Z'
+                  is_labeled: true
+                  overlap: 1
+                  inner_id: 1
+                  total_annotations: 1
+                  cancelled_annotations: 1
+                  total_predictions: 1
+                  comment_count: 1
+                  unresolved_comment_count: 1
+                  last_comment_updated_at: '2024-01-15T09:30:00Z'
+                  project: 1
+                  updated_by: 1
+                  file_upload: 1
+                  comment_authors:
+                    - 1
+    create:
+      path: /api/tasks/
+      method: POST
+      auth: true
+      docs: Create a new labeling task in Label Studio.
+      display-name: Create task
+      request:
+        body: root.BaseTask
+      response:
+        docs: ''
+        type: root.BaseTask
+      examples:
+        - request:
+            data: {}
+          response:
+            body:
+              id: 1
+              data:
+                data:
+                  key: value
+              meta:
+                meta:
+                  key: value
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              is_labeled: true
+              overlap: 1
+              inner_id: 1
+              total_annotations: 1
+              cancelled_annotations: 1
+              total_predictions: 1
+              comment_count: 1
+              unresolved_comment_count: 1
+              last_comment_updated_at: '2024-01-15T09:30:00Z'
+              project: 1
+              updated_by: 1
+              file_upload: 1
+              comment_authors:
+                - 1
+    get:
+      path: /api/tasks/{id}/
+      method: GET
+      auth: true
+      docs: >
+
+        Get task data, metadata, annotations and other attributes for a specific
+        labeling task by task ID.
+      path-parameters:
+        id:
+          type: string
+          docs: Task ID
+      display-name: Get task
+      response:
+        docs: ''
+        type: root.DataManagerTaskSerializer
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              id: 1
+              predictions: predictions
+              annotations:
+                - id: 1
+                  created_username: created_username
+                  created_ago: created_ago
+                  completed_by: 1
+                  unique_id: unique_id
+                  was_cancelled: true
+                  ground_truth: true
+                  created_at: '2024-01-15T09:30:00Z'
+                  updated_at: '2024-01-15T09:30:00Z'
+                  draft_created_at: '2024-01-15T09:30:00Z'
+                  lead_time: 1.1
+                  import_id: 1
+                  last_action: prediction
+                  task: 1
+                  project: 1
+                  updated_by: 1
+                  parent_prediction: 1
+                  parent_annotation: 1
+                  last_created_by: 1
+              drafts: drafts
+              annotators: annotators
+              inner_id: 1
+              cancelled_annotations: 1
+              total_annotations: 1
+              total_predictions: 1
+              completed_at: '2024-01-15T09:30:00Z'
+              annotations_results: annotations_results
+              predictions_results: predictions_results
+              predictions_score: 1.1
+              file_upload: file_upload
+              storage_filename: storage_filename
+              annotations_ids: annotations_ids
+              predictions_model_versions: predictions_model_versions
+              avg_lead_time: 1.1
+              draft_exists: true
+              updated_by: updated_by
+              data:
+                data:
+                  key: value
+              meta:
+                meta:
+                  key: value
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              is_labeled: true
+              overlap: 1
+              comment_count: 1
+              unresolved_comment_count: 1
+              last_comment_updated_at: '2024-01-15T09:30:00Z'
+              project: 1
+              comment_authors:
+                - 1
+    delete:
+      path: /api/tasks/{id}/
+      method: DELETE
+      auth: true
+      docs: Delete a task in Label Studio. This action cannot be undone!
+      path-parameters:
+        id:
+          type: string
+          docs: Task ID
+      display-name: Delete task
+      examples:
+        - path-parameters:
+            id: id
+    update:
+      path: /api/tasks/{id}/
+      method: PATCH
+      auth: true
+      docs: Update the attributes of an existing labeling task.
+      path-parameters:
+        id:
+          type: string
+          docs: Task ID
+      display-name: Update task
+      request:
+        body: root.TaskSimple
+      response:
+        docs: ''
+        type: root.TaskSimple
+      examples:
+        - path-parameters:
+            id: id
+          request:
+            data: {}
+          response:
+            body:
+              id: 1
+              data:
+                data:
+                  key: value
+              meta:
+                meta:
+                  key: value
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              is_labeled: true
+              overlap: 1
+              inner_id: 1
+              total_annotations: 1
+              cancelled_annotations: 1
+              total_predictions: 1
+              comment_count: 1
+              unresolved_comment_count: 1
+              last_comment_updated_at: '2024-01-15T09:30:00Z'
+              project: 1
+              updated_by: 1
+              file_upload: 1
+              comment_authors:
+                - 1
+              annotations:
+                - id: 1
+                  created_username: created_username
+                  created_ago: created_ago
+                  completed_by: 1
+                  unique_id: unique_id
+                  was_cancelled: true
+                  ground_truth: true
+                  created_at: '2024-01-15T09:30:00Z'
+                  updated_at: '2024-01-15T09:30:00Z'
+                  draft_created_at: '2024-01-15T09:30:00Z'
+                  lead_time: 1.1
+                  import_id: 1
+                  last_action: prediction
+                  task: 1
+                  project: 1
+                  updated_by: 1
+                  parent_prediction: 1
+                  parent_annotation: 1
+                  last_created_by: 1
+              predictions:
+                - id: 1
+                  model_version: model_version
+                  created_ago: created_ago
+                  score: 1.1
+                  cluster: 1
+                  mislabeling: 1.1
+                  created_at: '2024-01-15T09:30:00Z'
+                  updated_at: '2024-01-15T09:30:00Z'
+                  model: 1
+                  model_run: 1
+                  task: 1
+                  project: 1

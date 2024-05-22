@@ -1,0 +1,217 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /api/annotations/{id}/
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve a specific annotation for a task using the annotation result
+        ID.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this annotation.
+      display-name: Get annotation by its ID
+      response:
+        docs: ''
+        type: root.Annotation
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              created_username: created_username
+              created_ago: created_ago
+              completed_by: 1
+              unique_id: unique_id
+              result:
+                result:
+                  key: value
+              was_cancelled: true
+              ground_truth: true
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              draft_created_at: '2024-01-15T09:30:00Z'
+              lead_time: 1.1
+              import_id: 1
+              last_action: prediction
+              task: 1
+              project: 1
+              updated_by: 1
+              parent_prediction: 1
+              parent_annotation: 1
+              last_created_by: 1
+    delete:
+      path: /api/annotations/{id}/
+      method: DELETE
+      auth: true
+      docs: Delete an annotation. This action can't be undone!
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this annotation.
+      display-name: Delete annotation
+      examples:
+        - path-parameters:
+            id: 1
+    update:
+      path: /api/annotations/{id}/
+      method: PATCH
+      auth: true
+      docs: Update existing attributes on an annotation.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this annotation.
+      display-name: Update annotation
+      request:
+        body: root.Annotation
+      response:
+        docs: ''
+        type: root.Annotation
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              id: 1
+              created_username: created_username
+              created_ago: created_ago
+              completed_by: 1
+              unique_id: unique_id
+              result:
+                result:
+                  key: value
+              was_cancelled: true
+              ground_truth: true
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              draft_created_at: '2024-01-15T09:30:00Z'
+              lead_time: 1.1
+              import_id: 1
+              last_action: prediction
+              task: 1
+              project: 1
+              updated_by: 1
+              parent_prediction: 1
+              parent_annotation: 1
+              last_created_by: 1
+    list:
+      path: /api/tasks/{id}/annotations/
+      method: GET
+      auth: true
+      docs: List all annotations for a task.
+      path-parameters:
+        id:
+          type: integer
+          docs: Task ID
+      display-name: Get all task annotations
+      response:
+        docs: ''
+        type: list<root.Annotation>
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              - id: 1
+                created_username: created_username
+                created_ago: created_ago
+                completed_by: 1
+                unique_id: unique_id
+                result:
+                  result:
+                    key: value
+                was_cancelled: true
+                ground_truth: true
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+                draft_created_at: '2024-01-15T09:30:00Z'
+                lead_time: 1.1
+                import_id: 1
+                last_action: prediction
+                task: 1
+                project: 1
+                updated_by: 1
+                parent_prediction: 1
+                parent_annotation: 1
+                last_created_by: 1
+    create:
+      path: /api/tasks/{id}/annotations/
+      method: POST
+      auth: true
+      docs: >
+
+        Add annotations to a task like an annotator does. The content of the
+        result field depends on your 
+
+        labeling configuration. For example, send the following data as part of
+        your POST 
+
+        request to send an empty annotation with the ID of the user who
+        completed the task:
+
+
+        ```json
+
+        {
+
+        "result": {},
+
+        "was_cancelled": true,
+
+        "ground_truth": true,
+
+        "lead_time": 0,
+
+        "task": 0
+
+        "completed_by": 123
+
+        } 
+
+        ```
+      path-parameters:
+        id:
+          type: integer
+          docs: Task ID
+      display-name: Create annotation
+      request:
+        body: root.Annotation
+      response:
+        docs: ''
+        type: root.Annotation
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              id: 1
+              created_username: created_username
+              created_ago: created_ago
+              completed_by: 1
+              unique_id: unique_id
+              result:
+                result:
+                  key: value
+              was_cancelled: true
+              ground_truth: true
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              draft_created_at: '2024-01-15T09:30:00Z'
+              lead_time: 1.1
+              import_id: 1
+              last_action: prediction
+              task: 1
+              project: 1
+              updated_by: 1
+              parent_prediction: 1
+              parent_annotation: 1
+              last_created_by: 1
