@@ -1,0 +1,11 @@
+instances:
+  - url: https://label-studio.docs.buildwithfern.com
+title: Label Studio | Documentation
+navigation:
+  - api: API Reference
+    snippets:
+      python: label-studio-sdk
+
+colors:
+  accentPrimary: '#ffffff'
+  background: '#000000'

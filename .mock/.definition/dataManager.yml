@@ -1,0 +1,264 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_dm_actions_list:
+      path: /api/dm/actions/
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve all the registered actions with descriptions that data manager
+        can use.
+      display-name: Get actions
+      examples:
+        - {}
+    api_dm_actions_create:
+      path: /api/dm/actions/
+      method: POST
+      auth: true
+      docs: Perform an action with the selected items from a specific view.
+      display-name: Post actions
+      examples:
+        - {}
+    api_dm_columns_list:
+      path: /api/dm/columns/
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve the data manager columns available for the tasks in a specific
+        project.
+      display-name: Get data manager columns
+      examples:
+        - {}
+    api_dm_project_list:
+      path: /api/dm/project/
+      method: GET
+      auth: true
+      docs: Retrieve the project state for the data manager.
+      display-name: Get project state
+      examples:
+        - {}
+    api_dm_views_list:
+      path: /api/dm/views/
+      method: GET
+      auth: true
+      docs: List all views for a specific project.
+      display-name: List views
+      request:
+        name: ApiDmViewsListRequest
+        query-parameters:
+          project:
+            type: optional<integer>
+            docs: Project ID
+      response:
+        docs: ''
+        type: list<root.View>
+      examples:
+        - response:
+            body:
+              - id: 1
+                filter_group:
+                  id: 1
+                  filters:
+                    - column: column
+                      type: type
+                      operator: operator
+                  conjunction: conjunction
+                data:
+                  data:
+                    key: value
+                ordering:
+                  ordering:
+                    key: value
+                selected_items:
+                  selected_items:
+                    key: value
+                user: 1
+                project: 1
+    api_dm_views_create:
+      path: /api/dm/views/
+      method: POST
+      auth: true
+      docs: Create a view for a specific project.
+      display-name: Create view
+      request:
+        body: root.View
+      response:
+        docs: ''
+        type: root.View
+      examples:
+        - request:
+            project: 1
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                data:
+                  key: value
+              ordering:
+                ordering:
+                  key: value
+              selected_items:
+                selected_items:
+                  key: value
+              user: 1
+              project: 1
+    api_dm_views_reset:
+      path: /api/dm/views/reset/
+      method: DELETE
+      auth: true
+      docs: Reset all views for a specific project.
+      display-name: Reset project views
+      request:
+        name: ViewReset
+        body:
+          properties:
+            project: integer
+      examples:
+        - request:
+            project: 1
+    api_dm_views_read:
+      path: /api/dm/views/{id}/
+      method: GET
+      auth: true
+      docs: Get the details about a specific view in the data manager
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Get view details
+      response:
+        docs: ''
+        type: root.View
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                data:
+                  key: value
+              ordering:
+                ordering:
+                  key: value
+              selected_items:
+                selected_items:
+                  key: value
+              user: 1
+              project: 1
+    api_dm_views_update:
+      path: /api/dm/views/{id}/
+      method: PUT
+      auth: true
+      docs: >-
+        Overwrite view data with updated filters and other information for a
+        specific project.
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Put view
+      request:
+        body: root.View
+      response:
+        docs: ''
+        type: root.View
+      examples:
+        - path-parameters:
+            id: id
+          request:
+            project: 1
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                data:
+                  key: value
+              ordering:
+                ordering:
+                  key: value
+              selected_items:
+                selected_items:
+                  key: value
+              user: 1
+              project: 1
+    api_dm_views_delete:
+      path: /api/dm/views/{id}/
+      method: DELETE
+      auth: true
+      docs: Delete a specific view by ID.
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Delete view
+      examples:
+        - path-parameters:
+            id: id
+    api_dm_views_partial_update:
+      path: /api/dm/views/{id}/
+      method: PATCH
+      auth: true
+      docs: >-
+        Update view data with additional filters and other information for a
+        specific project.
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Update view
+      request:
+        body: root.View
+      response:
+        docs: ''
+        type: root.View
+      examples:
+        - path-parameters:
+            id: id
+          request:
+            project: 1
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                data:
+                  key: value
+              ordering:
+                ordering:
+                  key: value
+              selected_items:
+                selected_items:
+                  key: value
+              user: 1
+              project: 1
+imports:
+  root: __package__.yml

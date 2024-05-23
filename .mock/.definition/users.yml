@@ -1,0 +1,196 @@
+types:
+  ApiCurrentUserResetTokenCreateResponse:
+    docs: User token
+    properties:
+      token:
+        type: optional<string>
+        docs: Token
+  ApiCurrentUserTokenListResponse:
+    docs: User token
+    properties:
+      detail:
+        type: optional<string>
+        docs: Token
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_current-user_reset-token_create:
+      path: /api/current-user/reset-token/
+      method: POST
+      auth: true
+      docs: Reset the user token for the current user.
+      display-name: Reset user token
+      response:
+        docs: User token response
+        type: ApiCurrentUserResetTokenCreateResponse
+      examples:
+        - response:
+            body:
+              token: token
+    api_current-user_token_list:
+      path: /api/current-user/token
+      method: GET
+      auth: true
+      docs: Get a user token to authenticate to the API as the current user.
+      display-name: Get user token
+      response:
+        docs: User token response
+        type: ApiCurrentUserTokenListResponse
+      examples:
+        - response:
+            body:
+              detail: detail
+    api_current-user_whoami_read:
+      path: /api/current-user/whoami
+      method: GET
+      auth: true
+      docs: Retrieve details of the account that you are using to access the API.
+      display-name: Retrieve my user
+      response:
+        docs: ''
+        type: root.BaseUser
+      examples:
+        - response:
+            body:
+              id: 1
+              first_name: first_name
+              last_name: last_name
+              username: username
+              email: email
+              last_activity: '2024-01-15T09:30:00Z'
+              avatar: avatar
+              initials: initials
+              phone: phone
+              active_organization: 1
+              allow_newsletters: true
+    api_users_list:
+      path: /api/users/
+      method: GET
+      auth: true
+      docs: List the users that exist on the Label Studio server.
+      display-name: List users
+      response:
+        docs: ''
+        type: list<root.BaseUser>
+      examples:
+        - response:
+            body:
+              - id: 1
+                first_name: first_name
+                last_name: last_name
+                username: username
+                email: email
+                last_activity: '2024-01-15T09:30:00Z'
+                avatar: avatar
+                initials: initials
+                phone: phone
+                active_organization: 1
+                allow_newsletters: true
+    api_users_create:
+      path: /api/users/
+      method: POST
+      auth: true
+      docs: Create a user in Label Studio.
+      display-name: Create new user
+      request:
+        body: root.BaseUser
+      response:
+        docs: ''
+        type: root.BaseUser
+      examples:
+        - request:
+            username: username
+          response:
+            body:
+              id: 1
+              first_name: first_name
+              last_name: last_name
+              username: username
+              email: email
+              last_activity: '2024-01-15T09:30:00Z'
+              avatar: avatar
+              initials: initials
+              phone: phone
+              active_organization: 1
+              allow_newsletters: true
+    api_users_read:
+      path: /api/users/{id}/
+      method: GET
+      auth: true
+      docs: Get info about a specific Label Studio user, based on the user ID.
+      path-parameters:
+        id:
+          type: integer
+          docs: User ID
+      display-name: Get user info
+      response:
+        docs: ''
+        type: root.BaseUser
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              first_name: first_name
+              last_name: last_name
+              username: username
+              email: email
+              last_activity: '2024-01-15T09:30:00Z'
+              avatar: avatar
+              initials: initials
+              phone: phone
+              active_organization: 1
+              allow_newsletters: true
+    api_users_delete:
+      path: /api/users/{id}/
+      method: DELETE
+      auth: true
+      docs: Delete a specific Label Studio user.
+      path-parameters:
+        id:
+          type: integer
+          docs: User ID
+      display-name: Delete user
+      examples:
+        - path-parameters:
+            id: 1
+    api_users_partial_update:
+      path: /api/users/{id}/
+      method: PATCH
+      auth: true
+      docs: >
+
+        Update details for a specific user, such as their name or contact
+        information, in Label Studio.
+      path-parameters:
+        id:
+          type: integer
+          docs: User ID
+      display-name: Update user details
+      request:
+        body: root.BaseUser
+      response:
+        docs: ''
+        type: root.BaseUser
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            username: username
+          response:
+            body:
+              id: 1
+              first_name: first_name
+              last_name: last_name
+              username: username
+              email: email
+              last_activity: '2024-01-15T09:30:00Z'
+              avatar: avatar
+              initials: initials
+              phone: phone
+              active_organization: 1
+              allow_newsletters: true
+imports:
+  root: __package__.yml

@@ -1,0 +1,272 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_webhooks_list:
+      path: /api/webhooks/
+      method: GET
+      auth: true
+      docs: List all webhooks set up for your organization.
+      display-name: List all webhooks
+      request:
+        name: ApiWebhooksListRequest
+        query-parameters:
+          project:
+            type: optional<string>
+            docs: Project ID
+      response:
+        docs: ''
+        type: list<root.Webhook>
+      examples:
+        - response:
+            body:
+              - id: 1
+                organization: 1
+                project: 1
+                url: url
+                send_payload: true
+                send_for_all_actions: true
+                headers:
+                  headers:
+                    key: value
+                is_active: true
+                actions:
+                  - PROJECT_CREATED
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+    api_webhooks_create:
+      path: /api/webhooks/
+      method: POST
+      auth: true
+      docs: Create a webhook for your organization.
+      display-name: Create a webhook
+      request:
+        body: root.Webhook
+      response:
+        docs: ''
+        type: root.Webhook
+      examples:
+        - request:
+            url: url
+          response:
+            body:
+              id: 1
+              organization: 1
+              project: 1
+              url: url
+              send_payload: true
+              send_for_all_actions: true
+              headers:
+                headers:
+                  key: value
+              is_active: true
+              actions:
+                - PROJECT_CREATED
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+    api_webhooks_info_list:
+      path: /api/webhooks/info/
+      method: GET
+      auth: true
+      docs: Get descriptions of all available webhook actions to set up webhooks.
+      display-name: Get all webhook actions
+      request:
+        name: ApiWebhooksInfoListRequest
+        query-parameters:
+          organization-only:
+            type: optional<boolean>
+            docs: organization-only or not
+      examples:
+        - {}
+    api_webhooks_read:
+      path: /api/webhooks/{id}/
+      method: GET
+      auth: true
+      docs: ''
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this webhook.
+      display-name: Get webhook info
+      response:
+        docs: ''
+        type: root.Webhook
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              organization: 1
+              project: 1
+              url: url
+              send_payload: true
+              send_for_all_actions: true
+              headers:
+                headers:
+                  key: value
+              is_active: true
+              actions:
+                - PROJECT_CREATED
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+    api_webhooks_update:
+      path: /api/webhooks/{id}/
+      method: PUT
+      auth: true
+      docs: ''
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this webhook.
+      display-name: Save webhook info
+      request:
+        body: root.WebhookSerializerForUpdate
+        query-parameters:
+          url:
+            type: string
+            docs: URL of webhook
+          send_payload:
+            type: optional<boolean>
+            docs: If value is False send only action
+          send_for_all_actions:
+            type: optional<boolean>
+            docs: If value is False - used only for actions from WebhookAction
+          headers:
+            type: optional<string>
+            docs: Key Value Json of headers
+          is_active:
+            type: optional<boolean>
+            docs: If value is False the webhook is disabled
+          actions:
+            type: optional<ApiWebhooksUpdateRequestActionsItem>
+            allow-multiple: true
+        name: ApiWebhooksUpdateRequest
+      response:
+        docs: ''
+        type: root.WebhookSerializerForUpdate
+      examples:
+        - path-parameters:
+            id: 1
+          query-parameters:
+            url: url
+          request:
+            url: url
+          response:
+            body:
+              id: 1
+              organization: 1
+              project: 1
+              url: url
+              send_payload: true
+              send_for_all_actions: true
+              headers:
+                headers:
+                  key: value
+              is_active: true
+              actions:
+                - PROJECT_CREATED
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+    api_webhooks_delete:
+      path: /api/webhooks/{id}/
+      method: DELETE
+      auth: true
+      docs: ''
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this webhook.
+      display-name: Delete webhook info
+      examples:
+        - path-parameters:
+            id: 1
+    api_webhooks_partial_update:
+      path: /api/webhooks/{id}/
+      method: PATCH
+      auth: true
+      docs: ''
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this webhook.
+      display-name: Update webhook info
+      request:
+        body: root.WebhookSerializerForUpdate
+        query-parameters:
+          url:
+            type: string
+            docs: URL of webhook
+          send_payload:
+            type: optional<boolean>
+            docs: If value is False send only action
+          send_for_all_actions:
+            type: optional<boolean>
+            docs: If value is False - used only for actions from WebhookAction
+          headers:
+            type: optional<string>
+            docs: Key Value Json of headers
+          is_active:
+            type: optional<boolean>
+            docs: If value is False the webhook is disabled
+          actions:
+            type: optional<ApiWebhooksPartialUpdateRequestActionsItem>
+            allow-multiple: true
+        name: ApiWebhooksPartialUpdateRequest
+      response:
+        docs: ''
+        type: root.WebhookSerializerForUpdate
+      examples:
+        - path-parameters:
+            id: 1
+          query-parameters:
+            url: url
+          request:
+            url: url
+          response:
+            body:
+              id: 1
+              organization: 1
+              project: 1
+              url: url
+              send_payload: true
+              send_for_all_actions: true
+              headers:
+                headers:
+                  key: value
+              is_active: true
+              actions:
+                - PROJECT_CREATED
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+types:
+  ApiWebhooksUpdateRequestActionsItem:
+    enum:
+      - PROJECT_CREATED
+      - PROJECT_UPDATED
+      - PROJECT_DELETED
+      - TASKS_CREATED
+      - TASKS_DELETED
+      - ANNOTATION_CREATED
+      - ANNOTATIONS_CREATED
+      - ANNOTATION_UPDATED
+      - ANNOTATIONS_DELETED
+      - LABEL_LINK_CREATED
+      - LABEL_LINK_UPDATED
+      - LABEL_LINK_DELETED
+  ApiWebhooksPartialUpdateRequestActionsItem:
+    enum:
+      - PROJECT_CREATED
+      - PROJECT_UPDATED
+      - PROJECT_DELETED
+      - TASKS_CREATED
+      - TASKS_DELETED
+      - ANNOTATION_CREATED
+      - ANNOTATIONS_CREATED
+      - ANNOTATION_UPDATED
+      - ANNOTATIONS_DELETED
+      - LABEL_LINK_CREATED
+      - LABEL_LINK_UPDATED
+      - LABEL_LINK_DELETED
