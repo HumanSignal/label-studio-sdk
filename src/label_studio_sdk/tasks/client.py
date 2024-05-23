@@ -119,7 +119,7 @@ class TasksClient:
                 request_options=request_options,
             )
             _items = _parsed_response.tasks
-            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -481,7 +481,7 @@ class AsyncTasksClient:
                 request_options=request_options,
             )
             _items = _parsed_response.tasks
-            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next) # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
