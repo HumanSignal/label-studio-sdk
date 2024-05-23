@@ -1,0 +1,7 @@
+components:
+  securitySchemes:
+    Token:
+      x-fern-header:
+        name: api_key
+        env: LABEL_STUDIO_API_KEY
+        prefix: "Token "
