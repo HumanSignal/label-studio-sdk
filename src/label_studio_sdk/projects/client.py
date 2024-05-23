@@ -20,8 +20,8 @@ from ..types.project import Project
 from ..types.project_import import ProjectImport
 from ..types.project_label_config import ProjectLabelConfig
 from ..types.project_reimport import ProjectReimport
-from .types.projects_get_many_response import ProjectsGetManyResponse
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
+from .types.projects_list_response import ProjectsListResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -31,7 +31,7 @@ class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_many(
+    def list(
         self,
         *,
         ordering: typing.Optional[str] = None,
@@ -84,7 +84,7 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.get_many()
+        client.projects.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
@@ -122,9 +122,9 @@ class ProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(ProjectsGetManyResponse, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(ProjectsListResponse, _response.json())  # type: ignore
             _has_next = True
-            _get_next = lambda: self.get_many(
+            _get_next = lambda: self.list(
                 ordering=ordering,
                 ids=ids,
                 title=title,
@@ -1057,7 +1057,7 @@ class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_many(
+    async def list(
         self,
         *,
         ordering: typing.Optional[str] = None,
@@ -1110,7 +1110,7 @@ class AsyncProjectsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.projects.get_many()
+        await client.projects.list()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
@@ -1148,9 +1148,9 @@ class AsyncProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(ProjectsGetManyResponse, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(ProjectsListResponse, _response.json())  # type: ignore
             _has_next = True
-            _get_next = lambda: self.get_many(
+            _get_next = lambda: self.list(
                 ordering=ordering,
                 ids=ids,
                 title=title,

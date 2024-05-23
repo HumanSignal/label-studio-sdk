@@ -8,7 +8,7 @@ from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from ...types.project import Project
 
 
-class ProjectsGetManyResponse(pydantic_v1.BaseModel):
+class ProjectsListResponse(pydantic_v1.BaseModel):
     count: int
     next: typing.Optional[str] = None
     previous: typing.Optional[str] = None

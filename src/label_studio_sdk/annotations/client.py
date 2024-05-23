@@ -215,7 +215,7 @@ class AnnotationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def list_(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Annotation]:
+    def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Annotation]:
         """
         List all annotations for a task.
 
@@ -239,7 +239,7 @@ class AnnotationsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.annotations.list_(
+        client.annotations.list(
             id=1,
         )
         """
@@ -559,7 +559,7 @@ class AsyncAnnotationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def list_(
+    async def list(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Annotation]:
         """
@@ -585,7 +585,7 @@ class AsyncAnnotationsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.annotations.list_(
+        await client.annotations.list(
             id=1,
         )
         """

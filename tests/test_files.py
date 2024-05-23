@@ -36,10 +36,10 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = [{"id": 1, "file": "file"}]
     expected_types = ("list", {0: {"id": "integer", "file": None}})
-    response = client.files.list_(id=1)
+    response = client.files.list(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.files.list_(id=1)
+    async_response = await async_client.files.list(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 

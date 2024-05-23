@@ -21,7 +21,7 @@ class PredictionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list_(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Prediction]:
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Prediction]:
         """
         List all predictions and their IDs.
 
@@ -42,7 +42,7 @@ class PredictionsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.predictions.list_()
+        client.predictions.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
@@ -415,7 +415,7 @@ class AsyncPredictionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list_(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Prediction]:
+    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Prediction]:
         """
         List all predictions and their IDs.
 
@@ -436,7 +436,7 @@ class AsyncPredictionsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.predictions.list_()
+        await client.predictions.list()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",

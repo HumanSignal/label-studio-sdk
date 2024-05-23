@@ -46,10 +46,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.predictions.list_()
+    response = client.predictions.list()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.predictions.list_()
+    async_response = await async_client.predictions.list()
     validate_response(async_response, expected_response, expected_types)
 
 

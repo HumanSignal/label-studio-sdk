@@ -1264,7 +1264,7 @@ paths:
       tags:
         - Projects
       x-fern-sdk-group-name: projects
-      x-fern-sdk-method-name: get_many
+      x-fern-sdk-method-name: list
       x-fern-pagination:
         offset: $request.page
         results: $response.results

@@ -215,7 +215,7 @@ class FilesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def list_(
+    def list(
         self,
         id: int,
         *,
@@ -252,7 +252,7 @@ class FilesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.files.list_(
+        client.files.list(
             id=1,
         )
         """
@@ -559,7 +559,7 @@ class AsyncFilesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def list_(
+    async def list(
         self,
         id: int,
         *,
@@ -596,7 +596,7 @@ class AsyncFilesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.files.list_(
+        await client.files.list(
             id=1,
         )
         """

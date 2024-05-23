@@ -95,7 +95,7 @@ from .environment import LabelStudioEnvironment
 from .labels import ApiLabelLinksListResponse, ApiLabelsListResponse
 from .machine_learning import ApiMlCreateResponse
 from .organizations import ApiOrganizationsMembershipsListResponse
-from .projects import ProjectsGetManyResponse, ProjectsImportTasksResponse
+from .projects import ProjectsImportTasksResponse, ProjectsListResponse
 from .tasks import TasksGetManyResponse
 from .users import ApiCurrentUserResetTokenCreateResponse, ApiCurrentUserTokenListResponse
 from .version import __version__
@@ -162,8 +162,8 @@ __all__ = [
     "ProjectReimportStatus",
     "ProjectSampling",
     "ProjectSkipQueue",
-    "ProjectsGetManyResponse",
     "ProjectsImportTasksResponse",
+    "ProjectsListResponse",
     "RedisExportStorage",
     "RedisExportStorageStatus",
     "RedisImportStorage",
