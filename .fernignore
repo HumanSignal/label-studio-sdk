@@ -1,3 +1,9 @@
 # Specify files that shouldn't be modified by Fern
 
 .github/workflows/ci.yml
+
+## typing errors (will be fixed by Fern)
+src/label_studio_sdk/tasks/client.py
+tests/utilities.py
+pyproject.toml
+poetry.lock
