@@ -20,6 +20,7 @@ groups:
           inline_request_params: false
           package_name: label_studio_sdk
           client_class_name: LabelStudio
+        smart-casing: true
   python-sdk-local:
     generators:
       - name: fernapi/fern-python-sdk

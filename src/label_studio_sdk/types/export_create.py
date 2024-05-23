@@ -28,7 +28,7 @@ class ExportCreate(pydantic_v1.BaseModel):
     """
 
     status: typing.Optional[ExportCreateStatus] = None
-    md_5: typing.Optional[str] = pydantic_v1.Field(alias="md5", default=None)
+    md5: typing.Optional[str] = None
     counters: typing.Optional[typing.Dict[str, typing.Any]] = None
     converted_formats: typing.Optional[typing.List[ConvertedFormat]] = None
     task_filter_options: typing.Optional[TaskFilterOptions] = None
@@ -50,7 +50,5 @@ class ExportCreate(pydantic_v1.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
         extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

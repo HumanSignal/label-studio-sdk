@@ -5,7 +5,7 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from .s_3_export_storage_status import S3ExportStorageStatus
+from .s3export_storage_status import S3ExportStorageStatus
 
 
 class S3ExportStorage(pydantic_v1.BaseModel):
@@ -103,7 +103,7 @@ class S3ExportStorage(pydantic_v1.BaseModel):
     AWS Region
     """
 
-    s_3_endpoint: typing.Optional[str] = pydantic_v1.Field(alias="s3_endpoint", default=None)
+    s3endpoint: typing.Optional[str] = pydantic_v1.Field(alias="s3_endpoint", default=None)
     """
     S3 Endpoint
     """

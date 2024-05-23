@@ -11,8 +11,8 @@ from ..core.pydantic_utilities import pydantic_v1
 from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
-from ..types.s_3_export_storage import S3ExportStorage
-from ..types.s_3_import_storage import S3ImportStorage
+from ..types.s3export_storage import S3ExportStorage
+from ..types.s3import_storage import S3ImportStorage
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -22,7 +22,7 @@ class StorageS3Client:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def api_storages_export_s_3_list(
+    def api_storages_export_s3list(
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[S3ExportStorage]:
         """
@@ -48,7 +48,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_export_s_3_list()
+        client.storage_s3.api_storages_export_s3list()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
@@ -89,7 +89,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_export_s_3_create(
+    def api_storages_export_s3create(
         self, *, request: S3ExportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ExportStorage:
         """
@@ -115,7 +115,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_export_s_3_create(
+        client.storage_s3.api_storages_export_s3create(
             request=S3ExportStorage(
                 project=1,
             ),
@@ -157,7 +157,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_export_s_3_validate_create(
+    def api_storages_export_s3validate_create(
         self, *, request: S3ExportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ExportStorage:
         """
@@ -183,7 +183,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_export_s_3_validate_create(
+        client.storage_s3.api_storages_export_s3validate_create(
             request=S3ExportStorage(
                 project=1,
             ),
@@ -225,7 +225,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_export_s_3_read(
+    def api_storages_export_s3read(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ExportStorage:
         """
@@ -251,7 +251,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_export_s_3_read(
+        client.storage_s3.api_storages_export_s3read(
             id=1,
         )
         """
@@ -287,9 +287,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_export_s_3_delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def api_storages_export_s3delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific S3 export storage connection.
 
@@ -312,7 +310,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_export_s_3_delete(
+        client.storage_s3.api_storages_export_s3delete(
             id=1,
         )
         """
@@ -351,7 +349,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_export_s_3_partial_update(
+    def api_storages_export_s3partial_update(
         self, id: int, *, request: S3ExportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ExportStorage:
         """
@@ -380,7 +378,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_export_s_3_partial_update(
+        client.storage_s3.api_storages_export_s3partial_update(
             id=1,
             request=S3ExportStorage(
                 project=1,
@@ -425,7 +423,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_export_s_3_sync_create(
+    def api_storages_export_s3sync_create(
         self, id: str, *, request: S3ExportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ExportStorage:
         """
@@ -453,7 +451,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_export_s_3_sync_create(
+        client.storage_s3.api_storages_export_s3sync_create(
             id="id",
             request=S3ExportStorage(
                 project=1,
@@ -498,7 +496,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_s_3_list(
+    def api_storages_s3list(
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[S3ImportStorage]:
         """
@@ -524,7 +522,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_s_3_list()
+        client.storage_s3.api_storages_s3list()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
@@ -565,7 +563,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_s_3_create(
+    def api_storages_s3create(
         self, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ImportStorage:
         """
@@ -591,7 +589,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_s_3_create(
+        client.storage_s3.api_storages_s3create(
             request=S3ImportStorage(
                 project=1,
             ),
@@ -633,7 +631,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_s_3_validate_create(
+    def api_storages_s3validate_create(
         self, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ImportStorage:
         """
@@ -659,7 +657,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_s_3_validate_create(
+        client.storage_s3.api_storages_s3validate_create(
             request=S3ImportStorage(
                 project=1,
             ),
@@ -701,7 +699,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_s_3_read(
+    def api_storages_s3read(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ImportStorage:
         """
@@ -727,7 +725,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_s_3_read(
+        client.storage_s3.api_storages_s3read(
             id=1,
         )
         """
@@ -763,7 +761,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_s_3_delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def api_storages_s3delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific S3 import storage connection.
 
@@ -786,7 +784,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_s_3_delete(
+        client.storage_s3.api_storages_s3delete(
             id=1,
         )
         """
@@ -825,7 +823,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_s_3_partial_update(
+    def api_storages_s3partial_update(
         self, id: int, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ImportStorage:
         """
@@ -854,7 +852,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_s_3_partial_update(
+        client.storage_s3.api_storages_s3partial_update(
             id=1,
             request=S3ImportStorage(
                 project=1,
@@ -899,7 +897,7 @@ class StorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_storages_s_3_sync_create(
+    def api_storages_s3sync_create(
         self, id: str, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ImportStorage:
         """
@@ -927,7 +925,7 @@ class StorageS3Client:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.storage_s_3.api_storages_s_3_sync_create(
+        client.storage_s3.api_storages_s3sync_create(
             id="id",
             request=S3ImportStorage(
                 project=1,
@@ -977,7 +975,7 @@ class AsyncStorageS3Client:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def api_storages_export_s_3_list(
+    async def api_storages_export_s3list(
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[S3ExportStorage]:
         """
@@ -1003,7 +1001,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_export_s_3_list()
+        await client.storage_s3.api_storages_export_s3list()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
@@ -1044,7 +1042,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_export_s_3_create(
+    async def api_storages_export_s3create(
         self, *, request: S3ExportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ExportStorage:
         """
@@ -1070,7 +1068,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_export_s_3_create(
+        await client.storage_s3.api_storages_export_s3create(
             request=S3ExportStorage(
                 project=1,
             ),
@@ -1112,7 +1110,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_export_s_3_validate_create(
+    async def api_storages_export_s3validate_create(
         self, *, request: S3ExportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ExportStorage:
         """
@@ -1138,7 +1136,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_export_s_3_validate_create(
+        await client.storage_s3.api_storages_export_s3validate_create(
             request=S3ExportStorage(
                 project=1,
             ),
@@ -1180,7 +1178,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_export_s_3_read(
+    async def api_storages_export_s3read(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ExportStorage:
         """
@@ -1206,7 +1204,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_export_s_3_read(
+        await client.storage_s3.api_storages_export_s3read(
             id=1,
         )
         """
@@ -1242,7 +1240,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_export_s_3_delete(
+    async def api_storages_export_s3delete(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -1267,7 +1265,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_export_s_3_delete(
+        await client.storage_s3.api_storages_export_s3delete(
             id=1,
         )
         """
@@ -1306,7 +1304,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_export_s_3_partial_update(
+    async def api_storages_export_s3partial_update(
         self, id: int, *, request: S3ExportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ExportStorage:
         """
@@ -1335,7 +1333,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_export_s_3_partial_update(
+        await client.storage_s3.api_storages_export_s3partial_update(
             id=1,
             request=S3ExportStorage(
                 project=1,
@@ -1380,7 +1378,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_export_s_3_sync_create(
+    async def api_storages_export_s3sync_create(
         self, id: str, *, request: S3ExportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ExportStorage:
         """
@@ -1408,7 +1406,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_export_s_3_sync_create(
+        await client.storage_s3.api_storages_export_s3sync_create(
             id="id",
             request=S3ExportStorage(
                 project=1,
@@ -1453,7 +1451,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_s_3_list(
+    async def api_storages_s3list(
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[S3ImportStorage]:
         """
@@ -1479,7 +1477,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_s_3_list()
+        await client.storage_s3.api_storages_s3list()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
@@ -1520,7 +1518,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_s_3_create(
+    async def api_storages_s3create(
         self, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ImportStorage:
         """
@@ -1546,7 +1544,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_s_3_create(
+        await client.storage_s3.api_storages_s3create(
             request=S3ImportStorage(
                 project=1,
             ),
@@ -1588,7 +1586,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_s_3_validate_create(
+    async def api_storages_s3validate_create(
         self, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ImportStorage:
         """
@@ -1614,7 +1612,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_s_3_validate_create(
+        await client.storage_s3.api_storages_s3validate_create(
             request=S3ImportStorage(
                 project=1,
             ),
@@ -1656,7 +1654,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_s_3_read(
+    async def api_storages_s3read(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ImportStorage:
         """
@@ -1682,7 +1680,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_s_3_read(
+        await client.storage_s3.api_storages_s3read(
             id=1,
         )
         """
@@ -1718,9 +1716,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_s_3_delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def api_storages_s3delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific S3 import storage connection.
 
@@ -1743,7 +1739,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_s_3_delete(
+        await client.storage_s3.api_storages_s3delete(
             id=1,
         )
         """
@@ -1782,7 +1778,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_s_3_partial_update(
+    async def api_storages_s3partial_update(
         self, id: int, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ImportStorage:
         """
@@ -1811,7 +1807,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_s_3_partial_update(
+        await client.storage_s3.api_storages_s3partial_update(
             id=1,
             request=S3ImportStorage(
                 project=1,
@@ -1856,7 +1852,7 @@ class AsyncStorageS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_storages_s_3_sync_create(
+    async def api_storages_s3sync_create(
         self, id: str, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
     ) -> S3ImportStorage:
         """
@@ -1884,7 +1880,7 @@ class AsyncStorageS3Client:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.storage_s_3.api_storages_s_3_sync_create(
+        await client.storage_s3.api_storages_s3sync_create(
             id="id",
             request=S3ImportStorage(
                 project=1,

@@ -24,7 +24,7 @@ from .storage_azure.client import AsyncStorageAzureClient, StorageAzureClient
 from .storage_gcs.client import AsyncStorageGcsClient, StorageGcsClient
 from .storage_local.client import AsyncStorageLocalClient, StorageLocalClient
 from .storage_redis.client import AsyncStorageRedisClient, StorageRedisClient
-from .storage_s_3.client import AsyncStorageS3Client, StorageS3Client
+from .storage_s3.client import AsyncStorageS3Client, StorageS3Client
 from .tasks.client import AsyncTasksClient, TasksClient
 from .users.client import AsyncUsersClient, UsersClient
 from .webhooks.client import AsyncWebhooksClient, WebhooksClient
@@ -108,7 +108,7 @@ class LabelStudio:
         self.storage_gcs = StorageGcsClient(client_wrapper=self._client_wrapper)
         self.storage_local = StorageLocalClient(client_wrapper=self._client_wrapper)
         self.storage_redis = StorageRedisClient(client_wrapper=self._client_wrapper)
-        self.storage_s_3 = StorageS3Client(client_wrapper=self._client_wrapper)
+        self.storage_s3 = StorageS3Client(client_wrapper=self._client_wrapper)
         self.tasks = TasksClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         self.data = DataClient(client_wrapper=self._client_wrapper)
@@ -192,7 +192,7 @@ class AsyncLabelStudio:
         self.storage_gcs = AsyncStorageGcsClient(client_wrapper=self._client_wrapper)
         self.storage_local = AsyncStorageLocalClient(client_wrapper=self._client_wrapper)
         self.storage_redis = AsyncStorageRedisClient(client_wrapper=self._client_wrapper)
-        self.storage_s_3 = AsyncStorageS3Client(client_wrapper=self._client_wrapper)
+        self.storage_s3 = AsyncStorageS3Client(client_wrapper=self._client_wrapper)
         self.tasks = AsyncTasksClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         self.data = AsyncDataClient(client_wrapper=self._client_wrapper)

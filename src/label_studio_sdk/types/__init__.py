@@ -51,10 +51,10 @@ from .redis_export_storage import RedisExportStorage
 from .redis_export_storage_status import RedisExportStorageStatus
 from .redis_import_storage import RedisImportStorage
 from .redis_import_storage_status import RedisImportStorageStatus
-from .s_3_export_storage import S3ExportStorage
-from .s_3_export_storage_status import S3ExportStorageStatus
-from .s_3_import_storage import S3ImportStorage
-from .s_3_import_storage_status import S3ImportStorageStatus
+from .s3export_storage import S3ExportStorage
+from .s3export_storage_status import S3ExportStorageStatus
+from .s3import_storage import S3ImportStorage
+from .s3import_storage_status import S3ImportStorageStatus
 from .serialization_option import SerializationOption
 from .serialization_options import SerializationOptions
 from .task_filter_options import TaskFilterOptions

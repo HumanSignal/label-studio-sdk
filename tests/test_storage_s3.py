@@ -6,7 +6,7 @@ from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 from .utilities import validate_response
 
 
-async def test_api_storages_export_s_3_list(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_export_s3list(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = [
         {
             "id": 1,
@@ -66,14 +66,14 @@ async def test_api_storages_export_s_3_list(client: LabelStudio, async_client: A
             }
         },
     )
-    response = client.storage_s_3.api_storages_export_s_3_list()
+    response = client.storage_s3.api_storages_export_s3list()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_export_s_3_list()
+    async_response = await async_client.storage_s3.api_storages_export_s3list()
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_storages_export_s_3_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_export_s3create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "type": "type",
@@ -126,14 +126,14 @@ async def test_api_storages_export_s_3_create(client: LabelStudio, async_client:
         "s3_endpoint": None,
         "project": "integer",
     }
-    response = client.storage_s_3.api_storages_export_s_3_create(request=S3ExportStorage(project=1))
+    response = client.storage_s3.api_storages_export_s3create(request=S3ExportStorage(project=1))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_export_s_3_create(request=S3ExportStorage(project=1))
+    async_response = await async_client.storage_s3.api_storages_export_s3create(request=S3ExportStorage(project=1))
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_storages_export_s_3_validate_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_export_s3validate_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "type": "type",
@@ -186,16 +186,16 @@ async def test_api_storages_export_s_3_validate_create(client: LabelStudio, asyn
         "s3_endpoint": None,
         "project": "integer",
     }
-    response = client.storage_s_3.api_storages_export_s_3_validate_create(request=S3ExportStorage(project=1))
+    response = client.storage_s3.api_storages_export_s3validate_create(request=S3ExportStorage(project=1))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_export_s_3_validate_create(
+    async_response = await async_client.storage_s3.api_storages_export_s3validate_create(
         request=S3ExportStorage(project=1)
     )
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_storages_export_s_3_read(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_export_s3read(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "type": "type",
@@ -248,21 +248,21 @@ async def test_api_storages_export_s_3_read(client: LabelStudio, async_client: A
         "s3_endpoint": None,
         "project": "integer",
     }
-    response = client.storage_s_3.api_storages_export_s_3_read(id=1)
+    response = client.storage_s3.api_storages_export_s3read(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_export_s_3_read(id=1)
+    async_response = await async_client.storage_s3.api_storages_export_s3read(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_storages_export_s_3_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_export_s3delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.storage_s_3.api_storages_export_s_3_delete(id=1) is None  # type: ignore[func-returns-value]
+    assert client.storage_s3.api_storages_export_s3delete(id=1) is None  # type: ignore[func-returns-value]
 
-    assert await async_client.storage_s_3.api_storages_export_s_3_delete(id=1) is None  # type: ignore[func-returns-value]
+    assert await async_client.storage_s3.api_storages_export_s3delete(id=1) is None  # type: ignore[func-returns-value]
 
 
-async def test_api_storages_export_s_3_partial_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_export_s3partial_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "type": "type",
@@ -315,16 +315,16 @@ async def test_api_storages_export_s_3_partial_update(client: LabelStudio, async
         "s3_endpoint": None,
         "project": "integer",
     }
-    response = client.storage_s_3.api_storages_export_s_3_partial_update(id=1, request=S3ExportStorage(project=1))
+    response = client.storage_s3.api_storages_export_s3partial_update(id=1, request=S3ExportStorage(project=1))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_export_s_3_partial_update(
+    async_response = await async_client.storage_s3.api_storages_export_s3partial_update(
         id=1, request=S3ExportStorage(project=1)
     )
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_storages_export_s_3_sync_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_export_s3sync_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "type": "type",
@@ -377,16 +377,16 @@ async def test_api_storages_export_s_3_sync_create(client: LabelStudio, async_cl
         "s3_endpoint": None,
         "project": "integer",
     }
-    response = client.storage_s_3.api_storages_export_s_3_sync_create(id="id", request=S3ExportStorage(project=1))
+    response = client.storage_s3.api_storages_export_s3sync_create(id="id", request=S3ExportStorage(project=1))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_export_s_3_sync_create(
+    async_response = await async_client.storage_s3.api_storages_export_s3sync_create(
         id="id", request=S3ExportStorage(project=1)
     )
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_storages_s_3_list(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_s3list(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = [
         {
             "id": 1,
@@ -450,14 +450,14 @@ async def test_api_storages_s_3_list(client: LabelStudio, async_client: AsyncLab
             }
         },
     )
-    response = client.storage_s_3.api_storages_s_3_list()
+    response = client.storage_s3.api_storages_s3list()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_s_3_list()
+    async_response = await async_client.storage_s3.api_storages_s3list()
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_storages_s_3_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_s3create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "type": "type",
@@ -514,14 +514,14 @@ async def test_api_storages_s_3_create(client: LabelStudio, async_client: AsyncL
         "recursive_scan": None,
         "project": "integer",
     }
-    response = client.storage_s_3.api_storages_s_3_create(request=S3ImportStorage(project=1))
+    response = client.storage_s3.api_storages_s3create(request=S3ImportStorage(project=1))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_s_3_create(request=S3ImportStorage(project=1))
+    async_response = await async_client.storage_s3.api_storages_s3create(request=S3ImportStorage(project=1))
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_storages_s_3_validate_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_s3validate_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "type": "type",
@@ -578,14 +578,14 @@ async def test_api_storages_s_3_validate_create(client: LabelStudio, async_clien
         "recursive_scan": None,
         "project": "integer",
     }
-    response = client.storage_s_3.api_storages_s_3_validate_create(request=S3ImportStorage(project=1))
+    response = client.storage_s3.api_storages_s3validate_create(request=S3ImportStorage(project=1))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_s_3_validate_create(request=S3ImportStorage(project=1))
+    async_response = await async_client.storage_s3.api_storages_s3validate_create(request=S3ImportStorage(project=1))
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_storages_s_3_read(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_s3read(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "type": "type",
@@ -642,21 +642,21 @@ async def test_api_storages_s_3_read(client: LabelStudio, async_client: AsyncLab
         "recursive_scan": None,
         "project": "integer",
     }
-    response = client.storage_s_3.api_storages_s_3_read(id=1)
+    response = client.storage_s3.api_storages_s3read(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_s_3_read(id=1)
+    async_response = await async_client.storage_s3.api_storages_s3read(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_storages_s_3_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_s3delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.storage_s_3.api_storages_s_3_delete(id=1) is None  # type: ignore[func-returns-value]
+    assert client.storage_s3.api_storages_s3delete(id=1) is None  # type: ignore[func-returns-value]
 
-    assert await async_client.storage_s_3.api_storages_s_3_delete(id=1) is None  # type: ignore[func-returns-value]
+    assert await async_client.storage_s3.api_storages_s3delete(id=1) is None  # type: ignore[func-returns-value]
 
 
-async def test_api_storages_s_3_partial_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_s3partial_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "type": "type",
@@ -713,16 +713,16 @@ async def test_api_storages_s_3_partial_update(client: LabelStudio, async_client
         "recursive_scan": None,
         "project": "integer",
     }
-    response = client.storage_s_3.api_storages_s_3_partial_update(id=1, request=S3ImportStorage(project=1))
+    response = client.storage_s3.api_storages_s3partial_update(id=1, request=S3ImportStorage(project=1))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_s_3_partial_update(
+    async_response = await async_client.storage_s3.api_storages_s3partial_update(
         id=1, request=S3ImportStorage(project=1)
     )
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_storages_s_3_sync_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_api_storages_s3sync_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "type": "type",
@@ -779,10 +779,10 @@ async def test_api_storages_s_3_sync_create(client: LabelStudio, async_client: A
         "recursive_scan": None,
         "project": "integer",
     }
-    response = client.storage_s_3.api_storages_s_3_sync_create(id="id", request=S3ImportStorage(project=1))
+    response = client.storage_s3.api_storages_s3sync_create(id="id", request=S3ImportStorage(project=1))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.storage_s_3.api_storages_s_3_sync_create(
+    async_response = await async_client.storage_s3.api_storages_s3sync_create(
         id="id", request=S3ImportStorage(project=1)
     )
     validate_response(async_response, expected_response, expected_types)
