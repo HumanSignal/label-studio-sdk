@@ -1,6 +1,10 @@
 # Specify files that shouldn't be modified by Fern
 
-.github/workflows/ci.yml
+.github/workflows/*
+README.md
+
+## temporary exclude pagination until RND-66 is resolved
+
 
 ## typing errors (will be fixed by Fern)
 src/label_studio_sdk/tasks/client.py
