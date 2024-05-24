@@ -1,5 +1,19 @@
 # Label Studio Python Library
 
+<!-- Note about deprecated version <1 -->
+---
+> :warning: **Note**<br/>
+>
+> 1. The version of `label-studio-sdk<1` is deprecated.
+> 2. If you still want to use it, install it with `pip install "label-studio-sdk<1"`.
+> 3. You can find the branch with the old version by cloning the repository and checking out the branch as follows:
+>
+> ```sh
+> git clone https://github.com/HumanSignal/label-studio-sdk.git
+> cd label-studio-sdk
+> git checkout previous-version
+---
+
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 
 The Label Studio Python Library provides convenient access to the Label Studio API from applications written in Python.
@@ -119,8 +133,8 @@ Task data, annotations and predictions in [Label Studio tasks format](https://la
         "image": "https://example.com/image.jpg",
         "label": "cat"
     },
-    "annotations": [...],
-    "predictions": [...]
+    "annotations": [],
+    "predictions": []
 }
 ```
 
