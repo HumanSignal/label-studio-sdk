@@ -3,6 +3,9 @@
 .github/workflows/*
 README.md
 
+# manual extensions
+src/label_studio_sdk/_extensions
+
 ## temporary exclude pagination until RND-66 is resolved
 
 
