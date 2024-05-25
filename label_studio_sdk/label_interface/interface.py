@@ -391,7 +391,35 @@ class LabelInterface:
             lst = list(filter(match_fn, lst))
 
         return lst
+    
+    def load_task(self, task):
+        """Loads a task and substitutes the value in each object tag
+        with actual data from the task, returning a copy of the
+        LabelConfig object.
 
+        If the `value` field in an object tag is designed to take
+        variable input (i.e., `value_is_variable` is True), the
+        function replaces this value with the corresponding value from
+        the task dictionary.
+
+        Args:
+            task (dict): Dictionary representing the task, where
+            each key-value pair denotes an attribute-value of the
+            task.
+
+        Returns:
+            LabelInterface: A deep copy of the current LabelIntreface
+            instance with the object tags' value fields populated with
+            data from the task.
+
+        """
+        tree = copy.deepcopy(self)
+        for obj in tree.objects:
+            if obj.value_is_variable and obj.value_name in task:
+                obj.value = task.get(obj.value_name)
+
+        return tree
+    
     def parse(self, config_string: str) -> Tuple[Dict, Dict, Dict, etree._Element]:
         """Parses the received configuration string into dictionaries
         of ControlTags, ObjectTags, and Labels, along with an XML tree
@@ -488,34 +516,6 @@ class LabelInterface:
                 "Label config contains non-unique names"
             )
 
-    def load_task(self, task):
-        """Loads a task and substitutes the value in each object tag
-        with actual data from the task, returning a copy of the
-        LabelConfig object.
-
-        If the `value` field in an object tag is designed to take
-        variable input (i.e., `value_is_variable` is True), the
-        function replaces this value with the corresponding value from
-        the task dictionary.
-
-        Args:
-            task (dict): Dictionary representing the task, where
-            each key-value pair denotes an attribute-value of the
-            task.
-
-        Returns:
-            LabelInterface: A deep copy of the current LabelIntreface
-            instance with the object tags' value fields populated with
-            data from the task.
-
-        """
-        tree = copy.deepcopy(self)
-        for obj in tree.objects:
-            if obj.value_is_variable and obj.value_name in task:
-                obj.value = task.get(obj.value_name)
-
-        return tree
-
     @property
     def is_valid(self):
         """ """
@@ -568,6 +568,11 @@ class LabelInterface:
 
         return True
 
+    def _validate_object(self, obj):
+        """ """
+        return all(self.validate_region(r) for r in obj.get(RESULT_KEY) if r.get('type') != "relation") and \
+            all(self.validate_relation(r) for r in obj.get(RESULT_KEY) if r.get('type') == "relation")
+    
     def validate_annotation(self, annotation):
         """Validates the given annotation against the current configuration.
 
@@ -586,11 +591,11 @@ class LabelInterface:
             validation, False otherwise.
 
         """
-        return all(self.validate_region(r) for r in annotation.get(RESULT_KEY))
+        return self._validate_object(annotation)
 
     def validate_prediction(self, prediction):
         """Same as validate_annotation right now"""
-        return all(self.validate_region(r) for r in prediction.get(RESULT_KEY))
+        return self._validate_object(prediction)
 
     def validate_region(self, region) -> bool:
         """Validates a region from the annotation against the current
@@ -631,11 +636,28 @@ class LabelInterface:
 
         # validate the actual value, for example that <Labels /> tag
         # is producing start, end, and labels
-        if not control.validate_value(region["value"]):
-            return False
+        if region.get("type") is "relation":
+            if not control.validate_value(region):
+                return False
+        else:
+            if not control.validate_value(region["value"]):
+                return False
 
         return True
 
+    def validate_relation(self, relation, regions, _mapping=None) -> bool:
+        """Validates that the relation is correct and all the associated objects are provided"""
+        if _mapping is None:
+            _mapping = { r['id']: r for r in regions }
+
+        if relation.get("type") != "relation" or \
+           relation.get("direction") not in ("left", "right", "bi") or \
+           relation.get("from_id") not in _mapping or \
+           relation.get("to_id") not in _mapping:
+            return False
+        
+        return True
+    
     ### Generation
 
     def _sample_task(self, secure_mode=False):

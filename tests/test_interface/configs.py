@@ -90,12 +90,12 @@ TEXTAREA_CONF = f"""
 
 VIDEO_CONF = f"""
 <View>
-  <Labels name="videoLabels" toName="video">
-    <Label value="Car"/>
-    <Label value="Person"/>
+  <Labels name="videoLabels" toName="{TO_NAME}" >
+    <Label value="{LABEL1}" />
+    <Label value="{LABEL2}" />
   </Labels>
-  <Video name="video" value="$video"/>
-  <VideoRectangle name="box" toName="video"/>
+  <Video name="{TO_NAME}" value="{VALUE}" />
+  <VideoRectangle name="{FROM_NAME}" toName="{TO_NAME}" />
 </View>
 """
 

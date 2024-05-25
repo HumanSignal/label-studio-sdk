@@ -290,6 +290,7 @@ class ControlTag(LabelStudioTag):
         bool
             True if the value is valid, False otherwise
         """
+        
         if hasattr(self, "_label_attr_name"):
             if not self._validate_value_labels(value):
                 return False
@@ -361,7 +362,7 @@ class ControlTag(LabelStudioTag):
         obj = self.find_object_by_name(to_name)
         cls = self._value_class
         value = cls(**kwargs)
-
+        
         return Region(from_tag=self, to_tag=obj, value=value)
 
     def _label_with_labels(
@@ -419,8 +420,8 @@ class ControlTag(LabelStudioTag):
         **kwargs,
     ) -> Region:
         """
-        This method creates a new Region object with the specified label applied.
-        If not labels are provided, it creates a new instance of the value class with the provided arguments and keyword arguments.
+        This method creates a new Region object with the specified label.
+        
         If labels are provided, it creates a new instance of the value class with the provided arguments and keyword arguments and adds the labels to the Region object.
 
         Parameters:
@@ -459,8 +460,8 @@ class ControlTag(LabelStudioTag):
 
 
 class SpanSelection(BaseModel):
-    start: str
-    end: str
+    start: int
+    end: int
 
 
 class SpanSelectionOffsets(SpanSelection):
@@ -494,7 +495,7 @@ class LabelsTag(ControlTag):
 
 
 class BrushValue(BaseModel):
-    format: str
+    format: str = "rle"
     rle: List[int]
 
 
@@ -520,7 +521,7 @@ class EllipseValue(BaseModel):
     y: confloat(le=100)
     radiusX: confloat(le=50)
     radiusY: confloat(le=50)
-    rotation: confloat(le=360) = 0
+    rotation: Optional[confloat(le=360)] = 0
 
 
 class EllipseLabelsValue(EllipseValue):
@@ -563,7 +564,7 @@ class KeyPointLabelsTag(ControlTag):
 
 
 class PolygonValue(BaseModel):
-    points: Tuple[confloat(le=100), confloat(le=100)]
+    points: List[Tuple[confloat(le=100), confloat(le=100)]]
 
 
 class PolygonLabelsValue(PolygonValue):
@@ -574,9 +575,6 @@ class PolygonTag(ControlTag):
     """ """
 
     _value_class: Type[PolygonValue] = PolygonValue
-
-    def label(self, *args, **kwargs):
-        """ """
 
 
 class PolygonLabelsTag(ControlTag):
@@ -591,7 +589,7 @@ class RectangleValue(BaseModel):
     y: confloat(le=100)
     width: confloat(le=100)
     height: confloat(le=100)
-    rotation: confloat(le=360)
+    rotation: Optional[confloat(le=360)] = 0
 
 
 class RectangleLabelsValue(RectangleValue):
@@ -611,42 +609,45 @@ class RectangleLabelsTag(ControlTag):
     _value_class: Type[RectangleLabelsValue] = RectangleLabelsValue
 
 
+class VideoRectangleSequenceValue(BaseModel):
+    x: confloat(le=100)
+    y: confloat(le=100)
+    time: float
+    frame: int
+    width: confloat(le=100)
+    height: confloat(le=100)
+    rotation: Optional[float] = 0
+
+
 class VideoRectangleValue(BaseModel):
-    x: float
-    y: float
-    width: float
-    height: float
-    rotation: float
-
-
+    framesCount: int
+    duration: float
+    sequence: List[VideoRectangleSequenceValue]
+    labels: Optional[List[str]]
+    
+    
 class VideoRectangleTag(ControlTag):
     """ """
-
+    _label_attr_name: str = "labels"
     _value_class: Type[VideoRectangleValue] = VideoRectangleValue
-
+    
+    
+class NumberValue(BaseModel):
+    number: int
+    
 
 class NumberTag(ControlTag):
     """ """
+    _value_class: Type[NumberValue] = NumberValue
+    
 
-    def validate_value(self, value) -> bool:
-        """ """
-        # TODO implement
-        return True
+class DateTimeValue(BaseModel):
+    datetime: str
 
-    def label(self, *args, **kwargs):
-        """ """
-
-
+    
 class DateTimeTag(ControlTag):
     """ """
-
-    def validate_value(self, value) -> bool:
-        """ """
-        # TODO implement
-        return True
-
-    def label(self, *args, **kwargs):
-        """ """
+    _value_class: Type[DateTimeValue] = DateTimeValue
 
 
 class HyperTextLabelsValue(SpanSelectionOffsets):
@@ -669,8 +670,10 @@ class PairwiseTag(ControlTag):
 
     _value_class: Type[PairwiseValue] = PairwiseValue
 
-    def label(self, *args, **kwargs):
+    def label(self, side):
         """ """
+        value = PairwiseValue(selected=side)
+        return Region(from_tag=self, to_tag=self, value=value)
 
 
 class ParagraphLabelsValue(SpanSelectionOffsets):
@@ -683,20 +686,22 @@ class ParagraphLabelsTag(ControlTag):
     _label_attr_name: str = "paragraphlabels"
     _value_class: Type[ParagraphLabelsValue] = ParagraphLabelsValue
 
-    def label(self, *args, **kwargs):
+    def label(self, utterance=None, *args, **kwargs):
         """ """
+        if isinstance(utterance, int):
+            kwargs["start"] = utterance
+            kwargs["end"] = utterance
 
+        return super().label(*args, **kwargs)
+        
 
+class RankerValue(BaseModel):
+    rank: List[str]
+
+    
 class RankerTag(ControlTag):
     """ """
-
-    def validate_value(self, value) -> bool:
-        """ """
-        # TODO
-        return True
-
-    def label(self, *args, **kwargs):
-        """ """
+    _value_class: Type[RankerValue] = RankerValue
 
 
 class RatingValue(BaseModel):
@@ -705,24 +710,22 @@ class RatingValue(BaseModel):
 
 class RatingTag(ControlTag):
     """ """
-
     _value_class: Type[RatingValue] = RatingValue
-
-    def label(self, *args, **kwargs):
-        """ """
 
 
 class RelationsTag(ControlTag):
     """ """
-
-    def validate_value(self, value) -> bool:
+    def validate_value(self, ) -> bool:
         """ """
-        # TODO
-        return True
+        raise NotImplemented("""Should not be called directly, instead
+        use validate_relation() method found in LabelInterface class""")
 
     def label(self, *args, **kwargs):
         """ """
-
+        raise NotImplemented("""
+        Relations work on regions instead of Object tags
+        use Regions add_relation() method""")
+        
 
 class TaxonomyValue(BaseModel):
     taxonomy: List[List[str]]
