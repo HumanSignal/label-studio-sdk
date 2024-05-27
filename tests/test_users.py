@@ -6,27 +6,27 @@ from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 from .utilities import validate_response
 
 
-async def test_api_current_user_reset_token_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_reset_token(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {"token": "token"}
     expected_types = {"token": None}
-    response = client.users.api_current_user_reset_token_create()
+    response = client.users.reset_token()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.users.api_current_user_reset_token_create()
+    async_response = await async_client.users.reset_token()
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_current_user_token_list(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_get_token(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {"detail": "detail"}
     expected_types = {"detail": None}
-    response = client.users.api_current_user_token_list()
+    response = client.users.get_token()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.users.api_current_user_token_list()
+    async_response = await async_client.users.get_token()
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_current_user_whoami_read(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "first_name": "first_name",
@@ -53,14 +53,14 @@ async def test_api_current_user_whoami_read(client: LabelStudio, async_client: A
         "active_organization": "integer",
         "allow_newsletters": None,
     }
-    response = client.users.api_current_user_whoami_read()
+    response = client.users.whoami()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.users.api_current_user_whoami_read()
+    async_response = await async_client.users.whoami()
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_users_list(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = [
         {
             "id": 1,
@@ -94,14 +94,14 @@ async def test_api_users_list(client: LabelStudio, async_client: AsyncLabelStudi
             }
         },
     )
-    response = client.users.api_users_list()
+    response = client.users.list()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.users.api_users_list()
+    async_response = await async_client.users.list()
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_users_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "first_name": "first_name",
@@ -128,14 +128,14 @@ async def test_api_users_create(client: LabelStudio, async_client: AsyncLabelStu
         "active_organization": "integer",
         "allow_newsletters": None,
     }
-    response = client.users.api_users_create(request=BaseUser(username="username"))
+    response = client.users.create(request=BaseUser(username="username"))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.users.api_users_create(request=BaseUser(username="username"))
+    async_response = await async_client.users.create(request=BaseUser(username="username"))
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_users_read(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "first_name": "first_name",
@@ -162,21 +162,21 @@ async def test_api_users_read(client: LabelStudio, async_client: AsyncLabelStudi
         "active_organization": "integer",
         "allow_newsletters": None,
     }
-    response = client.users.api_users_read(id=1)
+    response = client.users.get(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.users.api_users_read(id=1)
+    async_response = await async_client.users.get(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_users_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.users.api_users_delete(id=1) is None  # type: ignore[func-returns-value]
+    assert client.users.delete(id=1) is None  # type: ignore[func-returns-value]
 
-    assert await async_client.users.api_users_delete(id=1) is None  # type: ignore[func-returns-value]
+    assert await async_client.users.delete(id=1) is None  # type: ignore[func-returns-value]
 
 
-async def test_api_users_partial_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "first_name": "first_name",
@@ -203,8 +203,8 @@ async def test_api_users_partial_update(client: LabelStudio, async_client: Async
         "active_organization": "integer",
         "allow_newsletters": None,
     }
-    response = client.users.api_users_partial_update(id=1, request=BaseUser(username="username"))
+    response = client.users.update(id=1, request=BaseUser(username="username"))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.users.api_users_partial_update(id=1, request=BaseUser(username="username"))
+    async_response = await async_client.users.update(id=1, request=BaseUser(username="username"))
     validate_response(async_response, expected_response, expected_types)

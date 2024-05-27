@@ -11,11 +11,10 @@ from ..core.pydantic_utilities import pydantic_v1
 from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
-from ..errors.method_not_allowed_error import MethodNotAllowedError
-from ..errors.not_found_error import NotFoundError
 from ..types.organization import Organization
 from ..types.organization_id import OrganizationId
-from .types.api_organizations_memberships_list_response import ApiOrganizationsMembershipsListResponse
+from ..types.organization_invite import OrganizationInvite
+from .members.client import AsyncMembersClient, MembersClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -24,10 +23,118 @@ OMIT = typing.cast(typing.Any, ...)
 class OrganizationsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.members = MembersClient(client_wrapper=self._client_wrapper)
 
-    def api_organizations_list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[OrganizationId]:
+    def get_invite(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationInvite:
+        """
+        Get a link to use to invite a new member to an organization in Label Studio Enterprise.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationInvite
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.get_invite()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/invite"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(OrganizationInvite, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def reset_invite(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationInvite:
+        """
+        Reset the token used in the invitation link to invite someone to an organization.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationInvite
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.reset_invite()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/invite/reset-token"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(OrganizationInvite, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[OrganizationId]:
         """
         Return a list of the organizations you've created or that you have access to.
 
@@ -48,7 +155,7 @@ class OrganizationsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.organizations.api_organizations_list()
+        client.organizations.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
@@ -80,9 +187,7 @@ class OrganizationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_organizations_read(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Organization:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Organization:
         """
         Retrieve the settings for a specific organization by ID.
 
@@ -106,7 +211,7 @@ class OrganizationsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.organizations.api_organizations_read(
+        client.organizations.get(
             id=1,
         )
         """
@@ -142,7 +247,7 @@ class OrganizationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_organizations_partial_update(
+    def update(
         self, id: int, *, request: Organization, request_options: typing.Optional[RequestOptions] = None
     ) -> Organization:
         """
@@ -171,7 +276,7 @@ class OrganizationsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.organizations.api_organizations_partial_update(
+        client.organizations.update(
             id=1,
             request=Organization(
                 title="title",
@@ -210,160 +315,6 @@ class OrganizationsClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(Organization, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def api_organizations_memberships_list(
-        self,
-        id: str,
-        *,
-        page: typing.Optional[int] = None,
-        page_size: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ApiOrganizationsMembershipsListResponse:
-        """
-        Retrieve a list of the organization members and their IDs.
-
-        Parameters
-        ----------
-        id : str
-
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        page_size : typing.Optional[int]
-            Number of results to return per page.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ApiOrganizationsMembershipsListResponse
-
-
-        Examples
-        --------
-        from label_studio_sdk.client import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.organizations.api_organizations_memberships_list(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            method="GET",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"api/organizations/{jsonable_encoder(id)}/memberships"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        {
-                            "page": page,
-                            "page_size": page_size,
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        }
-                    )
-                )
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ApiOrganizationsMembershipsListResponse, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def api_organizations_memberships_delete(
-        self, id: str, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Soft delete a member from the organization.
-
-        Parameters
-        ----------
-        id : str
-
-        user_pk : int
-            A unique integer value identifying the user to be deleted from the organization.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk.client import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.organizations.api_organizations_memberships_delete(
-            id="id",
-            user_pk=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            method="DELETE",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"api/organizations/{jsonable_encoder(id)}/memberships/{jsonable_encoder(user_pk)}/",
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        if _response.status_code == 404:
-            raise NotFoundError(pydantic_v1.parse_obj_as(typing.Any, _response.json()))  # type: ignore
-        if _response.status_code == 405:
-            raise MethodNotAllowedError(pydantic_v1.parse_obj_as(typing.Any, _response.json()))  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -374,10 +325,118 @@ class OrganizationsClient:
 class AsyncOrganizationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
 
-    async def api_organizations_list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[OrganizationId]:
+    async def get_invite(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationInvite:
+        """
+        Get a link to use to invite a new member to an organization in Label Studio Enterprise.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationInvite
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.organizations.get_invite()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/invite"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(OrganizationInvite, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def reset_invite(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationInvite:
+        """
+        Reset the token used in the invitation link to invite someone to an organization.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationInvite
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.organizations.reset_invite()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/invite/reset-token"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
+            ),
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(OrganizationInvite, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[OrganizationId]:
         """
         Return a list of the organizations you've created or that you have access to.
 
@@ -398,7 +457,7 @@ class AsyncOrganizationsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.organizations.api_organizations_list()
+        await client.organizations.list()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
@@ -430,9 +489,7 @@ class AsyncOrganizationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_organizations_read(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Organization:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Organization:
         """
         Retrieve the settings for a specific organization by ID.
 
@@ -456,7 +513,7 @@ class AsyncOrganizationsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.organizations.api_organizations_read(
+        await client.organizations.get(
             id=1,
         )
         """
@@ -492,7 +549,7 @@ class AsyncOrganizationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_organizations_partial_update(
+    async def update(
         self, id: int, *, request: Organization, request_options: typing.Optional[RequestOptions] = None
     ) -> Organization:
         """
@@ -521,7 +578,7 @@ class AsyncOrganizationsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.organizations.api_organizations_partial_update(
+        await client.organizations.update(
             id=1,
             request=Organization(
                 title="title",
@@ -560,160 +617,6 @@ class AsyncOrganizationsClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(Organization, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def api_organizations_memberships_list(
-        self,
-        id: str,
-        *,
-        page: typing.Optional[int] = None,
-        page_size: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ApiOrganizationsMembershipsListResponse:
-        """
-        Retrieve a list of the organization members and their IDs.
-
-        Parameters
-        ----------
-        id : str
-
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        page_size : typing.Optional[int]
-            Number of results to return per page.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ApiOrganizationsMembershipsListResponse
-
-
-        Examples
-        --------
-        from label_studio_sdk.client import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.organizations.api_organizations_memberships_list(
-            id="id",
-        )
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="GET",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"api/organizations/{jsonable_encoder(id)}/memberships"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        {
-                            "page": page,
-                            "page_size": page_size,
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        }
-                    )
-                )
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ApiOrganizationsMembershipsListResponse, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def api_organizations_memberships_delete(
-        self, id: str, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Soft delete a member from the organization.
-
-        Parameters
-        ----------
-        id : str
-
-        user_pk : int
-            A unique integer value identifying the user to be deleted from the organization.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk.client import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.organizations.api_organizations_memberships_delete(
-            id="id",
-            user_pk=1,
-        )
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="DELETE",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/",
-                f"api/organizations/{jsonable_encoder(id)}/memberships/{jsonable_encoder(user_pk)}/",
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        if _response.status_code == 404:
-            raise NotFoundError(pydantic_v1.parse_obj_as(typing.Any, _response.json()))  # type: ignore
-        if _response.status_code == 405:
-            raise MethodNotAllowedError(pydantic_v1.parse_obj_as(typing.Any, _response.json()))  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

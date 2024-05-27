@@ -1,0 +1,148 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_organizations_list:
+      path: /api/organizations/
+      method: GET
+      auth: true
+      docs: >
+
+        Return a list of the organizations you've created or that you have
+        access to.
+      display-name: List your organizations
+      response:
+        docs: ''
+        type: list<root.OrganizationId>
+      examples:
+        - response:
+            body:
+              - id: 1
+                title: title
+                contact_info: contact_info
+    api_organizations_read:
+      path: /api/organizations/{id}
+      method: GET
+      auth: true
+      docs: Retrieve the settings for a specific organization by ID.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this organization.
+      display-name: Get organization settings
+      response:
+        docs: ''
+        type: root.Organization
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              title: title
+              token: token
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              contact_info: contact_info
+              created_by: 1
+              users:
+                - 1
+    api_organizations_partial_update:
+      path: /api/organizations/{id}
+      method: PATCH
+      auth: true
+      docs: Update the settings for a specific organization by ID.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this organization.
+      display-name: Update organization settings
+      request:
+        body: root.Organization
+      response:
+        docs: ''
+        type: root.Organization
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            title: title
+          response:
+            body:
+              id: 1
+              title: title
+              token: token
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              contact_info: contact_info
+              created_by: 1
+              users:
+                - 1
+    api_organizations_memberships_list:
+      path: /api/organizations/{id}/memberships
+      method: GET
+      auth: true
+      docs: Retrieve a list of the organization members and their IDs.
+      path-parameters:
+        id: string
+      display-name: Get organization members list
+      request:
+        name: ApiOrganizationsMembershipsListRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
+      response:
+        docs: ''
+        type: ApiOrganizationsMembershipsListResponse
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              count: 1
+              next: next
+              previous: previous
+              results:
+                - id: 1
+                  organization: 1
+                  user:
+                    username: username
+    api_organizations_memberships_delete:
+      path: /api/organizations/{id}/memberships/{user_pk}/
+      method: DELETE
+      auth: true
+      docs: Soft delete a member from the organization.
+      path-parameters:
+        id: string
+        user_pk:
+          type: integer
+          docs: >-
+            A unique integer value identifying the user to be deleted from the
+            organization.
+      display-name: Soft delete an organization member
+      errors:
+        - root.NotFoundError
+        - root.MethodNotAllowedError
+      examples:
+        - path-parameters:
+            id: id
+            user_pk: 1
+types:
+  ApiOrganizationsMembershipsListResponse:
+    properties:
+      count: integer
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      previous:
+        type: optional<string>
+        validation:
+          format: uri
+      results: list<root.OrganizationMemberUser>

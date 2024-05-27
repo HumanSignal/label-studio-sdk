@@ -13,9 +13,7 @@ from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..types.label import Label
 from ..types.label_create import LabelCreate
-from ..types.label_link import LabelLink
-from .types.api_label_links_list_response import ApiLabelLinksListResponse
-from .types.api_labels_list_response import ApiLabelsListResponse
+from .types.labels_list_response import LabelsListResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -25,343 +23,9 @@ class LabelsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def api_label_links_list(
+    def list(
         self, *, page: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> ApiLabelLinksListResponse:
-        """
-        List label links for a specific label and project.
-
-        Parameters
-        ----------
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ApiLabelLinksListResponse
-
-
-        Examples
-        --------
-        from label_studio_sdk.client import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.labels.api_label_links_list()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            method="GET",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/label_links/"),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        {
-                            "page": page,
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        }
-                    )
-                )
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ApiLabelLinksListResponse, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def api_label_links_create(
-        self, *, request: LabelLink, request_options: typing.Optional[RequestOptions] = None
-    ) -> LabelLink:
-        """
-        Create label links to link new custom labels to your project labeling configuration.
-
-        Parameters
-        ----------
-        request : LabelLink
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LabelLink
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelLink
-        from label_studio_sdk.client import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.labels.api_label_links_create(
-            request=LabelLink(
-                from_name="from_name",
-                project=1,
-                label=1,
-            ),
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            method="POST",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/label_links/"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(LabelLink, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def api_label_links_read(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> LabelLink:
-        """
-        Get label links for a specific project configuration.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LabelLink
-
-
-        Examples
-        --------
-        from label_studio_sdk.client import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.labels.api_label_links_read(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            method="GET",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"api/label_links/{jsonable_encoder(id)}/"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(LabelLink, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def api_label_links_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Remove a label link that links custom labels to your project labeling configuration. If you remove a label link,
-        the label stops being available for the project it was linked to. You can add a new label link at any time.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk.client import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.labels.api_label_links_delete(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            method="DELETE",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"api/label_links/{jsonable_encoder(id)}/"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def api_label_links_partial_update(
-        self, id: str, *, request: LabelLink, request_options: typing.Optional[RequestOptions] = None
-    ) -> LabelLink:
-        """
-        Update a label link that links custom labels to a project labeling configuration, for example if the fromName,
-        toName, or name parameters for a tag in the labeling configuration change.
-
-        Parameters
-        ----------
-        id : str
-
-        request : LabelLink
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LabelLink
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelLink
-        from label_studio_sdk.client import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.labels.api_label_links_partial_update(
-            id="id",
-            request=LabelLink(
-                from_name="from_name",
-                project=1,
-                label=1,
-            ),
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            method="PATCH",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"api/label_links/{jsonable_encoder(id)}/"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(LabelLink, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def api_labels_list(
-        self, *, page: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> ApiLabelsListResponse:
+    ) -> LabelsListResponse:
         """
         List all custom labels added to your project separately from the labeling configuration.
 
@@ -375,7 +39,7 @@ class LabelsClient:
 
         Returns
         -------
-        ApiLabelsListResponse
+        LabelsListResponse
 
 
         Examples
@@ -385,7 +49,7 @@ class LabelsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.labels.api_labels_list()
+        client.labels.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
@@ -419,14 +83,14 @@ class LabelsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ApiLabelsListResponse, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(LabelsListResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_labels_create(
+    def create(
         self, *, request: typing.Sequence[LabelCreate], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[LabelCreate]:
         """
@@ -452,7 +116,7 @@ class LabelsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.labels.api_labels_create(
+        client.labels.create(
             request=[
                 LabelCreate(
                     project=1,
@@ -499,62 +163,7 @@ class LabelsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_labels_bulk_create(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        If you want to update the labels in saved annotations, use this endpoint.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk.client import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.labels.api_labels_bulk_create()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            method="POST",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/labels/bulk"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def api_labels_read(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Label:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Label:
         """
         Retrieve a specific custom label used for your project by its ID.
 
@@ -577,7 +186,7 @@ class LabelsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.labels.api_labels_read(
+        client.labels.get(
             id="id",
         )
         """
@@ -611,7 +220,7 @@ class LabelsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_labels_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Remove labels from your project without updating the labeling configuration.
 
@@ -633,7 +242,7 @@ class LabelsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.labels.api_labels_delete(
+        client.labels.delete(
             id="id",
         )
         """
@@ -670,9 +279,7 @@ class LabelsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_labels_partial_update(
-        self, id: str, *, request: Label, request_options: typing.Optional[RequestOptions] = None
-    ) -> Label:
+    def update(self, id: str, *, request: Label, request_options: typing.Optional[RequestOptions] = None) -> Label:
         """
         Update labels used for your project without updating the labeling configuration.
 
@@ -698,7 +305,7 @@ class LabelsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.labels.api_labels_partial_update(
+        client.labels.update(
             id="id",
             request=Label(
                 value={},
@@ -749,345 +356,9 @@ class AsyncLabelsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def api_label_links_list(
+    async def list(
         self, *, page: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> ApiLabelLinksListResponse:
-        """
-        List label links for a specific label and project.
-
-        Parameters
-        ----------
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ApiLabelLinksListResponse
-
-
-        Examples
-        --------
-        from label_studio_sdk.client import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.labels.api_label_links_list()
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="GET",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/label_links/"),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        {
-                            "page": page,
-                            **(
-                                request_options.get("additional_query_parameters", {})
-                                if request_options is not None
-                                else {}
-                            ),
-                        }
-                    )
-                )
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ApiLabelLinksListResponse, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def api_label_links_create(
-        self, *, request: LabelLink, request_options: typing.Optional[RequestOptions] = None
-    ) -> LabelLink:
-        """
-        Create label links to link new custom labels to your project labeling configuration.
-
-        Parameters
-        ----------
-        request : LabelLink
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LabelLink
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelLink
-        from label_studio_sdk.client import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.labels.api_label_links_create(
-            request=LabelLink(
-                from_name="from_name",
-                project=1,
-                label=1,
-            ),
-        )
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="POST",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/label_links/"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(LabelLink, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def api_label_links_read(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> LabelLink:
-        """
-        Get label links for a specific project configuration.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LabelLink
-
-
-        Examples
-        --------
-        from label_studio_sdk.client import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.labels.api_label_links_read(
-            id="id",
-        )
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="GET",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"api/label_links/{jsonable_encoder(id)}/"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(LabelLink, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def api_label_links_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Remove a label link that links custom labels to your project labeling configuration. If you remove a label link,
-        the label stops being available for the project it was linked to. You can add a new label link at any time.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk.client import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.labels.api_label_links_delete(
-            id="id",
-        )
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="DELETE",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"api/label_links/{jsonable_encoder(id)}/"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def api_label_links_partial_update(
-        self, id: str, *, request: LabelLink, request_options: typing.Optional[RequestOptions] = None
-    ) -> LabelLink:
-        """
-        Update a label link that links custom labels to a project labeling configuration, for example if the fromName,
-        toName, or name parameters for a tag in the labeling configuration change.
-
-        Parameters
-        ----------
-        id : str
-
-        request : LabelLink
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LabelLink
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelLink
-        from label_studio_sdk.client import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.labels.api_label_links_partial_update(
-            id="id",
-            request=LabelLink(
-                from_name="from_name",
-                project=1,
-                label=1,
-            ),
-        )
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="PATCH",
-            url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", f"api/label_links/{jsonable_encoder(id)}/"
-            ),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(LabelLink, _response.json())  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def api_labels_list(
-        self, *, page: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> ApiLabelsListResponse:
+    ) -> LabelsListResponse:
         """
         List all custom labels added to your project separately from the labeling configuration.
 
@@ -1101,7 +372,7 @@ class AsyncLabelsClient:
 
         Returns
         -------
-        ApiLabelsListResponse
+        LabelsListResponse
 
 
         Examples
@@ -1111,7 +382,7 @@ class AsyncLabelsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.labels.api_labels_list()
+        await client.labels.list()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
@@ -1145,14 +416,14 @@ class AsyncLabelsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ApiLabelsListResponse, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(LabelsListResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_labels_create(
+    async def create(
         self, *, request: typing.Sequence[LabelCreate], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[LabelCreate]:
         """
@@ -1178,7 +449,7 @@ class AsyncLabelsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.labels.api_labels_create(
+        await client.labels.create(
             request=[
                 LabelCreate(
                     project=1,
@@ -1225,62 +496,7 @@ class AsyncLabelsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_labels_bulk_create(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        If you want to update the labels in saved annotations, use this endpoint.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk.client import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.labels.api_labels_bulk_create()
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            method="POST",
-            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/labels/bulk"),
-            params=encode_query(
-                jsonable_encoder(
-                    request_options.get("additional_query_parameters") if request_options is not None else None
-                )
-            ),
-            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
-            if request_options is not None
-            else None,
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
-            timeout=request_options.get("timeout_in_seconds")
-            if request_options is not None and request_options.get("timeout_in_seconds") is not None
-            else self._client_wrapper.get_timeout(),
-            retries=0,
-            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def api_labels_read(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Label:
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Label:
         """
         Retrieve a specific custom label used for your project by its ID.
 
@@ -1303,7 +519,7 @@ class AsyncLabelsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.labels.api_labels_read(
+        await client.labels.get(
             id="id",
         )
         """
@@ -1337,7 +553,7 @@ class AsyncLabelsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_labels_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Remove labels from your project without updating the labeling configuration.
 
@@ -1359,7 +575,7 @@ class AsyncLabelsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.labels.api_labels_delete(
+        await client.labels.delete(
             id="id",
         )
         """
@@ -1396,7 +612,7 @@ class AsyncLabelsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_labels_partial_update(
+    async def update(
         self, id: str, *, request: Label, request_options: typing.Optional[RequestOptions] = None
     ) -> Label:
         """
@@ -1424,7 +640,7 @@ class AsyncLabelsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.labels.api_labels_partial_update(
+        await client.labels.update(
             id="id",
             request=Label(
                 value={},

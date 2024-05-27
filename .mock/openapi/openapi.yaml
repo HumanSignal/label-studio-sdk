@@ -86,6 +86,8 @@ paths:
                     type: string
       tags:
         - Users
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: reset_token
     parameters: []
   /api/current-user/token:
     get:
@@ -106,6 +108,8 @@ paths:
                     type: string
       tags:
         - Users
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: get_token
     parameters: []
   /api/current-user/whoami:
     get:
@@ -121,6 +125,8 @@ paths:
                 $ref: "#/components/schemas/BaseUser"
       tags:
         - Users
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: whoami
     parameters: []
   /api/dm/actions/:
     get:
@@ -324,7 +330,9 @@ paths:
                 $ref: "#/components/schemas/FileUpload"
       tags:
         - Import
-      x-fern-sdk-group-name: files
+      x-fern-sdk-group-name:
+        - projects
+        - files
       x-fern-sdk-method-name: get
     patch:
       operationId: api_import_file-upload_partial_update
@@ -345,7 +353,9 @@ paths:
                 $ref: "#/components/schemas/FileUpload"
       tags:
         - Import
-      x-fern-sdk-group-name: files
+      x-fern-sdk-group-name:
+        - projects
+        - files
       x-fern-sdk-method-name: update
     delete:
       operationId: api_import_file-upload_delete
@@ -356,7 +366,9 @@ paths:
           description: ""
       tags:
         - Import
-      x-fern-sdk-group-name: files
+      x-fern-sdk-group-name:
+        - projects
+        - files
       x-fern-sdk-method-name: delete
     parameters:
       - name: id
@@ -380,6 +392,8 @@ paths:
                 $ref: "#/components/schemas/OrganizationInvite"
       tags:
         - Invites
+      x-fern-sdk-group-name: organizations
+      x-fern-sdk-method-name: get_invite
     parameters: []
   /api/invite/reset-token:
     post:
@@ -396,6 +410,8 @@ paths:
                 $ref: "#/components/schemas/OrganizationInvite"
       tags:
         - Invites
+      x-fern-sdk-group-name: organizations
+      x-fern-sdk-method-name: reset_invite
     parameters: []
   /api/label_links/:
     get:
@@ -436,6 +452,10 @@ paths:
                       $ref: "#/components/schemas/LabelLink"
       tags:
         - Labels
+      x-fern-sdk-group-name:
+        - projects
+        - labels
+      x-fern-sdk-method-name: list
     post:
       operationId: api_label_links_create
       summary: Create label links
@@ -452,6 +472,10 @@ paths:
                 $ref: "#/components/schemas/LabelLink"
       tags:
         - Labels
+      x-fern-sdk-group-name:
+        - projects
+        - labels
+      x-fern-sdk-method-name: create
     parameters: []
   "/api/label_links/{id}/":
     get:
@@ -467,6 +491,10 @@ paths:
                 $ref: "#/components/schemas/LabelLink"
       tags:
         - Labels
+      x-fern-sdk-group-name:
+        - projects
+        - labels
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_label_links_partial_update
       summary: Update label link
@@ -486,6 +514,10 @@ paths:
                 $ref: "#/components/schemas/LabelLink"
       tags:
         - Labels
+      x-fern-sdk-group-name:
+        - projects
+        - labels
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_label_links_delete
       summary: Remove label link
@@ -499,6 +531,10 @@ paths:
           description: ""
       tags:
         - Labels
+      x-fern-sdk-group-name:
+        - projects
+        - labels
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -545,6 +581,8 @@ paths:
                       $ref: "#/components/schemas/Label"
       tags:
         - Labels
+      x-fern-sdk-group-name: labels
+      x-fern-sdk-method-name: list
     post:
       operationId: api_labels_create
       summary: Create labels
@@ -568,6 +606,8 @@ paths:
                   $ref: "#/components/schemas/LabelCreate"
       tags:
         - Labels
+      x-fern-sdk-group-name: labels
+      x-fern-sdk-method-name: create
     parameters: []
   /api/labels/bulk:
     post:
@@ -581,6 +621,10 @@ paths:
           description: ""
       tags:
         - Labels
+      x-fern-sdk-group-name:
+        - projects
+        - labels
+      x-fern-sdk-method-name: update_many
     parameters: []
   "/api/labels/{id}/":
     get:
@@ -598,6 +642,8 @@ paths:
                 $ref: "#/components/schemas/Label"
       tags:
         - Labels
+      x-fern-sdk-group-name: labels
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_labels_partial_update
       summary: Update labels
@@ -618,6 +664,8 @@ paths:
                 $ref: "#/components/schemas/Label"
       tags:
         - Labels
+      x-fern-sdk-group-name: labels
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_labels_delete
       summary: Remove labels
@@ -628,6 +676,8 @@ paths:
           description: ""
       tags:
         - Labels
+      x-fern-sdk-group-name: labels
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -664,6 +714,8 @@ paths:
                   $ref: "#/components/schemas/MLBackend"
       tags:
         - Machine Learning
+      x-fern-sdk-group-name: ml
+      x-fern-sdk-method-name: list
     post:
       operationId: api_ml_create
       summary: Add ML Backend
@@ -707,6 +759,8 @@ paths:
                     type: string
       tags:
         - Machine Learning
+      x-fern-sdk-group-name: ml
+      x-fern-sdk-method-name: create
     parameters: []
   "/api/ml/{id}":
     get:
@@ -730,6 +784,8 @@ paths:
                 $ref: "#/components/schemas/MLBackend"
       tags:
         - Machine Learning
+      x-fern-sdk-group-name: ml
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_ml_partial_update
       summary: Update ML Backend
@@ -757,6 +813,8 @@ paths:
                 $ref: "#/components/schemas/MLBackend"
       tags:
         - Machine Learning
+      x-fern-sdk-group-name: ml
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_ml_delete
       summary: Remove ML Backend
@@ -774,6 +832,8 @@ paths:
           description: ""
       tags:
         - Machine Learning
+      x-fern-sdk-group-name: ml
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -810,6 +870,8 @@ paths:
           description: Interactive annotation has succeeded.
       tags:
         - Machine Learning
+      x-fern-sdk-group-name: ml
+      x-fern-sdk-method-name: predict_interactive
     parameters:
       - name: id
         in: path
@@ -819,7 +881,7 @@ paths:
   "/api/ml/{id}/predict/test":
     post:
       operationId: api_ml_predict_test_create
-      summary: Predict
+      summary: Test prediction
       description: >
         
         After you add an ML backend, call this API with the ML backend ID to run a test prediction on specific task data               
@@ -891,6 +953,8 @@ paths:
                 example: Server responded with an error.
       tags:
         - Machine Learning
+      x-fern-sdk-group-name: ml
+      x-fern-sdk-method-name: train
     parameters:
       - name: id
         in: path
@@ -907,6 +971,8 @@ paths:
           description: List of available versions.
       tags:
         - Machine Learning
+      x-fern-sdk-group-name: ml
+      x-fern-sdk-method-name: list_model_versions
     parameters:
       - name: id
         in: path
@@ -931,6 +997,8 @@ paths:
                   $ref: "#/components/schemas/OrganizationId"
       tags:
         - Organizations
+      x-fern-sdk-group-name: organizations
+      x-fern-sdk-method-name: list
     parameters: []
   "/api/organizations/{id}":
     get:
@@ -946,6 +1014,8 @@ paths:
                 $ref: "#/components/schemas/Organization"
       tags:
         - Organizations
+      x-fern-sdk-group-name: organizations
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_organizations_partial_update
       summary: Update organization settings
@@ -965,6 +1035,8 @@ paths:
                 $ref: "#/components/schemas/Organization"
       tags:
         - Organizations
+      x-fern-sdk-group-name: organizations
+      x-fern-sdk-method-name: update
     parameters:
       - name: id
         in: path
@@ -1017,6 +1089,13 @@ paths:
                       $ref: "#/components/schemas/OrganizationMemberUser"
       tags:
         - Organizations
+      x-fern-sdk-group-name:
+        - organizations
+        - members
+      x-fern-sdk-method-name: list
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
     parameters:
       - name: id
         in: path
@@ -1045,6 +1124,10 @@ paths:
           description: User cannot soft delete self.
       tags:
         - Organizations
+      x-fern-sdk-group-name:
+        - organizations
+        - members
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -1497,6 +1580,8 @@ paths:
                 format: binary
       tags:
         - Export
+      x-fern-sdk-group-name: projects
+      x-fern-sdk-method-name: create_export
     parameters:
       - name: id
         in: path
@@ -1529,6 +1614,10 @@ paths:
                   type: string
       tags:
         - Export
+      x-fern-sdk-group-name:
+        - projects
+        - exports
+      x-fern-sdk-method-name: list_formats
     parameters:
       - name: id
         in: path
@@ -1560,6 +1649,10 @@ paths:
                   $ref: "#/components/schemas/Export"
       tags:
         - Export
+      x-fern-sdk-group-name:
+        - projects
+        - exports
+      x-fern-sdk-method-name: list
     post:
       operationId: api_projects_exports_create
       summary: Create new export snapshot
@@ -1588,6 +1681,10 @@ paths:
                 $ref: "#/components/schemas/ExportCreate"
       tags:
         - Export
+      x-fern-sdk-group-name:
+        - projects
+        - exports
+      x-fern-sdk-method-name: create
     parameters:
       - name: id
         in: path
@@ -1624,6 +1721,10 @@ paths:
                 $ref: "#/components/schemas/Export"
       tags:
         - Export
+      x-fern-sdk-group-name:
+        - projects
+        - exports
+      x-fern-sdk-method-name: get
     delete:
       operationId: api_projects_exports_delete
       summary: Delete export snapshot
@@ -1648,6 +1749,10 @@ paths:
           description: ""
       tags:
         - Export
+      x-fern-sdk-group-name:
+        - projects
+        - exports
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -1695,6 +1800,10 @@ paths:
                 $ref: "#/components/schemas/ExportConvert"
       tags:
         - Export
+      x-fern-sdk-group-name:
+        - projects
+        - exports
+      x-fern-sdk-method-name: convert
     parameters:
       - name: id
         in: path
@@ -1746,6 +1855,10 @@ paths:
           description: ""
       tags:
         - Export
+      x-fern-sdk-group-name:
+        - projects
+        - exports
+      x-fern-sdk-method-name: download
     parameters:
       - name: id
         in: path
@@ -1792,7 +1905,9 @@ paths:
                   $ref: "#/components/schemas/FileUpload"
       tags:
         - Import
-      x-fern-sdk-group-name: files
+      x-fern-sdk-group-name:
+        - projects
+        - files
       x-fern-sdk-method-name: list
     delete:
       operationId: api_projects_file-uploads_delete
@@ -1805,7 +1920,9 @@ paths:
           description: ""
       tags:
         - Import
-      x-fern-sdk-group-name: files
+      x-fern-sdk-group-name:
+        - projects
+        - files
       x-fern-sdk-method-name: delete_many
     parameters:
       - name: id
@@ -1982,8 +2099,8 @@ paths:
                 type: string
       tags:
         - Import
-      x-fern-sdk-group-name: projects
-      x-fern-sdk-method-name: import_tasks
+      x-fern-sdk-group-name: tasks
+      x-fern-sdk-method-name: create_many
     parameters:
       - name: id
         in: path
@@ -2012,6 +2129,8 @@ paths:
                 $ref: "#/components/schemas/ProjectImport"
       tags:
         - Projects
+      x-fern-sdk-group-name: tasks
+      x-fern-sdk-method-name: create_many_status
     parameters:
       - name: id
         in: path
@@ -2141,6 +2260,8 @@ paths:
                 $ref: "#/components/schemas/ProjectLabelConfig"
       tags:
         - Projects
+      x-fern-sdk-group-name: projects
+      x-fern-sdk-method-name: validate_config
     parameters:
       - name: id
         in: path
@@ -2158,6 +2279,8 @@ paths:
           description: List of ImportStorageSerializer
       tags:
         - Storage
+      x-fern-sdk-group-name: import_storage
+      x-fern-sdk-method-name: list
     parameters: []
   /api/storages/azure/:
     get:
@@ -2181,6 +2304,10 @@ paths:
                   $ref: "#/components/schemas/AzureBlobImportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure
+      x-fern-sdk-method-name: list
     post:
       operationId: api_storages_azure_create
       summary: Create new storage
@@ -2196,6 +2323,10 @@ paths:
                 $ref: "#/components/schemas/AzureBlobImportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure
+      x-fern-sdk-method-name: create
     parameters: []
   /api/storages/azure/validate:
     post:
@@ -2213,6 +2344,10 @@ paths:
                 $ref: "#/components/schemas/AzureBlobImportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure
+      x-fern-sdk-method-name: validate
     parameters: []
   "/api/storages/azure/{id}":
     get:
@@ -2228,6 +2363,10 @@ paths:
                 $ref: "#/components/schemas/AzureBlobImportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_storages_azure_partial_update
       summary: Update import storage
@@ -2243,6 +2382,10 @@ paths:
                 $ref: "#/components/schemas/AzureBlobImportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_storages_azure_delete
       summary: Delete import storage
@@ -2252,6 +2395,10 @@ paths:
           description: ""
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -2275,6 +2422,10 @@ paths:
                 $ref: "#/components/schemas/AzureBlobImportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure
+      x-fern-sdk-method-name: sync
     parameters:
       - name: id
         in: path
@@ -2291,6 +2442,8 @@ paths:
           description: List of ExportStorageSerializer
       tags:
         - Storage
+      x-fern-sdk-group-name: export_storage
+      x-fern-sdk-method-name: list
     parameters: []
   /api/storages/export/azure:
     get:
@@ -2314,6 +2467,10 @@ paths:
                   $ref: "#/components/schemas/AzureBlobExportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure
+      x-fern-sdk-method-name: list
     post:
       operationId: api_storages_export_azure_create
       summary: Create export storage
@@ -2329,6 +2486,10 @@ paths:
                 $ref: "#/components/schemas/AzureBlobExportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure
+      x-fern-sdk-method-name: create
     parameters: []
   /api/storages/export/azure/validate:
     post:
@@ -2346,6 +2507,10 @@ paths:
                 $ref: "#/components/schemas/AzureBlobExportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure
+      x-fern-sdk-method-name: validate
     parameters: []
   "/api/storages/export/azure/{id}":
     get:
@@ -2361,6 +2526,10 @@ paths:
                 $ref: "#/components/schemas/AzureBlobExportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_storages_export_azure_partial_update
       summary: Update export storage
@@ -2376,6 +2545,10 @@ paths:
                 $ref: "#/components/schemas/AzureBlobExportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_storages_export_azure_delete
       summary: Delete export storage
@@ -2385,6 +2558,10 @@ paths:
           description: ""
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -2408,6 +2585,10 @@ paths:
                 $ref: "#/components/schemas/AzureBlobExportStorage"
       tags:
         - "Storage: Azure"
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure
+      x-fern-sdk-method-name: sync
     parameters:
       - name: id
         in: path
@@ -2436,6 +2617,10 @@ paths:
                   $ref: "#/components/schemas/GCSExportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs
+      x-fern-sdk-method-name: list
     post:
       operationId: api_storages_export_gcs_create
       summary: Create export storage
@@ -2451,6 +2636,10 @@ paths:
                 $ref: "#/components/schemas/GCSExportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs
+      x-fern-sdk-method-name: create
     parameters: []
   /api/storages/export/gcs/validate:
     post:
@@ -2468,6 +2657,10 @@ paths:
                 $ref: "#/components/schemas/GCSExportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs
+      x-fern-sdk-method-name: validate
     parameters: []
   "/api/storages/export/gcs/{id}":
     get:
@@ -2483,6 +2676,10 @@ paths:
                 $ref: "#/components/schemas/GCSExportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_storages_export_gcs_partial_update
       summary: Update export storage
@@ -2498,6 +2695,10 @@ paths:
                 $ref: "#/components/schemas/GCSExportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_storages_export_gcs_delete
       summary: Delete export storage
@@ -2507,6 +2708,10 @@ paths:
           description: ""
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -2530,6 +2735,10 @@ paths:
                 $ref: "#/components/schemas/GCSExportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcs
+      x-fern-sdk-method-name: sync
     parameters:
       - name: id
         in: path
@@ -2558,6 +2767,10 @@ paths:
                   $ref: "#/components/schemas/LocalFilesExportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - export_storage
+        - local
+      x-fern-sdk-method-name: list
     post:
       operationId: api_storages_export_localfiles_create
       summary: Create export storage
@@ -2573,6 +2786,10 @@ paths:
                 $ref: "#/components/schemas/LocalFilesExportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - export_storage
+        - local
+      x-fern-sdk-method-name: create
     parameters: []
   /api/storages/export/localfiles/validate:
     post:
@@ -2590,6 +2807,10 @@ paths:
                 $ref: "#/components/schemas/LocalFilesExportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - export_storage
+        - local
+      x-fern-sdk-method-name: validate
     parameters: []
   "/api/storages/export/localfiles/{id}":
     get:
@@ -2605,6 +2826,10 @@ paths:
                 $ref: "#/components/schemas/LocalFilesExportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - export_storage
+        - local
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_storages_export_localfiles_partial_update
       summary: Update export storage
@@ -2620,6 +2845,10 @@ paths:
                 $ref: "#/components/schemas/LocalFilesExportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - export_storage
+        - local
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_storages_export_localfiles_delete
       summary: Delete export storage
@@ -2629,6 +2858,10 @@ paths:
           description: ""
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - export_storage
+        - local
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -2652,6 +2885,10 @@ paths:
                 $ref: "#/components/schemas/LocalFilesExportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - export_storage
+        - local
+      x-fern-sdk-method-name: sync
     parameters:
       - name: id
         in: path
@@ -2680,6 +2917,10 @@ paths:
                   $ref: "#/components/schemas/RedisExportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - export_storage
+        - redis
+      x-fern-sdk-method-name: list
     post:
       operationId: api_storages_export_redis_create
       summary: Create export storage
@@ -2695,6 +2936,10 @@ paths:
                 $ref: "#/components/schemas/RedisExportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - export_storage
+        - redis
+      x-fern-sdk-method-name: create
     parameters: []
   /api/storages/export/redis/validate:
     post:
@@ -2712,6 +2957,10 @@ paths:
                 $ref: "#/components/schemas/RedisExportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - export_storage
+        - redis
+      x-fern-sdk-method-name: validate
     parameters: []
   "/api/storages/export/redis/{id}":
     get:
@@ -2727,6 +2976,10 @@ paths:
                 $ref: "#/components/schemas/RedisExportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - export_storage
+        - redis
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_storages_export_redis_partial_update
       summary: Update export storage
@@ -2742,6 +2995,10 @@ paths:
                 $ref: "#/components/schemas/RedisExportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - export_storage
+        - redis
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_storages_export_redis_delete
       summary: Delete export storage
@@ -2751,6 +3008,10 @@ paths:
           description: ""
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - export_storage
+        - redis
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -2774,6 +3035,10 @@ paths:
                 $ref: "#/components/schemas/RedisExportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - export_storage
+        - redis
+      x-fern-sdk-method-name: sync
     parameters:
       - name: id
         in: path
@@ -2802,6 +3067,10 @@ paths:
                   $ref: "#/components/schemas/S3ExportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3
+      x-fern-sdk-method-name: list
     post:
       operationId: api_storages_export_s3_create
       summary: Create export storage
@@ -2817,6 +3086,10 @@ paths:
                 $ref: "#/components/schemas/S3ExportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3
+      x-fern-sdk-method-name: create
     parameters: []
   /api/storages/export/s3/validate:
     post:
@@ -2834,6 +3107,10 @@ paths:
                 $ref: "#/components/schemas/S3ExportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3
+      x-fern-sdk-method-name: validate
     parameters: []
   "/api/storages/export/s3/{id}":
     get:
@@ -2849,6 +3126,10 @@ paths:
                 $ref: "#/components/schemas/S3ExportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_storages_export_s3_partial_update
       summary: Update export storage
@@ -2864,6 +3145,10 @@ paths:
                 $ref: "#/components/schemas/S3ExportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_storages_export_s3_delete
       summary: Delete export storage
@@ -2873,6 +3158,10 @@ paths:
           description: ""
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -2896,6 +3185,10 @@ paths:
                 $ref: "#/components/schemas/S3ExportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - export_storage
+        - s3
+      x-fern-sdk-method-name: sync
     parameters:
       - name: id
         in: path
@@ -2912,6 +3205,8 @@ paths:
           description: "A list of export storages types {'name': name, 'title': title}."
       tags:
         - Storage
+      x-fern-sdk-group-name: export_storage
+      x-fern-sdk-method-name: list_types
     parameters: []
   /api/storages/gcs/:
     get:
@@ -2935,6 +3230,10 @@ paths:
                   $ref: "#/components/schemas/GCSImportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs
+      x-fern-sdk-method-name: list
     post:
       operationId: api_storages_gcs_create
       summary: Create import storage
@@ -2950,6 +3249,10 @@ paths:
                 $ref: "#/components/schemas/GCSImportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs
+      x-fern-sdk-method-name: create
     parameters: []
   /api/storages/gcs/validate:
     post:
@@ -2967,6 +3270,10 @@ paths:
                 $ref: "#/components/schemas/GCSImportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs
+      x-fern-sdk-method-name: validate
     parameters: []
   "/api/storages/gcs/{id}":
     get:
@@ -2982,6 +3289,10 @@ paths:
                 $ref: "#/components/schemas/GCSImportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_storages_gcs_partial_update
       summary: Update import storage
@@ -2997,6 +3308,10 @@ paths:
                 $ref: "#/components/schemas/GCSImportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_storages_gcs_delete
       summary: Delete import storage
@@ -3006,6 +3321,10 @@ paths:
           description: ""
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -3029,6 +3348,10 @@ paths:
                 $ref: "#/components/schemas/GCSImportStorage"
       tags:
         - "Storage: GCS"
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcs
+      x-fern-sdk-method-name: sync
     parameters:
       - name: id
         in: path
@@ -3057,6 +3380,10 @@ paths:
                   $ref: "#/components/schemas/LocalFilesImportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - import_storage
+        - local
+      x-fern-sdk-method-name: list
     post:
       operationId: api_storages_localfiles_create
       summary: Create import storage
@@ -3072,6 +3399,10 @@ paths:
                 $ref: "#/components/schemas/LocalFilesImportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - import_storage
+        - local
+      x-fern-sdk-method-name: create
     parameters: []
   /api/storages/localfiles/validate:
     post:
@@ -3089,6 +3420,10 @@ paths:
                 $ref: "#/components/schemas/LocalFilesImportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - import_storage
+        - local
+      x-fern-sdk-method-name: validate
     parameters: []
   "/api/storages/localfiles/{id}":
     get:
@@ -3104,6 +3439,10 @@ paths:
                 $ref: "#/components/schemas/LocalFilesImportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - import_storage
+        - local
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_storages_localfiles_partial_update
       summary: Update import storage
@@ -3119,6 +3458,10 @@ paths:
                 $ref: "#/components/schemas/LocalFilesImportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - import_storage
+        - local
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_storages_localfiles_delete
       summary: Delete import storage
@@ -3128,6 +3471,10 @@ paths:
           description: ""
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - import_storage
+        - local
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -3151,6 +3498,10 @@ paths:
                 $ref: "#/components/schemas/LocalFilesImportStorage"
       tags:
         - "Storage: Local"
+      x-fern-sdk-group-name:
+        - import_storage
+        - local
+      x-fern-sdk-method-name: sync
     parameters:
       - name: id
         in: path
@@ -3179,6 +3530,10 @@ paths:
                   $ref: "#/components/schemas/RedisImportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - import_storage
+        - redis
+      x-fern-sdk-method-name: list
     post:
       operationId: api_storages_redis_create
       summary: Create import storage
@@ -3194,6 +3549,10 @@ paths:
                 $ref: "#/components/schemas/RedisImportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - import_storage
+        - redis
+      x-fern-sdk-method-name: create
     parameters: []
   /api/storages/redis/validate:
     post:
@@ -3211,6 +3570,10 @@ paths:
                 $ref: "#/components/schemas/RedisImportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - import_storage
+        - redis
+      x-fern-sdk-method-name: validate
     parameters: []
   "/api/storages/redis/{id}":
     get:
@@ -3226,6 +3589,10 @@ paths:
                 $ref: "#/components/schemas/RedisImportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - import_storage
+        - redis
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_storages_redis_partial_update
       summary: Update import storage
@@ -3241,6 +3608,10 @@ paths:
                 $ref: "#/components/schemas/RedisImportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - import_storage
+        - redis
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_storages_redis_delete
       summary: Delete import storage
@@ -3250,6 +3621,10 @@ paths:
           description: ""
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - import_storage
+        - redis
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -3273,6 +3648,10 @@ paths:
                 $ref: "#/components/schemas/RedisImportStorage"
       tags:
         - "Storage: Redis"
+      x-fern-sdk-group-name:
+        - import_storage
+        - redis
+      x-fern-sdk-method-name: sync
     parameters:
       - name: id
         in: path
@@ -3282,7 +3661,7 @@ paths:
   /api/storages/s3/:
     get:
       operationId: api_storages_s3_list
-      summary: Get import storage
+      summary: List S3 import storage
       description: Get a list of all S3 import storage connections.
       parameters:
         - name: project
@@ -3301,9 +3680,13 @@ paths:
                   $ref: "#/components/schemas/S3ImportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3
+      x-fern-sdk-method-name: list
     post:
       operationId: api_storages_s3_create
-      summary: Create new storage
+      summary: Create new S3 storage
       description: Get new S3 import storage
       requestBody:
         $ref: "#/components/requestBodies/S3ImportStorage"
@@ -3316,6 +3699,10 @@ paths:
                 $ref: "#/components/schemas/S3ImportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3
+      x-fern-sdk-method-name: create
     parameters: []
   /api/storages/s3/validate:
     post:
@@ -3333,6 +3720,10 @@ paths:
                 $ref: "#/components/schemas/S3ImportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3
+      x-fern-sdk-method-name: validate
     parameters: []
   "/api/storages/s3/{id}":
     get:
@@ -3348,6 +3739,10 @@ paths:
                 $ref: "#/components/schemas/S3ImportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_storages_s3_partial_update
       summary: Update import storage
@@ -3363,6 +3758,10 @@ paths:
                 $ref: "#/components/schemas/S3ImportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_storages_s3_delete
       summary: Delete import storage
@@ -3372,6 +3771,10 @@ paths:
           description: ""
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -3395,6 +3798,10 @@ paths:
                 $ref: "#/components/schemas/S3ImportStorage"
       tags:
         - Storage:S3
+      x-fern-sdk-group-name:
+        - import_storage
+        - s3
+      x-fern-sdk-method-name: sync
     parameters:
       - name: id
         in: path
@@ -3411,6 +3818,8 @@ paths:
           description: "A list of import storages types {'name': name, 'title': title}."
       tags:
         - Storage
+      x-fern-sdk-group-name: import_storage
+      x-fern-sdk-method-name: list_types
     parameters: []
   /api/tasks/:
     get:
@@ -3473,7 +3882,7 @@ paths:
       tags:
         - Tasks
       x-fern-sdk-group-name: tasks
-      x-fern-sdk-method-name: get_many
+      x-fern-sdk-method-name: list
       x-fern-pagination:
         offset: $request.page
         results: $response.tasks
@@ -3674,6 +4083,8 @@ paths:
                   $ref: "#/components/schemas/BaseUser"
       tags:
         - Users
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: list
     post:
       operationId: api_users_create
       summary: Create new user
@@ -3689,6 +4100,8 @@ paths:
                 $ref: "#/components/schemas/BaseUser"
       tags:
         - Users
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: create
     parameters: []
   "/api/users/{id}/":
     get:
@@ -3711,6 +4124,8 @@ paths:
                 $ref: "#/components/schemas/BaseUser"
       tags:
         - Users
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: get
     patch:
       operationId: api_users_partial_update
       summary: Update user details
@@ -3735,6 +4150,8 @@ paths:
                 $ref: "#/components/schemas/BaseUser"
       tags:
         - Users
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_users_delete
       summary: Delete user
@@ -3751,6 +4168,8 @@ paths:
           description: ""
       tags:
         - Users
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -4000,6 +4419,26 @@ paths:
       tags:
         - data
     parameters: []
+  "/data/upload/{filename}":
+    get:
+      operationId: data_upload_read
+      summary: Download file
+      description: Download a specific uploaded file.
+      responses:
+        "200":
+          description: ""
+      tags:
+        - Import
+      x-fern-sdk-group-name:
+        - projects
+        - files
+      x-fern-sdk-method-name: download
+    parameters:
+      - name: filename
+        in: path
+        required: true
+        schema:
+          type: string
 servers:
   - url: http://localhost:8080
 components:

@@ -1,0 +1,11 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    localFilesList:
+      path: /data/local-files/
+      method: GET
+      auth: true
+      docs: Serving files for LocalFilesImportStorage
+      examples:
+        - {}

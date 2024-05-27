@@ -1,3 +1,7 @@
+paths:
+  /api/projects/:
+    post:
+      summary: List of Projects
 components:
   securitySchemes:
     Token:

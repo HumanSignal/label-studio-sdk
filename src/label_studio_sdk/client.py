@@ -11,20 +11,14 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .data.client import AsyncDataClient, DataClient
 from .data_manager.client import AsyncDataManagerClient, DataManagerClient
 from .environment import LabelStudioEnvironment
-from .export.client import AsyncExportClient, ExportClient
-from .files.client import AsyncFilesClient, FilesClient
-from .invites.client import AsyncInvitesClient, InvitesClient
+from .export_storage.client import AsyncExportStorageClient, ExportStorageClient
+from .import_storage.client import AsyncImportStorageClient, ImportStorageClient
 from .labels.client import AsyncLabelsClient, LabelsClient
 from .machine_learning.client import AsyncMachineLearningClient, MachineLearningClient
+from .ml.client import AsyncMlClient, MlClient
 from .organizations.client import AsyncOrganizationsClient, OrganizationsClient
 from .predictions.client import AsyncPredictionsClient, PredictionsClient
 from .projects.client import AsyncProjectsClient, ProjectsClient
-from .storage.client import AsyncStorageClient, StorageClient
-from .storage_azure.client import AsyncStorageAzureClient, StorageAzureClient
-from .storage_gcs.client import AsyncStorageGcsClient, StorageGcsClient
-from .storage_local.client import AsyncStorageLocalClient, StorageLocalClient
-from .storage_redis.client import AsyncStorageRedisClient, StorageRedisClient
-from .storage_s3.client import AsyncStorageS3Client, StorageS3Client
 from .tasks.client import AsyncTasksClient, TasksClient
 from .users.client import AsyncUsersClient, UsersClient
 from .webhooks.client import AsyncWebhooksClient, WebhooksClient
@@ -95,21 +89,15 @@ class LabelStudio:
         self.annotations = AnnotationsClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
         self.data_manager = DataManagerClient(client_wrapper=self._client_wrapper)
-        self.files = FilesClient(client_wrapper=self._client_wrapper)
-        self.invites = InvitesClient(client_wrapper=self._client_wrapper)
-        self.labels = LabelsClient(client_wrapper=self._client_wrapper)
-        self.machine_learning = MachineLearningClient(client_wrapper=self._client_wrapper)
-        self.organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
-        self.predictions = PredictionsClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
-        self.export = ExportClient(client_wrapper=self._client_wrapper)
-        self.storage = StorageClient(client_wrapper=self._client_wrapper)
-        self.storage_azure = StorageAzureClient(client_wrapper=self._client_wrapper)
-        self.storage_gcs = StorageGcsClient(client_wrapper=self._client_wrapper)
-        self.storage_local = StorageLocalClient(client_wrapper=self._client_wrapper)
-        self.storage_redis = StorageRedisClient(client_wrapper=self._client_wrapper)
-        self.storage_s3 = StorageS3Client(client_wrapper=self._client_wrapper)
+        self.organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
+        self.labels = LabelsClient(client_wrapper=self._client_wrapper)
+        self.ml = MlClient(client_wrapper=self._client_wrapper)
+        self.machine_learning = MachineLearningClient(client_wrapper=self._client_wrapper)
+        self.predictions = PredictionsClient(client_wrapper=self._client_wrapper)
         self.tasks = TasksClient(client_wrapper=self._client_wrapper)
+        self.import_storage = ImportStorageClient(client_wrapper=self._client_wrapper)
+        self.export_storage = ExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         self.data = DataClient(client_wrapper=self._client_wrapper)
 
@@ -179,21 +167,15 @@ class AsyncLabelStudio:
         self.annotations = AsyncAnnotationsClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
         self.data_manager = AsyncDataManagerClient(client_wrapper=self._client_wrapper)
-        self.files = AsyncFilesClient(client_wrapper=self._client_wrapper)
-        self.invites = AsyncInvitesClient(client_wrapper=self._client_wrapper)
-        self.labels = AsyncLabelsClient(client_wrapper=self._client_wrapper)
-        self.machine_learning = AsyncMachineLearningClient(client_wrapper=self._client_wrapper)
-        self.organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
-        self.predictions = AsyncPredictionsClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
-        self.export = AsyncExportClient(client_wrapper=self._client_wrapper)
-        self.storage = AsyncStorageClient(client_wrapper=self._client_wrapper)
-        self.storage_azure = AsyncStorageAzureClient(client_wrapper=self._client_wrapper)
-        self.storage_gcs = AsyncStorageGcsClient(client_wrapper=self._client_wrapper)
-        self.storage_local = AsyncStorageLocalClient(client_wrapper=self._client_wrapper)
-        self.storage_redis = AsyncStorageRedisClient(client_wrapper=self._client_wrapper)
-        self.storage_s3 = AsyncStorageS3Client(client_wrapper=self._client_wrapper)
+        self.organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
+        self.labels = AsyncLabelsClient(client_wrapper=self._client_wrapper)
+        self.ml = AsyncMlClient(client_wrapper=self._client_wrapper)
+        self.machine_learning = AsyncMachineLearningClient(client_wrapper=self._client_wrapper)
+        self.predictions = AsyncPredictionsClient(client_wrapper=self._client_wrapper)
         self.tasks = AsyncTasksClient(client_wrapper=self._client_wrapper)
+        self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
+        self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         self.data = AsyncDataClient(client_wrapper=self._client_wrapper)
 

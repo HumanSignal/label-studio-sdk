@@ -332,90 +332,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
-        "task_count": 1,
-        "annotation_count": 1,
-        "predictions_count": 1,
-        "duration": 1.1,
-        "file_upload_ids": [1],
-        "could_be_tasks_list": True,
-        "found_formats": ["found_formats"],
-        "data_columns": ["data_columns"],
-    }
-    expected_types = {
-        "task_count": "integer",
-        "annotation_count": "integer",
-        "predictions_count": "integer",
-        "duration": None,
-        "file_upload_ids": ("list", {0: "integer"}),
-        "could_be_tasks_list": None,
-        "found_formats": ("list", {0: None}),
-        "data_columns": ("list", {0: None}),
-    }
-    response = client.projects.import_tasks(id=1, data={})
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.import_tasks(id=1, data={})
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_api_projects_imports_read(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
-        "id": 1,
-        "preannotated_from_fields": {"preannotated_from_fields": {"key": "value"}},
-        "commit_to_project": True,
-        "return_task_ids": True,
-        "status": "created",
-        "url": "url",
-        "traceback": "traceback",
-        "error": "error",
-        "created_at": "2024-01-15T09:30:00Z",
-        "updated_at": "2024-01-15T09:30:00Z",
-        "finished_at": "2024-01-15T09:30:00Z",
-        "task_count": 1,
-        "annotation_count": 1,
-        "prediction_count": 1,
-        "duration": 1,
-        "file_upload_ids": {"file_upload_ids": {"key": "value"}},
-        "could_be_tasks_list": True,
-        "found_formats": {"found_formats": {"key": "value"}},
-        "data_columns": {"data_columns": {"key": "value"}},
-        "tasks": {"tasks": {"key": "value"}},
-        "task_ids": {"task_ids": {"key": "value"}},
-        "project": 1,
-    }
-    expected_types = {
-        "id": "integer",
-        "preannotated_from_fields": ("dict", {0: (None, None)}),
-        "commit_to_project": None,
-        "return_task_ids": None,
-        "status": None,
-        "url": None,
-        "traceback": None,
-        "error": None,
-        "created_at": "datetime",
-        "updated_at": "datetime",
-        "finished_at": "datetime",
-        "task_count": "integer",
-        "annotation_count": "integer",
-        "prediction_count": "integer",
-        "duration": "integer",
-        "file_upload_ids": ("dict", {0: (None, None)}),
-        "could_be_tasks_list": None,
-        "found_formats": ("dict", {0: (None, None)}),
-        "data_columns": ("dict", {0: (None, None)}),
-        "tasks": ("dict", {0: (None, None)}),
-        "task_ids": ("dict", {0: (None, None)}),
-        "project": "integer",
-    }
-    response = client.projects.api_projects_imports_read(id=1, import_pk="import_pk")
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.api_projects_imports_read(id=1, import_pk="import_pk")
-    validate_response(async_response, expected_response, expected_types)
-
-
 async def test_api_projects_reimports_read(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
@@ -468,15 +384,13 @@ async def test_api_projects_tasks_delete(client: LabelStudio, async_client: Asyn
     assert await async_client.projects.api_projects_tasks_delete(id=1) is None  # type: ignore[func-returns-value]
 
 
-async def test_api_projects_validate_label_config(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_validate_config(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {"label_config": "label_config"}
     expected_types = {"label_config": None}
-    response = client.projects.api_projects_validate_label_config(
-        id=1, request=ProjectLabelConfig(label_config="label_config")
-    )
+    response = client.projects.validate_config(id=1, request=ProjectLabelConfig(label_config="label_config"))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.api_projects_validate_label_config(
+    async_response = await async_client.projects.validate_config(
         id=1, request=ProjectLabelConfig(label_config="label_config")
     )
     validate_response(async_response, expected_response, expected_types)

@@ -6,17 +6,37 @@ from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 from .utilities import validate_response
 
 
-async def test_api_organizations_list(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_get_invite(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response = {"token": "token", "invite_url": "invite_url"}
+    expected_types = {"token": None, "invite_url": None}
+    response = client.organizations.get_invite()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.organizations.get_invite()
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_reset_invite(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response = {"token": "token", "invite_url": "invite_url"}
+    expected_types = {"token": None, "invite_url": None}
+    response = client.organizations.reset_invite()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.organizations.reset_invite()
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = [{"id": 1, "title": "title", "contact_info": "contact_info"}]
     expected_types = ("list", {0: {"id": "integer", "title": None, "contact_info": None}})
-    response = client.organizations.api_organizations_list()
+    response = client.organizations.list()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.organizations.api_organizations_list()
+    async_response = await async_client.organizations.list()
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_organizations_read(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "title": "title",
@@ -37,14 +57,14 @@ async def test_api_organizations_read(client: LabelStudio, async_client: AsyncLa
         "created_by": "integer",
         "users": ("list", {0: "integer"}),
     }
-    response = client.organizations.api_organizations_read(id=1)
+    response = client.organizations.get(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.organizations.api_organizations_read(id=1)
+    async_response = await async_client.organizations.get(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_organizations_partial_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
         "title": "title",
@@ -65,37 +85,8 @@ async def test_api_organizations_partial_update(client: LabelStudio, async_clien
         "created_by": "integer",
         "users": ("list", {0: "integer"}),
     }
-    response = client.organizations.api_organizations_partial_update(id=1, request=Organization(title="title"))
+    response = client.organizations.update(id=1, request=Organization(title="title"))
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.organizations.api_organizations_partial_update(
-        id=1, request=Organization(title="title")
-    )
+    async_response = await async_client.organizations.update(id=1, request=Organization(title="title"))
     validate_response(async_response, expected_response, expected_types)
-
-
-async def test_api_organizations_memberships_list(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
-        "count": 1,
-        "next": "next",
-        "previous": "previous",
-        "results": [{"id": 1, "organization": 1, "user": {"username": "username"}}],
-    }
-    expected_types = {
-        "count": "integer",
-        "next": None,
-        "previous": None,
-        "results": ("list", {0: {"id": "integer", "organization": "integer", "user": {"username": None}}}),
-    }
-    response = client.organizations.api_organizations_memberships_list(id="id")
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.organizations.api_organizations_memberships_list(id="id")
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_api_organizations_memberships_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.organizations.api_organizations_memberships_delete(id="id", user_pk=1) is None  # type: ignore[func-returns-value]
-
-    assert await async_client.organizations.api_organizations_memberships_delete(id="id", user_pk=1) is None  # type: ignore[func-returns-value]

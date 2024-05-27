@@ -12,8 +12,8 @@ from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..types.base_user import BaseUser
-from .types.api_current_user_reset_token_create_response import ApiCurrentUserResetTokenCreateResponse
-from .types.api_current_user_token_list_response import ApiCurrentUserTokenListResponse
+from .types.users_get_token_response import UsersGetTokenResponse
+from .types.users_reset_token_response import UsersResetTokenResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -23,9 +23,7 @@ class UsersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def api_current_user_reset_token_create(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ApiCurrentUserResetTokenCreateResponse:
+    def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersResetTokenResponse:
         """
         Reset the user token for the current user.
 
@@ -36,7 +34,7 @@ class UsersClient:
 
         Returns
         -------
-        ApiCurrentUserResetTokenCreateResponse
+        UsersResetTokenResponse
             User token response
 
         Examples
@@ -46,7 +44,7 @@ class UsersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.users.api_current_user_reset_token_create()
+        client.users.reset_token()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -74,16 +72,14 @@ class UsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ApiCurrentUserResetTokenCreateResponse, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(UsersResetTokenResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_current_user_token_list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ApiCurrentUserTokenListResponse:
+    def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersGetTokenResponse:
         """
         Get a user token to authenticate to the API as the current user.
 
@@ -94,7 +90,7 @@ class UsersClient:
 
         Returns
         -------
-        ApiCurrentUserTokenListResponse
+        UsersGetTokenResponse
             User token response
 
         Examples
@@ -104,7 +100,7 @@ class UsersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.users.api_current_user_token_list()
+        client.users.get_token()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
@@ -129,14 +125,14 @@ class UsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ApiCurrentUserTokenListResponse, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(UsersGetTokenResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_current_user_whoami_read(self, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
+    def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
         Retrieve details of the account that you are using to access the API.
 
@@ -157,7 +153,7 @@ class UsersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.users.api_current_user_whoami_read()
+        client.users.whoami()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
@@ -189,7 +185,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_users_list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[BaseUser]:
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[BaseUser]:
         """
         List the users that exist on the Label Studio server.
 
@@ -210,7 +206,7 @@ class UsersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.users.api_users_list()
+        client.users.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
@@ -242,9 +238,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_users_create(
-        self, *, request: BaseUser, request_options: typing.Optional[RequestOptions] = None
-    ) -> BaseUser:
+    def create(self, *, request: BaseUser, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
         Create a user in Label Studio.
 
@@ -268,7 +262,7 @@ class UsersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.users.api_users_create(
+        client.users.create(
             request=BaseUser(
                 username="username",
             ),
@@ -310,7 +304,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_users_read(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
         Get info about a specific Label Studio user, based on the user ID.
 
@@ -334,7 +328,7 @@ class UsersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.users.api_users_read(
+        client.users.get(
             id=1,
         )
         """
@@ -368,7 +362,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_users_delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific Label Studio user.
 
@@ -391,7 +385,7 @@ class UsersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.users.api_users_delete(
+        client.users.delete(
             id=1,
         )
         """
@@ -428,7 +422,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def api_users_partial_update(
+    def update(
         self, id: int, *, request: BaseUser, request_options: typing.Optional[RequestOptions] = None
     ) -> BaseUser:
         """
@@ -457,7 +451,7 @@ class UsersClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.users.api_users_partial_update(
+        client.users.update(
             id=1,
             request=BaseUser(
                 username="username",
@@ -505,9 +499,7 @@ class AsyncUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def api_current_user_reset_token_create(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ApiCurrentUserResetTokenCreateResponse:
+    async def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersResetTokenResponse:
         """
         Reset the user token for the current user.
 
@@ -518,7 +510,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        ApiCurrentUserResetTokenCreateResponse
+        UsersResetTokenResponse
             User token response
 
         Examples
@@ -528,7 +520,7 @@ class AsyncUsersClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.users.api_current_user_reset_token_create()
+        await client.users.reset_token()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -556,16 +548,14 @@ class AsyncUsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ApiCurrentUserResetTokenCreateResponse, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(UsersResetTokenResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_current_user_token_list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ApiCurrentUserTokenListResponse:
+    async def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersGetTokenResponse:
         """
         Get a user token to authenticate to the API as the current user.
 
@@ -576,7 +566,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        ApiCurrentUserTokenListResponse
+        UsersGetTokenResponse
             User token response
 
         Examples
@@ -586,7 +576,7 @@ class AsyncUsersClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.users.api_current_user_token_list()
+        await client.users.get_token()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
@@ -611,16 +601,14 @@ class AsyncUsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ApiCurrentUserTokenListResponse, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(UsersGetTokenResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_current_user_whoami_read(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> BaseUser:
+    async def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
         Retrieve details of the account that you are using to access the API.
 
@@ -641,7 +629,7 @@ class AsyncUsersClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.users.api_current_user_whoami_read()
+        await client.users.whoami()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
@@ -673,7 +661,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_users_list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[BaseUser]:
+    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[BaseUser]:
         """
         List the users that exist on the Label Studio server.
 
@@ -694,7 +682,7 @@ class AsyncUsersClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.users.api_users_list()
+        await client.users.list()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
@@ -726,9 +714,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_users_create(
-        self, *, request: BaseUser, request_options: typing.Optional[RequestOptions] = None
-    ) -> BaseUser:
+    async def create(self, *, request: BaseUser, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
         Create a user in Label Studio.
 
@@ -752,7 +738,7 @@ class AsyncUsersClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.users.api_users_create(
+        await client.users.create(
             request=BaseUser(
                 username="username",
             ),
@@ -794,7 +780,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_users_read(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
         Get info about a specific Label Studio user, based on the user ID.
 
@@ -818,7 +804,7 @@ class AsyncUsersClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.users.api_users_read(
+        await client.users.get(
             id=1,
         )
         """
@@ -852,7 +838,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_users_delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific Label Studio user.
 
@@ -875,7 +861,7 @@ class AsyncUsersClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.users.api_users_delete(
+        await client.users.delete(
             id=1,
         )
         """
@@ -912,7 +898,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def api_users_partial_update(
+    async def update(
         self, id: int, *, request: BaseUser, request_options: typing.Optional[RequestOptions] = None
     ) -> BaseUser:
         """
@@ -941,7 +927,7 @@ class AsyncUsersClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.users.api_users_partial_update(
+        await client.users.update(
             id=1,
             request=BaseUser(
                 username="username",
