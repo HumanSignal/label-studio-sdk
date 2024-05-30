@@ -2,6 +2,16 @@ from pydantic import BaseModel
 from typing import Dict, Optional, List, Tuple, Any, Callable
 
 
+def get_tag_class(name, default_mapping, re_mapping=None):
+    """ """
+    lc_name = name.lower()
+    if re_mapping and lc_name in re_mapping:
+        return re_mapping.get(lc_name)
+    else:
+        class_name = default_mapping.get(name.lower())
+        return class_name
+
+
 class LabelStudioTag(BaseModel):
     """
     Base class for a LabelStudio Tag

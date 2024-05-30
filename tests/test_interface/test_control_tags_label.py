@@ -5,9 +5,9 @@ import json
 from lxml.etree import Element
 
 from label_studio_sdk.label_interface import LabelInterface
+from label_studio_sdk.label_interface.region import Region
 import label_studio_sdk.label_interface.control_tags as CT
 import label_studio_sdk.label_interface.object_tags as OT
-from label_studio_sdk.label_interface.region import Region
 
 import tests.test_interface.configs as c
 
@@ -36,8 +36,8 @@ params = [
 
     (OT.ImageTag, CT.RatingTag, { "rating": 3 }, { "rating": 3 }),
     
-    (OT.ImageTag, CT.BrushTag, { "rle": [1,2,3] }, { "rle": [1,2,3], "format": "rle" }),
-    (OT.ImageTag, CT.BrushLabelsTag, { "rle": [1,2,3], "label": c.LABEL1 }, { "rle": [1,2,3], "format": "rle", "brushlabels": [ c.LABEL1 ] }),
+    (OT.ImageTag, CT.BrushTag, { "rle": [2,3,3,2] }, { "rle": [2,3,3,2], "format": "rle" }),
+    (OT.ImageTag, CT.BrushLabelsTag, { "rle": [2,3,3,2], "label": c.LABEL1 }, { "rle": [2,3,3,2], "format": "rle", "brushlabels": [ c.LABEL1 ] }),
 
     ## Text labeling
     (OT.TextTag, CT.NumberTag, { "number": 5 }, { "number": 5 }),
@@ -127,5 +127,4 @@ def test_relations():
     assert len(rels2) == 2
     assert "labels" in rels2[1]
     assert rels2[1]["labels"] == [ c.LABEL1, c.LABEL2]
-
-
+    

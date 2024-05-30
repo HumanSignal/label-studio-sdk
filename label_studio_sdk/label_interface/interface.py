@@ -12,7 +12,7 @@ from typing import Dict, Optional, List, Tuple, Any, Callable, Union
 from pydantic import BaseModel
 
 # from typing import Dict, Optional, List, Tuple, Any
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 from lxml import etree
 import xmljson
 
@@ -189,23 +189,34 @@ class LabelInterface:
     ```
     """
 
-    def __init__(self, config: str, *args, **kwargs):
+    def __init__(self, config: str, tags_mapping=None, *args, **kwargs):
         """
-        Create LabelInterface instance from the config string
-        Example:
+        Initialize a LabelInterface instance using a config string.
+
+        Args:
+          config (str): Configuration string.
+          tags_mapping: Provide your own implementation of any tag, this is helpful in cases where you want to override one of the control tags, and have your custom .label() method implemented.
+
+        The configuration string should be formatted as follows:
+
         ```
-        label_config = LabelInterface('''
         <View>
-        <Choices name="sentiment" toName="txt">
+          <Choices name="sentiment" toName="txt">
             <Choice value="Positive" />
             <Choice value="Negative" />
             <Choice value="Neutral" />
-        </Choices>
-        <Text name="txt" value="$text" />
-        ''')
+          </Choices>
+          <Text name="txt" value="$text" />
+        </View>
+        ```
+        This method will extract the predefined task from the configuration and 
+        parse the controls, objects, and labels used in it.
         """
+        self.task_loaded = False
+        
         self._config = config
-
+        self._tags_mapping = tags_mapping
+        
         # extract predefined task from the config
         _task_data, _ann, _pred = LabelInterface.get_task_from_labeling_config(config)
         self._sample_config_task = _task_data
@@ -224,6 +235,8 @@ class LabelInterface:
         self._objects = objects
         self._labels = labels
         self._tree = tree
+
+        
 
     ##### NEW API
 
@@ -414,7 +427,10 @@ class LabelInterface:
 
         """
         tree = copy.deepcopy(self)
+        tree.task_loaded = True
+        
         for obj in tree.objects:
+            print(obj.value_is_variable, obj.value_name)
             if obj.value_is_variable and obj.value_name in task:
                 obj.value = task.get(obj.value_name)
 
@@ -450,10 +466,10 @@ class LabelInterface:
                 variables.append(tag.attrib["indexFlag"])
 
             if ControlTag.validate_node(tag):
-                controls[tag.attrib["name"]] = ControlTag.parse_node(tag)
+                controls[tag.attrib["name"]] = ControlTag.parse_node(tag, tags_mapping=self._tags_mapping)
 
             elif ObjectTag.validate_node(tag):
-                objects[tag.attrib["name"]] = ObjectTag.parse_node(tag)
+                objects[tag.attrib["name"]] = ObjectTag.parse_node(tag, tags_mapping=self._tags_mapping)
 
             elif LabelTag.validate_node(tag):
                 lb = LabelTag.parse_node(tag, controls)
@@ -570,8 +586,22 @@ class LabelInterface:
 
     def _validate_object(self, obj):
         """ """
-        return all(self.validate_region(r) for r in obj.get(RESULT_KEY) if r.get('type') != "relation") and \
-            all(self.validate_relation(r) for r in obj.get(RESULT_KEY) if r.get('type') == "relation")
+        regions = []
+        for r in obj.get(RESULT_KEY):
+            if r.get('type') != "relation":
+                if not self.validate_region(r):
+                    return False
+
+                regions.append(r)
+
+        for r in obj.get(RESULT_KEY):
+            if r.get('type') == "relation" and \
+               not self.validate_relation(r, regions):
+                return False
+
+        return True                                                
+        # return all(self.validate_region(r) for r in obj.get(RESULT_KEY) if r.get('type') != "relation") and \
+        #     all(self.validate_relation(r) for r in obj.get(RESULT_KEY) if r.get('type') == "relation")
     
     def validate_annotation(self, annotation):
         """Validates the given annotation against the current configuration.
@@ -625,24 +655,20 @@ class LabelInterface:
         if not control or not obj:
             return False
 
-        # type of the region should match the tag name
+        # type of the region should match the tag name        
         if control.tag.lower() != region["type"]:
             return False
-
+        
         # make sure that in config it connects to the same tag as
         # immplied by the region data
         if region["to_name"] not in control.to_name:
             return False
-
+        
         # validate the actual value, for example that <Labels /> tag
         # is producing start, end, and labels
-        if region.get("type") is "relation":
-            if not control.validate_value(region):
-                return False
-        else:
-            if not control.validate_value(region["value"]):
-                return False
-
+        if not control.validate_value(region["value"]):
+            return False
+        
         return True
 
     def validate_relation(self, relation, regions, _mapping=None) -> bool:

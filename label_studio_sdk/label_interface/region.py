@@ -61,6 +61,7 @@ class Region(BaseModel):
         """ """
         return json.dumps(self._dict_relations())
 
+    @property
     def has_relations(self):
         return len(self.relations) > 0
     

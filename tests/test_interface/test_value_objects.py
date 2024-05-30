@@ -16,8 +16,8 @@ def test_prediction_value():
     
     r = chc.label(label=c.LABEL1)
     p = PredictionValue(model_version=MODEL_VERSION, score=SCORE, result=[ r ])
-
-    assert p.serialize() == {
+    
+    expected = {
         "model_version": MODEL_VERSION,
         "score": SCORE,
         "result": [
@@ -32,6 +32,9 @@ def test_prediction_value():
             }
         ]
     }
+    
+    assert p.serialize() == expected
+    
 
 def test_prediction_value_relation():
     """ """

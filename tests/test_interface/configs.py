@@ -68,7 +68,7 @@ CONF_COMPLEX = f"""
 TWO_TONAMES = f"""
     <View>
       <Text name="{TO_NAME}" value="{VALUE}" />
-      <Text name="{ANOTHER_TO_NAME}" value="{VALUE}" />
+      <Text name="{ANOTHER_TO_NAME}" value="{ANOTHER_VALUE}" />
       <Choices name="{FROM_NAME}" toName="{TO_NAME},{ANOTHER_TO_NAME}">
         <Choice value="{LABEL1}" />
         <Choice value="{LABEL2}" />

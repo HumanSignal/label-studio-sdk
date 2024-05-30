@@ -3,9 +3,9 @@
 
 import xml.etree.ElementTree
 from typing import Type, Dict, Optional, List, Tuple, Any, Union
-from pydantic import BaseModel, confloat
+from pydantic import BaseModel, confloat, Field, validator
 
-from .base import LabelStudioTag
+from .base import LabelStudioTag, get_tag_class
 from .region import Region
 from .object_tags import ObjectTag
 
@@ -40,12 +40,6 @@ _TAG_TO_CLASS = {
     "textarea": "TextAreaTag",
     "timeserieslabels": "TimeSeriesLabelsTag",
 }
-
-
-def get_tag_class(name):
-    """ """
-    class_name = _TAG_TO_CLASS.get(name.lower())
-    return globals().get(class_name, None)
 
 
 class ControlTag(LabelStudioTag):
@@ -100,7 +94,7 @@ class ControlTag(LabelStudioTag):
         )
 
     @classmethod
-    def parse_node(cls, tag: xml.etree.ElementTree.Element) -> "ControlTag":
+    def parse_node(cls, tag: xml.etree.ElementTree.Element, tags_mapping=None) -> "ControlTag":
         """
         Parse tag into a tag info
 
@@ -114,8 +108,10 @@ class ControlTag(LabelStudioTag):
         ControlTag
             The parsed tag
         """
-        tag_class = get_tag_class(tag.tag) or cls
-
+        tag_class = get_tag_class(tag.tag, _TAG_TO_CLASS, re_mapping=tags_mapping) or cls
+        if isinstance(tag_class, str):
+            tag_class = globals().get(tag_class, None)
+        
         tag_info = {
             "tag": tag.tag,
             "name": tag.attrib["name"],
@@ -142,7 +138,9 @@ class ControlTag(LabelStudioTag):
         if conditionals:
             tag_info["conditionals"] = conditionals
 
-        if tag.attrib.get("value", "empty")[0] == "$" or tag.attrib.get("apiUrl"):
+        val = tag.attrib.get("value", None)
+        if (val is not None and len(val) and val[0] == "$") or \
+           tag.attrib.get("apiUrl"):
             tag_info["dynamic_value"] = True
 
         return tag_class(**tag_info)
@@ -460,13 +458,13 @@ class ControlTag(LabelStudioTag):
 
 
 class SpanSelection(BaseModel):
-    start: int
-    end: int
+    start: int = Field(..., ge=0)
+    end: int = Field(..., ge=0)
 
 
 class SpanSelectionOffsets(SpanSelection):
-    startOffset: int
-    endOffset: int
+    startOffset: int = Field(..., ge=0)
+    endOffset: int = Field(..., ge=0)
 
 
 class ChoicesValue(BaseModel):
@@ -493,10 +491,41 @@ class LabelsTag(ControlTag):
 
 ## Image tags
 
+def validate_rle(list):
+    """
+    Validate if a list is correctly formatted in Run-Length Encoding (RLE).
+
+    A correctly formatted RLE list should follow 'value, count' pairs. 
+    For example, [2,3,3,2] is a valid RLE list representing [2,2,2,3,3].
+
+    Parameters:
+        list : a list of integers
+
+    Returns:
+        bool : True if the list is correctly formatted in RLE, False otherwise
+    """
+    # If the list length is odd, it's invalid.
+    if len(list) % 2 != 0:
+        return False
+
+    # Check 'value, count' pairs. The count should always be greater than zero.
+    for i in range(1, len(list), 2):
+        if list[i] <= 0:
+            return False
+
+    return True
+
 
 class BrushValue(BaseModel):
     format: str = "rle"
     rle: List[int]
+
+    @validator('rle')
+    def validate_rle(cls, rle_data):
+        if not validate_rle(rle_data):
+            raise ValueError('Invalid RLE format')
+        
+        return rle_data
 
 
 class BrushLabelsValue(BrushValue):
@@ -508,8 +537,14 @@ class BrushTag(ControlTag):
 
     _value_class: Type[BrushValue] = BrushValue
 
+    # def validate_value(self, value) -> bool:
+    #     res = super().validate_value(value)
+    #     if res is True and value.get("format") == "rle":
+    #         return validate_rle(value.get("rle"))
+        
+    #     return res
 
-class BrushLabelsTag(ControlTag):
+class BrushLabelsTag(BrushTag):
     """ """
 
     _label_attr_name: str = "brushlabels"
@@ -633,7 +668,7 @@ class VideoRectangleTag(ControlTag):
     
     
 class NumberValue(BaseModel):
-    number: int
+    number: int = Field(..., ge=0)
     
 
 class NumberTag(ControlTag):
@@ -705,7 +740,7 @@ class RankerTag(ControlTag):
 
 
 class RatingValue(BaseModel):
-    rating: int
+    rating: int = Field(..., ge=0)
 
 
 class RatingTag(ControlTag):
