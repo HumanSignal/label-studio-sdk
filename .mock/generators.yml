@@ -8,7 +8,7 @@ groups:
   python-sdk-staging:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 2.5.2
+        version: 2.7.0
         output:
           location: pypi
           package-name: label-studio-sdk
@@ -24,7 +24,7 @@ groups:
   python-sdk-local:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 2.5.2
+        version: 2.7.0
         output:
           location: local-file-system
           path: ../label_studio_sdk

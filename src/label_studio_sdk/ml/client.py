@@ -13,7 +13,10 @@ from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..errors.internal_server_error import InternalServerError
 from ..types.ml_backend import MlBackend
+from .types.ml_create_request_auth_method import MlCreateRequestAuthMethod
 from .types.ml_create_response import MlCreateResponse
+from .types.ml_update_request_auth_method import MlUpdateRequestAuthMethod
+from .types.ml_update_response import MlUpdateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -98,8 +101,16 @@ class MlClient:
     def create(
         self,
         *,
-        project: typing.Optional[int] = OMIT,
         url: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        auth_method: typing.Optional[MlCreateRequestAuthMethod] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        basic_auth_pass: typing.Optional[str] = OMIT,
+        extra_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlCreateResponse:
         """
@@ -113,11 +124,35 @@ class MlClient:
         
         Parameters
         ----------
+        url : typing.Optional[str]
+            ML backend URL
+        
         project : typing.Optional[int]
             Project ID
         
-        url : typing.Optional[str]
-            ML backend URL
+        is_interactive : typing.Optional[bool]
+            Is interactive
+        
+        title : typing.Optional[str]
+            Title
+        
+        description : typing.Optional[str]
+            Description
+        
+        auth_method : typing.Optional[MlCreateRequestAuthMethod]
+            Auth method
+        
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        basic_auth_pass : typing.Optional[str]
+            Basic auth password
+        
+        extra_params : typing.Optional[typing.Dict[str, typing.Any]]
+            Extra parameters
+        
+        timeout : typing.Optional[int]
+            Response model timeout
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -137,10 +172,26 @@ class MlClient:
         client.ml.create()
         """
         _request: typing.Dict[str, typing.Any] = {}
-        if project is not OMIT:
-            _request["project"] = project
         if url is not OMIT:
             _request["url"] = url
+        if project is not OMIT:
+            _request["project"] = project
+        if is_interactive is not OMIT:
+            _request["is_interactive"] = is_interactive
+        if title is not OMIT:
+            _request["title"] = title
+        if description is not OMIT:
+            _request["description"] = description
+        if auth_method is not OMIT:
+            _request["auth_method"] = auth_method
+        if basic_auth_user is not OMIT:
+            _request["basic_auth_user"] = basic_auth_user
+        if basic_auth_pass is not OMIT:
+            _request["basic_auth_pass"] = basic_auth_pass
+        if extra_params is not OMIT:
+            _request["extra_params"] = extra_params
+        if timeout is not OMIT:
+            _request["timeout"] = timeout
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/ml/"),
@@ -306,8 +357,21 @@ class MlClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
-        self, id: int, *, request: MlBackend, request_options: typing.Optional[RequestOptions] = None
-    ) -> MlBackend:
+        self,
+        id: int,
+        *,
+        url: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        auth_method: typing.Optional[MlUpdateRequestAuthMethod] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        basic_auth_pass: typing.Optional[str] = OMIT,
+        extra_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MlUpdateResponse:
         """
         Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
         
@@ -321,19 +385,46 @@ class MlClient:
         id : int
             A unique integer value identifying this ml backend.
         
-        request : MlBackend
+        url : typing.Optional[str]
+            ML backend URL
+        
+        project : typing.Optional[int]
+            Project ID
+        
+        is_interactive : typing.Optional[bool]
+            Is interactive
+        
+        title : typing.Optional[str]
+            Title
+        
+        description : typing.Optional[str]
+            Description
+        
+        auth_method : typing.Optional[MlUpdateRequestAuthMethod]
+            Auth method
+        
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        basic_auth_pass : typing.Optional[str]
+            Basic auth password
+        
+        extra_params : typing.Optional[typing.Dict[str, typing.Any]]
+            Extra parameters
+        
+        timeout : typing.Optional[int]
+            Response model timeout
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
         
         Returns
         -------
-        MlBackend
+        MlUpdateResponse
             
         
         Examples
         --------
-        from label_studio_sdk import MlBackend
         from label_studio_sdk.client import LabelStudio
         
         client = LabelStudio(
@@ -341,12 +432,29 @@ class MlClient:
         )
         client.ml.update(
             id=1,
-            request=MlBackend(
-                url="url",
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if url is not OMIT:
+            _request["url"] = url
+        if project is not OMIT:
+            _request["project"] = project
+        if is_interactive is not OMIT:
+            _request["is_interactive"] = is_interactive
+        if title is not OMIT:
+            _request["title"] = title
+        if description is not OMIT:
+            _request["description"] = description
+        if auth_method is not OMIT:
+            _request["auth_method"] = auth_method
+        if basic_auth_user is not OMIT:
+            _request["basic_auth_user"] = basic_auth_user
+        if basic_auth_pass is not OMIT:
+            _request["basic_auth_pass"] = basic_auth_pass
+        if extra_params is not OMIT:
+            _request["extra_params"] = extra_params
+        if timeout is not OMIT:
+            _request["timeout"] = timeout
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"api/ml/{jsonable_encoder(id)}"),
@@ -355,10 +463,10 @@ class MlClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -376,7 +484,7 @@ class MlClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(MlBackend, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(MlUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -685,8 +793,16 @@ class AsyncMlClient:
     async def create(
         self,
         *,
-        project: typing.Optional[int] = OMIT,
         url: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        auth_method: typing.Optional[MlCreateRequestAuthMethod] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        basic_auth_pass: typing.Optional[str] = OMIT,
+        extra_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlCreateResponse:
         """
@@ -700,11 +816,35 @@ class AsyncMlClient:
         
         Parameters
         ----------
+        url : typing.Optional[str]
+            ML backend URL
+        
         project : typing.Optional[int]
             Project ID
         
-        url : typing.Optional[str]
-            ML backend URL
+        is_interactive : typing.Optional[bool]
+            Is interactive
+        
+        title : typing.Optional[str]
+            Title
+        
+        description : typing.Optional[str]
+            Description
+        
+        auth_method : typing.Optional[MlCreateRequestAuthMethod]
+            Auth method
+        
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        basic_auth_pass : typing.Optional[str]
+            Basic auth password
+        
+        extra_params : typing.Optional[typing.Dict[str, typing.Any]]
+            Extra parameters
+        
+        timeout : typing.Optional[int]
+            Response model timeout
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -724,10 +864,26 @@ class AsyncMlClient:
         await client.ml.create()
         """
         _request: typing.Dict[str, typing.Any] = {}
-        if project is not OMIT:
-            _request["project"] = project
         if url is not OMIT:
             _request["url"] = url
+        if project is not OMIT:
+            _request["project"] = project
+        if is_interactive is not OMIT:
+            _request["is_interactive"] = is_interactive
+        if title is not OMIT:
+            _request["title"] = title
+        if description is not OMIT:
+            _request["description"] = description
+        if auth_method is not OMIT:
+            _request["auth_method"] = auth_method
+        if basic_auth_user is not OMIT:
+            _request["basic_auth_user"] = basic_auth_user
+        if basic_auth_pass is not OMIT:
+            _request["basic_auth_pass"] = basic_auth_pass
+        if extra_params is not OMIT:
+            _request["extra_params"] = extra_params
+        if timeout is not OMIT:
+            _request["timeout"] = timeout
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/ml/"),
@@ -893,8 +1049,21 @@ class AsyncMlClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: MlBackend, request_options: typing.Optional[RequestOptions] = None
-    ) -> MlBackend:
+        self,
+        id: int,
+        *,
+        url: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        auth_method: typing.Optional[MlUpdateRequestAuthMethod] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        basic_auth_pass: typing.Optional[str] = OMIT,
+        extra_params: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MlUpdateResponse:
         """
         Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
         
@@ -908,19 +1077,46 @@ class AsyncMlClient:
         id : int
             A unique integer value identifying this ml backend.
         
-        request : MlBackend
+        url : typing.Optional[str]
+            ML backend URL
+        
+        project : typing.Optional[int]
+            Project ID
+        
+        is_interactive : typing.Optional[bool]
+            Is interactive
+        
+        title : typing.Optional[str]
+            Title
+        
+        description : typing.Optional[str]
+            Description
+        
+        auth_method : typing.Optional[MlUpdateRequestAuthMethod]
+            Auth method
+        
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        basic_auth_pass : typing.Optional[str]
+            Basic auth password
+        
+        extra_params : typing.Optional[typing.Dict[str, typing.Any]]
+            Extra parameters
+        
+        timeout : typing.Optional[int]
+            Response model timeout
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
         
         Returns
         -------
-        MlBackend
+        MlUpdateResponse
             
         
         Examples
         --------
-        from label_studio_sdk import MlBackend
         from label_studio_sdk.client import AsyncLabelStudio
         
         client = AsyncLabelStudio(
@@ -928,12 +1124,29 @@ class AsyncMlClient:
         )
         await client.ml.update(
             id=1,
-            request=MlBackend(
-                url="url",
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if url is not OMIT:
+            _request["url"] = url
+        if project is not OMIT:
+            _request["project"] = project
+        if is_interactive is not OMIT:
+            _request["is_interactive"] = is_interactive
+        if title is not OMIT:
+            _request["title"] = title
+        if description is not OMIT:
+            _request["description"] = description
+        if auth_method is not OMIT:
+            _request["auth_method"] = auth_method
+        if basic_auth_user is not OMIT:
+            _request["basic_auth_user"] = basic_auth_user
+        if basic_auth_pass is not OMIT:
+            _request["basic_auth_pass"] = basic_auth_pass
+        if extra_params is not OMIT:
+            _request["extra_params"] = extra_params
+        if timeout is not OMIT:
+            _request["timeout"] = timeout
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"api/ml/{jsonable_encoder(id)}"),
@@ -942,10 +1155,10 @@ class AsyncMlClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -963,7 +1176,7 @@ class AsyncMlClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(MlBackend, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(MlUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

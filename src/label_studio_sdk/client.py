@@ -5,6 +5,7 @@ import typing
 
 import httpx
 
+from .actions.client import ActionsClient, AsyncActionsClient
 from .annotations.client import AnnotationsClient, AsyncAnnotationsClient
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
@@ -21,6 +22,7 @@ from .predictions.client import AsyncPredictionsClient, PredictionsClient
 from .projects.client import AsyncProjectsClient, ProjectsClient
 from .tasks.client import AsyncTasksClient, TasksClient
 from .users.client import AsyncUsersClient, UsersClient
+from .views.client import AsyncViewsClient, ViewsClient
 from .webhooks.client import AsyncWebhooksClient, WebhooksClient
 
 
@@ -88,7 +90,9 @@ class LabelStudio:
         )
         self.annotations = AnnotationsClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
+        self.actions = ActionsClient(client_wrapper=self._client_wrapper)
         self.data_manager = DataManagerClient(client_wrapper=self._client_wrapper)
+        self.views = ViewsClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
         self.organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
         self.labels = LabelsClient(client_wrapper=self._client_wrapper)
@@ -166,7 +170,9 @@ class AsyncLabelStudio:
         )
         self.annotations = AsyncAnnotationsClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
+        self.actions = AsyncActionsClient(client_wrapper=self._client_wrapper)
         self.data_manager = AsyncDataManagerClient(client_wrapper=self._client_wrapper)
+        self.views = AsyncViewsClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
         self.organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
         self.labels = AsyncLabelsClient(client_wrapper=self._client_wrapper)

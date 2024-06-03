@@ -12,6 +12,8 @@ from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...types.s3import_storage import S3ImportStorage
+from .types.s3create_response import S3CreateResponse
+from .types.s3update_response import S3UpdateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -89,37 +91,117 @@ class S3Client:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create(
-        self, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ImportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> S3CreateResponse:
         """
         Get new S3 import storage
 
         Parameters
         ----------
-        request : S3ImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in seconds
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3ImportStorage
+        S3CreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import S3ImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.s3.create(
-            request=S3ImportStorage(
-                project=1,
-            ),
-        )
+        client.import_storage.s3.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if bucket is not OMIT:
+            _request["bucket"] = bucket
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
+        if aws_access_key_id is not OMIT:
+            _request["aws_access_key_id"] = aws_access_key_id
+        if aws_secret_access_key is not OMIT:
+            _request["aws_secret_access_key"] = aws_secret_access_key
+        if aws_session_token is not OMIT:
+            _request["aws_session_token"] = aws_session_token
+        if aws_sse_kms_key_id is not OMIT:
+            _request["aws_sse_kms_key_id"] = aws_sse_kms_key_id
+        if region_name is not OMIT:
+            _request["region_name"] = region_name
+        if s3endpoint is not OMIT:
+            _request["s3_endpoint"] = s3endpoint
+        if presign is not OMIT:
+            _request["presign"] = presign
+        if presign_ttl is not OMIT:
+            _request["presign_ttl"] = presign_ttl
+        if recursive_scan is not OMIT:
+            _request["recursive_scan"] = recursive_scan
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/s3/"),
@@ -128,10 +210,10 @@ class S3Client:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -149,23 +231,19 @@ class S3Client:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(S3ImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(S3CreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(
-        self, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ImportStorage:
+    def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
         """
         Validate a specific S3 import storage connection.
 
         Parameters
         ----------
-        request : S3ImportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -176,17 +254,12 @@ class S3Client:
 
         Examples
         --------
-        from label_studio_sdk import S3ImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.s3.validate(
-            request=S3ImportStorage(
-                project=1,
-            ),
-        )
+        client.import_storage.s3.validate()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -196,12 +269,9 @@ class S3Client:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -347,8 +417,25 @@ class S3Client:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
-        self, id: int, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ImportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> S3UpdateResponse:
         """
         Update a specific S3 import storage connection.
 
@@ -357,19 +444,58 @@ class S3Client:
         id : int
             A unique integer value identifying this s3 import storage.
 
-        request : S3ImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in seconds
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3ImportStorage
+        S3UpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import S3ImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -377,11 +503,37 @@ class S3Client:
         )
         client.import_storage.s3.update(
             id=1,
-            request=S3ImportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if bucket is not OMIT:
+            _request["bucket"] = bucket
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
+        if aws_access_key_id is not OMIT:
+            _request["aws_access_key_id"] = aws_access_key_id
+        if aws_secret_access_key is not OMIT:
+            _request["aws_secret_access_key"] = aws_secret_access_key
+        if aws_session_token is not OMIT:
+            _request["aws_session_token"] = aws_session_token
+        if aws_sse_kms_key_id is not OMIT:
+            _request["aws_sse_kms_key_id"] = aws_sse_kms_key_id
+        if region_name is not OMIT:
+            _request["region_name"] = region_name
+        if s3endpoint is not OMIT:
+            _request["s3_endpoint"] = s3endpoint
+        if presign is not OMIT:
+            _request["presign"] = presign
+        if presign_ttl is not OMIT:
+            _request["presign_ttl"] = presign_ttl
+        if recursive_scan is not OMIT:
+            _request["recursive_scan"] = recursive_scan
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -392,10 +544,10 @@ class S3Client:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -413,24 +565,21 @@ class S3Client:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(S3ImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(S3UpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(
-        self, id: str, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ImportStorage:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
         """
         Sync tasks from an S3 import storage connection.
 
         Parameters
         ----------
-        id : str
-
-        request : S3ImportStorage
+        id : int
+            Storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -442,17 +591,13 @@ class S3Client:
 
         Examples
         --------
-        from label_studio_sdk import S3ImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
         client.import_storage.s3.sync(
-            id="id",
-            request=S3ImportStorage(
-                project=1,
-            ),
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -465,12 +610,9 @@ class S3Client:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -566,37 +708,117 @@ class AsyncS3Client:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
-        self, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ImportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> S3CreateResponse:
         """
         Get new S3 import storage
 
         Parameters
         ----------
-        request : S3ImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in seconds
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3ImportStorage
+        S3CreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import S3ImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.s3.create(
-            request=S3ImportStorage(
-                project=1,
-            ),
-        )
+        await client.import_storage.s3.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if bucket is not OMIT:
+            _request["bucket"] = bucket
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
+        if aws_access_key_id is not OMIT:
+            _request["aws_access_key_id"] = aws_access_key_id
+        if aws_secret_access_key is not OMIT:
+            _request["aws_secret_access_key"] = aws_secret_access_key
+        if aws_session_token is not OMIT:
+            _request["aws_session_token"] = aws_session_token
+        if aws_sse_kms_key_id is not OMIT:
+            _request["aws_sse_kms_key_id"] = aws_sse_kms_key_id
+        if region_name is not OMIT:
+            _request["region_name"] = region_name
+        if s3endpoint is not OMIT:
+            _request["s3_endpoint"] = s3endpoint
+        if presign is not OMIT:
+            _request["presign"] = presign
+        if presign_ttl is not OMIT:
+            _request["presign_ttl"] = presign_ttl
+        if recursive_scan is not OMIT:
+            _request["recursive_scan"] = recursive_scan
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/s3/"),
@@ -605,10 +827,10 @@ class AsyncS3Client:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -626,23 +848,19 @@ class AsyncS3Client:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(S3ImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(S3CreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(
-        self, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ImportStorage:
+    async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
         """
         Validate a specific S3 import storage connection.
 
         Parameters
         ----------
-        request : S3ImportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -653,17 +871,12 @@ class AsyncS3Client:
 
         Examples
         --------
-        from label_studio_sdk import S3ImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.s3.validate(
-            request=S3ImportStorage(
-                project=1,
-            ),
-        )
+        await client.import_storage.s3.validate()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -673,12 +886,9 @@ class AsyncS3Client:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -824,8 +1034,25 @@ class AsyncS3Client:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ImportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> S3UpdateResponse:
         """
         Update a specific S3 import storage connection.
 
@@ -834,19 +1061,58 @@ class AsyncS3Client:
         id : int
             A unique integer value identifying this s3 import storage.
 
-        request : S3ImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in seconds
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3ImportStorage
+        S3UpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import S3ImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -854,11 +1120,37 @@ class AsyncS3Client:
         )
         await client.import_storage.s3.update(
             id=1,
-            request=S3ImportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if bucket is not OMIT:
+            _request["bucket"] = bucket
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
+        if aws_access_key_id is not OMIT:
+            _request["aws_access_key_id"] = aws_access_key_id
+        if aws_secret_access_key is not OMIT:
+            _request["aws_secret_access_key"] = aws_secret_access_key
+        if aws_session_token is not OMIT:
+            _request["aws_session_token"] = aws_session_token
+        if aws_sse_kms_key_id is not OMIT:
+            _request["aws_sse_kms_key_id"] = aws_sse_kms_key_id
+        if region_name is not OMIT:
+            _request["region_name"] = region_name
+        if s3endpoint is not OMIT:
+            _request["s3_endpoint"] = s3endpoint
+        if presign is not OMIT:
+            _request["presign"] = presign
+        if presign_ttl is not OMIT:
+            _request["presign_ttl"] = presign_ttl
+        if recursive_scan is not OMIT:
+            _request["recursive_scan"] = recursive_scan
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -869,10 +1161,10 @@ class AsyncS3Client:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -890,24 +1182,21 @@ class AsyncS3Client:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(S3ImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(S3UpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def sync(
-        self, id: str, *, request: S3ImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ImportStorage:
+    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
         """
         Sync tasks from an S3 import storage connection.
 
         Parameters
         ----------
-        id : str
-
-        request : S3ImportStorage
+        id : int
+            Storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -919,17 +1208,13 @@ class AsyncS3Client:
 
         Examples
         --------
-        from label_studio_sdk import S3ImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
         await client.import_storage.s3.sync(
-            id="id",
-            request=S3ImportStorage(
-                project=1,
-            ),
+            id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -942,12 +1227,9 @@ class AsyncS3Client:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

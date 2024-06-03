@@ -5,10 +5,11 @@ import typing
 
 from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ...types.task import Task
 
 
 class TasksListResponse(pydantic_v1.BaseModel):
-    tasks: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic_v1.Field(default=None)
+    tasks: typing.Optional[typing.List[Task]] = pydantic_v1.Field(default=None)
     """
     List of tasks
     """

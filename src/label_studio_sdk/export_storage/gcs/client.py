@@ -12,6 +12,8 @@ from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...types.gcs_export_storage import GcsExportStorage
+from .types.gcs_create_response import GcsCreateResponse
+from .types.gcs_update_response import GcsUpdateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -89,37 +91,63 @@ class GcsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create(
-        self, *, request: GcsExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GcsCreateResponse:
         """
         Create a new GCS export storage connection to store annotations.
 
         Parameters
         ----------
-        request : GcsExportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            GCS bucket name
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
+
+        google_project_id : typing.Optional[str]
+            Google project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GcsExportStorage
+        GcsCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import GcsExportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.gcs.create(
-            request=GcsExportStorage(
-                project=1,
-            ),
-        )
+        client.export_storage.gcs.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if bucket is not OMIT:
+            _request["bucket"] = bucket
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if google_application_credentials is not OMIT:
+            _request["google_application_credentials"] = google_application_credentials
+        if google_project_id is not OMIT:
+            _request["google_project_id"] = google_project_id
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/export/gcs"),
@@ -128,10 +156,10 @@ class GcsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -149,23 +177,19 @@ class GcsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(GcsExportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(GcsCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(
-        self, *, request: GcsExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+    def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
         Validate a specific GCS export storage connection.
 
         Parameters
         ----------
-        request : GcsExportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -176,17 +200,12 @@ class GcsClient:
 
         Examples
         --------
-        from label_studio_sdk import GcsExportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.gcs.validate(
-            request=GcsExportStorage(
-                project=1,
-            ),
-        )
+        client.export_storage.gcs.validate()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -196,12 +215,9 @@ class GcsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -347,8 +363,16 @@ class GcsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
-        self, id: int, *, request: GcsExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GcsUpdateResponse:
         """
         Update a specific GCS export storage connection.
 
@@ -357,19 +381,31 @@ class GcsClient:
         id : int
             A unique integer value identifying this gcs export storage.
 
-        request : GcsExportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            GCS bucket name
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
+
+        google_project_id : typing.Optional[str]
+            Google project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GcsExportStorage
+        GcsUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import GcsExportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -377,11 +413,19 @@ class GcsClient:
         )
         client.export_storage.gcs.update(
             id=1,
-            request=GcsExportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if bucket is not OMIT:
+            _request["bucket"] = bucket
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if google_application_credentials is not OMIT:
+            _request["google_application_credentials"] = google_application_credentials
+        if google_project_id is not OMIT:
+            _request["google_project_id"] = google_project_id
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -392,10 +436,10 @@ class GcsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -413,24 +457,20 @@ class GcsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(GcsExportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(GcsUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(
-        self, id: str, *, request: GcsExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+    def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
         Sync tasks from an GCS export storage connection.
 
         Parameters
         ----------
         id : str
-
-        request : GcsExportStorage
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -442,7 +482,6 @@ class GcsClient:
 
         Examples
         --------
-        from label_studio_sdk import GcsExportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -450,9 +489,6 @@ class GcsClient:
         )
         client.export_storage.gcs.sync(
             id="id",
-            request=GcsExportStorage(
-                project=1,
-            ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -465,12 +501,9 @@ class GcsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -566,37 +599,63 @@ class AsyncGcsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
-        self, *, request: GcsExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GcsCreateResponse:
         """
         Create a new GCS export storage connection to store annotations.
 
         Parameters
         ----------
-        request : GcsExportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            GCS bucket name
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
+
+        google_project_id : typing.Optional[str]
+            Google project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GcsExportStorage
+        GcsCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import GcsExportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.export_storage.gcs.create(
-            request=GcsExportStorage(
-                project=1,
-            ),
-        )
+        await client.export_storage.gcs.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if bucket is not OMIT:
+            _request["bucket"] = bucket
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if google_application_credentials is not OMIT:
+            _request["google_application_credentials"] = google_application_credentials
+        if google_project_id is not OMIT:
+            _request["google_project_id"] = google_project_id
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/export/gcs"),
@@ -605,10 +664,10 @@ class AsyncGcsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -626,23 +685,19 @@ class AsyncGcsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(GcsExportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(GcsCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(
-        self, *, request: GcsExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+    async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
         Validate a specific GCS export storage connection.
 
         Parameters
         ----------
-        request : GcsExportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -653,17 +708,12 @@ class AsyncGcsClient:
 
         Examples
         --------
-        from label_studio_sdk import GcsExportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.export_storage.gcs.validate(
-            request=GcsExportStorage(
-                project=1,
-            ),
-        )
+        await client.export_storage.gcs.validate()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -673,12 +723,9 @@ class AsyncGcsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -824,8 +871,16 @@ class AsyncGcsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: GcsExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GcsUpdateResponse:
         """
         Update a specific GCS export storage connection.
 
@@ -834,19 +889,31 @@ class AsyncGcsClient:
         id : int
             A unique integer value identifying this gcs export storage.
 
-        request : GcsExportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            GCS bucket name
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
+
+        google_project_id : typing.Optional[str]
+            Google project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        GcsExportStorage
+        GcsUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import GcsExportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -854,11 +921,19 @@ class AsyncGcsClient:
         )
         await client.export_storage.gcs.update(
             id=1,
-            request=GcsExportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if bucket is not OMIT:
+            _request["bucket"] = bucket
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if google_application_credentials is not OMIT:
+            _request["google_application_credentials"] = google_application_credentials
+        if google_project_id is not OMIT:
+            _request["google_project_id"] = google_project_id
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -869,10 +944,10 @@ class AsyncGcsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -890,24 +965,20 @@ class AsyncGcsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(GcsExportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(GcsUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def sync(
-        self, id: str, *, request: GcsExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+    async def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
         Sync tasks from an GCS export storage connection.
 
         Parameters
         ----------
         id : str
-
-        request : GcsExportStorage
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -919,7 +990,6 @@ class AsyncGcsClient:
 
         Examples
         --------
-        from label_studio_sdk import GcsExportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -927,9 +997,6 @@ class AsyncGcsClient:
         )
         await client.export_storage.gcs.sync(
             id="id",
-            request=GcsExportStorage(
-                project=1,
-            ),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -942,12 +1009,9 @@ class AsyncGcsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

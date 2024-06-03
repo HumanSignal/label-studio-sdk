@@ -12,6 +12,8 @@ from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...types.azure_blob_import_storage import AzureBlobImportStorage
+from .types.azure_create_response import AzureCreateResponse
+from .types.azure_update_response import AzureUpdateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -89,37 +91,87 @@ class AzureClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create(
-        self, *, request: AzureBlobImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobImportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AzureCreateResponse:
         """
         Get new Azure import storage
 
         Parameters
         ----------
-        request : AzureBlobImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
+
+        presign : typing.Optional[bool]
+            Presign URLs for direct download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureBlobImportStorage
+        AzureCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure.create(
-            request=AzureBlobImportStorage(
-                project=1,
-            ),
-        )
+        client.import_storage.azure.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if container is not OMIT:
+            _request["container"] = container
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
+        if account_name is not OMIT:
+            _request["account_name"] = account_name
+        if account_key is not OMIT:
+            _request["account_key"] = account_key
+        if presign is not OMIT:
+            _request["presign"] = presign
+        if presign_ttl is not OMIT:
+            _request["presign_ttl"] = presign_ttl
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/azure/"),
@@ -128,10 +180,10 @@ class AzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -149,23 +201,19 @@ class AzureClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(AzureBlobImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(AzureCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(
-        self, *, request: AzureBlobImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobImportStorage:
+    def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
         Validate a specific Azure import storage connection.
 
         Parameters
         ----------
-        request : AzureBlobImportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -176,17 +224,12 @@ class AzureClient:
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure.validate(
-            request=AzureBlobImportStorage(
-                project=1,
-            ),
-        )
+        client.import_storage.azure.validate()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -196,12 +239,9 @@ class AzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -347,8 +387,20 @@ class AzureClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
-        self, id: int, *, request: AzureBlobImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobImportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AzureUpdateResponse:
         """
         Update a specific Azure import storage connection.
 
@@ -357,19 +409,43 @@ class AzureClient:
         id : int
             A unique integer value identifying this azure blob import storage.
 
-        request : AzureBlobImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
+
+        presign : typing.Optional[bool]
+            Presign URLs for direct download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureBlobImportStorage
+        AzureUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -377,11 +453,27 @@ class AzureClient:
         )
         client.import_storage.azure.update(
             id=1,
-            request=AzureBlobImportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if container is not OMIT:
+            _request["container"] = container
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
+        if account_name is not OMIT:
+            _request["account_name"] = account_name
+        if account_key is not OMIT:
+            _request["account_key"] = account_key
+        if presign is not OMIT:
+            _request["presign"] = presign
+        if presign_ttl is not OMIT:
+            _request["presign_ttl"] = presign_ttl
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -392,10 +484,10 @@ class AzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -413,24 +505,21 @@ class AzureClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(AzureBlobImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(AzureUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(
-        self, id: str, *, request: AzureBlobImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobImportStorage:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
         Sync tasks from an Azure import storage connection.
 
         Parameters
         ----------
-        id : str
-
-        request : AzureBlobImportStorage
+        id : int
+            Storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -442,17 +531,13 @@ class AzureClient:
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
         client.import_storage.azure.sync(
-            id="id",
-            request=AzureBlobImportStorage(
-                project=1,
-            ),
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -465,12 +550,9 @@ class AzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -566,37 +648,87 @@ class AsyncAzureClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
-        self, *, request: AzureBlobImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobImportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AzureCreateResponse:
         """
         Get new Azure import storage
 
         Parameters
         ----------
-        request : AzureBlobImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
+
+        presign : typing.Optional[bool]
+            Presign URLs for direct download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureBlobImportStorage
+        AzureCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.azure.create(
-            request=AzureBlobImportStorage(
-                project=1,
-            ),
-        )
+        await client.import_storage.azure.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if container is not OMIT:
+            _request["container"] = container
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
+        if account_name is not OMIT:
+            _request["account_name"] = account_name
+        if account_key is not OMIT:
+            _request["account_key"] = account_key
+        if presign is not OMIT:
+            _request["presign"] = presign
+        if presign_ttl is not OMIT:
+            _request["presign_ttl"] = presign_ttl
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/azure/"),
@@ -605,10 +737,10 @@ class AsyncAzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -626,23 +758,19 @@ class AsyncAzureClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(AzureBlobImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(AzureCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(
-        self, *, request: AzureBlobImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobImportStorage:
+    async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
         Validate a specific Azure import storage connection.
 
         Parameters
         ----------
-        request : AzureBlobImportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -653,17 +781,12 @@ class AsyncAzureClient:
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.azure.validate(
-            request=AzureBlobImportStorage(
-                project=1,
-            ),
-        )
+        await client.import_storage.azure.validate()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -673,12 +796,9 @@ class AsyncAzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -824,8 +944,20 @@ class AsyncAzureClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: AzureBlobImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobImportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AzureUpdateResponse:
         """
         Update a specific Azure import storage connection.
 
@@ -834,19 +966,43 @@ class AsyncAzureClient:
         id : int
             A unique integer value identifying this azure blob import storage.
 
-        request : AzureBlobImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
+
+        presign : typing.Optional[bool]
+            Presign URLs for direct download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureBlobImportStorage
+        AzureUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -854,11 +1010,27 @@ class AsyncAzureClient:
         )
         await client.import_storage.azure.update(
             id=1,
-            request=AzureBlobImportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if container is not OMIT:
+            _request["container"] = container
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
+        if account_name is not OMIT:
+            _request["account_name"] = account_name
+        if account_key is not OMIT:
+            _request["account_key"] = account_key
+        if presign is not OMIT:
+            _request["presign"] = presign
+        if presign_ttl is not OMIT:
+            _request["presign_ttl"] = presign_ttl
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -869,10 +1041,10 @@ class AsyncAzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -890,24 +1062,21 @@ class AsyncAzureClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(AzureBlobImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(AzureUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def sync(
-        self, id: str, *, request: AzureBlobImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobImportStorage:
+    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
         Sync tasks from an Azure import storage connection.
 
         Parameters
         ----------
-        id : str
-
-        request : AzureBlobImportStorage
+        id : int
+            Storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -919,17 +1088,13 @@ class AsyncAzureClient:
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
         await client.import_storage.azure.sync(
-            id="id",
-            request=AzureBlobImportStorage(
-                project=1,
-            ),
+            id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -942,12 +1107,9 @@ class AsyncAzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

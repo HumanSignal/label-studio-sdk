@@ -74,13 +74,31 @@ class PredictionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create(self, *, request: Prediction, request_options: typing.Optional[RequestOptions] = None) -> Prediction:
+    def create(
+        self,
+        *,
+        task: int,
+        result: typing.Sequence[typing.Dict[str, typing.Any]],
+        score: typing.Optional[float] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Prediction:
         """
         Create a prediction for a specific task.
 
         Parameters
         ----------
-        request : Prediction
+        task : int
+            Task ID for which the prediction is created
+
+        result : typing.Sequence[typing.Dict[str, typing.Any]]
+            Prediction result
+
+        score : typing.Optional[float]
+            Prediction score
+
+        model_version : typing.Optional[str]
+            Model version
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -88,22 +106,25 @@ class PredictionsClient:
         Returns
         -------
         Prediction
-
+            Created prediction
 
         Examples
         --------
-        from label_studio_sdk import Prediction
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
         client.predictions.create(
-            request=Prediction(
-                task=1,
-            ),
+            task=1,
+            result=[{}],
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"task": task, "result": result}
+        if score is not OMIT:
+            _request["score"] = score
+        if model_version is not OMIT:
+            _request["model_version"] = model_version
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/predictions/"),
@@ -112,10 +133,10 @@ class PredictionsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -201,7 +222,14 @@ class PredictionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def api_predictions_update(
-        self, id: int, *, request: Prediction, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        task: int,
+        result: typing.Sequence[typing.Dict[str, typing.Any]],
+        score: typing.Optional[float] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
         Overwrite prediction data by prediction ID.
@@ -211,7 +239,17 @@ class PredictionsClient:
         id : int
             Prediction ID
 
-        request : Prediction
+        task : int
+            Task ID for which the prediction is created
+
+        result : typing.Sequence[typing.Dict[str, typing.Any]]
+            Prediction result
+
+        score : typing.Optional[float]
+            Prediction score
+
+        model_version : typing.Optional[str]
+            Model version
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -223,7 +261,6 @@ class PredictionsClient:
 
         Examples
         --------
-        from label_studio_sdk import Prediction
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -231,11 +268,15 @@ class PredictionsClient:
         )
         client.predictions.api_predictions_update(
             id=1,
-            request=Prediction(
-                task=1,
-            ),
+            task=1,
+            result=[{}],
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"task": task, "result": result}
+        if score is not OMIT:
+            _request["score"] = score
+        if model_version is not OMIT:
+            _request["model_version"] = model_version
         _response = self._client_wrapper.httpx_client.request(
             method="PUT",
             url=urllib.parse.urljoin(
@@ -246,10 +287,10 @@ class PredictionsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -337,7 +378,14 @@ class PredictionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
-        self, id: int, *, request: Prediction, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        task: int,
+        result: typing.Sequence[typing.Dict[str, typing.Any]],
+        score: typing.Optional[float] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
         Update prediction data by prediction ID.
@@ -347,7 +395,17 @@ class PredictionsClient:
         id : int
             Prediction ID
 
-        request : Prediction
+        task : int
+            Task ID for which the prediction is created
+
+        result : typing.Sequence[typing.Dict[str, typing.Any]]
+            Prediction result
+
+        score : typing.Optional[float]
+            Prediction score
+
+        model_version : typing.Optional[str]
+            Model version
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -359,7 +417,6 @@ class PredictionsClient:
 
         Examples
         --------
-        from label_studio_sdk import Prediction
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -367,11 +424,15 @@ class PredictionsClient:
         )
         client.predictions.update(
             id=1,
-            request=Prediction(
-                task=1,
-            ),
+            task=1,
+            result=[{}],
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"task": task, "result": result}
+        if score is not OMIT:
+            _request["score"] = score
+        if model_version is not OMIT:
+            _request["model_version"] = model_version
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -382,10 +443,10 @@ class PredictionsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -469,14 +530,30 @@ class AsyncPredictionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
-        self, *, request: Prediction, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        task: int,
+        result: typing.Sequence[typing.Dict[str, typing.Any]],
+        score: typing.Optional[float] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
         Create a prediction for a specific task.
 
         Parameters
         ----------
-        request : Prediction
+        task : int
+            Task ID for which the prediction is created
+
+        result : typing.Sequence[typing.Dict[str, typing.Any]]
+            Prediction result
+
+        score : typing.Optional[float]
+            Prediction score
+
+        model_version : typing.Optional[str]
+            Model version
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -484,22 +561,25 @@ class AsyncPredictionsClient:
         Returns
         -------
         Prediction
-
+            Created prediction
 
         Examples
         --------
-        from label_studio_sdk import Prediction
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
         await client.predictions.create(
-            request=Prediction(
-                task=1,
-            ),
+            task=1,
+            result=[{}],
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"task": task, "result": result}
+        if score is not OMIT:
+            _request["score"] = score
+        if model_version is not OMIT:
+            _request["model_version"] = model_version
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/predictions/"),
@@ -508,10 +588,10 @@ class AsyncPredictionsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -597,7 +677,14 @@ class AsyncPredictionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def api_predictions_update(
-        self, id: int, *, request: Prediction, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        task: int,
+        result: typing.Sequence[typing.Dict[str, typing.Any]],
+        score: typing.Optional[float] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
         Overwrite prediction data by prediction ID.
@@ -607,7 +694,17 @@ class AsyncPredictionsClient:
         id : int
             Prediction ID
 
-        request : Prediction
+        task : int
+            Task ID for which the prediction is created
+
+        result : typing.Sequence[typing.Dict[str, typing.Any]]
+            Prediction result
+
+        score : typing.Optional[float]
+            Prediction score
+
+        model_version : typing.Optional[str]
+            Model version
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -619,7 +716,6 @@ class AsyncPredictionsClient:
 
         Examples
         --------
-        from label_studio_sdk import Prediction
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -627,11 +723,15 @@ class AsyncPredictionsClient:
         )
         await client.predictions.api_predictions_update(
             id=1,
-            request=Prediction(
-                task=1,
-            ),
+            task=1,
+            result=[{}],
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"task": task, "result": result}
+        if score is not OMIT:
+            _request["score"] = score
+        if model_version is not OMIT:
+            _request["model_version"] = model_version
         _response = await self._client_wrapper.httpx_client.request(
             method="PUT",
             url=urllib.parse.urljoin(
@@ -642,10 +742,10 @@ class AsyncPredictionsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -733,7 +833,14 @@ class AsyncPredictionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: Prediction, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        task: int,
+        result: typing.Sequence[typing.Dict[str, typing.Any]],
+        score: typing.Optional[float] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
         Update prediction data by prediction ID.
@@ -743,7 +850,17 @@ class AsyncPredictionsClient:
         id : int
             Prediction ID
 
-        request : Prediction
+        task : int
+            Task ID for which the prediction is created
+
+        result : typing.Sequence[typing.Dict[str, typing.Any]]
+            Prediction result
+
+        score : typing.Optional[float]
+            Prediction score
+
+        model_version : typing.Optional[str]
+            Model version
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -755,7 +872,6 @@ class AsyncPredictionsClient:
 
         Examples
         --------
-        from label_studio_sdk import Prediction
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -763,11 +879,15 @@ class AsyncPredictionsClient:
         )
         await client.predictions.update(
             id=1,
-            request=Prediction(
-                task=1,
-            ),
+            task=1,
+            result=[{}],
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"task": task, "result": result}
+        if score is not OMIT:
+            _request["score"] = score
+        if model_version is not OMIT:
+            _request["model_version"] = model_version
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -778,10 +898,10 @@ class AsyncPredictionsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(

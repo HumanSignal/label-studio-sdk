@@ -12,6 +12,8 @@ from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...types.azure_blob_export_storage import AzureBlobExportStorage
+from .types.azure_create_response import AzureCreateResponse
+from .types.azure_update_response import AzureUpdateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -89,37 +91,63 @@ class AzureClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create(
-        self, *, request: AzureBlobExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobExportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AzureCreateResponse:
         """
         Create a new Azure export storage connection to store annotations.
 
         Parameters
         ----------
-        request : AzureBlobExportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureBlobExportStorage
+        AzureCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobExportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.azure.create(
-            request=AzureBlobExportStorage(
-                project=1,
-            ),
-        )
+        client.export_storage.azure.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if container is not OMIT:
+            _request["container"] = container
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if account_name is not OMIT:
+            _request["account_name"] = account_name
+        if account_key is not OMIT:
+            _request["account_key"] = account_key
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/export/azure"),
@@ -128,10 +156,10 @@ class AzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -149,23 +177,19 @@ class AzureClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(AzureBlobExportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(AzureCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(
-        self, *, request: AzureBlobExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobExportStorage:
+    def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobExportStorage:
         """
         Validate a specific Azure export storage connection.
 
         Parameters
         ----------
-        request : AzureBlobExportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -176,17 +200,12 @@ class AzureClient:
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobExportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.azure.validate(
-            request=AzureBlobExportStorage(
-                project=1,
-            ),
-        )
+        client.export_storage.azure.validate()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -196,12 +215,9 @@ class AzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -347,8 +363,16 @@ class AzureClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
-        self, id: int, *, request: AzureBlobExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobExportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AzureUpdateResponse:
         """
         Update a specific Azure export storage connection.
 
@@ -357,19 +381,31 @@ class AzureClient:
         id : int
             A unique integer value identifying this azure blob export storage.
 
-        request : AzureBlobExportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureBlobExportStorage
+        AzureUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobExportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -377,11 +413,19 @@ class AzureClient:
         )
         client.export_storage.azure.update(
             id=1,
-            request=AzureBlobExportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if container is not OMIT:
+            _request["container"] = container
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if account_name is not OMIT:
+            _request["account_name"] = account_name
+        if account_key is not OMIT:
+            _request["account_key"] = account_key
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -392,10 +436,10 @@ class AzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -413,24 +457,20 @@ class AzureClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(AzureBlobExportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(AzureUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(
-        self, id: str, *, request: AzureBlobExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobExportStorage:
+    def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobExportStorage:
         """
         Sync tasks from an Azure export storage connection.
 
         Parameters
         ----------
         id : str
-
-        request : AzureBlobExportStorage
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -442,7 +482,6 @@ class AzureClient:
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobExportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -450,9 +489,6 @@ class AzureClient:
         )
         client.export_storage.azure.sync(
             id="id",
-            request=AzureBlobExportStorage(
-                project=1,
-            ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -465,12 +501,9 @@ class AzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -566,37 +599,63 @@ class AsyncAzureClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
-        self, *, request: AzureBlobExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobExportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AzureCreateResponse:
         """
         Create a new Azure export storage connection to store annotations.
 
         Parameters
         ----------
-        request : AzureBlobExportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureBlobExportStorage
+        AzureCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobExportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.export_storage.azure.create(
-            request=AzureBlobExportStorage(
-                project=1,
-            ),
-        )
+        await client.export_storage.azure.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if container is not OMIT:
+            _request["container"] = container
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if account_name is not OMIT:
+            _request["account_name"] = account_name
+        if account_key is not OMIT:
+            _request["account_key"] = account_key
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/export/azure"),
@@ -605,10 +664,10 @@ class AsyncAzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -626,23 +685,19 @@ class AsyncAzureClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(AzureBlobExportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(AzureCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(
-        self, *, request: AzureBlobExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobExportStorage:
+    async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobExportStorage:
         """
         Validate a specific Azure export storage connection.
 
         Parameters
         ----------
-        request : AzureBlobExportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -653,17 +708,12 @@ class AsyncAzureClient:
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobExportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.export_storage.azure.validate(
-            request=AzureBlobExportStorage(
-                project=1,
-            ),
-        )
+        await client.export_storage.azure.validate()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -673,12 +723,9 @@ class AsyncAzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -824,8 +871,16 @@ class AsyncAzureClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: AzureBlobExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobExportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        container: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        account_name: typing.Optional[str] = OMIT,
+        account_key: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AzureUpdateResponse:
         """
         Update a specific Azure export storage connection.
 
@@ -834,19 +889,31 @@ class AsyncAzureClient:
         id : int
             A unique integer value identifying this azure blob export storage.
 
-        request : AzureBlobExportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        container : typing.Optional[str]
+            Azure blob container
+
+        prefix : typing.Optional[str]
+            Azure blob prefix name
+
+        account_name : typing.Optional[str]
+            Azure Blob account name
+
+        account_key : typing.Optional[str]
+            Azure Blob account key
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureBlobExportStorage
+        AzureUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobExportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -854,11 +921,19 @@ class AsyncAzureClient:
         )
         await client.export_storage.azure.update(
             id=1,
-            request=AzureBlobExportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if container is not OMIT:
+            _request["container"] = container
+        if prefix is not OMIT:
+            _request["prefix"] = prefix
+        if account_name is not OMIT:
+            _request["account_name"] = account_name
+        if account_key is not OMIT:
+            _request["account_key"] = account_key
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -869,10 +944,10 @@ class AsyncAzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -890,24 +965,20 @@ class AsyncAzureClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(AzureBlobExportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(AzureUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def sync(
-        self, id: str, *, request: AzureBlobExportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureBlobExportStorage:
+    async def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobExportStorage:
         """
         Sync tasks from an Azure export storage connection.
 
         Parameters
         ----------
         id : str
-
-        request : AzureBlobExportStorage
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -919,7 +990,6 @@ class AsyncAzureClient:
 
         Examples
         --------
-        from label_studio_sdk import AzureBlobExportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -927,9 +997,6 @@ class AsyncAzureClient:
         )
         await client.export_storage.azure.sync(
             id="id",
-            request=AzureBlobExportStorage(
-                project=1,
-            ),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -942,12 +1009,9 @@ class AsyncAzureClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

@@ -9,15 +9,15 @@ from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 class Prediction(pydantic_v1.BaseModel):
     id: typing.Optional[int] = None
+    result: typing.List[typing.Dict[str, typing.Any]] = pydantic_v1.Field()
+    """
+    List of prediction results for the task
+    """
+
     model_version: typing.Optional[str] = None
     created_ago: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Delta time from creation time
-    """
-
-    result: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
-    """
-    Prediction result
     """
 
     score: typing.Optional[float] = pydantic_v1.Field(default=None)

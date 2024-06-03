@@ -144,7 +144,18 @@ class AnnotationsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
-        self, id: int, *, request: Annotation, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        result: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        task: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        completed_by: typing.Optional[int] = OMIT,
+        updated_by: typing.Optional[int] = OMIT,
+        was_cancelled: typing.Optional[bool] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        lead_time: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Annotation:
         """
         Update existing attributes on an annotation.
@@ -154,7 +165,29 @@ class AnnotationsClient:
         id : int
             A unique integer value identifying this annotation.
 
-        request : Annotation
+        result : typing.Optional[typing.Dict[str, typing.Any]]
+            Labeling result in JSON format
+
+        task : typing.Optional[int]
+            Corresponding task for this annotation
+
+        project : typing.Optional[int]
+            Project ID for this annotation
+
+        completed_by : typing.Optional[int]
+            User ID of the person who created this annotation
+
+        updated_by : typing.Optional[int]
+            Last user who updated this annotation
+
+        was_cancelled : typing.Optional[bool]
+            User skipped the task
+
+        ground_truth : typing.Optional[bool]
+            This annotation is a Ground Truth
+
+        lead_time : typing.Optional[float]
+            How much time it took to annotate the task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -166,7 +199,6 @@ class AnnotationsClient:
 
         Examples
         --------
-        from label_studio_sdk import Annotation
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -174,9 +206,25 @@ class AnnotationsClient:
         )
         client.annotations.update(
             id=1,
-            request=Annotation(),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if result is not OMIT:
+            _request["result"] = result
+        if task is not OMIT:
+            _request["task"] = task
+        if project is not OMIT:
+            _request["project"] = project
+        if completed_by is not OMIT:
+            _request["completed_by"] = completed_by
+        if updated_by is not OMIT:
+            _request["updated_by"] = updated_by
+        if was_cancelled is not OMIT:
+            _request["was_cancelled"] = was_cancelled
+        if ground_truth is not OMIT:
+            _request["ground_truth"] = ground_truth
+        if lead_time is not OMIT:
+            _request["lead_time"] = lead_time
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -187,10 +235,10 @@ class AnnotationsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -276,7 +324,18 @@ class AnnotationsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create(
-        self, id: int, *, request: Annotation, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        result: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        task: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        completed_by: typing.Optional[int] = OMIT,
+        updated_by: typing.Optional[int] = OMIT,
+        was_cancelled: typing.Optional[bool] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        lead_time: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Annotation:
         """
         Add annotations to a task like an annotator does. The content of the result field depends on your
@@ -299,7 +358,29 @@ class AnnotationsClient:
         id : int
             Task ID
 
-        request : Annotation
+        result : typing.Optional[typing.Dict[str, typing.Any]]
+            Labeling result in JSON format
+
+        task : typing.Optional[int]
+            Corresponding task for this annotation
+
+        project : typing.Optional[int]
+            Project ID for this annotation
+
+        completed_by : typing.Optional[int]
+            User ID of the person who created this annotation
+
+        updated_by : typing.Optional[int]
+            Last user who updated this annotation
+
+        was_cancelled : typing.Optional[bool]
+            User skipped the task
+
+        ground_truth : typing.Optional[bool]
+            This annotation is a Ground Truth
+
+        lead_time : typing.Optional[float]
+            How much time it took to annotate the task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -311,7 +392,6 @@ class AnnotationsClient:
 
         Examples
         --------
-        from label_studio_sdk import Annotation
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -319,9 +399,25 @@ class AnnotationsClient:
         )
         client.annotations.create(
             id=1,
-            request=Annotation(),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if result is not OMIT:
+            _request["result"] = result
+        if task is not OMIT:
+            _request["task"] = task
+        if project is not OMIT:
+            _request["project"] = project
+        if completed_by is not OMIT:
+            _request["completed_by"] = completed_by
+        if updated_by is not OMIT:
+            _request["updated_by"] = updated_by
+        if was_cancelled is not OMIT:
+            _request["was_cancelled"] = was_cancelled
+        if ground_truth is not OMIT:
+            _request["ground_truth"] = ground_truth
+        if lead_time is not OMIT:
+            _request["lead_time"] = lead_time
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(
@@ -332,10 +428,10 @@ class AnnotationsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -488,7 +584,18 @@ class AsyncAnnotationsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: Annotation, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        result: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        task: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        completed_by: typing.Optional[int] = OMIT,
+        updated_by: typing.Optional[int] = OMIT,
+        was_cancelled: typing.Optional[bool] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        lead_time: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Annotation:
         """
         Update existing attributes on an annotation.
@@ -498,7 +605,29 @@ class AsyncAnnotationsClient:
         id : int
             A unique integer value identifying this annotation.
 
-        request : Annotation
+        result : typing.Optional[typing.Dict[str, typing.Any]]
+            Labeling result in JSON format
+
+        task : typing.Optional[int]
+            Corresponding task for this annotation
+
+        project : typing.Optional[int]
+            Project ID for this annotation
+
+        completed_by : typing.Optional[int]
+            User ID of the person who created this annotation
+
+        updated_by : typing.Optional[int]
+            Last user who updated this annotation
+
+        was_cancelled : typing.Optional[bool]
+            User skipped the task
+
+        ground_truth : typing.Optional[bool]
+            This annotation is a Ground Truth
+
+        lead_time : typing.Optional[float]
+            How much time it took to annotate the task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -510,7 +639,6 @@ class AsyncAnnotationsClient:
 
         Examples
         --------
-        from label_studio_sdk import Annotation
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -518,9 +646,25 @@ class AsyncAnnotationsClient:
         )
         await client.annotations.update(
             id=1,
-            request=Annotation(),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if result is not OMIT:
+            _request["result"] = result
+        if task is not OMIT:
+            _request["task"] = task
+        if project is not OMIT:
+            _request["project"] = project
+        if completed_by is not OMIT:
+            _request["completed_by"] = completed_by
+        if updated_by is not OMIT:
+            _request["updated_by"] = updated_by
+        if was_cancelled is not OMIT:
+            _request["was_cancelled"] = was_cancelled
+        if ground_truth is not OMIT:
+            _request["ground_truth"] = ground_truth
+        if lead_time is not OMIT:
+            _request["lead_time"] = lead_time
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -531,10 +675,10 @@ class AsyncAnnotationsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -622,7 +766,18 @@ class AsyncAnnotationsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
-        self, id: int, *, request: Annotation, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        result: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        task: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        completed_by: typing.Optional[int] = OMIT,
+        updated_by: typing.Optional[int] = OMIT,
+        was_cancelled: typing.Optional[bool] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        lead_time: typing.Optional[float] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Annotation:
         """
         Add annotations to a task like an annotator does. The content of the result field depends on your
@@ -645,7 +800,29 @@ class AsyncAnnotationsClient:
         id : int
             Task ID
 
-        request : Annotation
+        result : typing.Optional[typing.Dict[str, typing.Any]]
+            Labeling result in JSON format
+
+        task : typing.Optional[int]
+            Corresponding task for this annotation
+
+        project : typing.Optional[int]
+            Project ID for this annotation
+
+        completed_by : typing.Optional[int]
+            User ID of the person who created this annotation
+
+        updated_by : typing.Optional[int]
+            Last user who updated this annotation
+
+        was_cancelled : typing.Optional[bool]
+            User skipped the task
+
+        ground_truth : typing.Optional[bool]
+            This annotation is a Ground Truth
+
+        lead_time : typing.Optional[float]
+            How much time it took to annotate the task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -657,7 +834,6 @@ class AsyncAnnotationsClient:
 
         Examples
         --------
-        from label_studio_sdk import Annotation
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -665,9 +841,25 @@ class AsyncAnnotationsClient:
         )
         await client.annotations.create(
             id=1,
-            request=Annotation(),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if result is not OMIT:
+            _request["result"] = result
+        if task is not OMIT:
+            _request["task"] = task
+        if project is not OMIT:
+            _request["project"] = project
+        if completed_by is not OMIT:
+            _request["completed_by"] = completed_by
+        if updated_by is not OMIT:
+            _request["updated_by"] = updated_by
+        if was_cancelled is not OMIT:
+            _request["was_cancelled"] = was_cancelled
+        if ground_truth is not OMIT:
+            _request["ground_truth"] = ground_truth
+        if lead_time is not OMIT:
+            _request["lead_time"] = lead_time
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(
@@ -678,10 +870,10 @@ class AsyncAnnotationsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(

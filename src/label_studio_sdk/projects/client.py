@@ -18,6 +18,7 @@ from ..types.project_reimport import ProjectReimport
 from .exports.client import AsyncExportsClient, ExportsClient
 from .files.client import AsyncFilesClient, FilesClient
 from .labels.client import AsyncLabelsClient, LabelsClient
+from .types.projects_create_response import ProjectsCreateResponse
 from .types.projects_list_response import ProjectsListResponse
 
 # this is used as the default value for optional parameters
@@ -140,7 +141,24 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create(self, *, request: Project, request_options: typing.Optional[RequestOptions] = None) -> Project:
+    def create(
+        self,
+        *,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        label_config: typing.Optional[str] = OMIT,
+        expert_instruction: typing.Optional[str] = OMIT,
+        show_instruction: typing.Optional[bool] = OMIT,
+        show_skip_button: typing.Optional[bool] = OMIT,
+        enable_empty_annotation: typing.Optional[bool] = OMIT,
+        show_annotation_history: typing.Optional[bool] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsCreateResponse:
         """
         Create a project and set up the labeling interface in Label Studio using the API.
 
@@ -150,28 +168,89 @@ class ProjectsClient:
 
         Parameters
         ----------
-        request : Project
+        title : typing.Optional[str]
+            Project title
+
+        description : typing.Optional[str]
+            Project description
+
+        label_config : typing.Optional[str]
+            Label config in XML format
+
+        expert_instruction : typing.Optional[str]
+            Labeling instructions
+
+        show_instruction : typing.Optional[bool]
+            Show labeling instructions
+
+        show_skip_button : typing.Optional[bool]
+            Show skip button
+
+        enable_empty_annotation : typing.Optional[bool]
+            Allow empty annotations
+
+        show_annotation_history : typing.Optional[bool]
+            Show annotation history
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal preannotations interactively
+
+        show_collab_predictions : typing.Optional[bool]
+            Show collaborative predictions
+
+        maximum_annotations : typing.Optional[int]
+            Maximum annotations per task
+
+        color : typing.Optional[str]
+            Project color in HEX format
+
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
+            Control weights
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Project
+        ProjectsCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import Project
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.create(
-            request=Project(),
-        )
+        client.projects.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if title is not OMIT:
+            _request["title"] = title
+        if description is not OMIT:
+            _request["description"] = description
+        if label_config is not OMIT:
+            _request["label_config"] = label_config
+        if expert_instruction is not OMIT:
+            _request["expert_instruction"] = expert_instruction
+        if show_instruction is not OMIT:
+            _request["show_instruction"] = show_instruction
+        if show_skip_button is not OMIT:
+            _request["show_skip_button"] = show_skip_button
+        if enable_empty_annotation is not OMIT:
+            _request["enable_empty_annotation"] = enable_empty_annotation
+        if show_annotation_history is not OMIT:
+            _request["show_annotation_history"] = show_annotation_history
+        if reveal_preannotations_interactively is not OMIT:
+            _request["reveal_preannotations_interactively"] = reveal_preannotations_interactively
+        if show_collab_predictions is not OMIT:
+            _request["show_collab_predictions"] = show_collab_predictions
+        if maximum_annotations is not OMIT:
+            _request["maximum_annotations"] = maximum_annotations
+        if color is not OMIT:
+            _request["color"] = color
+        if control_weights is not OMIT:
+            _request["control_weights"] = control_weights
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/projects/"),
@@ -180,10 +259,10 @@ class ProjectsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -201,7 +280,7 @@ class ProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(ProjectsCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -992,7 +1071,24 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create(self, *, request: Project, request_options: typing.Optional[RequestOptions] = None) -> Project:
+    async def create(
+        self,
+        *,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        label_config: typing.Optional[str] = OMIT,
+        expert_instruction: typing.Optional[str] = OMIT,
+        show_instruction: typing.Optional[bool] = OMIT,
+        show_skip_button: typing.Optional[bool] = OMIT,
+        enable_empty_annotation: typing.Optional[bool] = OMIT,
+        show_annotation_history: typing.Optional[bool] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsCreateResponse:
         """
         Create a project and set up the labeling interface in Label Studio using the API.
 
@@ -1002,28 +1098,89 @@ class AsyncProjectsClient:
 
         Parameters
         ----------
-        request : Project
+        title : typing.Optional[str]
+            Project title
+
+        description : typing.Optional[str]
+            Project description
+
+        label_config : typing.Optional[str]
+            Label config in XML format
+
+        expert_instruction : typing.Optional[str]
+            Labeling instructions
+
+        show_instruction : typing.Optional[bool]
+            Show labeling instructions
+
+        show_skip_button : typing.Optional[bool]
+            Show skip button
+
+        enable_empty_annotation : typing.Optional[bool]
+            Allow empty annotations
+
+        show_annotation_history : typing.Optional[bool]
+            Show annotation history
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal preannotations interactively
+
+        show_collab_predictions : typing.Optional[bool]
+            Show collaborative predictions
+
+        maximum_annotations : typing.Optional[int]
+            Maximum annotations per task
+
+        color : typing.Optional[str]
+            Project color in HEX format
+
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
+            Control weights
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Project
+        ProjectsCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import Project
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.projects.create(
-            request=Project(),
-        )
+        await client.projects.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if title is not OMIT:
+            _request["title"] = title
+        if description is not OMIT:
+            _request["description"] = description
+        if label_config is not OMIT:
+            _request["label_config"] = label_config
+        if expert_instruction is not OMIT:
+            _request["expert_instruction"] = expert_instruction
+        if show_instruction is not OMIT:
+            _request["show_instruction"] = show_instruction
+        if show_skip_button is not OMIT:
+            _request["show_skip_button"] = show_skip_button
+        if enable_empty_annotation is not OMIT:
+            _request["enable_empty_annotation"] = enable_empty_annotation
+        if show_annotation_history is not OMIT:
+            _request["show_annotation_history"] = show_annotation_history
+        if reveal_preannotations_interactively is not OMIT:
+            _request["reveal_preannotations_interactively"] = reveal_preannotations_interactively
+        if show_collab_predictions is not OMIT:
+            _request["show_collab_predictions"] = show_collab_predictions
+        if maximum_annotations is not OMIT:
+            _request["maximum_annotations"] = maximum_annotations
+        if color is not OMIT:
+            _request["color"] = color
+        if control_weights is not OMIT:
+            _request["control_weights"] = control_weights
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/projects/"),
@@ -1032,10 +1189,10 @@ class AsyncProjectsClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -1053,7 +1210,7 @@ class AsyncProjectsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(ProjectsCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

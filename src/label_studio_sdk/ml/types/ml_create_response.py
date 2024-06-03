@@ -5,17 +5,58 @@ import typing
 
 from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from .ml_create_response_auth_method import MlCreateResponseAuthMethod
 
 
 class MlCreateResponse(pydantic_v1.BaseModel):
+    url: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    ML backend URL
+    """
+
     project: typing.Optional[int] = pydantic_v1.Field(default=None)
     """
     Project ID
     """
 
-    url: typing.Optional[str] = pydantic_v1.Field(default=None)
+    is_interactive: typing.Optional[bool] = pydantic_v1.Field(default=None)
     """
-    ML backend URL
+    Is interactive
+    """
+
+    title: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Title
+    """
+
+    description: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Description
+    """
+
+    auth_method: typing.Optional[MlCreateResponseAuthMethod] = pydantic_v1.Field(default=None)
+    """
+    Auth method
+    """
+
+    basic_auth_user: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Basic auth user
+    """
+
+    basic_auth_pass: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Basic auth password
+    """
+
+    extra_params: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
+    """
+    Extra parameters
+    """
+
+    timeout: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    Response model timeout
     """
 
     def json(self, **kwargs: typing.Any) -> str:

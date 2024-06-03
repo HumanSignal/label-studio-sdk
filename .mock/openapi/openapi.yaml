@@ -37,7 +37,7 @@ paths:
       summary: Update annotation
       description: Update existing attributes on an annotation.
       requestBody:
-        $ref: "#/components/requestBodies/Annotation"
+        $ref: "#/components/requestBodies/api_annotations_partial_updateData"
       responses:
         "200":
           description: ""
@@ -139,6 +139,8 @@ paths:
           description: ""
       tags:
         - Data Manager
+      x-fern-sdk-group-name: actions
+      x-fern-sdk-method-name: list
     post:
       operationId: api_dm_actions_create
       summary: Post actions
@@ -148,6 +150,8 @@ paths:
           description: ""
       tags:
         - Data Manager
+      x-fern-sdk-group-name: actions
+      x-fern-sdk-method-name: create
     parameters: []
   /api/dm/columns/:
     get:
@@ -194,12 +198,14 @@ paths:
                   $ref: "#/components/schemas/View"
       tags:
         - Data Manager
+      x-fern-sdk-group-name: views
+      x-fern-sdk-method-name: list
     post:
       operationId: api_dm_views_create
       summary: Create view
       description: Create a view for a specific project.
       requestBody:
-        $ref: "#/components/requestBodies/View"
+        $ref: "#/components/requestBodies/api_dm_views_createData"
       responses:
         "201":
           description: ""
@@ -209,12 +215,14 @@ paths:
                 $ref: "#/components/schemas/View"
       tags:
         - Data Manager
+      x-fern-sdk-group-name: views
+      x-fern-sdk-method-name: create
     parameters: []
   /api/dm/views/reset/:
     delete:
       operationId: api_dm_views_reset
-      summary: Reset project views
-      description: Reset all views for a specific project.
+      summary: Delete all project views
+      description: Delete all views for a specific project
       requestBody:
         content:
           application/json:
@@ -226,6 +234,8 @@ paths:
           description: ""
       tags:
         - Data Manager
+      x-fern-sdk-group-name: views
+      x-fern-sdk-method-name: delete_all
     parameters: []
   "/api/dm/views/{id}/":
     get:
@@ -248,6 +258,8 @@ paths:
                 $ref: "#/components/schemas/View"
       tags:
         - Data Manager
+      x-fern-sdk-group-name: views
+      x-fern-sdk-method-name: get
     put:
       operationId: api_dm_views_update
       summary: Put view
@@ -261,14 +273,65 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/View"
+        $ref: "#/components/requestBodies/api_dm_views_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/View"
+                type: object
+                properties:
+                  data:
+                    description: Custom view data
+                    type: object
+                    properties:
+                      filters:
+                        description: Filters for the view
+                        type: object
+                        properties:
+                          conjunction:
+                            description: Type of conjunction
+                            type: string
+                            enum:
+                              - and
+                              - or
+                          items:
+                            description: Filter items
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                filter:
+                                  description: Field name
+                                  type: string
+                                type:
+                                  description: Field type
+                                  type: string
+                                operator:
+                                  description: Filter operator
+                                  type: string
+                                value:
+                                  description: Filter value
+                                  type: string
+                      ordering:
+                        description: Ordering for the view
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            column:
+                              description: Field name
+                              type: string
+                            direction:
+                              description: Order direction
+                              type: string
+                              enum:
+                                - asc
+                                - desc
+                  project:
+                    description: Project ID
+                    type: integer
       tags:
         - Data Manager
     patch:
@@ -284,9 +347,9 @@ paths:
           schema:
             type: string
       requestBody:
-        $ref: "#/components/requestBodies/View"
+        $ref: "#/components/requestBodies/api_dm_views_createData"
       responses:
-        "200":
+        "201":
           description: ""
           content:
             application/json:
@@ -294,6 +357,8 @@ paths:
                 $ref: "#/components/schemas/View"
       tags:
         - Data Manager
+      x-fern-sdk-group-name: views
+      x-fern-sdk-method-name: update
     delete:
       operationId: api_dm_views_delete
       summary: Delete view
@@ -310,6 +375,8 @@ paths:
           description: ""
       tags:
         - Data Manager
+      x-fern-sdk-group-name: views
+      x-fern-sdk-method-name: delete
     parameters:
       - name: id
         in: path
@@ -731,32 +798,49 @@ paths:
 
         --data '{"url": "http://localhost:9090", "project": {project_id}}' 
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                project:
-                  description: Project ID
-                  type: integer
-                url:
-                  description: ML backend URL
-                  type: string
-        required: true
+        $ref: "#/components/requestBodies/api_ml_createData"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
+                required: []
                 type: object
                 properties:
-                  project:
-                    description: Project ID
-                    type: integer
                   url:
                     description: ML backend URL
                     type: string
+                  project:
+                    description: Project ID
+                    type: integer
+                  is_interactive:
+                    description: Is interactive
+                    type: boolean
+                  title:
+                    description: Title
+                    type: string
+                  description:
+                    description: Description
+                    type: string
+                  auth_method:
+                    description: Auth method
+                    type: string
+                    enum:
+                      - NONE
+                      - BASIC_AUTH
+                  basic_auth_user:
+                    description: Basic auth user
+                    type: string
+                  basic_auth_pass:
+                    description: Basic auth password
+                    type: string
+                  extra_params:
+                    description: Extra parameters
+                    type: object
+                  timeout:
+                    description: Response model timeout
+                    type: integer
       tags:
         - Machine Learning
       x-fern-sdk-group-name: ml
@@ -799,18 +883,49 @@ paths:
 
         --data '{"url": "http://localhost:9091"}' 
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/MLBackend"
-        required: true
+        $ref: "#/components/requestBodies/api_ml_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/MLBackend"
+                required: []
+                type: object
+                properties:
+                  url:
+                    description: ML backend URL
+                    type: string
+                  project:
+                    description: Project ID
+                    type: integer
+                  is_interactive:
+                    description: Is interactive
+                    type: boolean
+                  title:
+                    description: Title
+                    type: string
+                  description:
+                    description: Description
+                    type: string
+                  auth_method:
+                    description: Auth method
+                    type: string
+                    enum:
+                      - NONE
+                      - BASIC_AUTH
+                  basic_auth_user:
+                    description: Basic auth user
+                    type: string
+                  basic_auth_pass:
+                    description: Basic auth password
+                    type: string
+                  extra_params:
+                    description: Extra parameters
+                    type: object
+                  timeout:
+                    description: Response model timeout
+                    type: integer
       tags:
         - Machine Learning
       x-fern-sdk-group-name: ml
@@ -1162,10 +1277,10 @@ paths:
       summary: Create prediction
       description: Create a prediction for a specific task.
       requestBody:
-        $ref: "#/components/requestBodies/Prediction"
+        $ref: "#/components/requestBodies/api_predictions_createData"
       responses:
         "201":
-          description: ""
+          description: Created prediction
           content:
             application/json:
               schema:
@@ -1210,7 +1325,7 @@ paths:
           schema:
             type: integer
       requestBody:
-        $ref: "#/components/requestBodies/Prediction"
+        $ref: "#/components/requestBodies/api_predictions_createData"
       responses:
         "200":
           description: ""
@@ -1232,7 +1347,7 @@ paths:
           schema:
             type: integer
       requestBody:
-        $ref: "#/components/requestBodies/Prediction"
+        $ref: "#/components/requestBodies/api_predictions_createData"
       responses:
         "200":
           description: ""
@@ -1365,14 +1480,130 @@ paths:
 
         ```
       requestBody:
-        $ref: "#/components/requestBodies/Project"
+        content:
+          application/json:
+            schema:
+              title: Project
+              description: Project
+              type: object
+              properties:
+                title:
+                  title: title
+                  description: Project title
+                  type: string
+                description:
+                  title: description
+                  description: Project description
+                  type: string
+                label_config:
+                  title: label_config
+                  description: Label config in XML format
+                  type: string
+                expert_instruction:
+                  title: expert_instruction
+                  description: Labeling instructions
+                  type: string
+                show_instruction:
+                  title: show_instruction
+                  description: Show labeling instructions
+                  type: boolean
+                show_skip_button:
+                  title: show_skip_button
+                  description: Show skip button
+                  type: boolean
+                enable_empty_annotation:
+                  title: enable_empty_annotation
+                  description: Allow empty annotations
+                  type: boolean
+                show_annotation_history:
+                  title: show_annotation_history
+                  description: Show annotation history
+                  type: boolean
+                reveal_preannotations_interactively:
+                  title: reveal_preannotations_interactively
+                  description: Reveal preannotations interactively
+                  type: boolean
+                show_collab_predictions:
+                  title: show_collab_predictions
+                  description: Show collaborative predictions
+                  type: boolean
+                maximum_annotations:
+                  title: maximum_annotations
+                  description: Maximum annotations per task
+                  type: integer
+                color:
+                  title: color
+                  description: Project color in HEX format
+                  type: string
+                  default: "#FFFFFF"
+                control_weights:
+                  title: control_weights
+                  description: Control weights
+                  type: object
+        required: true
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Project"
+                title: Project
+                description: Project
+                type: object
+                properties:
+                  title:
+                    title: title
+                    description: Project title
+                    type: string
+                  description:
+                    title: description
+                    description: Project description
+                    type: string
+                  label_config:
+                    title: label_config
+                    description: Label config in XML format
+                    type: string
+                  expert_instruction:
+                    title: expert_instruction
+                    description: Labeling instructions
+                    type: string
+                  show_instruction:
+                    title: show_instruction
+                    description: Show labeling instructions
+                    type: boolean
+                  show_skip_button:
+                    title: show_skip_button
+                    description: Show skip button
+                    type: boolean
+                  enable_empty_annotation:
+                    title: enable_empty_annotation
+                    description: Allow empty annotations
+                    type: boolean
+                  show_annotation_history:
+                    title: show_annotation_history
+                    description: Show annotation history
+                    type: boolean
+                  reveal_preannotations_interactively:
+                    title: reveal_preannotations_interactively
+                    description: Reveal preannotations interactively
+                    type: boolean
+                  show_collab_predictions:
+                    title: show_collab_predictions
+                    description: Show collaborative predictions
+                    type: boolean
+                  maximum_annotations:
+                    title: maximum_annotations
+                    description: Maximum annotations per task
+                    type: integer
+                  color:
+                    title: color
+                    description: Project color in HEX format
+                    type: string
+                    default: "#FFFFFF"
+                  control_weights:
+                    title: control_weights
+                    description: Control weights
+                    type: object
       tags:
         - Projects
       x-fern-sdk-group-name: projects
@@ -1462,7 +1693,11 @@ paths:
       summary: Update project
       description: Update the project settings for a specific project.
       requestBody:
-        $ref: "#/components/requestBodies/Project"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Project"
+        required: true
       responses:
         "200":
           description: ""
@@ -2035,7 +2270,33 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ImportApi"
+              type: array
+              items:
+                required: []
+                type: object
+                properties:
+                  data:
+                    description: Data of the task
+                    type: object
+                  project:
+                    description: Project ID for this task
+                    type: integer
+                  annotations:
+                    description: Annotations for this task
+                    type: array
+                    items:
+                      type: object
+                  predictions:
+                    description: Predictions for this task
+                    type: array
+                    items:
+                      type: object
+                  is_labeled:
+                    description: Whether the task is labeled or not
+                    type: boolean
+                  overlap:
+                    description: Overlap for the task
+                    type: number
         required: true
       responses:
         "201":
@@ -2313,14 +2574,43 @@ paths:
       summary: Create new storage
       description: Get new Azure import storage
       requestBody:
-        $ref: "#/components/requestBodies/AzureBlobImportStorage"
+        $ref: "#/components/requestBodies/api_storages_azure_createData"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AzureBlobImportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  container:
+                    description: Azure blob container
+                    type: string
+                  prefix:
+                    description: Azure blob prefix name
+                    type: string
+                  regex_filter:
+                    description: Cloud storage regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
+                  account_name:
+                    description: Azure Blob account name
+                    type: string
+                  account_key:
+                    description: Azure Blob account key
+                    type: string
+                  presign:
+                    description: Presign URLs for direct download
+                    type: boolean
+                  presign_ttl:
+                    description: Presign TTL in minutes
+                    type: integer
       tags:
         - "Storage: Azure"
       x-fern-sdk-group-name:
@@ -2333,8 +2623,6 @@ paths:
       operationId: api_storages_azure_validate_create
       summary: Validate import storage
       description: Validate a specific Azure import storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/AzureBlobImportStorage"
       responses:
         "201":
           description: ""
@@ -2372,14 +2660,43 @@ paths:
       summary: Update import storage
       description: Update a specific Azure import storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/AzureBlobImportStorage"
+        $ref: "#/components/requestBodies/api_storages_azure_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AzureBlobImportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  container:
+                    description: Azure blob container
+                    type: string
+                  prefix:
+                    description: Azure blob prefix name
+                    type: string
+                  regex_filter:
+                    description: Cloud storage regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
+                  account_name:
+                    description: Azure Blob account name
+                    type: string
+                  account_key:
+                    description: Azure Blob account key
+                    type: string
+                  presign:
+                    description: Presign URLs for direct download
+                    type: boolean
+                  presign_ttl:
+                    description: Presign TTL in minutes
+                    type: integer
       tags:
         - "Storage: Azure"
       x-fern-sdk-group-name:
@@ -2411,8 +2728,13 @@ paths:
       operationId: api_storages_azure_sync_create
       summary: Sync import storage
       description: Sync tasks from an Azure import storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/AzureBlobImportStorage"
+      parameters:
+        - name: id
+          in: path
+          description: Storage ID
+          required: true
+          schema:
+            type: integer
       responses:
         "201":
           description: ""
@@ -2476,14 +2798,31 @@ paths:
       summary: Create export storage
       description: Create a new Azure export storage connection to store annotations.
       requestBody:
-        $ref: "#/components/requestBodies/AzureBlobExportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_azure_createData"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AzureBlobExportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  container:
+                    description: Azure blob container
+                    type: string
+                  prefix:
+                    description: Azure blob prefix name
+                    type: string
+                  account_name:
+                    description: Azure Blob account name
+                    type: string
+                  account_key:
+                    description: Azure Blob account key
+                    type: string
       tags:
         - "Storage: Azure"
       x-fern-sdk-group-name:
@@ -2496,8 +2835,6 @@ paths:
       operationId: api_storages_export_azure_validate_create
       summary: Validate export storage
       description: Validate a specific Azure export storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/AzureBlobExportStorage"
       responses:
         "201":
           description: ""
@@ -2535,14 +2872,31 @@ paths:
       summary: Update export storage
       description: Update a specific Azure export storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/AzureBlobExportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_azure_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AzureBlobExportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  container:
+                    description: Azure blob container
+                    type: string
+                  prefix:
+                    description: Azure blob prefix name
+                    type: string
+                  account_name:
+                    description: Azure Blob account name
+                    type: string
+                  account_key:
+                    description: Azure Blob account key
+                    type: string
       tags:
         - "Storage: Azure"
       x-fern-sdk-group-name:
@@ -2574,8 +2928,6 @@ paths:
       operationId: api_storages_export_azure_sync_create
       summary: Sync export storage
       description: Sync tasks from an Azure export storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/AzureBlobExportStorage"
       responses:
         "201":
           description: ""
@@ -2626,14 +2978,31 @@ paths:
       summary: Create export storage
       description: Create a new GCS export storage connection to store annotations.
       requestBody:
-        $ref: "#/components/requestBodies/GCSExportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_gcs_createData"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GCSExportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  bucket:
+                    description: GCS bucket name
+                    type: string
+                  prefix:
+                    description: GCS bucket prefix
+                    type: string
+                  google_application_credentials:
+                    description: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+                    type: string
+                  google_project_id:
+                    description: Google project ID
+                    type: string
       tags:
         - "Storage: GCS"
       x-fern-sdk-group-name:
@@ -2646,8 +3015,6 @@ paths:
       operationId: api_storages_export_gcs_validate_create
       summary: Validate export storage
       description: Validate a specific GCS export storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/GCSExportStorage"
       responses:
         "201":
           description: ""
@@ -2685,14 +3052,31 @@ paths:
       summary: Update export storage
       description: Update a specific GCS export storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/GCSExportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_gcs_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GCSExportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  bucket:
+                    description: GCS bucket name
+                    type: string
+                  prefix:
+                    description: GCS bucket prefix
+                    type: string
+                  google_application_credentials:
+                    description: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+                    type: string
+                  google_project_id:
+                    description: Google project ID
+                    type: string
       tags:
         - "Storage: GCS"
       x-fern-sdk-group-name:
@@ -2724,8 +3108,6 @@ paths:
       operationId: api_storages_export_gcs_sync_create
       summary: Sync export storage
       description: Sync tasks from an GCS export storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/GCSExportStorage"
       responses:
         "201":
           description: ""
@@ -2776,14 +3158,28 @@ paths:
       summary: Create export storage
       description: Create a new local file export storage connection to store annotations.
       requestBody:
-        $ref: "#/components/requestBodies/LocalFilesExportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_localfiles_createData"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LocalFilesExportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  path:
+                    description: Local path
+                    type: string
+                  regex_filter:
+                    description: Regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
       tags:
         - "Storage: Local"
       x-fern-sdk-group-name:
@@ -2796,8 +3192,6 @@ paths:
       operationId: api_storages_export_localfiles_validate_create
       summary: Validate export storage
       description: Validate a specific local file export storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/LocalFilesExportStorage"
       responses:
         "201":
           description: ""
@@ -2835,14 +3229,28 @@ paths:
       summary: Update export storage
       description: Update a specific local file export storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/LocalFilesExportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_localfiles_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LocalFilesExportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  path:
+                    description: Local path
+                    type: string
+                  regex_filter:
+                    description: Regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
       tags:
         - "Storage: Local"
       x-fern-sdk-group-name:
@@ -2874,8 +3282,6 @@ paths:
       operationId: api_storages_export_localfiles_sync_create
       summary: Sync export storage
       description: Sync tasks from a local file export storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/LocalFilesExportStorage"
       responses:
         "201":
           description: ""
@@ -2926,14 +3332,34 @@ paths:
       summary: Create export storage
       description: Create a new Redis export storage connection to store annotations.
       requestBody:
-        $ref: "#/components/requestBodies/RedisExportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_redis_createData"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RedisExportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  path:
+                    description: Storage prefix (optional)
+                    type: string
+                  host:
+                    description: Server Host IP (optional)
+                    type: string
+                  port:
+                    description: Server Port (optional)
+                    type: string
+                  password:
+                    description: Server Password (optional)
+                    type: string
+                  db:
+                    description: Database ID of database to use
+                    type: integer
       tags:
         - "Storage: Redis"
       x-fern-sdk-group-name:
@@ -2946,8 +3372,6 @@ paths:
       operationId: api_storages_export_redis_validate_create
       summary: Validate export storage
       description: Validate a specific Redis export storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/RedisExportStorage"
       responses:
         "201":
           description: ""
@@ -2985,14 +3409,34 @@ paths:
       summary: Update export storage
       description: Update a specific Redis export storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/RedisExportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_redis_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RedisExportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  path:
+                    description: Storage prefix (optional)
+                    type: string
+                  host:
+                    description: Server Host IP (optional)
+                    type: string
+                  port:
+                    description: Server Port (optional)
+                    type: string
+                  password:
+                    description: Server Password (optional)
+                    type: string
+                  db:
+                    description: Database ID of database to use
+                    type: integer
       tags:
         - "Storage: Redis"
       x-fern-sdk-group-name:
@@ -3024,8 +3468,6 @@ paths:
       operationId: api_storages_export_redis_sync_create
       summary: Sync export storage
       description: Sync tasks from a specific Redis export storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/RedisExportStorage"
       responses:
         "201":
           description: ""
@@ -3076,14 +3518,42 @@ paths:
       summary: Create export storage
       description: Create a new S3 export storage connection to store annotations.
       requestBody:
-        $ref: "#/components/requestBodies/S3ExportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_s3_createData"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/S3ExportStorage"
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  bucket:
+                    description: S3 bucket name
+                    type: string
+                  prefix:
+                    description: S3 bucket prefix
+                    type: string
+                  aws_access_key_id:
+                    description: AWS_ACCESS_KEY_ID
+                    type: string
+                  aws_secret_access_key:
+                    description: AWS_SECRET_ACCESS_KEY
+                    type: string
+                  aws_session_token:
+                    description: AWS_SESSION_TOKEN
+                    type: string
+                  aws_sse_kms_key_id:
+                    description: AWS SSE KMS Key ID
+                    type: string
+                  region_name:
+                    description: AWS Region
+                    type: string
+                  s3_endpoint:
+                    description: S3 Endpoint
+                    type: string
       tags:
         - Storage:S3
       x-fern-sdk-group-name:
@@ -3097,7 +3567,11 @@ paths:
       summary: Validate export storage
       description: Validate a specific S3 export storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/S3ExportStorage"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/S3ExportStorage"
+        required: true
       responses:
         "201":
           description: ""
@@ -3135,14 +3609,42 @@ paths:
       summary: Update export storage
       description: Update a specific S3 export storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/S3ExportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_s3_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/S3ExportStorage"
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  bucket:
+                    description: S3 bucket name
+                    type: string
+                  prefix:
+                    description: S3 bucket prefix
+                    type: string
+                  aws_access_key_id:
+                    description: AWS_ACCESS_KEY_ID
+                    type: string
+                  aws_secret_access_key:
+                    description: AWS_SECRET_ACCESS_KEY
+                    type: string
+                  aws_session_token:
+                    description: AWS_SESSION_TOKEN
+                    type: string
+                  aws_sse_kms_key_id:
+                    description: AWS SSE KMS Key ID
+                    type: string
+                  region_name:
+                    description: AWS Region
+                    type: string
+                  s3_endpoint:
+                    description: S3 Endpoint
+                    type: string
       tags:
         - Storage:S3
       x-fern-sdk-group-name:
@@ -3174,8 +3676,6 @@ paths:
       operationId: api_storages_export_s3_sync_create
       summary: Sync export storage
       description: Sync tasks from an S3 export storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/S3ExportStorage"
       responses:
         "201":
           description: ""
@@ -3239,14 +3739,43 @@ paths:
       summary: Create import storage
       description: Create a new GCS import storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/GCSImportStorage"
+        $ref: "#/components/requestBodies/api_storages_gcs_createData"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GCSImportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  bucket:
+                    description: GCS bucket name
+                    type: string
+                  prefix:
+                    description: GCS bucket prefix
+                    type: string
+                  regex_filter:
+                    description: Cloud storage regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
+                  google_application_credentials:
+                    description: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+                    type: string
+                  google_project_id:
+                    description: Google project ID
+                    type: string
+                  presign:
+                    description: Presign URLs for direct download
+                    type: boolean
+                  presign_ttl:
+                    description: Presign TTL in minutes
+                    type: integer
       tags:
         - "Storage: GCS"
       x-fern-sdk-group-name:
@@ -3259,8 +3788,6 @@ paths:
       operationId: api_storages_gcs_validate_create
       summary: Validate import storage
       description: Validate a specific GCS import storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/GCSImportStorage"
       responses:
         "201":
           description: ""
@@ -3298,14 +3825,43 @@ paths:
       summary: Update import storage
       description: Update a specific GCS import storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/GCSImportStorage"
+        $ref: "#/components/requestBodies/api_storages_gcs_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/GCSImportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  bucket:
+                    description: GCS bucket name
+                    type: string
+                  prefix:
+                    description: GCS bucket prefix
+                    type: string
+                  regex_filter:
+                    description: Cloud storage regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
+                  google_application_credentials:
+                    description: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+                    type: string
+                  google_project_id:
+                    description: Google project ID
+                    type: string
+                  presign:
+                    description: Presign URLs for direct download
+                    type: boolean
+                  presign_ttl:
+                    description: Presign TTL in minutes
+                    type: integer
       tags:
         - "Storage: GCS"
       x-fern-sdk-group-name:
@@ -3337,8 +3893,13 @@ paths:
       operationId: api_storages_gcs_sync_create
       summary: Sync import storage
       description: Sync tasks from an GCS import storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/GCSImportStorage"
+      parameters:
+        - name: id
+          in: path
+          description: Storage ID
+          required: true
+          schema:
+            type: integer
       responses:
         "201":
           description: ""
@@ -3389,14 +3950,28 @@ paths:
       summary: Create import storage
       description: Create a new local file import storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/LocalFilesImportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_localfiles_createData"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LocalFilesImportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  path:
+                    description: Local path
+                    type: string
+                  regex_filter:
+                    description: Regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
       tags:
         - "Storage: Local"
       x-fern-sdk-group-name:
@@ -3409,8 +3984,6 @@ paths:
       operationId: api_storages_localfiles_validate_create
       summary: Validate import storage
       description: Validate a specific local file import storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/LocalFilesImportStorage"
       responses:
         "201":
           description: ""
@@ -3448,14 +4021,28 @@ paths:
       summary: Update import storage
       description: Update a specific local file import storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/LocalFilesImportStorage"
+        $ref: "#/components/requestBodies/api_storages_export_localfiles_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/LocalFilesImportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  path:
+                    description: Local path
+                    type: string
+                  regex_filter:
+                    description: Regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
       tags:
         - "Storage: Local"
       x-fern-sdk-group-name:
@@ -3487,8 +4074,13 @@ paths:
       operationId: api_storages_localfiles_sync_create
       summary: Sync import storage
       description: Sync tasks from a local file import storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/LocalFilesImportStorage"
+      parameters:
+        - name: id
+          in: path
+          description: Storage ID
+          required: true
+          schema:
+            type: integer
       responses:
         "201":
           description: ""
@@ -3539,14 +4131,37 @@ paths:
       summary: Create import storage
       description: Create a new Redis import storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/RedisImportStorage"
+        $ref: "#/components/requestBodies/api_storages_redis_createData"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RedisImportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  path:
+                    description: Storage prefix (optional)
+                    type: string
+                  host:
+                    description: Server Host IP (optional)
+                    type: string
+                  port:
+                    description: Server Port (optional)
+                    type: string
+                  password:
+                    description: Server Password (optional)
+                    type: string
+                  regex_filter:
+                    description: Cloud storage regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
       tags:
         - "Storage: Redis"
       x-fern-sdk-group-name:
@@ -3559,8 +4174,6 @@ paths:
       operationId: api_storages_redis_validate_create
       summary: Validate import storage
       description: Validate a specific Redis import storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/RedisImportStorage"
       responses:
         "201":
           description: ""
@@ -3598,14 +4211,37 @@ paths:
       summary: Update import storage
       description: Update a specific Redis import storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/RedisImportStorage"
+        $ref: "#/components/requestBodies/api_storages_redis_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RedisImportStorage"
+                required: []
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  path:
+                    description: Storage prefix (optional)
+                    type: string
+                  host:
+                    description: Server Host IP (optional)
+                    type: string
+                  port:
+                    description: Server Port (optional)
+                    type: string
+                  password:
+                    description: Server Password (optional)
+                    type: string
+                  regex_filter:
+                    description: Cloud storage regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
       tags:
         - "Storage: Redis"
       x-fern-sdk-group-name:
@@ -3637,8 +4273,13 @@ paths:
       operationId: api_storages_redis_sync_create
       summary: Sync import storage
       description: Sync tasks from a specific Redis import storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/RedisImportStorage"
+      parameters:
+        - name: id
+          in: path
+          description: Storage ID
+          required: true
+          schema:
+            type: integer
       responses:
         "201":
           description: ""
@@ -3689,14 +4330,57 @@ paths:
       summary: Create new S3 storage
       description: Get new S3 import storage
       requestBody:
-        $ref: "#/components/requestBodies/S3ImportStorage"
+        $ref: "#/components/requestBodies/api_storages_s3_createData"
       responses:
         "201":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/S3ImportStorage"
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  bucket:
+                    description: S3 bucket name
+                    type: string
+                  prefix:
+                    description: S3 bucket prefix
+                    type: string
+                  regex_filter:
+                    description: Cloud storage regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
+                  aws_access_key_id:
+                    description: AWS_ACCESS_KEY_ID
+                    type: string
+                  aws_secret_access_key:
+                    description: AWS_SECRET_ACCESS_KEY
+                    type: string
+                  aws_session_token:
+                    description: AWS_SESSION_TOKEN
+                    type: string
+                  aws_sse_kms_key_id:
+                    description: AWS SSE KMS Key ID
+                    type: string
+                  region_name:
+                    description: AWS Region
+                    type: string
+                  s3_endpoint:
+                    description: S3 Endpoint
+                    type: string
+                  presign:
+                    description: Presign URLs for download
+                    type: boolean
+                  presign_ttl:
+                    description: Presign TTL in seconds
+                    type: integer
+                  recursive_scan:
+                    description: Scan recursively
+                    type: boolean
       tags:
         - Storage:S3
       x-fern-sdk-group-name:
@@ -3709,8 +4393,6 @@ paths:
       operationId: api_storages_s3_validate_create
       summary: Validate import storage
       description: Validate a specific S3 import storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/S3ImportStorage"
       responses:
         "201":
           description: ""
@@ -3748,14 +4430,57 @@ paths:
       summary: Update import storage
       description: Update a specific S3 import storage connection.
       requestBody:
-        $ref: "#/components/requestBodies/S3ImportStorage"
+        $ref: "#/components/requestBodies/api_storages_s3_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/S3ImportStorage"
+                type: object
+                properties:
+                  project:
+                    description: Project ID
+                    type: integer
+                  bucket:
+                    description: S3 bucket name
+                    type: string
+                  prefix:
+                    description: S3 bucket prefix
+                    type: string
+                  regex_filter:
+                    description: Cloud storage regex for filtering objects
+                    type: string
+                  use_blob_urls:
+                    description: Interpret objects as BLOBs and generate URLs
+                    type: boolean
+                  aws_access_key_id:
+                    description: AWS_ACCESS_KEY_ID
+                    type: string
+                  aws_secret_access_key:
+                    description: AWS_SECRET_ACCESS_KEY
+                    type: string
+                  aws_session_token:
+                    description: AWS_SESSION_TOKEN
+                    type: string
+                  aws_sse_kms_key_id:
+                    description: AWS SSE KMS Key ID
+                    type: string
+                  region_name:
+                    description: AWS Region
+                    type: string
+                  s3_endpoint:
+                    description: S3 Endpoint
+                    type: string
+                  presign:
+                    description: Presign URLs for download
+                    type: boolean
+                  presign_ttl:
+                    description: Presign TTL in seconds
+                    type: integer
+                  recursive_scan:
+                    description: Scan recursively
+                    type: boolean
       tags:
         - Storage:S3
       x-fern-sdk-group-name:
@@ -3787,8 +4512,13 @@ paths:
       operationId: api_storages_s3_sync_create
       summary: Sync import storage
       description: Sync tasks from an S3 import storage connection.
-      requestBody:
-        $ref: "#/components/requestBodies/S3ImportStorage"
+      parameters:
+        - name: id
+          in: path
+          description: Storage ID
+          required: true
+          schema:
+            type: integer
       responses:
         "201":
           description: ""
@@ -3856,6 +4586,26 @@ paths:
           description: Resolve task data URIs using Cloud Storage
           schema:
             type: boolean
+        - name: fields
+          in: query
+          description: Set to "all" if you want to include annotations and predictions in
+            the response
+          schema:
+            type: string
+            enum:
+              - all
+              - task_only
+            default: task_only
+        - name: review
+          in: query
+          description: Get tasks for review
+          schema:
+            type: boolean
+        - name: include
+          in: query
+          description: Specify which fields to include in the response
+          schema:
+            type: string
       responses:
         "200":
           description: Tasks list
@@ -3891,11 +4641,7 @@ paths:
       summary: Create task
       description: Create a new labeling task in Label Studio.
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/BaseTask"
-        required: true
+        $ref: "#/components/requestBodies/api_tasks_createData"
       responses:
         "201":
           description: ""
@@ -3945,18 +4691,14 @@ paths:
           schema:
             type: string
       requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/TaskSimple"
-        required: true
+        $ref: "#/components/requestBodies/api_tasks_createData"
       responses:
         "200":
           description: ""
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TaskSimple"
+                $ref: "#/components/schemas/BaseTask"
       tags:
         - Tasks
       x-fern-sdk-group-name: tasks
@@ -4049,7 +4791,7 @@ paths:
           schema:
             type: integer
       requestBody:
-        $ref: "#/components/requestBodies/Annotation"
+        $ref: "#/components/requestBodies/api_annotations_partial_updateData"
       responses:
         "201":
           description: ""
@@ -4443,41 +5185,43 @@ servers:
   - url: http://localhost:8080
 components:
   requestBodies:
-    LocalFilesImportStorage:
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/LocalFilesImportStorage"
-      required: true
     WebhookSerializerForUpdate:
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/WebhookSerializerForUpdate"
       required: true
-    GCSExportStorage:
+    api_annotations_partial_updateData:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/GCSExportStorage"
-      required: true
-    RedisExportStorage:
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/RedisExportStorage"
-      required: true
-    AzureBlobImportStorage:
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/AzureBlobImportStorage"
-      required: true
-    View:
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/View"
+            required: []
+            type: object
+            properties:
+              result:
+                description: Labeling result in JSON format
+                type: object
+              task:
+                description: Corresponding task for this annotation
+                type: integer
+              project:
+                description: Project ID for this annotation
+                type: integer
+              completed_by:
+                description: User ID of the person who created this annotation
+                type: integer
+              updated_by:
+                description: Last user who updated this annotation
+                type: integer
+              was_cancelled:
+                description: User skipped the task
+                type: boolean
+              ground_truth:
+                description: This annotation is a Ground Truth
+                type: boolean
+              lead_time:
+                description: How much time it took to annotate the task
+                type: number
       required: true
     LabelLink:
       content:
@@ -4485,23 +5229,252 @@ components:
           schema:
             $ref: "#/components/schemas/LabelLink"
       required: true
-    S3ImportStorage:
+    api_storages_export_redis_createData:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/S3ImportStorage"
+            required: []
+            type: object
+            properties:
+              project:
+                description: Project ID
+                type: integer
+              path:
+                description: Storage prefix (optional)
+                type: string
+              host:
+                description: Server Host IP (optional)
+                type: string
+              port:
+                description: Server Port (optional)
+                type: string
+              password:
+                description: Server Password (optional)
+                type: string
+              db:
+                description: Database ID of database to use
+                type: integer
       required: true
-    Prediction:
+    api_storages_export_s3_createData:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Prediction"
+            type: object
+            properties:
+              project:
+                description: Project ID
+                type: integer
+              bucket:
+                description: S3 bucket name
+                type: string
+              prefix:
+                description: S3 bucket prefix
+                type: string
+              aws_access_key_id:
+                description: AWS_ACCESS_KEY_ID
+                type: string
+              aws_secret_access_key:
+                description: AWS_SECRET_ACCESS_KEY
+                type: string
+              aws_session_token:
+                description: AWS_SESSION_TOKEN
+                type: string
+              aws_sse_kms_key_id:
+                description: AWS SSE KMS Key ID
+                type: string
+              region_name:
+                description: AWS Region
+                type: string
+              s3_endpoint:
+                description: S3 Endpoint
+                type: string
       required: true
-    Annotation:
+    api_storages_export_gcs_createData:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Annotation"
+            required: []
+            type: object
+            properties:
+              project:
+                description: Project ID
+                type: integer
+              bucket:
+                description: GCS bucket name
+                type: string
+              prefix:
+                description: GCS bucket prefix
+                type: string
+              google_application_credentials:
+                description: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+                type: string
+              google_project_id:
+                description: Google project ID
+                type: string
+      required: true
+    api_storages_export_azure_createData:
+      content:
+        application/json:
+          schema:
+            required: []
+            type: object
+            properties:
+              project:
+                description: Project ID
+                type: integer
+              container:
+                description: Azure blob container
+                type: string
+              prefix:
+                description: Azure blob prefix name
+                type: string
+              account_name:
+                description: Azure Blob account name
+                type: string
+              account_key:
+                description: Azure Blob account key
+                type: string
+      required: true
+    api_dm_views_createData:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                description: Custom view data
+                type: object
+                properties:
+                  filters:
+                    description: Filters for the view
+                    type: object
+                    properties:
+                      conjunction:
+                        description: Type of conjunction
+                        type: string
+                        enum:
+                          - and
+                          - or
+                      items:
+                        description: Filter items
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            filter:
+                              description: Field name
+                              type: string
+                            type:
+                              description: Field type
+                              type: string
+                            operator:
+                              description: Filter operator
+                              type: string
+                            value:
+                              description: Filter value
+                              type: string
+                  ordering:
+                    description: Ordering for the view
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        column:
+                          description: Field name
+                          type: string
+                        direction:
+                          description: Order direction
+                          type: string
+                          enum:
+                            - asc
+                            - desc
+              project:
+                description: Project ID
+                type: integer
+      required: true
+    api_storages_gcs_createData:
+      content:
+        application/json:
+          schema:
+            required: []
+            type: object
+            properties:
+              project:
+                description: Project ID
+                type: integer
+              bucket:
+                description: GCS bucket name
+                type: string
+              prefix:
+                description: GCS bucket prefix
+                type: string
+              regex_filter:
+                description: Cloud storage regex for filtering objects
+                type: string
+              use_blob_urls:
+                description: Interpret objects as BLOBs and generate URLs
+                type: boolean
+              google_application_credentials:
+                description: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+                type: string
+              google_project_id:
+                description: Google project ID
+                type: string
+              presign:
+                description: Presign URLs for direct download
+                type: boolean
+              presign_ttl:
+                description: Presign TTL in minutes
+                type: integer
+      required: true
+    api_storages_s3_createData:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              project:
+                description: Project ID
+                type: integer
+              bucket:
+                description: S3 bucket name
+                type: string
+              prefix:
+                description: S3 bucket prefix
+                type: string
+              regex_filter:
+                description: Cloud storage regex for filtering objects
+                type: string
+              use_blob_urls:
+                description: Interpret objects as BLOBs and generate URLs
+                type: boolean
+              aws_access_key_id:
+                description: AWS_ACCESS_KEY_ID
+                type: string
+              aws_secret_access_key:
+                description: AWS_SECRET_ACCESS_KEY
+                type: string
+              aws_session_token:
+                description: AWS_SESSION_TOKEN
+                type: string
+              aws_sse_kms_key_id:
+                description: AWS SSE KMS Key ID
+                type: string
+              region_name:
+                description: AWS Region
+                type: string
+              s3_endpoint:
+                description: S3 Endpoint
+                type: string
+              presign:
+                description: Presign URLs for download
+                type: boolean
+              presign_ttl:
+                description: Presign TTL in seconds
+                type: integer
+              recursive_scan:
+                description: Scan recursively
+                type: boolean
       required: true
     BaseUser:
       content:
@@ -4509,17 +5482,70 @@ components:
           schema:
             $ref: "#/components/schemas/BaseUser"
       required: true
-    LocalFilesExportStorage:
+    api_ml_createData:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/LocalFilesExportStorage"
+            required: []
+            type: object
+            properties:
+              url:
+                description: ML backend URL
+                type: string
+              project:
+                description: Project ID
+                type: integer
+              is_interactive:
+                description: Is interactive
+                type: boolean
+              title:
+                description: Title
+                type: string
+              description:
+                description: Description
+                type: string
+              auth_method:
+                description: Auth method
+                type: string
+                enum:
+                  - NONE
+                  - BASIC_AUTH
+              basic_auth_user:
+                description: Basic auth user
+                type: string
+              basic_auth_pass:
+                description: Basic auth password
+                type: string
+              extra_params:
+                description: Extra parameters
+                type: object
+              timeout:
+                description: Response model timeout
+                type: integer
       required: true
-    Project:
+    api_predictions_createData:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Project"
+            required:
+              - task
+              - result
+            type: object
+            properties:
+              task:
+                description: Task ID for which the prediction is created
+                type: integer
+              result:
+                description: Prediction result
+                type: array
+                items:
+                  type: object
+              score:
+                description: Prediction score
+                type: number
+              model_version:
+                description: Model version
+                type: string
       required: true
     ProjectLabelConfig:
       content:
@@ -4527,29 +5553,106 @@ components:
           schema:
             $ref: "#/components/schemas/ProjectLabelConfig"
       required: true
-    AzureBlobExportStorage:
+    api_storages_azure_createData:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/AzureBlobExportStorage"
+            required: []
+            type: object
+            properties:
+              project:
+                description: Project ID
+                type: integer
+              container:
+                description: Azure blob container
+                type: string
+              prefix:
+                description: Azure blob prefix name
+                type: string
+              regex_filter:
+                description: Cloud storage regex for filtering objects
+                type: string
+              use_blob_urls:
+                description: Interpret objects as BLOBs and generate URLs
+                type: boolean
+              account_name:
+                description: Azure Blob account name
+                type: string
+              account_key:
+                description: Azure Blob account key
+                type: string
+              presign:
+                description: Presign URLs for direct download
+                type: boolean
+              presign_ttl:
+                description: Presign TTL in minutes
+                type: integer
       required: true
-    S3ExportStorage:
+    api_storages_export_localfiles_createData:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/S3ExportStorage"
+            required: []
+            type: object
+            properties:
+              project:
+                description: Project ID
+                type: integer
+              path:
+                description: Local path
+                type: string
+              regex_filter:
+                description: Regex for filtering objects
+                type: string
+              use_blob_urls:
+                description: Interpret objects as BLOBs and generate URLs
+                type: boolean
       required: true
-    GCSImportStorage:
+    api_storages_redis_createData:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/GCSImportStorage"
+            required: []
+            type: object
+            properties:
+              project:
+                description: Project ID
+                type: integer
+              path:
+                description: Storage prefix (optional)
+                type: string
+              host:
+                description: Server Host IP (optional)
+                type: string
+              port:
+                description: Server Port (optional)
+                type: string
+              password:
+                description: Server Password (optional)
+                type: string
+              regex_filter:
+                description: Cloud storage regex for filtering objects
+                type: string
+              use_blob_urls:
+                description: Interpret objects as BLOBs and generate URLs
+                type: boolean
       required: true
-    RedisImportStorage:
+    api_tasks_createData:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/RedisImportStorage"
+            type: object
+            properties:
+              data:
+                title: Task data
+                description: Task data dictionary with arbitrary keys and values
+                type: object
+                example:
+                  id: 1
+                  my_image_url: /static/samples/kittens.jpg
+              project:
+                description: Project ID
+                type: integer
       required: true
   securitySchemes:
     Token:
@@ -5271,6 +6374,7 @@ components:
           $ref: "#/components/schemas/UserSerializerWithProjects"
     Prediction:
       required:
+        - result
         - task
       type: object
       properties:
@@ -5278,6 +6382,14 @@ components:
           title: ID
           type: integer
           readOnly: true
+        result:
+          title: Prediction result list
+          type: array
+          description: List of prediction results for the task
+          items:
+            type: object
+            title: Prediction result items (regions)
+            description: List of predicted regions for the task
         model_version:
           title: Model version
           type: string
@@ -5288,11 +6400,6 @@ components:
           readOnly: true
           default: ""
           minLength: 1
-        result:
-          title: Result
-          description: Prediction result
-          type: object
-          nullable: true
         score:
           title: Score
           description: Prediction score
@@ -5818,104 +6925,6 @@ components:
           description: Export file format.
           type: string
           minLength: 1
-    ImportApi:
-      required:
-        - data
-      type: object
-      properties:
-        id:
-          title: ID
-          type: integer
-          readOnly: true
-        annotations:
-          type: array
-          items:
-            $ref: "#/components/schemas/Annotation"
-          default: []
-        predictions:
-          type: array
-          items:
-            $ref: "#/components/schemas/Prediction"
-          default: []
-        data:
-          title: Data
-          description: User imported or uploaded data for a task. Data is formatted
-            according to the project label config. You can find examples of data
-            for your project on the Import page in the Label Studio Data Manager
-            UI.
-          type: object
-        meta:
-          title: Meta
-          description: Meta is user imported (uploaded) data and can be useful as input
-            for an ML Backend for embeddings, advanced vectors, and other info.
-            It is passed to ML during training/predicting steps.
-          type: object
-          nullable: true
-        created_at:
-          title: Created at
-          description: Time a task was created
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          title: Updated at
-          description: Last time a task was updated
-          type: string
-          format: date-time
-          readOnly: true
-        overlap:
-          title: Overlap
-          description: Number of distinct annotators that processed the current task
-          type: integer
-        inner_id:
-          title: Inner id
-          description: Internal task ID in the project, starts with 1
-          type: integer
-          nullable: true
-        total_annotations:
-          title: Total_annotations
-          description: Number of total annotations for the current task except cancelled
-            annotations
-          type: integer
-        cancelled_annotations:
-          title: Cancelled_annotations
-          description: Number of total cancelled annotations for the current task
-          type: integer
-        total_predictions:
-          title: Total_predictions
-          description: Number of total predictions for the current task
-          type: integer
-        comment_count:
-          title: Comment count
-          description: Number of comments in the task including all annotations
-          type: integer
-        unresolved_comment_count:
-          title: Unresolved comment count
-          description: Number of unresolved comments in the task including all annotations
-          type: integer
-        last_comment_updated_at:
-          title: Last comment updated at
-          description: When the last comment was updated
-          type: string
-          format: date-time
-          nullable: true
-        updated_by:
-          title: Updated by
-          description: Last annotator or reviewer who updated this task
-          type: integer
-          nullable: true
-        file_upload:
-          title: File upload
-          description: Uploaded file used as data source for this task
-          type: integer
-          nullable: true
-        comment_authors:
-          description: Users who wrote comments
-          type: array
-          items:
-            description: Users who wrote comments
-            type: integer
-          uniqueItems: true
     ProjectImport:
       type: object
       properties:
@@ -7408,116 +8417,6 @@ components:
             description: Users who wrote comments
             type: integer
           uniqueItems: true
-    TaskSimple:
-      required:
-        - data
-      type: object
-      properties:
-        id:
-          title: ID
-          type: integer
-          readOnly: true
-        data:
-          title: Data
-          description: User imported or uploaded data for a task. Data is formatted
-            according to the project label config. You can find examples of data
-            for your project on the Import page in the Label Studio Data Manager
-            UI.
-          type: object
-        meta:
-          title: Meta
-          description: Meta is user imported (uploaded) data and can be useful as input
-            for an ML Backend for embeddings, advanced vectors, and other info.
-            It is passed to ML during training/predicting steps.
-          type: object
-          nullable: true
-        created_at:
-          title: Created at
-          description: Time a task was created
-          type: string
-          format: date-time
-          readOnly: true
-        updated_at:
-          title: Updated at
-          description: Last time a task was updated
-          type: string
-          format: date-time
-          readOnly: true
-        is_labeled:
-          title: Is_labeled
-          description: True if the number of annotations for this task is greater than or
-            equal to the number of maximum_completions for the project
-          type: boolean
-        overlap:
-          title: Overlap
-          description: Number of distinct annotators that processed the current task
-          type: integer
-        inner_id:
-          title: Inner id
-          description: Internal task ID in the project, starts with 1
-          type: integer
-          nullable: true
-        total_annotations:
-          title: Total_annotations
-          description: Number of total annotations for the current task except cancelled
-            annotations
-          type: integer
-        cancelled_annotations:
-          title: Cancelled_annotations
-          description: Number of total cancelled annotations for the current task
-          type: integer
-        total_predictions:
-          title: Total_predictions
-          description: Number of total predictions for the current task
-          type: integer
-        comment_count:
-          title: Comment count
-          description: Number of comments in the task including all annotations
-          type: integer
-        unresolved_comment_count:
-          title: Unresolved comment count
-          description: Number of unresolved comments in the task including all annotations
-          type: integer
-        last_comment_updated_at:
-          title: Last comment updated at
-          description: When the last comment was updated
-          type: string
-          format: date-time
-          nullable: true
-        project:
-          title: Project
-          description: Project ID for this task
-          type: integer
-          nullable: true
-        updated_by:
-          title: Updated by
-          description: Last annotator or reviewer who updated this task
-          type: integer
-          nullable: true
-        file_upload:
-          title: File upload
-          description: Uploaded file used as data source for this task
-          type: integer
-          nullable: true
-        comment_authors:
-          description: Users who wrote comments
-          type: array
-          items:
-            description: Users who wrote comments
-            type: integer
-          uniqueItems: true
-        annotations:
-          type: array
-          items:
-            $ref: "#/components/schemas/Annotation"
-          readOnly: true
-          default: []
-        predictions:
-          type: array
-          items:
-            $ref: "#/components/schemas/Prediction"
-          readOnly: true
-          default: []
     Webhook:
       required:
         - url

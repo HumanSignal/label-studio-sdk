@@ -57,8 +57,8 @@ from .s3import_storage import S3ImportStorage
 from .s3import_storage_status import S3ImportStorageStatus
 from .serialization_option import SerializationOption
 from .serialization_options import SerializationOptions
+from .task import Task
 from .task_filter_options import TaskFilterOptions
-from .task_simple import TaskSimple
 from .user_serializer_with_projects import UserSerializerWithProjects
 from .user_simple import UserSimple
 from .view import View
@@ -125,8 +125,8 @@ __all__ = [
     "S3ImportStorageStatus",
     "SerializationOption",
     "SerializationOptions",
+    "Task",
     "TaskFilterOptions",
-    "TaskSimple",
     "UserSerializerWithProjects",
     "UserSimple",
     "View",

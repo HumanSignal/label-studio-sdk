@@ -12,6 +12,8 @@ from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...types.local_files_import_storage import LocalFilesImportStorage
+from .types.local_create_response import LocalCreateResponse
+from .types.local_update_response import LocalUpdateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -89,37 +91,57 @@ class LocalClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create(
-        self, *, request: LocalFilesImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> LocalFilesImportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LocalCreateResponse:
         """
         Create a new local file import storage connection.
 
         Parameters
         ----------
-        request : LocalFilesImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        path : typing.Optional[str]
+            Local path
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        LocalFilesImportStorage
+        LocalCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import LocalFilesImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.local.create(
-            request=LocalFilesImportStorage(
-                project=1,
-            ),
-        )
+        client.import_storage.local.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if path is not OMIT:
+            _request["path"] = path
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/localfiles/"),
@@ -128,10 +150,10 @@ class LocalClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -149,23 +171,19 @@ class LocalClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(LocalFilesImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(LocalCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(
-        self, *, request: LocalFilesImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> LocalFilesImportStorage:
+    def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> LocalFilesImportStorage:
         """
         Validate a specific local file import storage connection.
 
         Parameters
         ----------
-        request : LocalFilesImportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -176,17 +194,12 @@ class LocalClient:
 
         Examples
         --------
-        from label_studio_sdk import LocalFilesImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.local.validate(
-            request=LocalFilesImportStorage(
-                project=1,
-            ),
-        )
+        client.import_storage.local.validate()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -196,12 +209,9 @@ class LocalClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -347,8 +357,15 @@ class LocalClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
-        self, id: int, *, request: LocalFilesImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> LocalFilesImportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LocalUpdateResponse:
         """
         Update a specific local file import storage connection.
 
@@ -357,19 +374,28 @@ class LocalClient:
         id : int
             A unique integer value identifying this local files import storage.
 
-        request : LocalFilesImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        path : typing.Optional[str]
+            Local path
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        LocalFilesImportStorage
+        LocalUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import LocalFilesImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -377,11 +403,17 @@ class LocalClient:
         )
         client.import_storage.local.update(
             id=1,
-            request=LocalFilesImportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if path is not OMIT:
+            _request["path"] = path
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -392,10 +424,10 @@ class LocalClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -413,24 +445,21 @@ class LocalClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(LocalFilesImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(LocalUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(
-        self, id: str, *, request: LocalFilesImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> LocalFilesImportStorage:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LocalFilesImportStorage:
         """
         Sync tasks from a local file import storage connection.
 
         Parameters
         ----------
-        id : str
-
-        request : LocalFilesImportStorage
+        id : int
+            Storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -442,17 +471,13 @@ class LocalClient:
 
         Examples
         --------
-        from label_studio_sdk import LocalFilesImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
         client.import_storage.local.sync(
-            id="id",
-            request=LocalFilesImportStorage(
-                project=1,
-            ),
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -465,12 +490,9 @@ class LocalClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -566,37 +588,57 @@ class AsyncLocalClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
-        self, *, request: LocalFilesImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> LocalFilesImportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LocalCreateResponse:
         """
         Create a new local file import storage connection.
 
         Parameters
         ----------
-        request : LocalFilesImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        path : typing.Optional[str]
+            Local path
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        LocalFilesImportStorage
+        LocalCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import LocalFilesImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.local.create(
-            request=LocalFilesImportStorage(
-                project=1,
-            ),
-        )
+        await client.import_storage.local.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if path is not OMIT:
+            _request["path"] = path
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/localfiles/"),
@@ -605,10 +647,10 @@ class AsyncLocalClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -626,23 +668,19 @@ class AsyncLocalClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(LocalFilesImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(LocalCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(
-        self, *, request: LocalFilesImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> LocalFilesImportStorage:
+    async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> LocalFilesImportStorage:
         """
         Validate a specific local file import storage connection.
 
         Parameters
         ----------
-        request : LocalFilesImportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -653,17 +691,12 @@ class AsyncLocalClient:
 
         Examples
         --------
-        from label_studio_sdk import LocalFilesImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.local.validate(
-            request=LocalFilesImportStorage(
-                project=1,
-            ),
-        )
+        await client.import_storage.local.validate()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -673,12 +706,9 @@ class AsyncLocalClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -824,8 +854,15 @@ class AsyncLocalClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: LocalFilesImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> LocalFilesImportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LocalUpdateResponse:
         """
         Update a specific local file import storage connection.
 
@@ -834,19 +871,28 @@ class AsyncLocalClient:
         id : int
             A unique integer value identifying this local files import storage.
 
-        request : LocalFilesImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        path : typing.Optional[str]
+            Local path
+
+        regex_filter : typing.Optional[str]
+            Regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        LocalFilesImportStorage
+        LocalUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import LocalFilesImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -854,11 +900,17 @@ class AsyncLocalClient:
         )
         await client.import_storage.local.update(
             id=1,
-            request=LocalFilesImportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if path is not OMIT:
+            _request["path"] = path
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -869,10 +921,10 @@ class AsyncLocalClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -890,7 +942,7 @@ class AsyncLocalClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(LocalFilesImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(LocalUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -898,16 +950,15 @@ class AsyncLocalClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def sync(
-        self, id: str, *, request: LocalFilesImportStorage, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LocalFilesImportStorage:
         """
         Sync tasks from a local file import storage connection.
 
         Parameters
         ----------
-        id : str
-
-        request : LocalFilesImportStorage
+        id : int
+            Storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -919,17 +970,13 @@ class AsyncLocalClient:
 
         Examples
         --------
-        from label_studio_sdk import LocalFilesImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
         await client.import_storage.local.sync(
-            id="id",
-            request=LocalFilesImportStorage(
-                project=1,
-            ),
+            id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -942,12 +989,9 @@ class AsyncLocalClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

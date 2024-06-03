@@ -12,6 +12,8 @@ from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...types.redis_import_storage import RedisImportStorage
+from .types.redis_create_response import RedisCreateResponse
+from .types.redis_update_response import RedisUpdateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -89,37 +91,75 @@ class RedisClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create(
-        self, *, request: RedisImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> RedisImportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RedisCreateResponse:
         """
         Create a new Redis import storage connection.
 
         Parameters
         ----------
-        request : RedisImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        port : typing.Optional[str]
+            Server Port (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisImportStorage
+        RedisCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import RedisImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.redis.create(
-            request=RedisImportStorage(
-                project=1,
-            ),
-        )
+        client.import_storage.redis.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if path is not OMIT:
+            _request["path"] = path
+        if host is not OMIT:
+            _request["host"] = host
+        if port is not OMIT:
+            _request["port"] = port
+        if password is not OMIT:
+            _request["password"] = password
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/redis/"),
@@ -128,10 +168,10 @@ class RedisClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -149,23 +189,19 @@ class RedisClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(RedisImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(RedisCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(
-        self, *, request: RedisImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> RedisImportStorage:
+    def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
         Validate a specific Redis import storage connection.
 
         Parameters
         ----------
-        request : RedisImportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -176,17 +212,12 @@ class RedisClient:
 
         Examples
         --------
-        from label_studio_sdk import RedisImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.redis.validate(
-            request=RedisImportStorage(
-                project=1,
-            ),
-        )
+        client.import_storage.redis.validate()
         """
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
@@ -196,12 +227,9 @@ class RedisClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -347,8 +375,18 @@ class RedisClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
-        self, id: int, *, request: RedisImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> RedisImportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RedisUpdateResponse:
         """
         Update a specific Redis import storage connection.
 
@@ -357,19 +395,37 @@ class RedisClient:
         id : int
             A unique integer value identifying this redis import storage.
 
-        request : RedisImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        port : typing.Optional[str]
+            Server Port (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisImportStorage
+        RedisUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import RedisImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -377,11 +433,23 @@ class RedisClient:
         )
         client.import_storage.redis.update(
             id=1,
-            request=RedisImportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if path is not OMIT:
+            _request["path"] = path
+        if host is not OMIT:
+            _request["host"] = host
+        if port is not OMIT:
+            _request["port"] = port
+        if password is not OMIT:
+            _request["password"] = password
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -392,10 +460,10 @@ class RedisClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -413,24 +481,21 @@ class RedisClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(RedisImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(RedisUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(
-        self, id: str, *, request: RedisImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> RedisImportStorage:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
         Sync tasks from a specific Redis import storage connection.
 
         Parameters
         ----------
-        id : str
-
-        request : RedisImportStorage
+        id : int
+            Storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -442,17 +507,13 @@ class RedisClient:
 
         Examples
         --------
-        from label_studio_sdk import RedisImportStorage
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
         client.import_storage.redis.sync(
-            id="id",
-            request=RedisImportStorage(
-                project=1,
-            ),
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -465,12 +526,9 @@ class RedisClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -566,37 +624,75 @@ class AsyncRedisClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
-        self, *, request: RedisImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> RedisImportStorage:
+        self,
+        *,
+        project: typing.Optional[int] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RedisCreateResponse:
         """
         Create a new Redis import storage connection.
 
         Parameters
         ----------
-        request : RedisImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        port : typing.Optional[str]
+            Server Port (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisImportStorage
+        RedisCreateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import RedisImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.redis.create(
-            request=RedisImportStorage(
-                project=1,
-            ),
-        )
+        await client.import_storage.redis.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if path is not OMIT:
+            _request["path"] = path
+        if host is not OMIT:
+            _request["host"] = host
+        if port is not OMIT:
+            _request["port"] = port
+        if password is not OMIT:
+            _request["password"] = password
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/storages/redis/"),
@@ -605,10 +701,10 @@ class AsyncRedisClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -626,23 +722,19 @@ class AsyncRedisClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(RedisImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(RedisCreateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(
-        self, *, request: RedisImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> RedisImportStorage:
+    async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
         Validate a specific Redis import storage connection.
 
         Parameters
         ----------
-        request : RedisImportStorage
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -653,17 +745,12 @@ class AsyncRedisClient:
 
         Examples
         --------
-        from label_studio_sdk import RedisImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.redis.validate(
-            request=RedisImportStorage(
-                project=1,
-            ),
-        )
+        await client.import_storage.redis.validate()
         """
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
@@ -673,12 +760,9 @@ class AsyncRedisClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -824,8 +908,18 @@ class AsyncRedisClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: RedisImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> RedisImportStorage:
+        self,
+        id: int,
+        *,
+        project: typing.Optional[int] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RedisUpdateResponse:
         """
         Update a specific Redis import storage connection.
 
@@ -834,19 +928,37 @@ class AsyncRedisClient:
         id : int
             A unique integer value identifying this redis import storage.
 
-        request : RedisImportStorage
+        project : typing.Optional[int]
+            Project ID
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        port : typing.Optional[str]
+            Server Port (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisImportStorage
+        RedisUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import RedisImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -854,11 +966,23 @@ class AsyncRedisClient:
         )
         await client.import_storage.redis.update(
             id=1,
-            request=RedisImportStorage(
-                project=1,
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if project is not OMIT:
+            _request["project"] = project
+        if path is not OMIT:
+            _request["path"] = path
+        if host is not OMIT:
+            _request["host"] = host
+        if port is not OMIT:
+            _request["port"] = port
+        if password is not OMIT:
+            _request["password"] = password
+        if regex_filter is not OMIT:
+            _request["regex_filter"] = regex_filter
+        if use_blob_urls is not OMIT:
+            _request["use_blob_urls"] = use_blob_urls
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(
@@ -869,10 +993,10 @@ class AsyncRedisClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -890,24 +1014,21 @@ class AsyncRedisClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(RedisImportStorage, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(RedisUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def sync(
-        self, id: str, *, request: RedisImportStorage, request_options: typing.Optional[RequestOptions] = None
-    ) -> RedisImportStorage:
+    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
         Sync tasks from a specific Redis import storage connection.
 
         Parameters
         ----------
-        id : str
-
-        request : RedisImportStorage
+        id : int
+            Storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -919,17 +1040,13 @@ class AsyncRedisClient:
 
         Examples
         --------
-        from label_studio_sdk import RedisImportStorage
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
         await client.import_storage.redis.sync(
-            id="id",
-            request=RedisImportStorage(
-                project=1,
-            ),
+            id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -942,12 +1059,9 @@ class AsyncRedisClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
-            if request_options is None or request_options.get("additional_body_parameters") is None
-            else {
-                **jsonable_encoder(request),
-                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
-            },
+            json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
