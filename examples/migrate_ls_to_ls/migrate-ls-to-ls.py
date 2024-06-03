@@ -41,7 +41,7 @@ DEFAULT_STORAGE_PRESIGN = (
 
 
 class Migration:
-    def __init__(self, src_url, src_key, dst_url, dst_key, dest_workspace):
+    def __init__(self, src_url, src_key, dst_url, dst_key, dest_workspace, skip_task_sync):
         """Initialize migration that copy projects from one LS instance to another
 
         :param src_url: source Label Studio instance
@@ -55,6 +55,7 @@ class Migration:
         self.dst_ls = Client(url=dst_url, api_key=dst_key)
         self.users = self.projects = self.project_ids = None
         self.dest_workspace = dest_workspace
+        self.skip_task_sync = skip_task_sync
 
     def set_project_ids(self, project_ids=None):
         """Set projects you need to migrate
@@ -150,28 +151,34 @@ class Migration:
         )
 
     def migrate_project(self, project):
-        filenames = self.export_chunked_snapshots(project)
-        if not filenames:
-            logger.error(
-                f"No exported files found: skipping project {project.id}. Maybe project is empty?"
-            )
-            return False
+        # export snapshots by chunks
+        if not self.skip_task_sync:
+            filenames = self.export_chunked_snapshots(project)
+            if not filenames:
+                logger.error(
+                    f"No exported files found: skipping project {project.id}. Maybe project is empty?"
+                )
+                return False
+    
+            logger.info(f"Patching snapshot users for project {project.id}")
+            for filename in filenames:
+                self.patch_snapshot_users(filename)
 
-        logger.info(f"Patching snapshot users for project {project.id}")
-        for filename in filenames:
-            self.patch_snapshot_users(filename)
-
+        
         logger.info(f"New project creation for project {project.id}")
         label_config = str(project.label_config)
         project.params["label_config"] = '<View></View>'
         new_project = self.create_project(project)
 
-        logger.info(f"Going to import {filenames} to project {new_project.id}")
-        for filename in filenames:
-            new_project.import_tasks(filename)
-            logger.info(f"Import {filename} finished for project {new_project.id}")
-            time.sleep(1)
+        # re-import snapshots by chunks
+        if not self.skip_task_sync:
+            logger.info(f"Going to import {filenames} to project {new_project.id}")
+            for filename in filenames:
+                new_project.import_tasks(filename)
+                logger.info(f"Import {filename} finished for project {new_project.id}")
+                time.sleep(1)
 
+        # update project params
         project.set_params(label_config=label_config)
         self.add_default_import_storage(new_project)
         return True
@@ -435,6 +442,12 @@ def run():
         default=None,
         help="Workspace where to store projects, e.g.: 42",
     )
+    parser.add_argument(
+        "--skip-task-sync",
+        dest="skip_task_sync",
+        action="store_true"
+        help="Copy project settings only if true",
+    )
     args = parser.parse_args(sys.argv[1:])
 
     migration = Migration(
@@ -443,6 +456,7 @@ def run():
         dst_url=args.dst_url,
         dst_key=args.dst_key,
         dest_workspace=args.dest_workspace,
+        skip_task_sync=args.skip_task_sync
     )
 
     project_ids = (
