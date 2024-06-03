@@ -172,7 +172,7 @@ class Migration:
             logger.info(f"Import {filename} finished for project {new_project.id}")
             time.sleep(1)
 
-        project.set_params(label_config=label_config)
+        new_project.set_params(label_config=label_config)
         self.add_default_import_storage(new_project)
         return True
 
