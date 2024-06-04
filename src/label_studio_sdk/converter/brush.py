@@ -146,6 +146,9 @@ def save_brush_images_from_annotation(
     )  # sanitize filename
 
     for name in layers:
+
+        sanitized_name = name.replace('/', '-').replace('\\', '-')
+
         filename = os.path.join(
             out_dir,
             'task-'
@@ -155,7 +158,7 @@ def save_brush_images_from_annotation(
             + '-by-'
             + email
             + '-'
-            + name,
+            + sanitized_name,
         )
         image = layers[name]
         logger.debug(f'Save image to {filename}')

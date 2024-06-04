@@ -364,7 +364,8 @@ class Converter(object):
 
         # one task
         if data_type == 'dict':
-            data = json.load(json_file)
+            with open(json_file, 'r') as json_file:
+                data = json.load(json_file)
             for item in self.annotation_result_from_task(data):
                 yield item
 
@@ -469,6 +470,7 @@ class Converter(object):
             'updated_at': annotation.get('updated_at'),
             'lead_time': annotation.get('lead_time'),
             'history': annotation.get('history'),
+            'was_cancelled': annotation.get('was_cancelled'),
         }
 
     def _check_format(self, fmt):
@@ -771,26 +773,34 @@ class Converter(object):
             else self.iter_from_json_file(input_data)
         )
         for item_idx, item in enumerate(item_iterator):
-            # get image path and label file path
-            image_path = item['input'][data_key]
-            # download image
-            if not os.path.exists(image_path):
-                try:
-                    image_path = download(
-                        image_path,
-                        output_image_dir,
-                        project_dir=self.project_dir,
-                        return_relative_path=True,
-                        upload_dir=self.upload_dir,
-                        download_resources=self.download_resources,
-                    )
-                except:
-                    logger.info(
-                        'Unable to download {image_path}. The item {item} will be skipped'.format(
-                            image_path=image_path, item=item
-                        ),
-                        exc_info=True,
-                    )
+            # get image path(s) and label file path
+            image_paths = item['input'][data_key]
+            image_paths = [image_paths] if isinstance(image_paths, str) else image_paths
+            # download image(s)
+            image_path = None
+            # TODO: for multi-page annotation, this code won't produce correct relationships between page and annotated shapes
+            # fixing the issue in RND-84
+            for image_path in reversed(image_paths):
+                if not os.path.exists(image_path):
+                    try:
+                        image_path = download(
+                            image_path,
+                            output_image_dir,
+                            project_dir=self.project_dir,
+                            return_relative_path=True,
+                            upload_dir=self.upload_dir,
+                            download_resources=self.download_resources,
+                        )
+                    except:
+                        logger.info(
+                            'Unable to download {image_path}. The item {item} will be skipped'.format(
+                                image_path=image_path, item=item
+                            ),
+                            exc_info=True,
+                        )
+            if not image_path:
+                logger.error(f'No image path found for item #{item_idx}')
+                continue
 
             # create dedicated subfolder for each labeler if split_labelers=True
             labeler_subfolder = str(item['completed_by']) if split_labelers else ''
