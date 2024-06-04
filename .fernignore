@@ -15,3 +15,7 @@ src/label_studio_sdk/_legacy
 
 # tutorials
 tutorials
+
+# tests
+tests/custom/converter
+tests/custom/label_studio_tools
