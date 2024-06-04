@@ -3,7 +3,8 @@
 .github/workflows/*
 README.md
 
-# manual extensions
+# manual extensions, use generators.yml to include specific top-level imports from here
+# this directory also includes legacy label_studio_tools/ package
 src/label_studio_sdk/_extensions
 
 # converter
