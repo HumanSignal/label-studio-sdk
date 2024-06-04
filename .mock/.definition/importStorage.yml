@@ -1,0 +1,20 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/storages/
+      method: GET
+      auth: true
+      docs: Retrieve a list of the import storages of all types with their IDs.
+      display-name: List all import storages from the project
+      examples:
+        - {}
+    list_types:
+      path: /api/storages/types
+      method: GET
+      auth: true
+      docs: Retrieve a list of the import storages types.
+      display-name: List all import storages types
+      examples:
+        - {}

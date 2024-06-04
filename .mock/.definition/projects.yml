@@ -13,33 +13,49 @@ types:
         validation:
           format: uri
       results: list<root.Project>
-  ProjectsImportTasksResponse:
-    docs: Task creation response
+  ProjectsCreateResponse:
+    docs: Project
     properties:
-      task_count:
-        type: optional<integer>
-        docs: Number of tasks added
-      annotation_count:
-        type: optional<integer>
-        docs: Number of annotations added
-      predictions_count:
-        type: optional<integer>
-        docs: Number of predictions added
-      duration:
-        type: optional<double>
-        docs: Time in seconds to create
-      file_upload_ids:
-        type: optional<list<integer>>
-        docs: Database IDs of uploaded files
-      could_be_tasks_list:
+      title:
+        type: optional<string>
+        docs: Project title
+      description:
+        type: optional<string>
+        docs: Project description
+      label_config:
+        type: optional<string>
+        docs: Label config in XML format
+      expert_instruction:
+        type: optional<string>
+        docs: Labeling instructions
+      show_instruction:
         type: optional<boolean>
-        docs: Whether uploaded files can contain lists of tasks, like CSV/TSV files
-      found_formats:
-        type: optional<list<string>>
-        docs: The list of found file formats
-      data_columns:
-        type: optional<list<string>>
-        docs: The list of found data columns
+        docs: Show labeling instructions
+      show_skip_button:
+        type: optional<boolean>
+        docs: Show skip button
+      enable_empty_annotation:
+        type: optional<boolean>
+        docs: Allow empty annotations
+      show_annotation_history:
+        type: optional<boolean>
+        docs: Show annotation history
+      reveal_preannotations_interactively:
+        type: optional<boolean>
+        docs: Reveal preannotations interactively
+      show_collab_predictions:
+        type: optional<boolean>
+        docs: Show collaborative predictions
+      maximum_annotations:
+        type: optional<integer>
+        docs: Maximum annotations per task
+      color:
+        type: optional<string>
+        docs: Project color in HEX format
+        default: '#FFFFFF'
+      control_weights:
+        type: optional<map<string, unknown>>
+        docs: Control weights
 service:
   auth: false
   base-path: ''
@@ -68,6 +84,9 @@ service:
         Token abc123'
 
         ```
+      pagination:
+        offset: $request.page
+        results: $response.results
       display-name: List your projects
       request:
         name: ProjectsListRequest
@@ -129,7 +148,6 @@ service:
                   overlap_cohort_percentage: 1
                   task_data_login: task_data_login
                   task_data_password: task_data_password
-                  parsed_label_config: parsed_label_config
                   evaluate_predictions_automatically: true
                   config_has_control_tags: config_has_control_tags
                   skip_queue: REQUEUE_FOR_ME
@@ -155,17 +173,58 @@ service:
         '{"label_config": "<View>[...]</View>"}'
 
         ```
-      display-name: Create new project
+      display-name: List of Projects
       request:
-        body: root.Project
+        name: ProjectsCreateRequest
+        body:
+          properties:
+            title:
+              type: optional<string>
+              docs: Project title
+            description:
+              type: optional<string>
+              docs: Project description
+            label_config:
+              type: optional<string>
+              docs: Label config in XML format
+            expert_instruction:
+              type: optional<string>
+              docs: Labeling instructions
+            show_instruction:
+              type: optional<boolean>
+              docs: Show labeling instructions
+            show_skip_button:
+              type: optional<boolean>
+              docs: Show skip button
+            enable_empty_annotation:
+              type: optional<boolean>
+              docs: Allow empty annotations
+            show_annotation_history:
+              type: optional<boolean>
+              docs: Show annotation history
+            reveal_preannotations_interactively:
+              type: optional<boolean>
+              docs: Reveal preannotations interactively
+            show_collab_predictions:
+              type: optional<boolean>
+              docs: Show collaborative predictions
+            maximum_annotations:
+              type: optional<integer>
+              docs: Maximum annotations per task
+            color:
+              type: optional<string>
+              docs: Project color in HEX format
+              default: '#FFFFFF'
+            control_weights:
+              type: optional<map<string, unknown>>
+              docs: Control weights
       response:
         docs: ''
-        type: root.Project
+        type: ProjectsCreateResponse
       examples:
         - request: {}
           response:
             body:
-              id: 1
               title: title
               description: description
               label_config: label_config
@@ -174,47 +233,13 @@ service:
               show_skip_button: true
               enable_empty_annotation: true
               show_annotation_history: true
-              organization: 1
-              color: color
-              maximum_annotations: 1
-              is_published: true
-              model_version: model_version
-              is_draft: true
-              created_by:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                email: email
-                avatar: avatar
-              created_at: '2024-01-15T09:30:00Z'
-              min_annotations_to_start_training: 1
-              start_training_on_annotation_update: start_training_on_annotation_update
+              reveal_preannotations_interactively: true
               show_collab_predictions: true
-              num_tasks_with_annotations: 1
-              task_number: 1
-              useful_annotation_number: 1
-              ground_truth_number: 1
-              skipped_annotations_number: 1
-              total_annotations_number: 1
-              total_predictions_number: 1
-              sampling: Sequential sampling
-              show_ground_truth_first: true
-              show_overlap_first: true
-              overlap_cohort_percentage: 1
-              task_data_login: task_data_login
-              task_data_password: task_data_password
+              maximum_annotations: 1
+              color: color
               control_weights:
                 control_weights:
                   key: value
-              parsed_label_config: parsed_label_config
-              evaluate_predictions_automatically: true
-              config_has_control_tags: config_has_control_tags
-              skip_queue: REQUEUE_FOR_ME
-              reveal_preannotations_interactively: true
-              pinned_at: '2024-01-15T09:30:00Z'
-              finished_task_number: 1
-              queue_total: queue_total
-              queue_done: queue_done
     api_projects_validate_create:
       path: /api/projects/validate/
       method: POST
@@ -286,7 +311,9 @@ service:
               control_weights:
                 control_weights:
                   key: value
-              parsed_label_config: '{"tag": {...}}'
+              parsed_label_config:
+                parsed_label_config:
+                  key: value
               evaluate_predictions_automatically: false
               config_has_control_tags: config_has_control_tags
               skip_queue: REQUEUE_FOR_ME
@@ -370,7 +397,9 @@ service:
               control_weights:
                 control_weights:
                   key: value
-              parsed_label_config: parsed_label_config
+              parsed_label_config:
+                parsed_label_config:
+                  key: value
               evaluate_predictions_automatically: true
               config_has_control_tags: config_has_control_tags
               skip_queue: REQUEUE_FOR_ME
@@ -379,259 +408,86 @@ service:
               finished_task_number: 1
               queue_total: queue_total
               queue_done: queue_done
-    import_tasks:
-      path: /api/projects/{id}/import
-      method: POST
+    create_export:
+      path: /api/projects/{id}/export
+      method: GET
       auth: true
       docs: >
 
-        Import data as labeling tasks in bulk using this API endpoint. You can
-        use this API endpoint to import multiple tasks.
+        <i>Note: if you have a large project it's recommended to use
 
-        One POST request is limited at 250K tasks and 200 MB.
+        export snapshots, this easy export endpoint might have
+        timeouts.</i><br/><br>
 
+        Export annotated tasks as a file in a specific format.
 
-        **Note:** Imported data is verified against a project *label_config* and
-        must
+        For example, to export JSON annotations for a project to a file called
+        `annotations.json`,
 
-        include all variables that were used in the *label_config*. For example,
-
-        if the label configuration has a *$text* variable, then each item in a
-        data object
-
-        must include a "text" field.
-
-        <br>
-
-
-        ## POST requests
-
-        <hr style="opacity:0.3">
-
-
-        There are three possible ways to import tasks with this endpoint:
-
-
-        ### 1\. **POST with data**
-
-        Send JSON tasks as POST data. Only JSON is supported for POSTing files
-        directly.
-
-        Update this example to specify your authorization token and Label Studio
-        instance host, then run the following from
-
-        the command line.
-
+        run the following from the command line:
 
         ```bash
 
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token
-        abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text":
-        "Some text 1"}, {"text": "Some text 2"}]'
+        curl -X GET
+        https://localhost:8080/api/projects/{id}/export?exportType=JSON -H
+        'Authorization: Token abc123' --output 'annotations.json'
 
         ```
 
-
-        ### 2\. **POST with files**
-
-        Send tasks as files. You can attach multiple files with different names.
-
-
-        - **JSON**: text files in JavaScript object notation format
-
-        - **CSV**: text files with tables in Comma Separated Values format
-
-        - **TSV**: text files with tables in Tab Separated Value format
-
-        - **TXT**: simple text files are similar to CSV with one column and no
-        header, supported for projects with one source only
-
-
-        Update this example to specify your authorization token, Label Studio
-        instance host, and file name and path,
-
-        then run the following from the command line:
-
+        To export all tasks, including skipped tasks and others without
+        annotations, run the following from the command line:
 
         ```bash
 
-        curl -H 'Authorization: Token abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' -F
-        ‘file=@path/to/my_file.csv’
+        curl -X GET
+        https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true
+        -H 'Authorization: Token abc123' --output 'annotations.json'
 
         ```
 
-
-        ### 3\. **POST with URL**
-
-        You can also provide a URL to a file with labeling tasks. Supported file
-        formats are the same as in option 2.
-
+        To export specific tasks with IDs of 123 and 345, run the following from
+        the command line:
 
         ```bash
 
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token
-        abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' \
-
-        --data '[{"url": "http://example.com/test1.csv"}, {"url":
-        "http://example.com/test2.csv"}]'
+        curl -X GET
+        https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H
+        'Authorization: Token abc123' --output 'annotations.json'
 
         ```
-
-
-        <br>
       path-parameters:
         id:
           type: integer
           docs: A unique integer value identifying this project.
-      display-name: Import tasks
+      display-name: Easy export of tasks and annotations
       request:
-        name: ImportApi
-        body:
-          properties:
-            id:
-              type: optional<integer>
-              name: importApiId
-            annotations: optional<list<root.Annotation>>
-            predictions: optional<list<root.Prediction>>
-            data:
-              docs: >-
-                User imported or uploaded data for a task. Data is formatted
-                according to the project label config. You can find examples of
-                data for your project on the Import page in the Label Studio
-                Data Manager UI.
-              type: map<string, unknown>
-            meta:
-              type: optional<map<string, unknown>>
-              docs: >-
-                Meta is user imported (uploaded) data and can be useful as input
-                for an ML Backend for embeddings, advanced vectors, and other
-                info. It is passed to ML during training/predicting steps.
-            created_at:
-              type: optional<datetime>
-              docs: Time a task was created
-            updated_at:
-              type: optional<datetime>
-              docs: Last time a task was updated
-            overlap:
-              type: optional<integer>
-              docs: Number of distinct annotators that processed the current task
-            inner_id:
-              type: optional<integer>
-              docs: Internal task ID in the project, starts with 1
-            total_annotations:
-              type: optional<integer>
-              docs: >-
-                Number of total annotations for the current task except
-                cancelled annotations
-            cancelled_annotations:
-              type: optional<integer>
-              docs: Number of total cancelled annotations for the current task
-            total_predictions:
-              type: optional<integer>
-              docs: Number of total predictions for the current task
-            comment_count:
-              type: optional<integer>
-              docs: Number of comments in the task including all annotations
-            unresolved_comment_count:
-              type: optional<integer>
-              docs: >-
-                Number of unresolved comments in the task including all
-                annotations
-            last_comment_updated_at:
-              type: optional<datetime>
-              docs: When the last comment was updated
-            updated_by:
-              type: optional<integer>
-              docs: Last annotator or reviewer who updated this task
-            file_upload:
-              type: optional<integer>
-              docs: Uploaded file used as data source for this task
-            comment_authors:
-              type: optional<list<integer>>
-              docs: Users who wrote comments
+        name: ProjectsCreateExportRequest
+        query-parameters:
+          export_type:
+            type: optional<string>
+            docs: Selected export format (JSON by default)
+          download_all_tasks:
+            type: optional<string>
+            docs: >
+
+              If true, download all tasks regardless of status. If false,
+              download only annotated tasks.
+          download_resources:
+            type: optional<boolean>
+            docs: >
+
+              If true, download all resource files such as images, audio, and
+              others relevant to the tasks.
+          ids:
+            type: optional<integer>
+            allow-multiple: true
+            docs: >
+
+              Specify a list of task IDs to retrieve only the details for those
+              tasks.
       response:
-        docs: Tasks successfully imported
-        type: ProjectsImportTasksResponse
-      errors:
-        - root.BadRequestError
-      examples:
-        - path-parameters:
-            id: 1
-          request:
-            data: {}
-          response:
-            body:
-              task_count: 1
-              annotation_count: 1
-              predictions_count: 1
-              duration: 1.1
-              file_upload_ids:
-                - 1
-              could_be_tasks_list: true
-              found_formats:
-                - found_formats
-              data_columns:
-                - data_columns
-    api_projects_imports_read:
-      path: /api/projects/{id}/imports/{import_pk}/
-      method: GET
-      auth: true
-      docs: Return data related to async project import operation
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project import.
-        import_pk: string
-      display-name: Get project import info
-      response:
-        docs: ''
-        type: root.ProjectImport
-      examples:
-        - path-parameters:
-            id: 1
-            import_pk: import_pk
-          response:
-            body:
-              id: 1
-              preannotated_from_fields:
-                preannotated_from_fields:
-                  key: value
-              commit_to_project: true
-              return_task_ids: true
-              status: created
-              url: url
-              traceback: traceback
-              error: error
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              finished_at: '2024-01-15T09:30:00Z'
-              task_count: 1
-              annotation_count: 1
-              prediction_count: 1
-              duration: 1
-              file_upload_ids:
-                file_upload_ids:
-                  key: value
-              could_be_tasks_list: true
-              found_formats:
-                found_formats:
-                  key: value
-              data_columns:
-                data_columns:
-                  key: value
-              tasks:
-                tasks:
-                  key: value
-              task_ids:
-                task_ids:
-                  key: value
-              project: 1
+        docs: Exported data
+        type: file
     api_projects_reimports_read:
       path: /api/projects/{id}/reimports/{reimport_pk}/
       method: GET
@@ -719,7 +575,7 @@ service:
       examples:
         - path-parameters:
             id: 1
-    api_projects_validate_label_config:
+    validate_config:
       path: /api/projects/{id}/validate/
       method: POST
       auth: true

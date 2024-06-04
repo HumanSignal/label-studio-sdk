@@ -1,19 +1,7 @@
 imports:
   root: __package__.yml
 types:
-  ApiLabelLinksListResponse:
-    properties:
-      count: integer
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: list<root.LabelLink>
-  ApiLabelsListResponse:
+  LabelsListResponse:
     properties:
       count: integer
       next:
@@ -29,145 +17,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_label_links_list:
-      path: /api/label_links/
-      method: GET
-      auth: true
-      docs: List label links for a specific label and project.
-      display-name: List label links
-      request:
-        name: ApiLabelLinksListRequest
-        query-parameters:
-          project:
-            type: optional<string>
-            docs: project
-          label__created_at:
-            type: optional<string>
-            docs: label__created_at
-          label__created_at__gte:
-            type: optional<string>
-            docs: label__created_at__gte
-          label__created_at__lte:
-            type: optional<string>
-            docs: label__created_at__lte
-          label__created_by:
-            type: optional<string>
-            docs: label__created_by
-          page:
-            type: optional<integer>
-            docs: A page number within the paginated result set.
-      response:
-        docs: ''
-        type: ApiLabelLinksListResponse
-      examples:
-        - response:
-            body:
-              count: 1
-              next: next
-              previous: previous
-              results:
-                - id: 1
-                  annotations_count: 1
-                  from_name: from_name
-                  project: 1
-                  label: 1
-    api_label_links_create:
-      path: /api/label_links/
-      method: POST
-      auth: true
-      docs: >-
-        Create label links to link new custom labels to your project labeling
-        configuration.
-      display-name: Create label links
-      request:
-        body: root.LabelLink
-      response:
-        docs: ''
-        type: root.LabelLink
-      examples:
-        - request:
-            from_name: from_name
-            project: 1
-            label: 1
-          response:
-            body:
-              id: 1
-              annotations_count: 1
-              from_name: from_name
-              project: 1
-              label: 1
-    api_label_links_read:
-      path: /api/label_links/{id}/
-      method: GET
-      auth: true
-      docs: 'Get label links for a specific project configuration. '
-      path-parameters:
-        id: string
-      display-name: Get label link
-      response:
-        docs: ''
-        type: root.LabelLink
-      examples:
-        - path-parameters:
-            id: id
-          response:
-            body:
-              id: 1
-              annotations_count: 1
-              from_name: from_name
-              project: 1
-              label: 1
-    api_label_links_delete:
-      path: /api/label_links/{id}/
-      method: DELETE
-      auth: true
-      docs: >
-
-        Remove a label link that links custom labels to your project labeling
-        configuration. If you remove a label link,
-
-        the label stops being available for the project it was linked to. You
-        can add a new label link at any time. 
-      path-parameters:
-        id: string
-      display-name: Remove label link
-      examples:
-        - path-parameters:
-            id: id
-    api_label_links_partial_update:
-      path: /api/label_links/{id}/
-      method: PATCH
-      auth: true
-      docs: >
-
-        Update a label link that links custom labels to a project labeling
-        configuration, for example if the fromName,  
-
-        toName, or name parameters for a tag in the labeling configuration
-        change. 
-      path-parameters:
-        id: string
-      display-name: Update label link
-      request:
-        body: root.LabelLink
-      response:
-        docs: ''
-        type: root.LabelLink
-      examples:
-        - path-parameters:
-            id: id
-          request:
-            from_name: from_name
-            project: 1
-            label: 1
-          response:
-            body:
-              id: 1
-              annotations_count: 1
-              from_name: from_name
-              project: 1
-              label: 1
-    api_labels_list:
+    list:
       path: /api/labels/
       method: GET
       auth: true
@@ -176,14 +26,14 @@ service:
         labeling configuration.
       display-name: List labels
       request:
-        name: ApiLabelsListRequest
+        name: LabelsListRequest
         query-parameters:
           page:
             type: optional<integer>
             docs: A page number within the paginated result set.
       response:
         docs: ''
-        type: ApiLabelsListResponse
+        type: LabelsListResponse
       examples:
         - response:
             body:
@@ -205,7 +55,7 @@ service:
                   organization: 1
                   projects:
                     - 1
-    api_labels_create:
+    create:
       path: /api/labels/
       method: POST
       auth: true
@@ -240,18 +90,7 @@ service:
                 approved_by: 1
                 projects:
                   - 1
-    api_labels_bulk_create:
-      path: /api/labels/bulk
-      method: POST
-      auth: true
-      docs: >
-
-        If you want to update the labels in saved annotations, use this
-        endpoint.
-      display-name: Bulk update labels
-      examples:
-        - {}
-    api_labels_read:
+    get:
       path: /api/labels/{id}/
       method: GET
       auth: true
@@ -285,7 +124,7 @@ service:
               organization: 1
               projects:
                 - 1
-    api_labels_delete:
+    delete:
       path: /api/labels/{id}/
       method: DELETE
       auth: true
@@ -298,7 +137,7 @@ service:
       examples:
         - path-parameters:
             id: id
-    api_labels_partial_update:
+    update:
       path: /api/labels/{id}/
       method: PATCH
       auth: true

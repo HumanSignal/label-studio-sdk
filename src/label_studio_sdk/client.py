@@ -5,19 +5,13 @@ import typing
 
 import httpx
 
-from .actions.client import ActionsClient, AsyncActionsClient
 from .annotations.client import AnnotationsClient, AsyncAnnotationsClient
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .data.client import AsyncDataClient, DataClient
-from .data_manager.client import AsyncDataManagerClient, DataManagerClient
 from .environment import LabelStudioEnvironment
 from .export_storage.client import AsyncExportStorageClient, ExportStorageClient
 from .import_storage.client import AsyncImportStorageClient, ImportStorageClient
-from .labels.client import AsyncLabelsClient, LabelsClient
-from .machine_learning.client import AsyncMachineLearningClient, MachineLearningClient
 from .ml.client import AsyncMlClient, MlClient
-from .organizations.client import AsyncOrganizationsClient, OrganizationsClient
 from .predictions.client import AsyncPredictionsClient, PredictionsClient
 from .projects.client import AsyncProjectsClient, ProjectsClient
 from .tasks.client import AsyncTasksClient, TasksClient
@@ -90,20 +84,14 @@ class LabelStudio:
         )
         self.annotations = AnnotationsClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
-        self.actions = ActionsClient(client_wrapper=self._client_wrapper)
-        self.data_manager = DataManagerClient(client_wrapper=self._client_wrapper)
         self.views = ViewsClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
-        self.organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
-        self.labels = LabelsClient(client_wrapper=self._client_wrapper)
         self.ml = MlClient(client_wrapper=self._client_wrapper)
-        self.machine_learning = MachineLearningClient(client_wrapper=self._client_wrapper)
         self.predictions = PredictionsClient(client_wrapper=self._client_wrapper)
         self.tasks = TasksClient(client_wrapper=self._client_wrapper)
         self.import_storage = ImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = ExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
-        self.data = DataClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncLabelStudio:
@@ -170,20 +158,14 @@ class AsyncLabelStudio:
         )
         self.annotations = AsyncAnnotationsClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
-        self.actions = AsyncActionsClient(client_wrapper=self._client_wrapper)
-        self.data_manager = AsyncDataManagerClient(client_wrapper=self._client_wrapper)
         self.views = AsyncViewsClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
-        self.organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
-        self.labels = AsyncLabelsClient(client_wrapper=self._client_wrapper)
         self.ml = AsyncMlClient(client_wrapper=self._client_wrapper)
-        self.machine_learning = AsyncMachineLearningClient(client_wrapper=self._client_wrapper)
         self.predictions = AsyncPredictionsClient(client_wrapper=self._client_wrapper)
         self.tasks = AsyncTasksClient(client_wrapper=self._client_wrapper)
         self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
-        self.data = AsyncDataClient(client_wrapper=self._client_wrapper)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: LabelStudioEnvironment) -> str:

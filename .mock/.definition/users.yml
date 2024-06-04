@@ -1,11 +1,11 @@
 types:
-  ApiCurrentUserResetTokenCreateResponse:
+  UsersResetTokenResponse:
     docs: User token
     properties:
       token:
         type: optional<string>
         docs: Token
-  ApiCurrentUserTokenListResponse:
+  UsersGetTokenResponse:
     docs: User token
     properties:
       detail:
@@ -15,7 +15,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_current-user_reset-token_create:
+    reset_token:
       path: /api/current-user/reset-token/
       method: POST
       auth: true
@@ -23,12 +23,12 @@ service:
       display-name: Reset user token
       response:
         docs: User token response
-        type: ApiCurrentUserResetTokenCreateResponse
+        type: UsersResetTokenResponse
       examples:
         - response:
             body:
               token: token
-    api_current-user_token_list:
+    get_token:
       path: /api/current-user/token
       method: GET
       auth: true
@@ -36,12 +36,12 @@ service:
       display-name: Get user token
       response:
         docs: User token response
-        type: ApiCurrentUserTokenListResponse
+        type: UsersGetTokenResponse
       examples:
         - response:
             body:
               detail: detail
-    api_current-user_whoami_read:
+    whoami:
       path: /api/current-user/whoami
       method: GET
       auth: true
@@ -64,7 +64,7 @@ service:
               phone: phone
               active_organization: 1
               allow_newsletters: true
-    api_users_list:
+    list:
       path: /api/users/
       method: GET
       auth: true
@@ -87,7 +87,7 @@ service:
                 phone: phone
                 active_organization: 1
                 allow_newsletters: true
-    api_users_create:
+    create:
       path: /api/users/
       method: POST
       auth: true
@@ -114,7 +114,7 @@ service:
               phone: phone
               active_organization: 1
               allow_newsletters: true
-    api_users_read:
+    get:
       path: /api/users/{id}/
       method: GET
       auth: true
@@ -143,7 +143,7 @@ service:
               phone: phone
               active_organization: 1
               allow_newsletters: true
-    api_users_delete:
+    delete:
       path: /api/users/{id}/
       method: DELETE
       auth: true
@@ -156,7 +156,7 @@ service:
       examples:
         - path-parameters:
             id: 1
-    api_users_partial_update:
+    update:
       path: /api/users/{id}/
       method: PATCH
       auth: true

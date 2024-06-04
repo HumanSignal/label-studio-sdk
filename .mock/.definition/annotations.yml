@@ -70,7 +70,33 @@ service:
           docs: A unique integer value identifying this annotation.
       display-name: Update annotation
       request:
-        body: root.Annotation
+        name: AnnotationsUpdateRequest
+        body:
+          properties:
+            result:
+              type: optional<map<string, unknown>>
+              docs: Labeling result in JSON format
+            task:
+              type: optional<integer>
+              docs: Corresponding task for this annotation
+            project:
+              type: optional<integer>
+              docs: Project ID for this annotation
+            completed_by:
+              type: optional<integer>
+              docs: User ID of the person who created this annotation
+            updated_by:
+              type: optional<integer>
+              docs: Last user who updated this annotation
+            was_cancelled:
+              type: optional<boolean>
+              docs: User skipped the task
+            ground_truth:
+              type: optional<boolean>
+              docs: This annotation is a Ground Truth
+            lead_time:
+              type: optional<double>
+              docs: How much time it took to annotate the task
       response:
         docs: ''
         type: root.Annotation
@@ -183,7 +209,33 @@ service:
           docs: Task ID
       display-name: Create annotation
       request:
-        body: root.Annotation
+        name: AnnotationsCreateRequest
+        body:
+          properties:
+            result:
+              type: optional<map<string, unknown>>
+              docs: Labeling result in JSON format
+            task:
+              type: optional<integer>
+              docs: Corresponding task for this annotation
+            project:
+              type: optional<integer>
+              docs: Project ID for this annotation
+            completed_by:
+              type: optional<integer>
+              docs: User ID of the person who created this annotation
+            updated_by:
+              type: optional<integer>
+              docs: Last user who updated this annotation
+            was_cancelled:
+              type: optional<boolean>
+              docs: User skipped the task
+            ground_truth:
+              type: optional<boolean>
+              docs: This annotation is a Ground Truth
+            lead_time:
+              type: optional<double>
+              docs: How much time it took to annotate the task
       response:
         docs: ''
         type: root.Annotation

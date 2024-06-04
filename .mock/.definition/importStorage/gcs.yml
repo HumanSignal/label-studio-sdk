@@ -1,0 +1,348 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/storages/gcs/
+      method: GET
+      auth: true
+      docs: Get a list of all GCS import storage connections.
+      display-name: Get all import storage
+      request:
+        name: GcsListRequest
+        query-parameters:
+          project:
+            type: optional<integer>
+            docs: Project ID
+      response:
+        docs: ''
+        type: list<root.GcsImportStorage>
+      examples:
+        - response:
+            body:
+              - id: 1
+                type: type
+                synchronizable: true
+                presign: true
+                bucket: bucket
+                prefix: prefix
+                regex_filter: regex_filter
+                use_blob_urls: true
+                google_application_credentials: google_application_credentials
+                google_project_id: google_project_id
+                last_sync: '2024-01-15T09:30:00Z'
+                last_sync_count: 1
+                last_sync_job: last_sync_job
+                status: initialized
+                traceback: traceback
+                meta:
+                  meta:
+                    key: value
+                title: title
+                description: description
+                created_at: '2024-01-15T09:30:00Z'
+                presign_ttl: 1
+                project: 1
+    create:
+      path: /api/storages/gcs/
+      method: POST
+      auth: true
+      docs: Create a new GCS import storage connection.
+      display-name: Create import storage
+      request:
+        name: GcsCreateRequest
+        body:
+          properties:
+            project:
+              type: optional<integer>
+              docs: Project ID
+            bucket:
+              type: optional<string>
+              docs: GCS bucket name
+            prefix:
+              type: optional<string>
+              docs: GCS bucket prefix
+            regex_filter:
+              type: optional<string>
+              docs: Cloud storage regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
+            google_application_credentials:
+              type: optional<string>
+              docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+            google_project_id:
+              type: optional<string>
+              docs: Google project ID
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for direct download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+      response:
+        docs: ''
+        type: GcsCreateResponse
+      examples:
+        - request: {}
+          response:
+            body:
+              project: 1
+              bucket: bucket
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
+              presign: true
+              presign_ttl: 1
+    validate:
+      path: /api/storages/gcs/validate
+      method: POST
+      auth: true
+      docs: Validate a specific GCS import storage connection.
+      display-name: Validate import storage
+      response:
+        docs: ''
+        type: root.GcsImportStorage
+      examples:
+        - response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              bucket: bucket
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                meta:
+                  key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              project: 1
+    get:
+      path: /api/storages/gcs/{id}
+      method: GET
+      auth: true
+      docs: Get a specific GCS import storage connection.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this gcs import storage.
+      display-name: Get import storage
+      response:
+        docs: ''
+        type: root.GcsImportStorage
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              bucket: bucket
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                meta:
+                  key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              project: 1
+    delete:
+      path: /api/storages/gcs/{id}
+      method: DELETE
+      auth: true
+      docs: Delete a specific GCS import storage connection.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this gcs import storage.
+      display-name: Delete import storage
+      examples:
+        - path-parameters:
+            id: 1
+    update:
+      path: /api/storages/gcs/{id}
+      method: PATCH
+      auth: true
+      docs: Update a specific GCS import storage connection.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this gcs import storage.
+      display-name: Update import storage
+      request:
+        name: GcsUpdateRequest
+        body:
+          properties:
+            project:
+              type: optional<integer>
+              docs: Project ID
+            bucket:
+              type: optional<string>
+              docs: GCS bucket name
+            prefix:
+              type: optional<string>
+              docs: GCS bucket prefix
+            regex_filter:
+              type: optional<string>
+              docs: Cloud storage regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
+            google_application_credentials:
+              type: optional<string>
+              docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+            google_project_id:
+              type: optional<string>
+              docs: Google project ID
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for direct download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+      response:
+        docs: ''
+        type: GcsUpdateResponse
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              project: 1
+              bucket: bucket
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
+              presign: true
+              presign_ttl: 1
+    sync:
+      path: /api/storages/gcs/{id}/sync
+      method: POST
+      auth: true
+      docs: Sync tasks from an GCS import storage connection.
+      path-parameters:
+        id:
+          type: integer
+          docs: Storage ID
+      display-name: Sync import storage
+      response:
+        docs: ''
+        type: root.GcsImportStorage
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              bucket: bucket
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                meta:
+                  key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              project: 1
+types:
+  GcsCreateResponse:
+    properties:
+      project:
+        type: optional<integer>
+        docs: Project ID
+      bucket:
+        type: optional<string>
+        docs: GCS bucket name
+      prefix:
+        type: optional<string>
+        docs: GCS bucket prefix
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
+      google_application_credentials:
+        type: optional<string>
+        docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+      google_project_id:
+        type: optional<string>
+        docs: Google project ID
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for direct download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes
+  GcsUpdateResponse:
+    properties:
+      project:
+        type: optional<integer>
+        docs: Project ID
+      bucket:
+        type: optional<string>
+        docs: GCS bucket name
+      prefix:
+        type: optional<string>
+        docs: GCS bucket prefix
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
+      google_application_credentials:
+        type: optional<string>
+        docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+      google_project_id:
+        type: optional<string>
+        docs: Google project ID
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for direct download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes

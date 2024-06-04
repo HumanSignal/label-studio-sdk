@@ -238,13 +238,51 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create(self, *, request: BaseUser, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
+    def create(
+        self,
+        *,
+        id: typing.Optional[int] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        allow_newsletters: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BaseUser:
         """
         Create a user in Label Studio.
 
         Parameters
         ----------
-        request : BaseUser
+        id : typing.Optional[int]
+            User ID
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
+
+        username : typing.Optional[str]
+            Username of the user
+
+        email : typing.Optional[str]
+            Email of the user
+
+        avatar : typing.Optional[str]
+            Avatar URL of the user
+
+        initials : typing.Optional[str]
+            Initials of the user
+
+        phone : typing.Optional[str]
+            Phone number of the user
+
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -256,18 +294,32 @@ class UsersClient:
 
         Examples
         --------
-        from label_studio_sdk import BaseUser
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.users.create(
-            request=BaseUser(
-                username="username",
-            ),
-        )
+        client.users.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if id is not OMIT:
+            _request["id"] = id
+        if first_name is not OMIT:
+            _request["first_name"] = first_name
+        if last_name is not OMIT:
+            _request["last_name"] = last_name
+        if username is not OMIT:
+            _request["username"] = username
+        if email is not OMIT:
+            _request["email"] = email
+        if avatar is not OMIT:
+            _request["avatar"] = avatar
+        if initials is not OMIT:
+            _request["initials"] = initials
+        if phone is not OMIT:
+            _request["phone"] = phone
+        if allow_newsletters is not OMIT:
+            _request["allow_newsletters"] = allow_newsletters
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/users/"),
@@ -276,10 +328,10 @@ class UsersClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -423,7 +475,19 @@ class UsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
-        self, id: int, *, request: BaseUser, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        users_update_request_id: typing.Optional[int] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        allow_newsletters: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseUser:
         """
         Update details for a specific user, such as their name or contact information, in Label Studio.
@@ -433,7 +497,32 @@ class UsersClient:
         id : int
             User ID
 
-        request : BaseUser
+        users_update_request_id : typing.Optional[int]
+            User ID
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
+
+        username : typing.Optional[str]
+            Username of the user
+
+        email : typing.Optional[str]
+            Email of the user
+
+        avatar : typing.Optional[str]
+            Avatar URL of the user
+
+        initials : typing.Optional[str]
+            Initials of the user
+
+        phone : typing.Optional[str]
+            Phone number of the user
+
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -445,7 +534,6 @@ class UsersClient:
 
         Examples
         --------
-        from label_studio_sdk import BaseUser
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -453,11 +541,27 @@ class UsersClient:
         )
         client.users.update(
             id=1,
-            request=BaseUser(
-                username="username",
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if users_update_request_id is not OMIT:
+            _request["id"] = users_update_request_id
+        if first_name is not OMIT:
+            _request["first_name"] = first_name
+        if last_name is not OMIT:
+            _request["last_name"] = last_name
+        if username is not OMIT:
+            _request["username"] = username
+        if email is not OMIT:
+            _request["email"] = email
+        if avatar is not OMIT:
+            _request["avatar"] = avatar
+        if initials is not OMIT:
+            _request["initials"] = initials
+        if phone is not OMIT:
+            _request["phone"] = phone
+        if allow_newsletters is not OMIT:
+            _request["allow_newsletters"] = allow_newsletters
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"api/users/{jsonable_encoder(id)}/"),
@@ -466,10 +570,10 @@ class UsersClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -714,13 +818,51 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create(self, *, request: BaseUser, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
+    async def create(
+        self,
+        *,
+        id: typing.Optional[int] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        allow_newsletters: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BaseUser:
         """
         Create a user in Label Studio.
 
         Parameters
         ----------
-        request : BaseUser
+        id : typing.Optional[int]
+            User ID
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
+
+        username : typing.Optional[str]
+            Username of the user
+
+        email : typing.Optional[str]
+            Email of the user
+
+        avatar : typing.Optional[str]
+            Avatar URL of the user
+
+        initials : typing.Optional[str]
+            Initials of the user
+
+        phone : typing.Optional[str]
+            Phone number of the user
+
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -732,18 +874,32 @@ class AsyncUsersClient:
 
         Examples
         --------
-        from label_studio_sdk import BaseUser
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.users.create(
-            request=BaseUser(
-                username="username",
-            ),
-        )
+        await client.users.create()
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if id is not OMIT:
+            _request["id"] = id
+        if first_name is not OMIT:
+            _request["first_name"] = first_name
+        if last_name is not OMIT:
+            _request["last_name"] = last_name
+        if username is not OMIT:
+            _request["username"] = username
+        if email is not OMIT:
+            _request["email"] = email
+        if avatar is not OMIT:
+            _request["avatar"] = avatar
+        if initials is not OMIT:
+            _request["initials"] = initials
+        if phone is not OMIT:
+            _request["phone"] = phone
+        if allow_newsletters is not OMIT:
+            _request["allow_newsletters"] = allow_newsletters
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "api/users/"),
@@ -752,10 +908,10 @@ class AsyncUsersClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -899,7 +1055,19 @@ class AsyncUsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: BaseUser, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        users_update_request_id: typing.Optional[int] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        allow_newsletters: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseUser:
         """
         Update details for a specific user, such as their name or contact information, in Label Studio.
@@ -909,7 +1077,32 @@ class AsyncUsersClient:
         id : int
             User ID
 
-        request : BaseUser
+        users_update_request_id : typing.Optional[int]
+            User ID
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
+
+        username : typing.Optional[str]
+            Username of the user
+
+        email : typing.Optional[str]
+            Email of the user
+
+        avatar : typing.Optional[str]
+            Avatar URL of the user
+
+        initials : typing.Optional[str]
+            Initials of the user
+
+        phone : typing.Optional[str]
+            Phone number of the user
+
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -921,7 +1114,6 @@ class AsyncUsersClient:
 
         Examples
         --------
-        from label_studio_sdk import BaseUser
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -929,11 +1121,27 @@ class AsyncUsersClient:
         )
         await client.users.update(
             id=1,
-            request=BaseUser(
-                username="username",
-            ),
         )
         """
+        _request: typing.Dict[str, typing.Any] = {}
+        if users_update_request_id is not OMIT:
+            _request["id"] = users_update_request_id
+        if first_name is not OMIT:
+            _request["first_name"] = first_name
+        if last_name is not OMIT:
+            _request["last_name"] = last_name
+        if username is not OMIT:
+            _request["username"] = username
+        if email is not OMIT:
+            _request["email"] = email
+        if avatar is not OMIT:
+            _request["avatar"] = avatar
+        if initials is not OMIT:
+            _request["initials"] = initials
+        if phone is not OMIT:
+            _request["phone"] = phone
+        if allow_newsletters is not OMIT:
+            _request["allow_newsletters"] = allow_newsletters
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"api/users/{jsonable_encoder(id)}/"),
@@ -942,10 +1150,10 @@ class AsyncUsersClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(

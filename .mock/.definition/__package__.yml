@@ -411,6 +411,9 @@ types:
   Prediction:
     properties:
       id: optional<integer>
+      result:
+        docs: List of prediction results for the task
+        type: list<map<string, unknown>>
       model_version: optional<string>
       created_ago:
         type: optional<string>
@@ -418,9 +421,6 @@ types:
         default: ''
         validation:
           minLength: 1
-      result:
-        type: optional<map<string, unknown>>
-        docs: Prediction result
       score:
         type: optional<double>
         docs: Prediction score
@@ -592,7 +592,7 @@ types:
           to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
           {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
       parsed_label_config:
-        type: optional<string>
+        type: optional<map<string, unknown>>
         docs: JSON-formatted labeling configuration
       evaluate_predictions_automatically:
         type: optional<boolean>
@@ -1622,72 +1622,6 @@ types:
       comment_authors:
         type: optional<list<integer>>
         docs: Users who wrote comments
-  TaskSimple:
-    properties:
-      id: optional<integer>
-      data:
-        docs: >-
-          User imported or uploaded data for a task. Data is formatted according
-          to the project label config. You can find examples of data for your
-          project on the Import page in the Label Studio Data Manager UI.
-        type: map<string, unknown>
-      meta:
-        type: optional<map<string, unknown>>
-        docs: >-
-          Meta is user imported (uploaded) data and can be useful as input for
-          an ML Backend for embeddings, advanced vectors, and other info. It is
-          passed to ML during training/predicting steps.
-      created_at:
-        type: optional<datetime>
-        docs: Time a task was created
-      updated_at:
-        type: optional<datetime>
-        docs: Last time a task was updated
-      is_labeled:
-        type: optional<boolean>
-        docs: >-
-          True if the number of annotations for this task is greater than or
-          equal to the number of maximum_completions for the project
-      overlap:
-        type: optional<integer>
-        docs: Number of distinct annotators that processed the current task
-      inner_id:
-        type: optional<integer>
-        docs: Internal task ID in the project, starts with 1
-      total_annotations:
-        type: optional<integer>
-        docs: >-
-          Number of total annotations for the current task except cancelled
-          annotations
-      cancelled_annotations:
-        type: optional<integer>
-        docs: Number of total cancelled annotations for the current task
-      total_predictions:
-        type: optional<integer>
-        docs: Number of total predictions for the current task
-      comment_count:
-        type: optional<integer>
-        docs: Number of comments in the task including all annotations
-      unresolved_comment_count:
-        type: optional<integer>
-        docs: Number of unresolved comments in the task including all annotations
-      last_comment_updated_at:
-        type: optional<datetime>
-        docs: When the last comment was updated
-      project:
-        type: optional<integer>
-        docs: Project ID for this task
-      updated_by:
-        type: optional<integer>
-        docs: Last annotator or reviewer who updated this task
-      file_upload:
-        type: optional<integer>
-        docs: Uploaded file used as data source for this task
-      comment_authors:
-        type: optional<list<integer>>
-        docs: Users who wrote comments
-      annotations: optional<list<Annotation>>
-      predictions: optional<list<Prediction>>
   WebhookActionsItem:
     enum:
       - PROJECT_CREATED
@@ -1778,3 +1712,83 @@ types:
       updated_at:
         type: optional<datetime>
         docs: Last update time
+  Task:
+    properties:
+      id:
+        type: optional<integer>
+        docs: Unique ID of the task
+      predictions:
+        type: optional<list<map<string, unknown>>>
+        docs: Predictions for this task
+      annotations:
+        type: optional<list<map<string, unknown>>>
+        docs: Annotations for this task
+      drafts:
+        type: optional<list<map<string, unknown>>>
+        docs: Drafts for this task
+      annotators:
+        type: optional<list<integer>>
+        docs: List of annotators' IDs for this task
+      inner_id:
+        type: optional<integer>
+        docs: Inner ID of the task
+      cancelled_annotations:
+        type: optional<integer>
+        docs: Number of cancelled annotations for this task
+      total_annotations:
+        type: optional<integer>
+        docs: Total number of annotations for this task
+      total_predictions:
+        type: optional<integer>
+        docs: Total number of predictions for this task
+      completed_at:
+        type: optional<datetime>
+        docs: Completion time of the task
+      file_upload:
+        type: optional<integer>
+        docs: File upload ID for this task
+      storage_filename:
+        type: optional<string>
+        docs: Storage filename for this task
+      avg_lead_time:
+        type: optional<double>
+        docs: Average lead time for this task
+      draft_exists:
+        type: optional<boolean>
+        docs: Whether a draft exists for this task or not
+      updated_by:
+        type: optional<list<map<string, unknown>>>
+        docs: List of annotators' info who updated this task
+      data:
+        type: optional<map<string, unknown>>
+        docs: Data of the task
+      meta:
+        type: optional<map<string, unknown>>
+        docs: Meta information of the task
+      created_at:
+        type: optional<datetime>
+        docs: Creation time of the task
+      updated_at:
+        type: optional<datetime>
+        docs: Last updated time of the task
+      is_labeled:
+        type: optional<boolean>
+        docs: Whether the task is labeled or not
+      overlap:
+        type: optional<double>
+        docs: Overlap for the task
+      comment_count:
+        type: optional<integer>
+        docs: Number of comments for this task
+      unresolved_comment_count:
+        type: optional<integer>
+        docs: Number of unresolved comments for this task
+      last_comment_updated_at:
+        type: optional<datetime>
+        docs: Last updated time of the comments for this task
+      project:
+        type: optional<integer>
+        docs: Project ID for this task
+      comment_authors:
+        type: optional<list<integer>>
+        docs: List of comment authors' IDs for this task

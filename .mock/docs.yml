@@ -1,11 +1,29 @@
 instances:
   - url: https://label-studio.docs.buildwithfern.com
-title: Label Studio | Documentation
+title: API Reference | Label Studio
 navigation:
   - api: API Reference
+    audiences:
+      - public
     snippets:
       python: label-studio-sdk
 
+css: ./styles.css
+
+navbar-links:
+  - type: secondary
+    text: Enterprise
+    url: https://humansignal.com/goenterprise
+  - type: primary
+    text: Quick Start
+    url: https://labelstud.io/guide/quick_start
+
 colors:
-  accentPrimary: '#ffffff'
-  background: '#000000'
+  accentPrimary: '#6B6860'
+  background: '#FDFDFC'
+
+logo:
+    light: ./images/logo.svg
+    dark: ./images/logo.svg
+    height: 24
+    href: https://labelstud.io/guide/

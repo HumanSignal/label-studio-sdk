@@ -1,0 +1,153 @@
+imports:
+  root: ../__package__.yml
+types:
+  LabelsListResponse:
+    properties:
+      count: integer
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      previous:
+        type: optional<string>
+        validation:
+          format: uri
+      results: list<root.LabelLink>
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/label_links/
+      method: GET
+      auth: true
+      docs: List label links for a specific label and project.
+      display-name: List label links
+      request:
+        name: LabelsListRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: A page number within the paginated result set.
+      response:
+        docs: ''
+        type: LabelsListResponse
+      examples:
+        - response:
+            body:
+              count: 1
+              next: next
+              previous: previous
+              results:
+                - id: 1
+                  annotations_count: 1
+                  from_name: from_name
+                  project: 1
+                  label: 1
+    create:
+      path: /api/label_links/
+      method: POST
+      auth: true
+      docs: >-
+        Create label links to link new custom labels to your project labeling
+        configuration.
+      display-name: Create label links
+      request:
+        body: root.LabelLink
+      response:
+        docs: ''
+        type: root.LabelLink
+      examples:
+        - request:
+            from_name: from_name
+            project: 1
+            label: 1
+          response:
+            body:
+              id: 1
+              annotations_count: 1
+              from_name: from_name
+              project: 1
+              label: 1
+    get:
+      path: /api/label_links/{id}/
+      method: GET
+      auth: true
+      docs: 'Get label links for a specific project configuration. '
+      path-parameters:
+        id: string
+      display-name: Get label link
+      response:
+        docs: ''
+        type: root.LabelLink
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              id: 1
+              annotations_count: 1
+              from_name: from_name
+              project: 1
+              label: 1
+    delete:
+      path: /api/label_links/{id}/
+      method: DELETE
+      auth: true
+      docs: >
+
+        Remove a label link that links custom labels to your project labeling
+        configuration. If you remove a label link,
+
+        the label stops being available for the project it was linked to. You
+        can add a new label link at any time. 
+      path-parameters:
+        id: string
+      display-name: Remove label link
+      examples:
+        - path-parameters:
+            id: id
+    update:
+      path: /api/label_links/{id}/
+      method: PATCH
+      auth: true
+      docs: >
+
+        Update a label link that links custom labels to a project labeling
+        configuration, for example if the fromName,  
+
+        toName, or name parameters for a tag in the labeling configuration
+        change. 
+      path-parameters:
+        id: string
+      display-name: Update label link
+      request:
+        body: root.LabelLink
+      response:
+        docs: ''
+        type: root.LabelLink
+      examples:
+        - path-parameters:
+            id: id
+          request:
+            from_name: from_name
+            project: 1
+            label: 1
+          response:
+            body:
+              id: 1
+              annotations_count: 1
+              from_name: from_name
+              project: 1
+              label: 1
+    update_many:
+      path: /api/labels/bulk
+      method: POST
+      auth: true
+      docs: >
+
+        If you want to update the labels in saved annotations, use this
+        endpoint.
+      display-name: Bulk update labels
+      examples:
+        - {}

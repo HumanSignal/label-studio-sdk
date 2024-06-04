@@ -134,46 +134,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_predictions_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
-        "id": 1,
-        "result": [{"result": {"key": "value"}}],
-        "model_version": "model_version",
-        "created_ago": "created_ago",
-        "score": 1.1,
-        "cluster": 1,
-        "neighbors": {"neighbors": {"key": "value"}},
-        "mislabeling": 1.1,
-        "created_at": "2024-01-15T09:30:00Z",
-        "updated_at": "2024-01-15T09:30:00Z",
-        "model": 1,
-        "model_run": 1,
-        "task": 1,
-        "project": 1,
-    }
-    expected_types: typing.Any = {
-        "id": "integer",
-        "result": ("list", {0: ("dict", {0: (None, None)})}),
-        "model_version": None,
-        "created_ago": None,
-        "score": None,
-        "cluster": "integer",
-        "neighbors": ("dict", {0: (None, None)}),
-        "mislabeling": None,
-        "created_at": "datetime",
-        "updated_at": "datetime",
-        "model": "integer",
-        "model_run": "integer",
-        "task": "integer",
-        "project": "integer",
-    }
-    response = client.predictions.api_predictions_update(id=1, task=1, result=[{}])
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.predictions.api_predictions_update(id=1, task=1, result=[{}])
-    validate_response(async_response, expected_response, expected_types)
-
-
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert client.predictions.delete(id=1) is None  # type: ignore[func-returns-value]

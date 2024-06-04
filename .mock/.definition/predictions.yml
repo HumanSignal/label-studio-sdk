@@ -10,18 +10,6 @@ service:
       auth: true
       docs: List all predictions and their IDs.
       display-name: List predictions
-      request:
-        name: PredictionsListRequest
-        query-parameters:
-          task:
-            type: optional<string>
-            docs: Filter the returned list by task
-          task__project:
-            type: optional<string>
-            docs: Filter the returned list by task__project
-          project:
-            type: optional<string>
-            docs: Filter the returned list by project
       response:
         docs: ''
         type: list<root.Prediction>
@@ -29,11 +17,10 @@ service:
         - response:
             body:
               - id: 1
+                result:
+                  - {}
                 model_version: model_version
                 created_ago: created_ago
-                result:
-                  result:
-                    key: value
                 score: 1.1
                 cluster: 1
                 neighbors:
@@ -53,21 +40,37 @@ service:
       docs: Create a prediction for a specific task.
       display-name: Create prediction
       request:
-        body: root.Prediction
+        name: PredictionsCreateRequest
+        body:
+          properties:
+            task:
+              type: integer
+              docs: Task ID for which the prediction is created
+            result:
+              docs: Prediction result
+              type: list<map<string, unknown>>
+            score:
+              type: optional<double>
+              docs: Prediction score
+            model_version:
+              type: optional<string>
+              docs: Model version
       response:
-        docs: ''
+        docs: Created prediction
         type: root.Prediction
       examples:
         - request:
             task: 1
+            result:
+              - {}
           response:
             body:
               id: 1
+              result:
+                - result:
+                    key: value
               model_version: model_version
               created_ago: created_ago
-              result:
-                result:
-                  key: value
               score: 1.1
               cluster: 1
               neighbors:
@@ -99,11 +102,11 @@ service:
           response:
             body:
               id: 1
+              result:
+                - result:
+                    key: value
               model_version: model_version
               created_ago: created_ago
-              result:
-                result:
-                  key: value
               score: 1.1
               cluster: 1
               neighbors:
@@ -127,7 +130,21 @@ service:
           docs: Prediction ID
       display-name: Put prediction
       request:
-        body: root.Prediction
+        name: ApiPredictionsUpdateRequest
+        body:
+          properties:
+            task:
+              type: integer
+              docs: Task ID for which the prediction is created
+            result:
+              docs: Prediction result
+              type: list<map<string, unknown>>
+            score:
+              type: optional<double>
+              docs: Prediction score
+            model_version:
+              type: optional<string>
+              docs: Model version
       response:
         docs: ''
         type: root.Prediction
@@ -136,14 +153,16 @@ service:
             id: 1
           request:
             task: 1
+            result:
+              - {}
           response:
             body:
               id: 1
+              result:
+                - result:
+                    key: value
               model_version: model_version
               created_ago: created_ago
-              result:
-                result:
-                  key: value
               score: 1.1
               cluster: 1
               neighbors:
@@ -180,7 +199,21 @@ service:
           docs: Prediction ID
       display-name: Update prediction
       request:
-        body: root.Prediction
+        name: PredictionsUpdateRequest
+        body:
+          properties:
+            task:
+              type: integer
+              docs: Task ID for which the prediction is created
+            result:
+              docs: Prediction result
+              type: list<map<string, unknown>>
+            score:
+              type: optional<double>
+              docs: Prediction score
+            model_version:
+              type: optional<string>
+              docs: Model version
       response:
         docs: ''
         type: root.Prediction
@@ -189,14 +222,16 @@ service:
             id: 1
           request:
             task: 1
+            result:
+              - {}
           response:
             body:
               id: 1
+              result:
+                - result:
+                    key: value
               model_version: model_version
               created_ago: created_ago
-              result:
-                result:
-                  key: value
               score: 1.1
               cluster: 1
               neighbors:

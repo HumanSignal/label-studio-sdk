@@ -6,12 +6,6 @@ from .views_create_request_data_filters_conjunction import ViewsCreateRequestDat
 from .views_create_request_data_filters_items_item import ViewsCreateRequestDataFiltersItemsItem
 from .views_create_request_data_ordering_item import ViewsCreateRequestDataOrderingItem
 from .views_create_request_data_ordering_item_direction import ViewsCreateRequestDataOrderingItemDirection
-from .views_update_request_data import ViewsUpdateRequestData
-from .views_update_request_data_filters import ViewsUpdateRequestDataFilters
-from .views_update_request_data_filters_conjunction import ViewsUpdateRequestDataFiltersConjunction
-from .views_update_request_data_filters_items_item import ViewsUpdateRequestDataFiltersItemsItem
-from .views_update_request_data_ordering_item import ViewsUpdateRequestDataOrderingItem
-from .views_update_request_data_ordering_item_direction import ViewsUpdateRequestDataOrderingItemDirection
 
 __all__ = [
     "ViewsCreateRequestData",
@@ -20,10 +14,4 @@ __all__ = [
     "ViewsCreateRequestDataFiltersItemsItem",
     "ViewsCreateRequestDataOrderingItem",
     "ViewsCreateRequestDataOrderingItemDirection",
-    "ViewsUpdateRequestData",
-    "ViewsUpdateRequestDataFilters",
-    "ViewsUpdateRequestDataFiltersConjunction",
-    "ViewsUpdateRequestDataFiltersItemsItem",
-    "ViewsUpdateRequestDataOrderingItem",
-    "ViewsUpdateRequestDataOrderingItemDirection",
 ]

@@ -7,12 +7,6 @@ from .types import (
     ViewsCreateRequestDataFiltersItemsItem,
     ViewsCreateRequestDataOrderingItem,
     ViewsCreateRequestDataOrderingItemDirection,
-    ViewsUpdateRequestData,
-    ViewsUpdateRequestDataFilters,
-    ViewsUpdateRequestDataFiltersConjunction,
-    ViewsUpdateRequestDataFiltersItemsItem,
-    ViewsUpdateRequestDataOrderingItem,
-    ViewsUpdateRequestDataOrderingItemDirection,
 )
 
 __all__ = [
@@ -22,10 +16,4 @@ __all__ = [
     "ViewsCreateRequestDataFiltersItemsItem",
     "ViewsCreateRequestDataOrderingItem",
     "ViewsCreateRequestDataOrderingItemDirection",
-    "ViewsUpdateRequestData",
-    "ViewsUpdateRequestDataFilters",
-    "ViewsUpdateRequestDataFiltersConjunction",
-    "ViewsUpdateRequestDataFiltersItemsItem",
-    "ViewsUpdateRequestDataOrderingItem",
-    "ViewsUpdateRequestDataOrderingItemDirection",
 ]

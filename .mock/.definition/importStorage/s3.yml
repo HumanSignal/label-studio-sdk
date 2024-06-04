@@ -1,0 +1,438 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/storages/s3/
+      method: GET
+      auth: true
+      docs: Get a list of all S3 import storage connections.
+      display-name: List S3 import storage
+      request:
+        name: S3ListRequest
+        query-parameters:
+          project:
+            type: optional<integer>
+            docs: Project ID
+      response:
+        docs: ''
+        type: list<root.S3ImportStorage>
+      examples:
+        - response:
+            body:
+              - id: 1
+                type: type
+                synchronizable: true
+                presign: true
+                last_sync: '2024-01-15T09:30:00Z'
+                last_sync_count: 1
+                last_sync_job: last_sync_job
+                status: initialized
+                traceback: traceback
+                meta:
+                  meta:
+                    key: value
+                title: title
+                description: description
+                created_at: '2024-01-15T09:30:00Z'
+                bucket: bucket
+                prefix: prefix
+                regex_filter: regex_filter
+                use_blob_urls: true
+                aws_access_key_id: aws_access_key_id
+                aws_secret_access_key: aws_secret_access_key
+                aws_session_token: aws_session_token
+                aws_sse_kms_key_id: aws_sse_kms_key_id
+                region_name: region_name
+                s3_endpoint: s3_endpoint
+                presign_ttl: 1
+                recursive_scan: true
+                project: 1
+    create:
+      path: /api/storages/s3/
+      method: POST
+      auth: true
+      docs: Get new S3 import storage
+      display-name: Create new S3 storage
+      request:
+        name: S3CreateRequest
+        body:
+          properties:
+            project:
+              type: optional<integer>
+              docs: Project ID
+            bucket:
+              type: optional<string>
+              docs: S3 bucket name
+            prefix:
+              type: optional<string>
+              docs: S3 bucket prefix
+            regex_filter:
+              type: optional<string>
+              docs: Cloud storage regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
+            aws_access_key_id:
+              type: optional<string>
+              docs: AWS_ACCESS_KEY_ID
+            aws_secret_access_key:
+              type: optional<string>
+              docs: AWS_SECRET_ACCESS_KEY
+            aws_session_token:
+              type: optional<string>
+              docs: AWS_SESSION_TOKEN
+            aws_sse_kms_key_id:
+              type: optional<string>
+              docs: AWS SSE KMS Key ID
+            region_name:
+              type: optional<string>
+              docs: AWS Region
+            s3_endpoint:
+              type: optional<string>
+              docs: S3 Endpoint
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in seconds
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
+      response:
+        docs: ''
+        type: S3CreateResponse
+      examples:
+        - request: {}
+          response:
+            body:
+              project: 1
+              bucket: bucket
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              aws_access_key_id: aws_access_key_id
+              aws_secret_access_key: aws_secret_access_key
+              aws_session_token: aws_session_token
+              aws_sse_kms_key_id: aws_sse_kms_key_id
+              region_name: region_name
+              s3_endpoint: s3_endpoint
+              presign: true
+              presign_ttl: 1
+              recursive_scan: true
+    validate:
+      path: /api/storages/s3/validate
+      method: POST
+      auth: true
+      docs: Validate a specific S3 import storage connection.
+      display-name: Validate import storage
+      response:
+        docs: ''
+        type: root.S3ImportStorage
+      examples:
+        - response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                meta:
+                  key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              bucket: bucket
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              aws_access_key_id: aws_access_key_id
+              aws_secret_access_key: aws_secret_access_key
+              aws_session_token: aws_session_token
+              aws_sse_kms_key_id: aws_sse_kms_key_id
+              region_name: region_name
+              s3_endpoint: s3_endpoint
+              presign_ttl: 1
+              recursive_scan: true
+              project: 1
+    get:
+      path: /api/storages/s3/{id}
+      method: GET
+      auth: true
+      docs: Get a specific S3 import storage connection.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this s3 import storage.
+      display-name: Get import storage
+      response:
+        docs: ''
+        type: root.S3ImportStorage
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                meta:
+                  key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              bucket: bucket
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              aws_access_key_id: aws_access_key_id
+              aws_secret_access_key: aws_secret_access_key
+              aws_session_token: aws_session_token
+              aws_sse_kms_key_id: aws_sse_kms_key_id
+              region_name: region_name
+              s3_endpoint: s3_endpoint
+              presign_ttl: 1
+              recursive_scan: true
+              project: 1
+    delete:
+      path: /api/storages/s3/{id}
+      method: DELETE
+      auth: true
+      docs: Delete a specific S3 import storage connection.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this s3 import storage.
+      display-name: Delete import storage
+      examples:
+        - path-parameters:
+            id: 1
+    update:
+      path: /api/storages/s3/{id}
+      method: PATCH
+      auth: true
+      docs: Update a specific S3 import storage connection.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this s3 import storage.
+      display-name: Update import storage
+      request:
+        name: S3UpdateRequest
+        body:
+          properties:
+            project:
+              type: optional<integer>
+              docs: Project ID
+            bucket:
+              type: optional<string>
+              docs: S3 bucket name
+            prefix:
+              type: optional<string>
+              docs: S3 bucket prefix
+            regex_filter:
+              type: optional<string>
+              docs: Cloud storage regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
+            aws_access_key_id:
+              type: optional<string>
+              docs: AWS_ACCESS_KEY_ID
+            aws_secret_access_key:
+              type: optional<string>
+              docs: AWS_SECRET_ACCESS_KEY
+            aws_session_token:
+              type: optional<string>
+              docs: AWS_SESSION_TOKEN
+            aws_sse_kms_key_id:
+              type: optional<string>
+              docs: AWS SSE KMS Key ID
+            region_name:
+              type: optional<string>
+              docs: AWS Region
+            s3_endpoint:
+              type: optional<string>
+              docs: S3 Endpoint
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in seconds
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
+      response:
+        docs: ''
+        type: S3UpdateResponse
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              project: 1
+              bucket: bucket
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              aws_access_key_id: aws_access_key_id
+              aws_secret_access_key: aws_secret_access_key
+              aws_session_token: aws_session_token
+              aws_sse_kms_key_id: aws_sse_kms_key_id
+              region_name: region_name
+              s3_endpoint: s3_endpoint
+              presign: true
+              presign_ttl: 1
+              recursive_scan: true
+    sync:
+      path: /api/storages/s3/{id}/sync
+      method: POST
+      auth: true
+      docs: Sync tasks from an S3 import storage connection.
+      path-parameters:
+        id:
+          type: integer
+          docs: Storage ID
+      display-name: Sync import storage
+      response:
+        docs: ''
+        type: root.S3ImportStorage
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                meta:
+                  key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              bucket: bucket
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              aws_access_key_id: aws_access_key_id
+              aws_secret_access_key: aws_secret_access_key
+              aws_session_token: aws_session_token
+              aws_sse_kms_key_id: aws_sse_kms_key_id
+              region_name: region_name
+              s3_endpoint: s3_endpoint
+              presign_ttl: 1
+              recursive_scan: true
+              project: 1
+types:
+  S3CreateResponse:
+    properties:
+      project:
+        type: optional<integer>
+        docs: Project ID
+      bucket:
+        type: optional<string>
+        docs: S3 bucket name
+      prefix:
+        type: optional<string>
+        docs: S3 bucket prefix
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
+      aws_access_key_id:
+        type: optional<string>
+        docs: AWS_ACCESS_KEY_ID
+      aws_secret_access_key:
+        type: optional<string>
+        docs: AWS_SECRET_ACCESS_KEY
+      aws_session_token:
+        type: optional<string>
+        docs: AWS_SESSION_TOKEN
+      aws_sse_kms_key_id:
+        type: optional<string>
+        docs: AWS SSE KMS Key ID
+      region_name:
+        type: optional<string>
+        docs: AWS Region
+      s3_endpoint:
+        type: optional<string>
+        docs: S3 Endpoint
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in seconds
+      recursive_scan:
+        type: optional<boolean>
+        docs: Scan recursively
+  S3UpdateResponse:
+    properties:
+      project:
+        type: optional<integer>
+        docs: Project ID
+      bucket:
+        type: optional<string>
+        docs: S3 bucket name
+      prefix:
+        type: optional<string>
+        docs: S3 bucket prefix
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
+      aws_access_key_id:
+        type: optional<string>
+        docs: AWS_ACCESS_KEY_ID
+      aws_secret_access_key:
+        type: optional<string>
+        docs: AWS_SECRET_ACCESS_KEY
+      aws_session_token:
+        type: optional<string>
+        docs: AWS_SESSION_TOKEN
+      aws_sse_kms_key_id:
+        type: optional<string>
+        docs: AWS SSE KMS Key ID
+      region_name:
+        type: optional<string>
+        docs: AWS Region
+      s3_endpoint:
+        type: optional<string>
+        docs: S3 Endpoint
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in seconds
+      recursive_scan:
+        type: optional<boolean>
+        docs: Scan recursively

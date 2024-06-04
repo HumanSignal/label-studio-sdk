@@ -1,0 +1,38 @@
+body{
+  --sand_900: #12110D;
+  --sand_800: #262522;
+  --sand_700: #45433E;
+  --sand_600: #6B6860;
+  --sand_500: #A49F95;
+  --sand_400: #CAC5B8;
+  --sand_300: #E1DED5;
+  --sand_200: #F0EFEB;
+  --sand_100: #F9F8F6;
+  --sand_0: #FDFDFC;
+
+  --grape_0: #F0F3FE;
+  --grape_100: #D4DBFB; 
+  --grape_500: #566FCF;
+  --grape_600: #576CC1;
+  --grape_700: #4C5FA9;
+  --grape_800: #37447A;
+
+  --persimmon_400: #FF7557;
+}
+
+header .fern-button{
+  border-radius: 2em;
+  background-color: var(--sand_900);
+}
+
+header .fern-button:not(.disabled).outlined.primary:hover{
+  background-color: var(--persimmon_400);
+} 
+
+header .fern-button-text{
+  color: var(--sand_0);
+}
+
+header .fern-button-content>svg{
+  color: var(--sand_0);
+}

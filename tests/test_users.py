@@ -2,7 +2,6 @@
 
 import typing
 
-from label_studio_sdk import BaseUser
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 
 from .utilities import validate_response
@@ -130,10 +129,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "active_organization": "integer",
         "allow_newsletters": None,
     }
-    response = client.users.create(request=BaseUser(username="username"))
+    response = client.users.create()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.users.create(request=BaseUser(username="username"))
+    async_response = await async_client.users.create()
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -205,8 +204,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "active_organization": "integer",
         "allow_newsletters": None,
     }
-    response = client.users.update(id=1, request=BaseUser(username="username"))
+    response = client.users.update(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.users.update(id=1, request=BaseUser(username="username"))
+    async_response = await async_client.users.update(id=1)
     validate_response(async_response, expected_response, expected_types)

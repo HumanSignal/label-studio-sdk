@@ -46,13 +46,6 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_projects_validate_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.projects.api_projects_validate_create(request=ProjectLabelConfig(label_config="label_config")) is None  # type: ignore[func-returns-value]
-
-    assert await async_client.projects.api_projects_validate_create(request=ProjectLabelConfig(label_config="label_config")) is None  # type: ignore[func-returns-value]
-
-
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
@@ -268,56 +261,11 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_api_projects_reimports_read(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
-        "id": 1,
-        "status": "created",
-        "error": "error",
-        "task_count": 1,
-        "annotation_count": 1,
-        "prediction_count": 1,
-        "duration": 1,
-        "file_upload_ids": {"file_upload_ids": {"key": "value"}},
-        "files_as_tasks_list": True,
-        "found_formats": {"found_formats": {"key": "value"}},
-        "data_columns": {"data_columns": {"key": "value"}},
-        "traceback": "traceback",
-        "project": 1,
-    }
-    expected_types: typing.Any = {
-        "id": "integer",
-        "status": None,
-        "error": None,
-        "task_count": "integer",
-        "annotation_count": "integer",
-        "prediction_count": "integer",
-        "duration": "integer",
-        "file_upload_ids": ("dict", {0: (None, None)}),
-        "files_as_tasks_list": None,
-        "found_formats": ("dict", {0: (None, None)}),
-        "data_columns": ("dict", {0: (None, None)}),
-        "traceback": None,
-        "project": "integer",
-    }
-    response = client.projects.api_projects_reimports_read(id=1, reimport_pk="reimport_pk")
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.api_projects_reimports_read(id=1, reimport_pk="reimport_pk")
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_api_projects_tasks_list(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_delete_all_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.projects.api_projects_tasks_list(id=1) is None  # type: ignore[func-returns-value]
+    assert client.projects.delete_all_tasks(id=1) is None  # type: ignore[func-returns-value]
 
-    assert await async_client.projects.api_projects_tasks_list(id=1) is None  # type: ignore[func-returns-value]
-
-
-async def test_api_projects_tasks_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.projects.api_projects_tasks_delete(id=1) is None  # type: ignore[func-returns-value]
-
-    assert await async_client.projects.api_projects_tasks_delete(id=1) is None  # type: ignore[func-returns-value]
+    assert await async_client.projects.delete_all_tasks(id=1) is None  # type: ignore[func-returns-value]
 
 
 async def test_validate_config(client: LabelStudio, async_client: AsyncLabelStudio) -> None:

@@ -1,0 +1,304 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/storages/export/redis
+      method: GET
+      auth: true
+      docs: Get a list of all Redis export storage connections.
+      display-name: Get all export storage
+      request:
+        name: RedisListRequest
+        query-parameters:
+          project:
+            type: optional<integer>
+            docs: Project ID
+      response:
+        docs: ''
+        type: list<root.RedisExportStorage>
+      examples:
+        - response:
+            body:
+              - id: 1
+                type: type
+                synchronizable: true
+                path: path
+                host: host
+                port: port
+                password: password
+                regex_filter: regex_filter
+                use_blob_urls: true
+                last_sync: '2024-01-15T09:30:00Z'
+                last_sync_count: 1
+                last_sync_job: last_sync_job
+                status: initialized
+                traceback: traceback
+                meta:
+                  meta:
+                    key: value
+                title: title
+                description: description
+                created_at: '2024-01-15T09:30:00Z'
+                can_delete_objects: true
+                db: 1
+                project: 1
+    create:
+      path: /api/storages/export/redis
+      method: POST
+      auth: true
+      docs: Create a new Redis export storage connection to store annotations.
+      display-name: Create export storage
+      request:
+        name: RedisCreateRequest
+        body:
+          properties:
+            project:
+              type: optional<integer>
+              docs: Project ID
+            path:
+              type: optional<string>
+              docs: Storage prefix (optional)
+            host:
+              type: optional<string>
+              docs: Server Host IP (optional)
+            port:
+              type: optional<string>
+              docs: Server Port (optional)
+            password:
+              type: optional<string>
+              docs: Server Password (optional)
+            db:
+              type: optional<integer>
+              docs: Database ID of database to use
+      response:
+        docs: ''
+        type: RedisCreateResponse
+      examples:
+        - request: {}
+          response:
+            body:
+              project: 1
+              path: path
+              host: host
+              port: port
+              password: password
+              db: 1
+    validate:
+      path: /api/storages/export/redis/validate
+      method: POST
+      auth: true
+      docs: Validate a specific Redis export storage connection.
+      display-name: Validate export storage
+      response:
+        docs: ''
+        type: root.RedisExportStorage
+      examples:
+        - response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              path: path
+              host: host
+              port: port
+              password: password
+              regex_filter: regex_filter
+              use_blob_urls: true
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                meta:
+                  key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              can_delete_objects: true
+              db: 1
+              project: 1
+    get:
+      path: /api/storages/export/redis/{id}
+      method: GET
+      auth: true
+      docs: Get a specific Redis export storage connection.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this redis export storage.
+      display-name: Get export storage
+      response:
+        docs: ''
+        type: root.RedisExportStorage
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              path: path
+              host: host
+              port: port
+              password: password
+              regex_filter: regex_filter
+              use_blob_urls: true
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                meta:
+                  key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              can_delete_objects: true
+              db: 1
+              project: 1
+    delete:
+      path: /api/storages/export/redis/{id}
+      method: DELETE
+      auth: true
+      docs: Delete a specific Redis export storage connection.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this redis export storage.
+      display-name: Delete export storage
+      examples:
+        - path-parameters:
+            id: 1
+    update:
+      path: /api/storages/export/redis/{id}
+      method: PATCH
+      auth: true
+      docs: Update a specific Redis export storage connection.
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this redis export storage.
+      display-name: Update export storage
+      request:
+        name: RedisUpdateRequest
+        body:
+          properties:
+            project:
+              type: optional<integer>
+              docs: Project ID
+            path:
+              type: optional<string>
+              docs: Storage prefix (optional)
+            host:
+              type: optional<string>
+              docs: Server Host IP (optional)
+            port:
+              type: optional<string>
+              docs: Server Port (optional)
+            password:
+              type: optional<string>
+              docs: Server Password (optional)
+            db:
+              type: optional<integer>
+              docs: Database ID of database to use
+      response:
+        docs: ''
+        type: RedisUpdateResponse
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              project: 1
+              path: path
+              host: host
+              port: port
+              password: password
+              db: 1
+    sync:
+      path: /api/storages/export/redis/{id}/sync
+      method: POST
+      auth: true
+      docs: Sync tasks from a specific Redis export storage connection.
+      path-parameters:
+        id: string
+      display-name: Sync export storage
+      response:
+        docs: ''
+        type: root.RedisExportStorage
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              path: path
+              host: host
+              port: port
+              password: password
+              regex_filter: regex_filter
+              use_blob_urls: true
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                meta:
+                  key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              can_delete_objects: true
+              db: 1
+              project: 1
+types:
+  RedisCreateResponse:
+    properties:
+      project:
+        type: optional<integer>
+        docs: Project ID
+      path:
+        type: optional<string>
+        docs: Storage prefix (optional)
+      host:
+        type: optional<string>
+        docs: Server Host IP (optional)
+      port:
+        type: optional<string>
+        docs: Server Port (optional)
+      password:
+        type: optional<string>
+        docs: Server Password (optional)
+      db:
+        type: optional<integer>
+        docs: Database ID of database to use
+  RedisUpdateResponse:
+    properties:
+      project:
+        type: optional<integer>
+        docs: Project ID
+      path:
+        type: optional<string>
+        docs: Storage prefix (optional)
+      host:
+        type: optional<string>
+        docs: Server Host IP (optional)
+      port:
+        type: optional<string>
+        docs: Server Port (optional)
+      password:
+        type: optional<string>
+        docs: Server Password (optional)
+      db:
+        type: optional<integer>
+        docs: Database ID of database to use
