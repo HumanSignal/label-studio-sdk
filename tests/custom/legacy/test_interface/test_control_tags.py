@@ -4,7 +4,7 @@ from lxml.etree import Element
 from label_studio_sdk._legacy.label_interface import LabelInterface
 from label_studio_sdk._legacy.label_interface.control_tags import ControlTag
 
-import configs as c
+from . import configs as c
 
 
 def test_parse():

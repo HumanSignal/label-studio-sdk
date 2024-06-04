@@ -13,7 +13,7 @@ from label_studio_sdk._legacy.label_interface.control_tags import (
 from label_studio_sdk._legacy.exceptions import LabelStudioValidationErrorSentryIgnored
 
 # from label_studio_sdk.label_config.regions import Region
-import configs as c
+from . import configs as c
 
 
 def test_validate_region():
