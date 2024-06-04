@@ -292,6 +292,9 @@ class Converter(object):
         for info in self._schema.values():
             output_tag_types.add(info['type'])
             for input_tag in info['inputs']:
+                if input_tag['type'] == 'Text' and input_tag.get('valueType') == 'url':
+                    logger.error('valueType="url" are not supported for text inputs')
+                    continue
                 input_tag_types.add(input_tag['type'])
 
         all_formats = [f.name for f in Format]
