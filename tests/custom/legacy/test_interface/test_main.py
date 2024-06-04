@@ -5,18 +5,18 @@ import pytest
 import xmljson
 import copy
 
-from label_studio_sdk.objects import PredictionValue
-from label_studio_sdk.label_interface import LabelInterface
-from label_studio_sdk.label_interface.control_tags import (
+from label_studio_sdk._legacy.objects import PredictionValue
+from label_studio_sdk._legacy.label_interface import LabelInterface
+from label_studio_sdk._legacy.label_interface.control_tags import (
     ControlTag,
     ChoicesTag,
     LabelsTag,
     Region,
 )
-from label_studio_sdk.exceptions import LabelStudioValidationErrorSentryIgnored
+from label_studio_sdk._legacy.exceptions import LabelStudioValidationErrorSentryIgnored
 
 # from label_studio_sdk.label_config.regions import Region
-import tests.test_interface.configs as c
+import configs as c
 
 
 ## testing basic functionality
