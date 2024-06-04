@@ -16,20 +16,20 @@ from collections import defaultdict
 from lxml import etree
 import xmljson
 
-from label_studio_sdk.exceptions import (
+from label_studio_sdk._legacy.exceptions import (
     LSConfigParseException,
     LabelStudioXMLSyntaxErrorSentryIgnored,
     LabelStudioValidationErrorSentryIgnored,
 )
 
-from label_studio_sdk.label_interface.control_tags import (
+from label_studio_sdk._legacy.label_interface.control_tags import (
     ControlTag,
     ChoicesTag,
     LabelsTag,
 )
-from label_studio_sdk.label_interface.object_tags import ObjectTag
-from label_studio_sdk.label_interface.label_tags import LabelTag
-from label_studio_sdk.objects import AnnotationValue, TaskValue, PredictionValue
+from label_studio_sdk._legacy.label_interface.object_tags import ObjectTag
+from label_studio_sdk._legacy.label_interface.label_tags import LabelTag
+from label_studio_sdk._legacy.objects import AnnotationValue, TaskValue, PredictionValue
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))

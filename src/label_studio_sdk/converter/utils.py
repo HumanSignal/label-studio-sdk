@@ -18,7 +18,7 @@ from urllib.parse import urlparse
 from nltk.tokenize.treebank import TreebankWordTokenizer
 from lxml import etree
 from collections import defaultdict
-from label_studio_tools.core.utils.params import get_env
+from label_studio_sdk._extensions.label_studio_tools.core.utils.params import get_env
 
 logger = logging.getLogger(__name__)
 

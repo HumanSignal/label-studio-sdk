@@ -6,7 +6,7 @@ import ujson as json
 
 from copy import deepcopy, copy
 
-from label_studio_converter.utils import ensure_dir, get_annotator, prettify_result
+from label_studio_sdk.converter.utils import ensure_dir, get_annotator, prettify_result
 
 
 logger = logging.getLogger(__name__)

@@ -4,7 +4,7 @@ import re
 from collections import defaultdict
 from lxml import etree
 
-from label_studio_tools.core.utils.exceptions import (
+from label_studio_sdk._extensions.label_studio_tools.core.utils.exceptions import (
     LabelStudioXMLSyntaxErrorSentryIgnored,
 )
 

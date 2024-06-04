@@ -1,7 +1,7 @@
 from copy import deepcopy
 from operator import itemgetter
 
-from label_studio_tools.core.label_config import _VIDEO_TRACKING_TAGS
+from label_studio_sdk._extensions.label_studio_tools.core.label_config import _VIDEO_TRACKING_TAGS
 
 
 def extract_key_frames(results):

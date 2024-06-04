@@ -11,8 +11,8 @@ from pathlib import Path
 from random import sample, shuffle
 from typing import Optional, Union, List, Dict, Callable
 
-from label_studio_tools.core.label_config import parse_config
-from label_studio_tools.core.utils.io import get_local_path
+from label_studio_sdk._extensions.label_studio_tools.core.label_config import parse_config
+from label_studio_sdk._extensions.label_studio_tools.core.utils.io import get_local_path
 from requests import Response
 from requests.exceptions import HTTPError, InvalidSchema, MissingSchema
 

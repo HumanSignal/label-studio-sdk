@@ -1,4 +1,4 @@
-from label_studio_tools.etl.registry import transform, call_dataloader
+from label_studio_sdk._extensions.label_studio_tools.etl.registry import transform, call_dataloader
 
 
 @transform.datarecords('read_base64_from_blob')

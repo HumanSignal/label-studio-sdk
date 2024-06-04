@@ -11,7 +11,7 @@ from urllib.parse import urlparse, urljoin
 from contextlib import contextmanager
 from tempfile import mkdtemp
 
-from label_studio_tools.core.utils.params import get_env
+from label_studio_sdk._extensions.label_studio_tools.core.utils.params import get_env
 
 _DIR_APP_NAME = 'label-studio'
 LOCAL_FILES_DOCUMENT_ROOT = get_env(

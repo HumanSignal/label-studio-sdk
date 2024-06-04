@@ -3,10 +3,10 @@ import io
 import logging
 import argparse
 
-from label_studio_converter.converter import Converter, Format, FormatNotSupportedError
-from label_studio_converter.exports.csv import ExportToCSV
-from label_studio_converter.utils import ExpandFullPath
-from label_studio_converter.imports import yolo as import_yolo, coco as import_coco
+from label_studio_sdk.converter.converter import Converter, Format, FormatNotSupportedError
+from label_studio_sdk.converter.exports.csv import ExportToCSV
+from label_studio_sdk.converter.utils import ExpandFullPath
+from label_studio_sdk.converter.imports import yolo as import_yolo, coco as import_coco
 
 logging.basicConfig(level=logging.INFO)
 

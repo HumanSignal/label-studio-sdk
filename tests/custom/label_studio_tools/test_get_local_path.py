@@ -26,8 +26,8 @@ test_cases = [
     ("http://example.com/1.jpg", f"test-data-dir/.cache/{_DIR_APP_NAME}/52ede693__1.jpg"),
 ]
 @pytest.mark.parametrize("url,expected", test_cases)
-@patch('label_studio_tools.core.utils.io.get_data_dir', return_value='test-data-dir/')
-@patch('label_studio_tools.core.utils.io.get_cache_dir', return_value=f'test-data-dir/.cache/{_DIR_APP_NAME}')
+@patch('label_studio_sdk._extensions.label_studio_tools.core.utils.io.get_data_dir', return_value='test-data-dir/')
+@patch('label_studio_sdk._extensions.label_studio_tools.core.utils.io.get_cache_dir', return_value=f'test-data-dir/.cache/{_DIR_APP_NAME}')
 def test_get_local_path(mock_get_data_dir, mock_get_cache_dir, url, expected):
     with patch('os.path.exists') as mock_exists:
         mock_exists.side_effect = os_path_exists
