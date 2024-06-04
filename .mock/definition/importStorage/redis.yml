@@ -5,20 +5,20 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/localfiles/
+      path: /api/storages/redis/
       method: GET
       auth: true
-      docs: Get a list of all local file import storage connections.
+      docs: Get a list of all Redis import storage connections.
       display-name: Get all import storage
       request:
-        name: LocalListRequest
+        name: RedisListRequest
         query-parameters:
           project:
             type: optional<integer>
             docs: Project ID
       response:
         docs: ''
-        type: list<root.LocalFilesImportStorage>
+        type: list<root.RedisImportStorage>
       examples:
         - response:
             body:
@@ -26,6 +26,9 @@ service:
                 type: type
                 synchronizable: true
                 path: path
+                host: host
+                port: port
+                password: password
                 regex_filter: regex_filter
                 use_blob_urls: true
                 last_sync: '2024-01-15T09:30:00Z'
@@ -39,15 +42,18 @@ service:
                 title: title
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
+                db: 1
                 project: 1
+      audiences:
+        - public
     create:
-      path: /api/storages/localfiles/
+      path: /api/storages/redis/
       method: POST
       auth: true
-      docs: Create a new local file import storage connection.
+      docs: Create a new Redis import storage connection.
       display-name: Create import storage
       request:
-        name: LocalCreateRequest
+        name: RedisCreateRequest
         body:
           properties:
             project:
@@ -55,33 +61,47 @@ service:
               docs: Project ID
             path:
               type: optional<string>
-              docs: Local path
+              docs: Storage prefix (optional)
+            host:
+              type: optional<string>
+              docs: Server Host IP (optional)
+            port:
+              type: optional<string>
+              docs: Server Port (optional)
+            password:
+              type: optional<string>
+              docs: Server Password (optional)
             regex_filter:
               type: optional<string>
-              docs: Regex for filtering objects
+              docs: Cloud storage regex for filtering objects
             use_blob_urls:
               type: optional<boolean>
               docs: Interpret objects as BLOBs and generate URLs
       response:
         docs: ''
-        type: LocalCreateResponse
+        type: RedisCreateResponse
       examples:
         - request: {}
           response:
             body:
               project: 1
               path: path
+              host: host
+              port: port
+              password: password
               regex_filter: regex_filter
               use_blob_urls: true
+      audiences:
+        - public
     validate:
-      path: /api/storages/localfiles/validate
+      path: /api/storages/redis/validate
       method: POST
       auth: true
-      docs: Validate a specific local file import storage connection.
+      docs: Validate a specific Redis import storage connection.
       display-name: Validate import storage
       response:
         docs: ''
-        type: root.LocalFilesImportStorage
+        type: root.RedisImportStorage
       examples:
         - response:
             body:
@@ -89,6 +109,9 @@ service:
               type: type
               synchronizable: true
               path: path
+              host: host
+              port: port
+              password: password
               regex_filter: regex_filter
               use_blob_urls: true
               last_sync: '2024-01-15T09:30:00Z'
@@ -102,20 +125,23 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
+              db: 1
               project: 1
+      audiences:
+        - public
     get:
-      path: /api/storages/localfiles/{id}
+      path: /api/storages/redis/{id}
       method: GET
       auth: true
-      docs: Get a specific local file import storage connection.
+      docs: Get a specific Redis import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this local files import storage.
+          docs: A unique integer value identifying this redis import storage.
       display-name: Get import storage
       response:
         docs: ''
-        type: root.LocalFilesImportStorage
+        type: root.RedisImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -125,6 +151,9 @@ service:
               type: type
               synchronizable: true
               path: path
+              host: host
+              port: port
+              password: password
               regex_filter: regex_filter
               use_blob_urls: true
               last_sync: '2024-01-15T09:30:00Z'
@@ -138,32 +167,37 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
+              db: 1
               project: 1
+      audiences:
+        - public
     delete:
-      path: /api/storages/localfiles/{id}
+      path: /api/storages/redis/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific local import storage connection.
+      docs: Delete a specific Redis import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this local files import storage.
+          docs: A unique integer value identifying this redis import storage.
       display-name: Delete import storage
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     update:
-      path: /api/storages/localfiles/{id}
+      path: /api/storages/redis/{id}
       method: PATCH
       auth: true
-      docs: Update a specific local file import storage connection.
+      docs: Update a specific Redis import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this local files import storage.
+          docs: A unique integer value identifying this redis import storage.
       display-name: Update import storage
       request:
-        name: LocalUpdateRequest
+        name: RedisUpdateRequest
         body:
           properties:
             project:
@@ -171,16 +205,25 @@ service:
               docs: Project ID
             path:
               type: optional<string>
-              docs: Local path
+              docs: Storage prefix (optional)
+            host:
+              type: optional<string>
+              docs: Server Host IP (optional)
+            port:
+              type: optional<string>
+              docs: Server Port (optional)
+            password:
+              type: optional<string>
+              docs: Server Password (optional)
             regex_filter:
               type: optional<string>
-              docs: Regex for filtering objects
+              docs: Cloud storage regex for filtering objects
             use_blob_urls:
               type: optional<boolean>
               docs: Interpret objects as BLOBs and generate URLs
       response:
         docs: ''
-        type: LocalUpdateResponse
+        type: RedisUpdateResponse
       examples:
         - path-parameters:
             id: 1
@@ -189,13 +232,18 @@ service:
             body:
               project: 1
               path: path
+              host: host
+              port: port
+              password: password
               regex_filter: regex_filter
               use_blob_urls: true
+      audiences:
+        - public
     sync:
-      path: /api/storages/localfiles/{id}/sync
+      path: /api/storages/redis/{id}/sync
       method: POST
       auth: true
-      docs: Sync tasks from a local file import storage connection.
+      docs: Sync tasks from a specific Redis import storage connection.
       path-parameters:
         id:
           type: integer
@@ -203,7 +251,7 @@ service:
       display-name: Sync import storage
       response:
         docs: ''
-        type: root.LocalFilesImportStorage
+        type: root.RedisImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -213,6 +261,9 @@ service:
               type: type
               synchronizable: true
               path: path
+              host: host
+              port: port
+              password: password
               regex_filter: regex_filter
               use_blob_urls: true
               last_sync: '2024-01-15T09:30:00Z'
@@ -226,33 +277,54 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
+              db: 1
               project: 1
+      audiences:
+        - public
 types:
-  LocalCreateResponse:
+  RedisCreateResponse:
     properties:
       project:
         type: optional<integer>
         docs: Project ID
       path:
         type: optional<string>
-        docs: Local path
+        docs: Storage prefix (optional)
+      host:
+        type: optional<string>
+        docs: Server Host IP (optional)
+      port:
+        type: optional<string>
+        docs: Server Port (optional)
+      password:
+        type: optional<string>
+        docs: Server Password (optional)
       regex_filter:
         type: optional<string>
-        docs: Regex for filtering objects
+        docs: Cloud storage regex for filtering objects
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
-  LocalUpdateResponse:
+  RedisUpdateResponse:
     properties:
       project:
         type: optional<integer>
         docs: Project ID
       path:
         type: optional<string>
-        docs: Local path
+        docs: Storage prefix (optional)
+      host:
+        type: optional<string>
+        docs: Server Host IP (optional)
+      port:
+        type: optional<string>
+        docs: Server Port (optional)
+      password:
+        type: optional<string>
+        docs: Server Password (optional)
       regex_filter:
         type: optional<string>
-        docs: Regex for filtering objects
+        docs: Cloud storage regex for filtering objects
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs

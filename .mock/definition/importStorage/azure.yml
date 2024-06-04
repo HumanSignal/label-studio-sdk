@@ -5,32 +5,33 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/redis/
+      path: /api/storages/azure/
       method: GET
       auth: true
-      docs: Get a list of all Redis import storage connections.
+      docs: Get list of all Azure import storage connections.
       display-name: Get all import storage
       request:
-        name: RedisListRequest
+        name: AzureListRequest
         query-parameters:
           project:
             type: optional<integer>
             docs: Project ID
       response:
         docs: ''
-        type: list<root.RedisImportStorage>
+        type: list<root.AzureBlobImportStorage>
       examples:
         - response:
             body:
               - id: 1
                 type: type
                 synchronizable: true
-                path: path
-                host: host
-                port: port
-                password: password
+                presign: true
+                container: container
+                prefix: prefix
                 regex_filter: regex_filter
                 use_blob_urls: true
+                account_name: account_name
+                account_key: account_key
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
@@ -42,74 +43,87 @@ service:
                 title: title
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
-                db: 1
+                presign_ttl: 1
                 project: 1
+      audiences:
+        - public
     create:
-      path: /api/storages/redis/
+      path: /api/storages/azure/
       method: POST
       auth: true
-      docs: Create a new Redis import storage connection.
-      display-name: Create import storage
+      docs: Get new Azure import storage
+      display-name: Create new storage
       request:
-        name: RedisCreateRequest
+        name: AzureCreateRequest
         body:
           properties:
             project:
               type: optional<integer>
               docs: Project ID
-            path:
+            container:
               type: optional<string>
-              docs: Storage prefix (optional)
-            host:
+              docs: Azure blob container
+            prefix:
               type: optional<string>
-              docs: Server Host IP (optional)
-            port:
-              type: optional<string>
-              docs: Server Port (optional)
-            password:
-              type: optional<string>
-              docs: Server Password (optional)
+              docs: Azure blob prefix name
             regex_filter:
               type: optional<string>
               docs: Cloud storage regex for filtering objects
             use_blob_urls:
               type: optional<boolean>
               docs: Interpret objects as BLOBs and generate URLs
+            account_name:
+              type: optional<string>
+              docs: Azure Blob account name
+            account_key:
+              type: optional<string>
+              docs: Azure Blob account key
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for direct download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
       response:
         docs: ''
-        type: RedisCreateResponse
+        type: AzureCreateResponse
       examples:
         - request: {}
           response:
             body:
               project: 1
-              path: path
-              host: host
-              port: port
-              password: password
+              container: container
+              prefix: prefix
               regex_filter: regex_filter
               use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
+              presign: true
+              presign_ttl: 1
+      audiences:
+        - public
     validate:
-      path: /api/storages/redis/validate
+      path: /api/storages/azure/validate
       method: POST
       auth: true
-      docs: Validate a specific Redis import storage connection.
+      docs: Validate a specific Azure import storage connection.
       display-name: Validate import storage
       response:
         docs: ''
-        type: root.RedisImportStorage
+        type: root.AzureBlobImportStorage
       examples:
         - response:
             body:
               id: 1
               type: type
               synchronizable: true
-              path: path
-              host: host
-              port: port
-              password: password
+              presign: true
+              container: container
+              prefix: prefix
               regex_filter: regex_filter
               use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -121,21 +135,23 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              db: 1
+              presign_ttl: 1
               project: 1
+      audiences:
+        - public
     get:
-      path: /api/storages/redis/{id}
+      path: /api/storages/azure/{id}
       method: GET
       auth: true
-      docs: Get a specific Redis import storage connection.
+      docs: Get a specific Azure import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this redis import storage.
+          docs: A unique integer value identifying this azure blob import storage.
       display-name: Get import storage
       response:
         docs: ''
-        type: root.RedisImportStorage
+        type: root.AzureBlobImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -144,12 +160,13 @@ service:
               id: 1
               type: type
               synchronizable: true
-              path: path
-              host: host
-              port: port
-              password: password
+              presign: true
+              container: container
+              prefix: prefix
               regex_filter: regex_filter
               use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -161,59 +178,69 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              db: 1
+              presign_ttl: 1
               project: 1
+      audiences:
+        - public
     delete:
-      path: /api/storages/redis/{id}
+      path: /api/storages/azure/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific Redis import storage connection.
+      docs: Delete a specific Azure import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this redis import storage.
+          docs: A unique integer value identifying this azure blob import storage.
       display-name: Delete import storage
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     update:
-      path: /api/storages/redis/{id}
+      path: /api/storages/azure/{id}
       method: PATCH
       auth: true
-      docs: Update a specific Redis import storage connection.
+      docs: Update a specific Azure import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this redis import storage.
+          docs: A unique integer value identifying this azure blob import storage.
       display-name: Update import storage
       request:
-        name: RedisUpdateRequest
+        name: AzureUpdateRequest
         body:
           properties:
             project:
               type: optional<integer>
               docs: Project ID
-            path:
+            container:
               type: optional<string>
-              docs: Storage prefix (optional)
-            host:
+              docs: Azure blob container
+            prefix:
               type: optional<string>
-              docs: Server Host IP (optional)
-            port:
-              type: optional<string>
-              docs: Server Port (optional)
-            password:
-              type: optional<string>
-              docs: Server Password (optional)
+              docs: Azure blob prefix name
             regex_filter:
               type: optional<string>
               docs: Cloud storage regex for filtering objects
             use_blob_urls:
               type: optional<boolean>
               docs: Interpret objects as BLOBs and generate URLs
+            account_name:
+              type: optional<string>
+              docs: Azure Blob account name
+            account_key:
+              type: optional<string>
+              docs: Azure Blob account key
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for direct download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
       response:
         docs: ''
-        type: RedisUpdateResponse
+        type: AzureUpdateResponse
       examples:
         - path-parameters:
             id: 1
@@ -221,17 +248,21 @@ service:
           response:
             body:
               project: 1
-              path: path
-              host: host
-              port: port
-              password: password
+              container: container
+              prefix: prefix
               regex_filter: regex_filter
               use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
+              presign: true
+              presign_ttl: 1
+      audiences:
+        - public
     sync:
-      path: /api/storages/redis/{id}/sync
+      path: /api/storages/azure/{id}/sync
       method: POST
       auth: true
-      docs: Sync tasks from a specific Redis import storage connection.
+      docs: Sync tasks from an Azure import storage connection.
       path-parameters:
         id:
           type: integer
@@ -239,7 +270,7 @@ service:
       display-name: Sync import storage
       response:
         docs: ''
-        type: root.RedisImportStorage
+        type: root.AzureBlobImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -248,12 +279,13 @@ service:
               id: 1
               type: type
               synchronizable: true
-              path: path
-              host: host
-              port: port
-              password: password
+              presign: true
+              container: container
+              prefix: prefix
               regex_filter: regex_filter
               use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -265,52 +297,66 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              db: 1
+              presign_ttl: 1
               project: 1
+      audiences:
+        - public
 types:
-  RedisCreateResponse:
+  AzureCreateResponse:
     properties:
       project:
         type: optional<integer>
         docs: Project ID
-      path:
+      container:
         type: optional<string>
-        docs: Storage prefix (optional)
-      host:
+        docs: Azure blob container
+      prefix:
         type: optional<string>
-        docs: Server Host IP (optional)
-      port:
-        type: optional<string>
-        docs: Server Port (optional)
-      password:
-        type: optional<string>
-        docs: Server Password (optional)
+        docs: Azure blob prefix name
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
-  RedisUpdateResponse:
+      account_name:
+        type: optional<string>
+        docs: Azure Blob account name
+      account_key:
+        type: optional<string>
+        docs: Azure Blob account key
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for direct download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes
+  AzureUpdateResponse:
     properties:
       project:
         type: optional<integer>
         docs: Project ID
-      path:
+      container:
         type: optional<string>
-        docs: Storage prefix (optional)
-      host:
+        docs: Azure blob container
+      prefix:
         type: optional<string>
-        docs: Server Host IP (optional)
-      port:
-        type: optional<string>
-        docs: Server Port (optional)
-      password:
-        type: optional<string>
-        docs: Server Password (optional)
+        docs: Azure blob prefix name
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
       use_blob_urls:
         type: optional<boolean>
         docs: Interpret objects as BLOBs and generate URLs
+      account_name:
+        type: optional<string>
+        docs: Azure Blob account name
+      account_key:
+        type: optional<string>
+        docs: Azure Blob account key
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for direct download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes

@@ -46,6 +46,8 @@ service:
               parent_prediction: 1
               parent_annotation: 1
               last_created_by: 1
+      audiences:
+        - public
     delete:
       path: /api/annotations/{id}/
       method: DELETE
@@ -59,6 +61,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     update:
       path: /api/annotations/{id}/
       method: PATCH
@@ -128,6 +132,8 @@ service:
               parent_prediction: 1
               parent_annotation: 1
               last_created_by: 1
+      audiences:
+        - public
     list:
       path: /api/tasks/{id}/annotations/
       method: GET
@@ -168,6 +174,8 @@ service:
                 parent_prediction: 1
                 parent_annotation: 1
                 last_created_by: 1
+      audiences:
+        - public
     create:
       path: /api/tasks/{id}/annotations/
       method: POST
@@ -267,3 +275,5 @@ service:
               parent_prediction: 1
               parent_annotation: 1
               last_created_by: 1
+      audiences:
+        - public

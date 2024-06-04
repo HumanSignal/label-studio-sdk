@@ -4,14 +4,14 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_webhooks_list:
+    list:
       path: /api/webhooks/
       method: GET
       auth: true
       docs: List all webhooks set up for your organization.
       display-name: List all webhooks
       request:
-        name: ApiWebhooksListRequest
+        name: WebhooksListRequest
         query-parameters:
           project:
             type: optional<string>
@@ -36,7 +36,9 @@ service:
                   - PROJECT_CREATED
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
-    api_webhooks_create:
+      audiences:
+        - public
+    create:
       path: /api/webhooks/
       method: POST
       auth: true
@@ -66,21 +68,25 @@ service:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-    api_webhooks_info_list:
+      audiences:
+        - public
+    info:
       path: /api/webhooks/info/
       method: GET
       auth: true
       docs: Get descriptions of all available webhook actions to set up webhooks.
       display-name: Get all webhook actions
       request:
-        name: ApiWebhooksInfoListRequest
+        name: WebhooksInfoRequest
         query-parameters:
           organization-only:
             type: optional<boolean>
             docs: organization-only or not
       examples:
         - {}
-    api_webhooks_read:
+      audiences:
+        - public
+    get:
       path: /api/webhooks/{id}/
       method: GET
       auth: true
@@ -112,6 +118,8 @@ service:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
     api_webhooks_update:
       path: /api/webhooks/{id}/
       method: PUT
@@ -170,7 +178,9 @@ service:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-    api_webhooks_delete:
+      audiences:
+        - internal
+    delete:
       path: /api/webhooks/{id}/
       method: DELETE
       auth: true
@@ -183,7 +193,9 @@ service:
       examples:
         - path-parameters:
             id: 1
-    api_webhooks_partial_update:
+      audiences:
+        - public
+    update:
       path: /api/webhooks/{id}/
       method: PATCH
       auth: true
@@ -212,9 +224,9 @@ service:
             type: optional<boolean>
             docs: If value is False the webhook is disabled
           actions:
-            type: optional<ApiWebhooksPartialUpdateRequestActionsItem>
+            type: optional<WebhooksUpdateRequestActionsItem>
             allow-multiple: true
-        name: ApiWebhooksPartialUpdateRequest
+        name: WebhooksUpdateRequest
       response:
         docs: ''
         type: root.WebhookSerializerForUpdate
@@ -241,6 +253,8 @@ service:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
 types:
   ApiWebhooksUpdateRequestActionsItem:
     enum:
@@ -256,7 +270,7 @@ types:
       - LABEL_LINK_CREATED
       - LABEL_LINK_UPDATED
       - LABEL_LINK_DELETED
-  ApiWebhooksPartialUpdateRequestActionsItem:
+  WebhooksUpdateRequestActionsItem:
     enum:
       - PROJECT_CREATED
       - PROJECT_UPDATED

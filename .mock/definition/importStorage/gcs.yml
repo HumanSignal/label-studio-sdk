@@ -45,6 +45,8 @@ service:
                 created_at: '2024-01-15T09:30:00Z'
                 presign_ttl: 1
                 project: 1
+      audiences:
+        - public
     create:
       path: /api/storages/gcs/
       method: POST
@@ -98,6 +100,8 @@ service:
               google_project_id: google_project_id
               presign: true
               presign_ttl: 1
+      audiences:
+        - public
     validate:
       path: /api/storages/gcs/validate
       method: POST
@@ -133,6 +137,8 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               presign_ttl: 1
               project: 1
+      audiences:
+        - public
     get:
       path: /api/storages/gcs/{id}
       method: GET
@@ -174,6 +180,8 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               presign_ttl: 1
               project: 1
+      audiences:
+        - public
     delete:
       path: /api/storages/gcs/{id}
       method: DELETE
@@ -187,6 +195,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     update:
       path: /api/storages/gcs/{id}
       method: PATCH
@@ -246,6 +256,8 @@ service:
               google_project_id: google_project_id
               presign: true
               presign_ttl: 1
+      audiences:
+        - public
     sync:
       path: /api/storages/gcs/{id}/sync
       method: POST
@@ -287,6 +299,8 @@ service:
               created_at: '2024-01-15T09:30:00Z'
               presign_ttl: 1
               project: 1
+      audiences:
+        - public
 types:
   GcsCreateResponse:
     properties:

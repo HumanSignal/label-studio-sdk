@@ -260,6 +260,8 @@ service:
                 task_ids:
                   key: value
               project: 1
+      audiences:
+        - public
     list:
       path: /api/tasks/
       method: GET
@@ -341,6 +343,8 @@ service:
               total: 1
               total_annotations: 1
               total_predictions: 1
+      audiences:
+        - public
     create:
       path: /api/tasks/
       method: POST
@@ -387,6 +391,8 @@ service:
               file_upload: 1
               comment_authors:
                 - 1
+      audiences:
+        - public
     get:
       path: /api/tasks/{id}/
       method: GET
@@ -463,6 +469,8 @@ service:
               project: 1
               comment_authors:
                 - 1
+      audiences:
+        - public
     delete:
       path: /api/tasks/{id}/
       method: DELETE
@@ -476,6 +484,8 @@ service:
       examples:
         - path-parameters:
             id: id
+      audiences:
+        - public
     update:
       path: /api/tasks/{id}/
       method: PATCH
@@ -528,3 +538,5 @@ service:
               file_upload: 1
               comment_authors:
                 - 1
+      audiences:
+        - public

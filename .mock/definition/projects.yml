@@ -156,6 +156,8 @@ service:
                   finished_task_number: 1
                   queue_total: queue_total
                   queue_done: queue_done
+      audiences:
+        - public
     create:
       path: /api/projects/
       method: POST
@@ -240,6 +242,8 @@ service:
               control_weights:
                 control_weights:
                   key: value
+      audiences:
+        - public
     api_projects_validate_create:
       path: /api/projects/validate/
       method: POST
@@ -251,6 +255,8 @@ service:
       examples:
         - request:
             label_config: label_config
+      audiences:
+        - internal
     get:
       path: /api/projects/{id}/
       method: GET
@@ -322,6 +328,8 @@ service:
               finished_task_number: 10
               queue_total: queue_total
               queue_done: queue_done
+      audiences:
+        - public
     delete:
       path: /api/projects/{id}/
       method: DELETE
@@ -335,6 +343,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     update:
       path: /api/projects/{id}/
       method: PATCH
@@ -408,6 +418,8 @@ service:
               finished_task_number: 1
               queue_total: queue_total
               queue_done: queue_done
+      audiences:
+        - public
     create_export:
       path: /api/projects/{id}/export
       method: GET
@@ -527,6 +539,8 @@ service:
                   key: value
               traceback: traceback
               project: 1
+      audiences:
+        - internal
     api_projects_tasks_list:
       path: /api/projects/{id}/tasks/
       method: GET
@@ -562,7 +576,9 @@ service:
       examples:
         - path-parameters:
             id: 1
-    api_projects_tasks_delete:
+      audiences:
+        - internal
+    delete_all_tasks:
       path: /api/projects/{id}/tasks/
       method: DELETE
       auth: true
@@ -575,6 +591,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     validate_config:
       path: /api/projects/{id}/validate/
       method: POST
@@ -601,3 +619,5 @@ service:
           response:
             body:
               label_config: label_config
+      audiences:
+        - public

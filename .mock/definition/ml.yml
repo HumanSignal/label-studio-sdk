@@ -52,6 +52,8 @@ service:
                 updated_at: '2024-01-15T09:30:00Z'
                 auto_update: true
                 project: 1
+      audiences:
+        - public
     create:
       path: /api/ml/
       method: POST
@@ -123,6 +125,8 @@ service:
                 extra_params:
                   key: value
               timeout: 1
+      audiences:
+        - public
     get:
       path: /api/ml/{id}
       method: GET
@@ -172,6 +176,8 @@ service:
               updated_at: '2024-01-15T09:30:00Z'
               auto_update: true
               project: 1
+      audiences:
+        - public
     delete:
       path: /api/ml/{id}
       method: DELETE
@@ -194,6 +200,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     update:
       path: /api/ml/{id}
       method: PATCH
@@ -270,6 +278,8 @@ service:
                 extra_params:
                   key: value
               timeout: 1
+      audiences:
+        - public
     predict_interactive:
       path: /api/ml/{id}/interactive-annotating
       method: POST
@@ -304,6 +314,28 @@ service:
             id: 1
           request:
             task: 1
+      audiences:
+        - public
+    test_predict:
+      path: /api/ml/{id}/predict/test
+      method: POST
+      auth: true
+      docs: >
+
+        After you add an ML backend, call this API with the ML backend ID to run
+        a test prediction on specific task data               
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this ML backend.
+      display-name: Test prediction
+      errors:
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - internal
     train:
       path: /api/ml/{id}/train
       method: POST
@@ -336,6 +368,8 @@ service:
         - path-parameters:
             id: 1
           request: {}
+      audiences:
+        - public
     list_model_versions:
       path: /api/ml/{id}/versions
       method: GET
@@ -347,6 +381,8 @@ service:
       examples:
         - path-parameters:
             id: id
+      audiences:
+        - public
 types:
   MlCreateRequestAuthMethod:
     enum:

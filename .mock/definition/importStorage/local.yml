@@ -5,32 +5,29 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/export/gcs
+      path: /api/storages/localfiles/
       method: GET
       auth: true
-      docs: Get a list of all GCS export storage connections.
-      display-name: Get all export storage
+      docs: Get a list of all local file import storage connections.
+      display-name: Get all import storage
       request:
-        name: GcsListRequest
+        name: LocalListRequest
         query-parameters:
           project:
             type: optional<integer>
             docs: Project ID
       response:
         docs: ''
-        type: list<root.GcsExportStorage>
+        type: list<root.LocalFilesImportStorage>
       examples:
         - response:
             body:
               - id: 1
                 type: type
                 synchronizable: true
-                bucket: bucket
-                prefix: prefix
+                path: path
                 regex_filter: regex_filter
                 use_blob_urls: true
-                google_application_credentials: google_application_credentials
-                google_project_id: google_project_id
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
@@ -42,66 +39,62 @@ service:
                 title: title
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
-                can_delete_objects: true
                 project: 1
+      audiences:
+        - public
     create:
-      path: /api/storages/export/gcs
+      path: /api/storages/localfiles/
       method: POST
       auth: true
-      docs: Create a new GCS export storage connection to store annotations.
-      display-name: Create export storage
+      docs: Create a new local file import storage connection.
+      display-name: Create import storage
       request:
-        name: GcsCreateRequest
+        name: LocalCreateRequest
         body:
           properties:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            path:
               type: optional<string>
-              docs: GCS bucket name
-            prefix:
+              docs: Local path
+            regex_filter:
               type: optional<string>
-              docs: GCS bucket prefix
-            google_application_credentials:
-              type: optional<string>
-              docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
-            google_project_id:
-              type: optional<string>
-              docs: Google project ID
+              docs: Regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
       response:
         docs: ''
-        type: GcsCreateResponse
+        type: LocalCreateResponse
       examples:
         - request: {}
           response:
             body:
               project: 1
-              bucket: bucket
-              prefix: prefix
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
+              path: path
+              regex_filter: regex_filter
+              use_blob_urls: true
+      audiences:
+        - public
     validate:
-      path: /api/storages/export/gcs/validate
+      path: /api/storages/localfiles/validate
       method: POST
       auth: true
-      docs: Validate a specific GCS export storage connection.
-      display-name: Validate export storage
+      docs: Validate a specific local file import storage connection.
+      display-name: Validate import storage
       response:
         docs: ''
-        type: root.GcsExportStorage
+        type: root.LocalFilesImportStorage
       examples:
         - response:
             body:
               id: 1
               type: type
               synchronizable: true
-              bucket: bucket
-              prefix: prefix
+              path: path
               regex_filter: regex_filter
               use_blob_urls: true
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -113,21 +106,22 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              can_delete_objects: true
               project: 1
+      audiences:
+        - public
     get:
-      path: /api/storages/export/gcs/{id}
+      path: /api/storages/localfiles/{id}
       method: GET
       auth: true
-      docs: Get a specific GCS export storage connection.
+      docs: Get a specific local file import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this gcs export storage.
-      display-name: Get export storage
+          docs: A unique integer value identifying this local files import storage.
+      display-name: Get import storage
       response:
         docs: ''
-        type: root.GcsExportStorage
+        type: root.LocalFilesImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -136,12 +130,9 @@ service:
               id: 1
               type: type
               synchronizable: true
-              bucket: bucket
-              prefix: prefix
+              path: path
               regex_filter: regex_filter
               use_blob_urls: true
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -153,53 +144,53 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              can_delete_objects: true
               project: 1
+      audiences:
+        - public
     delete:
-      path: /api/storages/export/gcs/{id}
+      path: /api/storages/localfiles/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific GCS export storage connection.
+      docs: Delete a specific local import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this gcs export storage.
-      display-name: Delete export storage
+          docs: A unique integer value identifying this local files import storage.
+      display-name: Delete import storage
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     update:
-      path: /api/storages/export/gcs/{id}
+      path: /api/storages/localfiles/{id}
       method: PATCH
       auth: true
-      docs: Update a specific GCS export storage connection.
+      docs: Update a specific local file import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this gcs export storage.
-      display-name: Update export storage
+          docs: A unique integer value identifying this local files import storage.
+      display-name: Update import storage
       request:
-        name: GcsUpdateRequest
+        name: LocalUpdateRequest
         body:
           properties:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            path:
               type: optional<string>
-              docs: GCS bucket name
-            prefix:
+              docs: Local path
+            regex_filter:
               type: optional<string>
-              docs: GCS bucket prefix
-            google_application_credentials:
-              type: optional<string>
-              docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
-            google_project_id:
-              type: optional<string>
-              docs: Google project ID
+              docs: Regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
       response:
         docs: ''
-        type: GcsUpdateResponse
+        type: LocalUpdateResponse
       examples:
         - path-parameters:
             id: 1
@@ -207,35 +198,35 @@ service:
           response:
             body:
               project: 1
-              bucket: bucket
-              prefix: prefix
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
+              path: path
+              regex_filter: regex_filter
+              use_blob_urls: true
+      audiences:
+        - public
     sync:
-      path: /api/storages/export/gcs/{id}/sync
+      path: /api/storages/localfiles/{id}/sync
       method: POST
       auth: true
-      docs: Sync tasks from an GCS export storage connection.
+      docs: Sync tasks from a local file import storage connection.
       path-parameters:
-        id: string
-      display-name: Sync export storage
+        id:
+          type: integer
+          docs: Storage ID
+      display-name: Sync import storage
       response:
         docs: ''
-        type: root.GcsExportStorage
+        type: root.LocalFilesImportStorage
       examples:
         - path-parameters:
-            id: id
+            id: 1
           response:
             body:
               id: 1
               type: type
               synchronizable: true
-              bucket: bucket
-              prefix: prefix
+              path: path
               regex_filter: regex_filter
               use_blob_urls: true
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -247,40 +238,35 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              can_delete_objects: true
               project: 1
+      audiences:
+        - public
 types:
-  GcsCreateResponse:
+  LocalCreateResponse:
     properties:
       project:
         type: optional<integer>
         docs: Project ID
-      bucket:
+      path:
         type: optional<string>
-        docs: GCS bucket name
-      prefix:
+        docs: Local path
+      regex_filter:
         type: optional<string>
-        docs: GCS bucket prefix
-      google_application_credentials:
-        type: optional<string>
-        docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
-      google_project_id:
-        type: optional<string>
-        docs: Google project ID
-  GcsUpdateResponse:
+        docs: Regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
+  LocalUpdateResponse:
     properties:
       project:
         type: optional<integer>
         docs: Project ID
-      bucket:
+      path:
         type: optional<string>
-        docs: GCS bucket name
-      prefix:
+        docs: Local path
+      regex_filter:
         type: optional<string>
-        docs: GCS bucket prefix
-      google_application_credentials:
-        type: optional<string>
-        docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
-      google_project_id:
-        type: optional<string>
-        docs: Google project ID
+        docs: Regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs

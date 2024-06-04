@@ -5,11 +5,11 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/export/s3
+      path: /api/storages/s3/
       method: GET
       auth: true
-      docs: Get a list of all S3 export storage connections.
-      display-name: Get all export storage
+      docs: Get a list of all S3 import storage connections.
+      display-name: List S3 import storage
       request:
         name: S3ListRequest
         query-parameters:
@@ -18,13 +18,14 @@ service:
             docs: Project ID
       response:
         docs: ''
-        type: list<root.S3ExportStorage>
+        type: list<root.S3ImportStorage>
       examples:
         - response:
             body:
               - id: 1
                 type: type
                 synchronizable: true
+                presign: true
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
@@ -36,7 +37,6 @@ service:
                 title: title
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
-                can_delete_objects: true
                 bucket: bucket
                 prefix: prefix
                 regex_filter: regex_filter
@@ -47,13 +47,17 @@ service:
                 aws_sse_kms_key_id: aws_sse_kms_key_id
                 region_name: region_name
                 s3_endpoint: s3_endpoint
+                presign_ttl: 1
+                recursive_scan: true
                 project: 1
+      audiences:
+        - public
     create:
-      path: /api/storages/export/s3
+      path: /api/storages/s3/
       method: POST
       auth: true
-      docs: Create a new S3 export storage connection to store annotations.
-      display-name: Create export storage
+      docs: Get new S3 import storage
+      display-name: Create new S3 storage
       request:
         name: S3CreateRequest
         body:
@@ -67,6 +71,12 @@ service:
             prefix:
               type: optional<string>
               docs: S3 bucket prefix
+            regex_filter:
+              type: optional<string>
+              docs: Cloud storage regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
             aws_access_key_id:
               type: optional<string>
               docs: AWS_ACCESS_KEY_ID
@@ -85,6 +95,15 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in seconds
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
       response:
         docs: ''
         type: S3CreateResponse
@@ -95,31 +114,35 @@ service:
               project: 1
               bucket: bucket
               prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
               region_name: region_name
               s3_endpoint: s3_endpoint
+              presign: true
+              presign_ttl: 1
+              recursive_scan: true
+      audiences:
+        - public
     validate:
-      path: /api/storages/export/s3/validate
+      path: /api/storages/s3/validate
       method: POST
       auth: true
-      docs: Validate a specific S3 export storage connection.
-      display-name: Validate export storage
-      request:
-        body: root.S3ExportStorage
+      docs: Validate a specific S3 import storage connection.
+      display-name: Validate import storage
       response:
         docs: ''
-        type: root.S3ExportStorage
+        type: root.S3ImportStorage
       examples:
-        - request:
-            project: 1
-          response:
+        - response:
             body:
               id: 1
               type: type
               synchronizable: true
+              presign: true
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -131,7 +154,6 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              can_delete_objects: true
               bucket: bucket
               prefix: prefix
               regex_filter: regex_filter
@@ -142,20 +164,24 @@ service:
               aws_sse_kms_key_id: aws_sse_kms_key_id
               region_name: region_name
               s3_endpoint: s3_endpoint
+              presign_ttl: 1
+              recursive_scan: true
               project: 1
+      audiences:
+        - public
     get:
-      path: /api/storages/export/s3/{id}
+      path: /api/storages/s3/{id}
       method: GET
       auth: true
-      docs: Get a specific S3 export storage connection.
+      docs: Get a specific S3 import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 export storage.
-      display-name: Get export storage
+          docs: A unique integer value identifying this s3 import storage.
+      display-name: Get import storage
       response:
         docs: ''
-        type: root.S3ExportStorage
+        type: root.S3ImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -164,6 +190,7 @@ service:
               id: 1
               type: type
               synchronizable: true
+              presign: true
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -175,7 +202,6 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              can_delete_objects: true
               bucket: bucket
               prefix: prefix
               regex_filter: regex_filter
@@ -186,30 +212,36 @@ service:
               aws_sse_kms_key_id: aws_sse_kms_key_id
               region_name: region_name
               s3_endpoint: s3_endpoint
+              presign_ttl: 1
+              recursive_scan: true
               project: 1
+      audiences:
+        - public
     delete:
-      path: /api/storages/export/s3/{id}
+      path: /api/storages/s3/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific S3 export storage connection.
+      docs: Delete a specific S3 import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 export storage.
-      display-name: Delete export storage
+          docs: A unique integer value identifying this s3 import storage.
+      display-name: Delete import storage
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     update:
-      path: /api/storages/export/s3/{id}
+      path: /api/storages/s3/{id}
       method: PATCH
       auth: true
-      docs: Update a specific S3 export storage connection.
+      docs: Update a specific S3 import storage connection.
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 export storage.
-      display-name: Update export storage
+          docs: A unique integer value identifying this s3 import storage.
+      display-name: Update import storage
       request:
         name: S3UpdateRequest
         body:
@@ -223,6 +255,12 @@ service:
             prefix:
               type: optional<string>
               docs: S3 bucket prefix
+            regex_filter:
+              type: optional<string>
+              docs: Cloud storage regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
             aws_access_key_id:
               type: optional<string>
               docs: AWS_ACCESS_KEY_ID
@@ -241,6 +279,15 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in seconds
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
       response:
         docs: ''
         type: S3UpdateResponse
@@ -253,31 +300,41 @@ service:
               project: 1
               bucket: bucket
               prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
               region_name: region_name
               s3_endpoint: s3_endpoint
+              presign: true
+              presign_ttl: 1
+              recursive_scan: true
+      audiences:
+        - public
     sync:
-      path: /api/storages/export/s3/{id}/sync
+      path: /api/storages/s3/{id}/sync
       method: POST
       auth: true
-      docs: Sync tasks from an S3 export storage connection.
+      docs: Sync tasks from an S3 import storage connection.
       path-parameters:
-        id: string
-      display-name: Sync export storage
+        id:
+          type: integer
+          docs: Storage ID
+      display-name: Sync import storage
       response:
         docs: ''
-        type: root.S3ExportStorage
+        type: root.S3ImportStorage
       examples:
         - path-parameters:
-            id: id
+            id: 1
           response:
             body:
               id: 1
               type: type
               synchronizable: true
+              presign: true
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -289,7 +346,6 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              can_delete_objects: true
               bucket: bucket
               prefix: prefix
               regex_filter: regex_filter
@@ -300,7 +356,11 @@ service:
               aws_sse_kms_key_id: aws_sse_kms_key_id
               region_name: region_name
               s3_endpoint: s3_endpoint
+              presign_ttl: 1
+              recursive_scan: true
               project: 1
+      audiences:
+        - public
 types:
   S3CreateResponse:
     properties:
@@ -313,6 +373,12 @@ types:
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
       aws_access_key_id:
         type: optional<string>
         docs: AWS_ACCESS_KEY_ID
@@ -331,6 +397,15 @@ types:
       s3_endpoint:
         type: optional<string>
         docs: S3 Endpoint
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in seconds
+      recursive_scan:
+        type: optional<boolean>
+        docs: Scan recursively
   S3UpdateResponse:
     properties:
       project:
@@ -342,6 +417,12 @@ types:
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
       aws_access_key_id:
         type: optional<string>
         docs: AWS_ACCESS_KEY_ID
@@ -360,3 +441,12 @@ types:
       s3_endpoint:
         type: optional<string>
         docs: S3 Endpoint
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in seconds
+      recursive_scan:
+        type: optional<boolean>
+        docs: Scan recursively

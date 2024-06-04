@@ -28,6 +28,8 @@ service:
         - response:
             body:
               token: token
+      audiences:
+        - public
     get_token:
       path: /api/current-user/token
       method: GET
@@ -41,6 +43,8 @@ service:
         - response:
             body:
               detail: detail
+      audiences:
+        - public
     whoami:
       path: /api/current-user/whoami
       method: GET
@@ -64,6 +68,8 @@ service:
               phone: phone
               active_organization: 1
               allow_newsletters: true
+      audiences:
+        - public
     list:
       path: /api/users/
       method: GET
@@ -87,6 +93,8 @@ service:
                 phone: phone
                 active_organization: 1
                 allow_newsletters: true
+      audiences:
+        - public
     create:
       path: /api/users/
       method: POST
@@ -94,13 +102,41 @@ service:
       docs: Create a user in Label Studio.
       display-name: Create new user
       request:
-        body: root.BaseUser
+        name: UsersCreateRequest
+        body:
+          properties:
+            id:
+              type: optional<integer>
+              docs: User ID
+            first_name:
+              type: optional<string>
+              docs: First name of the user
+            last_name:
+              type: optional<string>
+              docs: Last name of the user
+            username:
+              type: optional<string>
+              docs: Username of the user
+            email:
+              type: optional<string>
+              docs: Email of the user
+            avatar:
+              type: optional<string>
+              docs: Avatar URL of the user
+            initials:
+              type: optional<string>
+              docs: Initials of the user
+            phone:
+              type: optional<string>
+              docs: Phone number of the user
+            allow_newsletters:
+              type: optional<boolean>
+              docs: Whether the user allows newsletters
       response:
         docs: ''
         type: root.BaseUser
       examples:
-        - request:
-            username: username
+        - request: {}
           response:
             body:
               id: 1
@@ -114,6 +150,8 @@ service:
               phone: phone
               active_organization: 1
               allow_newsletters: true
+      audiences:
+        - public
     get:
       path: /api/users/{id}/
       method: GET
@@ -143,6 +181,8 @@ service:
               phone: phone
               active_organization: 1
               allow_newsletters: true
+      audiences:
+        - public
     delete:
       path: /api/users/{id}/
       method: DELETE
@@ -156,6 +196,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     update:
       path: /api/users/{id}/
       method: PATCH
@@ -170,15 +212,44 @@ service:
           docs: User ID
       display-name: Update user details
       request:
-        body: root.BaseUser
+        name: UsersUpdateRequest
+        body:
+          properties:
+            id:
+              type: optional<integer>
+              docs: User ID
+              name: usersUpdateRequestId
+            first_name:
+              type: optional<string>
+              docs: First name of the user
+            last_name:
+              type: optional<string>
+              docs: Last name of the user
+            username:
+              type: optional<string>
+              docs: Username of the user
+            email:
+              type: optional<string>
+              docs: Email of the user
+            avatar:
+              type: optional<string>
+              docs: Avatar URL of the user
+            initials:
+              type: optional<string>
+              docs: Initials of the user
+            phone:
+              type: optional<string>
+              docs: Phone number of the user
+            allow_newsletters:
+              type: optional<boolean>
+              docs: Whether the user allows newsletters
       response:
         docs: ''
         type: root.BaseUser
       examples:
         - path-parameters:
             id: 1
-          request:
-            username: username
+          request: {}
           response:
             body:
               id: 1
@@ -192,5 +263,7 @@ service:
               phone: phone
               active_organization: 1
               allow_newsletters: true
+      audiences:
+        - public
 imports:
   root: __package__.yml

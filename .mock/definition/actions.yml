@@ -12,6 +12,8 @@ service:
       display-name: Get actions
       examples:
         - {}
+      audiences:
+        - internal
     create:
       path: /api/dm/actions/
       method: POST
@@ -20,3 +22,5 @@ service:
       display-name: Post actions
       examples:
         - {}
+      audiences:
+        - internal
