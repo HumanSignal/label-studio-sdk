@@ -25,6 +25,15 @@ groups:
             - from: _legacy
               imports:
                 - Client
+          extra_dependencies:
+            pandas: '>=0.24.0'
+            requests: '>=2.22.0'
+            Pillow: '>=10.0.1'
+            nltk: '3.6.7'
+            ujson: '>=5.8.0'
+            ijson: '>=3.2.3'
+            appdirs: '>=1.4.3'
+            lxml: '>=4.2.5'
         smart-casing: true
   python-sdk-local:
     generators:
