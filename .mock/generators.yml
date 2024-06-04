@@ -20,6 +20,11 @@ groups:
           inline_request_params: false
           package_name: label_studio_sdk
           client_class_name: LabelStudio
+          # deprecated version 0.0.x of the SDK - to be removed in the future
+          additional_init_exports:
+            - from: _legacy
+              imports:
+                - Client
         smart-casing: true
   python-sdk-local:
     generators:
@@ -32,3 +37,7 @@ groups:
           inline_request_params: false
           package_name: label_studio_sdk
           client_class_name: LabelStudio
+          additional_init_exports:
+            - from: _legacy
+              imports:
+                - Client

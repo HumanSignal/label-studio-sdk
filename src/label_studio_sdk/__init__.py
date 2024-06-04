@@ -87,6 +87,7 @@ from . import (
     views,
     webhooks,
 )
+from ._legacy import Client
 from .data_manager import (
     ApiDmViewsUpdateRequestData,
     ApiDmViewsUpdateRequestDataFilters,
@@ -158,6 +159,7 @@ __all__ = [
     "BadRequestError",
     "BaseTask",
     "BaseUser",
+    "Client",
     "ConvertedFormat",
     "ConvertedFormatStatus",
     "DataManagerTaskSerializer",
