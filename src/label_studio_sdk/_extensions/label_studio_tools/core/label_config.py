@@ -83,6 +83,7 @@ def parse_config(config_string):
             inputs[tag.attrib['name']] = {
                 'type': tag.tag,
                 'value': tag.attrib['value'].lstrip('$'),
+                'valueType': tag.attrib.get('valueType')
             }
         if tag.tag not in _LABEL_TAGS:
             continue

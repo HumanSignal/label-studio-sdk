@@ -111,8 +111,9 @@ def get_local_path(
         filepath = os.path.join(image_dir, project_id, os.path.basename(url))
         if cache_dir and download_resources:
             shutil.copy(filepath, cache_dir)
-        logger.debug(f"Uploaded file: Path exists in image_dir: {filepath}")
-        return filepath
+        if os.path.exists(filepath):
+            logger.debug(f"Uploaded file: Path exists in image_dir: {filepath}")
+            return filepath
 
     # Upload or Local Storage file
     if is_uploaded_file or is_local_storage_file or is_cloud_storage_file:
