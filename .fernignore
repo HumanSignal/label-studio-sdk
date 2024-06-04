@@ -5,11 +5,10 @@ README.md
 
 # manual extensions
 src/label_studio_sdk/_extensions
+# legacy code - to be removed in the future
+src/label_studio_sdk/_legacy
 
 # tutorials
 tutorials
-
-# legacy code
-src/label_studio_sdk_legacy
 
 ## temporary exclude pagination until RND-66 is resolved
