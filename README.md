@@ -4,14 +4,22 @@
 ---
 > :warning: **Note**<br/>
 >
-> 1. The version of `label-studio-sdk<1` is deprecated.
-> 2. If you still want to use it, install it with `pip install "label-studio-sdk<1"`.
-> 3. You can find the branch with the old version by cloning the repository and checking out the branch as follows:
+> The version of `label-studio-sdk<1` is deprecated and no longer supported. We recommend updating to the latest version.
+> If you still want to use the old version, you can install it with `pip install "label-studio-sdk<1"`.
+> OR You can find the branch with the old version by cloning the repository and checking out the branch as follows:
 >
 > ```sh
 > git clone https://github.com/HumanSignal/label-studio-sdk.git
 > cd label-studio-sdk
 > git checkout previous-version
+> ```
+> 
+> OR you can change your import statements as follows:
+> ```python
+> from label_studio_sdk import Client
+> from label_studio_sdk._legacy import Project
+> from label_studio_sdk._legacy.data_manager import Filters, Column, Operator, Type
+> ```
 ---
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
