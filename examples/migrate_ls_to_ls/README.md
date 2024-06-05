@@ -9,7 +9,10 @@ This migration helps to copy projects from one LS instance to another. To be cop
 * Reviews (you should request our team to enable it on SaaS side for your organization)
 * Drafts (you should request our team to enable it on SaaS side for your organization)
 
-Other entities are not supported. Cloud Storages are not yet supported.
+Not supported:
+* Cloud Storages are not supported.
+* Files and media uploaded using UI imports are not supported and won't be copied. 
+* Other entities are not supported. 
 
 Each new run of this script will generate new projects on the destination instance.
 
