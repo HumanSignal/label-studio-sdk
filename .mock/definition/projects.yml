@@ -56,6 +56,53 @@ types:
       control_weights:
         type: optional<map<string, unknown>>
         docs: Control weights
+  ProjectsImportTasksRequestItem:
+    properties:
+      data:
+        type: optional<map<string, unknown>>
+        docs: Data of the task
+      project:
+        type: optional<integer>
+        docs: Project ID for this task
+      annotations:
+        type: optional<list<map<string, unknown>>>
+        docs: Annotations for this task
+      predictions:
+        type: optional<list<map<string, unknown>>>
+        docs: Predictions for this task
+      is_labeled:
+        type: optional<boolean>
+        docs: Whether the task is labeled or not
+      overlap:
+        type: optional<double>
+        docs: Overlap for the task
+  ProjectsImportTasksResponse:
+    docs: Task creation response
+    properties:
+      task_count:
+        type: optional<integer>
+        docs: Number of tasks added
+      annotation_count:
+        type: optional<integer>
+        docs: Number of annotations added
+      predictions_count:
+        type: optional<integer>
+        docs: Number of predictions added
+      duration:
+        type: optional<double>
+        docs: Time in seconds to create
+      file_upload_ids:
+        type: optional<list<integer>>
+        docs: Database IDs of uploaded files
+      could_be_tasks_list:
+        type: optional<boolean>
+        docs: Whether uploaded files can contain lists of tasks, like CSV/TSV files
+      found_formats:
+        type: optional<list<string>>
+        docs: The list of found file formats
+      data_columns:
+        type: optional<list<string>>
+        docs: The list of found data columns
 service:
   auth: false
   base-path: ''
@@ -500,6 +547,146 @@ service:
       response:
         docs: Exported data
         type: file
+      audiences:
+        - public
+    import_tasks:
+      path: /api/projects/{id}/import
+      method: POST
+      auth: true
+      docs: >
+
+        Import data as labeling tasks in bulk using this API endpoint. You can
+        use this API endpoint to import multiple tasks.
+
+        One POST request is limited at 250K tasks and 200 MB.
+
+
+        **Note:** Imported data is verified against a project *label_config* and
+        must
+
+        include all variables that were used in the *label_config*. For example,
+
+        if the label configuration has a *$text* variable, then each item in a
+        data object
+
+        must include a "text" field.
+
+        <br>
+
+
+        ## POST requests
+
+        <hr style="opacity:0.3">
+
+
+        There are three possible ways to import tasks with this endpoint:
+
+
+        ### 1\. **POST with data**
+
+        Send JSON tasks as POST data. Only JSON is supported for POSTing files
+        directly.
+
+        Update this example to specify your authorization token and Label Studio
+        instance host, then run the following from
+
+        the command line.
+
+
+        ```bash
+
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token
+        abc123' \
+
+        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text":
+        "Some text 1"}, {"text": "Some text 2"}]'
+
+        ```
+
+
+        ### 2\. **POST with files**
+
+        Send tasks as files. You can attach multiple files with different names.
+
+
+        - **JSON**: text files in JavaScript object notation format
+
+        - **CSV**: text files with tables in Comma Separated Values format
+
+        - **TSV**: text files with tables in Tab Separated Value format
+
+        - **TXT**: simple text files are similar to CSV with one column and no
+        header, supported for projects with one source only
+
+
+        Update this example to specify your authorization token, Label Studio
+        instance host, and file name and path,
+
+        then run the following from the command line:
+
+
+        ```bash
+
+        curl -H 'Authorization: Token abc123' \
+
+        -X POST 'https://localhost:8080/api/projects/1/import' -F
+        ‘file=@path/to/my_file.csv’
+
+        ```
+
+
+        ### 3\. **POST with URL**
+
+        You can also provide a URL to a file with labeling tasks. Supported file
+        formats are the same as in option 2.
+
+
+        ```bash
+
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token
+        abc123' \
+
+        -X POST 'https://localhost:8080/api/projects/1/import' \
+
+        --data '[{"url": "http://example.com/test1.csv"}, {"url":
+        "http://example.com/test2.csv"}]'
+
+        ```
+
+
+        <br>
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+      display-name: Import tasks
+      request:
+        body:
+          docs: List of tasks to import
+          type: list<ProjectsImportTasksRequestItem>
+      response:
+        docs: Tasks successfully imported
+        type: ProjectsImportTasksResponse
+      errors:
+        - root.BadRequestError
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            - {}
+          response:
+            body:
+              task_count: 1
+              annotation_count: 1
+              predictions_count: 1
+              duration: 1.1
+              file_upload_ids:
+                - 1
+              could_be_tasks_list: true
+              found_formats:
+                - found_formats
+              data_columns:
+                - data_columns
       audiences:
         - public
     api_projects_reimports_read:

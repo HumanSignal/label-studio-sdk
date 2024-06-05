@@ -12,11 +12,14 @@ from ..core.pydantic_utilities import pydantic_v1
 from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
+from ..errors.bad_request_error import BadRequestError
 from ..types.project import Project
 from ..types.project_label_config import ProjectLabelConfig
 from .exports.client import AsyncExportsClient, ExportsClient
 from .files.client import AsyncFilesClient, FilesClient
 from .types.projects_create_response import ProjectsCreateResponse
+from .types.projects_import_tasks_request_item import ProjectsImportTasksRequestItem
+from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from .types.projects_list_response import ProjectsListResponse
 
 # this is used as the default value for optional parameters
@@ -595,6 +598,137 @@ class ProjectsClient:
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def import_tasks(
+        self,
+        id: int,
+        *,
+        request: typing.Sequence[ProjectsImportTasksRequestItem],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsImportTasksResponse:
+        """
+        Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
+        One POST request is limited at 250K tasks and 200 MB.
+        
+        **Note:** Imported data is verified against a project _label_config_ and must
+        include all variables that were used in the _label_config_. For example,
+        if the label configuration has a _$text_ variable, then each item in a data object
+        must include a "text" field.
+        <br>
+        
+        ## POST requests
+        
+        <hr style="opacity:0.3">
+        
+        There are three possible ways to import tasks with this endpoint:
+        
+        ### 1\. **POST with data**
+        
+        Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
+        Update this example to specify your authorization token and Label Studio instance host, then run the following from
+        the command line.
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+        ```
+        
+        ### 2\. **POST with files**
+        
+        Send tasks as files. You can attach multiple files with different names.
+        
+        - **JSON**: text files in JavaScript object notation format
+        - **CSV**: text files with tables in Comma Separated Values format
+        - **TSV**: text files with tables in Tab Separated Value format
+        - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
+        
+        Update this example to specify your authorization token, Label Studio instance host, and file name and path,
+        then run the following from the command line:
+        
+        ```bash
+        curl -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
+        ```
+        
+        ### 3\. **POST with URL**
+        
+        You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' \
+        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+        ```
+        
+        <br>
+        
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+        
+        request : typing.Sequence[ProjectsImportTasksRequestItem]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        ProjectsImportTasksResponse
+            Tasks successfully imported
+        
+        Examples
+        --------
+        from label_studio_sdk import ProjectsImportTasksRequestItem
+        from label_studio_sdk.client import LabelStudio
+        
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.import_tasks(
+            id=1,
+            request=[ProjectsImportTasksRequestItem()],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"api/projects/{jsonable_encoder(id)}/import"
+            ),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
+            ),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
+        if _response.status_code == 400:
+            raise BadRequestError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
@@ -1307,6 +1441,137 @@ class AsyncProjectsClient:
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def import_tasks(
+        self,
+        id: int,
+        *,
+        request: typing.Sequence[ProjectsImportTasksRequestItem],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsImportTasksResponse:
+        """
+        Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
+        One POST request is limited at 250K tasks and 200 MB.
+        
+        **Note:** Imported data is verified against a project _label_config_ and must
+        include all variables that were used in the _label_config_. For example,
+        if the label configuration has a _$text_ variable, then each item in a data object
+        must include a "text" field.
+        <br>
+        
+        ## POST requests
+        
+        <hr style="opacity:0.3">
+        
+        There are three possible ways to import tasks with this endpoint:
+        
+        ### 1\. **POST with data**
+        
+        Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
+        Update this example to specify your authorization token and Label Studio instance host, then run the following from
+        the command line.
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+        ```
+        
+        ### 2\. **POST with files**
+        
+        Send tasks as files. You can attach multiple files with different names.
+        
+        - **JSON**: text files in JavaScript object notation format
+        - **CSV**: text files with tables in Comma Separated Values format
+        - **TSV**: text files with tables in Tab Separated Value format
+        - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
+        
+        Update this example to specify your authorization token, Label Studio instance host, and file name and path,
+        then run the following from the command line:
+        
+        ```bash
+        curl -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
+        ```
+        
+        ### 3\. **POST with URL**
+        
+        You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' \
+        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+        ```
+        
+        <br>
+        
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+        
+        request : typing.Sequence[ProjectsImportTasksRequestItem]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        ProjectsImportTasksResponse
+            Tasks successfully imported
+        
+        Examples
+        --------
+        from label_studio_sdk import ProjectsImportTasksRequestItem
+        from label_studio_sdk.client import AsyncLabelStudio
+        
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.import_tasks(
+            id=1,
+            request=[ProjectsImportTasksRequestItem()],
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            method="POST",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"api/projects/{jsonable_encoder(id)}/import"
+            ),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
+            ),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
+        if _response.status_code == 400:
+            raise BadRequestError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
