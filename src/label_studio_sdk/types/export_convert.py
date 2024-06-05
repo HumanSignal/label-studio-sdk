@@ -3,30 +3,14 @@
 import datetime as dt
 import typing
 
-from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from ...types.task import Task
+from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
-class TasksListResponse(pydantic_v1.BaseModel):
-    tasks: typing.Optional[typing.List[Task]] = pydantic_v1.Field(default=None)
+class ExportConvert(pydantic_v1.BaseModel):
+    export_type: str = pydantic_v1.Field()
     """
-    List of tasks, each task contains predictions and annotations if `fields` query parameter is set to `all`
-    """
-
-    total: typing.Optional[int] = pydantic_v1.Field(default=None)
-    """
-    Total number of tasks
-    """
-
-    total_annotations: typing.Optional[int] = pydantic_v1.Field(default=None)
-    """
-    Total number of annotations
-    """
-
-    total_predictions: typing.Optional[int] = pydantic_v1.Field(default=None)
-    """
-    Total number of predictions
+    Export file format.
     """
 
     def json(self, **kwargs: typing.Any) -> str:

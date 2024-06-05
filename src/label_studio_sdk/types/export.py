@@ -3,31 +3,31 @@
 import datetime as dt
 import typing
 
-from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from ...types.task import Task
+from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from .converted_format import ConvertedFormat
+from .export_status import ExportStatus
+from .user_simple import UserSimple
 
 
-class TasksListResponse(pydantic_v1.BaseModel):
-    tasks: typing.Optional[typing.List[Task]] = pydantic_v1.Field(default=None)
+class Export(pydantic_v1.BaseModel):
+    title: typing.Optional[str] = None
+    id: typing.Optional[int] = None
+    created_by: typing.Optional[UserSimple] = None
+    created_at: typing.Optional[dt.datetime] = pydantic_v1.Field(default=None)
     """
-    List of tasks, each task contains predictions and annotations if `fields` query parameter is set to `all`
-    """
-
-    total: typing.Optional[int] = pydantic_v1.Field(default=None)
-    """
-    Total number of tasks
+    Creation time
     """
 
-    total_annotations: typing.Optional[int] = pydantic_v1.Field(default=None)
+    finished_at: typing.Optional[dt.datetime] = pydantic_v1.Field(default=None)
     """
-    Total number of annotations
+    Complete or fail time
     """
 
-    total_predictions: typing.Optional[int] = pydantic_v1.Field(default=None)
-    """
-    Total number of predictions
-    """
+    status: typing.Optional[ExportStatus] = None
+    md5: typing.Optional[str] = None
+    counters: typing.Optional[typing.Dict[str, typing.Any]] = None
+    converted_formats: typing.Optional[typing.List[ConvertedFormat]] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -10,10 +10,10 @@ from .utilities import validate_response
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
-        "title": "title",
-        "description": "description",
-        "label_config": "label_config",
-        "expert_instruction": "expert_instruction",
+        "title": "My project",
+        "description": "My first project",
+        "label_config": "<View>[...]</View>",
+        "expert_instruction": "Label all cats",
         "show_instruction": True,
         "show_skip_button": True,
         "enable_empty_annotation": True,
@@ -22,7 +22,9 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "show_collab_predictions": True,
         "maximum_annotations": 1,
         "color": "color",
-        "control_weights": {"control_weights": {"key": "value"}},
+        "control_weights": {
+            "my_bbox": {"type": "RectangleLabels", "labels": {"Car": 1, "Airplaine": 0.5}, "overall": 0.33}
+        },
     }
     expected_types: typing.Any = {
         "title": None,

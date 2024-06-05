@@ -105,14 +105,43 @@ service:
         docs: List of Tasks
         type: TasksListResponse
       examples:
-        - response:
+        - name: response
+          response:
             body:
               tasks:
                 - id: 1
                   predictions:
-                    - {}
+                    - result:
+                        '0':
+                          from_name: sentiment
+                          to_name: text
+                          type: choices
+                          value:
+                            value:
+                              choices:
+                                '0': POSITIVE
+                      score: 0.9
+                      model_version: '1.0'
+                      task: 1
+                      created_at: '2021-01-01T00:00:00Z'
+                      updated_at: '2021-01-01T00:00:00Z'
                   annotations:
-                    - {}
+                    - result:
+                        '0':
+                          from_name: sentiment
+                          to_name: text
+                          type: choices
+                          value:
+                            value:
+                              choices:
+                                '0': POSITIVE
+                      created_at: '2021-01-01T00:00:00Z'
+                      updated_at: '2021-01-01T00:00:00Z'
+                      completed_by: 1
+                      updated_by: 1
+                      was_cancelled: false
+                      ground_truth: false
+                      lead_time: 12.34
                   drafts:
                     - {}
                   annotators:
@@ -160,29 +189,34 @@ service:
               type: optional<integer>
               docs: Project ID
       response:
-        docs: ''
+        docs: Created task
         type: root.BaseTask
       examples:
-        - request: {}
+        - name: response
+          request:
+            data:
+              image: https://example.com/image.jpg
+              text: Hello, world!
+            project: 1
           response:
             body:
               id: 1
               data:
-                data:
-                  key: value
+                image: https://example.com/image.jpg
+                text: Hello, AI!
               meta:
                 meta:
                   key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              is_labeled: true
+              is_labeled: false
               overlap: 1
               inner_id: 1
-              total_annotations: 1
-              cancelled_annotations: 1
-              total_predictions: 1
-              comment_count: 1
-              unresolved_comment_count: 1
+              total_annotations: 0
+              cancelled_annotations: 0
+              total_predictions: 0
+              comment_count: 0
+              unresolved_comment_count: 0
               last_comment_updated_at: '2024-01-15T09:30:00Z'
               project: 1
               updated_by: 1
@@ -205,66 +239,35 @@ service:
           docs: Task ID
       display-name: Get task
       response:
-        docs: ''
-        type: root.DataManagerTaskSerializer
+        docs: Task
+        type: root.BaseTask
       examples:
-        - path-parameters:
+        - name: response
+          path-parameters:
             id: id
           response:
             body:
               id: 1
-              predictions: predictions
-              annotations:
-                - id: 1
-                  created_username: created_username
-                  created_ago: created_ago
-                  completed_by: 1
-                  unique_id: unique_id
-                  was_cancelled: true
-                  ground_truth: true
-                  created_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  draft_created_at: '2024-01-15T09:30:00Z'
-                  lead_time: 1.1
-                  import_id: 1
-                  last_action: prediction
-                  task: 1
-                  project: 1
-                  updated_by: 1
-                  parent_prediction: 1
-                  parent_annotation: 1
-                  last_created_by: 1
-              drafts: drafts
-              annotators: annotators
-              inner_id: 1
-              cancelled_annotations: 1
-              total_annotations: 1
-              total_predictions: 1
-              completed_at: '2024-01-15T09:30:00Z'
-              annotations_results: annotations_results
-              predictions_results: predictions_results
-              predictions_score: 1.1
-              file_upload: file_upload
-              storage_filename: storage_filename
-              annotations_ids: annotations_ids
-              predictions_model_versions: predictions_model_versions
-              avg_lead_time: 1.1
-              draft_exists: true
-              updated_by: updated_by
               data:
-                data:
-                  key: value
+                image: https://example.com/image.jpg
+                text: Hello, AI!
               meta:
                 meta:
                   key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              is_labeled: true
+              is_labeled: false
               overlap: 1
-              comment_count: 1
-              unresolved_comment_count: 1
+              inner_id: 1
+              total_annotations: 0
+              cancelled_annotations: 0
+              total_predictions: 0
+              comment_count: 0
+              unresolved_comment_count: 0
               last_comment_updated_at: '2024-01-15T09:30:00Z'
               project: 1
+              updated_by: 1
+              file_upload: 1
               comment_authors:
                 - 1
       audiences:
@@ -305,31 +308,36 @@ service:
               type: optional<integer>
               docs: Project ID
       response:
-        docs: ''
+        docs: Updated task
         type: root.BaseTask
       examples:
-        - path-parameters:
+        - name: response
+          path-parameters:
             id: id
-          request: {}
+          request:
+            data:
+              image: https://example.com/image.jpg
+              text: Hello, world!
+            project: 1
           response:
             body:
               id: 1
               data:
-                data:
-                  key: value
+                image: https://example.com/image.jpg
+                text: Hello, AI!
               meta:
                 meta:
                   key: value
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
-              is_labeled: true
+              is_labeled: false
               overlap: 1
               inner_id: 1
-              total_annotations: 1
-              cancelled_annotations: 1
-              total_predictions: 1
-              comment_count: 1
-              unresolved_comment_count: 1
+              total_annotations: 0
+              cancelled_annotations: 0
+              total_predictions: 0
+              comment_count: 0
+              unresolved_comment_count: 0
               last_comment_updated_at: '2024-01-15T09:30:00Z'
               project: 1
               updated_by: 1
@@ -347,7 +355,9 @@ types:
     properties:
       tasks:
         type: optional<list<root.Task>>
-        docs: List of tasks
+        docs: >-
+          List of tasks, each task contains predictions and annotations if
+          `fields` query parameter is set to `all`
       total:
         type: optional<integer>
         docs: Total number of tasks

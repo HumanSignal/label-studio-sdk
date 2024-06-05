@@ -27,7 +27,7 @@ types:
         docs: Label config in XML format
       expert_instruction:
         type: optional<string>
-        docs: Labeling instructions
+        docs: Labeling instructions to show to the user
       show_instruction:
         type: optional<boolean>
         docs: Show labeling instructions
@@ -42,10 +42,12 @@ types:
         docs: Show annotation history
       reveal_preannotations_interactively:
         type: optional<boolean>
-        docs: Reveal preannotations interactively
+        docs: >-
+          Reveal preannotations interactively. If set to True, predictions will
+          be shown to the user only after selecting the area of interest
       show_collab_predictions:
         type: optional<boolean>
-        docs: Show collaborative predictions
+        docs: Show predictions to annotators
       maximum_annotations:
         type: optional<integer>
         docs: Maximum annotations per task
@@ -55,7 +57,15 @@ types:
         default: '#FFFFFF'
       control_weights:
         type: optional<map<string, unknown>>
-        docs: Control weights
+        docs: >-
+          Dict of weights for each control tag in metric calculation. Each
+          control tag (e.g. label or choice) will have it's own key in control
+          weight dict with weight for each label and overall weight.For example,
+          if bounding box annotation with control tag named my_bbox should be
+          included with 0.33 weight in agreement calculation, and the first
+          label Car should be twice more important than Airplaine, then you have
+          to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
   ProjectsImportTasksRequestItem:
     properties:
       data:
@@ -218,11 +228,11 @@ service:
         ```bash
 
         curl -H Content-Type:application/json -H 'Authorization: Token abc123'
-        -X POST 'https://localhost:8080/api/projects'     --data
-        '{"label_config": "<View>[...]</View>"}'
+        -X POST 'https://localhost:8080/api/projects'     --data '{"title": "My
+        project", "label_config": "<View></View>"}'
 
         ```
-      display-name: List of Projects
+      display-name: Create new project
       request:
         name: ProjectsCreateRequest
         body:
@@ -238,7 +248,7 @@ service:
               docs: Label config in XML format
             expert_instruction:
               type: optional<string>
-              docs: Labeling instructions
+              docs: Labeling instructions to show to the user
             show_instruction:
               type: optional<boolean>
               docs: Show labeling instructions
@@ -253,10 +263,13 @@ service:
               docs: Show annotation history
             reveal_preannotations_interactively:
               type: optional<boolean>
-              docs: Reveal preannotations interactively
+              docs: >-
+                Reveal preannotations interactively. If set to True, predictions
+                will be shown to the user only after selecting the area of
+                interest
             show_collab_predictions:
               type: optional<boolean>
-              docs: Show collaborative predictions
+              docs: Show predictions to annotators
             maximum_annotations:
               type: optional<integer>
               docs: Maximum annotations per task
@@ -266,7 +279,16 @@ service:
               default: '#FFFFFF'
             control_weights:
               type: optional<map<string, unknown>>
-              docs: Control weights
+              docs: >-
+                Dict of weights for each control tag in metric calculation. Each
+                control tag (e.g. label or choice) will have it's own key in
+                control weight dict with weight for each label and overall
+                weight.For example, if bounding box annotation with control tag
+                named my_bbox should be included with 0.33 weight in agreement
+                calculation, and the first label Car should be twice more
+                important than Airplaine, then you have to need the specify:
+                {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
+                'Airplaine': 0.5}, 'overall': 0.33}
       response:
         docs: ''
         type: ProjectsCreateResponse
@@ -274,10 +296,10 @@ service:
         - request: {}
           response:
             body:
-              title: title
-              description: description
-              label_config: label_config
-              expert_instruction: expert_instruction
+              title: My project
+              description: My first project
+              label_config: <View>[...]</View>
+              expert_instruction: Label all cats
               show_instruction: true
               show_skip_button: true
               enable_empty_annotation: true
@@ -287,8 +309,12 @@ service:
               maximum_annotations: 1
               color: color
               control_weights:
-                control_weights:
-                  key: value
+                my_bbox:
+                  type: RectangleLabels
+                  labels:
+                    Car: 1
+                    Airplaine: 0.5
+                  overall: 0.33
       audiences:
         - public
     api_projects_validate_create:

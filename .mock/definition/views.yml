@@ -207,6 +207,8 @@ service:
                   key: value
               user: 1
               project: 1
+      audiences:
+        - public
 types:
   ViewsCreateRequestDataFiltersConjunction:
     enum:

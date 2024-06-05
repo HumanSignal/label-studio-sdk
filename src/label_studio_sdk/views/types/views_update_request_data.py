@@ -5,28 +5,23 @@ import typing
 
 from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from ...types.task import Task
+from .views_update_request_data_filters import ViewsUpdateRequestDataFilters
+from .views_update_request_data_ordering_item import ViewsUpdateRequestDataOrderingItem
 
 
-class TasksListResponse(pydantic_v1.BaseModel):
-    tasks: typing.Optional[typing.List[Task]] = pydantic_v1.Field(default=None)
+class ViewsUpdateRequestData(pydantic_v1.BaseModel):
     """
-    List of tasks, each task contains predictions and annotations if `fields` query parameter is set to `all`
-    """
-
-    total: typing.Optional[int] = pydantic_v1.Field(default=None)
-    """
-    Total number of tasks
+    Custom view data
     """
 
-    total_annotations: typing.Optional[int] = pydantic_v1.Field(default=None)
+    filters: typing.Optional[ViewsUpdateRequestDataFilters] = pydantic_v1.Field(default=None)
     """
-    Total number of annotations
+    Filters for the view
     """
 
-    total_predictions: typing.Optional[int] = pydantic_v1.Field(default=None)
+    ordering: typing.Optional[typing.List[ViewsUpdateRequestDataOrderingItem]] = pydantic_v1.Field(default=None)
     """
-    Total number of predictions
+    Ordering for the view
     """
 
     def json(self, **kwargs: typing.Any) -> str:

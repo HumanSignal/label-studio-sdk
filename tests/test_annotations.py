@@ -14,13 +14,30 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "created_ago": "created_ago",
         "completed_by": 1,
         "unique_id": "unique_id",
-        "result": {"result": {"key": "value"}},
-        "was_cancelled": True,
-        "ground_truth": True,
+        "result": {
+            "0": {
+                "original_width": 1920,
+                "original_height": 1080,
+                "image_rotation": 0,
+                "from_name": "bboxes",
+                "to_name": "image",
+                "type": "rectanglelabels",
+                "value": {
+                    "x": 20,
+                    "y": 30,
+                    "width": 50,
+                    "height": 60,
+                    "rotation": 0,
+                    "values": {"rectanglelabels": {"0": "Person"}},
+                },
+            }
+        },
+        "was_cancelled": False,
+        "ground_truth": False,
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
         "draft_created_at": "2024-01-15T09:30:00Z",
-        "lead_time": 1.1,
+        "lead_time": 10,
         "import_id": 1,
         "last_action": "prediction",
         "task": 1,
@@ -73,13 +90,30 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_ago": "created_ago",
         "completed_by": 1,
         "unique_id": "unique_id",
-        "result": {"result": {"key": "value"}},
-        "was_cancelled": True,
-        "ground_truth": True,
+        "result": {
+            "0": {
+                "original_width": 1920,
+                "original_height": 1080,
+                "image_rotation": 0,
+                "from_name": "bboxes",
+                "to_name": "image",
+                "type": "rectanglelabels",
+                "value": {
+                    "x": 20,
+                    "y": 30,
+                    "width": 50,
+                    "height": 60,
+                    "rotation": 0,
+                    "values": {"rectanglelabels": {"0": "Person"}},
+                },
+            }
+        },
+        "was_cancelled": False,
+        "ground_truth": False,
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
         "draft_created_at": "2024-01-15T09:30:00Z",
-        "lead_time": 1.1,
+        "lead_time": 10,
         "import_id": 1,
         "last_action": "prediction",
         "task": 1,
@@ -111,10 +145,54 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "parent_annotation": "integer",
         "last_created_by": "integer",
     }
-    response = client.annotations.update(id=1)
+    response = client.annotations.update(
+        id=1,
+        result=[
+            {
+                "original_width": 1920,
+                "original_height": 1080,
+                "image_rotation": 0,
+                "from_name": "bboxes",
+                "to_name": "image",
+                "type": "rectanglelabels",
+                "value": {
+                    "x": 20,
+                    "y": 30,
+                    "width": 50,
+                    "height": 60,
+                    "rotation": 0,
+                    "values": {"rectanglelabels": {"0": "Person"}},
+                },
+            }
+        ],
+        was_cancelled=False,
+        ground_truth=True,
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.annotations.update(id=1)
+    async_response = await async_client.annotations.update(
+        id=1,
+        result=[
+            {
+                "original_width": 1920,
+                "original_height": 1080,
+                "image_rotation": 0,
+                "from_name": "bboxes",
+                "to_name": "image",
+                "type": "rectanglelabels",
+                "value": {
+                    "x": 20,
+                    "y": 30,
+                    "width": 50,
+                    "height": 60,
+                    "rotation": 0,
+                    "values": {"rectanglelabels": {"0": "Person"}},
+                },
+            }
+        ],
+        was_cancelled=False,
+        ground_truth=True,
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -126,13 +204,30 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "created_ago": "created_ago",
             "completed_by": 1,
             "unique_id": "unique_id",
-            "result": {"result": {"key": "value"}},
-            "was_cancelled": True,
-            "ground_truth": True,
+            "result": {
+                "0": {
+                    "original_width": 1920,
+                    "original_height": 1080,
+                    "image_rotation": 0,
+                    "from_name": "bboxes",
+                    "to_name": "image",
+                    "type": "rectanglelabels",
+                    "value": {
+                        "x": 20,
+                        "y": 30,
+                        "width": 50,
+                        "height": 60,
+                        "rotation": 0,
+                        "values": {"rectanglelabels": {"0": "Person"}},
+                    },
+                }
+            },
+            "was_cancelled": False,
+            "ground_truth": False,
             "created_at": "2024-01-15T09:30:00Z",
             "updated_at": "2024-01-15T09:30:00Z",
             "draft_created_at": "2024-01-15T09:30:00Z",
-            "lead_time": 1.1,
+            "lead_time": 10,
             "import_id": 1,
             "last_action": "prediction",
             "task": 1,
@@ -184,13 +279,30 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_ago": "created_ago",
         "completed_by": 1,
         "unique_id": "unique_id",
-        "result": {"result": {"key": "value"}},
-        "was_cancelled": True,
-        "ground_truth": True,
+        "result": {
+            "0": {
+                "original_width": 1920,
+                "original_height": 1080,
+                "image_rotation": 0,
+                "from_name": "bboxes",
+                "to_name": "image",
+                "type": "rectanglelabels",
+                "value": {
+                    "x": 20,
+                    "y": 30,
+                    "width": 50,
+                    "height": 60,
+                    "rotation": 0,
+                    "values": {"rectanglelabels": {"0": "Person"}},
+                },
+            }
+        },
+        "was_cancelled": False,
+        "ground_truth": False,
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
         "draft_created_at": "2024-01-15T09:30:00Z",
-        "lead_time": 1.1,
+        "lead_time": 10,
         "import_id": 1,
         "last_action": "prediction",
         "task": 1,
@@ -222,8 +334,52 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "parent_annotation": "integer",
         "last_created_by": "integer",
     }
-    response = client.annotations.create(id=1)
+    response = client.annotations.create(
+        id=1,
+        result=[
+            {
+                "original_width": 1920,
+                "original_height": 1080,
+                "image_rotation": 0,
+                "from_name": "bboxes",
+                "to_name": "image",
+                "type": "rectanglelabels",
+                "value": {
+                    "x": 20,
+                    "y": 30,
+                    "width": 50,
+                    "height": 60,
+                    "rotation": 0,
+                    "values": {"rectanglelabels": {"0": "Person"}},
+                },
+            }
+        ],
+        was_cancelled=False,
+        ground_truth=True,
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.annotations.create(id=1)
+    async_response = await async_client.annotations.create(
+        id=1,
+        result=[
+            {
+                "original_width": 1920,
+                "original_height": 1080,
+                "image_rotation": 0,
+                "from_name": "bboxes",
+                "to_name": "image",
+                "type": "rectanglelabels",
+                "value": {
+                    "x": 20,
+                    "y": 30,
+                    "width": 50,
+                    "height": 60,
+                    "rotation": 0,
+                    "values": {"rectanglelabels": {"0": "Person"}},
+                },
+            }
+        ],
+        was_cancelled=False,
+        ground_truth=True,
+    )
     validate_response(async_response, expected_response, expected_types)

@@ -60,6 +60,8 @@ service:
                     key: value
                 converted_formats:
                   - export_type: export_type
+      audiences:
+        - public
     create:
       path: /api/projects/{id}/exports/
       method: POST
@@ -170,6 +172,8 @@ service:
                   status: created
                   export_type: export_type
                   traceback: traceback
+      audiences:
+        - public
     delete:
       path: /api/projects/{id}/exports/{export_pk}
       method: DELETE
@@ -220,6 +224,8 @@ service:
           response:
             body:
               export_type: export_type
+      audiences:
+        - public
     download:
       path: /api/projects/{id}/exports/{export_pk}/download
       method: GET

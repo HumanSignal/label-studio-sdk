@@ -17,10 +17,11 @@ service:
           docs: A unique integer value identifying this annotation.
       display-name: Get annotation by its ID
       response:
-        docs: ''
+        docs: Retrieved annotation
         type: root.Annotation
       examples:
-        - path-parameters:
+        - name: response
+          path-parameters:
             id: 1
           response:
             body:
@@ -30,14 +31,28 @@ service:
               completed_by: 1
               unique_id: unique_id
               result:
-                result:
-                  key: value
-              was_cancelled: true
-              ground_truth: true
+                '0':
+                  original_width: 1920
+                  original_height: 1080
+                  image_rotation: 0
+                  from_name: bboxes
+                  to_name: image
+                  type: rectanglelabels
+                  value:
+                    x: 20
+                    'y': 30
+                    width: 50
+                    height: 60
+                    rotation: 0
+                    values:
+                      rectanglelabels:
+                        '0': Person
+              was_cancelled: false
+              ground_truth: false
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               draft_created_at: '2024-01-15T09:30:00Z'
-              lead_time: 1.1
+              lead_time: 10
               import_id: 1
               last_action: prediction
               task: 1
@@ -78,8 +93,11 @@ service:
         body:
           properties:
             result:
-              type: optional<map<string, unknown>>
-              docs: Labeling result in JSON format
+              type: optional<list<map<string, unknown>>>
+              docs: >-
+                Labeling result in JSON format. Read more about the format in
+                [the Label Studio
+                documentation.](https://labelstud.io/guide/task_format)
             task:
               type: optional<integer>
               docs: Corresponding task for this annotation
@@ -100,14 +118,33 @@ service:
               docs: This annotation is a Ground Truth
             lead_time:
               type: optional<double>
-              docs: How much time it took to annotate the task
+              docs: How much time it took to annotate the task (in seconds)
       response:
-        docs: ''
+        docs: Updated annotation
         type: root.Annotation
       examples:
-        - path-parameters:
+        - name: response
+          path-parameters:
             id: 1
-          request: {}
+          request:
+            result:
+              - original_width: 1920
+                original_height: 1080
+                image_rotation: 0
+                from_name: bboxes
+                to_name: image
+                type: rectanglelabels
+                value:
+                  x: 20
+                  'y': 30
+                  width: 50
+                  height: 60
+                  rotation: 0
+                  values:
+                    rectanglelabels:
+                      '0': Person
+            was_cancelled: false
+            ground_truth: true
           response:
             body:
               id: 1
@@ -116,14 +153,28 @@ service:
               completed_by: 1
               unique_id: unique_id
               result:
-                result:
-                  key: value
-              was_cancelled: true
-              ground_truth: true
+                '0':
+                  original_width: 1920
+                  original_height: 1080
+                  image_rotation: 0
+                  from_name: bboxes
+                  to_name: image
+                  type: rectanglelabels
+                  value:
+                    x: 20
+                    'y': 30
+                    width: 50
+                    height: 60
+                    rotation: 0
+                    values:
+                      rectanglelabels:
+                        '0': Person
+              was_cancelled: false
+              ground_truth: false
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               draft_created_at: '2024-01-15T09:30:00Z'
-              lead_time: 1.1
+              lead_time: 10
               import_id: 1
               last_action: prediction
               task: 1
@@ -145,10 +196,11 @@ service:
           docs: Task ID
       display-name: Get all task annotations
       response:
-        docs: ''
+        docs: Annotation
         type: list<root.Annotation>
       examples:
-        - path-parameters:
+        - name: response
+          path-parameters:
             id: 1
           response:
             body:
@@ -158,14 +210,28 @@ service:
                 completed_by: 1
                 unique_id: unique_id
                 result:
-                  result:
-                    key: value
-                was_cancelled: true
-                ground_truth: true
+                  '0':
+                    original_width: 1920
+                    original_height: 1080
+                    image_rotation: 0
+                    from_name: bboxes
+                    to_name: image
+                    type: rectanglelabels
+                    value:
+                      x: 20
+                      'y': 30
+                      width: 50
+                      height: 60
+                      rotation: 0
+                      values:
+                        rectanglelabels:
+                          '0': Person
+                was_cancelled: false
+                ground_truth: false
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 draft_created_at: '2024-01-15T09:30:00Z'
-                lead_time: 1.1
+                lead_time: 10
                 import_id: 1
                 last_action: prediction
                 task: 1
@@ -221,8 +287,11 @@ service:
         body:
           properties:
             result:
-              type: optional<map<string, unknown>>
-              docs: Labeling result in JSON format
+              type: optional<list<map<string, unknown>>>
+              docs: >-
+                Labeling result in JSON format. Read more about the format in
+                [the Label Studio
+                documentation.](https://labelstud.io/guide/task_format)
             task:
               type: optional<integer>
               docs: Corresponding task for this annotation
@@ -243,14 +312,33 @@ service:
               docs: This annotation is a Ground Truth
             lead_time:
               type: optional<double>
-              docs: How much time it took to annotate the task
+              docs: How much time it took to annotate the task (in seconds)
       response:
-        docs: ''
+        docs: Created annotation
         type: root.Annotation
       examples:
-        - path-parameters:
+        - name: response
+          path-parameters:
             id: 1
-          request: {}
+          request:
+            result:
+              - original_width: 1920
+                original_height: 1080
+                image_rotation: 0
+                from_name: bboxes
+                to_name: image
+                type: rectanglelabels
+                value:
+                  x: 20
+                  'y': 30
+                  width: 50
+                  height: 60
+                  rotation: 0
+                  values:
+                    rectanglelabels:
+                      '0': Person
+            was_cancelled: false
+            ground_truth: true
           response:
             body:
               id: 1
@@ -259,14 +347,28 @@ service:
               completed_by: 1
               unique_id: unique_id
               result:
-                result:
-                  key: value
-              was_cancelled: true
-              ground_truth: true
+                '0':
+                  original_width: 1920
+                  original_height: 1080
+                  image_rotation: 0
+                  from_name: bboxes
+                  to_name: image
+                  type: rectanglelabels
+                  value:
+                    x: 20
+                    'y': 30
+                    width: 50
+                    height: 60
+                    rotation: 0
+                    values:
+                      rectanglelabels:
+                        '0': Person
+              was_cancelled: false
+              ground_truth: false
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               draft_created_at: '2024-01-15T09:30:00Z'
-              lead_time: 1.1
+              lead_time: 10
               import_id: 1
               last_action: prediction
               task: 1

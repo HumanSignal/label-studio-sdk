@@ -414,7 +414,12 @@ types:
       result:
         docs: List of prediction results for the task
         type: list<map<string, unknown>>
-      model_version: optional<string>
+      model_version:
+        type: optional<string>
+        docs: >-
+          Model version - tag for predictions that can be used to filter tasks
+          in Data Manager, as well as select specific model version for showing
+          preannotations in the labeling interface
       created_ago:
         type: optional<string>
         docs: Delta time from creation time
@@ -1556,69 +1561,6 @@ types:
       file_upload:
         type: optional<integer>
         docs: Uploaded file used as data source for this task
-      comment_authors:
-        type: optional<list<integer>>
-        docs: Users who wrote comments
-  DataManagerTaskSerializer:
-    properties:
-      id: optional<integer>
-      predictions: optional<string>
-      annotations: optional<list<Annotation>>
-      drafts: optional<string>
-      annotators: optional<string>
-      inner_id: optional<integer>
-      cancelled_annotations: optional<integer>
-      total_annotations: optional<integer>
-      total_predictions: optional<integer>
-      completed_at: optional<datetime>
-      annotations_results: optional<string>
-      predictions_results: optional<string>
-      predictions_score: optional<double>
-      file_upload: optional<string>
-      storage_filename: optional<string>
-      annotations_ids: optional<string>
-      predictions_model_versions: optional<string>
-      avg_lead_time: optional<double>
-      draft_exists: optional<boolean>
-      updated_by: optional<string>
-      data:
-        docs: >-
-          User imported or uploaded data for a task. Data is formatted according
-          to the project label config. You can find examples of data for your
-          project on the Import page in the Label Studio Data Manager UI.
-        type: map<string, unknown>
-      meta:
-        type: optional<map<string, unknown>>
-        docs: >-
-          Meta is user imported (uploaded) data and can be useful as input for
-          an ML Backend for embeddings, advanced vectors, and other info. It is
-          passed to ML during training/predicting steps.
-      created_at:
-        type: optional<datetime>
-        docs: Time a task was created
-      updated_at:
-        type: optional<datetime>
-        docs: Last time a task was updated
-      is_labeled:
-        type: optional<boolean>
-        docs: >-
-          True if the number of annotations for this task is greater than or
-          equal to the number of maximum_completions for the project
-      overlap:
-        type: optional<integer>
-        docs: Number of distinct annotators that processed the current task
-      comment_count:
-        type: optional<integer>
-        docs: Number of comments in the task including all annotations
-      unresolved_comment_count:
-        type: optional<integer>
-        docs: Number of unresolved comments in the task including all annotations
-      last_comment_updated_at:
-        type: optional<datetime>
-        docs: When the last comment was updated
-      project:
-        type: optional<integer>
-        docs: Project ID for this task
       comment_authors:
         type: optional<list<integer>>
         docs: Users who wrote comments

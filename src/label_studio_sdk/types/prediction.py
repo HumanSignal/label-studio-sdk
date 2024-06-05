@@ -14,7 +14,11 @@ class Prediction(pydantic_v1.BaseModel):
     List of prediction results for the task
     """
 
-    model_version: typing.Optional[str] = None
+    model_version: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+    """
+
     created_ago: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Delta time from creation time

@@ -66,18 +66,18 @@ async def test_create_many_status(client: LabelStudio, async_client: AsyncLabelS
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
-        "data": {"data": {"key": "value"}},
+        "data": {"image": "https://example.com/image.jpg", "text": "Hello, AI!"},
         "meta": {"meta": {"key": "value"}},
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
-        "is_labeled": True,
+        "is_labeled": False,
         "overlap": 1,
         "inner_id": 1,
-        "total_annotations": 1,
-        "cancelled_annotations": 1,
-        "total_predictions": 1,
-        "comment_count": 1,
-        "unresolved_comment_count": 1,
+        "total_annotations": 0,
+        "cancelled_annotations": 0,
+        "total_predictions": 0,
+        "comment_count": 0,
+        "unresolved_comment_count": 0,
         "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "project": 1,
         "updated_by": 1,
@@ -86,7 +86,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     }
     expected_types: typing.Any = {
         "id": "integer",
-        "data": ("dict", {0: (None, None)}),
+        "data": ("dict", {0: (None, None), 1: (None, None)}),
         "meta": ("dict", {0: (None, None)}),
         "created_at": "datetime",
         "updated_at": "datetime",
@@ -104,125 +104,54 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "file_upload": "integer",
         "comment_authors": ("list", {0: "integer"}),
     }
-    response = client.tasks.create()
+    response = client.tasks.create(data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.tasks.create()
+    async_response = await async_client.tasks.create(
+        data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
-        "predictions": "predictions",
-        "annotations": [
-            {
-                "id": 1,
-                "created_username": "created_username",
-                "created_ago": "created_ago",
-                "completed_by": 1,
-                "unique_id": "unique_id",
-                "was_cancelled": True,
-                "ground_truth": True,
-                "created_at": "2024-01-15T09:30:00Z",
-                "updated_at": "2024-01-15T09:30:00Z",
-                "draft_created_at": "2024-01-15T09:30:00Z",
-                "lead_time": 1.1,
-                "import_id": 1,
-                "last_action": "prediction",
-                "task": 1,
-                "project": 1,
-                "updated_by": 1,
-                "parent_prediction": 1,
-                "parent_annotation": 1,
-                "last_created_by": 1,
-            }
-        ],
-        "drafts": "drafts",
-        "annotators": "annotators",
-        "inner_id": 1,
-        "cancelled_annotations": 1,
-        "total_annotations": 1,
-        "total_predictions": 1,
-        "completed_at": "2024-01-15T09:30:00Z",
-        "annotations_results": "annotations_results",
-        "predictions_results": "predictions_results",
-        "predictions_score": 1.1,
-        "file_upload": "file_upload",
-        "storage_filename": "storage_filename",
-        "annotations_ids": "annotations_ids",
-        "predictions_model_versions": "predictions_model_versions",
-        "avg_lead_time": 1.1,
-        "draft_exists": True,
-        "updated_by": "updated_by",
-        "data": {"data": {"key": "value"}},
+        "data": {"image": "https://example.com/image.jpg", "text": "Hello, AI!"},
         "meta": {"meta": {"key": "value"}},
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
-        "is_labeled": True,
+        "is_labeled": False,
         "overlap": 1,
-        "comment_count": 1,
-        "unresolved_comment_count": 1,
+        "inner_id": 1,
+        "total_annotations": 0,
+        "cancelled_annotations": 0,
+        "total_predictions": 0,
+        "comment_count": 0,
+        "unresolved_comment_count": 0,
         "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "project": 1,
+        "updated_by": 1,
+        "file_upload": 1,
         "comment_authors": [1],
     }
     expected_types: typing.Any = {
         "id": "integer",
-        "predictions": None,
-        "annotations": (
-            "list",
-            {
-                0: {
-                    "id": "integer",
-                    "created_username": None,
-                    "created_ago": None,
-                    "completed_by": "integer",
-                    "unique_id": None,
-                    "was_cancelled": None,
-                    "ground_truth": None,
-                    "created_at": "datetime",
-                    "updated_at": "datetime",
-                    "draft_created_at": "datetime",
-                    "lead_time": None,
-                    "import_id": "integer",
-                    "last_action": None,
-                    "task": "integer",
-                    "project": "integer",
-                    "updated_by": "integer",
-                    "parent_prediction": "integer",
-                    "parent_annotation": "integer",
-                    "last_created_by": "integer",
-                }
-            },
-        ),
-        "drafts": None,
-        "annotators": None,
-        "inner_id": "integer",
-        "cancelled_annotations": "integer",
-        "total_annotations": "integer",
-        "total_predictions": "integer",
-        "completed_at": "datetime",
-        "annotations_results": None,
-        "predictions_results": None,
-        "predictions_score": None,
-        "file_upload": None,
-        "storage_filename": None,
-        "annotations_ids": None,
-        "predictions_model_versions": None,
-        "avg_lead_time": None,
-        "draft_exists": None,
-        "updated_by": None,
-        "data": ("dict", {0: (None, None)}),
+        "data": ("dict", {0: (None, None), 1: (None, None)}),
         "meta": ("dict", {0: (None, None)}),
         "created_at": "datetime",
         "updated_at": "datetime",
         "is_labeled": None,
         "overlap": "integer",
+        "inner_id": "integer",
+        "total_annotations": "integer",
+        "cancelled_annotations": "integer",
+        "total_predictions": "integer",
         "comment_count": "integer",
         "unresolved_comment_count": "integer",
         "last_comment_updated_at": "datetime",
         "project": "integer",
+        "updated_by": "integer",
+        "file_upload": "integer",
         "comment_authors": ("list", {0: "integer"}),
     }
     response = client.tasks.get(id="id")
@@ -242,18 +171,18 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response = {
         "id": 1,
-        "data": {"data": {"key": "value"}},
+        "data": {"image": "https://example.com/image.jpg", "text": "Hello, AI!"},
         "meta": {"meta": {"key": "value"}},
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
-        "is_labeled": True,
+        "is_labeled": False,
         "overlap": 1,
         "inner_id": 1,
-        "total_annotations": 1,
-        "cancelled_annotations": 1,
-        "total_predictions": 1,
-        "comment_count": 1,
-        "unresolved_comment_count": 1,
+        "total_annotations": 0,
+        "cancelled_annotations": 0,
+        "total_predictions": 0,
+        "comment_count": 0,
+        "unresolved_comment_count": 0,
         "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "project": 1,
         "updated_by": 1,
@@ -262,7 +191,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     }
     expected_types: typing.Any = {
         "id": "integer",
-        "data": ("dict", {0: (None, None)}),
+        "data": ("dict", {0: (None, None), 1: (None, None)}),
         "meta": ("dict", {0: (None, None)}),
         "created_at": "datetime",
         "updated_at": "datetime",
@@ -280,8 +209,12 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "file_upload": "integer",
         "comment_authors": ("list", {0: "integer"}),
     }
-    response = client.tasks.update(id="id")
+    response = client.tasks.update(
+        id="id", data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.tasks.update(id="id")
+    async_response = await async_client.tasks.update(
+        id="id", data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1
+    )
     validate_response(async_response, expected_response, expected_types)
