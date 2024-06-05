@@ -500,6 +500,8 @@ service:
       response:
         docs: Exported data
         type: file
+      audiences:
+        - public
     api_projects_reimports_read:
       path: /api/projects/{id}/reimports/{reimport_pk}/
       method: GET

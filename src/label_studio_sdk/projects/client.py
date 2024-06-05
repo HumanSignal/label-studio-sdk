@@ -14,6 +14,8 @@ from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..types.project import Project
 from ..types.project_label_config import ProjectLabelConfig
+from .exports.client import AsyncExportsClient, ExportsClient
+from .files.client import AsyncFilesClient, FilesClient
 from .types.projects_create_response import ProjectsCreateResponse
 from .types.projects_list_response import ProjectsListResponse
 
@@ -24,6 +26,8 @@ OMIT = typing.cast(typing.Any, ...)
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.files = FilesClient(client_wrapper=self._client_wrapper)
+        self.exports = ExportsClient(client_wrapper=self._client_wrapper)
 
     def list(
         self,
@@ -472,6 +476,126 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def create_export(
+        self,
+        id: int,
+        *,
+        export_type: typing.Optional[str] = None,
+        download_all_tasks: typing.Optional[str] = None,
+        download_resources: typing.Optional[bool] = None,
+        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+        <i>Note: if you have a large project it's recommended to use
+        export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
+        Export annotated tasks as a file in a specific format.
+        For example, to export JSON annotations for a project to a file called `annotations.json`,
+        run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        To export specific tasks with IDs of 123 and 345, run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        export_type : typing.Optional[str]
+            Selected export format (JSON by default)
+
+        download_all_tasks : typing.Optional[str]
+            If true, download all tasks regardless of status. If false, download only annotated tasks.
+
+        download_resources : typing.Optional[bool]
+            If true, download all resource files such as images, audio, and others relevant to the tasks.
+
+        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Specify a list of task IDs to retrieve only the details for those tasks.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Exported data
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.create_export(
+            id=1,
+            export_type="string",
+            download_all_tasks="string",
+            download_resources=True,
+            ids=1,
+        )
+        """
+        with self._client_wrapper.httpx_client.stream(
+            method="GET",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"api/projects/{jsonable_encoder(id)}/export"
+            ),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "export_type": export_type,
+                            "download_all_tasks": download_all_tasks,
+                            "download_resources": download_resources,
+                            "ids": ids,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
+                )
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                for _chunk in _response.iter_bytes():
+                    yield _chunk
+                return
+            _response.read()
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete all tasks from a specific project.
@@ -612,6 +736,8 @@ class ProjectsClient:
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.files = AsyncFilesClient(client_wrapper=self._client_wrapper)
+        self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
 
     async def list(
         self,
@@ -1061,6 +1187,126 @@ class AsyncProjectsClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def create_export(
+        self,
+        id: int,
+        *,
+        export_type: typing.Optional[str] = None,
+        download_all_tasks: typing.Optional[str] = None,
+        download_resources: typing.Optional[bool] = None,
+        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        <i>Note: if you have a large project it's recommended to use
+        export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
+        Export annotated tasks as a file in a specific format.
+        For example, to export JSON annotations for a project to a file called `annotations.json`,
+        run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        To export specific tasks with IDs of 123 and 345, run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        export_type : typing.Optional[str]
+            Selected export format (JSON by default)
+
+        download_all_tasks : typing.Optional[str]
+            If true, download all tasks regardless of status. If false, download only annotated tasks.
+
+        download_resources : typing.Optional[bool]
+            If true, download all resource files such as images, audio, and others relevant to the tasks.
+
+        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Specify a list of task IDs to retrieve only the details for those tasks.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Exported data
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.create_export(
+            id=1,
+            export_type="string",
+            download_all_tasks="string",
+            download_resources=True,
+            ids=1,
+        )
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            method="GET",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"api/projects/{jsonable_encoder(id)}/export"
+            ),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "export_type": export_type,
+                            "download_all_tasks": download_all_tasks,
+                            "download_resources": download_resources,
+                            "ids": ids,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
+                )
+            ),
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
+            retries=0,
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                async for _chunk in _response.aiter_bytes():
+                    yield _chunk
+                return
+            await _response.aread()
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """

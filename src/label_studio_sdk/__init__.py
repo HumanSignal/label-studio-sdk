@@ -2,6 +2,7 @@
 
 from .types import (
     Annotation,
+    AnnotationFilterOptions,
     AnnotationLastAction,
     AzureBlobExportStorage,
     AzureBlobExportStorageStatus,
@@ -9,7 +10,12 @@ from .types import (
     AzureBlobImportStorageStatus,
     BaseTask,
     BaseUser,
+    ConvertedFormat,
+    ConvertedFormatStatus,
     DataManagerTaskSerializer,
+    ExportCreate,
+    ExportCreateStatus,
+    FileUpload,
     Filter,
     FilterGroup,
     GcsExportStorage,
@@ -38,7 +44,10 @@ from .types import (
     S3ExportStorageStatus,
     S3ImportStorage,
     S3ImportStorageStatus,
+    SerializationOption,
+    SerializationOptions,
     Task,
+    TaskFilterOptions,
     UserSimple,
     View,
     Webhook,
@@ -46,7 +55,7 @@ from .types import (
     WebhookSerializerForUpdate,
     WebhookSerializerForUpdateActionsItem,
 )
-from .errors import InternalServerError
+from .errors import BadRequestError, InternalServerError
 from . import annotations, export_storage, import_storage, ml, predictions, projects, tasks, users, views, webhooks
 from ._legacy import Client
 from .environment import LabelStudioEnvironment
@@ -59,7 +68,7 @@ from .ml import (
     MlUpdateResponseAuthMethod,
 )
 from .projects import ProjectsCreateResponse, ProjectsListResponse
-from .tasks import TasksListRequestFields, TasksListResponse
+from .tasks import TasksCreateManyRequestItem, TasksCreateManyResponse, TasksListRequestFields, TasksListResponse
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
 from .version import __version__
 from .views import (
@@ -74,15 +83,22 @@ from .webhooks import WebhooksUpdateRequestActionsItem
 
 __all__ = [
     "Annotation",
+    "AnnotationFilterOptions",
     "AnnotationLastAction",
     "AzureBlobExportStorage",
     "AzureBlobExportStorageStatus",
     "AzureBlobImportStorage",
     "AzureBlobImportStorageStatus",
+    "BadRequestError",
     "BaseTask",
     "BaseUser",
     "Client",
+    "ConvertedFormat",
+    "ConvertedFormatStatus",
     "DataManagerTaskSerializer",
+    "ExportCreate",
+    "ExportCreateStatus",
+    "FileUpload",
     "Filter",
     "FilterGroup",
     "GcsExportStorage",
@@ -121,7 +137,12 @@ __all__ = [
     "S3ExportStorageStatus",
     "S3ImportStorage",
     "S3ImportStorageStatus",
+    "SerializationOption",
+    "SerializationOptions",
     "Task",
+    "TaskFilterOptions",
+    "TasksCreateManyRequestItem",
+    "TasksCreateManyResponse",
     "TasksListRequestFields",
     "TasksListResponse",
     "UserSimple",

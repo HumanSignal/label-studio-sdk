@@ -21,6 +21,8 @@ service:
           response:
             body:
               - string
+      audiences:
+        - public
     list:
       path: /api/projects/{id}/exports/
       method: GET
@@ -121,6 +123,8 @@ service:
                 annotations__completed_by:
                   only_id: true
                 interpolate_key_frames: true
+      audiences:
+        - public
     get:
       path: /api/projects/{id}/exports/{export_pk}
       method: GET
@@ -185,6 +189,8 @@ service:
         - path-parameters:
             id: 1
             export_pk: export_pk
+      audiences:
+        - public
     convert:
       path: /api/projects/{id}/exports/{export_pk}/convert
       method: POST
@@ -252,5 +258,7 @@ service:
         - path-parameters:
             id: 1
             export_pk: export_pk
+      audiences:
+        - public
 imports:
   root: ../__package__.yml

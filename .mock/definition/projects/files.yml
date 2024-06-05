@@ -24,6 +24,8 @@ service:
             body:
               id: 1
               file: file
+      audiences:
+        - public
     delete:
       path: /api/import/file-upload/{id}
       method: DELETE
@@ -37,6 +39,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     update:
       path: /api/import/file-upload/{id}
       method: PATCH
@@ -60,6 +64,8 @@ service:
             body:
               id: 1
               file: file
+      audiences:
+        - public
     list:
       path: /api/projects/{id}/file-uploads
       method: GET
@@ -93,6 +99,8 @@ service:
             body:
               - id: 1
                 file: file
+      audiences:
+        - public
     delete_many:
       path: /api/projects/{id}/file-uploads
       method: DELETE
@@ -108,6 +116,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - public
     download:
       path: /data/upload/{filename}
       method: GET
@@ -119,3 +129,5 @@ service:
       examples:
         - path-parameters:
             filename: filename
+      audiences:
+        - public

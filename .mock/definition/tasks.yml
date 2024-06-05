@@ -206,6 +206,8 @@ service:
                 - found_formats
               data_columns:
                 - data_columns
+      audiences:
+        - public
     create_many_status:
       path: /api/projects/{id}/imports/{import_pk}/
       method: GET
