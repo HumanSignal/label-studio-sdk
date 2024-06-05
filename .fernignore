@@ -13,11 +13,9 @@ src/label_studio_sdk/converter
 # legacy code - to be removed in the future
 src/label_studio_sdk/_legacy
 
-# tutorials
+# tutorials and examples
 tutorials
-
-# legacy examples
-examples_legacy
+examples
 
 # tests
 tests/custom/converter
