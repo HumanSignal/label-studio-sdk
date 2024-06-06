@@ -1,6 +1,7 @@
 """ PathTrack BBoxes to Label Studio convert
 https://www.trace.ethz.ch/publications/2017/pathtrack/index.html
 """
+
 import os
 import sys
 import json
@@ -14,7 +15,7 @@ logger.setLevel(logging.DEBUG)
 
 handler = logging.StreamHandler(sys.stdout)
 handler.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
@@ -25,7 +26,7 @@ except ImportError:
 
 
 def get_labels():
-    return {i: 'Other' for i in range(0, 1000)}
+    return {i: "Other" for i in range(0, 1000)}
 
 
 def get_info(path):
@@ -71,13 +72,13 @@ def new_region(labels, info, from_name, to_name):
     }
 
     if labels is not None:
-        region['value']['labels'] = labels
+        region["value"]["labels"] = labels
 
     return region
 
 
 def new_keyframe(region, bbox, info):
-    region['value']['sequence'].append(
+    region["value"]["sequence"].append(
         {
             "x": bbox.x / info.original_width * 100,
             "y": bbox.y / info.original_height * 100,
@@ -110,7 +111,7 @@ def generator(path):
 
 
 def create_config(
-    from_name='box', to_name='video', source_value='video', target_fps=None
+    from_name="box", to_name="video", source_value="video", target_fps=None
 ):
     return f"""<View>
    <Header>Label the video:</Header>
@@ -129,9 +130,9 @@ def convert_shot(
     input_url,
     label_file,
     info_file,
-    from_name='box',
-    to_name='video',
-    source_value='video',
+    from_name="box",
+    to_name="video",
+    source_value="video",
     target_fps=None,
     hop_keyframes=0,
 ):
@@ -146,7 +147,7 @@ def convert_shot(
     :param target_fps: keep video with this fps only
     :param hop_keyframes: how many keyframes to skip
     """
-    logger.info('Converting of the shot is starting: %s', input_url)
+    logger.info("Converting of the shot is starting: %s", input_url)
     if not os.path.exists(label_file):
         return None
 
@@ -168,8 +169,8 @@ def convert_shot(
             region = regions[idx] = new_region(labels, info, from_name, to_name)
 
         # enable previous lifespan
-        if len(regions[idx]['value']['sequence']) > 0:
-            regions[idx]['value']['sequence'][-1]['enabled'] = True
+        if len(regions[idx]["value"]["sequence"]) > 0:
+            regions[idx]["value"]["sequence"][-1]["enabled"] = True
 
         regions[idx] = new_keyframe(region, bbox=v, info=info)
         keyframe_count += 1
@@ -177,15 +178,15 @@ def convert_shot(
     # keep only each <hop> keyframe
     if hop_keyframes > 1:
         for r in regions:
-            last = regions[r]['value']['sequence'][-1]
-            regions[r]['value']['sequence'] = regions[r]['value']['sequence'][
+            last = regions[r]["value"]["sequence"][-1]
+            regions[r]["value"]["sequence"] = regions[r]["value"]["sequence"][
                 0:-1:hop_keyframes
             ]
-            if regions[r]['value']['sequence'][-1] != last:
-                regions[r]['value']['sequence'].append(last)
+            if regions[r]["value"]["sequence"][-1] != last:
+                regions[r]["value"]["sequence"].append(last)
 
     logger.info(
-        'Shot with %i regions and %i keyframes created', len(regions), keyframe_count
+        "Shot with %i regions and %i keyframes created", len(regions), keyframe_count
     )
     data = {source_value: input_url}
     return new_task(data, result=list(regions.values()))
@@ -194,9 +195,9 @@ def convert_shot(
 def convert_dataset(
     root_dir,
     root_url,
-    from_name='box',
-    to_name='video',
-    source_value='video',
+    from_name="box",
+    to_name="video",
+    source_value="video",
     target_fps=None,
     hop_keyframes=0,
 ):
@@ -210,20 +211,20 @@ def convert_dataset(
     :param target_fps: keep video with this fps only
     :param hop_keyframes: how many keyframes to skip
     """
-    logger.info('Convert dataset start: %s', root_dir)
+    logger.info("Convert dataset start: %s", root_dir)
     tasks = []
 
-    if not root_url.endswith('/'):
-        root_url += '/'
+    if not root_url.endswith("/"):
+        root_url += "/"
 
     for d in os.listdir(root_dir):
         shot_dir = os.path.join(root_dir, d)
         if not os.path.isdir(shot_dir):
             continue
 
-        input_url = root_url + d + '/video.mp4'
-        label_file = os.path.join(shot_dir, 'gt/gt.txt')
-        info_file = os.path.join(shot_dir, 'info.xml')
+        input_url = root_url + d + "/video.mp4"
+        label_file = os.path.join(shot_dir, "gt/gt.txt")
+        info_file = os.path.join(shot_dir, "info.xml")
 
         task = convert_shot(
             input_url,
@@ -241,28 +242,28 @@ def convert_dataset(
         tasks.append(task)
 
     fps_name = int(target_fps)
-    path = os.path.join(root_dir, f'import-{fps_name}.json')
-    logger.info('Saving Label Studio JSON: %s', path)
-    with open(path, 'w') as f:
+    path = os.path.join(root_dir, f"import-{fps_name}.json")
+    logger.info("Saving Label Studio JSON: %s", path)
+    with open(path, "w") as f:
         json.dump(tasks, f)
 
-    path = os.path.join(root_dir, f'config-{fps_name}.xml')
-    logger.info('Saving Labeling Config: %s', path)
+    path = os.path.join(root_dir, f"config-{fps_name}.xml")
+    logger.info("Saving Labeling Config: %s", path)
     config = create_config(from_name, to_name, source_value, target_fps)
-    with open(path, 'w') as f:
+    with open(path, "w") as f:
         f.write(config)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # convert_dataset('../../tests', 'https://data.heartex.net/pathtrack/train/')
     # exit()
-    print(f'Usage: {sys.argv[0]} root_url target_fps\n')
+    print(f"Usage: {sys.argv[0]} root_url target_fps\n")
 
     url = (
         sys.argv[1]
         if len(sys.argv) > 1
-        else 'https://data.heartex.net/pathtrack/train/'
+        else "https://data.heartex.net/pathtrack/train/"
     )
     fps = float(sys.argv[2]) if len(sys.argv) > 2 else None
     hop = int(sys.argv[3]) if len(sys.argv) > 3 else 0
-    convert_dataset('./', url, target_fps=fps, hop_keyframes=hop)
+    convert_dataset("./", url, target_fps=fps, hop_keyframes=hop)

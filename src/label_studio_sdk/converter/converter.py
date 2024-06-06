@@ -71,81 +71,81 @@ class Format(Enum):
 class Converter(object):
     _FORMAT_INFO = {
         Format.JSON: {
-            'title': 'JSON',
-            'description': "List of items in raw JSON format stored in one JSON file. Use to export both the data "
+            "title": "JSON",
+            "description": "List of items in raw JSON format stored in one JSON file. Use to export both the data "
             "and the annotations for a dataset. It's Label Studio Common Format",
-            'link': 'https://labelstud.io/guide/export.html#JSON',
+            "link": "https://labelstud.io/guide/export.html#JSON",
         },
         Format.JSON_MIN: {
-            'title': 'JSON-MIN',
-            'description': 'List of items where only "from_name", "to_name" values from the raw JSON format are '
-            'exported. Use to export only the annotations for a dataset.',
-            'link': 'https://labelstud.io/guide/export.html#JSON-MIN',
+            "title": "JSON-MIN",
+            "description": 'List of items where only "from_name", "to_name" values from the raw JSON format are '
+            "exported. Use to export only the annotations for a dataset.",
+            "link": "https://labelstud.io/guide/export.html#JSON-MIN",
         },
         Format.CSV: {
-            'title': 'CSV',
-            'description': 'Results are stored as comma-separated values with the column names specified by the '
+            "title": "CSV",
+            "description": "Results are stored as comma-separated values with the column names specified by the "
             'values of the "from_name" and "to_name" fields.',
-            'link': 'https://labelstud.io/guide/export.html#CSV',
+            "link": "https://labelstud.io/guide/export.html#CSV",
         },
         Format.TSV: {
-            'title': 'TSV',
-            'description': 'Results are stored in tab-separated tabular file with column names specified by '
+            "title": "TSV",
+            "description": "Results are stored in tab-separated tabular file with column names specified by "
             '"from_name" "to_name" values',
-            'link': 'https://labelstud.io/guide/export.html#TSV',
+            "link": "https://labelstud.io/guide/export.html#TSV",
         },
         Format.CONLL2003: {
-            'title': 'CONLL2003',
-            'description': 'Popular format used for the CoNLL-2003 named entity recognition challenge.',
-            'link': 'https://labelstud.io/guide/export.html#CONLL2003',
-            'tags': ['sequence labeling', 'text tagging', 'named entity recognition'],
+            "title": "CONLL2003",
+            "description": "Popular format used for the CoNLL-2003 named entity recognition challenge.",
+            "link": "https://labelstud.io/guide/export.html#CONLL2003",
+            "tags": ["sequence labeling", "text tagging", "named entity recognition"],
         },
         Format.COCO: {
-            'title': 'COCO',
-            'description': 'Popular machine learning format used by the COCO dataset for object detection and image '
-            'segmentation tasks with polygons and rectangles.',
-            'link': 'https://labelstud.io/guide/export.html#COCO',
-            'tags': ['image segmentation', 'object detection'],
+            "title": "COCO",
+            "description": "Popular machine learning format used by the COCO dataset for object detection and image "
+            "segmentation tasks with polygons and rectangles.",
+            "link": "https://labelstud.io/guide/export.html#COCO",
+            "tags": ["image segmentation", "object detection"],
         },
         Format.VOC: {
-            'title': 'Pascal VOC XML',
-            'description': 'Popular XML format used for object detection and polygon image segmentation tasks.',
-            'link': 'https://labelstud.io/guide/export.html#Pascal-VOC-XML',
-            'tags': ['image segmentation', 'object detection'],
+            "title": "Pascal VOC XML",
+            "description": "Popular XML format used for object detection and polygon image segmentation tasks.",
+            "link": "https://labelstud.io/guide/export.html#Pascal-VOC-XML",
+            "tags": ["image segmentation", "object detection"],
         },
         Format.YOLO: {
-            'title': 'YOLO',
-            'description': 'Popular TXT format is created for each image file. Each txt file contains annotations for '
-            'the corresponding image file, that is object class, object coordinates, height & width.',
-            'link': 'https://labelstud.io/guide/export.html#YOLO',
-            'tags': ['image segmentation', 'object detection'],
+            "title": "YOLO",
+            "description": "Popular TXT format is created for each image file. Each txt file contains annotations for "
+            "the corresponding image file, that is object class, object coordinates, height & width.",
+            "link": "https://labelstud.io/guide/export.html#YOLO",
+            "tags": ["image segmentation", "object detection"],
         },
         Format.YOLO_OBB: {
-            'title': 'YOLOv8 OBB',
-            'description': 'Popular TXT format is created for each image file. Each txt file contains annotations for '
-            'the corresponding image file. The YOLO OBB format designates bounding boxes by their four corner points '
-            'with coordinates normalized between 0 and 1, so it is possible to export rotated objects.',
-            'link': 'https://labelstud.io/guide/export.html#YOLO',
-            'tags': ['image segmentation', 'object detection'],
+            "title": "YOLOv8 OBB",
+            "description": "Popular TXT format is created for each image file. Each txt file contains annotations for "
+            "the corresponding image file. The YOLO OBB format designates bounding boxes by their four corner points "
+            "with coordinates normalized between 0 and 1, so it is possible to export rotated objects.",
+            "link": "https://labelstud.io/guide/export.html#YOLO",
+            "tags": ["image segmentation", "object detection"],
         },
         Format.BRUSH_TO_NUMPY: {
-            'title': 'Brush labels to NumPy',
-            'description': 'Export your brush labels as NumPy 2d arrays. Each label outputs as one image.',
-            'link': 'https://labelstud.io/guide/export.html#Brush-labels-to-NumPy-amp-PNG',
-            'tags': ['image segmentation'],
+            "title": "Brush labels to NumPy",
+            "description": "Export your brush labels as NumPy 2d arrays. Each label outputs as one image.",
+            "link": "https://labelstud.io/guide/export.html#Brush-labels-to-NumPy-amp-PNG",
+            "tags": ["image segmentation"],
         },
         Format.BRUSH_TO_PNG: {
-            'title': 'Brush labels to PNG',
-            'description': 'Export your brush labels as PNG images. Each label outputs as one image.',
-            'link': 'https://labelstud.io/guide/export.html#Brush-labels-to-NumPy-amp-PNG',
-            'tags': ['image segmentation'],
+            "title": "Brush labels to PNG",
+            "description": "Export your brush labels as PNG images. Each label outputs as one image.",
+            "link": "https://labelstud.io/guide/export.html#Brush-labels-to-NumPy-amp-PNG",
+            "tags": ["image segmentation"],
         },
         Format.ASR_MANIFEST: {
-            'title': 'ASR Manifest',
-            'description': 'Export audio transcription labels for automatic speech recognition as the JSON manifest '
-            'format expected by NVIDIA NeMo models.',
-            'link': 'https://labelstud.io/guide/export.html#ASR-MANIFEST',
-            'tags': ['speech recognition'],
+            "title": "ASR Manifest",
+            "description": "Export audio transcription labels for automatic speech recognition as the JSON manifest "
+            "format expected by NVIDIA NeMo models.",
+            "link": "https://labelstud.io/guide/export.html#ASR-MANIFEST",
+            "tags": ["speech recognition"],
         },
     }
 
@@ -185,8 +185,8 @@ class Converter(object):
 
         if self._schema is None:
             logger.warning(
-                'Label config or schema for Converter is not provided, '
-                'it might be critical for some export formats, now set schema to empty dict'
+                "Label config or schema for Converter is not provided, "
+                "it might be critical for some export formats, now set schema to empty dict"
             )
             self._schema = {}
 
@@ -204,27 +204,27 @@ class Converter(object):
         elif format == Format.JSON_MIN:
             self.convert_to_json_min(input_data, output_data, is_dir=is_dir)
         elif format == Format.CSV:
-            header = kwargs.get('csv_header', True)
-            sep = kwargs.get('csv_separator', ',')
+            header = kwargs.get("csv_header", True)
+            sep = kwargs.get("csv_separator", ",")
             self.convert_to_csv(
                 input_data, output_data, sep=sep, header=header, is_dir=is_dir
             )
         elif format == Format.TSV:
-            header = kwargs.get('csv_header', True)
-            sep = kwargs.get('csv_separator', '\t')
+            header = kwargs.get("csv_header", True)
+            sep = kwargs.get("csv_separator", "\t")
             self.convert_to_csv(
                 input_data, output_data, sep=sep, header=header, is_dir=is_dir
             )
         elif format == Format.CONLL2003:
             self.convert_to_conll2003(input_data, output_data, is_dir=is_dir)
         elif format == Format.COCO:
-            image_dir = kwargs.get('image_dir')
+            image_dir = kwargs.get("image_dir")
             self.convert_to_coco(
                 input_data, output_data, output_image_dir=image_dir, is_dir=is_dir
             )
         elif format == Format.YOLO or format == Format.YOLO_OBB:
-            image_dir = kwargs.get('image_dir')
-            label_dir = kwargs.get('label_dir')
+            image_dir = kwargs.get("image_dir")
+            label_dir = kwargs.get("label_dir")
             self.convert_to_yolo(
                 input_data,
                 output_data,
@@ -234,7 +234,7 @@ class Converter(object):
                 is_obb=(format == Format.YOLO_OBB),
             )
         elif format == Format.VOC:
-            image_dir = kwargs.get('image_dir')
+            image_dir = kwargs.get("image_dir")
             self.convert_to_voc(
                 input_data, output_data, output_image_dir=image_dir, is_dir=is_dir
             )
@@ -244,14 +244,14 @@ class Converter(object):
                 if is_dir
                 else self.iter_from_json_file(input_data)
             )
-            brush.convert_task_dir(items, output_data, out_format='numpy')
+            brush.convert_task_dir(items, output_data, out_format="numpy")
         elif format == Format.BRUSH_TO_PNG:
             items = (
                 self.iter_from_dir(input_data)
                 if is_dir
                 else self.iter_from_json_file(input_data)
             )
-            brush.convert_task_dir(items, output_data, out_format='png')
+            brush.convert_task_dir(items, output_data, out_format="png")
         elif format == Format.ASR_MANIFEST:
             items = (
                 self.iter_from_dir(input_data)
@@ -275,14 +275,14 @@ class Converter(object):
                 if tag not in self._schema:
                     logger.debug(
                         'Specified tag "{tag}" not found in config schema: '
-                        'available options are {schema_keys}'.format(
+                        "available options are {schema_keys}".format(
                             tag=tag, schema_keys=str(list(self._schema.keys()))
                         )
                     )
         for name, info in self._schema.items():
             if output_tags is not None and name not in output_tags:
                 continue
-            data_keys |= set(map(itemgetter('value'), info['inputs']))
+            data_keys |= set(map(itemgetter("value"), info["inputs"]))
             output_tag_names.append(name)
 
         return list(data_keys), output_tag_names
@@ -298,52 +298,52 @@ class Converter(object):
         output_tag_types = set()
         input_tag_types = set()
         for info in self._schema.values():
-            output_tag_types.add(info['type'])
-            for input_tag in info['inputs']:
-                if input_tag['type'] == 'Text' and input_tag.get('valueType') == 'url':
+            output_tag_types.add(info["type"])
+            for input_tag in info["inputs"]:
+                if input_tag["type"] == "Text" and input_tag.get("valueType") == "url":
                     logger.error('valueType="url" are not supported for text inputs')
                     continue
-                input_tag_types.add(input_tag['type'])
+                input_tag_types.add(input_tag["type"])
 
         all_formats = [f.name for f in Format]
-        if not ('Text' in input_tag_types and 'Labels' in output_tag_types):
+        if not ("Text" in input_tag_types and "Labels" in output_tag_types):
             all_formats.remove(Format.CONLL2003.name)
         if not (
-            'Image' in input_tag_types
+            "Image" in input_tag_types
             and (
-                'RectangleLabels' in output_tag_types
-                or 'Rectangle' in output_tag_types
-                and 'Labels' in output_tag_types
+                "RectangleLabels" in output_tag_types
+                or "Rectangle" in output_tag_types
+                and "Labels" in output_tag_types
             )
         ):
             all_formats.remove(Format.VOC.name)
         if not (
-            'Image' in input_tag_types
+            "Image" in input_tag_types
             and (
-                'RectangleLabels' in output_tag_types
-                or 'PolygonLabels' in output_tag_types
+                "RectangleLabels" in output_tag_types
+                or "PolygonLabels" in output_tag_types
             )
-            or 'Rectangle' in output_tag_types
-            and 'Labels' in output_tag_types
-            or 'PolygonLabels' in output_tag_types
-            and 'Labels' in output_tag_types
+            or "Rectangle" in output_tag_types
+            and "Labels" in output_tag_types
+            or "PolygonLabels" in output_tag_types
+            and "Labels" in output_tag_types
         ):
             all_formats.remove(Format.COCO.name)
             all_formats.remove(Format.YOLO.name)
         if not (
-            'Image' in input_tag_types
+            "Image" in input_tag_types
             and (
-                'BrushLabels' in output_tag_types
-                or 'brushlabels' in output_tag_types
-                or 'Brush' in output_tag_types
-                and 'Labels' in output_tag_types
+                "BrushLabels" in output_tag_types
+                or "brushlabels" in output_tag_types
+                or "Brush" in output_tag_types
+                and "Labels" in output_tag_types
             )
         ):
             all_formats.remove(Format.BRUSH_TO_NUMPY.name)
             all_formats.remove(Format.BRUSH_TO_PNG.name)
         if not (
-            ('Audio' in input_tag_types or 'AudioPlus' in input_tag_types)
-            and 'TextArea' in output_tag_types
+            ("Audio" in input_tag_types or "AudioPlus" in input_tag_types)
+            and "TextArea" in output_tag_types
         ):
             all_formats.remove(Format.ASR_MANIFEST.name)
 
@@ -356,9 +356,9 @@ class Converter(object):
     def iter_from_dir(self, input_dir):
         if not os.path.exists(input_dir):
             raise FileNotFoundError(
-                '{input_dir} doesn\'t exist'.format(input_dir=input_dir)
+                "{input_dir} doesn't exist".format(input_dir=input_dir)
             )
-        for json_file in glob(os.path.join(input_dir, '*.json')):
+        for json_file in glob(os.path.join(input_dir, "*.json")):
             for item in self.iter_from_json_file(json_file):
                 if item:
                     yield item
@@ -371,18 +371,18 @@ class Converter(object):
         data_type = get_json_root_type(json_file)
 
         # one task
-        if data_type == 'dict':
-            with open(json_file, 'r') as json_file:
+        if data_type == "dict":
+            with open(json_file, "r") as json_file:
                 data = json.load(json_file)
             for item in self.annotation_result_from_task(data):
                 yield item
 
         # many tasks
-        elif data_type == 'list':
-            with io.open(json_file, 'rb') as f:
-                logger.debug(f'ijson backend in use: {ijson.backend}')
+        elif data_type == "list":
+            with io.open(json_file, "rb") as f:
+                logger.debug(f"ijson backend in use: {ijson.backend}")
                 data = ijson.items(
-                    f, 'item', use_float=True
+                    f, "item", use_float=True
                 )  # 'item' means to read array of dicts
                 for task in data:
                     for item in self.annotation_result_from_task(task):
@@ -402,11 +402,11 @@ class Converter(object):
             if tag_name == from_name:
                 return tag_name
 
-            if not tag_info.get('regex'):
+            if not tag_info.get("regex"):
                 continue
 
             tag_name_pattern = tag_name
-            for variable, regex in tag_info['regex'].items():
+            for variable, regex in tag_info["regex"].items():
                 tag_name_pattern = tag_name_pattern.replace(variable, regex)
 
             if re.compile(tag_name_pattern).match(from_name):
@@ -415,17 +415,17 @@ class Converter(object):
         return None
 
     def annotation_result_from_task(self, task):
-        has_annotations = 'completions' in task or 'annotations' in task
+        has_annotations = "completions" in task or "annotations" in task
         if not has_annotations:
             logger.warning(
                 'Each task dict item should contain "annotations" or "completions" [deprecated], '
-                'where value is list of dicts'
+                "where value is list of dicts"
             )
             return None
 
         # get last not skipped completion and make result from it
         annotations = (
-            task['annotations'] if 'annotations' in task else task['completions']
+            task["annotations"] if "annotations" in task else task["completions"]
         )
 
         # return task with empty annotations
@@ -435,7 +435,7 @@ class Converter(object):
 
         # skip cancelled annotations
         cancelled = lambda x: not (
-            x.get('skipped', False) or x.get('was_cancelled', False)
+            x.get("skipped", False) or x.get("was_cancelled", False)
         )
         annotations = list(filter(cancelled, annotations))
         if not annotations:
@@ -443,44 +443,44 @@ class Converter(object):
 
         # sort by creation time
         annotations = sorted(
-            annotations, key=lambda x: x.get('created_at', 0), reverse=True
+            annotations, key=lambda x: x.get("created_at", 0), reverse=True
         )
 
         for annotation in annotations:
-            result = annotation['result']
+            result = annotation["result"]
             outputs = defaultdict(list)
 
             # get results only as output
             for r in result:
-                if 'from_name' in r and (
-                    tag_name := self._maybe_matching_tag_from_schema(r['from_name'])
+                if "from_name" in r and (
+                    tag_name := self._maybe_matching_tag_from_schema(r["from_name"])
                 ):
-                    v = deepcopy(r['value'])
-                    v['type'] = self._schema[tag_name]['type']
-                    if 'original_width' in r:
-                        v['original_width'] = r['original_width']
-                    if 'original_height' in r:
-                        v['original_height'] = r['original_height']
-                    outputs[r['from_name']].append(v)
+                    v = deepcopy(r["value"])
+                    v["type"] = self._schema[tag_name]["type"]
+                    if "original_width" in r:
+                        v["original_width"] = r["original_width"]
+                    if "original_height" in r:
+                        v["original_height"] = r["original_height"]
+                    outputs[r["from_name"]].append(v)
 
             data = Converter.get_data(task, outputs, annotation)
-            if 'agreement' in task:
-                data['agreement'] = task['agreement']
+            if "agreement" in task:
+                data["agreement"] = task["agreement"]
             yield data
 
     @staticmethod
     def get_data(task, outputs, annotation):
         return {
-            'id': task['id'],
-            'input': task['data'],
-            'output': outputs or {},
-            'completed_by': annotation.get('completed_by', {}),
-            'annotation_id': annotation.get('id'),
-            'created_at': annotation.get('created_at'),
-            'updated_at': annotation.get('updated_at'),
-            'lead_time': annotation.get('lead_time'),
-            'history': annotation.get('history'),
-            'was_cancelled': annotation.get('was_cancelled'),
+            "id": task["id"],
+            "input": task["data"],
+            "output": outputs or {},
+            "completed_by": annotation.get("completed_by", {}),
+            "annotation_id": annotation.get("id"),
+            "created_at": annotation.get("created_at"),
+            "updated_at": annotation.get("updated_at"),
+            "lead_time": annotation.get("lead_time"),
+            "history": annotation.get("history"),
+            "was_cancelled": annotation.get("was_cancelled"),
         }
 
     def _check_format(self, fmt):
@@ -489,13 +489,13 @@ class Converter(object):
     def convert_to_json(self, input_data, output_dir, is_dir=True):
         self._check_format(Format.JSON)
         ensure_dir(output_dir)
-        output_file = os.path.join(output_dir, 'result.json')
+        output_file = os.path.join(output_dir, "result.json")
         records = []
         if is_dir:
-            for json_file in glob(os.path.join(input_data, '*.json')):
-                with io.open(json_file, encoding='utf8') as f:
+            for json_file in glob(os.path.join(input_data, "*.json")):
+                with io.open(json_file, encoding="utf8") as f:
                     records.append(json.load(f))
-            with io.open(output_file, mode='w', encoding='utf8') as fout:
+            with io.open(output_file, mode="w", encoding="utf8") as fout:
                 json.dump(records, fout, indent=2, ensure_ascii=False)
         else:
             copy2(input_data, output_file)
@@ -503,26 +503,26 @@ class Converter(object):
     def convert_to_json_min(self, input_data, output_dir, is_dir=True):
         self._check_format(Format.JSON_MIN)
         ensure_dir(output_dir)
-        output_file = os.path.join(output_dir, 'result.json')
+        output_file = os.path.join(output_dir, "result.json")
         records = []
         item_iterator = self.iter_from_dir if is_dir else self.iter_from_json_file
 
         for item in item_iterator(input_data):
-            record = deepcopy(item['input'])
-            if item.get('id') is not None:
-                record['id'] = item['id']
-            for name, value in item['output'].items():
+            record = deepcopy(item["input"])
+            if item.get("id") is not None:
+                record["id"] = item["id"]
+            for name, value in item["output"].items():
                 record[name] = prettify_result(value)
-            record['annotator'] = get_annotator(item, int_id=True)
-            record['annotation_id'] = item['annotation_id']
-            record['created_at'] = item['created_at']
-            record['updated_at'] = item['updated_at']
-            record['lead_time'] = item['lead_time']
-            if 'agreement' in item:
-                record['agreement'] = item['agreement']
+            record["annotator"] = get_annotator(item, int_id=True)
+            record["annotation_id"] = item["annotation_id"]
+            record["created_at"] = item["created_at"]
+            record["updated_at"] = item["updated_at"]
+            record["lead_time"] = item["lead_time"]
+            if "agreement" in item:
+                record["agreement"] = item["agreement"]
             records.append(record)
 
-        with io.open(output_file, mode='w', encoding='utf8') as fout:
+        with io.open(output_file, mode="w", encoding="utf8") as fout:
             json.dump(records, fout, indent=2, ensure_ascii=False)
 
     def convert_to_csv(self, input_data, output_dir, is_dir=True, **kwargs):
@@ -533,26 +533,26 @@ class Converter(object):
     def convert_to_conll2003(self, input_data, output_dir, is_dir=True):
         self._check_format(Format.CONLL2003)
         ensure_dir(output_dir)
-        output_file = os.path.join(output_dir, 'result.conll')
+        output_file = os.path.join(output_dir, "result.conll")
         data_key = self._data_keys[0]
-        with io.open(output_file, 'w', encoding='utf8') as fout:
-            fout.write('-DOCSTART- -X- O\n')
+        with io.open(output_file, "w", encoding="utf8") as fout:
+            fout.write("-DOCSTART- -X- O\n")
             item_iterator = self.iter_from_dir if is_dir else self.iter_from_json_file
 
             for item in item_iterator(input_data):
                 filtered_output = list(
                     filter(
-                        lambda x: x[0]['type'].lower() == 'labels',
-                        item['output'].values(),
+                        lambda x: x[0]["type"].lower() == "labels",
+                        item["output"].values(),
                     )
                 )
                 tokens, tags = create_tokens_and_tags(
-                    text=item['input'][data_key],
+                    text=item["input"][data_key],
                     spans=next(iter(filtered_output), None),
                 )
                 for token, tag in zip(tokens, tags):
-                    fout.write('{token} -X- _ {tag}\n'.format(token=token, tag=tag))
-                fout.write('\n')
+                    fout.write("{token} -X- _ {tag}\n".format(token=token, tag=tag))
+                fout.write("\n")
 
     def convert_to_coco(
         self, input_data, output_dir, output_image_dir=None, is_dir=True
@@ -560,21 +560,21 @@ class Converter(object):
         def add_image(images, width, height, image_id, image_path):
             images.append(
                 {
-                    'width': width,
-                    'height': height,
-                    'id': image_id,
-                    'file_name': image_path,
+                    "width": width,
+                    "height": height,
+                    "id": image_id,
+                    "file_name": image_path,
                 }
             )
             return images
 
         self._check_format(Format.COCO)
         ensure_dir(output_dir)
-        output_file = os.path.join(output_dir, 'result.json')
+        output_file = os.path.join(output_dir, "result.json")
         if output_image_dir is not None:
             ensure_dir(output_image_dir)
         else:
-            output_image_dir = os.path.join(output_dir, 'images')
+            output_image_dir = os.path.join(output_dir, "images")
             os.makedirs(output_image_dir, exist_ok=True)
         images, categories, annotations = [], [], []
         categories, category_name_to_id = self._get_labels()
@@ -585,7 +585,7 @@ class Converter(object):
             else self.iter_from_json_file(input_data)
         )
         for item_idx, item in enumerate(item_iterator):
-            image_path = item['input'][data_key]
+            image_path = item["input"][data_key]
             image_id = len(images)
             width = None
             height = None
@@ -602,7 +602,7 @@ class Converter(object):
                     )
                 except:
                     logger.info(
-                        'Unable to download {image_path}. The image of {item} will be skipped'.format(
+                        "Unable to download {image_path}. The image of {item} will be skipped".format(
                             image_path=image_path, item=item
                         ),
                         exc_info=True,
@@ -621,18 +621,18 @@ class Converter(object):
                 )
 
             # skip tasks without annotations
-            if not item['output']:
+            if not item["output"]:
                 # image wasn't load and there are no labels
                 if not width:
                     images = add_image(images, width, height, image_id, image_path)
 
-                logger.warning('No annotations found for item #' + str(item_idx))
+                logger.warning("No annotations found for item #" + str(item_idx))
                 continue
 
             # concatenate results over all tag names
             labels = []
-            for key in item['output']:
-                labels += item['output'][key]
+            for key in item["output"]:
+                labels += item["output"][key]
 
             if len(labels) == 0:
                 logger.debug(f'Empty bboxes for {item["output"]}')
@@ -640,7 +640,7 @@ class Converter(object):
 
             for label in labels:
                 category_name = None
-                for key in ['rectanglelabels', 'polygonlabels', 'labels']:
+                for key in ["rectanglelabels", "polygonlabels", "labels"]:
                     if key in label and len(label[key]) > 0:
                         category_name = label[key][0]
                         break
@@ -650,24 +650,24 @@ class Converter(object):
                     continue
 
                 if not height or not width:
-                    if 'original_width' not in label or 'original_height' not in label:
+                    if "original_width" not in label or "original_height" not in label:
                         logger.debug(
-                            f'original_width or original_height not found in {image_path}'
+                            f"original_width or original_height not found in {image_path}"
                         )
                         continue
 
-                    width, height = label['original_width'], label['original_height']
+                    width, height = label["original_width"], label["original_height"]
                     images = add_image(images, width, height, image_id, image_path)
 
                 if category_name not in category_name_to_id:
                     category_id = len(categories)
                     category_name_to_id[category_name] = category_id
-                    categories.append({'id': category_id, 'name': category_name})
+                    categories.append({"id": category_id, "name": category_name})
                 category_id = category_name_to_id[category_name]
 
                 annotation_id = len(annotations)
 
-                if 'rectanglelabels' in label or 'labels' in label:
+                if "rectanglelabels" in label or "labels" in label:
                     xywh = self.rotated_rectangle(label)
                     if xywh is None:
                         continue
@@ -680,14 +680,14 @@ class Converter(object):
 
                     annotations.append(
                         {
-                            'id': annotation_id,
-                            'image_id': image_id,
-                            'category_id': category_id,
-                            'segmentation': [],
-                            'bbox': [x, y, w, h],
-                            'ignore': 0,
-                            'iscrowd': 0,
-                            'area': w * h,
+                            "id": annotation_id,
+                            "image_id": image_id,
+                            "category_id": category_id,
+                            "segmentation": [],
+                            "bbox": [x, y, w, h],
+                            "ignore": 0,
+                            "iscrowd": 0,
+                            "area": w * h,
                         }
                     )
                 elif "polygonlabels" in label:
@@ -698,37 +698,37 @@ class Converter(object):
 
                     annotations.append(
                         {
-                            'id': annotation_id,
-                            'image_id': image_id,
-                            'category_id': category_id,
-                            'segmentation': [
+                            "id": annotation_id,
+                            "image_id": image_id,
+                            "category_id": category_id,
+                            "segmentation": [
                                 [coord for point in points_abs for coord in point]
                             ],
-                            'bbox': get_polygon_bounding_box(x, y),
-                            'ignore': 0,
-                            'iscrowd': 0,
-                            'area': get_polygon_area(x, y),
+                            "bbox": get_polygon_bounding_box(x, y),
+                            "ignore": 0,
+                            "iscrowd": 0,
+                            "area": get_polygon_area(x, y),
                         }
                     )
                 else:
                     raise ValueError("Unknown label type")
 
-                if os.getenv('LABEL_STUDIO_FORCE_ANNOTATOR_EXPORT'):
-                    annotations[-1].update({'annotator': get_annotator(item)})
+                if os.getenv("LABEL_STUDIO_FORCE_ANNOTATOR_EXPORT"):
+                    annotations[-1].update({"annotator": get_annotator(item)})
 
-        with io.open(output_file, mode='w', encoding='utf8') as fout:
+        with io.open(output_file, mode="w", encoding="utf8") as fout:
             json.dump(
                 {
-                    'images': images,
-                    'categories': categories,
-                    'annotations': annotations,
-                    'info': {
-                        'year': datetime.now().year,
-                        'version': '1.0',
-                        'description': '',
-                        'contributor': 'Label Studio',
-                        'url': '',
-                        'date_created': str(datetime.now()),
+                    "images": images,
+                    "categories": categories,
+                    "annotations": annotations,
+                    "info": {
+                        "year": datetime.now().year,
+                        "version": "1.0",
+                        "description": "",
+                        "contributor": "Label Studio",
+                        "url": "",
+                        "date_created": str(datetime.now()),
                     },
                 },
                 fout,
@@ -769,17 +769,17 @@ class Converter(object):
         else:
             self._check_format(Format.YOLO)
         ensure_dir(output_dir)
-        notes_file = os.path.join(output_dir, 'notes.json')
-        class_file = os.path.join(output_dir, 'classes.txt')
+        notes_file = os.path.join(output_dir, "notes.json")
+        class_file = os.path.join(output_dir, "classes.txt")
         if output_image_dir is not None:
             ensure_dir(output_image_dir)
         else:
-            output_image_dir = os.path.join(output_dir, 'images')
+            output_image_dir = os.path.join(output_dir, "images")
             os.makedirs(output_image_dir, exist_ok=True)
         if output_label_dir is not None:
             ensure_dir(output_label_dir)
         else:
-            output_label_dir = os.path.join(output_dir, 'labels')
+            output_label_dir = os.path.join(output_dir, "labels")
             os.makedirs(output_label_dir, exist_ok=True)
         categories, category_name_to_id = self._get_labels()
         data_key = self._data_keys[0]
@@ -790,7 +790,7 @@ class Converter(object):
         )
         for item_idx, item in enumerate(item_iterator):
             # get image path(s) and label file path
-            image_paths = item['input'][data_key]
+            image_paths = item["input"][data_key]
             image_paths = [image_paths] if isinstance(image_paths, str) else image_paths
             # download image(s)
             image_path = None
@@ -809,17 +809,17 @@ class Converter(object):
                         )
                     except:
                         logger.info(
-                            'Unable to download {image_path}. The item {item} will be skipped'.format(
+                            "Unable to download {image_path}. The item {item} will be skipped".format(
                                 image_path=image_path, item=item
                             ),
                             exc_info=True,
                         )
             if not image_path:
-                logger.error(f'No image path found for item #{item_idx}')
+                logger.error(f"No image path found for item #{item_idx}")
                 continue
 
             # create dedicated subfolder for each labeler if split_labelers=True
-            labeler_subfolder = str(item['completed_by']) if split_labelers else ''
+            labeler_subfolder = str(item["completed_by"]) if split_labelers else ""
             os.makedirs(
                 os.path.join(output_label_dir, labeler_subfolder), exist_ok=True
             )
@@ -830,26 +830,26 @@ class Converter(object):
                 0 : 255 - 4
             ]  # urls might be too long, use 255 bytes (-4 for .txt) limit for filenames
             label_path = os.path.join(
-                output_label_dir, labeler_subfolder, filename + '.txt'
+                output_label_dir, labeler_subfolder, filename + ".txt"
             )
 
             # Skip tasks without annotations
-            if not item['output']:
-                logger.warning('No completions found for item #' + str(item_idx))
+            if not item["output"]:
+                logger.warning("No completions found for item #" + str(item_idx))
                 if not os.path.exists(label_path):
-                    with open(label_path, 'x'):
+                    with open(label_path, "x"):
                         pass
                 continue
 
             # concatenate results over all tag names
             labels = []
-            for key in item['output']:
-                labels += item['output'][key]
+            for key in item["output"]:
+                labels += item["output"][key]
 
             if len(labels) == 0:
                 logger.warning(f'Empty bboxes for {item["output"]}')
                 if not os.path.exists(label_path):
-                    with open(label_path, 'x'):
+                    with open(label_path, "x"):
                         pass
                 continue
 
@@ -857,7 +857,7 @@ class Converter(object):
             for label in labels:
                 category_name = None
                 category_names = []  # considering multi-label
-                for key in ['rectanglelabels', 'polygonlabels', 'labels']:
+                for key in ["rectanglelabels", "polygonlabels", "labels"]:
                     if key in label and len(label[key]) > 0:
                         # change to save multi-label
                         for category_name in label[key]:
@@ -873,13 +873,13 @@ class Converter(object):
                     if category_name not in category_name_to_id:
                         category_id = len(categories)
                         category_name_to_id[category_name] = category_id
-                        categories.append({'id': category_id, 'name': category_name})
+                        categories.append({"id": category_id, "name": category_name})
                     category_id = category_name_to_id[category_name]
 
                     if (
                         "rectanglelabels" in label
-                        or 'rectangle' in label
-                        or 'labels' in label
+                        or "rectangle" in label
+                        or "labels" in label
                     ):
                         # yolo obb
                         if is_obb:
@@ -912,7 +912,7 @@ class Converter(object):
                             ) = annotation
                             annotations.append([category_id, x, y, w, h])
 
-                    elif "polygonlabels" in label or 'polygon' in label:
+                    elif "polygonlabels" in label or "polygon" in label:
                         points_abs = [(x / 100, y / 100) for x, y in label["points"]]
                         annotations.append(
                             [category_id]
@@ -920,24 +920,24 @@ class Converter(object):
                         )
                     else:
                         raise ValueError(f"Unknown label type {label}")
-            with open(label_path, 'w') as f:
+            with open(label_path, "w") as f:
                 for annotation in annotations:
                     for idx, l in enumerate(annotation):
                         if idx == len(annotation) - 1:
                             f.write(f"{l}\n")
                         else:
                             f.write(f"{l} ")
-        with open(class_file, 'w', encoding='utf8') as f:
+        with open(class_file, "w", encoding="utf8") as f:
             for c in categories:
-                f.write(c['name'] + '\n')
-        with io.open(notes_file, mode='w', encoding='utf8') as fout:
+                f.write(c["name"] + "\n")
+        with io.open(notes_file, mode="w", encoding="utf8") as fout:
             json.dump(
                 {
-                    'categories': categories,
-                    'info': {
-                        'year': datetime.now().year,
-                        'version': '1.0',
-                        'contributor': 'Label Studio',
+                    "categories": categories,
+                    "info": {
+                        "year": datetime.now().year,
+                        "version": "1.0",
+                        "contributor": "Label Studio",
                     },
                 },
                 fout,
@@ -947,7 +947,7 @@ class Converter(object):
     @staticmethod
     def rotated_rectangle(label):
         if not (
-            "x" in label and "y" in label and 'width' in label and 'height' in label
+            "x" in label and "y" in label and "width" in label and "height" in label
         ):
             return None
 
@@ -1014,9 +1014,9 @@ class Converter(object):
             ensure_dir(output_image_dir)
             output_image_dir_rel = output_image_dir
         else:
-            output_image_dir = os.path.join(output_dir, 'images')
+            output_image_dir = os.path.join(output_dir, "images")
             os.makedirs(output_image_dir, exist_ok=True)
-            output_image_dir_rel = 'images'
+            output_image_dir_rel = "images"
 
         def create_child_node(doc, tag, attr, parent_node):
             child_node = doc.createElement(tag)
@@ -1031,8 +1031,8 @@ class Converter(object):
             else self.iter_from_json_file(input_data)
         )
         for item_idx, item in enumerate(item_iterator):
-            image_path = item['input'][data_key]
-            annotations_dir = os.path.join(output_dir, 'Annotations')
+            image_path = item["input"][data_key]
+            annotations_dir = os.path.join(output_dir, "Annotations")
             if not os.path.exists(annotations_dir):
                 os.makedirs(annotations_dir)
             # Download image
@@ -1049,7 +1049,7 @@ class Converter(object):
                     )
                 except:
                     logger.info(
-                        'Unable to download {image_path}. The item {item} will be skipped'.format(
+                        "Unable to download {image_path}. The item {item} will be skipped".format(
                             image_path=image_path, item=item
                         ),
                         exc_info=True,
@@ -1065,87 +1065,87 @@ class Converter(object):
                         logger.warning(f"Can't read channels from image")
 
             # skip tasks without annotations
-            if not item['output']:
-                logger.warning('No annotations found for item #' + str(item_idx))
+            if not item["output"]:
+                logger.warning("No annotations found for item #" + str(item_idx))
                 continue
 
             image_name = os.path.basename(image_path)
-            xml_name = os.path.splitext(image_name)[0] + '.xml'
+            xml_name = os.path.splitext(image_name)[0] + ".xml"
 
             # concatenate results over all tag names
             bboxes = []
-            for key in item['output']:
-                bboxes += item['output'][key]
+            for key in item["output"]:
+                bboxes += item["output"][key]
 
             if len(bboxes) == 0:
                 logger.debug(f'Empty bboxes for {item["output"]}')
                 continue
 
-            if 'original_width' not in bboxes[0] or 'original_height' not in bboxes[0]:
+            if "original_width" not in bboxes[0] or "original_height" not in bboxes[0]:
                 logger.debug(
-                    f'original_width or original_height not found in {image_name}'
+                    f"original_width or original_height not found in {image_name}"
                 )
                 continue
 
-            width, height = bboxes[0]['original_width'], bboxes[0]['original_height']
+            width, height = bboxes[0]["original_width"], bboxes[0]["original_height"]
             xml_filepath = os.path.join(annotations_dir, xml_name)
 
             my_dom = xml.dom.getDOMImplementation()
-            doc = my_dom.createDocument(None, 'annotation', None)
+            doc = my_dom.createDocument(None, "annotation", None)
             root_node = doc.documentElement
-            create_child_node(doc, 'folder', output_image_dir_rel, root_node)
-            create_child_node(doc, 'filename', image_name, root_node)
+            create_child_node(doc, "folder", output_image_dir_rel, root_node)
+            create_child_node(doc, "filename", image_name, root_node)
 
-            source_node = doc.createElement('source')
-            create_child_node(doc, 'database', 'MyDatabase', source_node)
-            create_child_node(doc, 'annotation', 'COCO2017', source_node)
-            create_child_node(doc, 'image', 'flickr', source_node)
-            create_child_node(doc, 'flickrid', 'NULL', source_node)
-            create_child_node(doc, 'annotator', get_annotator(item, ''), source_node)
+            source_node = doc.createElement("source")
+            create_child_node(doc, "database", "MyDatabase", source_node)
+            create_child_node(doc, "annotation", "COCO2017", source_node)
+            create_child_node(doc, "image", "flickr", source_node)
+            create_child_node(doc, "flickrid", "NULL", source_node)
+            create_child_node(doc, "annotator", get_annotator(item, ""), source_node)
             root_node.appendChild(source_node)
 
-            owner_node = doc.createElement('owner')
-            create_child_node(doc, 'flickrid', 'NULL', owner_node)
-            create_child_node(doc, 'name', 'Label Studio', owner_node)
+            owner_node = doc.createElement("owner")
+            create_child_node(doc, "flickrid", "NULL", owner_node)
+            create_child_node(doc, "name", "Label Studio", owner_node)
             root_node.appendChild(owner_node)
-            size_node = doc.createElement('size')
-            create_child_node(doc, 'width', str(width), size_node)
-            create_child_node(doc, 'height', str(height), size_node)
-            create_child_node(doc, 'depth', str(channels), size_node)
+            size_node = doc.createElement("size")
+            create_child_node(doc, "width", str(width), size_node)
+            create_child_node(doc, "height", str(height), size_node)
+            create_child_node(doc, "depth", str(channels), size_node)
             root_node.appendChild(size_node)
-            create_child_node(doc, 'segmented', '0', root_node)
+            create_child_node(doc, "segmented", "0", root_node)
 
             for bbox in bboxes:
                 key = (
-                    'rectanglelabels'
-                    if 'rectanglelabels' in bbox
-                    else ('labels' if 'labels' in bbox else None)
+                    "rectanglelabels"
+                    if "rectanglelabels" in bbox
+                    else ("labels" if "labels" in bbox else None)
                 )
                 if key is None or len(bbox[key]) == 0:
                     continue
 
                 name = bbox[key][0]
-                x = int(bbox['x'] / 100 * width)
-                y = int(bbox['y'] / 100 * height)
-                w = int(bbox['width'] / 100 * width)
-                h = int(bbox['height'] / 100 * height)
+                x = int(bbox["x"] / 100 * width)
+                y = int(bbox["y"] / 100 * height)
+                w = int(bbox["width"] / 100 * width)
+                h = int(bbox["height"] / 100 * height)
 
-                object_node = doc.createElement('object')
-                create_child_node(doc, 'name', name, object_node)
-                create_child_node(doc, 'pose', 'Unspecified', object_node)
-                create_child_node(doc, 'truncated', '0', object_node)
-                create_child_node(doc, 'difficult', '0', object_node)
-                bndbox_node = doc.createElement('bndbox')
-                create_child_node(doc, 'xmin', str(x), bndbox_node)
-                create_child_node(doc, 'ymin', str(y), bndbox_node)
-                create_child_node(doc, 'xmax', str(x + w), bndbox_node)
-                create_child_node(doc, 'ymax', str(y + h), bndbox_node)
+                object_node = doc.createElement("object")
+                create_child_node(doc, "name", name, object_node)
+                create_child_node(doc, "pose", "Unspecified", object_node)
+                create_child_node(doc, "truncated", "0", object_node)
+                create_child_node(doc, "difficult", "0", object_node)
+                bndbox_node = doc.createElement("bndbox")
+                create_child_node(doc, "xmin", str(x), bndbox_node)
+                create_child_node(doc, "ymin", str(y), bndbox_node)
+                create_child_node(doc, "xmax", str(x + w), bndbox_node)
+                create_child_node(doc, "ymax", str(y + h), bndbox_node)
 
                 object_node.appendChild(bndbox_node)
                 root_node.appendChild(object_node)
 
-            with io.open(xml_filepath, mode='w', encoding='utf8') as fout:
-                doc.writexml(fout, addindent='' * 4, newl='\n', encoding='utf-8')
+            with io.open(xml_filepath, mode="w", encoding="utf8") as fout:
+                doc.writexml(fout, addindent="" * 4, newl="\n", encoding="utf-8")
 
     def _get_labels(self):
         labels = set()
@@ -1153,21 +1153,21 @@ class Converter(object):
         category_name_to_id = dict()
 
         for name, info in self._schema.items():
-            labels |= set(info['labels'])
-            attrs = info['labels_attrs']
+            labels |= set(info["labels"])
+            attrs = info["labels_attrs"]
             for label in attrs:
-                if attrs[label].get('category'):
+                if attrs[label].get("category"):
                     categories.append(
-                        {'id': attrs[label].get('category'), 'name': label}
+                        {"id": attrs[label].get("category"), "name": label}
                     )
-                    category_name_to_id[label] = attrs[label].get('category')
+                    category_name_to_id[label] = attrs[label].get("category")
         labels_to_add = set(labels) - set(list(category_name_to_id.keys()))
         labels_to_add = sorted(list(labels_to_add))
         idx = 0
         while idx in list(category_name_to_id.values()):
             idx += 1
         for label in labels_to_add:
-            categories.append({'id': idx, 'name': label})
+            categories.append({"id": idx, "name": label})
             category_name_to_id[label] = idx
             idx += 1
             while idx in list(category_name_to_id.values()):

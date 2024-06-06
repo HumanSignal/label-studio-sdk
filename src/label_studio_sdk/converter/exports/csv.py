@@ -8,9 +8,9 @@ from copy import deepcopy
 
 class ExportToCSV(object):
     def __init__(self, tasks):
-        if isinstance(tasks, str) and tasks.endswith('.json'):
+        if isinstance(tasks, str) and tasks.endswith(".json"):
             if not os.path.exists(tasks):
-                raise Exception(f'Task file not found {tasks}')
+                raise Exception(f"Task file not found {tasks}")
             # input is a file
             with open(tasks) as f:
                 self.tasks = json.load(f)
@@ -19,10 +19,10 @@ class ExportToCSV(object):
             self.tasks = tasks
 
     def _get_result_name(self, result):
-        return result.get('from_name')
+        return result.get("from_name")
 
     def _minify_result(self, result):
-        value = result['value']
+        value = result["value"]
         name = self._get_result_name(result)
         if len(value) == 1:
             item = next(iter(value.values()))
@@ -36,37 +36,37 @@ class ExportToCSV(object):
             return value
 
     def _get_annotation_results(self, annotation, minify, flat_regions):
-        results = annotation['result']
+        results = annotation["result"]
         if not flat_regions:
-            yield {'result': results}
+            yield {"result": results}
 
-        for result in annotation['result']:
+        for result in annotation["result"]:
             if minify:
                 yield self._minify_result(result)
             else:
                 yield {self._get_result_name(result): result}
 
     def _get_annotator_id(self, annotation):
-        annotator = annotation.get('completed_by', {})
+        annotator = annotation.get("completed_by", {})
         if isinstance(annotator, int):
             return annotator
         elif isinstance(annotator, dict):
-            return annotator.get('email') or annotator.get('id')
+            return annotator.get("email") or annotator.get("id")
 
     def to_records(self, minify=True, flat_regions=True):
         records = []
         for task in self.tasks:
-            annotations = task.get('annotations')
+            annotations = task.get("annotations")
             if annotations is None:
                 # Temp legacy fix
-                annotations = task['completions']
+                annotations = task["completions"]
             for annotation in annotations:
                 record = {
-                    'id': task['id'],
-                    'annotation_id': annotation.get('id'),
-                    'annotator': self._get_annotator_id(annotation),
+                    "id": task["id"],
+                    "annotation_id": annotation.get("id"),
+                    "annotator": self._get_annotator_id(annotation),
                 }
-                record.update(task['data'])
+                record.update(task["data"])
                 for result in self._get_annotation_results(
                     annotation, minify, flat_regions
                 ):
