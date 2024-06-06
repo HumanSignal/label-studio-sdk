@@ -600,9 +600,7 @@ class LabelInterface:
                 return False
 
         return True                                                
-        # return all(self.validate_region(r) for r in obj.get(RESULT_KEY) if r.get('type') != "relation") and \
-        #     all(self.validate_relation(r) for r in obj.get(RESULT_KEY) if r.get('type') == "relation")
-    
+        
     def validate_annotation(self, annotation):
         """Validates the given annotation against the current configuration.
 
