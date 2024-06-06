@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "label-studio-sdk"
-version = "0.0.69"
+version = "0.0.70"
 description = ""
 readme = "README.md"
 authors = []
