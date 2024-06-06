@@ -3,7 +3,7 @@ from unittest.mock import Mock
 import requests_mock
 
 from label_studio_sdk import Client
-from label_studio_sdk._legacy.data_manager import Filters, Operator, Type, Column
+from label_studio_sdk.data_manager import Filters, Operator, Type, Column
 
 
 def test_client_headers():
