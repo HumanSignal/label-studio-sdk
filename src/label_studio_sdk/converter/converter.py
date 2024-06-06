@@ -1,31 +1,29 @@
-from typing import Optional
-
-import os
 import io
-import math
-import re
 import logging
-import ujson as json
-import ijson
+import math
+import os
+import re
 import xml.dom
 import xml.dom.minidom
-
-from shutil import copy2
-from enum import Enum
-from datetime import datetime
-from glob import glob
 from collections import defaultdict
-from operator import itemgetter
 from copy import deepcopy
+from datetime import datetime
+from enum import Enum
+from glob import glob
+from operator import itemgetter
+from shutil import copy2
+from typing import Optional
+
+import ijson
+import ujson as json
 from PIL import Image
-
+from label_studio_sdk.converter import brush
+from label_studio_sdk.converter.audio import convert_to_asr_json_manifest
 from label_studio_sdk.converter.exports import csv2
-
 from label_studio_sdk.converter.utils import (
     parse_config,
     create_tokens_and_tags,
     download,
-    get_image_size,
     get_image_size_and_channels,
     ensure_dir,
     get_polygon_area,
@@ -34,10 +32,8 @@ from label_studio_sdk.converter.utils import (
     get_json_root_type,
     prettify_result,
     convert_annotation_to_yolo,
-    convert_annotation_to_yolo_obb
+    convert_annotation_to_yolo_obb,
 )
-from label_studio_sdk.converter import brush
-from label_studio_sdk.converter.audio import convert_to_asr_json_manifest
 
 logger = logging.getLogger(__name__)
 
@@ -123,7 +119,8 @@ class Converter(object):
             'the corresponding image file, that is object class, object coordinates, height & width.',
             'link': 'https://labelstud.io/guide/export.html#YOLO',
             'tags': ['image segmentation', 'object detection'],
-        },Format.YOLO_OBB: {
+        },
+        Format.YOLO_OBB: {
             'title': 'YOLOv8 OBB',
             'description': 'Popular TXT format is created for each image file. Each txt file contains annotations for '
             'the corresponding image file. The YOLO OBB format designates bounding boxes by their four corner points '
@@ -234,7 +231,7 @@ class Converter(object):
                 output_image_dir=image_dir,
                 output_label_dir=label_dir,
                 is_dir=is_dir,
-                is_obb = (format == Format.YOLO_OBB)
+                is_obb=(format == Format.YOLO_OBB),
             )
         elif format == Format.VOC:
             image_dir = kwargs.get('image_dir')
@@ -455,7 +452,9 @@ class Converter(object):
 
             # get results only as output
             for r in result:
-                if 'from_name' in r and (tag_name := self._maybe_matching_tag_from_schema(r['from_name'])):
+                if 'from_name' in r and (
+                    tag_name := self._maybe_matching_tag_from_schema(r['from_name'])
+                ):
                     v = deepcopy(r['value'])
                     v['type'] = self._schema[tag_name]['type']
                     if 'original_width' in r:
@@ -744,7 +743,7 @@ class Converter(object):
         output_label_dir=None,
         is_dir=True,
         split_labelers=False,
-        is_obb=False
+        is_obb=False,
     ):
         """Convert data in a specific format to the YOLO format.
 
@@ -888,12 +887,16 @@ class Converter(object):
                             if obb_annotation is None:
                                 continue
 
-                            top_left, top_right, bottom_right, bottom_left = obb_annotation
+                            top_left, top_right, bottom_right, bottom_left = (
+                                obb_annotation
+                            )
                             x1, y1 = top_left
                             x2, y2 = top_right
                             x3, y3 = bottom_right
                             x4, y4 = bottom_left
-                            annotations.append([category_id, x1, y1, x2, y2, x3, y3, x4, y4])
+                            annotations.append(
+                                [category_id, x1, y1, x2, y2, x3, y3, x4, y4]
+                            )
 
                         # simple yolo
                         else:
@@ -901,7 +904,12 @@ class Converter(object):
                             if annotation is None:
                                 continue
 
-                            x, y, w, h, = annotation
+                            (
+                                x,
+                                y,
+                                w,
+                                h,
+                            ) = annotation
                             annotations.append([category_id, x, y, w, h])
 
                     elif "polygonlabels" in label or 'polygon' in label:
