@@ -1,4 +1,4 @@
-""" PathTrack BBoxes to Label Studio convert
+"""PathTrack BBoxes to Label Studio convert
 https://www.trace.ethz.ch/publications/2017/pathtrack/index.html
 """
 

@@ -147,7 +147,6 @@ def save_brush_images_from_annotation(
     )  # sanitize filename
 
     for name in layers:
-
         sanitized_name = name.replace("/", "-").replace("\\", "-")
 
         filename = os.path.join(

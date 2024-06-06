@@ -1,6 +1,7 @@
 """
 Test for the brush.py module
 """
+
 import urllib3
 import json
 import os
@@ -13,18 +14,18 @@ def test_image2annotation():
     Import from png to LS annotation with RLE values
     """
     annotation = image2annotation(
-        os.path.abspath(os.path.dirname(__file__)) + '/data/test_brush/test.png',
-        label_name='Airplane',
-        from_name='tag',
-        to_name='image',
-        model_version='v1',
+        os.path.abspath(os.path.dirname(__file__)) + "/data/test_brush/test.png",
+        label_name="Airplane",
+        from_name="tag",
+        to_name="image",
+        model_version="v1",
         score=0.5,
     )
 
     # prepare Label Studio Task
     task = {
-        'data': {'image': 'https://labelstud.io/images/test.jpg'},
-        'predictions': [annotation],
+        "data": {"image": "https://labelstud.io/images/test.jpg"},
+        "predictions": [annotation],
     }
 
     """ You can import this `task.json` to the Label Studio project with this labeling config:
@@ -38,7 +39,7 @@ def test_image2annotation():
     </View>
 
     """
-    json.dump(task, open('task.json', 'w'))
+    json.dump(task, open("task.json", "w"))
     assert True
 
 
@@ -46,8 +47,29 @@ def test_rle_encoding():
     """
     Encode from color values of pixels to RLE, simple example
     """
-    test_arr = [1, 1, 1, 1, 2, 3, 5, 6, 7, 8, 4, 4, 4, 4, 4, 4, 4, 4]  # color pixels in rgb format
-    rle_test = encode_rle(test_arr)  # rle encoded output that will be stored in LS annotations
+    test_arr = [
+        1,
+        1,
+        1,
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+    ]  # color pixels in rgb format
+    rle_test = encode_rle(
+        test_arr
+    )  # rle encoded output that will be stored in LS annotations
     assert rle_test == [
         0,
         0,

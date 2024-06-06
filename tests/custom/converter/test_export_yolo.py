@@ -152,11 +152,11 @@ def test_convert_to_yolo_obb(create_temp_folder):
                 len(lines) == expected_annotations[fidx]
             ), f"Expect different number of annotations in file {file}."
             for idx, line in enumerate(lines):
-                parameters = line.split(' ')
+                parameters = line.split(" ")
                 total_parameters = len(parameters)
                 assert (
                     total_parameters == 9
-                ), f'Expected 9 parameters but got {total_parameters} in line {idx}'
+                ), f"Expected 9 parameters but got {total_parameters} in line {idx}"
 
 
 def test_convert_polygons_to_yolo(create_temp_folder):
@@ -258,7 +258,7 @@ def test_convert_annotation_to_yolo_format():
         result = convert_annotation_to_yolo(annotation)
         assert almost_equal_1d(
             result, expectations[idx]
-        ), f'Converted LS annotation to normalized Yolo format does not match expected result at index {idx}'
+        ), f"Converted LS annotation to normalized Yolo format does not match expected result at index {idx}"
 
 
 def test_convert_invalid_annotation_to_yolo_format():
@@ -298,7 +298,7 @@ def test_convert_invalid_annotation_to_yolo_format():
 
     for idx, annotation in enumerate(annotations):
         result = convert_annotation_to_yolo(annotation)
-        assert result is None, f'Expected annotation at index {idx} to be invalid'
+        assert result is None, f"Expected annotation at index {idx} to be invalid"
 
 
 def test_convert_annotation_to_yolo_obb_format():
@@ -368,10 +368,10 @@ def test_convert_annotation_to_yolo_obb_format():
 
     for idx, annotation in enumerate(annotations):
         result = convert_annotation_to_yolo_obb(annotation)
-        print('result = ', result)
+        print("result = ", result)
         assert almost_equal_2d(
             result, expectations[idx]
-        ), f'Converted LS annotation to normalized Yolo OBB-format does not match expected result at index {idx}'
+        ), f"Converted LS annotation to normalized Yolo OBB-format does not match expected result at index {idx}"
 
 
 def test_convert_invalid_annotation_to_yolo_obb_format():
@@ -456,4 +456,4 @@ def test_convert_invalid_annotation_to_yolo_obb_format():
         result = convert_annotation_to_yolo_obb(annotation)
         assert (
             result is None
-        ), f'Expected annotation for OBB at index {idx} to be invalid'
+        ), f"Expected annotation for OBB at index {idx} to be invalid"

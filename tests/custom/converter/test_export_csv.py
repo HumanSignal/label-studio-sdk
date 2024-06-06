@@ -8,11 +8,14 @@ from pandas import read_csv
 
 def test_simple_csv_export():
     # Test case 1, simple output, no JSON
-    converter = Converter({}, '/tmp')
-    output_dir = '/tmp/lsc-pytest'
-    result_csv = output_dir + '/result.csv'
-    input_data = os.path.abspath(os.path.dirname(__file__)) + '/data/test_export_csv/csv_test.json'
-    sep = ','
+    converter = Converter({}, "/tmp")
+    output_dir = "/tmp/lsc-pytest"
+    result_csv = output_dir + "/result.csv"
+    input_data = (
+        os.path.abspath(os.path.dirname(__file__))
+        + "/data/test_export_csv/csv_test.json"
+    )
+    sep = ","
     converter.convert_to_csv(input_data, output_dir, sep=sep, header=True, is_dir=False)
 
     df = read_csv(result_csv, sep=sep)
@@ -22,12 +25,18 @@ def test_simple_csv_export():
 
 
 def test_csv_export_complex_fields_with_json():
-    converter = Converter({}, '/tmp')
-    output_dir = '/tmp/lsc-pytest'
-    result_csv = output_dir + '/result.csv'
-    input_data = os.path.abspath(os.path.dirname(__file__)) + '/data/test_export_csv/csv_test2.json'
-    assert_csv = os.path.abspath(os.path.dirname(__file__)) + '/data/test_export_csv/csv_test2_result.csv'
-    sep = '\t'
+    converter = Converter({}, "/tmp")
+    output_dir = "/tmp/lsc-pytest"
+    result_csv = output_dir + "/result.csv"
+    input_data = (
+        os.path.abspath(os.path.dirname(__file__))
+        + "/data/test_export_csv/csv_test2.json"
+    )
+    assert_csv = (
+        os.path.abspath(os.path.dirname(__file__))
+        + "/data/test_export_csv/csv_test2_result.csv"
+    )
+    sep = "\t"
     converter.convert_to_csv(input_data, output_dir, sep=sep, header=True, is_dir=False)
     df = read_csv(result_csv, sep=sep)
     nulls = df.isnull().sum()
@@ -41,11 +50,14 @@ def test_csv_export_complex_fields_with_json():
 
 
 def test_csv_history():
-    converter = Converter({}, '/tmp')
-    output_dir = '/tmp/lsc-pytest'
-    result_csv = output_dir + '/result.csv'
-    input_data = os.path.abspath(os.path.dirname(__file__)) + '/data/test_export_csv/csv_test_history.json'
-    sep = '\t'
+    converter = Converter({}, "/tmp")
+    output_dir = "/tmp/lsc-pytest"
+    result_csv = output_dir + "/result.csv"
+    input_data = (
+        os.path.abspath(os.path.dirname(__file__))
+        + "/data/test_export_csv/csv_test_history.json"
+    )
+    sep = "\t"
     converter.convert_to_csv(input_data, output_dir, sep=sep, header=True, is_dir=False)
     df = read_csv(result_csv, sep=sep)
-    assert 'history' in df.columns, "'history' column is not in the CSV"
+    assert "history" in df.columns, "'history' column is not in the CSV"
