@@ -9,19 +9,19 @@ def test_parsing_label_config():
     """
     Test frames extraction with disabled in the end and frame count > disabled key frame
     """
-    label_config = '''
+    label_config = """
             <View><Text name="meta_info" value="$meta_info"></Text>
               <Text name="text" value=" $text "></Text>
               <Choices name="text_class" choice="single" toName="text">
                 <Choice value="class_A"></Choice>
                 <Choice value="class_B"></Choice>
               </Choices>
-            </View>'''
+            </View>"""
     config = parse_config(label_config)
-    assert 'text_class' in config
-    assert config['text_class']['type'] == 'Choices'
-    assert config['text_class']['to_name'] == ['text']
-    assert config['text_class']['labels'] == ['class_A', 'class_B']
+    assert "text_class" in config
+    assert config["text_class"]["type"] == "Choices"
+    assert config["text_class"]["to_name"] == ["text"]
+    assert config["text_class"]["labels"] == ["class_A", "class_B"]
 
 
 def test_is_video_object_tracking():
@@ -29,7 +29,7 @@ def test_is_video_object_tracking():
     Test is_video_object_tracking for video config
     """
     label_config = parse_config(
-        '''
+        """
                 <View>
               <Labels name="videoLabels" toName="video">
                 <Label value="Car"/>
@@ -37,7 +37,7 @@ def test_is_video_object_tracking():
               </Labels>
               <Video name="video" value="$video"/>
               <VideoRectangle name="box" toName="video"/>
-            </View>'''
+            </View>"""
     )
     assert is_video_object_tracking(label_config)
 
@@ -47,7 +47,7 @@ def test_is_video_object_tracking_not_video():
     Test is_video_object_tracking for Audio config
     """
     label_config = parse_config(
-        '''
+        """
                 <View>
                   <Header value="Listen to the audio"/>
                   <Audio name="audio" value="$audio"/>
@@ -59,7 +59,7 @@ def test_is_video_object_tracking_not_video():
                     <Choice value="Education"/>
                     <Choice value="Other"/>
                   </Choices>
-                </View>'''
+                </View>"""
     )
     assert not is_video_object_tracking(label_config)
 
@@ -69,7 +69,7 @@ def test_dynamic_labels_parse_config():
     Test adding dynamic_labels to outputs
     """
     outputs = parse_config(
-        '''
+        """
                 <View>
                   <Header value="Select label and click the image to start"/>
                   <Image name="image" value="$image" zoom="true"/>
@@ -77,9 +77,9 @@ def test_dynamic_labels_parse_config():
                                  strokeWidth="3" pointSize="small"
                                  opacity="0.9" value="$options"    
                   />
-                </View>'''
+                </View>"""
     )
-    assert outputs['label']['dynamic_labels']
+    assert outputs["label"]["dynamic_labels"]
 
 
 def test_no_dynamic_labels_parse_config():
@@ -87,7 +87,7 @@ def test_no_dynamic_labels_parse_config():
     Test not adding dynamic_labels to outputs
     """
     outputs = parse_config(
-        '''
+        """
                 <View>
                   <Header value="Select label and click the image to start"/>
                   <Image name="image" value="$image" zoom="true"/>
@@ -95,10 +95,10 @@ def test_no_dynamic_labels_parse_config():
                                  strokeWidth="3" pointSize="small"
                                  opacity="0.9"    
                   />
-                </View>'''
+                </View>"""
     )
-    assert outputs['label']
-    assert outputs['label'].get("dynamic_labels") is None
+    assert outputs["label"]
+    assert outputs["label"].get("dynamic_labels") is None
 
 
 def test_label_config_has_variables():
@@ -117,7 +117,7 @@ def test_not_dynamic_labels_parse_config():
     Test not adding dynamic_labels to outputs
     """
     outputs = parse_config(
-        '''
+        """
                 <View>
                   <Header value="Select label and click the image to start"/>
                   <Image name="image" value="$image" zoom="true"/>
@@ -125,23 +125,23 @@ def test_not_dynamic_labels_parse_config():
                                  strokeWidth="3" pointSize="small"
                                  opacity="0.9"    
                   />
-                </View>'''
+                </View>"""
     )
-    assert not outputs['label'].get('dynamic_labels', False)
-    assert 'dynamic_labels' not in outputs['label']
+    assert not outputs["label"].get("dynamic_labels", False)
+    assert "dynamic_labels" not in outputs["label"]
 
 
 def test_label_config_with_valueType_url():
     """
     Test config with value type = url
     """
-    label_config = '''
+    label_config = """
             <View><Text name="meta_info" value="$meta_info"></Text>
               <Text name="text" value="$text" valueType="url"></Text>
               <Choices name="text_class" choice="single" toName="text">
                 <Choice value="class_A"></Choice>
                 <Choice value="class_B"></Choice>
               </Choices>
-            </View>'''
+            </View>"""
     config = parse_config(label_config)
-    assert config['text_class']['inputs'][0]['valueType'] == 'url'
+    assert config["text_class"]["inputs"][0]["valueType"] == "url"

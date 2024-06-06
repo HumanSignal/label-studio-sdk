@@ -1,4 +1,6 @@
-from label_studio_sdk._extensions.label_studio_tools.postprocessing.video import extract_key_frames
+from label_studio_sdk._extensions.label_studio_tools.postprocessing.video import (
+    extract_key_frames,
+)
 
 
 def test_video_disabled_till_end():
@@ -39,29 +41,29 @@ def test_video_disabled_till_end():
         }
     ]
     key_frames = extract_key_frames(example)
-    assert len(key_frames[0]['value']['sequence']) == 5
-    key_frames = key_frames[0]['value']['sequence']
-    assert key_frames[0]['x'] == 38
-    assert key_frames[0]['y'] == 38
-    assert key_frames[0]['width'] == 41
-    assert key_frames[0]['height'] == 22
-    assert key_frames[0]['rotation'] == 0
-    assert key_frames[0]['time'] == 1.22
-    assert key_frames[4]['x'] == 40
-    assert key_frames[4]['y'] == 49
-    assert key_frames[4]['width'] == 56
-    assert key_frames[4]['height'] == 34
-    assert key_frames[4]['rotation'] == 30
-    assert key_frames[4]['time'] == 3.44
-    assert key_frames[2]['x'] == 39
-    assert key_frames[2]['y'] == 43.5
-    assert key_frames[2]['width'] == 48.5
-    assert key_frames[2]['height'] == 28
-    assert key_frames[2]['rotation'] == 15
-    assert key_frames[2]['auto']
-    assert key_frames[2]['time'] == 2.33
-    assert not key_frames[0].get('auto')
-    assert not key_frames[4].get('auto')
+    assert len(key_frames[0]["value"]["sequence"]) == 5
+    key_frames = key_frames[0]["value"]["sequence"]
+    assert key_frames[0]["x"] == 38
+    assert key_frames[0]["y"] == 38
+    assert key_frames[0]["width"] == 41
+    assert key_frames[0]["height"] == 22
+    assert key_frames[0]["rotation"] == 0
+    assert key_frames[0]["time"] == 1.22
+    assert key_frames[4]["x"] == 40
+    assert key_frames[4]["y"] == 49
+    assert key_frames[4]["width"] == 56
+    assert key_frames[4]["height"] == 34
+    assert key_frames[4]["rotation"] == 30
+    assert key_frames[4]["time"] == 3.44
+    assert key_frames[2]["x"] == 39
+    assert key_frames[2]["y"] == 43.5
+    assert key_frames[2]["width"] == 48.5
+    assert key_frames[2]["height"] == 28
+    assert key_frames[2]["rotation"] == 15
+    assert key_frames[2]["auto"]
+    assert key_frames[2]["time"] == 2.33
+    assert not key_frames[0].get("auto")
+    assert not key_frames[4].get("auto")
 
 
 def test_video_enabled_till_end():
@@ -101,48 +103,48 @@ def test_video_enabled_till_end():
             },
         }
     ]
-    key_frames = extract_key_frames(example)[0]['value']['sequence']
+    key_frames = extract_key_frames(example)[0]["value"]["sequence"]
     assert len(key_frames) == 10
-    assert key_frames[0]['x'] == 38
-    assert key_frames[0]['y'] == 38
-    assert key_frames[0]['width'] == 41
-    assert key_frames[0]['height'] == 22
-    assert key_frames[0]['rotation'] == 0
-    assert key_frames[0]['time'] == 1.01
-    assert key_frames[4]['x'] == 40
-    assert key_frames[4]['y'] == 49
-    assert key_frames[4]['width'] == 41
-    assert key_frames[4]['height'] == 22
-    assert key_frames[4]['rotation'] == 0
-    assert key_frames[4]['time'] == 5.05
-    assert key_frames[2]['x'] == 39
-    assert key_frames[2]['y'] == 43.5
-    assert key_frames[2]['width'] == 41
-    assert key_frames[2]['height'] == 22
-    assert key_frames[2]['rotation'] == 0
-    assert key_frames[2]['auto']
-    assert key_frames[2]['time'] == 3.03
-    assert not key_frames[0].get('auto')
-    assert not key_frames[4].get('auto')
-    assert key_frames[5]['x'] == 40
-    assert key_frames[5]['y'] == 49
-    assert key_frames[5]['width'] == 41
-    assert key_frames[5]['height'] == 22
-    assert key_frames[5]['rotation'] == 0
-    assert key_frames[5].get('auto')
-    assert key_frames[8]['x'] == 40
-    assert key_frames[8]['y'] == 49
-    assert key_frames[8]['width'] == 41
-    assert key_frames[8]['height'] == 22
-    assert key_frames[8]['rotation'] == 0
-    assert key_frames[8]['auto']
-    assert key_frames[9]['x'] == 40
-    assert key_frames[9]['y'] == 49
-    assert key_frames[9]['width'] == 41
-    assert key_frames[9]['height'] == 22
-    assert key_frames[9]['rotation'] == 0
-    assert key_frames[9]['time'] == 10.10
-    assert key_frames[9].get('auto')
+    assert key_frames[0]["x"] == 38
+    assert key_frames[0]["y"] == 38
+    assert key_frames[0]["width"] == 41
+    assert key_frames[0]["height"] == 22
+    assert key_frames[0]["rotation"] == 0
+    assert key_frames[0]["time"] == 1.01
+    assert key_frames[4]["x"] == 40
+    assert key_frames[4]["y"] == 49
+    assert key_frames[4]["width"] == 41
+    assert key_frames[4]["height"] == 22
+    assert key_frames[4]["rotation"] == 0
+    assert key_frames[4]["time"] == 5.05
+    assert key_frames[2]["x"] == 39
+    assert key_frames[2]["y"] == 43.5
+    assert key_frames[2]["width"] == 41
+    assert key_frames[2]["height"] == 22
+    assert key_frames[2]["rotation"] == 0
+    assert key_frames[2]["auto"]
+    assert key_frames[2]["time"] == 3.03
+    assert not key_frames[0].get("auto")
+    assert not key_frames[4].get("auto")
+    assert key_frames[5]["x"] == 40
+    assert key_frames[5]["y"] == 49
+    assert key_frames[5]["width"] == 41
+    assert key_frames[5]["height"] == 22
+    assert key_frames[5]["rotation"] == 0
+    assert key_frames[5].get("auto")
+    assert key_frames[8]["x"] == 40
+    assert key_frames[8]["y"] == 49
+    assert key_frames[8]["width"] == 41
+    assert key_frames[8]["height"] == 22
+    assert key_frames[8]["rotation"] == 0
+    assert key_frames[8]["auto"]
+    assert key_frames[9]["x"] == 40
+    assert key_frames[9]["y"] == 49
+    assert key_frames[9]["width"] == 41
+    assert key_frames[9]["height"] == 22
+    assert key_frames[9]["rotation"] == 0
+    assert key_frames[9]["time"] == 10.10
+    assert key_frames[9].get("auto")
 
 
 def test_video_enabled_till_end_one_frame():
@@ -172,21 +174,21 @@ def test_video_enabled_till_end_one_frame():
             },
         }
     ]
-    key_frames = extract_key_frames(example)[0]['value']['sequence']
+    key_frames = extract_key_frames(example)[0]["value"]["sequence"]
     assert len(key_frames) == 10
-    assert key_frames[0]['x'] == 38
-    assert key_frames[0]['y'] == 38
-    assert key_frames[0]['width'] == 41
-    assert key_frames[0]['height'] == 22
-    assert key_frames[0]['rotation'] == 0
-    assert key_frames[0]['time'] == 1
-    assert key_frames[9]['x'] == 38
-    assert key_frames[9]['y'] == 38
-    assert key_frames[9]['width'] == 41
-    assert key_frames[9]['height'] == 22
-    assert key_frames[9]['rotation'] == 0
-    assert key_frames[9]['time'] == 9
-    assert key_frames[9]['auto']
+    assert key_frames[0]["x"] == 38
+    assert key_frames[0]["y"] == 38
+    assert key_frames[0]["width"] == 41
+    assert key_frames[0]["height"] == 22
+    assert key_frames[0]["rotation"] == 0
+    assert key_frames[0]["time"] == 1
+    assert key_frames[9]["x"] == 38
+    assert key_frames[9]["y"] == 38
+    assert key_frames[9]["width"] == 41
+    assert key_frames[9]["height"] == 22
+    assert key_frames[9]["rotation"] == 0
+    assert key_frames[9]["time"] == 9
+    assert key_frames[9]["auto"]
 
 
 def test_video_disabled_till_end_one_frame():
@@ -214,7 +216,7 @@ def test_video_disabled_till_end_one_frame():
             },
         }
     ]
-    key_frames = extract_key_frames(example)[0]['value']['sequence']
+    key_frames = extract_key_frames(example)[0]["value"]["sequence"]
     assert len(key_frames) == 1
 
 
@@ -275,26 +277,26 @@ def test_video_disabled_till_end_keyframe_count():
             },
         }
     ]
-    key_frames = extract_key_frames(example)[0]['value']['sequence']
+    key_frames = extract_key_frames(example)[0]["value"]["sequence"]
     assert len(key_frames) == 10
-    assert key_frames[5]['x'] == 38
-    assert key_frames[5]['y'] == 38
-    assert key_frames[5]['width'] == 41
-    assert key_frames[5]['height'] == 22
-    assert key_frames[5]['rotation'] == 0
-    assert key_frames[5]['time'] == 11
-    assert key_frames[9]['x'] == 40
-    assert key_frames[9]['y'] == 49
-    assert key_frames[9]['width'] == 41
-    assert key_frames[9]['height'] == 22
-    assert key_frames[9]['rotation'] == 0
-    assert key_frames[9]['time'] == 15
-    assert key_frames[7]['x'] == 39
-    assert key_frames[7]['y'] == 43.5
-    assert key_frames[7]['width'] == 41
-    assert key_frames[7]['height'] == 22
-    assert key_frames[7]['rotation'] == 0
-    assert key_frames[7]['auto']
+    assert key_frames[5]["x"] == 38
+    assert key_frames[5]["y"] == 38
+    assert key_frames[5]["width"] == 41
+    assert key_frames[5]["height"] == 22
+    assert key_frames[5]["rotation"] == 0
+    assert key_frames[5]["time"] == 11
+    assert key_frames[9]["x"] == 40
+    assert key_frames[9]["y"] == 49
+    assert key_frames[9]["width"] == 41
+    assert key_frames[9]["height"] == 22
+    assert key_frames[9]["rotation"] == 0
+    assert key_frames[9]["time"] == 15
+    assert key_frames[7]["x"] == 39
+    assert key_frames[7]["y"] == 43.5
+    assert key_frames[7]["width"] == 41
+    assert key_frames[7]["height"] == 22
+    assert key_frames[7]["rotation"] == 0
+    assert key_frames[7]["auto"]
 
 
 def test_no_label_result():
@@ -352,23 +354,23 @@ def test_no_label_result():
             },
         }
     ]
-    key_frames = extract_key_frames(example)[0]['value']['sequence']
+    key_frames = extract_key_frames(example)[0]["value"]["sequence"]
     assert len(key_frames) == 10
-    assert key_frames[5]['x'] == 38
-    assert key_frames[5]['y'] == 38
-    assert key_frames[5]['width'] == 41
-    assert key_frames[5]['height'] == 22
-    assert key_frames[5]['rotation'] == 0
-    assert key_frames[9]['x'] == 40
-    assert key_frames[9]['y'] == 49
-    assert key_frames[9]['width'] == 41
-    assert key_frames[9]['height'] == 22
-    assert key_frames[9]['rotation'] == 0
-    assert key_frames[7]['x'] == 39
-    assert key_frames[7]['y'] == 43.5
-    assert key_frames[7]['width'] == 41
-    assert key_frames[7]['height'] == 22
-    assert key_frames[7]['rotation'] == 0
+    assert key_frames[5]["x"] == 38
+    assert key_frames[5]["y"] == 38
+    assert key_frames[5]["width"] == 41
+    assert key_frames[5]["height"] == 22
+    assert key_frames[5]["rotation"] == 0
+    assert key_frames[9]["x"] == 40
+    assert key_frames[9]["y"] == 49
+    assert key_frames[9]["width"] == 41
+    assert key_frames[9]["height"] == 22
+    assert key_frames[9]["rotation"] == 0
+    assert key_frames[7]["x"] == 39
+    assert key_frames[7]["y"] == 43.5
+    assert key_frames[7]["width"] == 41
+    assert key_frames[7]["height"] == 22
+    assert key_frames[7]["rotation"] == 0
 
 
 def test_case_with_1_frame_inside_2_span():
@@ -427,5 +429,5 @@ def test_case_with_1_frame_inside_2_span():
             "from_name": "box",
         }
     ]
-    key_frames = extract_key_frames(example)[0]['value']['sequence']
+    key_frames = extract_key_frames(example)[0]["value"]["sequence"]
     assert len(key_frames) == 294
