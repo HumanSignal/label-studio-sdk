@@ -11,7 +11,6 @@ class extract:
 
 
 class transform:
-
     DataRecords = Iterable[Dict[str, Any]]
     DataRecordsProducer = Callable[..., DataRecords]
 
@@ -28,7 +27,7 @@ class transform:
 
     @staticmethod
     def datarecords(name: str = None):
-        """ Class method to register transform function to produce DataRecords
+        """Class method to register transform function to produce DataRecords
         with specified name to the internal registry.
         Can output any iterable for dicts (generators, iterators, list, tuples)
         For example:
@@ -38,9 +37,13 @@ class transform:
             yield {"image": blob.download_as_string()}
         """
 
-        def register_transform_func(transform_func: transform.DataRecordsProducer) -> transform.DataRecordsProducer:
+        def register_transform_func(
+            transform_func: transform.DataRecordsProducer,
+        ) -> transform.DataRecordsProducer:
             if name in transform.registry:
-                raise transform.NameAlreadyExists(f'Dataloader {name} already exists. Will replace it')
+                raise transform.NameAlreadyExists(
+                    f"Dataloader {name} already exists. Will replace it"
+                )
             transform.registry[name] = transform_func
 
             @wraps(transform_func)
@@ -62,4 +65,3 @@ class transform:
 
 class load:
     pass
-

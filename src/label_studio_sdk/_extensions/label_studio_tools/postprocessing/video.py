@@ -1,7 +1,9 @@
 from copy import deepcopy
 from operator import itemgetter
 
-from label_studio_sdk._extensions.label_studio_tools.core.label_config import _VIDEO_TRACKING_TAGS
+from label_studio_sdk._extensions.label_studio_tools.core.label_config import (
+    _VIDEO_TRACKING_TAGS,
+)
 
 
 def extract_key_frames(results):
@@ -13,18 +15,18 @@ def extract_key_frames(results):
     final_results = []
     for result in results:
         temp = deepcopy(result)
-        if result['type'].lower() not in _VIDEO_TRACKING_TAGS:
+        if result["type"].lower() not in _VIDEO_TRACKING_TAGS:
             final_results.append(result)
             continue
-        sequence = result['value']['sequence']
+        sequence = result["value"]["sequence"]
         if len(sequence) < 1:
             continue
-        sequence = sorted(sequence, key=lambda d: d['frame'])
+        sequence = sorted(sequence, key=lambda d: d["frame"])
         exclude_first = False
         for i in range(len(sequence)):
             frame_a = sequence[i]
             frame_b = {} if i == len(sequence) - 1 else sequence[i + 1]
-            temp['value']['sequence'].extend(
+            temp["value"]["sequence"].extend(
                 _construct_result_from_frames(
                     frame1=frame_a,
                     frame2=frame_b,
@@ -33,9 +35,9 @@ def extract_key_frames(results):
                     exclude_first=exclude_first,
                 )
             )
-            exclude_first = frame_a['enabled']
-        temp['value']['sequence'] = sorted(
-            temp['value']['sequence'], key=itemgetter('frame')
+            exclude_first = frame_a["enabled"]
+        temp["value"]["sequence"] = sorted(
+            temp["value"]["sequence"], key=itemgetter("frame")
         )
         final_results.append(temp)
     return final_results
@@ -57,14 +59,14 @@ def _construct_result_from_frames(
     if not frame1["enabled"]:
         return []
     if len(frame2) > 0:
-        if frame1['frame'] > frame2['frame']:
+        if frame1["frame"] > frame2["frame"]:
             return []
-        frame_count = frame2['frame'] - frame1['frame'] + 1
+        frame_count = frame2["frame"] - frame1["frame"] + 1
     else:
-        frame_count = frameCount - frame1['frame'] + 1
+        frame_count = frameCount - frame1["frame"] + 1
     start_i = 1 if exclude_first else 0
     for i in range(start_i, frame_count):
-        frame_number = i + frame1['frame']
+        frame_number = i + frame1["frame"]
         delta = i / max(1, (frame_count - 1))
         deltas = {}
         for v in ["x", "y", "rotation", "width", "height", "time"]:
@@ -85,7 +87,7 @@ def _construct_result_from_frames(
                 "time": round(frame1["time"] + deltas["time"], 2),
             }
         )
-        if frame_number not in [frame1.get('frame'), frame2.get('frame')]:
+        if frame_number not in [frame1.get("frame"), frame2.get("frame")]:
             result["auto"] = True
             if deltas["time"] == 0 and duration > 0:
                 result["time"] = round(
