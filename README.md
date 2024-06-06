@@ -17,8 +17,8 @@
 > OR you can change your import statements as follows:
 > ```python
 > from label_studio_sdk import Client
+> from label_studio_sdk.data_manager import Filters, Column, Operator, Type
 > from label_studio_sdk._legacy import Project
-> from label_studio_sdk._legacy.data_manager import Filters, Column, Operator, Type
 > ```
 ---
 
