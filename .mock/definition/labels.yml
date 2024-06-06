@@ -55,6 +55,8 @@ service:
                   organization: 1
                   projects:
                     - 1
+      audiences:
+        - internal
     create:
       path: /api/labels/
       method: POST
@@ -90,6 +92,8 @@ service:
                 approved_by: 1
                 projects:
                   - 1
+      audiences:
+        - internal
     get:
       path: /api/labels/{id}/
       method: GET
@@ -124,6 +128,8 @@ service:
               organization: 1
               projects:
                 - 1
+      audiences:
+        - internal
     delete:
       path: /api/labels/{id}/
       method: DELETE
@@ -137,6 +143,8 @@ service:
       examples:
         - path-parameters:
             id: id
+      audiences:
+        - internal
     update:
       path: /api/labels/{id}/
       method: PATCH
@@ -178,3 +186,5 @@ service:
               organization: 1
               projects:
                 - 1
+      audiences:
+        - internal

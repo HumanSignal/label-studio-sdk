@@ -79,7 +79,7 @@ class S3Client:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3CreateResponse:
         """
-        Get new S3 import storage
+        Create new S3 import storage
 
         Parameters
         ----------
@@ -505,7 +505,7 @@ class AsyncS3Client:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3CreateResponse:
         """
-        Get new S3 import storage
+        Create new S3 import storage
 
         Parameters
         ----------

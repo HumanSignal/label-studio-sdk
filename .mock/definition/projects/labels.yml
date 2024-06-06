@@ -44,6 +44,8 @@ service:
                   from_name: from_name
                   project: 1
                   label: 1
+      audiences:
+        - internal
     create:
       path: /api/label_links/
       method: POST
@@ -69,6 +71,8 @@ service:
               from_name: from_name
               project: 1
               label: 1
+      audiences:
+        - internal
     get:
       path: /api/label_links/{id}/
       method: GET
@@ -90,6 +94,8 @@ service:
               from_name: from_name
               project: 1
               label: 1
+      audiences:
+        - internal
     delete:
       path: /api/label_links/{id}/
       method: DELETE
@@ -107,6 +113,8 @@ service:
       examples:
         - path-parameters:
             id: id
+      audiences:
+        - internal
     update:
       path: /api/label_links/{id}/
       method: PATCH
@@ -140,6 +148,8 @@ service:
               from_name: from_name
               project: 1
               label: 1
+      audiences:
+        - internal
     update_many:
       path: /api/labels/bulk
       method: POST
@@ -151,3 +161,5 @@ service:
       display-name: Bulk update labels
       examples:
         - {}
+      audiences:
+        - internal

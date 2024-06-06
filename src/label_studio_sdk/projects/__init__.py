@@ -6,7 +6,7 @@ from .types import (
     ProjectsImportTasksResponse,
     ProjectsListResponse,
 )
-from . import exports, files
+from . import exports
 
 __all__ = [
     "ProjectsCreateResponse",
@@ -14,5 +14,4 @@ __all__ = [
     "ProjectsImportTasksResponse",
     "ProjectsListResponse",
     "exports",
-    "files",
 ]

@@ -5,11 +5,13 @@ import typing
 
 import httpx
 
+from .actions.client import ActionsClient, AsyncActionsClient
 from .annotations.client import AnnotationsClient, AsyncAnnotationsClient
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .environment import LabelStudioEnvironment
 from .export_storage.client import AsyncExportStorageClient, ExportStorageClient
+from .files.client import AsyncFilesClient, FilesClient
 from .import_storage.client import AsyncImportStorageClient, ImportStorageClient
 from .ml.client import AsyncMlClient, MlClient
 from .predictions.client import AsyncPredictionsClient, PredictionsClient
@@ -84,7 +86,9 @@ class LabelStudio:
         )
         self.annotations = AnnotationsClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
+        self.actions = ActionsClient(client_wrapper=self._client_wrapper)
         self.views = ViewsClient(client_wrapper=self._client_wrapper)
+        self.files = FilesClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
         self.ml = MlClient(client_wrapper=self._client_wrapper)
         self.predictions = PredictionsClient(client_wrapper=self._client_wrapper)
@@ -158,7 +162,9 @@ class AsyncLabelStudio:
         )
         self.annotations = AsyncAnnotationsClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
+        self.actions = AsyncActionsClient(client_wrapper=self._client_wrapper)
         self.views = AsyncViewsClient(client_wrapper=self._client_wrapper)
+        self.files = AsyncFilesClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
         self.ml = AsyncMlClient(client_wrapper=self._client_wrapper)
         self.predictions = AsyncPredictionsClient(client_wrapper=self._client_wrapper)

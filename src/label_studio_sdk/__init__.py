@@ -58,9 +58,24 @@ from .types import (
     WebhookSerializerForUpdateActionsItem,
 )
 from .errors import BadRequestError, InternalServerError
-from . import annotations, export_storage, import_storage, ml, predictions, projects, tasks, users, views, webhooks
+from . import (
+    actions,
+    annotations,
+    export_storage,
+    files,
+    import_storage,
+    ml,
+    predictions,
+    projects,
+    tasks,
+    users,
+    views,
+    webhooks,
+)
 from ._legacy import Client
 from .environment import LabelStudioEnvironment
+from .export_storage import ExportStorageListTypesResponseItem
+from .import_storage import ImportStorageListTypesResponseItem
 from .ml import (
     MlCreateRequestAuthMethod,
     MlCreateResponse,
@@ -113,6 +128,7 @@ __all__ = [
     "ExportCreate",
     "ExportCreateStatus",
     "ExportStatus",
+    "ExportStorageListTypesResponseItem",
     "FileUpload",
     "Filter",
     "FilterGroup",
@@ -120,6 +136,7 @@ __all__ = [
     "GcsExportStorageStatus",
     "GcsImportStorage",
     "GcsImportStorageStatus",
+    "ImportStorageListTypesResponseItem",
     "InternalServerError",
     "LabelStudioEnvironment",
     "LocalFilesExportStorage",
@@ -182,8 +199,10 @@ __all__ = [
     "WebhookSerializerForUpdateActionsItem",
     "WebhooksUpdateRequestActionsItem",
     "__version__",
+    "actions",
     "annotations",
     "export_storage",
+    "files",
     "import_storage",
     "ml",
     "predictions",

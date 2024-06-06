@@ -3,12 +3,12 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ...core.api_error import ApiError
-from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import pydantic_v1
-from ...core.request_options import RequestOptions
-from ...types.file_upload import FileUpload
+from ..core.api_error import ApiError
+from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.jsonable_encoder import jsonable_encoder
+from ..core.pydantic_utilities import pydantic_v1
+from ..core.request_options import RequestOptions
+from ..types.file_upload import FileUpload
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -42,7 +42,7 @@ class FilesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.files.get(
+        client.files.get(
             id=1,
         )
         """
@@ -80,7 +80,7 @@ class FilesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.files.delete(
+        client.files.delete(
             id=1,
         )
         """
@@ -124,7 +124,7 @@ class FilesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.files.update(
+        client.files.update(
             id=1,
             request=FileUpload(),
         )
@@ -181,7 +181,7 @@ class FilesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.files.list(
+        client.files.list(
             id=1,
         )
         """
@@ -222,7 +222,7 @@ class FilesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.files.delete_many(
+        client.files.delete_many(
             id=1,
         )
         """
@@ -259,7 +259,7 @@ class FilesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.files.download(
+        client.files.download(
             filename="filename",
         )
         """
@@ -303,7 +303,7 @@ class AsyncFilesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.projects.files.get(
+        await client.files.get(
             id=1,
         )
         """
@@ -341,7 +341,7 @@ class AsyncFilesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.projects.files.delete(
+        await client.files.delete(
             id=1,
         )
         """
@@ -385,7 +385,7 @@ class AsyncFilesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.projects.files.update(
+        await client.files.update(
             id=1,
             request=FileUpload(),
         )
@@ -442,7 +442,7 @@ class AsyncFilesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.projects.files.list(
+        await client.files.list(
             id=1,
         )
         """
@@ -483,7 +483,7 @@ class AsyncFilesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.projects.files.delete_many(
+        await client.files.delete_many(
             id=1,
         )
         """
@@ -520,7 +520,7 @@ class AsyncFilesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.projects.files.download(
+        await client.files.download(
             filename="filename",
         )
         """

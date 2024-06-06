@@ -13,7 +13,6 @@ from ..errors.bad_request_error import BadRequestError
 from ..types.project import Project
 from ..types.project_label_config import ProjectLabelConfig
 from .exports.client import AsyncExportsClient, ExportsClient
-from .files.client import AsyncFilesClient, FilesClient
 from .types.projects_create_response import ProjectsCreateResponse
 from .types.projects_import_tasks_request_item import ProjectsImportTasksRequestItem
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
@@ -26,7 +25,6 @@ OMIT = typing.cast(typing.Any, ...)
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.files = FilesClient(client_wrapper=self._client_wrapper)
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
 
     def list(
@@ -173,7 +171,7 @@ class ProjectsClient:
             Project color in HEX format
 
         control_weights : typing.Optional[typing.Dict[str, typing.Any]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -641,7 +639,6 @@ class ProjectsClient:
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.files = AsyncFilesClient(client_wrapper=self._client_wrapper)
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
 
     async def list(
@@ -788,7 +785,7 @@ class AsyncProjectsClient:
             Project color in HEX format
 
         control_weights : typing.Optional[typing.Dict[str, typing.Any]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it's own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

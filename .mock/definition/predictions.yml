@@ -10,6 +10,15 @@ service:
       auth: true
       docs: List all predictions and their IDs.
       display-name: List predictions
+      request:
+        name: PredictionsListRequest
+        query-parameters:
+          task:
+            type: optional<integer>
+            docs: Filter predictions by task ID
+          project:
+            type: optional<integer>
+            docs: Filter predictions by project ID
       response:
         docs: Predictions list
         type: list<root.Prediction>

@@ -51,7 +51,7 @@ service:
       path: /api/storages/azure/
       method: POST
       auth: true
-      docs: Get new Azure import storage
+      docs: Create new Azure import storage
       display-name: Create new storage
       request:
         name: AzureCreateRequest

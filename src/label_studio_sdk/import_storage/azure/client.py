@@ -74,7 +74,7 @@ class AzureClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureCreateResponse:
         """
-        Get new Azure import storage
+        Create new Azure import storage
 
         Parameters
         ----------
@@ -450,7 +450,7 @@ class AsyncAzureClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureCreateResponse:
         """
-        Get new Azure import storage
+        Create new Azure import storage
 
         Parameters
         ----------

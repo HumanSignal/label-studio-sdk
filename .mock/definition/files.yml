@@ -1,5 +1,5 @@
 imports:
-  root: ../__package__.yml
+  root: __package__.yml
 service:
   auth: false
   base-path: ''

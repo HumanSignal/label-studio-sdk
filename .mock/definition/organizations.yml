@@ -20,7 +20,7 @@ service:
             body:
               token: token
               invite_url: invite_url
-    reset_invite:
+    reset_token:
       path: /api/invite/reset-token
       method: POST
       auth: true

@@ -56,7 +56,7 @@ service:
       path: /api/storages/s3/
       method: POST
       auth: true
-      docs: Get new S3 import storage
+      docs: Create new S3 import storage
       display-name: Create new S3 storage
       request:
         name: S3CreateRequest
