@@ -1,2 +1,0 @@
-include requirements.txt
-include label_studio_sdk/schema/*.json

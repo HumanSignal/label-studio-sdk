@@ -1,0 +1,416 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create_export:
+      path: /api/projects/{id}/export
+      method: GET
+      auth: true
+      docs: >
+
+        <Note>If you have a large project it's recommended to use export
+        snapshots, this easy export endpoint might have timeouts.</Note>
+
+        Export annotated tasks as a file in a specific format.
+
+        For example, to export JSON annotations for a project to a file called
+        `annotations.json`,
+
+        run the following from the command line:
+
+        ```bash
+
+        curl -X GET
+        https://localhost:8080/api/projects/{id}/export?exportType=JSON -H
+        'Authorization: Token abc123' --output 'annotations.json'
+
+        ```
+
+        To export all tasks, including skipped tasks and others without
+        annotations, run the following from the command line:
+
+        ```bash
+
+        curl -X GET
+        https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true
+        -H 'Authorization: Token abc123' --output 'annotations.json'
+
+        ```
+
+        To export specific tasks with IDs of 123 and 345, run the following from
+        the command line:
+
+        ```bash
+
+        curl -X GET
+        https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H
+        'Authorization: Token abc123' --output 'annotations.json'
+
+        ```
+
+
+        You must provide a project ID. The project ID can be found in the URL
+        when viewing the project in Label Studio, or you can retrieve all
+        project IDs using [List all projects](../list). 
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+      display-name: Easy export of tasks and annotations
+      request:
+        name: ExportsCreateExportRequest
+        query-parameters:
+          export_type:
+            type: optional<string>
+            docs: Selected export format (JSON by default)
+          download_all_tasks:
+            type: optional<string>
+            docs: >
+
+              If true, download all tasks regardless of status. If false,
+              download only annotated tasks.
+          download_resources:
+            type: optional<boolean>
+            docs: >
+
+              If true, download all resource files such as images, audio, and
+              others relevant to the tasks.
+          ids:
+            type: optional<integer>
+            allow-multiple: true
+            docs: >
+
+              Specify a list of task IDs to retrieve only the details for those
+              tasks.
+      response:
+        docs: Exported data
+        type: file
+      audiences:
+        - public
+    list_formats:
+      path: /api/projects/{id}/export/formats
+      method: GET
+      auth: true
+      docs: >
+
+        Before exporting annotations, you can check with formats are supported
+        by the specified project. For more information about export formats, see
+        [Export formats supported by Label
+        Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
+
+
+        You must provide a project ID. The project ID can be found in the URL
+        when viewing the project in Label Studio, or you can retrieve all
+        project IDs using [List all projects](../list). 
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+      display-name: Get export formats
+      response:
+        docs: Export formats
+        type: list<string>
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              - string
+      audiences:
+        - public
+    list:
+      path: /api/projects/{id}/exports/
+      method: GET
+      auth: true
+      docs: >
+
+        Returns a list of export file (snapshots) for a specific project by ID.
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](../list). 
+
+
+        Included in the response is information about each snapshot, such as who
+        created it and what format it is in. 
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+      display-name: List all export snapshots
+      response:
+        docs: ''
+        type: list<root.Export>
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              - title: title
+                id: 1
+                created_by:
+                  id: 1
+                  first_name: first_name
+                  last_name: last_name
+                  email: email
+                  avatar: avatar
+                created_at: '2024-01-15T09:30:00Z'
+                finished_at: '2024-01-15T09:30:00Z'
+                status: created
+                md5: md5
+                counters:
+                  counters:
+                    key: value
+                converted_formats:
+                  - export_type: export_type
+      audiences:
+        - public
+    create:
+      path: /api/projects/{id}/exports/
+      method: POST
+      auth: true
+      docs: >
+
+        Create a new export request to start a background task and generate an
+        export file (snapshot) for a specific project by ID. The project ID can
+        be found in the URL when viewing the project in Label Studio, or you can
+        retrieve all project IDs using [List all projects](../list). 
+
+
+        A snapshot is a static export of your project's data and annotations at
+        a specific point in time. It captures the current state of your tasks,
+        annotations, and other relevant data, allowing you to download and
+        review them later. Snapshots are particularly useful for large projects
+        as they help avoid timeouts during export operations by processing the
+        data asynchronously.
+
+
+        For more information, see the [Label Studio documentation on exporting
+        annotations](https://labelstud.io/guide/export.html).
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+      display-name: Create new export snapshot
+      request:
+        body: root.ExportCreate
+      response:
+        docs: ''
+        type: root.ExportCreate
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              title: title
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              created_at: '2024-01-15T09:30:00Z'
+              finished_at: '2024-01-15T09:30:00Z'
+              status: created
+              md5: md5
+              counters:
+                counters:
+                  key: value
+              converted_formats:
+                - id: 1
+                  status: created
+                  export_type: export_type
+                  traceback: traceback
+              task_filter_options:
+                view: 1
+                skipped: skipped
+                finished: finished
+                annotated: annotated
+                only_with_annotations: true
+              annotation_filter_options:
+                usual: true
+                ground_truth: true
+                skipped: true
+              serialization_options:
+                drafts:
+                  only_id: true
+                predictions:
+                  only_id: true
+                include_annotation_history: true
+                annotations__completed_by:
+                  only_id: true
+                interpolate_key_frames: true
+      audiences:
+        - public
+    get:
+      path: /api/projects/{id}/exports/{export_pk}
+      method: GET
+      auth: true
+      docs: >
+
+        Retrieve information about a specific export file (snapshot). 
+
+
+        You will need the export ID. You can find this in the response when you
+        [create the snapshot via the API](create) or using [List all export
+        snapshots](list).   
+
+
+        You will also need the project ID. This can be found in the URL when
+        viewing the project in Label Studio, or you can retrieve all project IDs
+        using [List all projects](../list). 
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        export_pk:
+          type: string
+          docs: Primary key identifying the export file.
+      display-name: Get export snapshot by ID
+      response:
+        docs: ''
+        type: root.Export
+      examples:
+        - path-parameters:
+            id: 1
+            export_pk: export_pk
+          response:
+            body:
+              title: title
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              created_at: '2024-01-15T09:30:00Z'
+              finished_at: '2024-01-15T09:30:00Z'
+              status: created
+              md5: md5
+              counters:
+                counters:
+                  key: value
+              converted_formats:
+                - id: 1
+                  status: created
+                  export_type: export_type
+                  traceback: traceback
+      audiences:
+        - public
+    delete:
+      path: /api/projects/{id}/exports/{export_pk}
+      method: DELETE
+      auth: true
+      docs: >
+
+        Delete an export file by specified export ID.
+
+
+        You will need the export ID. You can find this in the response when you
+        [create the snapshot via the API](create) or using [List all export
+        snapshots](list). 
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        export_pk:
+          type: string
+          docs: Primary key identifying the export file.
+      display-name: Delete export snapshot
+      examples:
+        - path-parameters:
+            id: 1
+            export_pk: export_pk
+      audiences:
+        - public
+    convert:
+      path: /api/projects/{id}/exports/{export_pk}/convert
+      method: POST
+      auth: true
+      docs: >
+
+        You can use this to convert an export snapshot into the selected
+        format. 
+
+
+        To see what formats are supported, you can use [Get export
+        formats](list-formats) or see [Export formats supported by Label
+        Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
+
+
+        You will need to provide the project ID and export ID (`export_pk`). The
+        export ID is returned when you create the export or you can use [List
+        all export snapshots](list).
+
+
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](../list). 
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        export_pk:
+          type: string
+          docs: Primary key identifying the export file.
+      display-name: Export conversion
+      request:
+        body: root.ExportConvert
+      response:
+        docs: ''
+        type: root.ExportConvert
+      examples:
+        - path-parameters:
+            id: 1
+            export_pk: export_pk
+          request:
+            export_type: export_type
+          response:
+            body:
+              export_type: export_type
+      audiences:
+        - public
+    download:
+      path: /api/projects/{id}/exports/{export_pk}/download
+      method: GET
+      auth: true
+      docs: >
+
+        Download an export snapshot as a file in a specified format. To see what
+        formats are supported, you can use [Get export formats](list-formats) or
+        see [Export formats supported by Label
+        Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
+
+
+        You will need to provide the project ID and export ID (`export_pk`). The
+        export ID is returned when you create the export or you can use [List
+        all export snapshots](list).
+
+
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](../list). 
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        export_pk:
+          type: string
+          docs: Primary key identifying the export file.
+      display-name: Download export snapshot
+      request:
+        name: ExportsDownloadRequest
+        query-parameters:
+          exportType:
+            type: optional<string>
+            docs: Selected export format
+      examples:
+        - path-parameters:
+            id: 1
+            export_pk: export_pk
+      audiences:
+        - public
+imports:
+  root: ../__package__.yml

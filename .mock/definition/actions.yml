@@ -1,0 +1,26 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/dm/actions/
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve all the registered actions with descriptions that data manager
+        can use.
+      display-name: Get actions
+      examples:
+        - {}
+      audiences:
+        - public
+    create:
+      path: /api/dm/actions/
+      method: POST
+      auth: true
+      docs: Perform an action with the selected items from a specific view.
+      display-name: Post actions
+      examples:
+        - {}
+      audiences:
+        - public

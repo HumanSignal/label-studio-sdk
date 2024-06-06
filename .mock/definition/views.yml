@@ -1,0 +1,345 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/dm/views/
+      method: GET
+      auth: true
+      docs: >
+
+        List all views for a specific project. A view is a tab in the Data
+        Manager where you can set filters and customize which tasks and
+        information appears. 
+
+
+        You will need to provide the project ID. You can find this in the URL
+        when viewing the project in Label Studio, or you can use [List all
+        projects](../projects/list). 
+      display-name: List views
+      request:
+        name: ViewsListRequest
+        query-parameters:
+          project:
+            type: optional<integer>
+            docs: Project ID
+      response:
+        docs: ''
+        type: list<root.View>
+      examples:
+        - response:
+            body:
+              - id: 1
+                filter_group:
+                  id: 1
+                  filters:
+                    - column: column
+                      type: type
+                      operator: operator
+                  conjunction: conjunction
+                data:
+                  data:
+                    key: value
+                ordering:
+                  ordering:
+                    key: value
+                selected_items:
+                  selected_items:
+                    key: value
+                user: 1
+                project: 1
+      audiences:
+        - public
+    create:
+      path: /api/dm/views/
+      method: POST
+      auth: true
+      docs: >
+
+        Create a new Data Manager view for a specific project. A view is a tab
+        in the Data Manager where you can set filters and customize what tasks
+        and information appears. 
+
+
+        You will need to provide the project ID. You can find this in the URL
+        when viewing the project in Label Studio, or you can use [List all
+        projects](../projects/list). 
+      display-name: Create view
+      request:
+        name: ViewsCreateRequest
+        body:
+          properties:
+            data:
+              type: optional<ViewsCreateRequestData>
+              docs: Custom view data
+            project:
+              type: optional<integer>
+              docs: Project ID
+      response:
+        docs: ''
+        type: root.View
+      examples:
+        - request: {}
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                data:
+                  key: value
+              ordering:
+                ordering:
+                  key: value
+              selected_items:
+                selected_items:
+                  key: value
+              user: 1
+              project: 1
+      audiences:
+        - public
+    delete_all:
+      path: /api/dm/views/reset/
+      method: DELETE
+      auth: true
+      docs: >
+
+        Delete all views for a specific project. A view is a tab in the Data
+        Manager where you can set filters and customize what tasks appear. 
+
+
+        You will need to provide the project ID. You can find this in the URL
+        when viewing the project in Label Studio, or you can use [List all
+        projects](../projects/list).
+      display-name: Delete all project views
+      request:
+        name: ViewReset
+        body:
+          properties:
+            project: integer
+      examples:
+        - request:
+            project: 1
+      audiences:
+        - public
+    get:
+      path: /api/dm/views/{id}/
+      method: GET
+      auth: true
+      docs: >
+
+        Get the details about a specific Data Manager view (tab). You will need
+        to supply the view ID. You can find this using [List views](list).  
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Get view details
+      response:
+        docs: ''
+        type: root.View
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                data:
+                  key: value
+              ordering:
+                ordering:
+                  key: value
+              selected_items:
+                selected_items:
+                  key: value
+              user: 1
+              project: 1
+      audiences:
+        - public
+    delete:
+      path: /api/dm/views/{id}/
+      method: DELETE
+      auth: true
+      docs: >-
+        Delete a specific Data Manager view (tab) by ID. You can find the view
+        using [List views](list).
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Delete view
+      examples:
+        - path-parameters:
+            id: id
+      audiences:
+        - public
+    update:
+      path: /api/dm/views/{id}/
+      method: PATCH
+      auth: true
+      docs: >
+
+        You can update a specific Data Manager view (tab) with additional
+        filters and other customizations. You will need to supply the view ID.
+        You can find this using [List views](list).  
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Update view
+      request:
+        name: ViewsUpdateRequest
+        body:
+          properties:
+            data:
+              type: optional<ViewsUpdateRequestData>
+              docs: Custom view data
+            project:
+              type: optional<integer>
+              docs: Project ID
+      response:
+        docs: ''
+        type: root.View
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                data:
+                  key: value
+              ordering:
+                ordering:
+                  key: value
+              selected_items:
+                selected_items:
+                  key: value
+              user: 1
+              project: 1
+      audiences:
+        - public
+types:
+  ViewsCreateRequestDataFiltersConjunction:
+    enum:
+      - and
+      - or
+    docs: Type of conjunction
+  ViewsCreateRequestDataFiltersItemsItem:
+    properties:
+      filter:
+        type: optional<string>
+        docs: Field name
+      type:
+        type: optional<string>
+        docs: Field type
+      operator:
+        type: optional<string>
+        docs: Filter operator
+      value:
+        type: optional<string>
+        docs: Filter value
+  ViewsCreateRequestDataFilters:
+    docs: Filters for the view
+    properties:
+      conjunction:
+        type: optional<ViewsCreateRequestDataFiltersConjunction>
+        docs: Type of conjunction
+      items:
+        type: optional<list<ViewsCreateRequestDataFiltersItemsItem>>
+        docs: Filter items
+  ViewsCreateRequestDataOrderingItemDirection:
+    enum:
+      - asc
+      - desc
+    docs: Order direction
+  ViewsCreateRequestDataOrderingItem:
+    properties:
+      column:
+        type: optional<string>
+        docs: Field name
+      direction:
+        type: optional<ViewsCreateRequestDataOrderingItemDirection>
+        docs: Order direction
+  ViewsCreateRequestData:
+    docs: Custom view data
+    properties:
+      filters:
+        type: optional<ViewsCreateRequestDataFilters>
+        docs: Filters for the view
+      ordering:
+        type: optional<list<ViewsCreateRequestDataOrderingItem>>
+        docs: Ordering for the view
+  ViewsUpdateRequestDataFiltersConjunction:
+    enum:
+      - and
+      - or
+    docs: Type of conjunction
+  ViewsUpdateRequestDataFiltersItemsItem:
+    properties:
+      filter:
+        type: optional<string>
+        docs: Field name
+      type:
+        type: optional<string>
+        docs: Field type
+      operator:
+        type: optional<string>
+        docs: Filter operator
+      value:
+        type: optional<string>
+        docs: Filter value
+  ViewsUpdateRequestDataFilters:
+    docs: Filters for the view
+    properties:
+      conjunction:
+        type: optional<ViewsUpdateRequestDataFiltersConjunction>
+        docs: Type of conjunction
+      items:
+        type: optional<list<ViewsUpdateRequestDataFiltersItemsItem>>
+        docs: Filter items
+  ViewsUpdateRequestDataOrderingItemDirection:
+    enum:
+      - asc
+      - desc
+    docs: Order direction
+  ViewsUpdateRequestDataOrderingItem:
+    properties:
+      column:
+        type: optional<string>
+        docs: Field name
+      direction:
+        type: optional<ViewsUpdateRequestDataOrderingItemDirection>
+        docs: Order direction
+  ViewsUpdateRequestData:
+    docs: Custom view data
+    properties:
+      filters:
+        type: optional<ViewsUpdateRequestDataFilters>
+        docs: Filters for the view
+      ordering:
+        type: optional<list<ViewsUpdateRequestDataOrderingItem>>
+        docs: Ordering for the view

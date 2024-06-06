@@ -1,0 +1,176 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_dm_columns_list:
+      path: /api/dm/columns/
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve the data manager columns available for the tasks in a specific
+        project.
+      display-name: Get data manager columns
+      examples:
+        - {}
+      audiences:
+        - internal
+    api_dm_project_list:
+      path: /api/dm/project/
+      method: GET
+      auth: true
+      docs: Retrieve the project state for the data manager.
+      display-name: Get project state
+      examples:
+        - {}
+      audiences:
+        - internal
+    api_dm_views_update:
+      path: /api/dm/views/{id}/
+      method: PUT
+      auth: true
+      docs: >-
+        Overwrite view data with updated filters and other information for a
+        specific project.
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Put view
+      request:
+        name: ApiDmViewsUpdateRequest
+        body:
+          properties:
+            data:
+              type: optional<ApiDmViewsUpdateRequestData>
+              docs: Custom view data
+            project:
+              type: optional<integer>
+              docs: Project ID
+      response:
+        docs: ''
+        type: ApiDmViewsUpdateResponse
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+          response:
+            body:
+              data:
+                filters:
+                  conjunction: and
+                  items:
+                    - {}
+                ordering:
+                  - {}
+              project: 1
+      audiences:
+        - internal
+types:
+  ApiDmViewsUpdateRequestDataFiltersConjunction:
+    enum:
+      - and
+      - or
+    docs: Type of conjunction
+  ApiDmViewsUpdateRequestDataFiltersItemsItem:
+    properties:
+      filter:
+        type: optional<string>
+        docs: Field name
+      type:
+        type: optional<string>
+        docs: Field type
+      operator:
+        type: optional<string>
+        docs: Filter operator
+      value:
+        type: optional<string>
+        docs: Filter value
+  ApiDmViewsUpdateRequestDataFilters:
+    docs: Filters for the view
+    properties:
+      conjunction:
+        type: optional<ApiDmViewsUpdateRequestDataFiltersConjunction>
+        docs: Type of conjunction
+      items:
+        type: optional<list<ApiDmViewsUpdateRequestDataFiltersItemsItem>>
+        docs: Filter items
+  ApiDmViewsUpdateRequestDataOrderingItemDirection:
+    enum:
+      - asc
+      - desc
+    docs: Order direction
+  ApiDmViewsUpdateRequestDataOrderingItem:
+    properties:
+      column:
+        type: optional<string>
+        docs: Field name
+      direction:
+        type: optional<ApiDmViewsUpdateRequestDataOrderingItemDirection>
+        docs: Order direction
+  ApiDmViewsUpdateRequestData:
+    docs: Custom view data
+    properties:
+      filters:
+        type: optional<ApiDmViewsUpdateRequestDataFilters>
+        docs: Filters for the view
+      ordering:
+        type: optional<list<ApiDmViewsUpdateRequestDataOrderingItem>>
+        docs: Ordering for the view
+  ApiDmViewsUpdateResponseDataFiltersConjunction:
+    enum:
+      - and
+      - or
+    docs: Type of conjunction
+  ApiDmViewsUpdateResponseDataFiltersItemsItem:
+    properties:
+      filter:
+        type: optional<string>
+        docs: Field name
+      type:
+        type: optional<string>
+        docs: Field type
+      operator:
+        type: optional<string>
+        docs: Filter operator
+      value:
+        type: optional<string>
+        docs: Filter value
+  ApiDmViewsUpdateResponseDataFilters:
+    docs: Filters for the view
+    properties:
+      conjunction:
+        type: optional<ApiDmViewsUpdateResponseDataFiltersConjunction>
+        docs: Type of conjunction
+      items:
+        type: optional<list<ApiDmViewsUpdateResponseDataFiltersItemsItem>>
+        docs: Filter items
+  ApiDmViewsUpdateResponseDataOrderingItemDirection:
+    enum:
+      - asc
+      - desc
+    docs: Order direction
+  ApiDmViewsUpdateResponseDataOrderingItem:
+    properties:
+      column:
+        type: optional<string>
+        docs: Field name
+      direction:
+        type: optional<ApiDmViewsUpdateResponseDataOrderingItemDirection>
+        docs: Order direction
+  ApiDmViewsUpdateResponseData:
+    docs: Custom view data
+    properties:
+      filters:
+        type: optional<ApiDmViewsUpdateResponseDataFilters>
+        docs: Filters for the view
+      ordering:
+        type: optional<list<ApiDmViewsUpdateResponseDataOrderingItem>>
+        docs: Ordering for the view
+  ApiDmViewsUpdateResponse:
+    properties:
+      data:
+        type: optional<ApiDmViewsUpdateResponseData>
+        docs: Custom view data
+      project:
+        type: optional<integer>
+        docs: Project ID

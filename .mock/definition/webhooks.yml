@@ -1,0 +1,343 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/webhooks/
+      method: GET
+      auth: true
+      docs: >
+
+        List all webhooks set up for your organization. 
+
+
+        Webhooks in Label Studio let you set up integrations that subscribe to
+        certain events that occur inside Label Studio. When an event is
+        triggered, Label Studio sends an HTTP POST request to the configured
+        webhook URL. 
+
+
+        For more information, see [Set up webhooks in Label
+        Studio](https://labelstud.io/guide/webhooks). 
+      display-name: List all webhooks
+      request:
+        name: WebhooksListRequest
+        query-parameters:
+          project:
+            type: optional<string>
+            docs: Project ID
+      response:
+        docs: ''
+        type: list<root.Webhook>
+      examples:
+        - response:
+            body:
+              - id: 1
+                organization: 1
+                project: 1
+                url: url
+                send_payload: true
+                send_for_all_actions: true
+                headers:
+                  headers:
+                    key: value
+                is_active: true
+                actions:
+                  - PROJECT_CREATED
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
+    create:
+      path: /api/webhooks/
+      method: POST
+      auth: true
+      docs: >
+
+        Create a webhook. 
+
+        Label Studio provides several out-of-the box webhook events, which you
+        can find listed here: [Available Label Studio
+        webhooks](https://labelstud.io/guide/webhooks#Available-Label-Studio-webhooks). 
+
+
+        If you want to create your own custom webhook, refer to [Create custom
+        events for webhooks in Label
+        Studio](https://labelstud.io/guide/webhook_create).
+
+
+        <Note>Label Studio makes two main types of events available to integrate
+        with webhooks: project-level task events and organization events. If you
+        want to use organization-level webhook events, you will need to set
+        `LABEL_STUDIO_ALLOW_ORGANIZATION_WEBHOOKS=true`. </Note>
+      display-name: Create a webhook
+      request:
+        body: root.Webhook
+      response:
+        docs: ''
+        type: root.Webhook
+      examples:
+        - request:
+            url: url
+          response:
+            body:
+              id: 1
+              organization: 1
+              project: 1
+              url: url
+              send_payload: true
+              send_for_all_actions: true
+              headers:
+                headers:
+                  key: value
+              is_active: true
+              actions:
+                - PROJECT_CREATED
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
+    info:
+      path: /api/webhooks/info/
+      method: GET
+      auth: true
+      docs: >
+
+        Get descriptions of all available webhook actions to set up webhooks.
+        For more information, see the [Webhook event
+        reference](https://labelstud.io/guide/webhook_reference).
+      display-name: Get all webhook actions
+      request:
+        name: WebhooksInfoRequest
+        query-parameters:
+          organization-only:
+            type: optional<boolean>
+            docs: organization-only or not
+      examples:
+        - {}
+      audiences:
+        - public
+    get:
+      path: /api/webhooks/{id}/
+      method: GET
+      auth: true
+      docs: >
+
+        Get information about a specific webhook. You will need to provide the
+        webhook ID. You can get this from [List all webhooks](list).
+
+
+        For more information about webhooks, see [Set up webhooks in Label
+        Studio](https://labelstud.io/guide/webhooks) and the [Webhook event
+        reference](https://labelstud.io/guide/webhook_reference).
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this webhook.
+      display-name: Get webhook info
+      response:
+        docs: ''
+        type: root.Webhook
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              organization: 1
+              project: 1
+              url: url
+              send_payload: true
+              send_for_all_actions: true
+              headers:
+                headers:
+                  key: value
+              is_active: true
+              actions:
+                - PROJECT_CREATED
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
+    api_webhooks_update:
+      path: /api/webhooks/{id}/
+      method: PUT
+      auth: true
+      docs: ''
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this webhook.
+      display-name: Save webhook info
+      request:
+        body: root.WebhookSerializerForUpdate
+        query-parameters:
+          url:
+            type: string
+            docs: URL of webhook
+          send_payload:
+            type: optional<boolean>
+            docs: If value is False send only action
+          send_for_all_actions:
+            type: optional<boolean>
+            docs: If value is False - used only for actions from WebhookAction
+          headers:
+            type: optional<string>
+            docs: Key Value Json of headers
+          is_active:
+            type: optional<boolean>
+            docs: If value is False the webhook is disabled
+          actions:
+            type: optional<ApiWebhooksUpdateRequestActionsItem>
+            allow-multiple: true
+        name: ApiWebhooksUpdateRequest
+      response:
+        docs: ''
+        type: root.WebhookSerializerForUpdate
+      examples:
+        - path-parameters:
+            id: 1
+          query-parameters:
+            url: url
+          request:
+            url: url
+          response:
+            body:
+              id: 1
+              organization: 1
+              project: 1
+              url: url
+              send_payload: true
+              send_for_all_actions: true
+              headers:
+                headers:
+                  key: value
+              is_active: true
+              actions:
+                - PROJECT_CREATED
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - internal
+    delete:
+      path: /api/webhooks/{id}/
+      method: DELETE
+      auth: true
+      docs: >
+
+        Delete a webhook. You will need to provide the webhook ID. You can get
+        this from [List all webhooks](list).
+
+
+        For more information about webhooks, see [Set up webhooks in Label
+        Studio](https://labelstud.io/guide/webhooks) and the [Webhook event
+        reference](https://labelstud.io/guide/webhook_reference).
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this webhook.
+      display-name: Delete webhook
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - public
+    update:
+      path: /api/webhooks/{id}/
+      method: PATCH
+      auth: true
+      docs: >
+
+        Update a webhook. You will need to provide the webhook ID. You can get
+        this from [List all webhooks](list).
+
+
+        For more information about webhooks, see [Set up webhooks in Label
+        Studio](https://labelstud.io/guide/webhooks) and the [Webhook event
+        reference](https://labelstud.io/guide/webhook_reference).
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this webhook.
+      display-name: Update webhook info
+      request:
+        body: root.WebhookSerializerForUpdate
+        query-parameters:
+          url:
+            type: string
+            docs: URL of webhook
+          send_payload:
+            type: optional<boolean>
+            docs: If value is False send only action
+          send_for_all_actions:
+            type: optional<boolean>
+            docs: If value is False - used only for actions from WebhookAction
+          headers:
+            type: optional<string>
+            docs: Key Value Json of headers
+          is_active:
+            type: optional<boolean>
+            docs: If value is False the webhook is disabled
+          actions:
+            type: optional<WebhooksUpdateRequestActionsItem>
+            allow-multiple: true
+        name: WebhooksUpdateRequest
+      response:
+        docs: ''
+        type: root.WebhookSerializerForUpdate
+      examples:
+        - path-parameters:
+            id: 1
+          query-parameters:
+            url: url
+          request:
+            url: url
+          response:
+            body:
+              id: 1
+              organization: 1
+              project: 1
+              url: url
+              send_payload: true
+              send_for_all_actions: true
+              headers:
+                headers:
+                  key: value
+              is_active: true
+              actions:
+                - PROJECT_CREATED
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
+types:
+  ApiWebhooksUpdateRequestActionsItem:
+    enum:
+      - PROJECT_CREATED
+      - PROJECT_UPDATED
+      - PROJECT_DELETED
+      - TASKS_CREATED
+      - TASKS_DELETED
+      - ANNOTATION_CREATED
+      - ANNOTATIONS_CREATED
+      - ANNOTATION_UPDATED
+      - ANNOTATIONS_DELETED
+      - LABEL_LINK_CREATED
+      - LABEL_LINK_UPDATED
+      - LABEL_LINK_DELETED
+  WebhooksUpdateRequestActionsItem:
+    enum:
+      - PROJECT_CREATED
+      - PROJECT_UPDATED
+      - PROJECT_DELETED
+      - TASKS_CREATED
+      - TASKS_DELETED
+      - ANNOTATION_CREATED
+      - ANNOTATIONS_CREATED
+      - ANNOTATION_UPDATED
+      - ANNOTATIONS_DELETED
+      - LABEL_LINK_CREATED
+      - LABEL_LINK_UPDATED
+      - LABEL_LINK_DELETED
