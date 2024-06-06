@@ -72,7 +72,7 @@ from . import (
     views,
     webhooks,
 )
-from ._legacy import Client
+from ._legacy import Client, data_manager
 from .environment import LabelStudioEnvironment
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
@@ -196,6 +196,7 @@ __all__ = [
     "__version__",
     "actions",
     "annotations",
+    "data_manager",
     "export_storage",
     "files",
     "import_storage",
