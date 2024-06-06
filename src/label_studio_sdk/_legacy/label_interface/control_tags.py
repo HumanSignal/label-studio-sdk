@@ -3,9 +3,9 @@
 
 import xml.etree.ElementTree
 from typing import Type, Dict, Optional, List, Tuple, Any, Union
-from pydantic import BaseModel, confloat
+from pydantic import BaseModel, confloat, Field, validator
 
-from .base import LabelStudioTag
+from .base import LabelStudioTag, get_tag_class
 from .region import Region
 from .object_tags import ObjectTag
 
@@ -40,12 +40,6 @@ _TAG_TO_CLASS = {
     "textarea": "TextAreaTag",
     "timeserieslabels": "TimeSeriesLabelsTag",
 }
-
-
-def get_tag_class(name):
-    """ """
-    class_name = _TAG_TO_CLASS.get(name.lower())
-    return globals().get(class_name, None)
 
 
 class ControlTag(LabelStudioTag):
@@ -100,7 +94,7 @@ class ControlTag(LabelStudioTag):
         )
 
     @classmethod
-    def parse_node(cls, tag: xml.etree.ElementTree.Element) -> "ControlTag":
+    def parse_node(cls, tag: xml.etree.ElementTree.Element, tags_mapping=None) -> "ControlTag":
         """
         Parse tag into a tag info
 
@@ -114,8 +108,10 @@ class ControlTag(LabelStudioTag):
         ControlTag
             The parsed tag
         """
-        tag_class = get_tag_class(tag.tag) or cls
-
+        tag_class = get_tag_class(tag.tag, _TAG_TO_CLASS, re_mapping=tags_mapping) or cls
+        if isinstance(tag_class, str):
+            tag_class = globals().get(tag_class, None)
+        
         tag_info = {
             "tag": tag.tag,
             "name": tag.attrib["name"],
@@ -142,7 +138,9 @@ class ControlTag(LabelStudioTag):
         if conditionals:
             tag_info["conditionals"] = conditionals
 
-        if tag.attrib.get("value", "empty")[0] == "$" or tag.attrib.get("apiUrl"):
+        val = tag.attrib.get("value", None)
+        if (val is not None and len(val) and val[0] == "$") or \
+           tag.attrib.get("apiUrl"):
             tag_info["dynamic_value"] = True
 
         return tag_class(**tag_info)
@@ -290,6 +288,7 @@ class ControlTag(LabelStudioTag):
         bool
             True if the value is valid, False otherwise
         """
+        
         if hasattr(self, "_label_attr_name"):
             if not self._validate_value_labels(value):
                 return False
@@ -361,7 +360,7 @@ class ControlTag(LabelStudioTag):
         obj = self.find_object_by_name(to_name)
         cls = self._value_class
         value = cls(**kwargs)
-
+        
         return Region(from_tag=self, to_tag=obj, value=value)
 
     def _label_with_labels(
@@ -419,8 +418,8 @@ class ControlTag(LabelStudioTag):
         **kwargs,
     ) -> Region:
         """
-        This method creates a new Region object with the specified label applied.
-        If not labels are provided, it creates a new instance of the value class with the provided arguments and keyword arguments.
+        This method creates a new Region object with the specified label.
+        
         If labels are provided, it creates a new instance of the value class with the provided arguments and keyword arguments and adds the labels to the Region object.
 
         Parameters:
@@ -459,13 +458,13 @@ class ControlTag(LabelStudioTag):
 
 
 class SpanSelection(BaseModel):
-    start: str
-    end: str
+    start: int = Field(..., ge=0)
+    end: int = Field(..., ge=0)
 
 
 class SpanSelectionOffsets(SpanSelection):
-    startOffset: int
-    endOffset: int
+    startOffset: int = Field(..., ge=0)
+    endOffset: int = Field(..., ge=0)
 
 
 class ChoicesValue(BaseModel):
@@ -492,10 +491,41 @@ class LabelsTag(ControlTag):
 
 ## Image tags
 
+def validate_rle(list):
+    """
+    Validate if a list is correctly formatted in Run-Length Encoding (RLE).
+
+    A correctly formatted RLE list should follow 'value, count' pairs. 
+    For example, [2,3,3,2] is a valid RLE list representing [2,2,2,3,3].
+
+    Parameters:
+        list : a list of integers
+
+    Returns:
+        bool : True if the list is correctly formatted in RLE, False otherwise
+    """
+    # If the list length is odd, it's invalid.
+    if len(list) % 2 != 0:
+        return False
+
+    # Check 'value, count' pairs. The count should always be greater than zero.
+    for i in range(1, len(list), 2):
+        if list[i] <= 0:
+            return False
+
+    return True
+
 
 class BrushValue(BaseModel):
-    format: str
+    format: str = "rle"
     rle: List[int]
+
+    @validator('rle')
+    def validate_rle(cls, rle_data):
+        if not validate_rle(rle_data):
+            raise ValueError('Invalid RLE format')
+        
+        return rle_data
 
 
 class BrushLabelsValue(BrushValue):
@@ -507,8 +537,14 @@ class BrushTag(ControlTag):
 
     _value_class: Type[BrushValue] = BrushValue
 
+    # def validate_value(self, value) -> bool:
+    #     res = super().validate_value(value)
+    #     if res is True and value.get("format") == "rle":
+    #         return validate_rle(value.get("rle"))
+        
+    #     return res
 
-class BrushLabelsTag(ControlTag):
+class BrushLabelsTag(BrushTag):
     """ """
 
     _label_attr_name: str = "brushlabels"
@@ -520,7 +556,7 @@ class EllipseValue(BaseModel):
     y: confloat(le=100)
     radiusX: confloat(le=50)
     radiusY: confloat(le=50)
-    rotation: confloat(le=360) = 0
+    rotation: Optional[confloat(le=360)] = 0
 
 
 class EllipseLabelsValue(EllipseValue):
@@ -563,7 +599,7 @@ class KeyPointLabelsTag(ControlTag):
 
 
 class PolygonValue(BaseModel):
-    points: Tuple[confloat(le=100), confloat(le=100)]
+    points: List[Tuple[confloat(le=100), confloat(le=100)]]
 
 
 class PolygonLabelsValue(PolygonValue):
@@ -574,9 +610,6 @@ class PolygonTag(ControlTag):
     """ """
 
     _value_class: Type[PolygonValue] = PolygonValue
-
-    def label(self, *args, **kwargs):
-        """ """
 
 
 class PolygonLabelsTag(ControlTag):
@@ -591,7 +624,7 @@ class RectangleValue(BaseModel):
     y: confloat(le=100)
     width: confloat(le=100)
     height: confloat(le=100)
-    rotation: confloat(le=360)
+    rotation: Optional[confloat(le=360)] = 0
 
 
 class RectangleLabelsValue(RectangleValue):
@@ -611,42 +644,45 @@ class RectangleLabelsTag(ControlTag):
     _value_class: Type[RectangleLabelsValue] = RectangleLabelsValue
 
 
+class VideoRectangleSequenceValue(BaseModel):
+    x: confloat(le=100)
+    y: confloat(le=100)
+    time: float
+    frame: int
+    width: confloat(le=100)
+    height: confloat(le=100)
+    rotation: Optional[float] = 0
+
+
 class VideoRectangleValue(BaseModel):
-    x: float
-    y: float
-    width: float
-    height: float
-    rotation: float
-
-
+    framesCount: int
+    duration: float
+    sequence: List[VideoRectangleSequenceValue]
+    labels: Optional[List[str]]
+    
+    
 class VideoRectangleTag(ControlTag):
     """ """
-
+    _label_attr_name: str = "labels"
     _value_class: Type[VideoRectangleValue] = VideoRectangleValue
-
+    
+    
+class NumberValue(BaseModel):
+    number: int = Field(..., ge=0)
+    
 
 class NumberTag(ControlTag):
     """ """
+    _value_class: Type[NumberValue] = NumberValue
+    
 
-    def validate_value(self, value) -> bool:
-        """ """
-        # TODO implement
-        return True
+class DateTimeValue(BaseModel):
+    datetime: str
 
-    def label(self, *args, **kwargs):
-        """ """
-
-
+    
 class DateTimeTag(ControlTag):
     """ """
-
-    def validate_value(self, value) -> bool:
-        """ """
-        # TODO implement
-        return True
-
-    def label(self, *args, **kwargs):
-        """ """
+    _value_class: Type[DateTimeValue] = DateTimeValue
 
 
 class HyperTextLabelsValue(SpanSelectionOffsets):
@@ -669,8 +705,10 @@ class PairwiseTag(ControlTag):
 
     _value_class: Type[PairwiseValue] = PairwiseValue
 
-    def label(self, *args, **kwargs):
+    def label(self, side):
         """ """
+        value = PairwiseValue(selected=side)
+        return Region(from_tag=self, to_tag=self, value=value)
 
 
 class ParagraphLabelsValue(SpanSelectionOffsets):
@@ -683,46 +721,46 @@ class ParagraphLabelsTag(ControlTag):
     _label_attr_name: str = "paragraphlabels"
     _value_class: Type[ParagraphLabelsValue] = ParagraphLabelsValue
 
-    def label(self, *args, **kwargs):
+    def label(self, utterance=None, *args, **kwargs):
         """ """
+        if isinstance(utterance, int):
+            kwargs["start"] = utterance
+            kwargs["end"] = utterance
 
+        return super().label(*args, **kwargs)
+        
 
+class RankerValue(BaseModel):
+    rank: List[str]
+
+    
 class RankerTag(ControlTag):
     """ """
-
-    def validate_value(self, value) -> bool:
-        """ """
-        # TODO
-        return True
-
-    def label(self, *args, **kwargs):
-        """ """
+    _value_class: Type[RankerValue] = RankerValue
 
 
 class RatingValue(BaseModel):
-    rating: int
+    rating: int = Field(..., ge=0)
 
 
 class RatingTag(ControlTag):
     """ """
-
     _value_class: Type[RatingValue] = RatingValue
-
-    def label(self, *args, **kwargs):
-        """ """
 
 
 class RelationsTag(ControlTag):
     """ """
-
-    def validate_value(self, value) -> bool:
+    def validate_value(self, ) -> bool:
         """ """
-        # TODO
-        return True
+        raise NotImplemented("""Should not be called directly, instead
+        use validate_relation() method found in LabelInterface class""")
 
     def label(self, *args, **kwargs):
         """ """
-
+        raise NotImplemented("""
+        Relations work on regions instead of Object tags
+        use Regions add_relation() method""")
+        
 
 class TaxonomyValue(BaseModel):
     taxonomy: List[List[str]]

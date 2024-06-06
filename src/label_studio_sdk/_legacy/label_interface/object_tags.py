@@ -8,7 +8,7 @@ import xml.etree.ElementTree
 from urllib.parse import urlencode
 from typing import Optional
 
-from .base import LabelStudioTag
+from .base import LabelStudioTag, get_tag_class
 
 _TAG_TO_CLASS = {
     "audio": "AudioTag",
@@ -77,12 +77,6 @@ def data_examples(
     return _DATA_EXAMPLES[mode]
 
 
-def get_tag_class(name):
-    """ """
-    class_name = _TAG_TO_CLASS.get(name.lower())
-    return globals().get(class_name, None)
-
-
 class ObjectTag(LabelStudioTag):
     """
     Class that represents a ObjectTag in Label Studio
@@ -103,7 +97,7 @@ class ObjectTag(LabelStudioTag):
     # self._value_type = value_type
 
     @classmethod
-    def parse_node(cls, tag: xml.etree.ElementTree.Element) -> "ObjectTag":
+    def parse_node(cls, tag: xml.etree.ElementTree.Element, tags_mapping=None) -> "ObjectTag":
         """
         This class method parses a node and returns a ObjectTag object if the node has a name and a value.
 
@@ -117,8 +111,10 @@ class ObjectTag(LabelStudioTag):
         ObjectTag
             A new ObjectTag object with the tag name, attributes, name, and value.
         """
-        tag_class = get_tag_class(tag.tag) or cls
-
+        tag_class = get_tag_class(tag.tag, _TAG_TO_CLASS, re_mapping=tags_mapping) or cls
+        if isinstance(tag_class, str):
+            tag_class = globals().get(tag_class, None)
+        
         return tag_class(
             tag=tag.tag,
             attr=dict(tag.attrib),
@@ -146,10 +142,9 @@ class ObjectTag(LabelStudioTag):
     @property
     def value_is_variable(self) -> bool:
         """Check if value has variable"""
-        pattern = re.compile(r"^\$[A-Za-z_]+$")
+        pattern = re.compile(r"^\$[^, ]+$")
         return bool(pattern.fullmatch(self.value))
-
-        # TODO this should not be here as soon as we cover all the tags
+    
 
     # and have generate_example in each
     def generate_example_value(self, mode="upload", secure_mode=False):
