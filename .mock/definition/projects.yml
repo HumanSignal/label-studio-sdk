@@ -66,66 +66,6 @@ types:
           first label Car should be twice as important as Airplane, then you
           need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
           {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
-  ProjectsImportTasksRequestBodyItemAnnotationsItem:
-    properties:
-      result:
-        type: optional<list<map<string, unknown>>>
-        docs: >-
-          Labeling result in JSON format. Read more about the format in [the
-          Label Studio documentation.](https://labelstud.io/guide/task_format)
-      task:
-        type: optional<integer>
-        docs: Corresponding task for this annotation
-      project:
-        type: optional<integer>
-        docs: Project ID for this annotation
-      completed_by:
-        type: optional<integer>
-        docs: User ID of the person who created this annotation
-      updated_by:
-        type: optional<integer>
-        docs: Last user who updated this annotation
-      was_cancelled:
-        type: optional<boolean>
-        docs: User skipped the task
-      ground_truth:
-        type: optional<boolean>
-        docs: This annotation is a Ground Truth
-      lead_time:
-        type: optional<double>
-        docs: How much time it took to annotate the task (in seconds)
-  ProjectsImportTasksRequestBodyItemPredictionsItem:
-    properties:
-      task:
-        type: optional<integer>
-        docs: Task ID for which the prediction is created
-      result:
-        type: optional<list<map<string, unknown>>>
-        docs: >-
-          Prediction result in JSON format. Read more about the format in [the
-          Label Studio documentation.](https://labelstud.io/guide/predictions)
-      score:
-        type: optional<double>
-        docs: >-
-          Prediction score. Can be used in Data Manager to sort task by model
-          confidence. Task with the lowest score will be shown first.
-      model_version:
-        type: optional<string>
-        docs: >-
-          Model version - tag for predictions that can be used to filter tasks
-          in Data Manager, as well as select specific model version for showing
-          preannotations in the labeling interface
-  ProjectsImportTasksRequestBodyItem:
-    properties:
-      data:
-        type: optional<map<string, unknown>>
-        docs: Data of the task
-      annotations:
-        type: optional<list<ProjectsImportTasksRequestBodyItemAnnotationsItem>>
-        docs: Annotations for this task
-      predictions:
-        type: optional<list<ProjectsImportTasksRequestBodyItemPredictionsItem>>
-        docs: Predictions for this task
   ProjectsImportTasksResponse:
     docs: Task creation response
     properties:
@@ -695,7 +635,7 @@ service:
       request:
         body:
           docs: List of tasks to import
-          type: list<ProjectsImportTasksRequestBodyItem>
+          type: list<map<string, unknown>>
         query-parameters:
           commit_to_project:
             type: optional<boolean>
@@ -725,8 +665,11 @@ service:
             - data:
                 image: http://example.com/image.jpg
               annotations:
-                - result:
-                    - original_width: 1920
+                '0':
+                  id: 1
+                  result:
+                    '0':
+                      original_width: 1920
                       original_height: 1080
                       image_rotation: 0
                       from_name: bboxes
@@ -749,9 +692,12 @@ service:
                   ground_truth: false
                   lead_time: 10
               predictions:
-                - task: 1
+                '0':
+                  id: 1
+                  task: 1
                   result:
-                    - original_width: 1920
+                    '0':
+                      original_width: 1920
                       original_height: 1080
                       image_rotation: 0
                       from_name: bboxes

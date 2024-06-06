@@ -14,7 +14,6 @@ from ..types.project import Project
 from ..types.project_label_config import ProjectLabelConfig
 from .exports.client import AsyncExportsClient, ExportsClient
 from .types.projects_create_response import ProjectsCreateResponse
-from .types.projects_import_tasks_request_body_item import ProjectsImportTasksRequestBodyItem
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from .types.projects_list_response import ProjectsListResponse
 
@@ -366,7 +365,7 @@ class ProjectsClient:
         self,
         id: int,
         *,
-        request: typing.Sequence[ProjectsImportTasksRequestBodyItem],
+        request: typing.Sequence[typing.Dict[str, typing.Any]],
         commit_to_project: typing.Optional[bool] = None,
         return_task_ids: typing.Optional[bool] = None,
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -430,7 +429,7 @@ class ProjectsClient:
         id : int
             A unique integer value identifying this project.
         
-        request : typing.Sequence[ProjectsImportTasksRequestBodyItem]
+        request : typing.Sequence[typing.Dict[str, typing.Any]]
         
         commit_to_project : typing.Optional[bool]
             Set to "true" to immediately commit tasks to the project.
@@ -451,11 +450,6 @@ class ProjectsClient:
         
         Examples
         --------
-        from label_studio_sdk import (
-            ProjectsImportTasksRequestBodyItem,
-            ProjectsImportTasksRequestBodyItemAnnotationsItem,
-            ProjectsImportTasksRequestBodyItemPredictionsItem,
-        )
         from label_studio_sdk.client import LabelStudio
         
         client = LabelStudio(
@@ -464,12 +458,13 @@ class ProjectsClient:
         client.projects.import_tasks(
             id=1,
             request=[
-                ProjectsImportTasksRequestBodyItem(
-                    data={"image": "http://example.com/image.jpg"},
-                    annotations=[
-                        ProjectsImportTasksRequestBodyItemAnnotationsItem(
-                            result=[
-                                {
+                {
+                    "data": {"image": "http://example.com/image.jpg"},
+                    "annotations": {
+                        "0": {
+                            "id": 1,
+                            "result": {
+                                "0": {
                                     "original_width": 1920,
                                     "original_height": 1080,
                                     "image_rotation": 0,
@@ -485,21 +480,22 @@ class ProjectsClient:
                                         "values": {"rectanglelabels": {"0": "Person"}},
                                     },
                                 }
-                            ],
-                            task=1,
-                            project=1,
-                            completed_by=1,
-                            updated_by=1,
-                            was_cancelled=False,
-                            ground_truth=False,
-                            lead_time=10.0,
-                        )
-                    ],
-                    predictions=[
-                        ProjectsImportTasksRequestBodyItemPredictionsItem(
-                            task=1,
-                            result=[
-                                {
+                            },
+                            "task": 1,
+                            "project": 1,
+                            "completed_by": 1,
+                            "updated_by": 1,
+                            "was_cancelled": false,
+                            "ground_truth": false,
+                            "lead_time": 10,
+                        }
+                    },
+                    "predictions": {
+                        "0": {
+                            "id": 1,
+                            "task": 1,
+                            "result": {
+                                "0": {
                                     "original_width": 1920,
                                     "original_height": 1080,
                                     "image_rotation": 0,
@@ -515,12 +511,12 @@ class ProjectsClient:
                                         "values": {"rectanglelabels": {"0": "Person"}},
                                     },
                                 }
-                            ],
-                            score=0.95,
-                            model_version="yolo-v8",
-                        )
-                    ],
-                )
+                            },
+                            "score": 0.95,
+                            "model_version": "yolo-v8",
+                        }
+                    },
+                }
             ],
         )
         """
@@ -946,7 +942,7 @@ class AsyncProjectsClient:
         self,
         id: int,
         *,
-        request: typing.Sequence[ProjectsImportTasksRequestBodyItem],
+        request: typing.Sequence[typing.Dict[str, typing.Any]],
         commit_to_project: typing.Optional[bool] = None,
         return_task_ids: typing.Optional[bool] = None,
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -1010,7 +1006,7 @@ class AsyncProjectsClient:
         id : int
             A unique integer value identifying this project.
         
-        request : typing.Sequence[ProjectsImportTasksRequestBodyItem]
+        request : typing.Sequence[typing.Dict[str, typing.Any]]
         
         commit_to_project : typing.Optional[bool]
             Set to "true" to immediately commit tasks to the project.
@@ -1031,11 +1027,6 @@ class AsyncProjectsClient:
         
         Examples
         --------
-        from label_studio_sdk import (
-            ProjectsImportTasksRequestBodyItem,
-            ProjectsImportTasksRequestBodyItemAnnotationsItem,
-            ProjectsImportTasksRequestBodyItemPredictionsItem,
-        )
         from label_studio_sdk.client import AsyncLabelStudio
         
         client = AsyncLabelStudio(
@@ -1044,12 +1035,13 @@ class AsyncProjectsClient:
         await client.projects.import_tasks(
             id=1,
             request=[
-                ProjectsImportTasksRequestBodyItem(
-                    data={"image": "http://example.com/image.jpg"},
-                    annotations=[
-                        ProjectsImportTasksRequestBodyItemAnnotationsItem(
-                            result=[
-                                {
+                {
+                    "data": {"image": "http://example.com/image.jpg"},
+                    "annotations": {
+                        "0": {
+                            "id": 1,
+                            "result": {
+                                "0": {
                                     "original_width": 1920,
                                     "original_height": 1080,
                                     "image_rotation": 0,
@@ -1065,21 +1057,22 @@ class AsyncProjectsClient:
                                         "values": {"rectanglelabels": {"0": "Person"}},
                                     },
                                 }
-                            ],
-                            task=1,
-                            project=1,
-                            completed_by=1,
-                            updated_by=1,
-                            was_cancelled=False,
-                            ground_truth=False,
-                            lead_time=10.0,
-                        )
-                    ],
-                    predictions=[
-                        ProjectsImportTasksRequestBodyItemPredictionsItem(
-                            task=1,
-                            result=[
-                                {
+                            },
+                            "task": 1,
+                            "project": 1,
+                            "completed_by": 1,
+                            "updated_by": 1,
+                            "was_cancelled": false,
+                            "ground_truth": false,
+                            "lead_time": 10,
+                        }
+                    },
+                    "predictions": {
+                        "0": {
+                            "id": 1,
+                            "task": 1,
+                            "result": {
+                                "0": {
                                     "original_width": 1920,
                                     "original_height": 1080,
                                     "image_rotation": 0,
@@ -1095,12 +1088,12 @@ class AsyncProjectsClient:
                                         "values": {"rectanglelabels": {"0": "Person"}},
                                     },
                                 }
-                            ],
-                            score=0.95,
-                            model_version="yolo-v8",
-                        )
-                    ],
-                )
+                            },
+                            "score": 0.95,
+                            "model_version": "yolo-v8",
+                        }
+                    },
+                }
             ],
         )
         """

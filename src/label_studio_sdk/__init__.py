@@ -84,14 +84,7 @@ from .ml import (
     MlUpdateResponse,
     MlUpdateResponseAuthMethod,
 )
-from .projects import (
-    ProjectsCreateResponse,
-    ProjectsImportTasksRequestBodyItem,
-    ProjectsImportTasksRequestBodyItemAnnotationsItem,
-    ProjectsImportTasksRequestBodyItemPredictionsItem,
-    ProjectsImportTasksResponse,
-    ProjectsListResponse,
-)
+from .projects import ProjectsCreateResponse, ProjectsImportTasksResponse, ProjectsListResponse
 from .tasks import TasksListRequestFields, TasksListResponse
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
 from .version import __version__
@@ -162,9 +155,6 @@ __all__ = [
     "ProjectSampling",
     "ProjectSkipQueue",
     "ProjectsCreateResponse",
-    "ProjectsImportTasksRequestBodyItem",
-    "ProjectsImportTasksRequestBodyItemAnnotationsItem",
-    "ProjectsImportTasksRequestBodyItemPredictionsItem",
     "ProjectsImportTasksResponse",
     "ProjectsListResponse",
     "RedisExportStorage",

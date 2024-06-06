@@ -2,13 +2,7 @@
 
 import typing
 
-from label_studio_sdk import (
-    Project,
-    ProjectLabelConfig,
-    ProjectsImportTasksRequestBodyItem,
-    ProjectsImportTasksRequestBodyItemAnnotationsItem,
-    ProjectsImportTasksRequestBodyItemPredictionsItem,
-)
+from label_studio_sdk import Project, ProjectLabelConfig
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 
 from .utilities import validate_response
@@ -293,12 +287,13 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
     response = client.projects.import_tasks(
         id=1,
         request=[
-            ProjectsImportTasksRequestBodyItem(
-                data={"image": "http://example.com/image.jpg"},
-                annotations=[
-                    ProjectsImportTasksRequestBodyItemAnnotationsItem(
-                        result=[
-                            {
+            {
+                "data": {"image": "http://example.com/image.jpg"},
+                "annotations": {
+                    "0": {
+                        "id": 1,
+                        "result": {
+                            "0": {
                                 "original_width": 1920,
                                 "original_height": 1080,
                                 "image_rotation": 0,
@@ -314,21 +309,22 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
                                     "values": {"rectanglelabels": {"0": "Person"}},
                                 },
                             }
-                        ],
-                        task=1,
-                        project=1,
-                        completed_by=1,
-                        updated_by=1,
-                        was_cancelled=False,
-                        ground_truth=False,
-                        lead_time=10.0,
-                    )
-                ],
-                predictions=[
-                    ProjectsImportTasksRequestBodyItemPredictionsItem(
-                        task=1,
-                        result=[
-                            {
+                        },
+                        "task": 1,
+                        "project": 1,
+                        "completed_by": 1,
+                        "updated_by": 1,
+                        "was_cancelled": false,
+                        "ground_truth": false,
+                        "lead_time": 10,
+                    }
+                },
+                "predictions": {
+                    "0": {
+                        "id": 1,
+                        "task": 1,
+                        "result": {
+                            "0": {
                                 "original_width": 1920,
                                 "original_height": 1080,
                                 "image_rotation": 0,
@@ -344,12 +340,12 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
                                     "values": {"rectanglelabels": {"0": "Person"}},
                                 },
                             }
-                        ],
-                        score=0.95,
-                        model_version="yolo-v8",
-                    )
-                ],
-            )
+                        },
+                        "score": 0.95,
+                        "model_version": "yolo-v8",
+                    }
+                },
+            }
         ],
     )
     validate_response(response, expected_response, expected_types)
@@ -357,12 +353,13 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
     async_response = await async_client.projects.import_tasks(
         id=1,
         request=[
-            ProjectsImportTasksRequestBodyItem(
-                data={"image": "http://example.com/image.jpg"},
-                annotations=[
-                    ProjectsImportTasksRequestBodyItemAnnotationsItem(
-                        result=[
-                            {
+            {
+                "data": {"image": "http://example.com/image.jpg"},
+                "annotations": {
+                    "0": {
+                        "id": 1,
+                        "result": {
+                            "0": {
                                 "original_width": 1920,
                                 "original_height": 1080,
                                 "image_rotation": 0,
@@ -378,21 +375,22 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
                                     "values": {"rectanglelabels": {"0": "Person"}},
                                 },
                             }
-                        ],
-                        task=1,
-                        project=1,
-                        completed_by=1,
-                        updated_by=1,
-                        was_cancelled=False,
-                        ground_truth=False,
-                        lead_time=10.0,
-                    )
-                ],
-                predictions=[
-                    ProjectsImportTasksRequestBodyItemPredictionsItem(
-                        task=1,
-                        result=[
-                            {
+                        },
+                        "task": 1,
+                        "project": 1,
+                        "completed_by": 1,
+                        "updated_by": 1,
+                        "was_cancelled": false,
+                        "ground_truth": false,
+                        "lead_time": 10,
+                    }
+                },
+                "predictions": {
+                    "0": {
+                        "id": 1,
+                        "task": 1,
+                        "result": {
+                            "0": {
                                 "original_width": 1920,
                                 "original_height": 1080,
                                 "image_rotation": 0,
@@ -408,12 +406,12 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
                                     "values": {"rectanglelabels": {"0": "Person"}},
                                 },
                             }
-                        ],
-                        score=0.95,
-                        model_version="yolo-v8",
-                    )
-                ],
-            )
+                        },
+                        "score": 0.95,
+                        "model_version": "yolo-v8",
+                    }
+                },
+            }
         ],
     )
     validate_response(async_response, expected_response, expected_types)
