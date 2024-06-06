@@ -24,6 +24,7 @@ tests/custom/label_studio_tools
 tests/custom/legacy
 
 # manual workflows
+.github/workflows/ci.yml
 .github/release.yml
 .github/pr-title-checker-config.json
 .github/autolabeler.yml
