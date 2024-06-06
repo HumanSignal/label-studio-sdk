@@ -22,7 +22,7 @@ class UsersClient:
 
     def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersResetTokenResponse:
         """
-        Reset the user token for the current user.
+        Reset your access token or API key. When reset, any scripts or automations you have in place will need to be updated with the new key.
 
         Parameters
         ----------
@@ -56,7 +56,7 @@ class UsersClient:
 
     def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersGetTokenResponse:
         """
-        Get a user token to authenticate to the API as the current user.
+        Get a access token to authenticate to the API as the current user. To find this in the Label Studio interface, click **Account & Settings** in the upper right. For more information, see [Access Token](https://labelstud.io/guide/user_account#Access-token).
 
         Parameters
         ----------
@@ -90,7 +90,7 @@ class UsersClient:
 
     def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
-        Retrieve details of the account that you are using to access the API.
+        Get information about your user account, such as your username, email, and user ID.
 
         Parameters
         ----------
@@ -124,7 +124,7 @@ class UsersClient:
 
     def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[BaseUser]:
         """
-        List the users that exist on the Label Studio server.
+        List all users in your Label Studio organization.
 
         Parameters
         ----------
@@ -246,7 +246,8 @@ class UsersClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
-        Get info about a specific Label Studio user, based on the user ID.
+        Get info about a specific Label Studio user.
+        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
 
         Parameters
         ----------
@@ -286,6 +287,10 @@ class UsersClient:
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific Label Studio user.
+
+        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
+
+        <Warning>Use caution when deleting a user, as this can cause issues such as breaking the "Annotated by" filter or leaving orphaned records.</Warning>
 
         Parameters
         ----------
@@ -337,7 +342,9 @@ class UsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseUser:
         """
-        Update details for a specific user, such as their name or contact information, in Label Studio.
+        Update details for a specific Label Studio user, such as their name or contact information.
+
+        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
 
         Parameters
         ----------
@@ -422,7 +429,7 @@ class AsyncUsersClient:
 
     async def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersResetTokenResponse:
         """
-        Reset the user token for the current user.
+        Reset your access token or API key. When reset, any scripts or automations you have in place will need to be updated with the new key.
 
         Parameters
         ----------
@@ -456,7 +463,7 @@ class AsyncUsersClient:
 
     async def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersGetTokenResponse:
         """
-        Get a user token to authenticate to the API as the current user.
+        Get a access token to authenticate to the API as the current user. To find this in the Label Studio interface, click **Account & Settings** in the upper right. For more information, see [Access Token](https://labelstud.io/guide/user_account#Access-token).
 
         Parameters
         ----------
@@ -490,7 +497,7 @@ class AsyncUsersClient:
 
     async def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
-        Retrieve details of the account that you are using to access the API.
+        Get information about your user account, such as your username, email, and user ID.
 
         Parameters
         ----------
@@ -524,7 +531,7 @@ class AsyncUsersClient:
 
     async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[BaseUser]:
         """
-        List the users that exist on the Label Studio server.
+        List all users in your Label Studio organization.
 
         Parameters
         ----------
@@ -646,7 +653,8 @@ class AsyncUsersClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
-        Get info about a specific Label Studio user, based on the user ID.
+        Get info about a specific Label Studio user.
+        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
 
         Parameters
         ----------
@@ -686,6 +694,10 @@ class AsyncUsersClient:
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific Label Studio user.
+
+        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
+
+        <Warning>Use caution when deleting a user, as this can cause issues such as breaking the "Annotated by" filter or leaving orphaned records.</Warning>
 
         Parameters
         ----------
@@ -737,7 +749,9 @@ class AsyncUsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseUser:
         """
-        Update details for a specific user, such as their name or contact information, in Label Studio.
+        Update details for a specific Label Studio user, such as their name or contact information.
+
+        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
 
         Parameters
         ----------

@@ -24,7 +24,11 @@ class GcsClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[GcsExportStorage]:
         """
-        Get a list of all GCS export storage connections.
+        You can connect your Google Cloud Storage bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all GCS export (target) storage connections for a specific project.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -70,7 +74,11 @@ class GcsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsCreateResponse:
         """
-        Create a new GCS export storage connection to store annotations.
+        Create a new target storage connection to Google Cloud Storage.
+
+        For information about the required fields and prerequisites, see [Google Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage) in the Label Studio documentation.
+
+        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
 
         Parameters
         ----------
@@ -129,7 +137,7 @@ class GcsClient:
 
     def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
-        Validate a specific GCS export storage connection.
+        Validate a specific GCS export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 
         Parameters
         ----------
@@ -163,7 +171,9 @@ class GcsClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
-        Get a specific GCS export storage connection.
+        Get a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -202,7 +212,9 @@ class GcsClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific GCS export storage connection.
+        Delete a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+
+        Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 
         Parameters
         ----------
@@ -250,7 +262,9 @@ class GcsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsUpdateResponse:
         """
-        Update a specific GCS export storage connection.
+        Update a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -314,7 +328,11 @@ class GcsClient:
 
     def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
-        Sync tasks from an GCS export storage connection.
+        Sync tasks to a GCS export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+
+        Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
+
+        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 
         Parameters
         ----------
@@ -359,7 +377,11 @@ class AsyncGcsClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[GcsExportStorage]:
         """
-        Get a list of all GCS export storage connections.
+        You can connect your Google Cloud Storage bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all GCS export (target) storage connections for a specific project.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -405,7 +427,11 @@ class AsyncGcsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsCreateResponse:
         """
-        Create a new GCS export storage connection to store annotations.
+        Create a new target storage connection to Google Cloud Storage.
+
+        For information about the required fields and prerequisites, see [Google Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage) in the Label Studio documentation.
+
+        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
 
         Parameters
         ----------
@@ -464,7 +490,7 @@ class AsyncGcsClient:
 
     async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
-        Validate a specific GCS export storage connection.
+        Validate a specific GCS export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 
         Parameters
         ----------
@@ -498,7 +524,9 @@ class AsyncGcsClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
-        Get a specific GCS export storage connection.
+        Get a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -537,7 +565,9 @@ class AsyncGcsClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific GCS export storage connection.
+        Delete a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+
+        Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 
         Parameters
         ----------
@@ -585,7 +615,9 @@ class AsyncGcsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsUpdateResponse:
         """
-        Update a specific GCS export storage connection.
+        Update a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -649,7 +681,11 @@ class AsyncGcsClient:
 
     async def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
-        Sync tasks from an GCS export storage connection.
+        Sync tasks to a GCS export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+
+        Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
+
+        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 
         Parameters
         ----------

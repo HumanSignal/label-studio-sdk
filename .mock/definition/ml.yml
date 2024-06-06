@@ -10,14 +10,15 @@ service:
       auth: true
       docs: >
 
-        List all configured ML backends for a specific project by ID.
+        List all configured Machine Learning (ML) backends for a specific
+        project by ID. For more information about ML backends, see [Machine
+        learning integration](https://labelstud.io/guide/ml). 
 
-        Use the following cURL command:
 
-        ```bash
 
-        curl https://localhost:8080/api/ml?project={project_id} -H
-        'Authorization: Token abc123'
+        You will need to provide the project ID. This can be found in the URL
+        when viewing the project in Label Studio, or you can retrieve all
+        project IDs using [List all projects](../projects/list).
       display-name: List ML backends
       request:
         name: MlListRequest
@@ -60,18 +61,22 @@ service:
       auth: true
       docs: >
 
-        Add an ML backend to a project using the Label Studio UI or by sending a
-        POST request using the following cURL 
+        Add an ML backend to a project. For more information about what you need
+        to configure when adding an ML backend, see [Connect the model to Label
+        studio](https://labelstud.io/guide/ml#Connect-the-model-to-Label-Studio).
 
-        command:
 
-        ```bash
+        <Note>If you are using Docker Compose, you may need to adjust your ML
+        backend URL. See [localhost and Docker
+        containers](https://labelstud.io/guide/ml#localhost-and-Docker-containers).</Note>
 
-        curl -X POST -H 'Content-type: application/json'
-        https://localhost:8080/api/ml -H 'Authorization: Token abc123'\
 
-        --data '{"url": "http://localhost:9090", "project": {project_id}}' 
-      display-name: Add ML Backend
+        <Note>If you are using files that are located in the cloud, local
+        storage, or uploaded to Label Studio, you must configure your
+        environment variables to allow the ML backend to interact with those
+        files. See [Allow the ML backend to access Label
+        Studio](https://labelstud.io/guide/ml#Allow-the-ML-backend-to-access-Label-Studio-data).</Note>
+      display-name: Add ML backend
       request:
         name: MlCreateRequest
         body:
@@ -133,20 +138,18 @@ service:
       auth: true
       docs: >
 
-        Get details about a specific ML backend connection by ID. For example,
-        make a GET request using the
+        Get details about a specific ML backend. You will need to specify an ID
+        for the backend connection. You can find this using [List ML
+        backends](list). 
 
-        following cURL command:
 
-        ```bash
-
-        curl https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization:
-        Token abc123'
+        For more information, see [Machine learning
+        integration](https://labelstud.io/guide/ml).
       path-parameters:
         id:
           type: integer
           docs: A unique integer value identifying this ml backend.
-      display-name: Get ML Backend
+      display-name: Get ML backend
       response:
         docs: ''
         type: root.MlBackend
@@ -184,19 +187,18 @@ service:
       auth: true
       docs: >
 
-        Remove an existing ML backend connection by ID. For example, use the
+        Remove an existing ML backend connection. You will need to specify an ID
+        for the backend connection. You can find this using [List ML
+        backends](list).
 
-        following cURL command:
 
-        ```bash
-
-        curl -X DELETE https://localhost:8080/api/ml/{ml_backend_ID} -H
-        'Authorization: Token abc123'
+        For more information, see [Machine learning
+        integration](https://labelstud.io/guide/ml).
       path-parameters:
         id:
           type: integer
           docs: A unique integer value identifying this ml backend.
-      display-name: Remove ML Backend
+      display-name: Remove ML backend
       examples:
         - path-parameters:
             id: 1
@@ -208,21 +210,17 @@ service:
       auth: true
       docs: >
 
-        Update ML backend parameters using the Label Studio UI or by sending a
-        PATCH request using the following cURL command:
+        Update the ML backend parameters. You will need to specify an ID for the
+        backend connection. You can find this using [List ML backends](list).
 
-        ```bash
 
-        curl -X PATCH -H 'Content-type: application/json'
-        https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token
-        abc123'\
-
-        --data '{"url": "http://localhost:9091"}' 
+        For more information, see [Machine learning
+        integration](https://labelstud.io/guide/ml).
       path-parameters:
         id:
           type: integer
           docs: A unique integer value identifying this ml backend.
-      display-name: Update ML Backend
+      display-name: Update ML backend
       request:
         name: MlUpdateRequest
         body:
@@ -286,19 +284,32 @@ service:
       auth: true
       docs: >
 
-        Send a request to the machine learning backend set up to be used for
-        interactive preannotations to retrieve a
+        Enable interactive pre-annotations for a specific task. 
 
-        predicted region based on annotator input. 
 
-        See [set up machine
-        learning](https://labelstud.io/guide/ml.html#Get-interactive-preannotations)
-        for more.
+        ML-assisted labeling with interactive pre-annotations works with image
+        segmentation and object detection tasks using rectangles, ellipses,
+        polygons, brush masks, and keypoints, as well as with HTML and text
+        named entity recognition tasks. Your ML backend must support the type of
+        labeling that you’re performing, recognize the input that you create,
+        and be able to respond with the relevant output for a prediction. For
+        more information, see [Interactive
+        pre-annotations](https://labelstud.io/guide/ml.html#Interactive-pre-annotations).
+
+
+        Before you can use interactive annotations, it must be enabled for you
+        ML backend connection (`"is_interactive": true`). 
+
+
+        You will need the task ID and the ML backend connection ID. The task ID
+        is available from the Label Studio URL when viewing the task, or you can
+        retrieve it programmatically with [Get task list](../tasks/list). The ML
+        backend connection ID is available via [List ML backends](list).
       path-parameters:
         id:
           type: integer
           docs: A unique integer value identifying this ML backend.
-      display-name: Request Interactive Annotation
+      display-name: Request interactive annotations
       request:
         name: MlInteractiveAnnotatingRequest
         body:
@@ -342,19 +353,22 @@ service:
       auth: true
       docs: >
 
-        After you add an ML backend, call this API with the ML backend ID to
-        start training with 
+        After you connect a model to Label Studio as a machine learning backend
+        and annotate at least one task, you can start training the model.
+        Training logs appear in stdout and the console.
 
-        already-labeled tasks. 
+
+        For more information, see [Model
+        training](https://labelstud.io/guide/ml.html#Model-training).
 
 
-        Get the ML backend ID by [listing the ML backends for a
-        project](https://labelstud.io/api/#operation/api_ml_list).
+        You will need to specify an ID for the backend connection. You can find
+        this using [List ML backends](list).
       path-parameters:
         id:
           type: integer
           docs: A unique integer value identifying this ML backend.
-      display-name: Train
+      display-name: Start training
       request:
         name: MlTrainRequest
         body:
@@ -374,7 +388,11 @@ service:
       path: /api/ml/{id}/versions
       method: GET
       auth: true
-      docs: Get available versions of the model.
+      docs: >
+
+        Get available versions of the model. You will need to specify an ID for
+        the backend connection. You can find this using [List ML
+        backends](list).
       path-parameters:
         id: string
       display-name: Get model versions

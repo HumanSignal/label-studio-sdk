@@ -2,7 +2,7 @@
 
 import typing
 
-from label_studio_sdk import Project, ProjectLabelConfig, ProjectsImportTasksRequestItem
+from label_studio_sdk import Project, ProjectLabelConfig
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 
 from .utilities import validate_response
@@ -261,41 +261,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
     async_response = await async_client.projects.update(id=1, request=Project())
     validate_response(async_response, expected_response, expected_types)
-
-
-async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
-        "task_count": 1,
-        "annotation_count": 1,
-        "predictions_count": 1,
-        "duration": 1.1,
-        "file_upload_ids": [1],
-        "could_be_tasks_list": True,
-        "found_formats": ["found_formats"],
-        "data_columns": ["data_columns"],
-    }
-    expected_types: typing.Any = {
-        "task_count": "integer",
-        "annotation_count": "integer",
-        "predictions_count": "integer",
-        "duration": None,
-        "file_upload_ids": ("list", {0: "integer"}),
-        "could_be_tasks_list": None,
-        "found_formats": ("list", {0: None}),
-        "data_columns": ("list", {0: None}),
-    }
-    response = client.projects.import_tasks(id=1, request=[ProjectsImportTasksRequestItem()])
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.import_tasks(id=1, request=[ProjectsImportTasksRequestItem()])
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_delete_all_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.projects.delete_all_tasks(id=1) is None  # type: ignore[func-returns-value]
-
-    assert await async_client.projects.delete_all_tasks(id=1) is None  # type: ignore[func-returns-value]
 
 
 async def test_validate_config(client: LabelStudio, async_client: AsyncLabelStudio) -> None:

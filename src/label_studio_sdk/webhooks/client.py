@@ -26,6 +26,10 @@ class WebhooksClient:
         """
         List all webhooks set up for your organization.
 
+        Webhooks in Label Studio let you set up integrations that subscribe to certain events that occur inside Label Studio. When an event is triggered, Label Studio sends an HTTP POST request to the configured webhook URL.
+
+        For more information, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks).
+
         Parameters
         ----------
         project : typing.Optional[str]
@@ -61,7 +65,12 @@ class WebhooksClient:
 
     def create(self, *, request: Webhook, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
         """
-        Create a webhook for your organization.
+        Create a webhook.
+        Label Studio provides several out-of-the box webhook events, which you can find listed here: [Available Label Studio webhooks](https://labelstud.io/guide/webhooks#Available-Label-Studio-webhooks).
+
+        If you want to create your own custom webhook, refer to [Create custom events for webhooks in Label Studio](https://labelstud.io/guide/webhook_create).
+
+        <Note>Label Studio makes two main types of events available to integrate with webhooks: project-level task events and organization events. If you want to use organization-level webhook events, you will need to set `LABEL_STUDIO_ALLOW_ORGANIZATION_WEBHOOKS=true`. </Note>
 
         Parameters
         ----------
@@ -107,7 +116,7 @@ class WebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Get descriptions of all available webhook actions to set up webhooks.
+        Get descriptions of all available webhook actions to set up webhooks. For more information, see the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
         Parameters
         ----------
@@ -146,7 +155,9 @@ class WebhooksClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
         """
+        Get information about a specific webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
 
+        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
         Parameters
         ----------
@@ -185,7 +196,9 @@ class WebhooksClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        Delete a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
 
+        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
         Parameters
         ----------
@@ -237,7 +250,9 @@ class WebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WebhookSerializerForUpdate:
         """
+        Update a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
 
+        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
         Parameters
         ----------
@@ -321,6 +336,10 @@ class AsyncWebhooksClient:
         """
         List all webhooks set up for your organization.
 
+        Webhooks in Label Studio let you set up integrations that subscribe to certain events that occur inside Label Studio. When an event is triggered, Label Studio sends an HTTP POST request to the configured webhook URL.
+
+        For more information, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks).
+
         Parameters
         ----------
         project : typing.Optional[str]
@@ -356,7 +375,12 @@ class AsyncWebhooksClient:
 
     async def create(self, *, request: Webhook, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
         """
-        Create a webhook for your organization.
+        Create a webhook.
+        Label Studio provides several out-of-the box webhook events, which you can find listed here: [Available Label Studio webhooks](https://labelstud.io/guide/webhooks#Available-Label-Studio-webhooks).
+
+        If you want to create your own custom webhook, refer to [Create custom events for webhooks in Label Studio](https://labelstud.io/guide/webhook_create).
+
+        <Note>Label Studio makes two main types of events available to integrate with webhooks: project-level task events and organization events. If you want to use organization-level webhook events, you will need to set `LABEL_STUDIO_ALLOW_ORGANIZATION_WEBHOOKS=true`. </Note>
 
         Parameters
         ----------
@@ -402,7 +426,7 @@ class AsyncWebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Get descriptions of all available webhook actions to set up webhooks.
+        Get descriptions of all available webhook actions to set up webhooks. For more information, see the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
         Parameters
         ----------
@@ -441,7 +465,9 @@ class AsyncWebhooksClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
         """
+        Get information about a specific webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
 
+        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
         Parameters
         ----------
@@ -480,7 +506,9 @@ class AsyncWebhooksClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        Delete a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
 
+        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
         Parameters
         ----------
@@ -532,7 +560,9 @@ class AsyncWebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WebhookSerializerForUpdate:
         """
+        Update a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
 
+        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 
         Parameters
         ----------

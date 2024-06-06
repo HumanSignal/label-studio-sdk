@@ -24,7 +24,11 @@ class S3Client:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[S3ImportStorage]:
         """
-        Get a list of all S3 import storage connections.
+        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -79,7 +83,13 @@ class S3Client:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3CreateResponse:
         """
-        Create new S3 import storage
+        Create a new source storage connection to a S3 bucket.
+
+        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
+
+        <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
+
+        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
 
         Parameters
         ----------
@@ -174,7 +184,7 @@ class S3Client:
 
     def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
         """
-        Validate a specific S3 import storage connection.
+        Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
         Parameters
         ----------
@@ -208,7 +218,9 @@ class S3Client:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
         """
-        Get a specific S3 import storage connection.
+        Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -247,7 +259,11 @@ class S3Client:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific S3 import storage connection.
+        Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
+
+        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 
         Parameters
         ----------
@@ -304,7 +320,9 @@ class S3Client:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3UpdateResponse:
         """
-        Update a specific S3 import storage connection.
+        Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -404,7 +422,11 @@ class S3Client:
 
     def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
         """
-        Sync tasks from an S3 import storage connection.
+        Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
+
+        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 
         Parameters
         ----------
@@ -450,7 +472,11 @@ class AsyncS3Client:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[S3ImportStorage]:
         """
-        Get a list of all S3 import storage connections.
+        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -505,7 +531,13 @@ class AsyncS3Client:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3CreateResponse:
         """
-        Create new S3 import storage
+        Create a new source storage connection to a S3 bucket.
+
+        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
+
+        <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
+
+        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
 
         Parameters
         ----------
@@ -600,7 +632,7 @@ class AsyncS3Client:
 
     async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
         """
-        Validate a specific S3 import storage connection.
+        Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
         Parameters
         ----------
@@ -634,7 +666,9 @@ class AsyncS3Client:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
         """
-        Get a specific S3 import storage connection.
+        Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -673,7 +707,11 @@ class AsyncS3Client:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific S3 import storage connection.
+        Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
+
+        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 
         Parameters
         ----------
@@ -730,7 +768,9 @@ class AsyncS3Client:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3UpdateResponse:
         """
-        Update a specific S3 import storage connection.
+        Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -830,7 +870,11 @@ class AsyncS3Client:
 
     async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
         """
-        Sync tasks from an S3 import storage connection.
+        Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
+
+        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 
         Parameters
         ----------

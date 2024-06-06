@@ -8,8 +8,21 @@ service:
       path: /api/storages/export/redis
       method: GET
       auth: true
-      docs: Get a list of all Redis export storage connections.
-      display-name: Get all export storage
+      docs: >
+
+        You can connect your Redis database to Label Studio as a source storage
+        or target storage. Use this API request to get a list of all Redis
+        export (target) storage connections for a specific project. 
+
+
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](../projects/list). 
+
+
+        For more information about working with external storage, see [Sync data
+        from external storage](https://labelstud.io/guide/storage).
+      display-name: List export storages
       request:
         name: RedisListRequest
         query-parameters:
@@ -51,8 +64,20 @@ service:
       path: /api/storages/export/redis
       method: POST
       auth: true
-      docs: Create a new Redis export storage connection to store annotations.
-      display-name: Create export storage
+      docs: >
+
+        Create a new target storage connection to Redis. 
+
+
+        For information about the required fields and prerequisites, see [Redis
+        database](https://labelstud.io/guide/storage#Redis-database) in the
+        Label Studio documentation. 
+
+
+        <Tip>After you add the storage, you should validate the connection
+        before attempting to sync your data. Your data will not be exported
+        until you [sync your connection](sync).</Tip>
+      display-name: Create new storage
       request:
         name: RedisCreateRequest
         body:
@@ -94,7 +119,11 @@ service:
       path: /api/storages/export/redis/validate
       method: POST
       auth: true
-      docs: Validate a specific Redis export storage connection.
+      docs: >
+
+        Validate a specific Redis export storage connection. This is useful to
+        ensure that the storage configuration settings are correct and
+        operational before attempting to export data.
       display-name: Validate export storage
       response:
         docs: ''
@@ -131,7 +160,15 @@ service:
       path: /api/storages/export/redis/{id}
       method: GET
       auth: true
-      docs: Get a specific Redis export storage connection.
+      docs: >
+
+        Get a specific Redis export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export
+        storages](list). 
+
+
+        For more information about working with external storage, see [Sync data
+        from external storage](https://labelstud.io/guide/storage).
       path-parameters:
         id:
           type: integer
@@ -174,7 +211,18 @@ service:
       path: /api/storages/export/redis/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific Redis export storage connection.
+      docs: >
+
+        Delete a specific Redis export storage connection. You will need to
+        provide the export storage ID. You can find this using [List export
+        storages](list). 
+
+
+        Deleting an export/target storage connection does not affect tasks with
+        synced data in Label Studio. If you want to remove the tasks that were
+        synced from the external storage, you will need to delete them manually
+        from within the Label Studio UI or use the [Delete
+        tasks](../../tasks/delete-all-tasks) API. 
       path-parameters:
         id:
           type: integer
@@ -189,7 +237,15 @@ service:
       path: /api/storages/export/redis/{id}
       method: PATCH
       auth: true
-      docs: Update a specific Redis export storage connection.
+      docs: >
+
+        Update a specific Redis export storage connection. You will need to
+        provide the export storage ID. You can find this using [List export
+        storages](list). 
+
+
+        For more information about working with external storage, see [Sync data
+        from external storage](https://labelstud.io/guide/storage).
       path-parameters:
         id:
           type: integer
@@ -238,7 +294,23 @@ service:
       path: /api/storages/export/redis/{id}/sync
       method: POST
       auth: true
-      docs: Sync tasks from a specific Redis export storage connection.
+      docs: >
+
+        Sync tasks to an Redis export/target storage connection. You will need
+        to provide the export storage ID. You can find this using [List export
+        storages](list). 
+
+
+        Sync operations with external databases only go one way. They either
+        create tasks from objects in the database (source/import storage) or
+        push annotations to the output database (export/target storage).
+        Changing something on the database side doesn’t guarantee consistency in
+        results.
+
+
+        <Note>Before proceeding, you should review [How sync operations work -
+        Source storage](https://labelstud.io/guide/storage#Source-storage) to
+        ensure that your data remains secure and private.</Note> 
       path-parameters:
         id: string
       display-name: Sync export storage

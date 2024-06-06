@@ -9,13 +9,10 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
-from ..errors.bad_request_error import BadRequestError
 from ..types.project import Project
 from ..types.project_label_config import ProjectLabelConfig
 from .exports.client import AsyncExportsClient, ExportsClient
 from .types.projects_create_response import ProjectsCreateResponse
-from .types.projects_import_tasks_request_item import ProjectsImportTasksRequestItem
-from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from .types.projects_list_response import ProjectsListResponse
 
 # this is used as the default value for optional parameters
@@ -38,9 +35,10 @@ class ProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Project]:
         """
-        Return a list of the projects that you've created.
+        Return a list of the projects within your organization.
 
-        To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`.
+        To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using this API call.
+
         To retrieve a list of your Label Studio projects, update the following command to match your own environment.
         Replace the domain name, port, and authorization token, then run the following from the command line:
 
@@ -126,10 +124,14 @@ class ProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsCreateResponse:
         """
-        Create a project and set up the labeling interface in Label Studio using the API.
+        Create a project and set up the labeling interface. For more information about setting up projects, see the following:
+
+        - [Create and configure projects](https://labelstud.io/guide/setup_project)
+        - [Configure labeling interface](https://labelstud.io/guide/setup)
+        - [Project settings](https://labelstud.io/guide/project_settings)
 
         ```bash
-        curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"title": "My project", "label_config": "<View></View>"}'
+        curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"label_config": "<View>[...]</View>"}'
         ```
 
         Parameters
@@ -221,7 +223,7 @@ class ProjectsClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
         """
-        Retrieve information about a project by project ID.
+        Retrieve information about a specific project by project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
 
         Parameters
         ----------
@@ -260,7 +262,9 @@ class ProjectsClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a project by specified project ID.
+        Delete a project by specified project ID. Deleting a project permanently removes all tasks, annotations, and project data from Label Studio.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
 
         Parameters
         ----------
@@ -298,7 +302,19 @@ class ProjectsClient:
 
     def update(self, id: int, *, request: Project, request_options: typing.Optional[RequestOptions] = None) -> Project:
         """
-        Update the project settings for a specific project.
+        Update the project settings for a specific project. For more information, see the following:
+
+        - [Create and configure projects](https://labelstud.io/guide/setup_project)
+        - [Configure labeling interface](https://labelstud.io/guide/setup)
+        - [Project settings](https://labelstud.io/guide/project_settings)
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
+
+        <Warning>
+        If you are modifying the labeling config for project that has in-progress work, note the following:
+        * You cannot remove labels or change the type of labeling being performed unless you delete any existing annotations that are using those labels.
+        * If you make changes to the labeling configuration, any tabs that you might have created in the Data Manager are removed.
+        </Warning>
 
         Parameters
         ----------
@@ -343,252 +359,13 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create_export(
-        self,
-        id: int,
-        *,
-        export_type: typing.Optional[str] = None,
-        download_all_tasks: typing.Optional[str] = None,
-        download_resources: typing.Optional[bool] = None,
-        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
-        """
-        <i>Note: if you have a large project it's recommended to use
-        export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
-        Export annotated tasks as a file in a specific format.
-        For example, to export JSON annotations for a project to a file called `annotations.json`,
-        run the following from the command line:
-
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
-
-        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
-
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
-
-        To export specific tasks with IDs of 123 and 345, run the following from the command line:
-
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-
-        export_type : typing.Optional[str]
-            Selected export format (JSON by default)
-
-        download_all_tasks : typing.Optional[str]
-            If true, download all tasks regardless of status. If false, download only annotated tasks.
-
-        download_resources : typing.Optional[bool]
-            If true, download all resource files such as images, audio, and others relevant to the tasks.
-
-        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            Specify a list of task IDs to retrieve only the details for those tasks.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Yields
-        ------
-        typing.Iterator[bytes]
-            Exported data
-
-        Examples
-        --------
-        from label_studio_sdk.client import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.create_export(
-            id=1,
-            export_type="string",
-            download_all_tasks="string",
-            download_resources=True,
-            ids=1,
-        )
-        """
-        with self._client_wrapper.httpx_client.stream(
-            f"api/projects/{jsonable_encoder(id)}/export",
-            method="GET",
-            params={
-                "export_type": export_type,
-                "download_all_tasks": download_all_tasks,
-                "download_resources": download_resources,
-                "ids": ids,
-            },
-            request_options=request_options,
-        ) as _response:
-            if 200 <= _response.status_code < 300:
-                for _chunk in _response.iter_bytes():
-                    yield _chunk
-                return
-            _response.read()
-            try:
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def import_tasks(
-        self,
-        id: int,
-        *,
-        request: typing.Sequence[ProjectsImportTasksRequestItem],
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsImportTasksResponse:
-        """
-        Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
-        One POST request is limited at 250K tasks and 200 MB.
-        
-        **Note:** Imported data is verified against a project _label_config_ and must
-        include all variables that were used in the _label_config_. For example,
-        if the label configuration has a _$text_ variable, then each item in a data object
-        must include a "text" field.
-        <br>
-        
-        ## POST requests
-        
-        <hr style="opacity:0.3">
-        
-        There are three possible ways to import tasks with this endpoint:
-        
-        ### 1\. **POST with data**
-        
-        Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
-        Update this example to specify your authorization token and Label Studio instance host, then run the following from
-        the command line.
-        
-        ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
-        ```
-        
-        ### 2\. **POST with files**
-        
-        Send tasks as files. You can attach multiple files with different names.
-        
-        - **JSON**: text files in JavaScript object notation format
-        - **CSV**: text files with tables in Comma Separated Values format
-        - **TSV**: text files with tables in Tab Separated Value format
-        - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
-        
-        Update this example to specify your authorization token, Label Studio instance host, and file name and path,
-        then run the following from the command line:
-        
-        ```bash
-        curl -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
-        ```
-        
-        ### 3\. **POST with URL**
-        
-        You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
-        
-        ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' \
-        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
-        ```
-        
-        <br>
-        
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-        
-        request : typing.Sequence[ProjectsImportTasksRequestItem]
-        
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-        
-        Returns
-        -------
-        ProjectsImportTasksResponse
-            Tasks successfully imported
-        
-        Examples
-        --------
-        from label_studio_sdk import ProjectsImportTasksRequestItem
-        from label_studio_sdk.client import LabelStudio
-        
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.import_tasks(
-            id=1,
-            request=[ProjectsImportTasksRequestItem()],
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/import",
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
-        if _response.status_code == 400:
-            raise BadRequestError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Delete all tasks from a specific project.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk.client import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.delete_all_tasks(
-            id=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/", method="DELETE", request_options=request_options
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     def validate_config(
         self, id: int, *, request: ProjectLabelConfig, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectLabelConfig:
         """
-        Determine whether the label configuration for a specific project is valid.
+        Determine whether the label configuration for a specific project is valid. For more information about setting up labeling configs, see [Configure labeling interface](https://labelstud.io/guide/setup) and our [Tags reference](https://labelstud.io/tags/).
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
 
         Parameters
         ----------
@@ -652,9 +429,10 @@ class AsyncProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Project]:
         """
-        Return a list of the projects that you've created.
+        Return a list of the projects within your organization.
 
-        To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`.
+        To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using this API call.
+
         To retrieve a list of your Label Studio projects, update the following command to match your own environment.
         Replace the domain name, port, and authorization token, then run the following from the command line:
 
@@ -740,10 +518,14 @@ class AsyncProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsCreateResponse:
         """
-        Create a project and set up the labeling interface in Label Studio using the API.
+        Create a project and set up the labeling interface. For more information about setting up projects, see the following:
+
+        - [Create and configure projects](https://labelstud.io/guide/setup_project)
+        - [Configure labeling interface](https://labelstud.io/guide/setup)
+        - [Project settings](https://labelstud.io/guide/project_settings)
 
         ```bash
-        curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"title": "My project", "label_config": "<View></View>"}'
+        curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"label_config": "<View>[...]</View>"}'
         ```
 
         Parameters
@@ -835,7 +617,7 @@ class AsyncProjectsClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
         """
-        Retrieve information about a project by project ID.
+        Retrieve information about a specific project by project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
 
         Parameters
         ----------
@@ -874,7 +656,9 @@ class AsyncProjectsClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a project by specified project ID.
+        Delete a project by specified project ID. Deleting a project permanently removes all tasks, annotations, and project data from Label Studio.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
 
         Parameters
         ----------
@@ -914,7 +698,19 @@ class AsyncProjectsClient:
         self, id: int, *, request: Project, request_options: typing.Optional[RequestOptions] = None
     ) -> Project:
         """
-        Update the project settings for a specific project.
+        Update the project settings for a specific project. For more information, see the following:
+
+        - [Create and configure projects](https://labelstud.io/guide/setup_project)
+        - [Configure labeling interface](https://labelstud.io/guide/setup)
+        - [Project settings](https://labelstud.io/guide/project_settings)
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
+
+        <Warning>
+        If you are modifying the labeling config for project that has in-progress work, note the following:
+        * You cannot remove labels or change the type of labeling being performed unless you delete any existing annotations that are using those labels.
+        * If you make changes to the labeling configuration, any tabs that you might have created in the Data Manager are removed.
+        </Warning>
 
         Parameters
         ----------
@@ -959,252 +755,13 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create_export(
-        self,
-        id: int,
-        *,
-        export_type: typing.Optional[str] = None,
-        download_all_tasks: typing.Optional[str] = None,
-        download_resources: typing.Optional[bool] = None,
-        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
-        """
-        <i>Note: if you have a large project it's recommended to use
-        export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
-        Export annotated tasks as a file in a specific format.
-        For example, to export JSON annotations for a project to a file called `annotations.json`,
-        run the following from the command line:
-
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
-
-        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
-
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
-
-        To export specific tasks with IDs of 123 and 345, run the following from the command line:
-
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
-        ```
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-
-        export_type : typing.Optional[str]
-            Selected export format (JSON by default)
-
-        download_all_tasks : typing.Optional[str]
-            If true, download all tasks regardless of status. If false, download only annotated tasks.
-
-        download_resources : typing.Optional[bool]
-            If true, download all resource files such as images, audio, and others relevant to the tasks.
-
-        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
-            Specify a list of task IDs to retrieve only the details for those tasks.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Yields
-        ------
-        typing.AsyncIterator[bytes]
-            Exported data
-
-        Examples
-        --------
-        from label_studio_sdk.client import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.projects.create_export(
-            id=1,
-            export_type="string",
-            download_all_tasks="string",
-            download_resources=True,
-            ids=1,
-        )
-        """
-        async with self._client_wrapper.httpx_client.stream(
-            f"api/projects/{jsonable_encoder(id)}/export",
-            method="GET",
-            params={
-                "export_type": export_type,
-                "download_all_tasks": download_all_tasks,
-                "download_resources": download_resources,
-                "ids": ids,
-            },
-            request_options=request_options,
-        ) as _response:
-            if 200 <= _response.status_code < 300:
-                async for _chunk in _response.aiter_bytes():
-                    yield _chunk
-                return
-            await _response.aread()
-            try:
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def import_tasks(
-        self,
-        id: int,
-        *,
-        request: typing.Sequence[ProjectsImportTasksRequestItem],
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsImportTasksResponse:
-        """
-        Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
-        One POST request is limited at 250K tasks and 200 MB.
-        
-        **Note:** Imported data is verified against a project _label_config_ and must
-        include all variables that were used in the _label_config_. For example,
-        if the label configuration has a _$text_ variable, then each item in a data object
-        must include a "text" field.
-        <br>
-        
-        ## POST requests
-        
-        <hr style="opacity:0.3">
-        
-        There are three possible ways to import tasks with this endpoint:
-        
-        ### 1\. **POST with data**
-        
-        Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
-        Update this example to specify your authorization token and Label Studio instance host, then run the following from
-        the command line.
-        
-        ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
-        ```
-        
-        ### 2\. **POST with files**
-        
-        Send tasks as files. You can attach multiple files with different names.
-        
-        - **JSON**: text files in JavaScript object notation format
-        - **CSV**: text files with tables in Comma Separated Values format
-        - **TSV**: text files with tables in Tab Separated Value format
-        - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
-        
-        Update this example to specify your authorization token, Label Studio instance host, and file name and path,
-        then run the following from the command line:
-        
-        ```bash
-        curl -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
-        ```
-        
-        ### 3\. **POST with URL**
-        
-        You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
-        
-        ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' \
-        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
-        ```
-        
-        <br>
-        
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-        
-        request : typing.Sequence[ProjectsImportTasksRequestItem]
-        
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-        
-        Returns
-        -------
-        ProjectsImportTasksResponse
-            Tasks successfully imported
-        
-        Examples
-        --------
-        from label_studio_sdk import ProjectsImportTasksRequestItem
-        from label_studio_sdk.client import AsyncLabelStudio
-        
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.projects.import_tasks(
-            id=1,
-            request=[ProjectsImportTasksRequestItem()],
-        )
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/import",
-            method="POST",
-            json=request,
-            request_options=request_options,
-            omit=OMIT,
-        )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
-        if _response.status_code == 400:
-            raise BadRequestError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Delete all tasks from a specific project.
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk.client import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.projects.delete_all_tasks(
-            id=1,
-        )
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/", method="DELETE", request_options=request_options
-        )
-        if 200 <= _response.status_code < 300:
-            return
-        try:
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     async def validate_config(
         self, id: int, *, request: ProjectLabelConfig, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectLabelConfig:
         """
-        Determine whether the label configuration for a specific project is valid.
+        Determine whether the label configuration for a specific project is valid. For more information about setting up labeling configs, see [Configure labeling interface](https://labelstud.io/guide/setup) and our [Tags reference](https://labelstud.io/tags/).
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
 
         Parameters
         ----------

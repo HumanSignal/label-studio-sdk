@@ -7,7 +7,7 @@ from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
-class ProjectsImportTasksResponse(pydantic_v1.BaseModel):
+class TasksImportTasksResponse(pydantic_v1.BaseModel):
     """
     Task creation response
     """

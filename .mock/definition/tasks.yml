@@ -1,18 +1,239 @@
+types:
+  TasksImportTasksRequestItem:
+    properties:
+      data:
+        type: optional<map<string, unknown>>
+        docs: Data of the task
+      project:
+        type: optional<integer>
+        docs: Project ID for this task
+      annotations:
+        type: optional<list<map<string, unknown>>>
+        docs: Annotations for this task
+      predictions:
+        type: optional<list<map<string, unknown>>>
+        docs: Predictions for this task
+      is_labeled:
+        type: optional<boolean>
+        docs: Whether the task is labeled or not
+      overlap:
+        type: optional<double>
+        docs: Overlap for the task
+  TasksImportTasksResponse:
+    docs: Task creation response
+    properties:
+      task_count:
+        type: optional<integer>
+        docs: Number of tasks added
+      annotation_count:
+        type: optional<integer>
+        docs: Number of annotations added
+      predictions_count:
+        type: optional<integer>
+        docs: Number of predictions added
+      duration:
+        type: optional<double>
+        docs: Time in seconds to create
+      file_upload_ids:
+        type: optional<list<integer>>
+        docs: Database IDs of uploaded files
+      could_be_tasks_list:
+        type: optional<boolean>
+        docs: Whether uploaded files can contain lists of tasks, like CSV/TSV files
+      found_formats:
+        type: optional<list<string>>
+        docs: The list of found file formats
+      data_columns:
+        type: optional<list<string>>
+        docs: The list of found data columns
+  TasksListRequestFields:
+    enum:
+      - all
+      - task_only
+  TasksListResponse:
+    properties:
+      tasks:
+        type: optional<list<root.Task>>
+        docs: >-
+          List of tasks, each task contains predictions and annotations if
+          `fields` query parameter is set to `all`
+      total:
+        type: optional<integer>
+        docs: Total number of tasks
+      total_annotations:
+        type: optional<integer>
+        docs: Total number of annotations
+      total_predictions:
+        type: optional<integer>
+        docs: Total number of predictions
 imports:
   root: __package__.yml
 service:
   auth: false
   base-path: ''
   endpoints:
+    import_tasks:
+      path: /api/projects/{id}/import
+      method: POST
+      auth: true
+      docs: >
+
+        Use this API endpoint to import labeling tasks in bulk. Note that each
+        POST request is limited at 250K tasks and 200 MB.
+
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](../projects/list). 
+
+
+        <Note>
+
+        Imported data is verified against a project *label_config* and must
+        include all variables that were used in the *label_config*. 
+
+
+        For example, if the label configuration has a *$text* variable, then
+        each item in a data object must include a `text` field.
+
+        </Note>
+
+
+        There are three possible ways to import tasks with this endpoint:
+
+
+        #### 1\. **POST with data**
+
+        Send JSON tasks as POST data. Only JSON is supported for POSTing files
+        directly.
+
+
+        Update this example to specify your authorization token and Label Studio
+        instance host, then run the following from
+
+        the command line:
+
+
+        ```bash
+
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token
+        abc123' \
+
+        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text":
+        "Some text 1"}, {"text": "Some text 2"}]'
+
+        ```
+
+
+        #### 2\. **POST with files**
+
+        Send tasks as files. You can attach multiple files with different names.
+
+
+        - **JSON**: text files in JavaScript object notation format
+
+        - **CSV**: text files with tables in Comma Separated Values format
+
+        - **TSV**: text files with tables in Tab Separated Value format
+
+        - **TXT**: simple text files are similar to CSV with one column and no
+        header, supported for projects with one source only
+
+
+        Update this example to specify your authorization token, Label Studio
+        instance host, and file name and path,
+
+        then run the following from the command line:
+
+
+        ```bash
+
+        curl -H 'Authorization: Token abc123' \
+
+        -X POST 'https://localhost:8080/api/projects/1/import' -F
+        ‘file=@path/to/my_file.csv’
+
+        ```
+
+
+        #### 3\. **POST with URL**
+
+        You can also provide a URL to a file with labeling tasks. Supported file
+        formats are the same as in option 2.
+
+
+        ```bash
+
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token
+        abc123' \
+
+        -X POST 'https://localhost:8080/api/projects/1/import' \
+
+        --data '[{"url": "http://example.com/test1.csv"}, {"url":
+        "http://example.com/test2.csv"}]'
+
+        ```
+
+
+        <br>
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+      display-name: Import tasks
+      request:
+        body:
+          docs: List of tasks to import
+          type: list<TasksImportTasksRequestItem>
+      response:
+        docs: Tasks successfully imported
+        type: TasksImportTasksResponse
+      errors:
+        - root.BadRequestError
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            - {}
+          response:
+            body:
+              task_count: 1
+              annotation_count: 1
+              predictions_count: 1
+              duration: 1.1
+              file_upload_ids:
+                - 1
+              could_be_tasks_list: true
+              found_formats:
+                - found_formats
+              data_columns:
+                - data_columns
+      audiences:
+        - public
     create_many_status:
       path: /api/projects/{id}/imports/{import_pk}/
       method: GET
       auth: true
-      docs: Return data related to async project import operation
+      docs: >
+
+        Get information about an async project import operation. This can be
+        especially useful to monitor status, as large import jobs can take
+        time. 
+
+
+        You will need the project ID and the unique ID of the import operation. 
+
+
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](../projects/list). 
+
+
+        The import ID is returned as part of the response when you call [Import
+        tasks](import-tasks). 
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this project import.
+          docs: The project ID.
         import_pk: string
       display-name: Get project import info
       response:
@@ -60,18 +281,50 @@ service:
               project: 1
       audiences:
         - public
+    delete_all_tasks:
+      path: /api/projects/{id}/tasks/
+      method: DELETE
+      auth: true
+      docs: >
+
+        Delete all tasks from a specific project.
+
+
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](../projects/list). 
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+      display-name: Delete all tasks
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - public
     list:
       path: /api/tasks/
       method: GET
       auth: true
       docs: >
 
-        Retrieve a list of tasks with pagination for a specific view or project,
-        by using filters and ordering.
+        Retrieve a list of tasks. 
+
+
+        You can use the query parameters to filter the list by project and/or
+        view (a tab within the Data Manager). You can also optionally add
+        pagination to make the response easier to parse. 
+
+
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](../projects/list). The view ID can be found using [List
+        views](../views/list).
       pagination:
         offset: $request.page
         results: $response.tasks
-      display-name: Get tasks list
+      display-name: Get task list
       request:
         name: TasksListRequest
         query-parameters:
@@ -176,7 +429,17 @@ service:
       path: /api/tasks/
       method: POST
       auth: true
-      docs: Create a new labeling task in Label Studio.
+      docs: >
+
+        Create a new labeling task in Label Studio.
+
+
+        The data you provide depends on your labeling config and data type. 
+
+
+        You will also need to provide a project ID. The project ID can be found
+        in the URL when viewing the project in Label Studio, or you can retrieve
+        all project IDs using [List all projects](../projects/list). 
       display-name: Create task
       request:
         name: TasksCreateRequest
@@ -233,6 +496,10 @@ service:
 
         Get task data, metadata, annotations and other attributes for a specific
         labeling task by task ID.
+
+        The task ID is available from the Label Studio URL when viewing the
+        task, or you can retrieve it programmatically with [Get task
+        list](list). 
       path-parameters:
         id:
           type: string
@@ -276,7 +543,17 @@ service:
       path: /api/tasks/{id}/
       method: DELETE
       auth: true
-      docs: Delete a task in Label Studio. This action cannot be undone!
+      docs: >
+
+        Delete a task in Label Studio. 
+
+
+        You will need the task ID. This is available from the Label Studio URL
+        when viewing the task, or you can retrieve it programmatically with [Get
+        task list](list). 
+
+
+        <Warning>This action cannot be undone.</Warning>
       path-parameters:
         id:
           type: string
@@ -291,7 +568,14 @@ service:
       path: /api/tasks/{id}/
       method: PATCH
       auth: true
-      docs: Update the attributes of an existing labeling task.
+      docs: >
+
+        Update the attributes of an existing labeling task.
+
+
+        You will need the task ID. This is available from the Label Studio URL
+        when viewing the task, or you can retrieve it programmatically with [Get
+        task list](list). 
       path-parameters:
         id:
           type: string
@@ -346,24 +630,3 @@ service:
                 - 1
       audiences:
         - public
-types:
-  TasksListRequestFields:
-    enum:
-      - all
-      - task_only
-  TasksListResponse:
-    properties:
-      tasks:
-        type: optional<list<root.Task>>
-        docs: >-
-          List of tasks, each task contains predictions and annotations if
-          `fields` query parameter is set to `all`
-      total:
-        type: optional<integer>
-        docs: Total number of tasks
-      total_annotations:
-        type: optional<integer>
-        docs: Total number of annotations
-      total_predictions:
-        type: optional<integer>
-        docs: Total number of predictions

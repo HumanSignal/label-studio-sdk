@@ -8,8 +8,22 @@ service:
       path: /api/storages/export/azure
       method: GET
       auth: true
-      docs: Get a list of all Azure export storage connections.
-      display-name: Get all export storage
+      docs: >
+
+        You can connect your Microsoft Azure Blob storage container to Label
+        Studio as a source storage or target storage. Use this API request to
+        get a list of all Azure export (target) storage connections for a
+        specific project. 
+
+
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](../projects/list). 
+
+
+        For more information about working with external storage, see [Sync data
+        from external storage](https://labelstud.io/guide/storage).
+      display-name: List export storages
       request:
         name: AzureListRequest
         query-parameters:
@@ -50,8 +64,21 @@ service:
       path: /api/storages/export/azure
       method: POST
       auth: true
-      docs: Create a new Azure export storage connection to store annotations.
-      display-name: Create export storage
+      docs: >
+
+        Create a new target storage connection to Microsoft Azure Blob storage. 
+
+
+        For information about the required fields and prerequisites, see
+        [Microsoft Azure Blob
+        storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage)
+        in the Label Studio documentation. 
+
+
+        <Tip>After you add the storage, you should validate the connection
+        before attempting to sync your data. Your data will not be exported
+        until you [sync your connection](sync).</Tip>
+      display-name: Create new storage
       request:
         name: AzureCreateRequest
         body:
@@ -89,7 +116,11 @@ service:
       path: /api/storages/export/azure/validate
       method: POST
       auth: true
-      docs: Validate a specific Azure export storage connection.
+      docs: >
+
+        Validate a specific Azure export storage connection. This is useful to
+        ensure that the storage configuration settings are correct and
+        operational before attempting to export data.
       display-name: Validate export storage
       response:
         docs: ''
@@ -125,7 +156,15 @@ service:
       path: /api/storages/export/azure/{id}
       method: GET
       auth: true
-      docs: Get a specific Azure export storage connection.
+      docs: >
+
+        Get a specific Azure export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export
+        storages](list). 
+
+
+        For more information about working with external storage, see [Sync data
+        from external storage](https://labelstud.io/guide/storage).
       path-parameters:
         id:
           type: integer
@@ -167,7 +206,18 @@ service:
       path: /api/storages/export/azure/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific Azure export storage connection.
+      docs: >
+
+        Delete a specific Azure export storage connection. You will need to
+        provide the export storage ID. You can find this using [List export
+        storages](list). 
+
+
+        Deleting an export/target storage connection does not affect tasks with
+        synced data in Label Studio. If you want to remove the tasks that were
+        synced from the external storage, you will need to delete them manually
+        from within the Label Studio UI or use the [Delete
+        tasks](../../tasks/delete-all-tasks) API. 
       path-parameters:
         id:
           type: integer
@@ -182,7 +232,15 @@ service:
       path: /api/storages/export/azure/{id}
       method: PATCH
       auth: true
-      docs: Update a specific Azure export storage connection.
+      docs: >
+
+        Update a specific Azure export storage connection. You will need to
+        provide the export storage ID. You can find this using [List export
+        storages](list). 
+
+
+        For more information about working with external storage, see [Sync data
+        from external storage](https://labelstud.io/guide/storage).
       path-parameters:
         id:
           type: integer
@@ -227,7 +285,23 @@ service:
       path: /api/storages/export/azure/{id}/sync
       method: POST
       auth: true
-      docs: Sync tasks from an Azure export storage connection.
+      docs: >
+
+        Sync tasks to an Azure export/target storage connection. You will need
+        to provide the export storage ID. You can find this using [List export
+        storages](list). 
+
+
+        Sync operations with external containers only go one way. They either
+        create tasks from objects in the container (source/import storage) or
+        push annotations to the output container (export/target storage).
+        Changing something on the Microsoft side doesn’t guarantee consistency
+        in results.
+
+
+        <Note>Before proceeding, you should review [How sync operations work -
+        Source storage](https://labelstud.io/guide/storage#Source-storage) to
+        ensure that your data remains secure and private.</Note> 
       path-parameters:
         id: string
       display-name: Sync export storage

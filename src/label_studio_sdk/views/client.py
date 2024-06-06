@@ -24,7 +24,9 @@ class ViewsClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[View]:
         """
-        List all views for a specific project.
+        List all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize which tasks and information appears.
+
+        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
 
         Parameters
         ----------
@@ -67,7 +69,9 @@ class ViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-        Create a view for a specific project.
+        Create a new Data Manager view for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks and information appears.
+
+        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
 
         Parameters
         ----------
@@ -111,7 +115,9 @@ class ViewsClient:
 
     def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete all views for a specific project
+        Delete all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks appear.
+
+        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
 
         Parameters
         ----------
@@ -152,7 +158,7 @@ class ViewsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> View:
         """
-        Get the details about a specific view in the data manager
+        Get the details about a specific Data Manager view (tab). You will need to supply the view ID. You can find this using [List views](list).
 
         Parameters
         ----------
@@ -191,7 +197,7 @@ class ViewsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific view by ID.
+        Delete a specific Data Manager view (tab) by ID. You can find the view using [List views](list).
 
         Parameters
         ----------
@@ -236,7 +242,7 @@ class ViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-        Update view data with additional filters and other information for a specific project.
+        You can update a specific Data Manager view (tab) with additional filters and other customizations. You will need to supply the view ID. You can find this using [List views](list).
 
         Parameters
         ----------
@@ -292,7 +298,9 @@ class AsyncViewsClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[View]:
         """
-        List all views for a specific project.
+        List all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize which tasks and information appears.
+
+        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
 
         Parameters
         ----------
@@ -335,7 +343,9 @@ class AsyncViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-        Create a view for a specific project.
+        Create a new Data Manager view for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks and information appears.
+
+        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
 
         Parameters
         ----------
@@ -379,7 +389,9 @@ class AsyncViewsClient:
 
     async def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete all views for a specific project
+        Delete all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks appear.
+
+        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
 
         Parameters
         ----------
@@ -420,7 +432,7 @@ class AsyncViewsClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> View:
         """
-        Get the details about a specific view in the data manager
+        Get the details about a specific Data Manager view (tab). You will need to supply the view ID. You can find this using [List views](list).
 
         Parameters
         ----------
@@ -459,7 +471,7 @@ class AsyncViewsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific view by ID.
+        Delete a specific Data Manager view (tab) by ID. You can find the view using [List views](list).
 
         Parameters
         ----------
@@ -504,7 +516,7 @@ class AsyncViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-        Update view data with additional filters and other information for a specific project.
+        You can update a specific Data Manager view (tab) with additional filters and other customizations. You will need to supply the view ID. You can find this using [List views](list).
 
         Parameters
         ----------

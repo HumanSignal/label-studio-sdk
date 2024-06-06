@@ -9,9 +9,12 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
+from ..errors.bad_request_error import BadRequestError
 from ..types.base_task import BaseTask
 from ..types.project_import import ProjectImport
 from ..types.task import Task
+from .types.tasks_import_tasks_request_item import TasksImportTasksRequestItem
+from .types.tasks_import_tasks_response import TasksImportTasksResponse
 from .types.tasks_list_request_fields import TasksListRequestFields
 from .types.tasks_list_response import TasksListResponse
 
@@ -23,16 +26,127 @@ class TasksClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def import_tasks(
+        self,
+        id: int,
+        *,
+        request: typing.Sequence[TasksImportTasksRequestItem],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TasksImportTasksResponse:
+        """
+        Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+        
+        <Note>
+        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*.
+        
+        For example, if the label configuration has a _$text_ variable, then each item in a data object must include a `text` field.
+        </Note>
+        
+        There are three possible ways to import tasks with this endpoint:
+        
+        #### 1\. **POST with data**
+        
+        Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
+        
+        Update this example to specify your authorization token and Label Studio instance host, then run the following from
+        the command line:
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+        ```
+        
+        #### 2\. **POST with files**
+        
+        Send tasks as files. You can attach multiple files with different names.
+        
+        - **JSON**: text files in JavaScript object notation format
+        - **CSV**: text files with tables in Comma Separated Values format
+        - **TSV**: text files with tables in Tab Separated Value format
+        - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
+        
+        Update this example to specify your authorization token, Label Studio instance host, and file name and path,
+        then run the following from the command line:
+        
+        ```bash
+        curl -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
+        ```
+        
+        #### 3\. **POST with URL**
+        
+        You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' \
+        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+        ```
+        
+        <br>
+        
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+        
+        request : typing.Sequence[TasksImportTasksRequestItem]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        TasksImportTasksResponse
+            Tasks successfully imported
+        
+        Examples
+        --------
+        from label_studio_sdk import TasksImportTasksRequestItem
+        from label_studio_sdk.client import LabelStudio
+        
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.tasks.import_tasks(
+            id=1,
+            request=[TasksImportTasksRequestItem()],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/import",
+            method="POST",
+            json=request,
+            request_options=request_options,
+            omit=OMIT,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(TasksImportTasksResponse, _response.json())  # type: ignore
+        if _response.status_code == 400:
+            raise BadRequestError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def create_many_status(
         self, id: int, import_pk: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectImport:
         """
-        Return data related to async project import operation
+        Get information about an async project import operation. This can be especially useful to monitor status, as large import jobs can take time.
+
+        You will need the project ID and the unique ID of the import operation.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+        The import ID is returned as part of the response when you call [Import tasks](import-tasks).
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this project import.
+            The project ID.
 
         import_pk : str
 
@@ -69,6 +183,46 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete all tasks from a specific project.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.tasks.delete_all_tasks(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/tasks/", method="DELETE", request_options=request_options
+        )
+        if 200 <= _response.status_code < 300:
+            return
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def list(
         self,
         *,
@@ -83,7 +237,11 @@ class TasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Task]:
         """
-        Retrieve a list of tasks with pagination for a specific view or project, by using filters and ordering.
+        Retrieve a list of tasks.
+
+        You can use the query parameters to filter the list by project and/or view (a tab within the Data Manager). You can also optionally add pagination to make the response easier to parse.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). The view ID can be found using [List views](../views/list).
 
         Parameters
         ----------
@@ -175,6 +333,10 @@ class TasksClient:
         """
         Create a new labeling task in Label Studio.
 
+        The data you provide depends on your labeling config and data type.
+
+        You will also need to provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
         Parameters
         ----------
         data : typing.Optional[typing.Dict[str, typing.Any]]
@@ -221,6 +383,7 @@ class TasksClient:
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> BaseTask:
         """
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
+        The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
         Parameters
         ----------
@@ -259,7 +422,11 @@ class TasksClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a task in Label Studio. This action cannot be undone!
+        Delete a task in Label Studio.
+
+        You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
+
+        <Warning>This action cannot be undone.</Warning>
 
         Parameters
         ----------
@@ -305,6 +472,8 @@ class TasksClient:
     ) -> BaseTask:
         """
         Update the attributes of an existing labeling task.
+
+        You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
         Parameters
         ----------
@@ -358,16 +527,127 @@ class AsyncTasksClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    async def import_tasks(
+        self,
+        id: int,
+        *,
+        request: typing.Sequence[TasksImportTasksRequestItem],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> TasksImportTasksResponse:
+        """
+        Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+        
+        <Note>
+        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*.
+        
+        For example, if the label configuration has a _$text_ variable, then each item in a data object must include a `text` field.
+        </Note>
+        
+        There are three possible ways to import tasks with this endpoint:
+        
+        #### 1\. **POST with data**
+        
+        Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
+        
+        Update this example to specify your authorization token and Label Studio instance host, then run the following from
+        the command line:
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+        ```
+        
+        #### 2\. **POST with files**
+        
+        Send tasks as files. You can attach multiple files with different names.
+        
+        - **JSON**: text files in JavaScript object notation format
+        - **CSV**: text files with tables in Comma Separated Values format
+        - **TSV**: text files with tables in Tab Separated Value format
+        - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
+        
+        Update this example to specify your authorization token, Label Studio instance host, and file name and path,
+        then run the following from the command line:
+        
+        ```bash
+        curl -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
+        ```
+        
+        #### 3\. **POST with URL**
+        
+        You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' \
+        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+        ```
+        
+        <br>
+        
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+        
+        request : typing.Sequence[TasksImportTasksRequestItem]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        TasksImportTasksResponse
+            Tasks successfully imported
+        
+        Examples
+        --------
+        from label_studio_sdk import TasksImportTasksRequestItem
+        from label_studio_sdk.client import AsyncLabelStudio
+        
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.tasks.import_tasks(
+            id=1,
+            request=[TasksImportTasksRequestItem()],
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/import",
+            method="POST",
+            json=request,
+            request_options=request_options,
+            omit=OMIT,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(TasksImportTasksResponse, _response.json())  # type: ignore
+        if _response.status_code == 400:
+            raise BadRequestError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def create_many_status(
         self, id: int, import_pk: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectImport:
         """
-        Return data related to async project import operation
+        Get information about an async project import operation. This can be especially useful to monitor status, as large import jobs can take time.
+
+        You will need the project ID and the unique ID of the import operation.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+        The import ID is returned as part of the response when you call [Import tasks](import-tasks).
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this project import.
+            The project ID.
 
         import_pk : str
 
@@ -404,6 +684,46 @@ class AsyncTasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    async def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete all tasks from a specific project.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.tasks.delete_all_tasks(
+            id=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/tasks/", method="DELETE", request_options=request_options
+        )
+        if 200 <= _response.status_code < 300:
+            return
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def list(
         self,
         *,
@@ -418,7 +738,11 @@ class AsyncTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Task]:
         """
-        Retrieve a list of tasks with pagination for a specific view or project, by using filters and ordering.
+        Retrieve a list of tasks.
+
+        You can use the query parameters to filter the list by project and/or view (a tab within the Data Manager). You can also optionally add pagination to make the response easier to parse.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). The view ID can be found using [List views](../views/list).
 
         Parameters
         ----------
@@ -510,6 +834,10 @@ class AsyncTasksClient:
         """
         Create a new labeling task in Label Studio.
 
+        The data you provide depends on your labeling config and data type.
+
+        You will also need to provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
         Parameters
         ----------
         data : typing.Optional[typing.Dict[str, typing.Any]]
@@ -556,6 +884,7 @@ class AsyncTasksClient:
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> BaseTask:
         """
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
+        The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
         Parameters
         ----------
@@ -594,7 +923,11 @@ class AsyncTasksClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a task in Label Studio. This action cannot be undone!
+        Delete a task in Label Studio.
+
+        You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
+
+        <Warning>This action cannot be undone.</Warning>
 
         Parameters
         ----------
@@ -640,6 +973,8 @@ class AsyncTasksClient:
     ) -> BaseTask:
         """
         Update the attributes of an existing labeling task.
+
+        You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
         Parameters
         ----------

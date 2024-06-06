@@ -24,7 +24,11 @@ class RedisClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[RedisImportStorage]:
         """
-        Get a list of all Redis import storage connections.
+        You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis import (source) storage connections for a specific project.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -72,7 +76,11 @@ class RedisClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisCreateResponse:
         """
-        Create a new Redis import storage connection.
+        Create a new source storage connection to a Redis database.
+
+        For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation.
+
+        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
 
         Parameters
         ----------
@@ -139,7 +147,7 @@ class RedisClient:
 
     def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
-        Validate a specific Redis import storage connection.
+        Validate a specific Redis import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
         Parameters
         ----------
@@ -173,7 +181,9 @@ class RedisClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
-        Get a specific Redis import storage connection.
+        Get a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -212,7 +222,11 @@ class RedisClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific Redis import storage connection.
+        Delete a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
+
+        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 
         Parameters
         ----------
@@ -262,7 +276,9 @@ class RedisClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisUpdateResponse:
         """
-        Update a specific Redis import storage connection.
+        Update a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -334,7 +350,11 @@ class RedisClient:
 
     def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
-        Sync tasks from a specific Redis import storage connection.
+        Sync tasks from a Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.
+
+        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 
         Parameters
         ----------
@@ -380,7 +400,11 @@ class AsyncRedisClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[RedisImportStorage]:
         """
-        Get a list of all Redis import storage connections.
+        You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis import (source) storage connections for a specific project.
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -428,7 +452,11 @@ class AsyncRedisClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisCreateResponse:
         """
-        Create a new Redis import storage connection.
+        Create a new source storage connection to a Redis database.
+
+        For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation.
+
+        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
 
         Parameters
         ----------
@@ -495,7 +523,7 @@ class AsyncRedisClient:
 
     async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
-        Validate a specific Redis import storage connection.
+        Validate a specific Redis import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
         Parameters
         ----------
@@ -529,7 +557,9 @@ class AsyncRedisClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
-        Get a specific Redis import storage connection.
+        Get a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -568,7 +598,11 @@ class AsyncRedisClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific Redis import storage connection.
+        Delete a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
+
+        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 
         Parameters
         ----------
@@ -618,7 +652,9 @@ class AsyncRedisClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisUpdateResponse:
         """
-        Update a specific Redis import storage connection.
+        Update a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
@@ -690,7 +726,11 @@ class AsyncRedisClient:
 
     async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
-        Sync tasks from a specific Redis import storage connection.
+        Sync tasks from a Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+        Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.
+
+        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 
         Parameters
         ----------

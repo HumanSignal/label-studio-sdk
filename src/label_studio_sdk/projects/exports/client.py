@@ -20,9 +20,107 @@ class ExportsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def create_export(
+        self,
+        id: int,
+        *,
+        export_type: typing.Optional[str] = None,
+        download_all_tasks: typing.Optional[str] = None,
+        download_resources: typing.Optional[bool] = None,
+        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+        <Note>If you have a large project it's recommended to use export snapshots, this easy export endpoint might have timeouts.</Note>
+        Export annotated tasks as a file in a specific format.
+        For example, to export JSON annotations for a project to a file called `annotations.json`,
+        run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        To export specific tasks with IDs of 123 and 345, run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        export_type : typing.Optional[str]
+            Selected export format (JSON by default)
+
+        download_all_tasks : typing.Optional[str]
+            If true, download all tasks regardless of status. If false, download only annotated tasks.
+
+        download_resources : typing.Optional[bool]
+            If true, download all resource files such as images, audio, and others relevant to the tasks.
+
+        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Specify a list of task IDs to retrieve only the details for those tasks.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Exported data
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.exports.create_export(
+            id=1,
+            export_type="string",
+            download_all_tasks="string",
+            download_resources=True,
+            ids=1,
+        )
+        """
+        with self._client_wrapper.httpx_client.stream(
+            f"api/projects/{jsonable_encoder(id)}/export",
+            method="GET",
+            params={
+                "export_type": export_type,
+                "download_all_tasks": download_all_tasks,
+                "download_resources": download_resources,
+                "ids": ids,
+            },
+            request_options=request_options,
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                for _chunk in _response.iter_bytes():
+                    yield _chunk
+                return
+            _response.read()
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def list_formats(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[str]:
         """
-        Retrieve the available export formats for the current project by ID.
+        Before exporting annotations, you can check with formats are supported by the specified project. For more information about export formats, see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
+
+        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
@@ -61,7 +159,9 @@ class ExportsClient:
 
     def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Export]:
         """
-        Returns a list of exported files for a specific project by ID.
+        Returns a list of export file (snapshots) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+
+        Included in the response is information about each snapshot, such as who created it and what format it is in.
 
         Parameters
         ----------
@@ -102,7 +202,11 @@ class ExportsClient:
         self, id: int, *, request: ExportCreate, request_options: typing.Optional[RequestOptions] = None
     ) -> ExportCreate:
         """
-        Create a new export request to start a background task and generate an export file for a specific project by ID.
+        Create a new export request to start a background task and generate an export file (snapshot) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+
+        A snapshot is a static export of your project's data and annotations at a specific point in time. It captures the current state of your tasks, annotations, and other relevant data, allowing you to download and review them later. Snapshots are particularly useful for large projects as they help avoid timeouts during export operations by processing the data asynchronously.
+
+        For more information, see the [Label Studio documentation on exporting annotations](https://labelstud.io/guide/export.html).
 
         Parameters
         ----------
@@ -149,7 +253,11 @@ class ExportsClient:
 
     def get(self, id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
         """
-        Retrieve information about an export file by export ID for a specific project.
+        Retrieve information about a specific export file (snapshot).
+
+        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).
+
+        You will also need the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
@@ -195,6 +303,8 @@ class ExportsClient:
     def delete(self, id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete an export file by specified export ID.
+
+        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).
 
         Parameters
         ----------
@@ -245,7 +355,13 @@ class ExportsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ExportConvert:
         """
-        Convert export snapshot to selected format
+        You can use this to convert an export snapshot into the selected format.
+
+        To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
+
+        You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
@@ -305,12 +421,11 @@ class ExportsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Download an export file in the specified format for a specific project. Specify the project ID with the `id`
-        parameter in the path and the ID of the export file you want to download using the `export_pk` parameter
-        in the path.
+        Download an export snapshot as a file in a specified format. To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
 
-        Get the `export_pk` from the response of the request to [Create new export](/api#operation/api_projects_exports_create)
-        or after [listing export files](/api#operation/api_projects_exports_list).
+        You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
@@ -361,11 +476,109 @@ class AsyncExportsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    async def create_export(
+        self,
+        id: int,
+        *,
+        export_type: typing.Optional[str] = None,
+        download_all_tasks: typing.Optional[str] = None,
+        download_resources: typing.Optional[bool] = None,
+        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        <Note>If you have a large project it's recommended to use export snapshots, this easy export endpoint might have timeouts.</Note>
+        Export annotated tasks as a file in a specific format.
+        For example, to export JSON annotations for a project to a file called `annotations.json`,
+        run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        To export specific tasks with IDs of 123 and 345, run the following from the command line:
+
+        ```bash
+        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
+        ```
+
+        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        export_type : typing.Optional[str]
+            Selected export format (JSON by default)
+
+        download_all_tasks : typing.Optional[str]
+            If true, download all tasks regardless of status. If false, download only annotated tasks.
+
+        download_resources : typing.Optional[bool]
+            If true, download all resource files such as images, audio, and others relevant to the tasks.
+
+        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+            Specify a list of task IDs to retrieve only the details for those tasks.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Exported data
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.exports.create_export(
+            id=1,
+            export_type="string",
+            download_all_tasks="string",
+            download_resources=True,
+            ids=1,
+        )
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            f"api/projects/{jsonable_encoder(id)}/export",
+            method="GET",
+            params={
+                "export_type": export_type,
+                "download_all_tasks": download_all_tasks,
+                "download_resources": download_resources,
+                "ids": ids,
+            },
+            request_options=request_options,
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                async for _chunk in _response.aiter_bytes():
+                    yield _chunk
+                return
+            await _response.aread()
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def list_formats(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[str]:
         """
-        Retrieve the available export formats for the current project by ID.
+        Before exporting annotations, you can check with formats are supported by the specified project. For more information about export formats, see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
+
+        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
@@ -404,7 +617,9 @@ class AsyncExportsClient:
 
     async def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Export]:
         """
-        Returns a list of exported files for a specific project by ID.
+        Returns a list of export file (snapshots) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+
+        Included in the response is information about each snapshot, such as who created it and what format it is in.
 
         Parameters
         ----------
@@ -445,7 +660,11 @@ class AsyncExportsClient:
         self, id: int, *, request: ExportCreate, request_options: typing.Optional[RequestOptions] = None
     ) -> ExportCreate:
         """
-        Create a new export request to start a background task and generate an export file for a specific project by ID.
+        Create a new export request to start a background task and generate an export file (snapshot) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+
+        A snapshot is a static export of your project's data and annotations at a specific point in time. It captures the current state of your tasks, annotations, and other relevant data, allowing you to download and review them later. Snapshots are particularly useful for large projects as they help avoid timeouts during export operations by processing the data asynchronously.
+
+        For more information, see the [Label Studio documentation on exporting annotations](https://labelstud.io/guide/export.html).
 
         Parameters
         ----------
@@ -492,7 +711,11 @@ class AsyncExportsClient:
 
     async def get(self, id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
         """
-        Retrieve information about an export file by export ID for a specific project.
+        Retrieve information about a specific export file (snapshot).
+
+        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).
+
+        You will also need the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
@@ -538,6 +761,8 @@ class AsyncExportsClient:
     async def delete(self, id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete an export file by specified export ID.
+
+        You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).
 
         Parameters
         ----------
@@ -588,7 +813,13 @@ class AsyncExportsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ExportConvert:
         """
-        Convert export snapshot to selected format
+        You can use this to convert an export snapshot into the selected format.
+
+        To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
+
+        You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
@@ -648,12 +879,11 @@ class AsyncExportsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Download an export file in the specified format for a specific project. Specify the project ID with the `id`
-        parameter in the path and the ID of the export file you want to download using the `export_pk` parameter
-        in the path.
+        Download an export snapshot as a file in a specified format. To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
 
-        Get the `export_pk` from the response of the request to [Create new export](/api#operation/api_projects_exports_create)
-        or after [listing export files](/api#operation/api_projects_exports_list).
+        You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
+
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------

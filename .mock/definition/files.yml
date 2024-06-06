@@ -8,7 +8,9 @@ service:
       path: /api/import/file-upload/{id}
       method: GET
       auth: true
-      docs: Retrieve details about a specific uploaded file.
+      docs: >-
+        Retrieve details about a specific uploaded file. To get the file upload
+        ID, use [Get files list](list).
       path-parameters:
         id:
           type: integer
@@ -30,7 +32,9 @@ service:
       path: /api/import/file-upload/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific uploaded file.
+      docs: >-
+        Delete a specific uploaded file. To get the file upload ID, use [Get
+        files list](list).
       path-parameters:
         id:
           type: integer
@@ -45,7 +49,21 @@ service:
       path: /api/import/file-upload/{id}
       method: PATCH
       auth: true
-      docs: Update a specific uploaded file.
+      docs: >
+
+        Update a specific uploaded file. To get the file upload ID, use [Get
+        files list](list). 
+
+
+        You will need to include the file data in the request body. For example:
+
+        ```bash
+
+        curl -H 'Authorization: Token abc123' \ -X POST
+        'https://localhost:8080/api/import/file-upload/245' -F
+        ‘file=@path/to/my_file.csv’
+
+        ```
       path-parameters:
         id:
           type: integer
@@ -73,7 +91,13 @@ service:
       docs: >
 
         Retrieve the list of uploaded files used to create labeling tasks for a
-        specific project.
+        specific project. These are files that have been uploaded directly to
+        Label Studio. 
+
+
+        You must provide a project ID. The project ID can be found in the URL
+        when viewing the project in Label Studio, or you can retrieve all
+        project IDs using [List all projects](../list). 
       path-parameters:
         id:
           type: integer
@@ -105,9 +129,15 @@ service:
       path: /api/projects/{id}/file-uploads
       method: DELETE
       auth: true
-      docs: |
+      docs: >
 
-        Delete uploaded files for a specific project.
+        Delete uploaded files for a specific project. These are files that have
+        been uploaded directly to Label Studio. 
+
+
+        You must provide a project ID. The project ID can be found in the URL
+        when viewing the project in Label Studio, or you can retrieve all
+        project IDs using [List all projects](../list). 
       path-parameters:
         id:
           type: integer
@@ -122,7 +152,9 @@ service:
       path: /data/upload/{filename}
       method: GET
       auth: true
-      docs: Download a specific uploaded file.
+      docs: >-
+        Download a specific uploaded file. If you aren't sure of the file name,
+        try [Get files list](list) first.
       path-parameters:
         filename: string
       display-name: Download file

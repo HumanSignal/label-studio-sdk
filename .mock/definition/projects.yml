@@ -66,53 +66,6 @@ types:
           first label Car should be twice as important as Airplane, then you
           need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
           {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
-  ProjectsImportTasksRequestItem:
-    properties:
-      data:
-        type: optional<map<string, unknown>>
-        docs: Data of the task
-      project:
-        type: optional<integer>
-        docs: Project ID for this task
-      annotations:
-        type: optional<list<map<string, unknown>>>
-        docs: Annotations for this task
-      predictions:
-        type: optional<list<map<string, unknown>>>
-        docs: Predictions for this task
-      is_labeled:
-        type: optional<boolean>
-        docs: Whether the task is labeled or not
-      overlap:
-        type: optional<double>
-        docs: Overlap for the task
-  ProjectsImportTasksResponse:
-    docs: Task creation response
-    properties:
-      task_count:
-        type: optional<integer>
-        docs: Number of tasks added
-      annotation_count:
-        type: optional<integer>
-        docs: Number of annotations added
-      predictions_count:
-        type: optional<integer>
-        docs: Number of predictions added
-      duration:
-        type: optional<double>
-        docs: Time in seconds to create
-      file_upload_ids:
-        type: optional<list<integer>>
-        docs: Database IDs of uploaded files
-      could_be_tasks_list:
-        type: optional<boolean>
-        docs: Whether uploaded files can contain lists of tasks, like CSV/TSV files
-      found_formats:
-        type: optional<list<string>>
-        docs: The list of found file formats
-      data_columns:
-        type: optional<list<string>>
-        docs: The list of found data columns
 service:
   auth: false
   base-path: ''
@@ -123,11 +76,14 @@ service:
       auth: true
       docs: >
 
-        Return a list of the projects that you've created.
+        Return a list of the projects within your organization.
 
 
         To perform most tasks with the Label Studio API, you must specify the
-        project ID, sometimes referred to as the `pk`.
+        project ID, sometimes referred to as the `pk`. The project ID can be
+        found in the URL when viewing the project in Label Studio, or you can
+        retrieve all project IDs using this API call. 
+
 
         To retrieve a list of your Label Studio projects, update the following
         command to match your own environment.
@@ -144,7 +100,7 @@ service:
       pagination:
         offset: $request.page
         results: $response.results
-      display-name: List your projects
+      display-name: List all projects
       request:
         name: ProjectsListRequest
         query-parameters:
@@ -221,15 +177,22 @@ service:
       auth: true
       docs: >
 
-        Create a project and set up the labeling interface in Label Studio using
-        the API.
+        Create a project and set up the labeling interface. For more information
+        about setting up projects, see the following:
+
+        * [Create and configure
+        projects](https://labelstud.io/guide/setup_project)
+
+        * [Configure labeling interface](https://labelstud.io/guide/setup)
+
+        * [Project settings](https://labelstud.io/guide/project_settings)
 
 
         ```bash
 
         curl -H Content-Type:application/json -H 'Authorization: Token abc123'
-        -X POST 'https://localhost:8080/api/projects'     --data '{"title": "My
-        project", "label_config": "<View></View>"}'
+        -X POST 'https://localhost:8080/api/projects'     --data
+        '{"label_config": "<View>[...]</View>"}'
 
         ```
       display-name: Create new project
@@ -334,7 +297,10 @@ service:
       path: /api/projects/{id}/
       method: GET
       auth: true
-      docs: Retrieve information about a project by project ID.
+      docs: >-
+        Retrieve information about a specific project by project ID. The project
+        ID can be found in the URL when viewing the project in Label Studio, or
+        you can retrieve all project IDs using [List all projects](list).
       path-parameters:
         id:
           type: integer
@@ -407,7 +373,15 @@ service:
       path: /api/projects/{id}/
       method: DELETE
       auth: true
-      docs: Delete a project by specified project ID.
+      docs: >
+
+        Delete a project by specified project ID. Deleting a project permanently
+        removes all tasks, annotations, and project data from Label Studio.
+
+
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](list). 
       path-parameters:
         id:
           type: integer
@@ -422,12 +396,42 @@ service:
       path: /api/projects/{id}/
       method: PATCH
       auth: true
-      docs: Update the project settings for a specific project.
+      docs: >
+
+        Update the project settings for a specific project. For more
+        information, see the following:
+
+        * [Create and configure
+        projects](https://labelstud.io/guide/setup_project)
+
+        * [Configure labeling interface](https://labelstud.io/guide/setup)
+
+        * [Project settings](https://labelstud.io/guide/project_settings)
+
+
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](list). 
+
+
+        <Warning>
+
+        If you are modifying the labeling config for project that has
+        in-progress work, note the following:
+
+        * You cannot remove labels or change the type of labeling being
+        performed unless you delete any existing annotations that are using
+        those labels. 
+
+        * If you make changes to the labeling configuration, any tabs that you
+        might have created in the Data Manager are removed.
+
+        </Warning>
       path-parameters:
         id:
           type: integer
           docs: A unique integer value identifying this project.
-      display-name: Update project
+      display-name: Update a project
       request:
         body: root.Project
       response:
@@ -491,228 +495,6 @@ service:
               finished_task_number: 1
               queue_total: queue_total
               queue_done: queue_done
-      audiences:
-        - public
-    create_export:
-      path: /api/projects/{id}/export
-      method: GET
-      auth: true
-      docs: >
-
-        <i>Note: if you have a large project it's recommended to use
-
-        export snapshots, this easy export endpoint might have
-        timeouts.</i><br/><br>
-
-        Export annotated tasks as a file in a specific format.
-
-        For example, to export JSON annotations for a project to a file called
-        `annotations.json`,
-
-        run the following from the command line:
-
-        ```bash
-
-        curl -X GET
-        https://localhost:8080/api/projects/{id}/export?exportType=JSON -H
-        'Authorization: Token abc123' --output 'annotations.json'
-
-        ```
-
-        To export all tasks, including skipped tasks and others without
-        annotations, run the following from the command line:
-
-        ```bash
-
-        curl -X GET
-        https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true
-        -H 'Authorization: Token abc123' --output 'annotations.json'
-
-        ```
-
-        To export specific tasks with IDs of 123 and 345, run the following from
-        the command line:
-
-        ```bash
-
-        curl -X GET
-        https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H
-        'Authorization: Token abc123' --output 'annotations.json'
-
-        ```
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-      display-name: Easy export of tasks and annotations
-      request:
-        name: ProjectsCreateExportRequest
-        query-parameters:
-          export_type:
-            type: optional<string>
-            docs: Selected export format (JSON by default)
-          download_all_tasks:
-            type: optional<string>
-            docs: >
-
-              If true, download all tasks regardless of status. If false,
-              download only annotated tasks.
-          download_resources:
-            type: optional<boolean>
-            docs: >
-
-              If true, download all resource files such as images, audio, and
-              others relevant to the tasks.
-          ids:
-            type: optional<integer>
-            allow-multiple: true
-            docs: >
-
-              Specify a list of task IDs to retrieve only the details for those
-              tasks.
-      response:
-        docs: Exported data
-        type: file
-      audiences:
-        - public
-    import_tasks:
-      path: /api/projects/{id}/import
-      method: POST
-      auth: true
-      docs: >
-
-        Import data as labeling tasks in bulk using this API endpoint. You can
-        use this API endpoint to import multiple tasks.
-
-        One POST request is limited at 250K tasks and 200 MB.
-
-
-        **Note:** Imported data is verified against a project *label_config* and
-        must
-
-        include all variables that were used in the *label_config*. For example,
-
-        if the label configuration has a *$text* variable, then each item in a
-        data object
-
-        must include a "text" field.
-
-        <br>
-
-
-        ## POST requests
-
-        <hr style="opacity:0.3">
-
-
-        There are three possible ways to import tasks with this endpoint:
-
-
-        ### 1\. **POST with data**
-
-        Send JSON tasks as POST data. Only JSON is supported for POSTing files
-        directly.
-
-        Update this example to specify your authorization token and Label Studio
-        instance host, then run the following from
-
-        the command line.
-
-
-        ```bash
-
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token
-        abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text":
-        "Some text 1"}, {"text": "Some text 2"}]'
-
-        ```
-
-
-        ### 2\. **POST with files**
-
-        Send tasks as files. You can attach multiple files with different names.
-
-
-        - **JSON**: text files in JavaScript object notation format
-
-        - **CSV**: text files with tables in Comma Separated Values format
-
-        - **TSV**: text files with tables in Tab Separated Value format
-
-        - **TXT**: simple text files are similar to CSV with one column and no
-        header, supported for projects with one source only
-
-
-        Update this example to specify your authorization token, Label Studio
-        instance host, and file name and path,
-
-        then run the following from the command line:
-
-
-        ```bash
-
-        curl -H 'Authorization: Token abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' -F
-        ‘file=@path/to/my_file.csv’
-
-        ```
-
-
-        ### 3\. **POST with URL**
-
-        You can also provide a URL to a file with labeling tasks. Supported file
-        formats are the same as in option 2.
-
-
-        ```bash
-
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token
-        abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' \
-
-        --data '[{"url": "http://example.com/test1.csv"}, {"url":
-        "http://example.com/test2.csv"}]'
-
-        ```
-
-
-        <br>
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-      display-name: Import tasks
-      request:
-        body:
-          docs: List of tasks to import
-          type: list<ProjectsImportTasksRequestItem>
-      response:
-        docs: Tasks successfully imported
-        type: ProjectsImportTasksResponse
-      errors:
-        - root.BadRequestError
-      examples:
-        - path-parameters:
-            id: 1
-          request:
-            - {}
-          response:
-            body:
-              task_count: 1
-              annotation_count: 1
-              predictions_count: 1
-              duration: 1.1
-              file_upload_ids:
-                - 1
-              could_be_tasks_list: true
-              found_formats:
-                - found_formats
-              data_columns:
-                - data_columns
       audiences:
         - public
     api_projects_reimports_read:
@@ -793,21 +575,6 @@ service:
             id: 1
       audiences:
         - internal
-    delete_all_tasks:
-      path: /api/projects/{id}/tasks/
-      method: DELETE
-      auth: true
-      docs: Delete all tasks from a specific project.
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-      display-name: Delete all tasks
-      examples:
-        - path-parameters:
-            id: 1
-      audiences:
-        - public
     validate_config:
       path: /api/projects/{id}/validate/
       method: POST
@@ -815,12 +582,19 @@ service:
       docs: >
 
         Determine whether the label configuration for a specific project is
-        valid.
+        valid. For more information about setting up labeling configs, see
+        [Configure labeling interface](https://labelstud.io/guide/setup) and our
+        [Tags reference](https://labelstud.io/tags/).
+
+
+        The project ID can be found in the URL when viewing the project in Label
+        Studio, or you can retrieve all project IDs using [List all
+        projects](list). 
       path-parameters:
         id:
           type: integer
           docs: A unique integer value identifying this project.
-      display-name: Validate project label config
+      display-name: Validate project labeling config
       request:
         body: root.ProjectLabelConfig
       response:
