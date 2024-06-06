@@ -1,12 +1,15 @@
-import os
-import io
-import logging
 import argparse
+import logging
+import os
 
-from label_studio_sdk.converter.converter import Converter, Format, FormatNotSupportedError
+from label_studio_sdk.converter.converter import (
+    Converter,
+    Format,
+    FormatNotSupportedError,
+)
 from label_studio_sdk.converter.exports.csv import ExportToCSV
-from label_studio_sdk.converter.utils import ExpandFullPath
 from label_studio_sdk.converter.imports import yolo as import_yolo, coco as import_coco
+from label_studio_sdk.converter.utils import ExpandFullPath
 
 logging.basicConfig(level=logging.INFO)
 
@@ -151,6 +154,10 @@ def export(args):
         )
     elif args.format == Format.YOLO:
         c.convert_to_yolo(args.input, args.output, is_dir=not args.heartex_format)
+    elif args.format == Format.YOLO_OBB:
+        c.convert_to_yolo(
+            args.input, args.output, is_dir=not args.heartex_format, is_obb=True
+        )
     else:
         raise FormatNotSupportedError()
 
