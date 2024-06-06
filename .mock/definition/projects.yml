@@ -66,26 +66,66 @@ types:
           first label Car should be twice as important as Airplane, then you
           need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
           {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
-  ProjectsImportTasksRequestItem:
+  ProjectsImportTasksRequestBodyItemAnnotationsItem:
+    properties:
+      result:
+        type: optional<list<map<string, unknown>>>
+        docs: >-
+          Labeling result in JSON format. Read more about the format in [the
+          Label Studio documentation.](https://labelstud.io/guide/task_format)
+      task:
+        type: optional<integer>
+        docs: Corresponding task for this annotation
+      project:
+        type: optional<integer>
+        docs: Project ID for this annotation
+      completed_by:
+        type: optional<integer>
+        docs: User ID of the person who created this annotation
+      updated_by:
+        type: optional<integer>
+        docs: Last user who updated this annotation
+      was_cancelled:
+        type: optional<boolean>
+        docs: User skipped the task
+      ground_truth:
+        type: optional<boolean>
+        docs: This annotation is a Ground Truth
+      lead_time:
+        type: optional<double>
+        docs: How much time it took to annotate the task (in seconds)
+  ProjectsImportTasksRequestBodyItemPredictionsItem:
+    properties:
+      task:
+        type: optional<integer>
+        docs: Task ID for which the prediction is created
+      result:
+        type: optional<list<map<string, unknown>>>
+        docs: >-
+          Prediction result in JSON format. Read more about the format in [the
+          Label Studio documentation.](https://labelstud.io/guide/predictions)
+      score:
+        type: optional<double>
+        docs: >-
+          Prediction score. Can be used in Data Manager to sort task by model
+          confidence. Task with the lowest score will be shown first.
+      model_version:
+        type: optional<string>
+        docs: >-
+          Model version - tag for predictions that can be used to filter tasks
+          in Data Manager, as well as select specific model version for showing
+          preannotations in the labeling interface
+  ProjectsImportTasksRequestBodyItem:
     properties:
       data:
         type: optional<map<string, unknown>>
         docs: Data of the task
-      project:
-        type: optional<integer>
-        docs: Project ID for this task
       annotations:
-        type: optional<list<map<string, unknown>>>
+        type: optional<list<ProjectsImportTasksRequestBodyItemAnnotationsItem>>
         docs: Annotations for this task
       predictions:
-        type: optional<list<map<string, unknown>>>
+        type: optional<list<ProjectsImportTasksRequestBodyItemPredictionsItem>>
         docs: Predictions for this task
-      is_labeled:
-        type: optional<boolean>
-        docs: Whether the task is labeled or not
-      overlap:
-        type: optional<double>
-        docs: Overlap for the task
   ProjectsImportTasksResponse:
     docs: Task creation response
     properties:
@@ -655,7 +695,24 @@ service:
       request:
         body:
           docs: List of tasks to import
-          type: list<ProjectsImportTasksRequestItem>
+          type: list<ProjectsImportTasksRequestBodyItem>
+        query-parameters:
+          commit_to_project:
+            type: optional<boolean>
+            docs: Set to "true" to immediately commit tasks to the project.
+          return_task_ids:
+            type: optional<boolean>
+            docs: Set to "true" to return task IDs in the response.
+          preannotated_from_fields:
+            type: optional<string>
+            allow-multiple: true
+            docs: >-
+              List of fields to preannotate from the task data. For example, if
+              you provide a list of `{"text": "text", "prediction": "label"}`
+              items in the request, the system will create a task with the
+              `text` field and a prediction with the `label` field when
+              `preannoted_from_fields=["prediction"]`.
+        name: ProjectsImportTasksRequest
       response:
         docs: Tasks successfully imported
         type: ProjectsImportTasksResponse
@@ -665,7 +722,52 @@ service:
         - path-parameters:
             id: 1
           request:
-            - {}
+            - data:
+                image: http://example.com/image.jpg
+              annotations:
+                - result:
+                    - original_width: 1920
+                      original_height: 1080
+                      image_rotation: 0
+                      from_name: bboxes
+                      to_name: image
+                      type: rectanglelabels
+                      value:
+                        x: 20
+                        'y': 30
+                        width: 50
+                        height: 60
+                        rotation: 0
+                        values:
+                          rectanglelabels:
+                            '0': Person
+                  task: 1
+                  project: 1
+                  completed_by: 1
+                  updated_by: 1
+                  was_cancelled: false
+                  ground_truth: false
+                  lead_time: 10
+              predictions:
+                - task: 1
+                  result:
+                    - original_width: 1920
+                      original_height: 1080
+                      image_rotation: 0
+                      from_name: bboxes
+                      to_name: image
+                      type: rectanglelabels
+                      value:
+                        x: 20
+                        'y': 30
+                        width: 50
+                        height: 60
+                        rotation: 0
+                        values:
+                          rectanglelabels:
+                            '0': Person
+                  score: 0.95
+                  model_version: yolo-v8
           response:
             body:
               task_count: 1

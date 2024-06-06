@@ -5,37 +5,28 @@ import typing
 
 from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from .projects_import_tasks_request_body_item_annotations_item import ProjectsImportTasksRequestBodyItemAnnotationsItem
+from .projects_import_tasks_request_body_item_predictions_item import ProjectsImportTasksRequestBodyItemPredictionsItem
 
 
-class ProjectsImportTasksRequestItem(pydantic_v1.BaseModel):
+class ProjectsImportTasksRequestBodyItem(pydantic_v1.BaseModel):
     data: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
     """
     Data of the task
     """
 
-    project: typing.Optional[int] = pydantic_v1.Field(default=None)
-    """
-    Project ID for this task
-    """
-
-    annotations: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic_v1.Field(default=None)
+    annotations: typing.Optional[typing.List[ProjectsImportTasksRequestBodyItemAnnotationsItem]] = pydantic_v1.Field(
+        default=None
+    )
     """
     Annotations for this task
     """
 
-    predictions: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic_v1.Field(default=None)
+    predictions: typing.Optional[typing.List[ProjectsImportTasksRequestBodyItemPredictionsItem]] = pydantic_v1.Field(
+        default=None
+    )
     """
     Predictions for this task
-    """
-
-    is_labeled: typing.Optional[bool] = pydantic_v1.Field(default=None)
-    """
-    Whether the task is labeled or not
-    """
-
-    overlap: typing.Optional[float] = pydantic_v1.Field(default=None)
-    """
-    Overlap for the task
     """
 
     def json(self, **kwargs: typing.Any) -> str:

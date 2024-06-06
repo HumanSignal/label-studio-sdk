@@ -2,7 +2,9 @@
 
 from .types import (
     ProjectsCreateResponse,
-    ProjectsImportTasksRequestItem,
+    ProjectsImportTasksRequestBodyItem,
+    ProjectsImportTasksRequestBodyItemAnnotationsItem,
+    ProjectsImportTasksRequestBodyItemPredictionsItem,
     ProjectsImportTasksResponse,
     ProjectsListResponse,
 )
@@ -10,7 +12,9 @@ from . import exports
 
 __all__ = [
     "ProjectsCreateResponse",
-    "ProjectsImportTasksRequestItem",
+    "ProjectsImportTasksRequestBodyItem",
+    "ProjectsImportTasksRequestBodyItemAnnotationsItem",
+    "ProjectsImportTasksRequestBodyItemPredictionsItem",
     "ProjectsImportTasksResponse",
     "ProjectsListResponse",
     "exports",

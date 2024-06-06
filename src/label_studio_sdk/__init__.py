@@ -86,7 +86,9 @@ from .ml import (
 )
 from .projects import (
     ProjectsCreateResponse,
-    ProjectsImportTasksRequestItem,
+    ProjectsImportTasksRequestBodyItem,
+    ProjectsImportTasksRequestBodyItemAnnotationsItem,
+    ProjectsImportTasksRequestBodyItemPredictionsItem,
     ProjectsImportTasksResponse,
     ProjectsListResponse,
 )
@@ -160,7 +162,9 @@ __all__ = [
     "ProjectSampling",
     "ProjectSkipQueue",
     "ProjectsCreateResponse",
-    "ProjectsImportTasksRequestItem",
+    "ProjectsImportTasksRequestBodyItem",
+    "ProjectsImportTasksRequestBodyItemAnnotationsItem",
+    "ProjectsImportTasksRequestBodyItemPredictionsItem",
     "ProjectsImportTasksResponse",
     "ProjectsListResponse",
     "RedisExportStorage",

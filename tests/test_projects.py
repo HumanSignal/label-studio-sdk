@@ -2,7 +2,13 @@
 
 import typing
 
-from label_studio_sdk import Project, ProjectLabelConfig, ProjectsImportTasksRequestItem
+from label_studio_sdk import (
+    Project,
+    ProjectLabelConfig,
+    ProjectsImportTasksRequestBodyItem,
+    ProjectsImportTasksRequestBodyItemAnnotationsItem,
+    ProjectsImportTasksRequestBodyItemPredictionsItem,
+)
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 
 from .utilities import validate_response
@@ -284,10 +290,132 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
         "found_formats": ("list", {0: None}),
         "data_columns": ("list", {0: None}),
     }
-    response = client.projects.import_tasks(id=1, request=[ProjectsImportTasksRequestItem()])
+    response = client.projects.import_tasks(
+        id=1,
+        request=[
+            ProjectsImportTasksRequestBodyItem(
+                data={"image": "http://example.com/image.jpg"},
+                annotations=[
+                    ProjectsImportTasksRequestBodyItemAnnotationsItem(
+                        result=[
+                            {
+                                "original_width": 1920,
+                                "original_height": 1080,
+                                "image_rotation": 0,
+                                "from_name": "bboxes",
+                                "to_name": "image",
+                                "type": "rectanglelabels",
+                                "value": {
+                                    "x": 20,
+                                    "y": 30,
+                                    "width": 50,
+                                    "height": 60,
+                                    "rotation": 0,
+                                    "values": {"rectanglelabels": {"0": "Person"}},
+                                },
+                            }
+                        ],
+                        task=1,
+                        project=1,
+                        completed_by=1,
+                        updated_by=1,
+                        was_cancelled=False,
+                        ground_truth=False,
+                        lead_time=10.0,
+                    )
+                ],
+                predictions=[
+                    ProjectsImportTasksRequestBodyItemPredictionsItem(
+                        task=1,
+                        result=[
+                            {
+                                "original_width": 1920,
+                                "original_height": 1080,
+                                "image_rotation": 0,
+                                "from_name": "bboxes",
+                                "to_name": "image",
+                                "type": "rectanglelabels",
+                                "value": {
+                                    "x": 20,
+                                    "y": 30,
+                                    "width": 50,
+                                    "height": 60,
+                                    "rotation": 0,
+                                    "values": {"rectanglelabels": {"0": "Person"}},
+                                },
+                            }
+                        ],
+                        score=0.95,
+                        model_version="yolo-v8",
+                    )
+                ],
+            )
+        ],
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.import_tasks(id=1, request=[ProjectsImportTasksRequestItem()])
+    async_response = await async_client.projects.import_tasks(
+        id=1,
+        request=[
+            ProjectsImportTasksRequestBodyItem(
+                data={"image": "http://example.com/image.jpg"},
+                annotations=[
+                    ProjectsImportTasksRequestBodyItemAnnotationsItem(
+                        result=[
+                            {
+                                "original_width": 1920,
+                                "original_height": 1080,
+                                "image_rotation": 0,
+                                "from_name": "bboxes",
+                                "to_name": "image",
+                                "type": "rectanglelabels",
+                                "value": {
+                                    "x": 20,
+                                    "y": 30,
+                                    "width": 50,
+                                    "height": 60,
+                                    "rotation": 0,
+                                    "values": {"rectanglelabels": {"0": "Person"}},
+                                },
+                            }
+                        ],
+                        task=1,
+                        project=1,
+                        completed_by=1,
+                        updated_by=1,
+                        was_cancelled=False,
+                        ground_truth=False,
+                        lead_time=10.0,
+                    )
+                ],
+                predictions=[
+                    ProjectsImportTasksRequestBodyItemPredictionsItem(
+                        task=1,
+                        result=[
+                            {
+                                "original_width": 1920,
+                                "original_height": 1080,
+                                "image_rotation": 0,
+                                "from_name": "bboxes",
+                                "to_name": "image",
+                                "type": "rectanglelabels",
+                                "value": {
+                                    "x": 20,
+                                    "y": 30,
+                                    "width": 50,
+                                    "height": 60,
+                                    "rotation": 0,
+                                    "values": {"rectanglelabels": {"0": "Person"}},
+                                },
+                            }
+                        ],
+                        score=0.95,
+                        model_version="yolo-v8",
+                    )
+                ],
+            )
+        ],
+    )
     validate_response(async_response, expected_response, expected_types)
 
 

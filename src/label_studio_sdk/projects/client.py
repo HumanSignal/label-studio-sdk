@@ -14,7 +14,7 @@ from ..types.project import Project
 from ..types.project_label_config import ProjectLabelConfig
 from .exports.client import AsyncExportsClient, ExportsClient
 from .types.projects_create_response import ProjectsCreateResponse
-from .types.projects_import_tasks_request_item import ProjectsImportTasksRequestItem
+from .types.projects_import_tasks_request_body_item import ProjectsImportTasksRequestBodyItem
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from .types.projects_list_response import ProjectsListResponse
 
@@ -366,7 +366,10 @@ class ProjectsClient:
         self,
         id: int,
         *,
-        request: typing.Sequence[ProjectsImportTasksRequestItem],
+        request: typing.Sequence[ProjectsImportTasksRequestBodyItem],
+        commit_to_project: typing.Optional[bool] = None,
+        return_task_ids: typing.Optional[bool] = None,
+        preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
         """
@@ -427,7 +430,16 @@ class ProjectsClient:
         id : int
             A unique integer value identifying this project.
         
-        request : typing.Sequence[ProjectsImportTasksRequestItem]
+        request : typing.Sequence[ProjectsImportTasksRequestBodyItem]
+        
+        commit_to_project : typing.Optional[bool]
+            Set to "true" to immediately commit tasks to the project.
+        
+        return_task_ids : typing.Optional[bool]
+            Set to "true" to return task IDs in the response.
+        
+        preannotated_from_fields : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of fields to preannotate from the task data. For example, if you provide a list of `{"text": "text", "prediction": "label"}` items in the request, the system will create a task with the `text` field and a prediction with the `label` field when `preannoted_from_fields=["prediction"]`.
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -439,7 +451,11 @@ class ProjectsClient:
         
         Examples
         --------
-        from label_studio_sdk import ProjectsImportTasksRequestItem
+        from label_studio_sdk import (
+            ProjectsImportTasksRequestBodyItem,
+            ProjectsImportTasksRequestBodyItemAnnotationsItem,
+            ProjectsImportTasksRequestBodyItemPredictionsItem,
+        )
         from label_studio_sdk.client import LabelStudio
         
         client = LabelStudio(
@@ -447,12 +463,75 @@ class ProjectsClient:
         )
         client.projects.import_tasks(
             id=1,
-            request=[ProjectsImportTasksRequestItem()],
+            request=[
+                ProjectsImportTasksRequestBodyItem(
+                    data={"image": "http://example.com/image.jpg"},
+                    annotations=[
+                        ProjectsImportTasksRequestBodyItemAnnotationsItem(
+                            result=[
+                                {
+                                    "original_width": 1920,
+                                    "original_height": 1080,
+                                    "image_rotation": 0,
+                                    "from_name": "bboxes",
+                                    "to_name": "image",
+                                    "type": "rectanglelabels",
+                                    "value": {
+                                        "x": 20,
+                                        "y": 30,
+                                        "width": 50,
+                                        "height": 60,
+                                        "rotation": 0,
+                                        "values": {"rectanglelabels": {"0": "Person"}},
+                                    },
+                                }
+                            ],
+                            task=1,
+                            project=1,
+                            completed_by=1,
+                            updated_by=1,
+                            was_cancelled=False,
+                            ground_truth=False,
+                            lead_time=10.0,
+                        )
+                    ],
+                    predictions=[
+                        ProjectsImportTasksRequestBodyItemPredictionsItem(
+                            task=1,
+                            result=[
+                                {
+                                    "original_width": 1920,
+                                    "original_height": 1080,
+                                    "image_rotation": 0,
+                                    "from_name": "bboxes",
+                                    "to_name": "image",
+                                    "type": "rectanglelabels",
+                                    "value": {
+                                        "x": 20,
+                                        "y": 30,
+                                        "width": 50,
+                                        "height": 60,
+                                        "rotation": 0,
+                                        "values": {"rectanglelabels": {"0": "Person"}},
+                                    },
+                                }
+                            ],
+                            score=0.95,
+                            model_version="yolo-v8",
+                        )
+                    ],
+                )
+            ],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/import",
             method="POST",
+            params={
+                "commit_to_project": commit_to_project,
+                "return_task_ids": return_task_ids,
+                "preannotated_from_fields": preannotated_from_fields,
+            },
             json=request,
             request_options=request_options,
             omit=OMIT,
@@ -867,7 +946,10 @@ class AsyncProjectsClient:
         self,
         id: int,
         *,
-        request: typing.Sequence[ProjectsImportTasksRequestItem],
+        request: typing.Sequence[ProjectsImportTasksRequestBodyItem],
+        commit_to_project: typing.Optional[bool] = None,
+        return_task_ids: typing.Optional[bool] = None,
+        preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
         """
@@ -928,7 +1010,16 @@ class AsyncProjectsClient:
         id : int
             A unique integer value identifying this project.
         
-        request : typing.Sequence[ProjectsImportTasksRequestItem]
+        request : typing.Sequence[ProjectsImportTasksRequestBodyItem]
+        
+        commit_to_project : typing.Optional[bool]
+            Set to "true" to immediately commit tasks to the project.
+        
+        return_task_ids : typing.Optional[bool]
+            Set to "true" to return task IDs in the response.
+        
+        preannotated_from_fields : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of fields to preannotate from the task data. For example, if you provide a list of `{"text": "text", "prediction": "label"}` items in the request, the system will create a task with the `text` field and a prediction with the `label` field when `preannoted_from_fields=["prediction"]`.
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -940,7 +1031,11 @@ class AsyncProjectsClient:
         
         Examples
         --------
-        from label_studio_sdk import ProjectsImportTasksRequestItem
+        from label_studio_sdk import (
+            ProjectsImportTasksRequestBodyItem,
+            ProjectsImportTasksRequestBodyItemAnnotationsItem,
+            ProjectsImportTasksRequestBodyItemPredictionsItem,
+        )
         from label_studio_sdk.client import AsyncLabelStudio
         
         client = AsyncLabelStudio(
@@ -948,12 +1043,75 @@ class AsyncProjectsClient:
         )
         await client.projects.import_tasks(
             id=1,
-            request=[ProjectsImportTasksRequestItem()],
+            request=[
+                ProjectsImportTasksRequestBodyItem(
+                    data={"image": "http://example.com/image.jpg"},
+                    annotations=[
+                        ProjectsImportTasksRequestBodyItemAnnotationsItem(
+                            result=[
+                                {
+                                    "original_width": 1920,
+                                    "original_height": 1080,
+                                    "image_rotation": 0,
+                                    "from_name": "bboxes",
+                                    "to_name": "image",
+                                    "type": "rectanglelabels",
+                                    "value": {
+                                        "x": 20,
+                                        "y": 30,
+                                        "width": 50,
+                                        "height": 60,
+                                        "rotation": 0,
+                                        "values": {"rectanglelabels": {"0": "Person"}},
+                                    },
+                                }
+                            ],
+                            task=1,
+                            project=1,
+                            completed_by=1,
+                            updated_by=1,
+                            was_cancelled=False,
+                            ground_truth=False,
+                            lead_time=10.0,
+                        )
+                    ],
+                    predictions=[
+                        ProjectsImportTasksRequestBodyItemPredictionsItem(
+                            task=1,
+                            result=[
+                                {
+                                    "original_width": 1920,
+                                    "original_height": 1080,
+                                    "image_rotation": 0,
+                                    "from_name": "bboxes",
+                                    "to_name": "image",
+                                    "type": "rectanglelabels",
+                                    "value": {
+                                        "x": 20,
+                                        "y": 30,
+                                        "width": 50,
+                                        "height": 60,
+                                        "rotation": 0,
+                                        "values": {"rectanglelabels": {"0": "Person"}},
+                                    },
+                                }
+                            ],
+                            score=0.95,
+                            model_version="yolo-v8",
+                        )
+                    ],
+                )
+            ],
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/import",
             method="POST",
+            params={
+                "commit_to_project": commit_to_project,
+                "return_task_ids": return_task_ids,
+                "preannotated_from_fields": preannotated_from_fields,
+            },
             json=request,
             request_options=request_options,
             omit=OMIT,
