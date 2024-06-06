@@ -169,7 +169,7 @@ task = client.tasks.create(
 ## Import batch tasks
 
 ```python
-tasks = client.tasks.import_batch(
+tasks = client.projects.import_tasks(
     project="PROJECT_ID",
     data=[
         {
