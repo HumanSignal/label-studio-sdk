@@ -636,23 +636,6 @@ service:
         body:
           docs: List of tasks to import
           type: list<map<string, unknown>>
-        query-parameters:
-          commit_to_project:
-            type: optional<boolean>
-            docs: Set to "true" to immediately commit tasks to the project.
-          return_task_ids:
-            type: optional<boolean>
-            docs: Set to "true" to return task IDs in the response.
-          preannotated_from_fields:
-            type: optional<string>
-            allow-multiple: true
-            docs: >-
-              List of fields to preannotate from the task data. For example, if
-              you provide a list of `{"text": "text", "prediction": "label"}`
-              items in the request, the system will create a task with the
-              `text` field and a prediction with the `label` field when
-              `preannoted_from_fields=["prediction"]`.
-        name: ProjectsImportTasksRequest
       response:
         docs: Tasks successfully imported
         type: ProjectsImportTasksResponse

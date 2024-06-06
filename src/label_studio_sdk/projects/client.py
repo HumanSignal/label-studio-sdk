@@ -366,9 +366,6 @@ class ProjectsClient:
         id: int,
         *,
         request: typing.Sequence[typing.Dict[str, typing.Any]],
-        commit_to_project: typing.Optional[bool] = None,
-        return_task_ids: typing.Optional[bool] = None,
-        preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
         """
@@ -431,15 +428,6 @@ class ProjectsClient:
         
         request : typing.Sequence[typing.Dict[str, typing.Any]]
         
-        commit_to_project : typing.Optional[bool]
-            Set to "true" to immediately commit tasks to the project.
-        
-        return_task_ids : typing.Optional[bool]
-            Set to "true" to return task IDs in the response.
-        
-        preannotated_from_fields : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of fields to preannotate from the task data. For example, if you provide a list of `{"text": "text", "prediction": "label"}` items in the request, the system will create a task with the `text` field and a prediction with the `label` field when `preannoted_from_fields=["prediction"]`.
-        
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
         
@@ -463,11 +451,6 @@ class ProjectsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/import",
             method="POST",
-            params={
-                "commit_to_project": commit_to_project,
-                "return_task_ids": return_task_ids,
-                "preannotated_from_fields": preannotated_from_fields,
-            },
             json=request,
             request_options=request_options,
             omit=OMIT,
@@ -883,9 +866,6 @@ class AsyncProjectsClient:
         id: int,
         *,
         request: typing.Sequence[typing.Dict[str, typing.Any]],
-        commit_to_project: typing.Optional[bool] = None,
-        return_task_ids: typing.Optional[bool] = None,
-        preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
         """
@@ -948,15 +928,6 @@ class AsyncProjectsClient:
         
         request : typing.Sequence[typing.Dict[str, typing.Any]]
         
-        commit_to_project : typing.Optional[bool]
-            Set to "true" to immediately commit tasks to the project.
-        
-        return_task_ids : typing.Optional[bool]
-            Set to "true" to return task IDs in the response.
-        
-        preannotated_from_fields : typing.Optional[typing.Union[str, typing.Sequence[str]]]
-            List of fields to preannotate from the task data. For example, if you provide a list of `{"text": "text", "prediction": "label"}` items in the request, the system will create a task with the `text` field and a prediction with the `label` field when `preannoted_from_fields=["prediction"]`.
-        
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
         
@@ -980,11 +951,6 @@ class AsyncProjectsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/import",
             method="POST",
-            params={
-                "commit_to_project": commit_to_project,
-                "return_task_ids": return_task_ids,
-                "preannotated_from_fields": preannotated_from_fields,
-            },
             json=request,
             request_options=request_options,
             omit=OMIT,
