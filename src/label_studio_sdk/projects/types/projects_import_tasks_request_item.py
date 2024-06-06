@@ -7,7 +7,7 @@ from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
-class TasksImportTasksRequestItem(pydantic_v1.BaseModel):
+class ProjectsImportTasksRequestItem(pydantic_v1.BaseModel):
     data: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
     """
     Data of the task

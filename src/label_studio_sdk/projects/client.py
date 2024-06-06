@@ -9,10 +9,13 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
+from ..errors.bad_request_error import BadRequestError
 from ..types.project import Project
 from ..types.project_label_config import ProjectLabelConfig
 from .exports.client import AsyncExportsClient, ExportsClient
 from .types.projects_create_response import ProjectsCreateResponse
+from .types.projects_import_tasks_request_item import ProjectsImportTasksRequestItem
+from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from .types.projects_list_response import ProjectsListResponse
 
 # this is used as the default value for optional parameters
@@ -353,6 +356,111 @@ class ProjectsClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def import_tasks(
+        self,
+        id: int,
+        *,
+        request: typing.Sequence[ProjectsImportTasksRequestItem],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsImportTasksResponse:
+        """
+        Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+        
+        <Note>
+        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*.
+        
+        For example, if the label configuration has a _$text_ variable, then each item in a data object must include a `text` field.
+        </Note>
+        
+        There are three possible ways to import tasks with this endpoint:
+        
+        #### 1\. **POST with data**
+        
+        Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
+        
+        Update this example to specify your authorization token and Label Studio instance host, then run the following from
+        the command line:
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+        ```
+        
+        #### 2\. **POST with files**
+        
+        Send tasks as files. You can attach multiple files with different names.
+        
+        - **JSON**: text files in JavaScript object notation format
+        - **CSV**: text files with tables in Comma Separated Values format
+        - **TSV**: text files with tables in Tab Separated Value format
+        - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
+        
+        Update this example to specify your authorization token, Label Studio instance host, and file name and path,
+        then run the following from the command line:
+        
+        ```bash
+        curl -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
+        ```
+        
+        #### 3\. **POST with URL**
+        
+        You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' \
+        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+        ```
+        
+        <br>
+        
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+        
+        request : typing.Sequence[ProjectsImportTasksRequestItem]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        ProjectsImportTasksResponse
+            Tasks successfully imported
+        
+        Examples
+        --------
+        from label_studio_sdk import ProjectsImportTasksRequestItem
+        from label_studio_sdk.client import LabelStudio
+        
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.import_tasks(
+            id=1,
+            request=[ProjectsImportTasksRequestItem()],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/import",
+            method="POST",
+            json=request,
+            request_options=request_options,
+            omit=OMIT,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
+        if _response.status_code == 400:
+            raise BadRequestError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -749,6 +857,111 @@ class AsyncProjectsClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def import_tasks(
+        self,
+        id: int,
+        *,
+        request: typing.Sequence[ProjectsImportTasksRequestItem],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsImportTasksResponse:
+        """
+        Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+        
+        <Note>
+        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*.
+        
+        For example, if the label configuration has a _$text_ variable, then each item in a data object must include a `text` field.
+        </Note>
+        
+        There are three possible ways to import tasks with this endpoint:
+        
+        #### 1\. **POST with data**
+        
+        Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
+        
+        Update this example to specify your authorization token and Label Studio instance host, then run the following from
+        the command line:
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+        ```
+        
+        #### 2\. **POST with files**
+        
+        Send tasks as files. You can attach multiple files with different names.
+        
+        - **JSON**: text files in JavaScript object notation format
+        - **CSV**: text files with tables in Comma Separated Values format
+        - **TSV**: text files with tables in Tab Separated Value format
+        - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
+        
+        Update this example to specify your authorization token, Label Studio instance host, and file name and path,
+        then run the following from the command line:
+        
+        ```bash
+        curl -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
+        ```
+        
+        #### 3\. **POST with URL**
+        
+        You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
+        
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://localhost:8080/api/projects/1/import' \
+        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+        ```
+        
+        <br>
+        
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+        
+        request : typing.Sequence[ProjectsImportTasksRequestItem]
+        
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+        
+        Returns
+        -------
+        ProjectsImportTasksResponse
+            Tasks successfully imported
+        
+        Examples
+        --------
+        from label_studio_sdk import ProjectsImportTasksRequestItem
+        from label_studio_sdk.client import AsyncLabelStudio
+        
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.projects.import_tasks(
+            id=1,
+            request=[ProjectsImportTasksRequestItem()],
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/import",
+            method="POST",
+            json=request,
+            request_options=request_options,
+            omit=OMIT,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
+        if _response.status_code == 400:
+            raise BadRequestError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
