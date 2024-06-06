@@ -12,7 +12,7 @@ src/label_studio_sdk/converter
 
 # legacy code - to be removed in the future
 src/label_studio_sdk/_legacy
-data_manager.py
+src/label_studio_sdk/data_manager.py
 
 # tutorials and examples
 tutorials
