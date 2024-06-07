@@ -68,7 +68,7 @@ CONF_COMPLEX = f"""
 TWO_TONAMES = f"""
     <View>
       <Text name="{TO_NAME}" value="{VALUE}" />
-      <Text name="{ANOTHER_TO_NAME}" value="{VALUE}" />
+      <Text name="{ANOTHER_TO_NAME}" value="{ANOTHER_VALUE}" />
       <Choices name="{FROM_NAME}" toName="{TO_NAME},{ANOTHER_TO_NAME}">
         <Choice value="{LABEL1}" />
         <Choice value="{LABEL2}" />
@@ -90,12 +90,12 @@ TEXTAREA_CONF = f"""
 
 VIDEO_CONF = f"""
 <View>
-  <Labels name="videoLabels" toName="video">
-    <Label value="Car"/>
-    <Label value="Person"/>
+  <Labels name="videoLabels" toName="{TO_NAME}" >
+    <Label value="{LABEL1}" />
+    <Label value="{LABEL2}" />
   </Labels>
-  <Video name="video" value="$video"/>
-  <VideoRectangle name="box" toName="video"/>
+  <Video name="{TO_NAME}" value="{VALUE}" />
+  <VideoRectangle name="{FROM_NAME}" toName="{TO_NAME}" />
 </View>
 """
 

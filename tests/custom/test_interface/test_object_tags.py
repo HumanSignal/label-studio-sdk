@@ -1,4 +1,4 @@
-from label_studio_sdk._legacy.label_interface.object_tags import ObjectTag
+from label_studio_sdk.label_interface.object_tags import ObjectTag
 from lxml.etree import Element
 
 

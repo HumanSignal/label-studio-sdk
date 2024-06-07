@@ -1,6 +1,6 @@
-from label_studio_sdk._legacy.label_interface.region import Region
-from label_studio_sdk._legacy.label_interface.object_tags import ImageTag
-from label_studio_sdk._legacy.label_interface.control_tags import RectangleTag
+from label_studio_sdk.label_interface.region import Region
+from label_studio_sdk.label_interface.object_tags import ImageTag
+from label_studio_sdk.label_interface.control_tags import RectangleTag
 
 
 def test_li():

@@ -6,8 +6,8 @@ import xmljson
 import copy
 
 from label_studio_sdk._legacy.objects import PredictionValue
-from label_studio_sdk._legacy.label_interface import LabelInterface
-from label_studio_sdk._legacy.label_interface.control_tags import (
+from label_studio_sdk.label_interface import LabelInterface
+from label_studio_sdk.label_interface.control_tags import (
     ControlTag,
     ChoicesTag,
     LabelsTag,
@@ -17,7 +17,6 @@ from label_studio_sdk._legacy.exceptions import LabelStudioValidationErrorSentry
 
 # from label_studio_sdk.label_config.regions import Region
 from . import configs as c
-
 
 ## testing basic functionality
 
@@ -64,8 +63,8 @@ def test_parse_textarea():
     conf = LabelInterface(c.TEXTAREA_CONF)
 
 
-# def test_parse_config_to_json():
-#     json = LabelInterface.parse_config_to_json(c.SIMPLE_CONF)
+def test_parse_config_to_json():
+    json = LabelInterface.parse_config_to_json(c.SIMPLE_CONF)
 
 
 def test_to_name_validation():
@@ -170,7 +169,7 @@ def test_label_with_choices():
 
 ## testing all other tags
 
-## test other method
+## test other methods
 
 
 def test_load_task():
@@ -178,9 +177,12 @@ def test_load_task():
     var_name = c.VALUE[1:]
     value = "test"
 
+    assert conf.task_loaded == False
+    
     tree = conf.load_task({var_name: value})
 
     assert isinstance(tree, LabelInterface)
+    assert tree.task_loaded == True
     assert tree.get_object(c.TO_NAME).value == value
 
 

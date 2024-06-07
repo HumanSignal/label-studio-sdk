@@ -1,7 +1,7 @@
 from lxml.etree import Element
 
-from label_studio_sdk._legacy.label_interface import LabelInterface
-from label_studio_sdk._legacy.label_interface.object_tags import ObjectTag
+from label_studio_sdk.label_interface import LabelInterface
+from label_studio_sdk.label_interface.object_tags import ObjectTag
 from . import configs as c
 
 

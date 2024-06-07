@@ -12,7 +12,7 @@ from typing import Dict, Optional, List, Tuple, Any, Callable, Union
 from pydantic import BaseModel
 
 # from typing import Dict, Optional, List, Tuple, Any
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 from lxml import etree
 import xmljson
 
@@ -22,18 +22,18 @@ from label_studio_sdk._legacy.exceptions import (
     LabelStudioValidationErrorSentryIgnored,
 )
 
-from label_studio_sdk._legacy.label_interface.control_tags import (
+from .control_tags import (
     ControlTag,
     ChoicesTag,
     LabelsTag,
 )
-from label_studio_sdk._legacy.label_interface.object_tags import ObjectTag
-from label_studio_sdk._legacy.label_interface.label_tags import LabelTag
+from .object_tags import ObjectTag
+from .label_tags import LabelTag
 from label_studio_sdk._legacy.objects import AnnotationValue, TaskValue, PredictionValue
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(dir_path, "..", "schema", "label_config_schema.json")
+file_path = os.path.join(dir_path, "..", "_legacy", "schema", "label_config_schema.json")
 
 with open(file_path) as f:
     _LABEL_CONFIG_SCHEMA_DATA = json.load(f)
@@ -189,23 +189,34 @@ class LabelInterface:
     ```
     """
 
-    def __init__(self, config: str, *args, **kwargs):
+    def __init__(self, config: str, tags_mapping=None, *args, **kwargs):
         """
-        Create LabelInterface instance from the config string
-        Example:
+        Initialize a LabelInterface instance using a config string.
+
+        Args:
+          config (str): Configuration string.
+          tags_mapping: Provide your own implementation of any tag, this is helpful in cases where you want to override one of the control tags, and have your custom .label() method implemented.
+
+        The configuration string should be formatted as follows:
+
         ```
-        label_config = LabelInterface('''
         <View>
-        <Choices name="sentiment" toName="txt">
+          <Choices name="sentiment" toName="txt">
             <Choice value="Positive" />
             <Choice value="Negative" />
             <Choice value="Neutral" />
-        </Choices>
-        <Text name="txt" value="$text" />
-        ''')
+          </Choices>
+          <Text name="txt" value="$text" />
+        </View>
+        ```
+        This method will extract the predefined task from the configuration and 
+        parse the controls, objects, and labels used in it.
         """
+        self.task_loaded = False
+        
         self._config = config
-
+        self._tags_mapping = tags_mapping
+        
         # extract predefined task from the config
         _task_data, _ann, _pred = LabelInterface.get_task_from_labeling_config(config)
         self._sample_config_task = _task_data
@@ -224,6 +235,8 @@ class LabelInterface:
         self._objects = objects
         self._labels = labels
         self._tree = tree
+
+        
 
     ##### NEW API
 
@@ -391,7 +404,38 @@ class LabelInterface:
             lst = list(filter(match_fn, lst))
 
         return lst
+    
+    def load_task(self, task):
+        """Loads a task and substitutes the value in each object tag
+        with actual data from the task, returning a copy of the
+        LabelConfig object.
 
+        If the `value` field in an object tag is designed to take
+        variable input (i.e., `value_is_variable` is True), the
+        function replaces this value with the corresponding value from
+        the task dictionary.
+
+        Args:
+            task (dict): Dictionary representing the task, where
+            each key-value pair denotes an attribute-value of the
+            task.
+
+        Returns:
+            LabelInterface: A deep copy of the current LabelIntreface
+            instance with the object tags' value fields populated with
+            data from the task.
+
+        """
+        tree = copy.deepcopy(self)
+        tree.task_loaded = True
+        
+        for obj in tree.objects:
+            print(obj.value_is_variable, obj.value_name)
+            if obj.value_is_variable and obj.value_name in task:
+                obj.value = task.get(obj.value_name)
+
+        return tree
+    
     def parse(self, config_string: str) -> Tuple[Dict, Dict, Dict, etree._Element]:
         """Parses the received configuration string into dictionaries
         of ControlTags, ObjectTags, and Labels, along with an XML tree
@@ -422,10 +466,10 @@ class LabelInterface:
                 variables.append(tag.attrib["indexFlag"])
 
             if ControlTag.validate_node(tag):
-                controls[tag.attrib["name"]] = ControlTag.parse_node(tag)
+                controls[tag.attrib["name"]] = ControlTag.parse_node(tag, tags_mapping=self._tags_mapping)
 
             elif ObjectTag.validate_node(tag):
-                objects[tag.attrib["name"]] = ObjectTag.parse_node(tag)
+                objects[tag.attrib["name"]] = ObjectTag.parse_node(tag, tags_mapping=self._tags_mapping)
 
             elif LabelTag.validate_node(tag):
                 lb = LabelTag.parse_node(tag, controls)
@@ -488,34 +532,6 @@ class LabelInterface:
                 "Label config contains non-unique names"
             )
 
-    def load_task(self, task):
-        """Loads a task and substitutes the value in each object tag
-        with actual data from the task, returning a copy of the
-        LabelConfig object.
-
-        If the `value` field in an object tag is designed to take
-        variable input (i.e., `value_is_variable` is True), the
-        function replaces this value with the corresponding value from
-        the task dictionary.
-
-        Args:
-            task (dict): Dictionary representing the task, where
-            each key-value pair denotes an attribute-value of the
-            task.
-
-        Returns:
-            LabelInterface: A deep copy of the current LabelIntreface
-            instance with the object tags' value fields populated with
-            data from the task.
-
-        """
-        tree = copy.deepcopy(self)
-        for obj in tree.objects:
-            if obj.value_is_variable and obj.value_name in task:
-                obj.value = task.get(obj.value_name)
-
-        return tree
-
     @property
     def is_valid(self):
         """ """
@@ -568,6 +584,23 @@ class LabelInterface:
 
         return True
 
+    def _validate_object(self, obj):
+        """ """
+        regions = []
+        for r in obj.get(RESULT_KEY):
+            if r.get('type') != "relation":
+                if not self.validate_region(r):
+                    return False
+
+                regions.append(r)
+
+        for r in obj.get(RESULT_KEY):
+            if r.get('type') == "relation" and \
+               not self.validate_relation(r, regions):
+                return False
+
+        return True                                                
+        
     def validate_annotation(self, annotation):
         """Validates the given annotation against the current configuration.
 
@@ -586,11 +619,11 @@ class LabelInterface:
             validation, False otherwise.
 
         """
-        return all(self.validate_region(r) for r in annotation.get(RESULT_KEY))
+        return self._validate_object(annotation)
 
     def validate_prediction(self, prediction):
         """Same as validate_annotation right now"""
-        return all(self.validate_region(r) for r in prediction.get(RESULT_KEY))
+        return self._validate_object(prediction)
 
     def validate_region(self, region) -> bool:
         """Validates a region from the annotation against the current
@@ -620,22 +653,35 @@ class LabelInterface:
         if not control or not obj:
             return False
 
-        # type of the region should match the tag name
+        # type of the region should match the tag name        
         if control.tag.lower() != region["type"]:
             return False
-
+        
         # make sure that in config it connects to the same tag as
         # immplied by the region data
         if region["to_name"] not in control.to_name:
             return False
-
+        
         # validate the actual value, for example that <Labels /> tag
         # is producing start, end, and labels
         if not control.validate_value(region["value"]):
             return False
-
+        
         return True
 
+    def validate_relation(self, relation, regions, _mapping=None) -> bool:
+        """Validates that the relation is correct and all the associated objects are provided"""
+        if _mapping is None:
+            _mapping = { r['id']: r for r in regions }
+
+        if relation.get("type") != "relation" or \
+           relation.get("direction") not in ("left", "right", "bi") or \
+           relation.get("from_id") not in _mapping or \
+           relation.get("to_id") not in _mapping:
+            return False
+        
+        return True
+    
     ### Generation
 
     def _sample_task(self, secure_mode=False):
