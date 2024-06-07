@@ -3,7 +3,7 @@ import pytest
 import xmljson
 import copy
 
-from label_studio_sdk.objects import PredictionValue
+from label_studio_sdk._legacy.objects import PredictionValue
 from label_studio_sdk.label_interface import LabelInterface
 from label_studio_sdk.label_interface.object_tags import ImageTag
 from label_studio_sdk.label_interface.control_tags import (
@@ -13,7 +13,7 @@ from label_studio_sdk.label_interface.control_tags import (
     BrushTag,
     BrushLabelsTag
 )
-from label_studio_sdk.exceptions import LabelStudioValidationErrorSentryIgnored
+from label_studio_sdk._legacy.exceptions import LabelStudioValidationErrorSentryIgnored
 
 # from label_studio_sdk.label_config.regions import Region
 from . import configs as c

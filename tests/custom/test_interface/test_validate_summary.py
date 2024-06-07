@@ -1,7 +1,7 @@
 import pytest
 
 from label_studio_sdk.label_interface import LabelInterface
-from label_studio_sdk.exceptions import LabelStudioValidationErrorSentryIgnored
+from label_studio_sdk._legacy.exceptions import LabelStudioValidationErrorSentryIgnored
 
 from . import configs as c
 from .mockups import SummaryMockup

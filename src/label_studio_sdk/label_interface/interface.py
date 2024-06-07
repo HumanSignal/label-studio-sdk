@@ -33,7 +33,7 @@ from label_studio_sdk._legacy.objects import AnnotationValue, TaskValue, Predict
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-file_path = os.path.join(dir_path, "..", "schema", "label_config_schema.json")
+file_path = os.path.join(dir_path, "..", "_legacy", "schema", "label_config_schema.json")
 
 with open(file_path) as f:
     _LABEL_CONFIG_SCHEMA_DATA = json.load(f)

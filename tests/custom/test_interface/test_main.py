@@ -13,7 +13,7 @@ from label_studio_sdk.label_interface.control_tags import (
     LabelsTag,
     Region,
 )
-from label_studio_sdk.exceptions import LabelStudioValidationErrorSentryIgnored
+from label_studio_sdk._legacy.exceptions import LabelStudioValidationErrorSentryIgnored
 
 # from label_studio_sdk.label_config.regions import Region
 from . import configs as c
