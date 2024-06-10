@@ -92,6 +92,34 @@ service:
         name: S3CreateRequest
         body:
           properties:
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
+            title:
+              type: optional<string>
+              docs: Storage title
+            description:
+              type: optional<string>
+              docs: Storage description
             project:
               type: optional<integer>
               docs: Project ID
@@ -101,12 +129,6 @@ service:
             prefix:
               type: optional<string>
               docs: S3 bucket prefix
-            regex_filter:
-              type: optional<string>
-              docs: Cloud storage regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: Interpret objects as BLOBs and generate URLs
             aws_access_key_id:
               type: optional<string>
               docs: AWS_ACCESS_KEY_ID
@@ -125,15 +147,6 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for download
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in seconds
-            recursive_scan:
-              type: optional<boolean>
-              docs: Scan recursively
       response:
         docs: ''
         type: S3CreateResponse
@@ -141,20 +154,22 @@ service:
         - request: {}
           response:
             body:
+              regex_filter: regex_filter
+              use_blob_urls: true
+              presign: true
+              presign_ttl: 1
+              recursive_scan: true
+              title: title
+              description: description
               project: 1
               bucket: bucket
               prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
               region_name: region_name
               s3_endpoint: s3_endpoint
-              presign: true
-              presign_ttl: 1
-              recursive_scan: true
       audiences:
         - public
     validate:
@@ -167,40 +182,70 @@ service:
         ensure that the storage configuration settings are correct and
         operational before attempting to import data.
       display-name: Validate import storage
-      response:
-        docs: ''
-        type: root.S3ImportStorage
+      request:
+        name: S3ValidateRequest
+        body:
+          properties:
+            id:
+              type: optional<integer>
+              docs: Storage ID. If set, storage with specified ID will be updated
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
+            title:
+              type: optional<string>
+              docs: Storage title
+            description:
+              type: optional<string>
+              docs: Storage description
+            project:
+              type: optional<integer>
+              docs: Project ID
+            bucket:
+              type: optional<string>
+              docs: S3 bucket name
+            prefix:
+              type: optional<string>
+              docs: S3 bucket prefix
+            aws_access_key_id:
+              type: optional<string>
+              docs: AWS_ACCESS_KEY_ID
+            aws_secret_access_key:
+              type: optional<string>
+              docs: AWS_SECRET_ACCESS_KEY
+            aws_session_token:
+              type: optional<string>
+              docs: AWS_SESSION_TOKEN
+            aws_sse_kms_key_id:
+              type: optional<string>
+              docs: AWS SSE KMS Key ID
+            region_name:
+              type: optional<string>
+              docs: AWS Region
+            s3_endpoint:
+              type: optional<string>
+              docs: S3 Endpoint
       examples:
-        - response:
-            body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
-              meta:
-                meta:
-                  key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              aws_access_key_id: aws_access_key_id
-              aws_secret_access_key: aws_secret_access_key
-              aws_session_token: aws_session_token
-              aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
-              presign_ttl: 1
-              recursive_scan: true
-              project: 1
+        - request: {}
       audiences:
         - public
     get:
@@ -313,6 +358,34 @@ service:
         name: S3UpdateRequest
         body:
           properties:
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
+            title:
+              type: optional<string>
+              docs: Storage title
+            description:
+              type: optional<string>
+              docs: Storage description
             project:
               type: optional<integer>
               docs: Project ID
@@ -322,12 +395,6 @@ service:
             prefix:
               type: optional<string>
               docs: S3 bucket prefix
-            regex_filter:
-              type: optional<string>
-              docs: Cloud storage regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: Interpret objects as BLOBs and generate URLs
             aws_access_key_id:
               type: optional<string>
               docs: AWS_ACCESS_KEY_ID
@@ -346,15 +413,6 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for download
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in seconds
-            recursive_scan:
-              type: optional<boolean>
-              docs: Scan recursively
       response:
         docs: ''
         type: S3UpdateResponse
@@ -364,20 +422,22 @@ service:
           request: {}
           response:
             body:
+              regex_filter: regex_filter
+              use_blob_urls: true
+              presign: true
+              presign_ttl: 1
+              recursive_scan: true
+              title: title
+              description: description
               project: 1
               bucket: bucket
               prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
               region_name: region_name
               s3_endpoint: s3_endpoint
-              presign: true
-              presign_ttl: 1
-              recursive_scan: true
       audiences:
         - public
     sync:
@@ -446,6 +506,34 @@ service:
 types:
   S3CreateResponse:
     properties:
+      regex_filter:
+        type: optional<string>
+        docs: >-
+          Cloud storage regex for filtering objects. You must specify it
+          otherwise no objects will be imported.
+      use_blob_urls:
+        type: optional<boolean>
+        docs: >-
+          Interpret objects as BLOBs and generate URLs. For example, if your
+          bucket contains images, you can use this option to generate URLs for
+          these images. If set to False, it will read the content of the file
+          and load it into Label Studio.
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes
+        default: 1
+      recursive_scan:
+        type: optional<boolean>
+        docs: Scan recursively
+      title:
+        type: optional<string>
+        docs: Storage title
+      description:
+        type: optional<string>
+        docs: Storage description
       project:
         type: optional<integer>
         docs: Project ID
@@ -455,12 +543,6 @@ types:
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
-      regex_filter:
-        type: optional<string>
-        docs: Cloud storage regex for filtering objects
-      use_blob_urls:
-        type: optional<boolean>
-        docs: Interpret objects as BLOBs and generate URLs
       aws_access_key_id:
         type: optional<string>
         docs: AWS_ACCESS_KEY_ID
@@ -479,17 +561,36 @@ types:
       s3_endpoint:
         type: optional<string>
         docs: S3 Endpoint
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for download
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in seconds
-      recursive_scan:
-        type: optional<boolean>
-        docs: Scan recursively
   S3UpdateResponse:
     properties:
+      regex_filter:
+        type: optional<string>
+        docs: >-
+          Cloud storage regex for filtering objects. You must specify it
+          otherwise no objects will be imported.
+      use_blob_urls:
+        type: optional<boolean>
+        docs: >-
+          Interpret objects as BLOBs and generate URLs. For example, if your
+          bucket contains images, you can use this option to generate URLs for
+          these images. If set to False, it will read the content of the file
+          and load it into Label Studio.
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes
+        default: 1
+      recursive_scan:
+        type: optional<boolean>
+        docs: Scan recursively
+      title:
+        type: optional<string>
+        docs: Storage title
+      description:
+        type: optional<string>
+        docs: Storage description
       project:
         type: optional<integer>
         docs: Project ID
@@ -499,12 +600,6 @@ types:
       prefix:
         type: optional<string>
         docs: S3 bucket prefix
-      regex_filter:
-        type: optional<string>
-        docs: Cloud storage regex for filtering objects
-      use_blob_urls:
-        type: optional<boolean>
-        docs: Interpret objects as BLOBs and generate URLs
       aws_access_key_id:
         type: optional<string>
         docs: AWS_ACCESS_KEY_ID
@@ -523,12 +618,3 @@ types:
       s3_endpoint:
         type: optional<string>
         docs: S3 Endpoint
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for download
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in seconds
-      recursive_scan:
-        type: optional<boolean>
-        docs: Scan recursively

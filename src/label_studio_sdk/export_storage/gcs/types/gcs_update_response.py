@@ -8,6 +8,21 @@ from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
 class GcsUpdateResponse(pydantic_v1.BaseModel):
+    can_delete_objects: typing.Optional[bool] = pydantic_v1.Field(default=None)
+    """
+    Deletion from storage enabled.
+    """
+
+    title: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Storage title
+    """
+
+    description: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Storage description
+    """
+
     project: typing.Optional[int] = pydantic_v1.Field(default=None)
     """
     Project ID
@@ -25,7 +40,7 @@ class GcsUpdateResponse(pydantic_v1.BaseModel):
 
     google_application_credentials: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
-    The content of GOOGLE_APPLICATION_CREDENTIALS json file
+    The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
     """
 
     google_project_id: typing.Optional[str] = pydantic_v1.Field(default=None)
