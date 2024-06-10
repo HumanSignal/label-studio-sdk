@@ -6,6 +6,7 @@ README.md
 # manual extensions, use generators.yml to include specific top-level imports from here
 # this directory also includes legacy label_studio_tools/ package
 src/label_studio_sdk/_extensions
+src/label_studio_sdk/label_interface
 
 # converter
 src/label_studio_sdk/converter
@@ -22,6 +23,7 @@ examples
 tests/custom/converter
 tests/custom/label_studio_tools
 tests/custom/legacy
+tests/custom/test_interface
 
 # manual workflows
 .github/workflows/ci.yml
