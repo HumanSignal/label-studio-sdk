@@ -22,6 +22,7 @@ examples
 tests/custom/converter
 tests/custom/label_studio_tools
 tests/custom/legacy
+tests/custom/test_interface
 
 # manual workflows
 .github/workflows/ci.yml
