@@ -81,6 +81,24 @@ service:
         name: RedisCreateRequest
         body:
           properties:
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+            title:
+              type: optional<string>
+              docs: Storage title
+            description:
+              type: optional<string>
+              docs: Storage description
             project:
               type: optional<integer>
               docs: Project ID
@@ -96,12 +114,6 @@ service:
             password:
               type: optional<string>
               docs: Server Password (optional)
-            regex_filter:
-              type: optional<string>
-              docs: Cloud storage regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: Interpret objects as BLOBs and generate URLs
       response:
         docs: ''
         type: RedisCreateResponse
@@ -109,13 +121,15 @@ service:
         - request: {}
           response:
             body:
+              regex_filter: regex_filter
+              use_blob_urls: true
+              title: title
+              description: description
               project: 1
               path: path
               host: host
               port: port
               password: password
-              regex_filter: regex_filter
-              use_blob_urls: true
       audiences:
         - public
     validate:
@@ -128,34 +142,48 @@ service:
         ensure that the storage configuration settings are correct and
         operational before attempting to import data.
       display-name: Validate import storage
-      response:
-        docs: ''
-        type: root.RedisImportStorage
+      request:
+        name: RedisValidateRequest
+        body:
+          properties:
+            id:
+              type: optional<integer>
+              docs: Storage ID. If set, storage with specified ID will be updated
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+            title:
+              type: optional<string>
+              docs: Storage title
+            description:
+              type: optional<string>
+              docs: Storage description
+            project:
+              type: optional<integer>
+              docs: Project ID
+            path:
+              type: optional<string>
+              docs: Storage prefix (optional)
+            host:
+              type: optional<string>
+              docs: Server Host IP (optional)
+            port:
+              type: optional<string>
+              docs: Server Port (optional)
+            password:
+              type: optional<string>
+              docs: Server Password (optional)
       examples:
-        - response:
-            body:
-              id: 1
-              type: type
-              synchronizable: true
-              path: path
-              host: host
-              port: port
-              password: password
-              regex_filter: regex_filter
-              use_blob_urls: true
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
-              meta:
-                meta:
-                  key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              db: 1
-              project: 1
+        - request: {}
       audiences:
         - public
     get:
@@ -262,6 +290,24 @@ service:
         name: RedisUpdateRequest
         body:
           properties:
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+            title:
+              type: optional<string>
+              docs: Storage title
+            description:
+              type: optional<string>
+              docs: Storage description
             project:
               type: optional<integer>
               docs: Project ID
@@ -277,12 +323,6 @@ service:
             password:
               type: optional<string>
               docs: Server Password (optional)
-            regex_filter:
-              type: optional<string>
-              docs: Cloud storage regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: Interpret objects as BLOBs and generate URLs
       response:
         docs: ''
         type: RedisUpdateResponse
@@ -292,13 +332,15 @@ service:
           request: {}
           response:
             body:
+              regex_filter: regex_filter
+              use_blob_urls: true
+              title: title
+              description: description
               project: 1
               path: path
               host: host
               port: port
               password: password
-              regex_filter: regex_filter
-              use_blob_urls: true
       audiences:
         - public
     sync:
@@ -362,6 +404,24 @@ service:
 types:
   RedisCreateResponse:
     properties:
+      regex_filter:
+        type: optional<string>
+        docs: >-
+          Cloud storage regex for filtering objects. You must specify it
+          otherwise no objects will be imported.
+      use_blob_urls:
+        type: optional<boolean>
+        docs: >-
+          Interpret objects as BLOBs and generate URLs. For example, if your
+          bucket contains images, you can use this option to generate URLs for
+          these images. If set to False, it will read the content of the file
+          and load it into Label Studio.
+      title:
+        type: optional<string>
+        docs: Storage title
+      description:
+        type: optional<string>
+        docs: Storage description
       project:
         type: optional<integer>
         docs: Project ID
@@ -377,14 +437,26 @@ types:
       password:
         type: optional<string>
         docs: Server Password (optional)
-      regex_filter:
-        type: optional<string>
-        docs: Cloud storage regex for filtering objects
-      use_blob_urls:
-        type: optional<boolean>
-        docs: Interpret objects as BLOBs and generate URLs
   RedisUpdateResponse:
     properties:
+      regex_filter:
+        type: optional<string>
+        docs: >-
+          Cloud storage regex for filtering objects. You must specify it
+          otherwise no objects will be imported.
+      use_blob_urls:
+        type: optional<boolean>
+        docs: >-
+          Interpret objects as BLOBs and generate URLs. For example, if your
+          bucket contains images, you can use this option to generate URLs for
+          these images. If set to False, it will read the content of the file
+          and load it into Label Studio.
+      title:
+        type: optional<string>
+        docs: Storage title
+      description:
+        type: optional<string>
+        docs: Storage description
       project:
         type: optional<integer>
         docs: Project ID
@@ -400,9 +472,3 @@ types:
       password:
         type: optional<string>
         docs: Server Password (optional)
-      regex_filter:
-        type: optional<string>
-        docs: Cloud storage regex for filtering objects
-      use_blob_urls:
-        type: optional<boolean>
-        docs: Interpret objects as BLOBs and generate URLs
