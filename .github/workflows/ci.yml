@@ -8,7 +8,7 @@ jobs:
 #      - name: Checkout repo
 #        uses: actions/checkout@v3
 #      - name: Set up python
-#        uses: actions/setup-python@v4
+#        uses: actions/setup-python@v5
 #        with:
 #          python-version: 3.8
 #      - name: Bootstrap poetry
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Set up python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.8
       - name: Bootstrap poetry
@@ -46,7 +46,7 @@ jobs:
 #      - name: Checkout repo
 #        uses: actions/checkout@v3
 #      - name: Set up python
-#        uses: actions/setup-python@v4
+#        uses: actions/setup-python@v5
 #        with:
 #          python-version: 3.8
 #      - name: Bootstrap poetry
