@@ -33,13 +33,8 @@ service:
           response:
             body:
               id: 1
-              created_username: created_username
-              created_ago: created_ago
-              completed_by: 1
-              unique_id: unique_id
               result:
-                '0':
-                  original_width: 1920
+                - original_width: 1920
                   original_height: 1080
                   image_rotation: 0
                   from_name: bboxes
@@ -54,6 +49,10 @@ service:
                     values:
                       rectanglelabels:
                         '0': Person
+              created_username: created_username
+              created_ago: created_ago
+              completed_by: 1
+              unique_id: unique_id
               was_cancelled: false
               ground_truth: false
               created_at: '2024-01-15T09:30:00Z'
@@ -181,13 +180,8 @@ service:
           response:
             body:
               id: 1
-              created_username: created_username
-              created_ago: created_ago
-              completed_by: 1
-              unique_id: unique_id
               result:
-                '0':
-                  original_width: 1920
+                - original_width: 1920
                   original_height: 1080
                   image_rotation: 0
                   from_name: bboxes
@@ -202,6 +196,10 @@ service:
                     values:
                       rectanglelabels:
                         '0': Person
+              created_username: created_username
+              created_ago: created_ago
+              completed_by: 1
+              unique_id: unique_id
               was_cancelled: false
               ground_truth: false
               created_at: '2024-01-15T09:30:00Z'
@@ -245,13 +243,8 @@ service:
           response:
             body:
               - id: 1
-                created_username: created_username
-                created_ago: created_ago
-                completed_by: 1
-                unique_id: unique_id
                 result:
-                  '0':
-                    original_width: 1920
+                  - original_width: 1920
                     original_height: 1080
                     image_rotation: 0
                     from_name: bboxes
@@ -266,6 +259,10 @@ service:
                       values:
                         rectanglelabels:
                           '0': Person
+                created_username: created_username
+                created_ago: created_ago
+                completed_by: 1
+                unique_id: unique_id
                 was_cancelled: false
                 ground_truth: false
                 created_at: '2024-01-15T09:30:00Z'
@@ -388,13 +385,8 @@ service:
           response:
             body:
               id: 1
-              created_username: created_username
-              created_ago: created_ago
-              completed_by: 1
-              unique_id: unique_id
               result:
-                '0':
-                  original_width: 1920
+                - original_width: 1920
                   original_height: 1080
                   image_rotation: 0
                   from_name: bboxes
@@ -409,6 +401,10 @@ service:
                     values:
                       rectanglelabels:
                         '0': Person
+              created_username: created_username
+              created_ago: created_ago
+              completed_by: 1
+              unique_id: unique_id
               was_cancelled: false
               ground_truth: false
               created_at: '2024-01-15T09:30:00Z'

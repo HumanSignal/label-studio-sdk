@@ -8,6 +8,36 @@ from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
 class AzureUpdateResponse(pydantic_v1.BaseModel):
+    regex_filter: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    """
+
+    use_blob_urls: typing.Optional[bool] = pydantic_v1.Field(default=None)
+    """
+    Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    """
+
+    presign: typing.Optional[bool] = pydantic_v1.Field(default=None)
+    """
+    Presign URLs for direct download
+    """
+
+    presign_ttl: typing.Optional[int] = pydantic_v1.Field(default=None)
+    """
+    Presign TTL in minutes
+    """
+
+    title: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Storage title
+    """
+
+    description: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Storage description
+    """
+
     project: typing.Optional[int] = pydantic_v1.Field(default=None)
     """
     Project ID
@@ -23,16 +53,6 @@ class AzureUpdateResponse(pydantic_v1.BaseModel):
     Azure blob prefix name
     """
 
-    regex_filter: typing.Optional[str] = pydantic_v1.Field(default=None)
-    """
-    Cloud storage regex for filtering objects
-    """
-
-    use_blob_urls: typing.Optional[bool] = pydantic_v1.Field(default=None)
-    """
-    Interpret objects as BLOBs and generate URLs
-    """
-
     account_name: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Azure Blob account name
@@ -41,16 +61,6 @@ class AzureUpdateResponse(pydantic_v1.BaseModel):
     account_key: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Azure Blob account key
-    """
-
-    presign: typing.Optional[bool] = pydantic_v1.Field(default=None)
-    """
-    Presign URLs for direct download
-    """
-
-    presign_ttl: typing.Optional[int] = pydantic_v1.Field(default=None)
-    """
-    Presign TTL in minutes
     """
 
     def json(self, **kwargs: typing.Any) -> str:

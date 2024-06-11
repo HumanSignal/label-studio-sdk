@@ -32,6 +32,9 @@ types:
   Annotation:
     properties:
       id: optional<integer>
+      result:
+        docs: List of annotation results for the task
+        type: list<map<string, unknown>>
       created_username:
         type: optional<string>
         docs: Username string
@@ -46,9 +49,6 @@ types:
         type: optional<string>
         validation:
           minLength: 1
-      result:
-        type: optional<map<string, unknown>>
-        docs: The main value of annotator work - labeling result in JSON format
       was_cancelled:
         type: optional<boolean>
         docs: User skipped the task

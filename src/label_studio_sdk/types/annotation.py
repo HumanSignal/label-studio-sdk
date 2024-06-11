@@ -10,6 +10,11 @@ from .annotation_last_action import AnnotationLastAction
 
 class Annotation(pydantic_v1.BaseModel):
     id: typing.Optional[int] = None
+    result: typing.List[typing.Dict[str, typing.Any]] = pydantic_v1.Field()
+    """
+    List of annotation results for the task
+    """
+
     created_username: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Username string
@@ -22,11 +27,6 @@ class Annotation(pydantic_v1.BaseModel):
 
     completed_by: typing.Optional[int] = None
     unique_id: typing.Optional[str] = None
-    result: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
-    """
-    The main value of annotator work - labeling result in JSON format
-    """
-
     was_cancelled: typing.Optional[bool] = pydantic_v1.Field(default=None)
     """
     User skipped the task
