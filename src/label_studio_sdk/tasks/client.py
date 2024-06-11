@@ -12,7 +12,6 @@ from ..core.request_options import RequestOptions
 from ..types.base_task import BaseTask
 from ..types.project_import import ProjectImport
 from ..types.task import Task
-from .types.tasks_delete_all_tasks_response import TasksDeleteAllTasksResponse
 from .types.tasks_list_request_fields import TasksListRequestFields
 from .types.tasks_list_response import TasksListResponse
 
@@ -76,9 +75,7 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_all_tasks(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> TasksDeleteAllTasksResponse:
+    def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete all tasks from a specific project.
 
@@ -94,8 +91,7 @@ class TasksClient:
 
         Returns
         -------
-        TasksDeleteAllTasksResponse
-            List of deleted task IDs
+        None
 
         Examples
         --------
@@ -112,7 +108,7 @@ class TasksClient:
             f"api/projects/{jsonable_encoder(id)}/tasks/", method="DELETE", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(TasksDeleteAllTasksResponse, _response.json())  # type: ignore
+            return
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -486,9 +482,7 @@ class AsyncTasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_all_tasks(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> TasksDeleteAllTasksResponse:
+    async def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete all tasks from a specific project.
 
@@ -504,8 +498,7 @@ class AsyncTasksClient:
 
         Returns
         -------
-        TasksDeleteAllTasksResponse
-            List of deleted task IDs
+        None
 
         Examples
         --------
@@ -522,7 +515,7 @@ class AsyncTasksClient:
             f"api/projects/{jsonable_encoder(id)}/tasks/", method="DELETE", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(TasksDeleteAllTasksResponse, _response.json())  # type: ignore
+            return
         try:
             _response_json = _response.json()
         except JSONDecodeError:

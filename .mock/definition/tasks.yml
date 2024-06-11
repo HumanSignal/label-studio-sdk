@@ -93,16 +93,9 @@ service:
           type: integer
           docs: A unique integer value identifying this project.
       display-name: Delete all tasks
-      response:
-        docs: List of deleted task IDs
-        type: TasksDeleteAllTasksResponse
       examples:
         - path-parameters:
             id: 1
-          response:
-            body:
-              tasks:
-                - id: 1
       audiences:
         - public
     list:
@@ -459,15 +452,6 @@ service:
       audiences:
         - public
 types:
-  TasksDeleteAllTasksResponseTasksItem:
-    docs: Task object
-    properties:
-      id:
-        type: optional<integer>
-        docs: Task ID
-  TasksDeleteAllTasksResponse:
-    properties:
-      tasks: optional<list<TasksDeleteAllTasksResponseTasksItem>>
   TasksListRequestFields:
     enum:
       - all
