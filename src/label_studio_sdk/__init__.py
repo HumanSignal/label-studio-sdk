@@ -85,7 +85,12 @@ from .ml import (
     MlUpdateResponseAuthMethod,
 )
 from .projects import ProjectsCreateResponse, ProjectsImportTasksResponse, ProjectsListResponse
-from .tasks import TasksListRequestFields, TasksListResponse
+from .tasks import (
+    TasksDeleteAllTasksResponse,
+    TasksDeleteAllTasksResponseTasksItem,
+    TasksListRequestFields,
+    TasksListResponse,
+)
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
 from .version import __version__
 from .views import (
@@ -169,6 +174,8 @@ __all__ = [
     "SerializationOptions",
     "Task",
     "TaskFilterOptions",
+    "TasksDeleteAllTasksResponse",
+    "TasksDeleteAllTasksResponseTasksItem",
     "TasksListRequestFields",
     "TasksListResponse",
     "UserSimple",
