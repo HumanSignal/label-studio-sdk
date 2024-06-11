@@ -10,7 +10,7 @@ from .annotation_last_action import AnnotationLastAction
 
 class Annotation(pydantic_v1.BaseModel):
     id: typing.Optional[int] = None
-    result: typing.List[typing.Dict[str, typing.Any]] = pydantic_v1.Field()
+    result: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic_v1.Field(default=None)
     """
     List of annotation results for the task
     """
