@@ -8,16 +8,6 @@ from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
 class LocalCreateResponse(pydantic_v1.BaseModel):
-    title: typing.Optional[str] = pydantic_v1.Field(default=None)
-    """
-    Storage title
-    """
-
-    description: typing.Optional[str] = pydantic_v1.Field(default=None)
-    """
-    Storage description
-    """
-
     project: typing.Optional[int] = pydantic_v1.Field(default=None)
     """
     Project ID
@@ -25,7 +15,7 @@ class LocalCreateResponse(pydantic_v1.BaseModel):
 
     path: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
-    Path to local directory
+    Local path
     """
 
     regex_filter: typing.Optional[str] = pydantic_v1.Field(default=None)
@@ -35,7 +25,7 @@ class LocalCreateResponse(pydantic_v1.BaseModel):
 
     use_blob_urls: typing.Optional[bool] = pydantic_v1.Field(default=None)
     """
-    Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    Interpret objects as BLOBs and generate URLs
     """
 
     def json(self, **kwargs: typing.Any) -> str:

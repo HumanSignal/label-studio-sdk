@@ -58,7 +58,7 @@ class Task(pydantic_v1.BaseModel):
     Completion time of the task
     """
 
-    file_upload: typing.Optional[int] = pydantic_v1.Field(default=None)
+    file_upload: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     File upload ID for this task
     """

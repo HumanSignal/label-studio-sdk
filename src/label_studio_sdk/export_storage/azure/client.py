@@ -66,9 +66,6 @@ class AzureClient:
     def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         container: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
@@ -85,15 +82,6 @@ class AzureClient:
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
@@ -130,9 +118,6 @@ class AzureClient:
             "api/storages/export/azure",
             method="POST",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
                 "project": project,
                 "container": container,
                 "prefix": prefix,
@@ -150,58 +135,19 @@ class AzureClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobExportStorage:
         """
         Validate a specific Azure export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        AzureBlobExportStorage
+
 
         Examples
         --------
@@ -213,24 +159,10 @@ class AzureClient:
         client.export_storage.azure.validate()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/export/azure/validate",
-            method="POST",
-            json={
-                "id": id,
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "api/storages/export/azure/validate", method="POST", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
-            return
+            return pydantic_v1.parse_obj_as(AzureBlobExportStorage, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -322,9 +254,6 @@ class AzureClient:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         container: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
@@ -341,15 +270,6 @@ class AzureClient:
         ----------
         id : int
             A unique integer value identifying this azure blob export storage.
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
 
         project : typing.Optional[int]
             Project ID
@@ -389,9 +309,6 @@ class AzureClient:
             f"api/storages/export/azure/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
                 "project": project,
                 "container": container,
                 "prefix": prefix,
@@ -502,9 +419,6 @@ class AsyncAzureClient:
     async def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         container: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
@@ -521,15 +435,6 @@ class AsyncAzureClient:
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
@@ -566,9 +471,6 @@ class AsyncAzureClient:
             "api/storages/export/azure",
             method="POST",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
                 "project": project,
                 "container": container,
                 "prefix": prefix,
@@ -586,58 +488,19 @@ class AsyncAzureClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobExportStorage:
         """
         Validate a specific Azure export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        AzureBlobExportStorage
+
 
         Examples
         --------
@@ -649,24 +512,10 @@ class AsyncAzureClient:
         await client.export_storage.azure.validate()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/export/azure/validate",
-            method="POST",
-            json={
-                "id": id,
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "api/storages/export/azure/validate", method="POST", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
-            return
+            return pydantic_v1.parse_obj_as(AzureBlobExportStorage, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -758,9 +607,6 @@ class AsyncAzureClient:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         container: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
@@ -777,15 +623,6 @@ class AsyncAzureClient:
         ----------
         id : int
             A unique integer value identifying this azure blob export storage.
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
 
         project : typing.Optional[int]
             Project ID
@@ -825,9 +662,6 @@ class AsyncAzureClient:
             f"api/storages/export/azure/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
                 "project": project,
                 "container": container,
                 "prefix": prefix,

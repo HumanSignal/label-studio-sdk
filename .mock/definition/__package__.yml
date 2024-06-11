@@ -1687,7 +1687,7 @@ types:
         type: optional<datetime>
         docs: Completion time of the task
       file_upload:
-        type: optional<integer>
+        type: optional<string>
         docs: File upload ID for this task
       storage_filename:
         type: optional<string>

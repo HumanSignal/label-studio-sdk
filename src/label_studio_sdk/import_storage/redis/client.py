@@ -66,15 +66,13 @@ class RedisClient:
     def create(
         self,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
         port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisCreateResponse:
         """
@@ -86,18 +84,6 @@ class RedisClient:
 
         Parameters
         ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
@@ -112,6 +98,12 @@ class RedisClient:
 
         password : typing.Optional[str]
             Server Password (optional)
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -134,15 +126,13 @@ class RedisClient:
             "api/storages/redis/",
             method="POST",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
-                "description": description,
                 "project": project,
                 "path": path,
                 "host": host,
                 "port": port,
                 "password": password,
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
             },
             request_options=request_options,
             omit=OMIT,
@@ -155,62 +145,19 @@ class RedisClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
-        host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
-        password: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
         Validate a specific Redis import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Storage prefix (optional)
-
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
-        port : typing.Optional[str]
-            Server Port (optional)
-
-        password : typing.Optional[str]
-            Server Password (optional)
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        RedisImportStorage
+
 
         Examples
         --------
@@ -222,25 +169,10 @@ class RedisClient:
         client.import_storage.redis.validate()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/redis/validate",
-            method="POST",
-            json={
-                "id": id,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
-                "description": description,
-                "project": project,
-                "path": path,
-                "host": host,
-                "port": port,
-                "password": password,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "api/storages/redis/validate", method="POST", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
-            return
+            return pydantic_v1.parse_obj_as(RedisImportStorage, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -334,15 +266,13 @@ class RedisClient:
         self,
         id: int,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
         port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisUpdateResponse:
         """
@@ -354,18 +284,6 @@ class RedisClient:
         ----------
         id : int
             A unique integer value identifying this redis import storage.
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
 
         project : typing.Optional[int]
             Project ID
@@ -381,6 +299,12 @@ class RedisClient:
 
         password : typing.Optional[str]
             Server Password (optional)
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -405,15 +329,13 @@ class RedisClient:
             f"api/storages/redis/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
-                "description": description,
                 "project": project,
                 "path": path,
                 "host": host,
                 "port": port,
                 "password": password,
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
             },
             request_options=request_options,
             omit=OMIT,
@@ -520,15 +442,13 @@ class AsyncRedisClient:
     async def create(
         self,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
         port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisCreateResponse:
         """
@@ -540,18 +460,6 @@ class AsyncRedisClient:
 
         Parameters
         ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
         project : typing.Optional[int]
             Project ID
 
@@ -566,6 +474,12 @@ class AsyncRedisClient:
 
         password : typing.Optional[str]
             Server Password (optional)
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -588,15 +502,13 @@ class AsyncRedisClient:
             "api/storages/redis/",
             method="POST",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
-                "description": description,
                 "project": project,
                 "path": path,
                 "host": host,
                 "port": port,
                 "password": password,
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
             },
             request_options=request_options,
             omit=OMIT,
@@ -609,62 +521,19 @@ class AsyncRedisClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
-        host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
-        password: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> RedisImportStorage:
         """
         Validate a specific Redis import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Storage prefix (optional)
-
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
-        port : typing.Optional[str]
-            Server Port (optional)
-
-        password : typing.Optional[str]
-            Server Password (optional)
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        RedisImportStorage
+
 
         Examples
         --------
@@ -676,25 +545,10 @@ class AsyncRedisClient:
         await client.import_storage.redis.validate()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/redis/validate",
-            method="POST",
-            json={
-                "id": id,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
-                "description": description,
-                "project": project,
-                "path": path,
-                "host": host,
-                "port": port,
-                "password": password,
-            },
-            request_options=request_options,
-            omit=OMIT,
+            "api/storages/redis/validate", method="POST", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
-            return
+            return pydantic_v1.parse_obj_as(RedisImportStorage, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -788,15 +642,13 @@ class AsyncRedisClient:
         self,
         id: int,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
         port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisUpdateResponse:
         """
@@ -808,18 +660,6 @@ class AsyncRedisClient:
         ----------
         id : int
             A unique integer value identifying this redis import storage.
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
 
         project : typing.Optional[int]
             Project ID
@@ -835,6 +675,12 @@ class AsyncRedisClient:
 
         password : typing.Optional[str]
             Server Password (optional)
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -859,15 +705,13 @@ class AsyncRedisClient:
             f"api/storages/redis/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "title": title,
-                "description": description,
                 "project": project,
                 "path": path,
                 "host": host,
                 "port": port,
                 "password": password,
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
             },
             request_options=request_options,
             omit=OMIT,

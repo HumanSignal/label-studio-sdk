@@ -88,31 +88,6 @@ service:
         name: GcsCreateRequest
         body:
           properties:
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for direct download
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
             project:
               type: optional<integer>
               docs: Project ID
@@ -122,15 +97,24 @@ service:
             prefix:
               type: optional<string>
               docs: GCS bucket prefix
+            regex_filter:
+              type: optional<string>
+              docs: Cloud storage regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
             google_application_credentials:
               type: optional<string>
-              docs: >-
-                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-                official Google Cloud Authentication documentation for more
-                details.
+              docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
             google_project_id:
               type: optional<string>
               docs: Google project ID
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for direct download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
       response:
         docs: ''
         type: GcsCreateResponse
@@ -138,17 +122,15 @@ service:
         - request: {}
           response:
             body:
-              regex_filter: regex_filter
-              use_blob_urls: true
-              presign: true
-              presign_ttl: 1
-              title: title
-              description: description
               project: 1
               bucket: bucket
               prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               google_application_credentials: google_application_credentials
               google_project_id: google_project_id
+              presign: true
+              presign_ttl: 1
       audiences:
         - public
     validate:
@@ -161,58 +143,35 @@ service:
         ensure that the storage configuration settings are correct and
         operational before attempting to import data.
       display-name: Validate import storage
-      request:
-        name: GcsValidateRequest
-        body:
-          properties:
-            id:
-              type: optional<integer>
-              docs: Storage ID. If set, storage with specified ID will be updated
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for direct download
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            bucket:
-              type: optional<string>
-              docs: GCS bucket name
-            prefix:
-              type: optional<string>
-              docs: GCS bucket prefix
-            google_application_credentials:
-              type: optional<string>
-              docs: >-
-                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-                official Google Cloud Authentication documentation for more
-                details.
-            google_project_id:
-              type: optional<string>
-              docs: Google project ID
+      response:
+        docs: ''
+        type: root.GcsImportStorage
       examples:
-        - request: {}
+        - response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              bucket: bucket
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                meta:
+                  key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              project: 1
       audiences:
         - public
     get:
@@ -320,31 +279,6 @@ service:
         name: GcsUpdateRequest
         body:
           properties:
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for direct download
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
             project:
               type: optional<integer>
               docs: Project ID
@@ -354,15 +288,24 @@ service:
             prefix:
               type: optional<string>
               docs: GCS bucket prefix
+            regex_filter:
+              type: optional<string>
+              docs: Cloud storage regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
             google_application_credentials:
               type: optional<string>
-              docs: >-
-                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-                official Google Cloud Authentication documentation for more
-                details.
+              docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
             google_project_id:
               type: optional<string>
               docs: Google project ID
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for direct download
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
       response:
         docs: ''
         type: GcsUpdateResponse
@@ -372,17 +315,15 @@ service:
           request: {}
           response:
             body:
-              regex_filter: regex_filter
-              use_blob_urls: true
-              presign: true
-              presign_ttl: 1
-              title: title
-              description: description
               project: 1
               bucket: bucket
               prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               google_application_credentials: google_application_credentials
               google_project_id: google_project_id
+              presign: true
+              presign_ttl: 1
       audiences:
         - public
     sync:
@@ -446,31 +387,6 @@ service:
 types:
   GcsCreateResponse:
     properties:
-      regex_filter:
-        type: optional<string>
-        docs: >-
-          Cloud storage regex for filtering objects. You must specify it
-          otherwise no objects will be imported.
-      use_blob_urls:
-        type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          bucket contains images, you can use this option to generate URLs for
-          these images. If set to False, it will read the content of the file
-          and load it into Label Studio.
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for direct download
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in minutes
-        default: 1
-      title:
-        type: optional<string>
-        docs: Storage title
-      description:
-        type: optional<string>
-        docs: Storage description
       project:
         type: optional<integer>
         docs: Project ID
@@ -480,41 +396,26 @@ types:
       prefix:
         type: optional<string>
         docs: GCS bucket prefix
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
       google_application_credentials:
         type: optional<string>
-        docs: >-
-          The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-          official Google Cloud Authentication documentation for more details.
+        docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
       google_project_id:
         type: optional<string>
         docs: Google project ID
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for direct download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes
   GcsUpdateResponse:
     properties:
-      regex_filter:
-        type: optional<string>
-        docs: >-
-          Cloud storage regex for filtering objects. You must specify it
-          otherwise no objects will be imported.
-      use_blob_urls:
-        type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          bucket contains images, you can use this option to generate URLs for
-          these images. If set to False, it will read the content of the file
-          and load it into Label Studio.
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for direct download
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in minutes
-        default: 1
-      title:
-        type: optional<string>
-        docs: Storage title
-      description:
-        type: optional<string>
-        docs: Storage description
       project:
         type: optional<integer>
         docs: Project ID
@@ -524,11 +425,21 @@ types:
       prefix:
         type: optional<string>
         docs: GCS bucket prefix
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
       google_application_credentials:
         type: optional<string>
-        docs: >-
-          The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-          official Google Cloud Authentication documentation for more details.
+        docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
       google_project_id:
         type: optional<string>
         docs: Google project ID
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for direct download
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes

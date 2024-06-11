@@ -78,28 +78,18 @@ service:
         name: LocalCreateRequest
         body:
           properties:
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
             project:
               type: optional<integer>
               docs: Project ID
             path:
               type: optional<string>
-              docs: Path to local directory
+              docs: Local path
             regex_filter:
               type: optional<string>
               docs: Regex for filtering objects
             use_blob_urls:
               type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your directory contains images, you can use this option to
-                generate URLs for these images. If set to False, it will read
-                the content of the file and load it into Label Studio.
+              docs: Interpret objects as BLOBs and generate URLs
       response:
         docs: ''
         type: LocalCreateResponse
@@ -107,8 +97,6 @@ service:
         - request: {}
           response:
             body:
-              title: title
-              description: description
               project: 1
               path: path
               regex_filter: regex_filter
@@ -125,37 +113,31 @@ service:
         to ensure that the storage configuration settings are correct and
         operational before attempting to export data.
       display-name: Validate export storage
-      request:
-        name: LocalValidateRequest
-        body:
-          properties:
-            id:
-              type: optional<integer>
-              docs: Storage ID. If set, storage with specified ID will be updated
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            path:
-              type: optional<string>
-              docs: Path to local directory
-            regex_filter:
-              type: optional<string>
-              docs: Regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your directory contains images, you can use this option to
-                generate URLs for these images. If set to False, it will read
-                the content of the file and load it into Label Studio.
+      response:
+        docs: ''
+        type: root.LocalFilesExportStorage
       examples:
-        - request: {}
+        - response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              path: path
+              regex_filter: regex_filter
+              use_blob_urls: true
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                meta:
+                  key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              can_delete_objects: true
+              project: 1
       audiences:
         - public
     get:
@@ -253,28 +235,18 @@ service:
         name: LocalUpdateRequest
         body:
           properties:
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
             project:
               type: optional<integer>
               docs: Project ID
             path:
               type: optional<string>
-              docs: Path to local directory
+              docs: Local path
             regex_filter:
               type: optional<string>
               docs: Regex for filtering objects
             use_blob_urls:
               type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your directory contains images, you can use this option to
-                generate URLs for these images. If set to False, it will read
-                the content of the file and load it into Label Studio.
+              docs: Interpret objects as BLOBs and generate URLs
       response:
         docs: ''
         type: LocalUpdateResponse
@@ -284,8 +256,6 @@ service:
           request: {}
           response:
             body:
-              title: title
-              description: description
               project: 1
               path: path
               regex_filter: regex_filter
@@ -348,49 +318,29 @@ service:
 types:
   LocalCreateResponse:
     properties:
-      title:
-        type: optional<string>
-        docs: Storage title
-      description:
-        type: optional<string>
-        docs: Storage description
       project:
         type: optional<integer>
         docs: Project ID
       path:
         type: optional<string>
-        docs: Path to local directory
+        docs: Local path
       regex_filter:
         type: optional<string>
         docs: Regex for filtering objects
       use_blob_urls:
         type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          directory contains images, you can use this option to generate URLs
-          for these images. If set to False, it will read the content of the
-          file and load it into Label Studio.
+        docs: Interpret objects as BLOBs and generate URLs
   LocalUpdateResponse:
     properties:
-      title:
-        type: optional<string>
-        docs: Storage title
-      description:
-        type: optional<string>
-        docs: Storage description
       project:
         type: optional<integer>
         docs: Project ID
       path:
         type: optional<string>
-        docs: Path to local directory
+        docs: Local path
       regex_filter:
         type: optional<string>
         docs: Regex for filtering objects
       use_blob_urls:
         type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          directory contains images, you can use this option to generate URLs
-          for these images. If set to False, it will read the content of the
-          file and load it into Label Studio.
+        docs: Interpret objects as BLOBs and generate URLs

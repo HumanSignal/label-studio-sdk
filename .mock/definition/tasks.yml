@@ -199,7 +199,7 @@ service:
                   total_annotations: 1
                   total_predictions: 1
                   completed_at: '2024-01-15T09:30:00Z'
-                  file_upload: 1
+                  file_upload: file_upload
                   storage_filename: storage_filename
                   avg_lead_time: 1.1
                   draft_exists: true
