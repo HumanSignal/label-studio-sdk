@@ -73,18 +73,6 @@ from . import (
     webhooks,
 )
 from ._legacy import Client
-from .actions import (
-    ActionsCreateRequestFilters,
-    ActionsCreateRequestFiltersConjunction,
-    ActionsCreateRequestFiltersItemsItem,
-    ActionsCreateRequestFiltersItemsItemFilter,
-    ActionsCreateRequestFiltersItemsItemOperator,
-    ActionsCreateRequestId,
-    ActionsCreateRequestOrderingItem,
-    ActionsCreateRequestSelectedItems,
-    ActionsCreateRequestSelectedItemsExcluded,
-    ActionsCreateRequestSelectedItemsIncluded,
-)
 from .environment import LabelStudioEnvironment
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
@@ -97,12 +85,7 @@ from .ml import (
     MlUpdateResponseAuthMethod,
 )
 from .projects import ProjectsCreateResponse, ProjectsImportTasksResponse, ProjectsListResponse
-from .tasks import (
-    TasksDeleteAllTasksResponse,
-    TasksDeleteAllTasksResponseTasksItem,
-    TasksListRequestFields,
-    TasksListResponse,
-)
+from .tasks import TasksListRequestFields, TasksListResponse
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
 from .version import __version__
 from .views import (
@@ -110,30 +93,18 @@ from .views import (
     ViewsCreateRequestDataFilters,
     ViewsCreateRequestDataFiltersConjunction,
     ViewsCreateRequestDataFiltersItemsItem,
-    ViewsCreateRequestDataFiltersItemsItemFilter,
-    ViewsCreateRequestDataFiltersItemsItemOperator,
     ViewsCreateRequestDataOrderingItem,
+    ViewsCreateRequestDataOrderingItemDirection,
     ViewsUpdateRequestData,
     ViewsUpdateRequestDataFilters,
     ViewsUpdateRequestDataFiltersConjunction,
     ViewsUpdateRequestDataFiltersItemsItem,
-    ViewsUpdateRequestDataFiltersItemsItemFilter,
-    ViewsUpdateRequestDataFiltersItemsItemOperator,
     ViewsUpdateRequestDataOrderingItem,
+    ViewsUpdateRequestDataOrderingItemDirection,
 )
 from .webhooks import WebhooksUpdateRequestActionsItem
 
 __all__ = [
-    "ActionsCreateRequestFilters",
-    "ActionsCreateRequestFiltersConjunction",
-    "ActionsCreateRequestFiltersItemsItem",
-    "ActionsCreateRequestFiltersItemsItemFilter",
-    "ActionsCreateRequestFiltersItemsItemOperator",
-    "ActionsCreateRequestId",
-    "ActionsCreateRequestOrderingItem",
-    "ActionsCreateRequestSelectedItems",
-    "ActionsCreateRequestSelectedItemsExcluded",
-    "ActionsCreateRequestSelectedItemsIncluded",
     "Annotation",
     "AnnotationFilterOptions",
     "AnnotationLastAction",
@@ -198,8 +169,6 @@ __all__ = [
     "SerializationOptions",
     "Task",
     "TaskFilterOptions",
-    "TasksDeleteAllTasksResponse",
-    "TasksDeleteAllTasksResponseTasksItem",
     "TasksListRequestFields",
     "TasksListResponse",
     "UserSimple",
@@ -210,16 +179,14 @@ __all__ = [
     "ViewsCreateRequestDataFilters",
     "ViewsCreateRequestDataFiltersConjunction",
     "ViewsCreateRequestDataFiltersItemsItem",
-    "ViewsCreateRequestDataFiltersItemsItemFilter",
-    "ViewsCreateRequestDataFiltersItemsItemOperator",
     "ViewsCreateRequestDataOrderingItem",
+    "ViewsCreateRequestDataOrderingItemDirection",
     "ViewsUpdateRequestData",
     "ViewsUpdateRequestDataFilters",
     "ViewsUpdateRequestDataFiltersConjunction",
     "ViewsUpdateRequestDataFiltersItemsItem",
-    "ViewsUpdateRequestDataFiltersItemsItemFilter",
-    "ViewsUpdateRequestDataFiltersItemsItemOperator",
     "ViewsUpdateRequestDataOrderingItem",
+    "ViewsUpdateRequestDataOrderingItemDirection",
     "Webhook",
     "WebhookActionsItem",
     "WebhookSerializerForUpdate",

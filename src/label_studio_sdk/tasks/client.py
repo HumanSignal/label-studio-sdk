@@ -12,7 +12,6 @@ from ..core.request_options import RequestOptions
 from ..types.base_task import BaseTask
 from ..types.project_import import ProjectImport
 from ..types.task import Task
-from .types.tasks_delete_all_tasks_response import TasksDeleteAllTasksResponse
 from .types.tasks_list_request_fields import TasksListRequestFields
 from .types.tasks_list_response import TasksListResponse
 
@@ -76,9 +75,7 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_all_tasks(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> TasksDeleteAllTasksResponse:
+    def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete all tasks from a specific project.
 
@@ -94,8 +91,7 @@ class TasksClient:
 
         Returns
         -------
-        TasksDeleteAllTasksResponse
-            List of deleted task IDs
+        None
 
         Examples
         --------
@@ -112,7 +108,7 @@ class TasksClient:
             f"api/projects/{jsonable_encoder(id)}/tasks/", method="DELETE", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(TasksDeleteAllTasksResponse, _response.json())  # type: ignore
+            return
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -167,7 +163,7 @@ class TasksClient:
             Specify which fields to include in the response
 
         query : typing.Optional[str]
-            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check Data Manager > Create View for more details about filters, selectedItems and ordering.
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`
 
             - **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/> Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
             - **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/> Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
@@ -191,6 +187,7 @@ class TasksClient:
         )
         client.tasks.list()
         """
+        page = page or 1
         _response = self._client_wrapper.httpx_client.request(
             "api/tasks/",
             method="GET",
@@ -211,7 +208,7 @@ class TasksClient:
             _parsed_response = pydantic_v1.parse_obj_as(TasksListResponse, _response.json())  # type: ignore
             _has_next = True
             _get_next = lambda: self.list(
-                page=page + 1 if page is not None else 1,
+                page=page + 1,
                 page_size=page_size,
                 view=view,
                 project=project,
@@ -486,9 +483,7 @@ class AsyncTasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_all_tasks(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> TasksDeleteAllTasksResponse:
+    async def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete all tasks from a specific project.
 
@@ -504,8 +499,7 @@ class AsyncTasksClient:
 
         Returns
         -------
-        TasksDeleteAllTasksResponse
-            List of deleted task IDs
+        None
 
         Examples
         --------
@@ -522,7 +516,7 @@ class AsyncTasksClient:
             f"api/projects/{jsonable_encoder(id)}/tasks/", method="DELETE", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(TasksDeleteAllTasksResponse, _response.json())  # type: ignore
+            return
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -577,7 +571,7 @@ class AsyncTasksClient:
             Specify which fields to include in the response
 
         query : typing.Optional[str]
-            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check Data Manager > Create View for more details about filters, selectedItems and ordering.
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`
 
             - **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/> Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
             - **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/> Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
@@ -601,6 +595,7 @@ class AsyncTasksClient:
         )
         await client.tasks.list()
         """
+        page = page or 1
         _response = await self._client_wrapper.httpx_client.request(
             "api/tasks/",
             method="GET",
@@ -621,7 +616,7 @@ class AsyncTasksClient:
             _parsed_response = pydantic_v1.parse_obj_as(TasksListResponse, _response.json())  # type: ignore
             _has_next = True
             _get_next = lambda: self.list(
-                page=page + 1 if page is not None else 1,
+                page=page + 1,
                 page_size=page_size,
                 view=view,
                 project=project,

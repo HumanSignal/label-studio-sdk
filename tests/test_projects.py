@@ -9,7 +9,7 @@ from .utilities import validate_response
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "title": "My project",
         "description": "My first project",
         "label_config": "<View>[...]</View>",
@@ -49,7 +49,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "title": "My project",
         "description": "My first project",
@@ -160,7 +160,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "title": "title",
         "description": "description",
@@ -264,7 +264,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "task_count": 1,
         "annotation_count": 1,
         "predictions_count": 1,
@@ -292,7 +292,7 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
 
 
 async def test_validate_config(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {"label_config": "label_config"}
+    expected_response: typing.Any = {"label_config": "label_config"}
     expected_types: typing.Any = {"label_config": None}
     response = client.projects.validate_config(id=1, request=ProjectLabelConfig(label_config="label_config"))
     validate_response(response, expected_response, expected_types)

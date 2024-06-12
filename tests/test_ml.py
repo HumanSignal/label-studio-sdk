@@ -8,7 +8,7 @@ from .utilities import validate_response
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = [
+    expected_response: typing.Any = [
         {
             "id": 1,
             "state": "CO",
@@ -65,7 +65,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "url": "url",
         "project": 1,
         "is_interactive": True,
@@ -97,7 +97,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "state": "CO",
         "readable_state": "readable_state",
@@ -154,7 +154,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "url": "url",
         "project": 1,
         "is_interactive": True,

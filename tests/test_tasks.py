@@ -8,7 +8,7 @@ from .utilities import validate_response
 
 
 async def test_create_many_status(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "preannotated_from_fields": {"preannotated_from_fields": {"key": "value"}},
         "commit_to_project": True,
@@ -64,17 +64,14 @@ async def test_create_many_status(client: LabelStudio, async_client: AsyncLabelS
 
 
 async def test_delete_all_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {"tasks": [{"id": 1}]}
-    expected_types: typing.Any = {"tasks": ("list", {0: {"id": "integer"}})}
-    response = client.tasks.delete_all_tasks(id=1)
-    validate_response(response, expected_response, expected_types)
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert client.tasks.delete_all_tasks(id=1) is None  # type: ignore[func-returns-value]
 
-    async_response = await async_client.tasks.delete_all_tasks(id=1)
-    validate_response(async_response, expected_response, expected_types)
+    assert await async_client.tasks.delete_all_tasks(id=1) is None  # type: ignore[func-returns-value]
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "data": {"image": "https://example.com/image.jpg", "text": "Hello, AI!"},
         "meta": {"meta": {"key": "value"}},
@@ -124,7 +121,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "data": {"image": "https://example.com/image.jpg", "text": "Hello, AI!"},
         "meta": {"meta": {"key": "value"}},
@@ -179,7 +176,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "data": {"image": "https://example.com/image.jpg", "text": "Hello, AI!"},
         "meta": {"meta": {"key": "value"}},

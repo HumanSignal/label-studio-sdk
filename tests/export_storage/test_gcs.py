@@ -8,7 +8,7 @@ from ..utilities import validate_response
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = [
+    expected_response: typing.Any = [
         {
             "id": 1,
             "type": "type",
@@ -67,7 +67,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "can_delete_objects": True,
         "title": "title",
         "description": "description",
@@ -102,7 +102,7 @@ async def test_validate(client: LabelStudio, async_client: AsyncLabelStudio) -> 
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "type": "type",
         "synchronizable": True,
@@ -161,7 +161,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "can_delete_objects": True,
         "title": "title",
         "description": "description",
@@ -189,7 +189,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_sync(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "type": "type",
         "synchronizable": True,

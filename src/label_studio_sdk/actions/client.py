@@ -6,13 +6,6 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from .types.actions_create_request_filters import ActionsCreateRequestFilters
-from .types.actions_create_request_id import ActionsCreateRequestId
-from .types.actions_create_request_ordering_item import ActionsCreateRequestOrderingItem
-from .types.actions_create_request_selected_items import ActionsCreateRequestSelectedItems
-
-# this is used as the default value for optional parameters
-OMIT = typing.cast(typing.Any, ...)
 
 
 class ActionsClient:
@@ -52,40 +45,12 @@ class ActionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create(
-        self,
-        *,
-        id: typing.Optional[ActionsCreateRequestId] = None,
-        project: typing.Optional[int] = None,
-        view: typing.Optional[int] = None,
-        filters: typing.Optional[ActionsCreateRequestFilters] = OMIT,
-        selected_items: typing.Optional[ActionsCreateRequestSelectedItems] = OMIT,
-        ordering: typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Perform a Data Manager action with the selected tasks and filters.
+        Perform an action with the selected items from a specific view.
 
         Parameters
         ----------
-        id : typing.Optional[ActionsCreateRequestId]
-            Action name ID, the full list of actions can be retrieved with a GET request
-
-        project : typing.Optional[int]
-            Project ID
-
-        view : typing.Optional[int]
-            View ID (optional, it has higher priority than filters, selectedItems and ordering from the request body payload)
-
-        filters : typing.Optional[ActionsCreateRequestFilters]
-            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-
-        selected_items : typing.Optional[ActionsCreateRequestSelectedItems]
-            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-
-        ordering : typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]]
-            List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -103,12 +68,7 @@ class ActionsClient:
         client.actions.create()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/dm/actions/",
-            method="POST",
-            params={"id": id, "project": project, "view": view},
-            json={"filters": filters, "selectedItems": selected_items, "ordering": ordering},
-            request_options=request_options,
-            omit=OMIT,
+            "api/dm/actions/", method="POST", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
             return
@@ -156,40 +116,12 @@ class AsyncActionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create(
-        self,
-        *,
-        id: typing.Optional[ActionsCreateRequestId] = None,
-        project: typing.Optional[int] = None,
-        view: typing.Optional[int] = None,
-        filters: typing.Optional[ActionsCreateRequestFilters] = OMIT,
-        selected_items: typing.Optional[ActionsCreateRequestSelectedItems] = OMIT,
-        ordering: typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Perform a Data Manager action with the selected tasks and filters.
+        Perform an action with the selected items from a specific view.
 
         Parameters
         ----------
-        id : typing.Optional[ActionsCreateRequestId]
-            Action name ID, the full list of actions can be retrieved with a GET request
-
-        project : typing.Optional[int]
-            Project ID
-
-        view : typing.Optional[int]
-            View ID (optional, it has higher priority than filters, selectedItems and ordering from the request body payload)
-
-        filters : typing.Optional[ActionsCreateRequestFilters]
-            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-
-        selected_items : typing.Optional[ActionsCreateRequestSelectedItems]
-            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-
-        ordering : typing.Optional[typing.Sequence[ActionsCreateRequestOrderingItem]]
-            List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -207,12 +139,7 @@ class AsyncActionsClient:
         await client.actions.create()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/dm/actions/",
-            method="POST",
-            params={"id": id, "project": project, "view": view},
-            json={"filters": filters, "selectedItems": selected_items, "ordering": ordering},
-            request_options=request_options,
-            omit=OMIT,
+            "api/dm/actions/", method="POST", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
             return
