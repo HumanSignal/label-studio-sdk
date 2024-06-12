@@ -29,26 +29,6 @@ The Label Studio Python Library provides convenient access to the Label Studio A
 
 <!-- Outline -->
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Examples](#examples)
-  - [Get all projects](#get-all-projects)
-  - [Create a new project](#create-a-new-project)
-  - [Get project by ID](#get-project-by-id)
-  - [Update project](#update-project)
-  - [Delete project](#delete-project)
-  - [Get tasks with annotations and predictions](#get-tasks-with-annotations-and-predictions)
-  - [Get task by ID](#get-task-by-id)
-  - [Get all annotations for a task](#get-all-annotations-for-a-task)
-  - [Create a new task](#create-a-new-task)
-  - [Import batch tasks](#import-batch-tasks)
-  - [Update task](#update-task)
-  - [Delete task](#delete-task)
-  - [Create prediction](#create-prediction)
-  - [Update prediction](#update-prediction)
-  - [Delete prediction](#delete-prediction)
-  - [Async client](#async-client)
-
 
 # Documentation
 Explore the Label Studio API documentation [here](https://api.labelstud.io/).
@@ -72,6 +52,8 @@ ls = LabelStudio(
 ```
 
 # Examples
+
+Check more examples [here](https://api.labelstud.io/).
 
 ## Create a new project
 
