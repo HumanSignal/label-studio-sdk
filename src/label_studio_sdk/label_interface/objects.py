@@ -1,7 +1,7 @@
 from typing import Type, Dict, Optional, List, Tuple, Any, Union
 from pydantic import BaseModel, Field, confloat
 
-from label_studio_sdk.label_interface.region import Region
+from .region import Region
 
 
 def serialize_regions(result):
