@@ -29,7 +29,7 @@ from .control_tags import (
 )
 from .object_tags import ObjectTag
 from .label_tags import LabelTag
-from label_studio_sdk._legacy.objects import AnnotationValue, TaskValue, PredictionValue
+from .objects import AnnotationValue, TaskValue, PredictionValue
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
