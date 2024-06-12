@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "label-studio-sdk"
-version = "1.0.1.dev"
+version = "0.0.121"
 description = ""
 readme = "README.md"
 authors = []
@@ -48,7 +48,7 @@ ujson = ">=5.8.0"
 xmljson = "0.2.1"
 
 [tool.poetry.dev-dependencies]
-mypy = "1.9.0"
+mypy = "1.0.1"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"

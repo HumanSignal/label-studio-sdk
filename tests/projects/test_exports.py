@@ -9,7 +9,7 @@ from ..utilities import validate_response
 
 
 async def test_list_formats(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = ["string"]
+    expected_response: typing.Any = ["string"]
     expected_types: typing.Any = ("list", {0: None})
     response = client.projects.exports.list_formats(id=1)
     validate_response(response, expected_response, expected_types)
@@ -19,7 +19,7 @@ async def test_list_formats(client: LabelStudio, async_client: AsyncLabelStudio)
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = [
+    expected_response: typing.Any = [
         {
             "title": "title",
             "id": 1,
@@ -62,7 +62,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "title": "title",
         "id": 1,
         "created_by": {
@@ -128,7 +128,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "title": "title",
         "id": 1,
         "created_by": {
@@ -171,7 +171,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_convert(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {"export_type": "export_type"}
+    expected_response: typing.Any = {"export_type": "export_type"}
     expected_types: typing.Any = {"export_type": None}
     response = client.projects.exports.convert(
         id=1, export_pk="export_pk", request=ExportConvert(export_type="export_type")

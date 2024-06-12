@@ -66,20 +66,22 @@ class S3Client:
     def create(
         self,
         *,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3CreateResponse:
         """
@@ -93,6 +95,27 @@ class S3Client:
 
         Parameters
         ----------
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
+
+        title : typing.Optional[str]
+            Storage title
+
+        description : typing.Optional[str]
+            Storage description
+
         project : typing.Optional[int]
             Project ID
 
@@ -101,12 +124,6 @@ class S3Client:
 
         prefix : typing.Optional[str]
             S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
 
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
@@ -125,15 +142,6 @@ class S3Client:
 
         s3endpoint : typing.Optional[str]
             S3 Endpoint
-
-        presign : typing.Optional[bool]
-            Presign URLs for download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in seconds
-
-        recursive_scan : typing.Optional[bool]
-            Scan recursively
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -156,20 +164,22 @@ class S3Client:
             "api/storages/s3/",
             method="POST",
             json={
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
+                "title": title,
+                "description": description,
                 "project": project,
                 "bucket": bucket,
                 "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
-                "presign": presign,
-                "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
             },
             request_options=request_options,
             omit=OMIT,
@@ -182,19 +192,90 @@ class S3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
+    def validate(
+        self,
+        *,
+        id: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
         Parameters
         ----------
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
+
+        title : typing.Optional[str]
+            Storage title
+
+        description : typing.Optional[str]
+            Storage description
+
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3ImportStorage
-
+        None
 
         Examples
         --------
@@ -206,10 +287,32 @@ class S3Client:
         client.import_storage.s3.validate()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/s3/validate", method="POST", request_options=request_options
+            "api/storages/s3/validate",
+            method="POST",
+            json={
+                "id": id,
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
+                "title": title,
+                "description": description,
+                "project": project,
+                "bucket": bucket,
+                "prefix": prefix,
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "region_name": region_name,
+                "s3_endpoint": s3endpoint,
+            },
+            request_options=request_options,
+            omit=OMIT,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(S3ImportStorage, _response.json())  # type: ignore
+            return
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -303,20 +406,22 @@ class S3Client:
         self,
         id: int,
         *,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3UpdateResponse:
         """
@@ -329,6 +434,27 @@ class S3Client:
         id : int
             A unique integer value identifying this s3 import storage.
 
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
+
+        title : typing.Optional[str]
+            Storage title
+
+        description : typing.Optional[str]
+            Storage description
+
         project : typing.Optional[int]
             Project ID
 
@@ -337,12 +463,6 @@ class S3Client:
 
         prefix : typing.Optional[str]
             S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
 
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
@@ -361,15 +481,6 @@ class S3Client:
 
         s3endpoint : typing.Optional[str]
             S3 Endpoint
-
-        presign : typing.Optional[bool]
-            Presign URLs for download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in seconds
-
-        recursive_scan : typing.Optional[bool]
-            Scan recursively
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -394,20 +505,22 @@ class S3Client:
             f"api/storages/s3/{jsonable_encoder(id)}",
             method="PATCH",
             json={
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
+                "title": title,
+                "description": description,
                 "project": project,
                 "bucket": bucket,
                 "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
-                "presign": presign,
-                "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
             },
             request_options=request_options,
             omit=OMIT,
@@ -514,20 +627,22 @@ class AsyncS3Client:
     async def create(
         self,
         *,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3CreateResponse:
         """
@@ -541,6 +656,27 @@ class AsyncS3Client:
 
         Parameters
         ----------
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
+
+        title : typing.Optional[str]
+            Storage title
+
+        description : typing.Optional[str]
+            Storage description
+
         project : typing.Optional[int]
             Project ID
 
@@ -549,12 +685,6 @@ class AsyncS3Client:
 
         prefix : typing.Optional[str]
             S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
 
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
@@ -573,15 +703,6 @@ class AsyncS3Client:
 
         s3endpoint : typing.Optional[str]
             S3 Endpoint
-
-        presign : typing.Optional[bool]
-            Presign URLs for download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in seconds
-
-        recursive_scan : typing.Optional[bool]
-            Scan recursively
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -604,20 +725,22 @@ class AsyncS3Client:
             "api/storages/s3/",
             method="POST",
             json={
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
+                "title": title,
+                "description": description,
                 "project": project,
                 "bucket": bucket,
                 "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
-                "presign": presign,
-                "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
             },
             request_options=request_options,
             omit=OMIT,
@@ -630,19 +753,90 @@ class AsyncS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(self, *, request_options: typing.Optional[RequestOptions] = None) -> S3ImportStorage:
+    async def validate(
+        self,
+        *,
+        id: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
         Parameters
         ----------
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
+
+        title : typing.Optional[str]
+            Storage title
+
+        description : typing.Optional[str]
+            Storage description
+
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3ImportStorage
-
+        None
 
         Examples
         --------
@@ -654,10 +848,32 @@ class AsyncS3Client:
         await client.import_storage.s3.validate()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/s3/validate", method="POST", request_options=request_options
+            "api/storages/s3/validate",
+            method="POST",
+            json={
+                "id": id,
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
+                "title": title,
+                "description": description,
+                "project": project,
+                "bucket": bucket,
+                "prefix": prefix,
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "region_name": region_name,
+                "s3_endpoint": s3endpoint,
+            },
+            request_options=request_options,
+            omit=OMIT,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(S3ImportStorage, _response.json())  # type: ignore
+            return
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -751,20 +967,22 @@ class AsyncS3Client:
         self,
         id: int,
         *,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3UpdateResponse:
         """
@@ -777,6 +995,27 @@ class AsyncS3Client:
         id : int
             A unique integer value identifying this s3 import storage.
 
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
+
+        title : typing.Optional[str]
+            Storage title
+
+        description : typing.Optional[str]
+            Storage description
+
         project : typing.Optional[int]
             Project ID
 
@@ -785,12 +1024,6 @@ class AsyncS3Client:
 
         prefix : typing.Optional[str]
             S3 bucket prefix
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
 
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
@@ -809,15 +1042,6 @@ class AsyncS3Client:
 
         s3endpoint : typing.Optional[str]
             S3 Endpoint
-
-        presign : typing.Optional[bool]
-            Presign URLs for download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in seconds
-
-        recursive_scan : typing.Optional[bool]
-            Scan recursively
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -842,20 +1066,22 @@ class AsyncS3Client:
             f"api/storages/s3/{jsonable_encoder(id)}",
             method="PATCH",
             json={
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
+                "title": title,
+                "description": description,
                 "project": project,
                 "bucket": bucket,
                 "prefix": prefix,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
-                "presign": presign,
-                "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
             },
             request_options=request_options,
             omit=OMIT,

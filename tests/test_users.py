@@ -8,7 +8,7 @@ from .utilities import validate_response
 
 
 async def test_reset_token(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {"token": "token"}
+    expected_response: typing.Any = {"token": "token"}
     expected_types: typing.Any = {"token": None}
     response = client.users.reset_token()
     validate_response(response, expected_response, expected_types)
@@ -18,7 +18,7 @@ async def test_reset_token(client: LabelStudio, async_client: AsyncLabelStudio) 
 
 
 async def test_get_token(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {"detail": "detail"}
+    expected_response: typing.Any = {"detail": "detail"}
     expected_types: typing.Any = {"detail": None}
     response = client.users.get_token()
     validate_response(response, expected_response, expected_types)
@@ -28,7 +28,7 @@ async def test_get_token(client: LabelStudio, async_client: AsyncLabelStudio) ->
 
 
 async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "first_name": "first_name",
         "last_name": "last_name",
@@ -62,7 +62,7 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = [
+    expected_response: typing.Any = [
         {
             "id": 1,
             "first_name": "first_name",
@@ -103,7 +103,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "first_name": "first_name",
         "last_name": "last_name",
@@ -137,7 +137,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "first_name": "first_name",
         "last_name": "last_name",
@@ -178,7 +178,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "first_name": "first_name",
         "last_name": "last_name",

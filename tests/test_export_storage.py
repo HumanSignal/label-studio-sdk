@@ -8,7 +8,7 @@ from .utilities import validate_response
 
 
 async def test_list_types(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = [{"name": "name", "title": "title"}]
+    expected_response: typing.Any = [{"name": "name", "title": "title"}]
     expected_types: typing.Any = ("list", {0: {"name": None, "title": None}})
     response = client.export_storage.list_types()
     validate_response(response, expected_response, expected_types)

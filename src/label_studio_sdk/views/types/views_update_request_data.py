@@ -16,12 +16,12 @@ class ViewsUpdateRequestData(pydantic_v1.BaseModel):
 
     filters: typing.Optional[ViewsUpdateRequestDataFilters] = pydantic_v1.Field(default=None)
     """
-    Filters for the view
+    Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
     """
 
     ordering: typing.Optional[typing.List[ViewsUpdateRequestDataOrderingItem]] = pydantic_v1.Field(default=None)
     """
-    Ordering for the view
+    List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
     """
 
     def json(self, **kwargs: typing.Any) -> str:

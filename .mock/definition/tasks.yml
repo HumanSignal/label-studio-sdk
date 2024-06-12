@@ -149,6 +149,34 @@ service:
           include:
             type: optional<string>
             docs: Specify which fields to include in the response
+          query:
+            type: optional<string>
+            docs: >-
+              Additional query to filter tasks. It must be JSON encoded string
+              of dict containing one of the following parameters: `{"filters":
+              ..., "selectedItems": ..., "ordering": ...}`. Check Data Manager >
+              Create View for more details about filters, selectedItems and
+              ordering.
+
+
+              * **filters**: dict with `"conjunction"` string (`"or"` or
+              `"and"`) and list of filters in `"items"` array. Each filter is a
+              dictionary with keys: `"filter"`, `"operator"`, `"type"`,
+              `"value"`. [Read more about available
+              filters](https://labelstud.io/sdk/data_manager.html)<br/>                  
+              Example: `{"conjunction": "or", "items": [{"filter":
+              "filter:tasks:completed_at", "operator": "greater", "type":
+              "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+
+              * **selectedItems**: dictionary with keys: `"all"`, `"included"`,
+              `"excluded"`. If "all" is `false`, `"included"` must be used. If
+              "all" is `true`, `"excluded"` must be used.<br/>                  
+              Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all":
+              true, "excluded": [4, 5]}`
+
+              * **ordering**: list of fields to order by. Currently, ordering is
+              supported by only one parameter. <br/>
+                                 Example: `["completed_at"]`
       response:
         docs: List of Tasks
         type: TasksListResponse
@@ -199,7 +227,7 @@ service:
                   total_annotations: 1
                   total_predictions: 1
                   completed_at: '2024-01-15T09:30:00Z'
-                  file_upload: 1
+                  file_upload: file_upload
                   storage_filename: storage_filename
                   avg_lead_time: 1.1
                   draft_exists: true

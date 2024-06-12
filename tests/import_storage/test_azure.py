@@ -8,7 +8,7 @@ from ..utilities import validate_response
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = [
+    expected_response: typing.Any = [
         {
             "id": 1,
             "type": "type",
@@ -69,27 +69,31 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
+        "regex_filter": "regex_filter",
+        "use_blob_urls": True,
+        "presign": True,
+        "presign_ttl": 1,
+        "title": "title",
+        "description": "description",
         "project": 1,
         "container": "container",
         "prefix": "prefix",
-        "regex_filter": "regex_filter",
-        "use_blob_urls": True,
         "account_name": "account_name",
         "account_key": "account_key",
-        "presign": True,
-        "presign_ttl": 1,
     }
     expected_types: typing.Any = {
+        "regex_filter": None,
+        "use_blob_urls": None,
+        "presign": None,
+        "presign_ttl": "integer",
+        "title": None,
+        "description": None,
         "project": "integer",
         "container": None,
         "prefix": None,
-        "regex_filter": None,
-        "use_blob_urls": None,
         "account_name": None,
         "account_key": None,
-        "presign": None,
-        "presign_ttl": "integer",
     }
     response = client.import_storage.azure.create()
     validate_response(response, expected_response, expected_types)
@@ -99,61 +103,14 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_validate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
-        "id": 1,
-        "type": "type",
-        "synchronizable": True,
-        "presign": True,
-        "container": "container",
-        "prefix": "prefix",
-        "regex_filter": "regex_filter",
-        "use_blob_urls": True,
-        "account_name": "account_name",
-        "account_key": "account_key",
-        "last_sync": "2024-01-15T09:30:00Z",
-        "last_sync_count": 1,
-        "last_sync_job": "last_sync_job",
-        "status": "initialized",
-        "traceback": "traceback",
-        "meta": {"meta": {"key": "value"}},
-        "title": "title",
-        "description": "description",
-        "created_at": "2024-01-15T09:30:00Z",
-        "presign_ttl": 1,
-        "project": 1,
-    }
-    expected_types: typing.Any = {
-        "id": "integer",
-        "type": None,
-        "synchronizable": None,
-        "presign": None,
-        "container": None,
-        "prefix": None,
-        "regex_filter": None,
-        "use_blob_urls": None,
-        "account_name": None,
-        "account_key": None,
-        "last_sync": "datetime",
-        "last_sync_count": "integer",
-        "last_sync_job": None,
-        "status": None,
-        "traceback": None,
-        "meta": ("dict", {0: (None, None)}),
-        "title": None,
-        "description": None,
-        "created_at": "datetime",
-        "presign_ttl": "integer",
-        "project": "integer",
-    }
-    response = client.import_storage.azure.validate()
-    validate_response(response, expected_response, expected_types)
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert client.import_storage.azure.validate() is None  # type: ignore[func-returns-value]
 
-    async_response = await async_client.import_storage.azure.validate()
-    validate_response(async_response, expected_response, expected_types)
+    assert await async_client.import_storage.azure.validate() is None  # type: ignore[func-returns-value]
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "type": "type",
         "synchronizable": True,
@@ -214,27 +171,31 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
+        "regex_filter": "regex_filter",
+        "use_blob_urls": True,
+        "presign": True,
+        "presign_ttl": 1,
+        "title": "title",
+        "description": "description",
         "project": 1,
         "container": "container",
         "prefix": "prefix",
-        "regex_filter": "regex_filter",
-        "use_blob_urls": True,
         "account_name": "account_name",
         "account_key": "account_key",
-        "presign": True,
-        "presign_ttl": 1,
     }
     expected_types: typing.Any = {
+        "regex_filter": None,
+        "use_blob_urls": None,
+        "presign": None,
+        "presign_ttl": "integer",
+        "title": None,
+        "description": None,
         "project": "integer",
         "container": None,
         "prefix": None,
-        "regex_filter": None,
-        "use_blob_urls": None,
         "account_name": None,
         "account_key": None,
-        "presign": None,
-        "presign_ttl": "integer",
     }
     response = client.import_storage.azure.update(id=1)
     validate_response(response, expected_response, expected_types)
@@ -244,7 +205,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_sync(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "type": "type",
         "synchronizable": True,

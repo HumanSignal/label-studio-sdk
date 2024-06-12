@@ -32,6 +32,9 @@ types:
   Annotation:
     properties:
       id: optional<integer>
+      result:
+        type: optional<list<map<string, unknown>>>
+        docs: List of annotation results for the task
       created_username:
         type: optional<string>
         docs: Username string
@@ -46,9 +49,6 @@ types:
         type: optional<string>
         validation:
           minLength: 1
-      result:
-        type: optional<map<string, unknown>>
-        docs: The main value of annotator work - labeling result in JSON format
       was_cancelled:
         type: optional<boolean>
         docs: User skipped the task
@@ -1687,7 +1687,7 @@ types:
         type: optional<datetime>
         docs: Completion time of the task
       file_upload:
-        type: optional<integer>
+        type: optional<string>
         docs: File upload ID for this task
       storage_filename:
         type: optional<string>

@@ -8,7 +8,7 @@ from .utilities import validate_response
 
 
 async def test_create_many_status(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "preannotated_from_fields": {"preannotated_from_fields": {"key": "value"}},
         "commit_to_project": True,
@@ -71,7 +71,7 @@ async def test_delete_all_tasks(client: LabelStudio, async_client: AsyncLabelStu
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "data": {"image": "https://example.com/image.jpg", "text": "Hello, AI!"},
         "meta": {"meta": {"key": "value"}},
@@ -121,7 +121,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "data": {"image": "https://example.com/image.jpg", "text": "Hello, AI!"},
         "meta": {"meta": {"key": "value"}},
@@ -176,7 +176,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response = {
+    expected_response: typing.Any = {
         "id": 1,
         "data": {"image": "https://example.com/image.jpg", "text": "Hello, AI!"},
         "meta": {"meta": {"key": "value"}},

@@ -126,6 +126,7 @@ class TasksClient:
         fields: typing.Optional[TasksListRequestFields] = None,
         review: typing.Optional[bool] = None,
         include: typing.Optional[str] = None,
+        query: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Task]:
         """
@@ -161,6 +162,14 @@ class TasksClient:
         include : typing.Optional[str]
             Specify which fields to include in the response
 
+        query : typing.Optional[str]
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check Data Manager > Create View for more details about filters, selectedItems and ordering.
+
+            - **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/> Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+            - **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/> Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+            - **ordering**: list of fields to order by. Currently, ordering is supported by only one parameter. <br/>
+              Example: `["completed_at"]`
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -178,6 +187,7 @@ class TasksClient:
         )
         client.tasks.list()
         """
+        page = page or 1
         _response = self._client_wrapper.httpx_client.request(
             "api/tasks/",
             method="GET",
@@ -190,6 +200,7 @@ class TasksClient:
                 "fields": fields,
                 "review": review,
                 "include": include,
+                "query": query,
             },
             request_options=request_options,
         )
@@ -197,7 +208,7 @@ class TasksClient:
             _parsed_response = pydantic_v1.parse_obj_as(TasksListResponse, _response.json())  # type: ignore
             _has_next = True
             _get_next = lambda: self.list(
-                page=page + 1 if page is not None else 1,
+                page=page + 1,
                 page_size=page_size,
                 view=view,
                 project=project,
@@ -205,6 +216,7 @@ class TasksClient:
                 fields=fields,
                 review=review,
                 include=include,
+                query=query,
                 request_options=request_options,
             )
             _items = _parsed_response.tasks
@@ -522,6 +534,7 @@ class AsyncTasksClient:
         fields: typing.Optional[TasksListRequestFields] = None,
         review: typing.Optional[bool] = None,
         include: typing.Optional[str] = None,
+        query: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Task]:
         """
@@ -557,6 +570,14 @@ class AsyncTasksClient:
         include : typing.Optional[str]
             Specify which fields to include in the response
 
+        query : typing.Optional[str]
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check Data Manager > Create View for more details about filters, selectedItems and ordering.
+
+            - **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/> Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+            - **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/> Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+            - **ordering**: list of fields to order by. Currently, ordering is supported by only one parameter. <br/>
+              Example: `["completed_at"]`
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -574,6 +595,7 @@ class AsyncTasksClient:
         )
         await client.tasks.list()
         """
+        page = page or 1
         _response = await self._client_wrapper.httpx_client.request(
             "api/tasks/",
             method="GET",
@@ -586,6 +608,7 @@ class AsyncTasksClient:
                 "fields": fields,
                 "review": review,
                 "include": include,
+                "query": query,
             },
             request_options=request_options,
         )
@@ -593,7 +616,7 @@ class AsyncTasksClient:
             _parsed_response = pydantic_v1.parse_obj_as(TasksListResponse, _response.json())  # type: ignore
             _has_next = True
             _get_next = lambda: self.list(
-                page=page + 1 if page is not None else 1,
+                page=page + 1,
                 page_size=page_size,
                 view=view,
                 project=project,
@@ -601,6 +624,7 @@ class AsyncTasksClient:
                 fields=fields,
                 review=review,
                 include=include,
+                query=query,
                 request_options=request_options,
             )
             _items = _parsed_response.tasks

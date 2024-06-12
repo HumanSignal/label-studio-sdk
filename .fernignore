@@ -7,6 +7,9 @@ README.md
 # this directory also includes legacy label_studio_tools/ package
 src/label_studio_sdk/_extensions
 src/label_studio_sdk/label_interface
+src/label_studio_sdk/client.py
+src/label_studio_sdk/tasks/client_ext.py
+src/label_studio_sdk/projects/client_ext.py
 
 # converter
 src/label_studio_sdk/converter

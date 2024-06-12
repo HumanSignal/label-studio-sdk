@@ -82,6 +82,7 @@ class ProjectsClient:
         )
         client.projects.list()
         """
+        page = page or 1
         _response = self._client_wrapper.httpx_client.request(
             "api/projects/",
             method="GET",
@@ -95,7 +96,7 @@ class ProjectsClient:
                 ordering=ordering,
                 ids=ids,
                 title=title,
-                page=page + 1 if page is not None else 1,
+                page=page + 1,
                 page_size=page_size,
                 request_options=request_options,
             )
@@ -597,6 +598,7 @@ class AsyncProjectsClient:
         )
         await client.projects.list()
         """
+        page = page or 1
         _response = await self._client_wrapper.httpx_client.request(
             "api/projects/",
             method="GET",
@@ -610,7 +612,7 @@ class AsyncProjectsClient:
                 ordering=ordering,
                 ids=ids,
                 title=title,
-                page=page + 1 if page is not None else 1,
+                page=page + 1,
                 page_size=page_size,
                 request_options=request_options,
             )
