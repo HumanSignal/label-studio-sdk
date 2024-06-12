@@ -1,5 +1,6 @@
 from .base_client import LabelStudioBase, AsyncLabelStudioBase
 from .tasks.client_ext import TasksClientExt, AsyncTasksClientExt
+from .projects.client_ext import ProjectsClientExt, AsyncProjectsClientExt
 
 
 class LabelStudio(LabelStudioBase):
@@ -10,6 +11,7 @@ class LabelStudio(LabelStudioBase):
         super().__init__(*args, **kwargs)
 
         self.tasks = TasksClientExt(client_wrapper=self._client_wrapper)
+        self.projects = ProjectsClientExt(client_wrapper=self._client_wrapper)
 
 
 class AsyncLabelStudio(AsyncLabelStudioBase):
@@ -20,3 +22,4 @@ class AsyncLabelStudio(AsyncLabelStudioBase):
         super().__init__(*args, **kwargs)
 
         self.tasks = AsyncTasksClientExt(client_wrapper=self._client_wrapper)
+        self.projects = AsyncProjectsClientExt(client_wrapper=self._client_wrapper)

@@ -1,18 +1,19 @@
-from .client import TasksClient, AsyncTasksClient
+from .client import ProjectsClient, AsyncProjectsClient
+
 from label_studio_sdk._extensions.pager_ext import SyncPagerExt, AsyncPagerExt, T
 
 
-class TasksClientExt(TasksClient):
+class ProjectsClientExt(ProjectsClient):
 
     def list(self, **kwargs) -> SyncPagerExt[T]:
         return SyncPagerExt.from_sync_pager(super().list(**kwargs))
 
-    list.__doc__ = TasksClient.list.__doc__
+    list.__doc__ = ProjectsClient.list.__doc__
 
 
-class AsyncTasksClientExt(AsyncTasksClient):
+class AsyncProjectsClientExt(AsyncProjectsClient):
 
     async def list(self, **kwargs):
         return await AsyncPagerExt.from_async_pager(await super().list(**kwargs))
 
-    list.__doc__ = AsyncTasksClient.list.__doc__
+    list.__doc__ = AsyncProjectsClient.list.__doc__
