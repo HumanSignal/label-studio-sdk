@@ -7,7 +7,7 @@
 import pytest
 
 from label_studio_sdk.label_interface import LabelInterface
-from label_studio_sdk._legacy.objects import PredictionValue
+from label_studio_sdk.label_interface.objects import PredictionValue
 
 from . import configs as c
 

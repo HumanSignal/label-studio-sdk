@@ -3,7 +3,7 @@ import pytest
 import xmljson
 import copy
 
-from label_studio_sdk._legacy.objects import PredictionValue
+from label_studio_sdk.label_interface.objects import PredictionValue
 from label_studio_sdk.label_interface import LabelInterface
 from label_studio_sdk.label_interface.object_tags import ImageTag
 from label_studio_sdk.label_interface.control_tags import (
