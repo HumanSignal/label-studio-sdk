@@ -50,6 +50,10 @@ class AsyncPagerExt(AsyncPager, typing.Generic[T]):
 class TasksClientExt(TasksClient):
 
     def list(self, **kwargs) -> SyncPagerExt[T]:
+        # TODO: remove this after page duplication bug is fixed
+        if kwargs.get('page') is None:
+            kwargs['page'] = 1
+
         return SyncPagerExt.from_sync_pager(super().list(**kwargs))
 
     list.__doc__ = TasksClient.list.__doc__
@@ -58,6 +62,10 @@ class TasksClientExt(TasksClient):
 class AsyncTasksClientExt(AsyncTasksClient):
 
     async def list(self, **kwargs):
+        # TODO: remove this after page duplication bug is fixed
+        if kwargs.get('page') is None:
+            kwargs['page'] = 1
+
         return await AsyncPagerExt.from_async_pager(await super().list(**kwargs))
 
     list.__doc__ = AsyncTasksClient.list.__doc__
