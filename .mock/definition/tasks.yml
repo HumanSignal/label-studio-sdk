@@ -154,7 +154,9 @@ service:
             docs: >-
               Additional query to filter tasks. It must be JSON encoded string
               of dict containing one of the following parameters: `{"filters":
-              ..., "selectedItems": ..., "ordering": ...}`
+              ..., "selectedItems": ..., "ordering": ...}`. Check Data Manager >
+              Create View for more details about filters, selectedItems and
+              ordering.
 
 
               * **filters**: dict with `"conjunction"` string (`"or"` or

@@ -2,7 +2,7 @@
 
 import typing
 
-ViewsCreateRequestDataOrderingItem = typing.Union[
+ActionsCreateRequestOrderingItem = typing.Union[
     typing.Literal[
         "tasks:agreement",
         "tasks:annotations_results",

@@ -5,27 +5,29 @@ import typing
 
 from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from .views_update_request_data_filters_items_item_filter import ViewsUpdateRequestDataFiltersItemsItemFilter
+from .views_update_request_data_filters_items_item_operator import ViewsUpdateRequestDataFiltersItemsItemOperator
 
 
 class ViewsUpdateRequestDataFiltersItemsItem(pydantic_v1.BaseModel):
-    filter: typing.Optional[str] = pydantic_v1.Field(default=None)
+    filter: ViewsUpdateRequestDataFiltersItemsItemFilter = pydantic_v1.Field()
     """
-    Field name
-    """
-
-    type: typing.Optional[str] = pydantic_v1.Field(default=None)
-    """
-    Field type
+    Filter identifier, it should start with `filter:tasks:` prefix, e.g. `filter:tasks:agreement`. For `task.data` fields it may look like `filter:tasks:data.field_name`. Possible values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement for annotation results for a specific task (Enterprise only)</li><br><li>`filter:tasks:annotations_results`<br> (String) Annotation results for the tasks</li><br><li>`filter:tasks:annotators`<br> (List) Annotators that completed the task (Community). Can include assigned annotators (Enterprise only). Important note: the filter `type` should be List, but the filter `value` is integer</li><br><li>`filter:tasks:cancelled_annotations`<br> (Number) Number of cancelled or skipped annotations for the task</li><br><li>`filter:tasks:comments`<br> (Number) Number of comments in a task</li><br><li>`filter:tasks:completed_at`<br> (Datetime) Time when a task was fully annotated</li><br><li>`filter:tasks:created_at`<br> (Datetime) Time the task was created at</li><br><li>`filter:tasks:file_upload`<br> (String) Name of the file uploaded to create the tasks</li><br><li>`filter:tasks:ground_truth`<br> (Boolean) Ground truth status of the tasks</li><br><li>`filter:tasks:id`<br> (Number) Task ID</li><br><li>`filter:tasks:inner_id`<br> (Number) Task Inner ID, it starts from 1 for all projects</li><br><li>`filter:tasks:predictions_model_versions`<br> (String) Model version used for the predictions</li><br><li>`filter:tasks:predictions_results`<br> (String) Prediction results for the tasks</li><br><li>`filter:tasks:predictions_score`<br> (Number) Prediction score for the task</li><br><li>`filter:tasks:reviewed`<br> (Boolean) Whether the tasks have been reviewed (Enterprise only)</li><br><li>`filter:tasks:reviewers`<br> (String) Reviewers that reviewed the task, or assigned reviewers (Enterprise only). Important note: the filter `type` should be List, but the filter `value` is integer</li><br><li>`filter:tasks:reviews_accepted`<br> (Number) Number of annotations accepted for a task in review (Enterprise only)</li><br><li>`filter:tasks:reviews_rejected`<br> (Number) Number of annotations rejected for a task in review (Enterprise only)</li><br><li>`filter:tasks:total_annotations`<br> (Number) Total number of annotations on a task</li><br><li>`filter:tasks:total_predictions`<br> (Number) Total number of predictions for the task</li><br><li>`filter:tasks:unresolved_comment_count`<br> (Number) Number of unresolved comments in a task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the task was updated at (e.g. new annotation was created, review added, etc)</li>
     """
 
-    operator: typing.Optional[str] = pydantic_v1.Field(default=None)
+    operator: ViewsUpdateRequestDataFiltersItemsItemOperator = pydantic_v1.Field()
     """
-    Filter operator
+    Filter operator. Possible values:<br><li>`contains`<br> Contains</li><br><li>`ends_with`<br> Ends with</li><br><li>`equal`<br> Equal to</li><br><li>`exists`<br> Exists</li><br><li>`greater`<br> Greater than</li><br><li>`greater_or_equal`<br> Greater than or equal to</li><br><li>`in`<br> Is between min and max values, so the filter `value` should be e.g. `{"min": 1, "max": 7}`</li><br><li>`less`<br> Less than</li><br><li>`less_or_equal`<br> Less than or equal to</li><br><li>`not_contains`<br> Does not contain</li><br><li>`not_equal`<br> Not equal to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is not between min and max values, so the filter `value` should be e.g. `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
     """
 
-    value: typing.Optional[str] = pydantic_v1.Field(default=None)
+    type: str = pydantic_v1.Field()
     """
-    Filter value
+    Type of the filter value. Possible values:<br><li>`Boolean`<br> Boolean</li><br><li>`Datetime`<br> Datetime string in `strftime('%Y-%m-%dT%H:%M:%S.%fZ')` format</li><br><li>`List`<br> List of items</li><br><li>`Number`<br> Float or Integer</li><br><li>`String`<br> String</li><br><li>`Unknown`<br> Unknown is explicitly converted to string format</li>
+    """
+
+    value: str = pydantic_v1.Field()
+    """
+    Value to filter by
     """
 
     def json(self, **kwargs: typing.Any) -> str:
