@@ -5,23 +5,16 @@ import typing
 
 from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from .views_create_request_data_filters_conjunction import ViewsCreateRequestDataFiltersConjunction
-from .views_create_request_data_filters_items_item import ViewsCreateRequestDataFiltersItemsItem
 
 
-class ViewsCreateRequestDataFilters(pydantic_v1.BaseModel):
+class TasksDeleteAllTasksResponseTasksItem(pydantic_v1.BaseModel):
     """
-    Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-    """
-
-    conjunction: ViewsCreateRequestDataFiltersConjunction = pydantic_v1.Field()
-    """
-    Logical conjunction for the filters. This conjunction (either "or" or "and") will be applied to all items in the filters list. It is not possible to combine "or" and "and" within one list of filters. All filters will be either combined with "or" or with "and", but not a mix of both.
+    Task object
     """
 
-    items: typing.List[ViewsCreateRequestDataFiltersItemsItem] = pydantic_v1.Field()
+    id: typing.Optional[int] = pydantic_v1.Field(default=None)
     """
-    List of filter items
+    Task ID
     """
 
     def json(self, **kwargs: typing.Any) -> str:

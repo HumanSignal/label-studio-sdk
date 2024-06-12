@@ -11,17 +11,17 @@ from .views_update_request_data_filters_items_item import ViewsUpdateRequestData
 
 class ViewsUpdateRequestDataFilters(pydantic_v1.BaseModel):
     """
-    Filters for the view
+    Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
     """
 
-    conjunction: typing.Optional[ViewsUpdateRequestDataFiltersConjunction] = pydantic_v1.Field(default=None)
+    conjunction: ViewsUpdateRequestDataFiltersConjunction = pydantic_v1.Field()
     """
-    Type of conjunction
+    Logical conjunction for the filters. This conjunction (either "or" or "and") will be applied to all items in the filters list. It is not possible to combine "or" and "and" within one list of filters. All filters will be either combined with "or" or with "and", but not a mix of both.
     """
 
-    items: typing.Optional[typing.List[ViewsUpdateRequestDataFiltersItemsItem]] = pydantic_v1.Field(default=None)
+    items: typing.List[ViewsUpdateRequestDataFiltersItemsItem] = pydantic_v1.Field()
     """
-    Filter items
+    List of filter items
     """
 
     def json(self, **kwargs: typing.Any) -> str:
