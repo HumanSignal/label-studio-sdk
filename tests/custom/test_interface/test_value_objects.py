@@ -33,7 +33,7 @@ def test_prediction_value():
         ]
     }
     
-    assert p.serialize() == expected
+    assert p.model_dump() == expected
     
 
 def test_prediction_value_relation():
@@ -50,7 +50,7 @@ def test_prediction_value_relation():
 
     # we will pick the last item which should be a relation by default
     # (all relations should be last items in the array)
-    res = p.serialize()
+    res = p.model_dump()
     relation = res.get("result")[-1]
 
     assert relation == [{
