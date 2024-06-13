@@ -23,6 +23,7 @@
 ---
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![pypi](https://img.shields.io/pypi/v/label-studio-sdk.svg)](https://pypi.python.org/pypi/label-studio-sdk)
 
 The Label Studio Python Library provides convenient access to the Label Studio API from applications written in Python.
 <!-- End Title  -->
@@ -38,6 +39,8 @@ Explore the Label Studio API documentation [here](https://api.labelstud.io/).
 
 ```sh
 pip install --upgrade label-studio-sdk
+# or
+poetry add label-studio-sdk
 ```
 
 # Usage
@@ -101,6 +104,43 @@ from label_studio_sdk.client import AsyncLabelStudio
 
 client = AsyncLabelStudio(
     api_key="YOUR_API_KEY",
+)
+```
+
+## Advanced
+
+### Timeouts
+By default, requests time out after 60 seconds. You can configure this with a 
+timeout option at the client or request level.
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+ls = LabelStudio(
+    # All timeouts set to 20 seconds
+    timeout=20.0
+)
+
+ls.projects.create(..., {
+    # Override timeout for a specific method
+    timeout=20.0
+})
+```
+
+### Custom HTTP client
+You can override the httpx client to customize it for your use-case. Some common use-cases 
+include support for proxies and transports.
+
+```python
+import httpx
+
+from label_studio_sdk.client import LabelStudio
+
+ls = LabelStudio(
+    http_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
 )
 ```
 
