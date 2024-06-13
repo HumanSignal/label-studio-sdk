@@ -1,11 +1,10 @@
 from typing import Type, Dict, Optional, List, Tuple, Any, Union
-from pydantic import BaseModel, Field, confloat
+from pydantic import BaseModel, Field, confloat, field_serializer
 
 from .region import Region
 
 
 def serialize_regions(result):
-    """ """
     res = []
     relations = []
     for r in result:
@@ -25,19 +24,13 @@ class PredictionValue(BaseModel):
     model_version: Optional[Any] = None
     score: Optional[float] = 0.00
     result: Optional[List[Union[Dict[str, Any], Region]]]
-    # cluster: Optional[Any] = None
-    # neighbors: Optional[Any] = None
 
     class Config:
         allow_population_by_field_name = True
 
-    def serialize(self):
-        """ """
-        return {
-            "model_version": self.model_version,
-            "score": self.score,
-            "result": serialize_regions(self.result),
-        }
+    @field_serializer('result')
+    def serialize_result(self, result):
+        return serialize_regions(result)
 
 
 class AnnotationValue(BaseModel):
@@ -54,16 +47,9 @@ class AnnotationValue(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
-    def serialize(self):
-        """ """
-        return {
-            "was_cancelled": self.was_cancelled,
-            "ground_truth": self.ground_truth,
-            "lead_time": self.lead_time,
-            "result_count": self.result_count,
-            "completed_by": self.completed_by,
-            "result": serialize_regions(self.result),
-        }
+    @field_serializer('result')
+    def serialize_result(self, result):
+        return serialize_regions(result)
 
 
 class TaskValue(BaseModel):
