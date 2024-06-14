@@ -22,12 +22,12 @@ Any georeferenced raster can be used. For this demo, a georeferenced TIFF image 
 2. Use the included `grab_georeferenced_image.py` with your credentials to download the image in a [UTM coordinate system](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system), where each pixel is a fixed area instead of a fixed fraction of longitude and latitude. This makes the image "square" with respect to the ground.
 3. Export to PNG:
 ```bash
-convert data/e9b9661bcbd97b67f45364aafd82f9d6/response.tiff data/e9b9661bcbd97b67f45364aafd82f9d6/response.png
+convert data/e9b9661bcbd97b67f45364aafd82f9d6/response.tiff data/response.png
 ```
 
 ## Load data into Label Studio
 
-Create a new project and upload `data/e9b9661bcbd97b67f45364aafd82f9d6/response.png` to the project.
+Create a new project and upload `data/response.png` to the project.
 
 Add a label config for image segmentation, slightly modified from the default template:
 
