@@ -1,6 +1,6 @@
 # Mensuration with Label Studio
 
-![screenshot](data/Screenshot\ from\ 2024-06-14\ 09-18-21.png)
+![screenshot](data/Screenshot%20from%202024-06-14%2009-18-21.png)
 
 Label georeferenced images in Label Studio, and use the SDK to perform [mensuration](https://pro.arcgis.com/en/pro-app/latest/arcpy/image-analyst/mensuration-class.htm) (measure real-world distances within the image) using the labels produced.
 
