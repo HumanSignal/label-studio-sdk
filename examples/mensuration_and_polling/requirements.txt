@@ -1,0 +1,4 @@
+label_studio_sdk~=1.0.1
+rasterio~=1.3.10
+sentinelhub~=3.10.2
+Shapely~=2.0.4
