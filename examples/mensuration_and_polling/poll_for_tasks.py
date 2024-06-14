@@ -25,6 +25,7 @@ def poll_for_completed_tasks_new(
                     }
                 ],
             },
+            fields="all",
         )
         yield from tasks
         time.sleep(freq_seconds)
@@ -76,31 +77,42 @@ def perimeter_and_area(source_img_path, annot):
 
 
 if __name__ == "__main__":
-    # new SDK client (version >= 1.0.0)
-    ls = LabelStudio(
-        base_url="http://localhost:8080",
-        api_key="cca56ca8fc0d511a87bbc63f5857b9a7a8f14c23",
-    )
-    # old SDK client (version < 1.0.0)
-    client = Client(
-        url="http://localhost:8080",
-        api_key="cca56ca8fc0d511a87bbc63f5857b9a7a8f14c23"
-    )
-    client.check_connection()
+    url = "http://localhost:8080"
+    api_key = "cca56ca8fc0d511a87bbc63f5857b9a7a8f14c23"
     project_id = 4
-    project = client.get_project(project_id)
     freq_seconds = 1
-    # for task in poll_for_completed_tasks_new(ls, project_id, freq_seconds):
-    for task in poll_for_completed_tasks_old(project, freq_seconds):
-        # assume that the most recent annotation is the one that was updated
-        # can check annot['updated_at'] to confirm
-        annot = task["annotations"][0]
-        # currently, we only have one source image, but in general need to build a mapping between the task image (PNG) and the source image (TIFF)
-        perimeter, area = perimeter_and_area(
-            "data/e9b9661bcbd97b67f45364aafd82f9d6/response.tiff", annot
-        )
-        project.update_task(
-            task_id=task["id"],
-            data={**task["data"], "label_perimeter": perimeter, "label_area": area},
-        )
-        print("updated task", task["id"])
+    use_new_sdk = False
+    if use_new_sdk:
+        # new SDK client (version >= 1.0.0)
+        ls = LabelStudio(base_url=url, api_key=api_key)
+        for task in poll_for_completed_tasks_new(ls, project_id, freq_seconds):
+            # assume that the most recent annotation is the one that was updated
+            # can check annot['updated_at'] to confirm
+            annot = task.annotations[0]
+            # currently, we only have one source image, but in general need to build a mapping between the task image (PNG) and the source image (TIFF)
+            perimeter, area = perimeter_and_area(
+                "data/e9b9661bcbd97b67f45364aafd82f9d6/response.tiff", annot
+            )
+            ls.tasks.update(
+                id=task.id,
+                data={**task.data, "label_perimeter": perimeter, "label_area": area},
+            )
+            print("updated task", task.id)
+    else:
+        # old SDK client (version < 1.0.0)
+        client = Client(url=url, api_key=api_key)
+        client.check_connection()
+        project = client.get_project(project_id)
+        for task in poll_for_completed_tasks_old(project, freq_seconds):
+            # assume that the most recent annotation is the one that was updated
+            # can check annot['updated_at'] to confirm
+            annot = task["annotations"][0]
+            # currently, we only have one source image, but in general need to build a mapping between the task image (PNG) and the source image (TIFF)
+            perimeter, area = perimeter_and_area(
+                "data/e9b9661bcbd97b67f45364aafd82f9d6/response.tiff", annot
+            )
+            project.update_task(
+                task_id=task["id"],
+                data={**task["data"], "label_perimeter": perimeter, "label_area": area},
+            )
+            print("updated task", task["id"])
