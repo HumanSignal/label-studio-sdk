@@ -10,6 +10,9 @@ from datetime import datetime, timedelta
 
 
 def to_local_utm_crs(bbox: BBox):
+    """
+    Convert a WGS84 (longitude, latitude) bounding box in degrees to a UTM (x, y) bounding box in meters
+    """
     assert bbox.crs == CRS.WGS84
     lon, lat = bbox.middle
 
@@ -31,6 +34,9 @@ def to_local_utm_crs(bbox: BBox):
 def download_image(
     bbox: BBox, start_time: datetime, end_time: datetime, config: SHConfig
 ):
+    """
+    Download a Sentinel-2 image chip covering bbox as a cloud-free composite from start_time to end_time, using given SentinelHub credentials, to the './data' folder
+    """
     evalscript = """
     //VERSION=3
     function setup() {
