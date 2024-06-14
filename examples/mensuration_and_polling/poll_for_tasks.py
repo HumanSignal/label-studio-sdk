@@ -1,4 +1,5 @@
 import time
+import json
 from datetime import datetime, timedelta, timezone
 import rasterio
 from shapely.geometry import Polygon
@@ -12,19 +13,20 @@ def poll_for_completed_tasks_new(
 ) -> list:
     while True:
         last_poll_time = datetime.now(timezone.utc) - timedelta(seconds=freq_sec)
+        filters = Filters.create(
+            "and",  # need 'and' instead of 'or', even though this is only one filter
+            [
+                Filters.item(
+                    Column.updated_at,
+                    Operator.GREATER_OR_EQUAL,
+                    Type.Datetime,
+                    Filters.value(last_poll_time),
+                )
+            ],
+        )
         tasks = ls.tasks.list(
             project=project_id,
-            query={
-                "conjunction": "and",
-                "items": [
-                    {
-                        "filter": "filter:tasks:updated_at",
-                        "operator": "greater",
-                        "type": "Datetime",
-                        "value": last_poll_time.isoformat(),
-                    }
-                ],
-            },
+            query=json.dumps({"filters": filters}),
             fields="all",
         )
         yield from tasks
@@ -81,7 +83,7 @@ if __name__ == "__main__":
     api_key = "cca56ca8fc0d511a87bbc63f5857b9a7a8f14c23"
     project_id = 4
     freq_seconds = 1
-    use_new_sdk = False
+    use_new_sdk = True
     if use_new_sdk:
         # new SDK client (version >= 1.0.0)
         ls = LabelStudio(base_url=url, api_key=api_key)
