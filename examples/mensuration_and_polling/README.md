@@ -61,6 +61,7 @@ Your project ID can be found in the URL of the project page: `<base_url>/project
 
 Then run it in another window while Label Studio is running:
 ```bash
+pip install -r requirements.txt
 python poll_for_tasks.py
 ```
 
