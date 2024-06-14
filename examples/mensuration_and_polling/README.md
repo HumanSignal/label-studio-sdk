@@ -27,7 +27,9 @@ convert data/e9b9661bcbd97b67f45364aafd82f9d6/response.tiff data/e9b9661bcbd97b6
 
 ## Load data into Label Studio
 
-Create a new project with a label config for image segmentation, slightly modified from the default template:
+Create a new project and upload `data/e9b9661bcbd97b67f45364aafd82f9d6/response.png` to the project.
+
+Add a label config for image segmentation, slightly modified from the default template:
 
 ```xml
 <View>
@@ -46,7 +48,7 @@ Create a new project with a label config for image segmentation, slightly modifi
 </View>
 ```
 
-and upload `data/e9b9661bcbd97b67f45364aafd82f9d6/response.png` to the project.
+Note: you must upload all your files before setting the label config, to support the workaround where `Text` fields are populated by the SDK when an annotation is updated.
 
 
 ## Run background task
