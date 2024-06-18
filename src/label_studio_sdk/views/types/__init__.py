@@ -6,6 +6,7 @@ from .views_create_request_data_filters_conjunction import ViewsCreateRequestDat
 from .views_create_request_data_filters_items_item import ViewsCreateRequestDataFiltersItemsItem
 from .views_create_request_data_filters_items_item_filter import ViewsCreateRequestDataFiltersItemsItemFilter
 from .views_create_request_data_filters_items_item_operator import ViewsCreateRequestDataFiltersItemsItemOperator
+from .views_create_request_data_filters_items_item_value import ViewsCreateRequestDataFiltersItemsItemValue
 from .views_create_request_data_ordering_item import ViewsCreateRequestDataOrderingItem
 from .views_update_request_data import ViewsUpdateRequestData
 from .views_update_request_data_filters import ViewsUpdateRequestDataFilters
@@ -13,6 +14,7 @@ from .views_update_request_data_filters_conjunction import ViewsUpdateRequestDat
 from .views_update_request_data_filters_items_item import ViewsUpdateRequestDataFiltersItemsItem
 from .views_update_request_data_filters_items_item_filter import ViewsUpdateRequestDataFiltersItemsItemFilter
 from .views_update_request_data_filters_items_item_operator import ViewsUpdateRequestDataFiltersItemsItemOperator
+from .views_update_request_data_filters_items_item_value import ViewsUpdateRequestDataFiltersItemsItemValue
 from .views_update_request_data_ordering_item import ViewsUpdateRequestDataOrderingItem
 
 __all__ = [
@@ -22,6 +24,7 @@ __all__ = [
     "ViewsCreateRequestDataFiltersItemsItem",
     "ViewsCreateRequestDataFiltersItemsItemFilter",
     "ViewsCreateRequestDataFiltersItemsItemOperator",
+    "ViewsCreateRequestDataFiltersItemsItemValue",
     "ViewsCreateRequestDataOrderingItem",
     "ViewsUpdateRequestData",
     "ViewsUpdateRequestDataFilters",
@@ -29,5 +32,6 @@ __all__ = [
     "ViewsUpdateRequestDataFiltersItemsItem",
     "ViewsUpdateRequestDataFiltersItemsItemFilter",
     "ViewsUpdateRequestDataFiltersItemsItemOperator",
+    "ViewsUpdateRequestDataFiltersItemsItemValue",
     "ViewsUpdateRequestDataOrderingItem",
 ]

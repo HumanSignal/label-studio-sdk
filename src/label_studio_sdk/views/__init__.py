@@ -7,6 +7,7 @@ from .types import (
     ViewsCreateRequestDataFiltersItemsItem,
     ViewsCreateRequestDataFiltersItemsItemFilter,
     ViewsCreateRequestDataFiltersItemsItemOperator,
+    ViewsCreateRequestDataFiltersItemsItemValue,
     ViewsCreateRequestDataOrderingItem,
     ViewsUpdateRequestData,
     ViewsUpdateRequestDataFilters,
@@ -14,6 +15,7 @@ from .types import (
     ViewsUpdateRequestDataFiltersItemsItem,
     ViewsUpdateRequestDataFiltersItemsItemFilter,
     ViewsUpdateRequestDataFiltersItemsItemOperator,
+    ViewsUpdateRequestDataFiltersItemsItemValue,
     ViewsUpdateRequestDataOrderingItem,
 )
 
@@ -24,6 +26,7 @@ __all__ = [
     "ViewsCreateRequestDataFiltersItemsItem",
     "ViewsCreateRequestDataFiltersItemsItemFilter",
     "ViewsCreateRequestDataFiltersItemsItemOperator",
+    "ViewsCreateRequestDataFiltersItemsItemValue",
     "ViewsCreateRequestDataOrderingItem",
     "ViewsUpdateRequestData",
     "ViewsUpdateRequestDataFilters",
@@ -31,5 +34,6 @@ __all__ = [
     "ViewsUpdateRequestDataFiltersItemsItem",
     "ViewsUpdateRequestDataFiltersItemsItemFilter",
     "ViewsUpdateRequestDataFiltersItemsItemOperator",
+    "ViewsUpdateRequestDataFiltersItemsItemValue",
     "ViewsUpdateRequestDataOrderingItem",
 ]

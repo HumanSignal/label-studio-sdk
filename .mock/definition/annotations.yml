@@ -51,7 +51,9 @@ service:
                         '0': Person
               created_username: created_username
               created_ago: created_ago
-              completed_by: 1
+              completed_by:
+                completed_by:
+                  key: value
               unique_id: unique_id
               was_cancelled: false
               ground_truth: false
@@ -198,7 +200,9 @@ service:
                         '0': Person
               created_username: created_username
               created_ago: created_ago
-              completed_by: 1
+              completed_by:
+                completed_by:
+                  key: value
               unique_id: unique_id
               was_cancelled: false
               ground_truth: false
@@ -261,7 +265,9 @@ service:
                           '0': Person
                 created_username: created_username
                 created_ago: created_ago
-                completed_by: 1
+                completed_by:
+                  completed_by:
+                    key: value
                 unique_id: unique_id
                 was_cancelled: false
                 ground_truth: false
@@ -403,7 +409,9 @@ service:
                         '0': Person
               created_username: created_username
               created_ago: created_ago
-              completed_by: 1
+              completed_by:
+                completed_by:
+                  key: value
               unique_id: unique_id
               was_cancelled: false
               ground_truth: false

@@ -10,6 +10,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 from ..types.base_task import BaseTask
+from ..types.data_manager_task_serializer import DataManagerTaskSerializer
 from ..types.project_import import ProjectImport
 from ..types.task import Task
 from .types.tasks_list_request_fields import TasksListRequestFields
@@ -163,7 +164,7 @@ class TasksClient:
             Specify which fields to include in the response
 
         query : typing.Optional[str]
-            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check Data Manager > Create View for more details about filters, selectedItems and ordering.
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check [Data Manager > Create View > see `data` field](#tag/Data-Manager/operation/api_dm_views_create) for more details about filters, selectedItems and ordering.
 
             - **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/> Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
             - **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/> Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
@@ -284,7 +285,7 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> BaseTask:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DataManagerTaskSerializer:
         """
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
         The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
@@ -299,7 +300,7 @@ class TasksClient:
 
         Returns
         -------
-        BaseTask
+        DataManagerTaskSerializer
             Task
 
         Examples
@@ -317,7 +318,7 @@ class TasksClient:
             f"api/tasks/{jsonable_encoder(id)}/", method="GET", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(DataManagerTaskSerializer, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -571,7 +572,7 @@ class AsyncTasksClient:
             Specify which fields to include in the response
 
         query : typing.Optional[str]
-            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check Data Manager > Create View for more details about filters, selectedItems and ordering.
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check [Data Manager > Create View > see `data` field](#tag/Data-Manager/operation/api_dm_views_create) for more details about filters, selectedItems and ordering.
 
             - **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/> Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
             - **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/> Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
@@ -692,7 +693,9 @@ class AsyncTasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> BaseTask:
+    async def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DataManagerTaskSerializer:
         """
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
         The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
@@ -707,7 +710,7 @@ class AsyncTasksClient:
 
         Returns
         -------
-        BaseTask
+        DataManagerTaskSerializer
             Task
 
         Examples
@@ -725,7 +728,7 @@ class AsyncTasksClient:
             f"api/tasks/{jsonable_encoder(id)}/", method="GET", request_options=request_options
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(DataManagerTaskSerializer, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

@@ -476,7 +476,7 @@ class ProjectsClient:
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
         if _response.status_code == 400:
-            raise BadRequestError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
+            raise BadRequestError(pydantic_v1.parse_obj_as(typing.Any, _response.json()))  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -994,7 +994,7 @@ class AsyncProjectsClient:
         if 200 <= _response.status_code < 300:
             return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
         if _response.status_code == 400:
-            raise BadRequestError(pydantic_v1.parse_obj_as(str, _response.json()))  # type: ignore
+            raise BadRequestError(pydantic_v1.parse_obj_as(typing.Any, _response.json()))  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

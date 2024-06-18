@@ -154,9 +154,10 @@ service:
             docs: >-
               Additional query to filter tasks. It must be JSON encoded string
               of dict containing one of the following parameters: `{"filters":
-              ..., "selectedItems": ..., "ordering": ...}`. Check Data Manager >
-              Create View for more details about filters, selectedItems and
-              ordering.
+              ..., "selectedItems": ..., "ordering": ...}`. Check [Data Manager
+              > Create View > see `data`
+              field](#tag/Data-Manager/operation/api_dm_views_create) for more
+              details about filters, selectedItems and ordering.
 
 
               * **filters**: dict with `"conjunction"` string (`"or"` or
@@ -330,7 +331,7 @@ service:
       display-name: Get task
       response:
         docs: Task
-        type: root.BaseTask
+        type: root.DataManagerTaskSerializer
       examples:
         - name: response
           path-parameters:
@@ -338,6 +339,74 @@ service:
           response:
             body:
               id: 1
+              predictions:
+                - id: 1
+                  result:
+                    - {}
+                  model_version: model_version
+                  created_ago: created_ago
+                  score: 1.1
+                  cluster: 1
+                  mislabeling: 1.1
+                  created_at: '2024-01-15T09:30:00Z'
+                  updated_at: '2024-01-15T09:30:00Z'
+                  model: 1
+                  model_run: 1
+                  task: 1
+                  project: 1
+              annotations:
+                - id: 1
+                  result:
+                    - {}
+                  created_username: created_username
+                  created_ago: created_ago
+                  unique_id: unique_id
+                  was_cancelled: true
+                  ground_truth: true
+                  created_at: '2024-01-15T09:30:00Z'
+                  updated_at: '2024-01-15T09:30:00Z'
+                  draft_created_at: '2024-01-15T09:30:00Z'
+                  lead_time: 1.1
+                  import_id: 1
+                  last_action: prediction
+                  task: 1
+                  project: 1
+                  updated_by: 1
+                  parent_prediction: 1
+                  parent_annotation: 1
+                  last_created_by: 1
+              drafts:
+                - id: 1
+                  result:
+                    - {}
+                  user: user
+                  created_username: created_username
+                  created_ago: created_ago
+                  lead_time: 1.1
+                  was_postponed: true
+                  import_id: 1
+                  created_at: '2024-01-15T09:30:00Z'
+                  updated_at: '2024-01-15T09:30:00Z'
+                  task: 1
+                  annotation: 1
+              annotators:
+                - 1
+              inner_id: 1
+              cancelled_annotations: 0
+              total_annotations: 0
+              total_predictions: 0
+              completed_at: '2024-01-15T09:30:00Z'
+              annotations_results: annotations_results
+              predictions_results: predictions_results
+              predictions_score: 1.1
+              file_upload: 42d46c4c-my-pic.jpeg
+              storage_filename: storage_filename
+              annotations_ids: annotations_ids
+              predictions_model_versions: predictions_model_versions
+              avg_lead_time: 1.1
+              draft_exists: true
+              updated_by:
+                - user_id: 1
               data:
                 image: https://example.com/image.jpg
                 text: Hello, AI!
@@ -348,16 +417,10 @@ service:
               updated_at: '2024-01-15T09:30:00Z'
               is_labeled: false
               overlap: 1
-              inner_id: 1
-              total_annotations: 0
-              cancelled_annotations: 0
-              total_predictions: 0
               comment_count: 0
               unresolved_comment_count: 0
               last_comment_updated_at: '2024-01-15T09:30:00Z'
               project: 1
-              updated_by: 1
-              file_upload: 1
               comment_authors:
                 - 1
       audiences:

@@ -55,8 +55,8 @@ class ActionsClient:
     def create(
         self,
         *,
-        id: typing.Optional[ActionsCreateRequestId] = None,
-        project: typing.Optional[int] = None,
+        id: ActionsCreateRequestId,
+        project: int,
         view: typing.Optional[int] = None,
         filters: typing.Optional[ActionsCreateRequestFilters] = OMIT,
         selected_items: typing.Optional[ActionsCreateRequestSelectedItems] = OMIT,
@@ -64,14 +64,14 @@ class ActionsClient:
         request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        Perform a Data Manager action with the selected tasks and filters.
+        Perform a Data Manager action with the selected tasks and filters. Note: More complex actions require additional parameters in the request body. Call `GET api/actions?project=<id>` to explore them. <br>Example: `GET api/actions?id=delete_tasks&project=1`
 
         Parameters
         ----------
-        id : typing.Optional[ActionsCreateRequestId]
-            Action name ID, the full list of actions can be retrieved with a GET request
+        id : ActionsCreateRequestId
+            Action name ID, see the full list of actions in the `GET api/actions` request
 
-        project : typing.Optional[int]
+        project : int
             Project ID
 
         view : typing.Optional[int]
@@ -95,12 +95,36 @@ class ActionsClient:
 
         Examples
         --------
+        from label_studio_sdk import (
+            ActionsCreateRequestFilters,
+            ActionsCreateRequestFiltersItemsItem,
+            ActionsCreateRequestSelectedItemsExcluded,
+        )
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.actions.create()
+        client.actions.create(
+            id="retrieve_tasks_predictions",
+            project=1,
+            filters=ActionsCreateRequestFilters(
+                conjunction="or",
+                items=[
+                    ActionsCreateRequestFiltersItemsItem(
+                        filter="filter:tasks:id",
+                        operator="greater",
+                        type="Number",
+                        value=123,
+                    )
+                ],
+            ),
+            selected_items=ActionsCreateRequestSelectedItemsExcluded(
+                all_=True,
+                excluded=[124, 125, 126],
+            ),
+            ordering=["tasks:total_annotations"],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/dm/actions/",
@@ -159,8 +183,8 @@ class AsyncActionsClient:
     async def create(
         self,
         *,
-        id: typing.Optional[ActionsCreateRequestId] = None,
-        project: typing.Optional[int] = None,
+        id: ActionsCreateRequestId,
+        project: int,
         view: typing.Optional[int] = None,
         filters: typing.Optional[ActionsCreateRequestFilters] = OMIT,
         selected_items: typing.Optional[ActionsCreateRequestSelectedItems] = OMIT,
@@ -168,14 +192,14 @@ class AsyncActionsClient:
         request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        Perform a Data Manager action with the selected tasks and filters.
+        Perform a Data Manager action with the selected tasks and filters. Note: More complex actions require additional parameters in the request body. Call `GET api/actions?project=<id>` to explore them. <br>Example: `GET api/actions?id=delete_tasks&project=1`
 
         Parameters
         ----------
-        id : typing.Optional[ActionsCreateRequestId]
-            Action name ID, the full list of actions can be retrieved with a GET request
+        id : ActionsCreateRequestId
+            Action name ID, see the full list of actions in the `GET api/actions` request
 
-        project : typing.Optional[int]
+        project : int
             Project ID
 
         view : typing.Optional[int]
@@ -199,12 +223,36 @@ class AsyncActionsClient:
 
         Examples
         --------
+        from label_studio_sdk import (
+            ActionsCreateRequestFilters,
+            ActionsCreateRequestFiltersItemsItem,
+            ActionsCreateRequestSelectedItemsExcluded,
+        )
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.actions.create()
+        await client.actions.create(
+            id="retrieve_tasks_predictions",
+            project=1,
+            filters=ActionsCreateRequestFilters(
+                conjunction="or",
+                items=[
+                    ActionsCreateRequestFiltersItemsItem(
+                        filter="filter:tasks:id",
+                        operator="greater",
+                        type="Number",
+                        value=123,
+                    )
+                ],
+            ),
+            selected_items=ActionsCreateRequestSelectedItemsExcluded(
+                all_=True,
+                excluded=[124, 125, 126],
+            ),
+            ordering=["tasks:total_annotations"],
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "api/dm/actions/",

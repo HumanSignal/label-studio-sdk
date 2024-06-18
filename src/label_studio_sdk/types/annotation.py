@@ -25,7 +25,11 @@ class Annotation(pydantic_v1.BaseModel):
     Time delta from creation time
     """
 
-    completed_by: typing.Optional[int] = None
+    completed_by: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
+    """
+    User details who completed this annotation.
+    """
+
     unique_id: typing.Optional[str] = None
     was_cancelled: typing.Optional[bool] = pydantic_v1.Field(default=None)
     """
