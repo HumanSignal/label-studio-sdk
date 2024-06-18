@@ -22,6 +22,7 @@ from label_studio_sdk._legacy.exceptions import (
     LabelStudioValidationErrorSentryIgnored,
 )
 
+from .base import LabelStudioTag
 from .control_tags import (
     ControlTag,
     ChoicesTag,
@@ -30,6 +31,7 @@ from .control_tags import (
 from .object_tags import ObjectTag
 from .label_tags import LabelTag
 from .objects import AnnotationValue, TaskValue, PredictionValue
+import .create as CE
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -189,6 +191,25 @@ class LabelInterface:
     ```
     """
 
+    @classmethod
+    def create(cls, tags, mapping=None, title=None, pretty=True):
+        """ Simple way of create UI config, it helps you not to thing much about the name/toName mapping
+
+        LabelInterface.create_simple({
+          "txt": "Text",
+          "chc": choices("positive", "negative")
+        })
+        """
+        tuples = CE.convert_tags_description(tags, mapping=mapping)
+
+        if title:
+            tuples = (("Header", { "value": title }, {}),) + tuples
+        
+        tree = CE.tree_from_tuples(*tuples)
+        
+        return CE.tree_to_string(tree, pretty=pretty)
+
+    
     def __init__(self, config: str, tags_mapping=None, *args, **kwargs):
         """
         Initialize a LabelInterface instance using a config string.
