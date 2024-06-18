@@ -129,7 +129,7 @@ def _convert(name: str, tag: Union[str, list, tuple, LabelStudioTag]) -> tuple:
     el[1].setdefault("name", name)
     
     if el[0].lower() in OT._TAG_TO_CLASS and not el[1].get("value"):
-        el[1]["value"] = "$"  name
+        el[1]["value"] = "$" + name
             
     return el
 

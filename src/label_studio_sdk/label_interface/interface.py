@@ -31,7 +31,7 @@ from .control_tags import (
 from .object_tags import ObjectTag
 from .label_tags import LabelTag
 from .objects import AnnotationValue, TaskValue, PredictionValue
-import .create as CE
+from . import create as CE
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))

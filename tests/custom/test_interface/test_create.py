@@ -8,11 +8,11 @@ TNAME = "third_name"
 
 CONVERT = [
     # convert string
-    ("text", ("text", { "name": NAME, "value": "$"  NAME }, ())),
+    ("text", ("text", { "name": NAME, "value": "$" + NAME }, ())),
 
     # convert tuple
-    (("text", { "name": NAME }), ("text", { "name": NAME, "value": "$"  NAME }, ())),
-    (("text", { }), ("text", { "name": NAME, "value": "$"  NAME }, ())),
+    (("text", { "name": NAME }), ("text", { "name": NAME, "value": "$" + NAME }, ())),
+    (("text", { }), ("text", { "name": NAME, "value": "$" + NAME }, ())),
 
     # convert tag
     # (("text", { }), ("text", { "name": NAME, "value": "$"  NAME }, ()))
@@ -20,17 +20,17 @@ CONVERT = [
 
 SIMPLE = [
     # lets convert a simple object tag
-    ({ NAME: "text" }, [ ("text", { "name": NAME, "value": "$"  NAME }, ()) ]),
+    ({ NAME: "text" }, [ ("text", { "name": NAME, "value": "$" + NAME }, ()) ]),
 
     # converting simple classification
     ({ NAME: "text", SNAME: "choices" },
-     [ ("text", { "name": NAME, "value": "$"  NAME }, ()),
+     [ ("text", { "name": NAME, "value": "$" + NAME }, ()),
        ("choices", { "name": SNAME, "toName": NAME }, ()) ]),
 
     # convert with multiple object tags and verify toName connection
     ({ NAME: "text", TNAME: "text", SNAME: "choices" },
-     [ ("text", { "name": NAME, "value": "$"  NAME }, ()),
-       ("text", { "name": TNAME, "value": "$"  TNAME }, ()),
+     [ ("text", { "name": NAME, "value": "$" + NAME }, ()),
+       ("text", { "name": TNAME, "value": "$" + TNAME }, ()),
        ("choices", { "name": SNAME, "toName": NAME }, ()) ]),
 
     # make sure that name and toName are not not adjusted when used objects directly
