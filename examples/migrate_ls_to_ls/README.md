@@ -22,6 +22,12 @@ Each new run of this script will generate new projects on the destination instan
 
 **Note:** Create a new workspace and get its ID for projects to be mgiratated. 
 
+**SDK v0.0.34**
+
+```
+pip install label-studio-sdk==0.0.34
+```
+
 # How it works? 
 
 1. Get all projects from source LS (or specific projects)
