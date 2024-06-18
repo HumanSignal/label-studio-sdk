@@ -7,13 +7,8 @@ from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
-class AnnotationDraft(pydantic_v1.BaseModel):
+class AnnotationDraftDmField(pydantic_v1.BaseModel):
     id: typing.Optional[int] = None
-    result: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic_v1.Field(default=None)
-    """
-    List of annotation results for the task
-    """
-
     user: typing.Optional[str] = None
     created_username: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
@@ -23,6 +18,11 @@ class AnnotationDraft(pydantic_v1.BaseModel):
     created_ago: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Delta time from creation time
+    """
+
+    result: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic_v1.Field(default=None)
+    """
+    List of annotation results for the task
     """
 
     lead_time: typing.Optional[float] = pydantic_v1.Field(default=None)

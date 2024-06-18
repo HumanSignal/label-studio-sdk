@@ -43,9 +43,7 @@ types:
         default: ''
         validation:
           minLength: 1
-      completed_by:
-        type: optional<map<string, unknown>>
-        docs: User details who completed this annotation.
+      completed_by: optional<integer>
       unique_id:
         type: optional<string>
         validation:
@@ -1565,12 +1563,88 @@ types:
       comment_authors:
         type: optional<list<integer>>
         docs: Users who wrote comments
-  AnnotationDraft:
+  AnnotationsDmFieldLastAction:
+    enum:
+      - prediction
+      - propagated_annotation
+      - imported
+      - submitted
+      - updated
+      - skipped
+      - accepted
+      - rejected
+      - fixed_and_accepted
+      - deleted_review
+    docs: Action which was performed in the last annotation history item
+  AnnotationsDmField:
     properties:
       id: optional<integer>
       result:
         type: optional<list<map<string, unknown>>>
         docs: List of annotation results for the task
+      created_username:
+        type: optional<string>
+        docs: Username string
+      created_ago:
+        type: optional<string>
+        docs: Time delta from creation time
+        default: ''
+        validation:
+          minLength: 1
+      completed_by:
+        type: optional<map<string, unknown>>
+        docs: User details who completed this annotation.
+      unique_id:
+        type: optional<string>
+        validation:
+          minLength: 1
+      was_cancelled:
+        type: optional<boolean>
+        docs: User skipped the task
+      ground_truth:
+        type: optional<boolean>
+        docs: This annotation is a Ground Truth (ground_truth)
+      created_at:
+        type: optional<datetime>
+        docs: Creation time
+      updated_at:
+        type: optional<datetime>
+        docs: Last updated time
+      draft_created_at:
+        type: optional<datetime>
+        docs: Draft creation time
+      lead_time:
+        type: optional<double>
+        docs: How much time it took to annotate the task
+      import_id:
+        type: optional<integer>
+        docs: >-
+          Original annotation ID that was at the import step or NULL if this
+          annotation wasn't imported
+      last_action:
+        type: optional<AnnotationsDmFieldLastAction>
+        docs: Action which was performed in the last annotation history item
+      task:
+        type: optional<integer>
+        docs: Corresponding task for this annotation
+      project:
+        type: optional<integer>
+        docs: Project ID for this annotation
+      updated_by:
+        type: optional<integer>
+        docs: Last user who updated this annotation
+      parent_prediction:
+        type: optional<integer>
+        docs: Points to the prediction from which this annotation was created
+      parent_annotation:
+        type: optional<integer>
+        docs: Points to the parent annotation from which this annotation was created
+      last_created_by:
+        type: optional<integer>
+        docs: User who created the last annotation history item
+  AnnotationDraftDmField:
+    properties:
+      id: optional<integer>
       user:
         type: optional<string>
         validation:
@@ -1584,6 +1658,9 @@ types:
         default: ''
         validation:
           minLength: 1
+      result:
+        type: optional<list<map<string, unknown>>>
+        docs: List of annotation results for the task
       lead_time:
         type: optional<double>
         docs: How much time it took to annotate the task
@@ -1613,9 +1690,11 @@ types:
     properties:
       id: optional<integer>
       predictions: optional<list<Prediction>>
-      annotations: optional<list<Annotation>>
-      drafts: optional<list<AnnotationDraft>>
-      annotators: optional<list<integer>>
+      annotations: optional<list<AnnotationsDmField>>
+      drafts: optional<list<AnnotationDraftDmField>>
+      annotators:
+        type: optional<list<integer>>
+        docs: Annotators IDs who annotated this task
       inner_id: optional<integer>
       cancelled_annotations: optional<integer>
       total_annotations: optional<integer>

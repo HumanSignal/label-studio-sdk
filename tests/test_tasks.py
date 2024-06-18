@@ -166,10 +166,10 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "drafts": [
             {
                 "id": 1,
-                "result": [{}],
                 "user": "user",
                 "created_username": "created_username",
                 "created_ago": "created_ago",
+                "result": [{}],
                 "lead_time": 1.1,
                 "was_postponed": True,
                 "import_id": 1,
@@ -260,10 +260,10 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             {
                 0: {
                     "id": "integer",
-                    "result": ("list", {0: ("dict", {})}),
                     "user": None,
                     "created_username": None,
                     "created_ago": None,
+                    "result": ("list", {0: ("dict", {})}),
                     "lead_time": None,
                     "was_postponed": None,
                     "import_id": "integer",

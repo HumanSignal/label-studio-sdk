@@ -5,10 +5,10 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from .annotation_last_action import AnnotationLastAction
+from .annotations_dm_field_last_action import AnnotationsDmFieldLastAction
 
 
-class Annotation(pydantic_v1.BaseModel):
+class AnnotationsDmField(pydantic_v1.BaseModel):
     id: typing.Optional[int] = None
     result: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic_v1.Field(default=None)
     """
@@ -25,7 +25,11 @@ class Annotation(pydantic_v1.BaseModel):
     Time delta from creation time
     """
 
-    completed_by: typing.Optional[int] = None
+    completed_by: typing.Optional[typing.Dict[str, typing.Any]] = pydantic_v1.Field(default=None)
+    """
+    User details who completed this annotation.
+    """
+
     unique_id: typing.Optional[str] = None
     was_cancelled: typing.Optional[bool] = pydantic_v1.Field(default=None)
     """
@@ -62,7 +66,7 @@ class Annotation(pydantic_v1.BaseModel):
     Original annotation ID that was at the import step or NULL if this annotation wasn't imported
     """
 
-    last_action: typing.Optional[AnnotationLastAction] = pydantic_v1.Field(default=None)
+    last_action: typing.Optional[AnnotationsDmFieldLastAction] = pydantic_v1.Field(default=None)
     """
     Action which was performed in the last annotation history item
     """

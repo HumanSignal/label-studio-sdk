@@ -377,11 +377,11 @@ service:
                   last_created_by: 1
               drafts:
                 - id: 1
-                  result:
-                    - {}
                   user: user
                   created_username: created_username
                   created_ago: created_ago
+                  result:
+                    - {}
                   lead_time: 1.1
                   was_postponed: true
                   import_id: 1
