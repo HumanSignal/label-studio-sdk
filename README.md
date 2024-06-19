@@ -1,6 +1,5 @@
 # Label Studio Python Library
 
-<!-- Note about deprecated version <1 -->
 ---
 > :warning: **Note**<br/>
 >
@@ -26,9 +25,6 @@
 [![pypi](https://img.shields.io/pypi/v/label-studio-sdk.svg)](https://pypi.python.org/pypi/label-studio-sdk)
 
 The Label Studio Python Library provides convenient access to the Label Studio API from applications written in Python.
-<!-- End Title  -->
-
-<!-- Outline -->
 
 
 # Documentation
