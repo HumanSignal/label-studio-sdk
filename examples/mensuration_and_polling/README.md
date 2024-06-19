@@ -16,18 +16,26 @@ You will learn:
 
 ## Setup data
 
-Any georeferenced raster can be used. For this demo, a georeferenced TIFF image of the Grand Canyon and a corresponding PNG image that can be loaded into Label Studio (TIFF is not supported in Label Studio) was generated using the following steps:
+Any georeferenced raster images can be used. For this demo, two images are used:
 
-1. Sign up at sentinel-hub.com for a trial account for access to [Sentinel-2](https://en.wikipedia.org/wiki/Sentinel-2) satellite images on demand. These have a resolution of 10 GSD (10 meters per pixel).
+### Grand Canyon satellite image
+
+a georeferenced TIFF image of the Grand Canyon and a corresponding PNG image that can be loaded into Label Studio (TIFF is not supported in Label Studio) was generated using the following steps:
+
+1. Sign up at sentinel-hub.com for a trial account for access to [Sentinel-2](https://en.wikipedia.org/wiki/Sentinel-2) satellite images on demand. These have a resolution of 10m GSD (10 meters per pixel).
 2. Use the included `grab_georeferenced_image.py` with your credentials to download the image in a [UTM coordinate system](https://en.wikipedia.org/wiki/Universal_Transverse_Mercator_coordinate_system), where each pixel is a fixed area instead of a fixed fraction of longitude and latitude. This makes the image "square" with respect to the ground.
 3. Export to PNG:
 ```bash
 convert data/e9b9661bcbd97b67f45364aafd82f9d6/response.tiff data/response.png
 ```
 
+### Urban drone image
+
+A UAV image of a city block was downloaded from [OpenAerialMap](https://openaerialmap.org/) and cropped to a reasonable size using [QGIS](https://www.qgis.org/en/site/). It has a resolution of 20cm GSD, so it started out as a huge file. Then it was exported to PNG in the same way.
+
 ## Load data into Label Studio
 
-Create a new project and upload `data/response.png` to the project.
+Create a new project and upload `data/response.png` and `666dbadcf1cf8e0001fb2f51_cropped.png` to the project.
 
 Add a label config for image segmentation, slightly modified from the default template:
 
@@ -37,13 +45,13 @@ Add a label config for image segmentation, slightly modified from the default te
   <Header value="Select label and click the image to start"/>
   <Image name="image" value="$image" zoom="true"/>
 
-  <PolygonLabels name="label" toName="image"
-                 strokeWidth="3" pointSize="small"
-                 opacity="0.9">
+  <PolygonLabels name="label" toName="image" strokeWidth="3" pointSize="small" opacity="0.9">
     <Label value="label_name" background="red"/>
   </PolygonLabels>
-  <Text name="perimeter_km" value="Perimeter in km: $label_perimeter" editable="false" />
-  <Text name="area_km^2" value="Area in km^2: $label_area" editable="false" />
+  <Text name="perimeter_m" value="Perimeter in m: $perimeter_m" editable="false" />
+  <Text name="area_m^2" value="Area in m^2: $area_m2" editable="false" />
+  <Text name="length_m" value="Length in m: $major_axis_m" editable="false" />
+  <Text name="width_m" value="Width in m: $minor_axis_m" editable="false" />
 
 </View>
 ```
@@ -64,6 +72,8 @@ Then run it in another window while Label Studio is running:
 pip install -r requirements.txt
 python poll_for_tasks.py
 ```
+
+Refresh the page between starting the background task and creating new annotations to ensure that it started correctly.
 
 
 ## Create or edit a georeferenced polygon annotation
