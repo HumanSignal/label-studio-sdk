@@ -48,10 +48,9 @@ def create_bbox(annotation, categories, from_name, image_height, image_width, to
 
 
 def create_segmentation(
-    annotation, categories, from_name, image_height, image_width, to_name
+    category_id, segmentation, categories, from_name, image_height, image_width, to_name
 ):
-    label = categories[int(annotation["category_id"])]
-    segmentation = annotation["segmentation"][0]
+    label = categories[int(category_id)]
     points = [list(x) for x in zip(*[iter(segmentation)] * 2)]
 
     for i in range(len(points)):
@@ -216,15 +215,17 @@ def convert_coco_to_ls(
             task[out_type][0]["result"].append(item)
 
         if "segmentation" in annotation and len(annotation["segmentation"]):
-            item = create_segmentation(
-                annotation,
-                categories,
-                segmentation_from_name,
-                image_height,
-                image_width,
-                to_name,
-            )
-            task[out_type][0]["result"].append(item)
+            for single_segmentation in annotation["segmentation"]:
+                item = create_segmentation(
+                    annotation["category_id"],
+                    single_segmentation,
+                    categories,
+                    segmentation_from_name,
+                    image_height,
+                    image_width,
+                    to_name,
+                )
+                task[out_type][0]["result"].append(item)
 
         if "keypoints" in annotation:
             items = create_keypoints(
