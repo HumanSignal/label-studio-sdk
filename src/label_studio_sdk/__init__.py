@@ -2,7 +2,6 @@
 
 from .types import (
     Annotation,
-    AnnotationDraftDmField,
     AnnotationFilterOptions,
     AnnotationLastAction,
     AnnotationsDmField,
@@ -16,6 +15,8 @@ from .types import (
     ConvertedFormat,
     ConvertedFormatStatus,
     DataManagerTaskSerializer,
+    DataManagerTaskSerializerDraftsItem,
+    DataManagerTaskSerializerPredictionsItem,
     Export,
     ExportConvert,
     ExportCreate,
@@ -138,7 +139,6 @@ __all__ = [
     "ActionsCreateRequestSelectedItemsExcluded",
     "ActionsCreateRequestSelectedItemsIncluded",
     "Annotation",
-    "AnnotationDraftDmField",
     "AnnotationFilterOptions",
     "AnnotationLastAction",
     "AnnotationsDmField",
@@ -154,6 +154,8 @@ __all__ = [
     "ConvertedFormat",
     "ConvertedFormatStatus",
     "DataManagerTaskSerializer",
+    "DataManagerTaskSerializerDraftsItem",
+    "DataManagerTaskSerializerPredictionsItem",
     "Export",
     "ExportConvert",
     "ExportCreate",

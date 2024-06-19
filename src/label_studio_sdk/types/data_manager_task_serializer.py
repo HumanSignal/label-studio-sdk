@@ -5,16 +5,26 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from .annotation_draft_dm_field import AnnotationDraftDmField
 from .annotations_dm_field import AnnotationsDmField
-from .prediction import Prediction
+from .data_manager_task_serializer_drafts_item import DataManagerTaskSerializerDraftsItem
+from .data_manager_task_serializer_predictions_item import DataManagerTaskSerializerPredictionsItem
 
 
 class DataManagerTaskSerializer(pydantic_v1.BaseModel):
     id: typing.Optional[int] = None
-    predictions: typing.Optional[typing.List[Prediction]] = None
+    predictions: typing.Optional[typing.List[DataManagerTaskSerializerPredictionsItem]] = pydantic_v1.Field(
+        default=None
+    )
+    """
+    Predictions for this task
+    """
+
     annotations: typing.Optional[typing.List[AnnotationsDmField]] = None
-    drafts: typing.Optional[typing.List[AnnotationDraftDmField]] = None
+    drafts: typing.Optional[typing.List[DataManagerTaskSerializerDraftsItem]] = pydantic_v1.Field(default=None)
+    """
+    Drafts for this task
+    """
+
     annotators: typing.Optional[typing.List[int]] = pydantic_v1.Field(default=None)
     """
     Annotators IDs who annotated this task

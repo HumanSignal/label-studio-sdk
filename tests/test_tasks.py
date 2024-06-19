@@ -125,19 +125,13 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "id": 1,
         "predictions": [
             {
-                "id": 1,
                 "result": [{}],
-                "model_version": "model_version",
-                "created_ago": "created_ago",
                 "score": 1.1,
-                "cluster": 1,
-                "mislabeling": 1.1,
+                "model_version": "model_version",
+                "task": 1,
+                "project": 1.1,
                 "created_at": "2024-01-15T09:30:00Z",
                 "updated_at": "2024-01-15T09:30:00Z",
-                "model": 1,
-                "model_run": 1,
-                "task": 1,
-                "project": 1,
             }
         ],
         "annotations": [
@@ -163,22 +157,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
                 "last_created_by": 1,
             }
         ],
-        "drafts": [
-            {
-                "id": 1,
-                "user": "user",
-                "created_username": "created_username",
-                "created_ago": "created_ago",
-                "result": [{}],
-                "lead_time": 1.1,
-                "was_postponed": True,
-                "import_id": 1,
-                "created_at": "2024-01-15T09:30:00Z",
-                "updated_at": "2024-01-15T09:30:00Z",
-                "task": 1,
-                "annotation": 1,
-            }
-        ],
+        "drafts": [{"result": [{}], "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"}],
         "annotators": [1],
         "inner_id": 1,
         "cancelled_annotations": 0,
@@ -213,19 +192,13 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             "list",
             {
                 0: {
-                    "id": "integer",
                     "result": ("list", {0: ("dict", {})}),
-                    "model_version": None,
-                    "created_ago": None,
                     "score": None,
-                    "cluster": "integer",
-                    "mislabeling": None,
+                    "model_version": None,
+                    "task": "integer",
+                    "project": None,
                     "created_at": "datetime",
                     "updated_at": "datetime",
-                    "model": "integer",
-                    "model_run": "integer",
-                    "task": "integer",
-                    "project": "integer",
                 }
             },
         ),
@@ -257,22 +230,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         ),
         "drafts": (
             "list",
-            {
-                0: {
-                    "id": "integer",
-                    "user": None,
-                    "created_username": None,
-                    "created_ago": None,
-                    "result": ("list", {0: ("dict", {})}),
-                    "lead_time": None,
-                    "was_postponed": None,
-                    "import_id": "integer",
-                    "created_at": "datetime",
-                    "updated_at": "datetime",
-                    "task": "integer",
-                    "annotation": "integer",
-                }
-            },
+            {0: {"result": ("list", {0: ("dict", {})}), "created_at": "datetime", "updated_at": "datetime"}},
         ),
         "annotators": ("list", {0: "integer"}),
         "inner_id": "integer",

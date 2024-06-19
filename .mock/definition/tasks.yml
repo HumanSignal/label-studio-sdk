@@ -340,20 +340,14 @@ service:
             body:
               id: 1
               predictions:
-                - id: 1
-                  result:
+                - result:
                     - {}
-                  model_version: model_version
-                  created_ago: created_ago
                   score: 1.1
-                  cluster: 1
-                  mislabeling: 1.1
+                  model_version: model_version
+                  task: 1
+                  project: 1.1
                   created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
-                  model: 1
-                  model_run: 1
-                  task: 1
-                  project: 1
               annotations:
                 - id: 1
                   result:
@@ -376,19 +370,10 @@ service:
                   parent_annotation: 1
                   last_created_by: 1
               drafts:
-                - id: 1
-                  user: user
-                  created_username: created_username
-                  created_ago: created_ago
-                  result:
+                - result:
                     - {}
-                  lead_time: 1.1
-                  was_postponed: true
-                  import_id: 1
                   created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
-                  task: 1
-                  annotation: 1
               annotators:
                 - 1
               inner_id: 1

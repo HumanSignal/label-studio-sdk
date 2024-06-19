@@ -1642,56 +1642,32 @@ types:
       last_created_by:
         type: optional<integer>
         docs: User who created the last annotation history item
-  AnnotationDraftDmField:
+  DataManagerTaskSerializerPredictionsItem:
     properties:
-      id: optional<integer>
-      user:
-        type: optional<string>
-        validation:
-          minLength: 1
-      created_username:
-        type: optional<string>
-        docs: User name string
-      created_ago:
-        type: optional<string>
-        docs: Delta time from creation time
-        default: ''
-        validation:
-          minLength: 1
-      result:
-        type: optional<list<map<string, unknown>>>
-        docs: List of annotation results for the task
-      lead_time:
-        type: optional<double>
-        docs: How much time it took to annotate the task
-      was_postponed:
-        type: optional<boolean>
-        docs: >-
-          User postponed this draft (clicked a forward button) in the label
-          stream
-      import_id:
-        type: optional<integer>
-        docs: >-
-          Original draft ID that was at the import step or NULL if this draft
-          wasn't imported
-      created_at:
-        type: optional<datetime>
-        docs: Creation time
-      updated_at:
-        type: optional<datetime>
-        docs: Last update time
-      task:
-        type: optional<integer>
-        docs: Corresponding task for this draft
-      annotation:
-        type: optional<integer>
-        docs: Corresponding annotation for this draft
+      result: optional<list<map<string, unknown>>>
+      score: optional<double>
+      model_version: optional<string>
+      model: optional<map<string, unknown>>
+      model_run: optional<map<string, unknown>>
+      task: optional<integer>
+      project: optional<double>
+      created_at: optional<datetime>
+      updated_at: optional<datetime>
+  DataManagerTaskSerializerDraftsItem:
+    properties:
+      result: optional<list<map<string, unknown>>>
+      created_at: optional<datetime>
+      updated_at: optional<datetime>
   DataManagerTaskSerializer:
     properties:
       id: optional<integer>
-      predictions: optional<list<Prediction>>
+      predictions:
+        type: optional<list<DataManagerTaskSerializerPredictionsItem>>
+        docs: Predictions for this task
       annotations: optional<list<AnnotationsDmField>>
-      drafts: optional<list<AnnotationDraftDmField>>
+      drafts:
+        type: optional<list<DataManagerTaskSerializerDraftsItem>>
+        docs: Drafts for this task
       annotators:
         type: optional<list<integer>>
         docs: Annotators IDs who annotated this task
