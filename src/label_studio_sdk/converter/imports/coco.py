@@ -271,7 +271,7 @@ def add_parser(subparsers):
         "--input",
         dest="input",
         required=True,
-        help="directory with COCO where images, labels, notes.json are located",
+        help="input COCO json file",
         action=ExpandFullPath,
     )
     coco.add_argument(
