@@ -1,3 +1,5 @@
+imports:
+  root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -8,10 +10,48 @@ service:
       auth: true
       docs: >-
         Retrieve the data manager columns available for the tasks in a specific
-        project.
+        project. For more details, see [GET
+        api/actions](#/Data%20Manager/get_api_actions).
       display-name: Get data manager columns
+      request:
+        name: ApiDmColumnsListRequest
+        query-parameters:
+          project:
+            type: integer
+            docs: Project ID
+      response:
+        docs: Columns retrieved successfully
+        type: unknown
+      errors:
+        - root.BadRequestError
+        - root.NotFoundError
       examples:
-        - {}
+        - name: response
+          query-parameters:
+            project: 1
+          response:
+            body:
+              columns:
+                '0':
+                  id: id
+                  title: ID
+                  type: Number
+                  help: Task ID
+                  target: tasks
+                  visibility_defaults:
+                    explore: true
+                    labeling: false
+                  project_defined: false
+                '1':
+                  id: completed_at
+                  title: Completed
+                  type: Datetime
+                  target: tasks
+                  help: Last annotation date
+                  visibility_defaults:
+                    explore: true
+                    labeling: false
+                  project_defined: false
       audiences:
         - internal
     api_dm_project_list:
@@ -59,10 +99,10 @@ service:
                 filters:
                   conjunction: or
                   items:
-                    - filter: filter:tasks:agreement
-                      operator: contains
-                      type: type
-                      value: value
+                    - filter: filter:tasks:id
+                      operator: greater
+                      type: Number
+                      value: 123
                 ordering:
                   - tasks:agreement
               project: 1
@@ -127,9 +167,11 @@ types:
     docs: >-
       Filter identifier, it should start with `filter:tasks:` prefix, e.g.
       `filter:tasks:agreement`. For `task.data` fields it may look like
-      `filter:tasks:data.field_name`. Possible
-      values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement for
-      annotation results for a specific task (Enterprise
+      `filter:tasks:data.field_name`. If you need more info about columns, check
+      the [Get data manager
+      columns](#tag/Data-Manager/operation/api_dm_columns_list) API endpoint.
+      Possible values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement
+      for annotation results for a specific task (Enterprise
       only)</li><br><li>`filter:tasks:annotations_results`<br> (String)
       Annotation results for the tasks</li><br><li>`filter:tasks:annotators`<br>
       (List) Annotators that completed the task (Community). Can include
@@ -198,6 +240,20 @@ types:
       to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
       not between min and max values, so the filter `value` should be e.g.
       `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
+  ApiDmViewsUpdateRequestDataFiltersItemsItemValue:
+    discriminated: false
+    docs: Value to filter by
+    union:
+      - type: string
+        docs: String
+      - type: integer
+        docs: Integer
+      - type: double
+        docs: Float
+      - type: boolean
+        docs: Boolean
+      - docs: List of strings or integers
+        type: map<string, unknown>
   ApiDmViewsUpdateRequestDataFiltersItemsItem:
     properties:
       filter:
@@ -205,11 +261,13 @@ types:
         docs: >-
           Filter identifier, it should start with `filter:tasks:` prefix, e.g.
           `filter:tasks:agreement`. For `task.data` fields it may look like
-          `filter:tasks:data.field_name`. Possible
-          values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement for
-          annotation results for a specific task (Enterprise
-          only)</li><br><li>`filter:tasks:annotations_results`<br> (String)
-          Annotation results for the
+          `filter:tasks:data.field_name`. If you need more info about columns,
+          check the [Get data manager
+          columns](#tag/Data-Manager/operation/api_dm_columns_list) API
+          endpoint. Possible values:<br><li>`filter:tasks:agreement`<br>
+          (Number) Agreement for annotation results for a specific task
+          (Enterprise only)</li><br><li>`filter:tasks:annotations_results`<br>
+          (String) Annotation results for the
           tasks</li><br><li>`filter:tasks:annotators`<br> (List) Annotators that
           completed the task (Community). Can include assigned annotators
           (Enterprise only). Important note: the filter `type` should be List,
@@ -275,7 +333,7 @@ types:
           Integer</li><br><li>`String`<br> String</li><br><li>`Unknown`<br>
           Unknown is explicitly converted to string format</li>
       value:
-        type: string
+        type: ApiDmViewsUpdateRequestDataFiltersItemsItemValue
         docs: Value to filter by
   ApiDmViewsUpdateRequestDataFilters:
     docs: >-
@@ -417,9 +475,11 @@ types:
     docs: >-
       Filter identifier, it should start with `filter:tasks:` prefix, e.g.
       `filter:tasks:agreement`. For `task.data` fields it may look like
-      `filter:tasks:data.field_name`. Possible
-      values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement for
-      annotation results for a specific task (Enterprise
+      `filter:tasks:data.field_name`. If you need more info about columns, check
+      the [Get data manager
+      columns](#tag/Data-Manager/operation/api_dm_columns_list) API endpoint.
+      Possible values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement
+      for annotation results for a specific task (Enterprise
       only)</li><br><li>`filter:tasks:annotations_results`<br> (String)
       Annotation results for the tasks</li><br><li>`filter:tasks:annotators`<br>
       (List) Annotators that completed the task (Community). Can include
@@ -488,6 +548,20 @@ types:
       to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
       not between min and max values, so the filter `value` should be e.g.
       `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
+  ApiDmViewsUpdateResponseDataFiltersItemsItemValue:
+    discriminated: false
+    docs: Value to filter by
+    union:
+      - type: string
+        docs: String
+      - type: integer
+        docs: Integer
+      - type: double
+        docs: Float
+      - type: boolean
+        docs: Boolean
+      - docs: List of strings or integers
+        type: map<string, unknown>
   ApiDmViewsUpdateResponseDataFiltersItemsItem:
     properties:
       filter:
@@ -495,11 +569,13 @@ types:
         docs: >-
           Filter identifier, it should start with `filter:tasks:` prefix, e.g.
           `filter:tasks:agreement`. For `task.data` fields it may look like
-          `filter:tasks:data.field_name`. Possible
-          values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement for
-          annotation results for a specific task (Enterprise
-          only)</li><br><li>`filter:tasks:annotations_results`<br> (String)
-          Annotation results for the
+          `filter:tasks:data.field_name`. If you need more info about columns,
+          check the [Get data manager
+          columns](#tag/Data-Manager/operation/api_dm_columns_list) API
+          endpoint. Possible values:<br><li>`filter:tasks:agreement`<br>
+          (Number) Agreement for annotation results for a specific task
+          (Enterprise only)</li><br><li>`filter:tasks:annotations_results`<br>
+          (String) Annotation results for the
           tasks</li><br><li>`filter:tasks:annotators`<br> (List) Annotators that
           completed the task (Community). Can include assigned annotators
           (Enterprise only). Important note: the filter `type` should be List,
@@ -565,7 +641,7 @@ types:
           Integer</li><br><li>`String`<br> String</li><br><li>`Unknown`<br>
           Unknown is explicitly converted to string format</li>
       value:
-        type: string
+        type: ApiDmViewsUpdateResponseDataFiltersItemsItemValue
         docs: Value to filter by
   ApiDmViewsUpdateResponseDataFilters:
     docs: >-

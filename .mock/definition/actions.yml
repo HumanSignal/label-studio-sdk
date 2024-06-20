@@ -18,18 +18,22 @@ service:
       path: /api/dm/actions/
       method: POST
       auth: true
-      docs: Perform a Data Manager action with the selected tasks and filters.
+      docs: >-
+        Perform a Data Manager action with the selected tasks and filters. Note:
+        More complex actions require additional parameters in the request body.
+        Call `GET api/actions?project=<id>` to explore them. <br>Example: `GET
+        api/actions?id=delete_tasks&project=1`
       display-name: Post actions
       request:
         name: ActionsCreateRequest
         query-parameters:
           id:
-            type: optional<ActionsCreateRequestId>
+            type: ActionsCreateRequestId
             docs: >-
-              Action name ID, the full list of actions can be retrieved with a
-              GET request
+              Action name ID, see the full list of actions in the `GET
+              api/actions` request
           project:
-            type: optional<integer>
+            type: integer
             docs: Project ID
           view:
             type: optional<integer>
@@ -62,7 +66,25 @@ service:
                 without the `filter:` prefix. To reverse the order, add a minus
                 sign before the field name, e.g. `-tasks:created_at`.
       examples:
-        - request: {}
+        - query-parameters:
+            id: retrieve_tasks_predictions
+            project: 1
+          request:
+            filters:
+              conjunction: or
+              items:
+                - filter: filter:tasks:id
+                  operator: greater
+                  type: Number
+                  value: 123
+            selectedItems:
+              all: true
+              excluded:
+                - 124
+                - 125
+                - 126
+            ordering:
+              - tasks:total_annotations
       audiences:
         - public
 types:
@@ -136,9 +158,11 @@ types:
     docs: >-
       Filter identifier, it should start with `filter:tasks:` prefix, e.g.
       `filter:tasks:agreement`. For `task.data` fields it may look like
-      `filter:tasks:data.field_name`. Possible
-      values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement for
-      annotation results for a specific task (Enterprise
+      `filter:tasks:data.field_name`. If you need more info about columns, check
+      the [Get data manager
+      columns](#tag/Data-Manager/operation/api_dm_columns_list) API endpoint.
+      Possible values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement
+      for annotation results for a specific task (Enterprise
       only)</li><br><li>`filter:tasks:annotations_results`<br> (String)
       Annotation results for the tasks</li><br><li>`filter:tasks:annotators`<br>
       (List) Annotators that completed the task (Community). Can include
@@ -207,6 +231,20 @@ types:
       to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
       not between min and max values, so the filter `value` should be e.g.
       `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
+  ActionsCreateRequestFiltersItemsItemValue:
+    discriminated: false
+    docs: Value to filter by
+    union:
+      - type: string
+        docs: String
+      - type: integer
+        docs: Integer
+      - type: double
+        docs: Float
+      - type: boolean
+        docs: Boolean
+      - docs: List of strings or integers
+        type: map<string, unknown>
   ActionsCreateRequestFiltersItemsItem:
     properties:
       filter:
@@ -214,11 +252,13 @@ types:
         docs: >-
           Filter identifier, it should start with `filter:tasks:` prefix, e.g.
           `filter:tasks:agreement`. For `task.data` fields it may look like
-          `filter:tasks:data.field_name`. Possible
-          values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement for
-          annotation results for a specific task (Enterprise
-          only)</li><br><li>`filter:tasks:annotations_results`<br> (String)
-          Annotation results for the
+          `filter:tasks:data.field_name`. If you need more info about columns,
+          check the [Get data manager
+          columns](#tag/Data-Manager/operation/api_dm_columns_list) API
+          endpoint. Possible values:<br><li>`filter:tasks:agreement`<br>
+          (Number) Agreement for annotation results for a specific task
+          (Enterprise only)</li><br><li>`filter:tasks:annotations_results`<br>
+          (String) Annotation results for the
           tasks</li><br><li>`filter:tasks:annotators`<br> (List) Annotators that
           completed the task (Community). Can include assigned annotators
           (Enterprise only). Important note: the filter `type` should be List,
@@ -284,7 +324,7 @@ types:
           Integer</li><br><li>`String`<br> String</li><br><li>`Unknown`<br>
           Unknown is explicitly converted to string format</li>
       value:
-        type: string
+        type: ActionsCreateRequestFiltersItemsItemValue
         docs: Value to filter by
   ActionsCreateRequestFilters:
     docs: >-
