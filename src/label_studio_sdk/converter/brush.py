@@ -99,7 +99,7 @@ def decode_rle(rle, print_params: bool = False):
     return out
 
 
-def decode_from_annotation(from_name, results):
+def decode_from_annotation(results):
     """from LS annotation to {"tag_name + label_name": [numpy uint8 image (width x height)]}"""
     layers = {}
     counters = defaultdict(int)
@@ -116,7 +116,7 @@ def decode_from_annotation(from_name, results):
         width = result["original_width"]
         height = result["original_height"]
         labels = result[key] if key in result else ["no_label"]
-        name = from_name + "-" + "-".join(labels)
+        name = "".join(labels)
 
         # result count
         i = str(counters[name])
@@ -129,37 +129,17 @@ def decode_from_annotation(from_name, results):
 
 
 def save_brush_images_from_annotation(
-    task_id,
-    annotation_id,
-    completed_by,
-    from_name,
+    image_name,
     results,
     out_dir,
     out_format="numpy",
 ):
-    layers = decode_from_annotation(from_name, results)
-    if isinstance(completed_by, dict):
-        email = completed_by.get("email", "")
-    else:
-        email = str(completed_by)
-    email = "".join(
-        x for x in email if x.isalnum() or x == "@" or x == "."
-    )  # sanitize filename
+    layers = decode_from_annotation(results)
+    image_base = image_name.split('.')[0]
 
     for name in layers:
         sanitized_name = name.replace("/", "-").replace("\\", "-")
-
-        filename = os.path.join(
-            out_dir,
-            "task-"
-            + str(task_id)
-            + "-annotation-"
-            + str(annotation_id)
-            + "-by-"
-            + email
-            + "-"
-            + sanitized_name,
-        )
+        filename = os.path.join(out_dir,image_base+"-"+sanitized_name)
         image = layers[name]
         logger.debug(f"Save image to {filename}")
         if out_format == "numpy":
@@ -175,10 +155,7 @@ def convert_task(item, out_dir, out_format="numpy"):
     """Task with multiple annotations to brush images, out_format = numpy | png"""
     for from_name, results in item["output"].items():
         save_brush_images_from_annotation(
-            item["id"],
-            item["annotation_id"],
-            item["completed_by"],
-            from_name,
+            os.path.basename(item["input"]["image"]),
             results,
             out_dir,
             out_format,
