@@ -3,5 +3,6 @@
 from .projects_create_response import ProjectsCreateResponse
 from .projects_import_tasks_response import ProjectsImportTasksResponse
 from .projects_list_response import ProjectsListResponse
+from .projects_update_response import ProjectsUpdateResponse
 
-__all__ = ["ProjectsCreateResponse", "ProjectsImportTasksResponse", "ProjectsListResponse"]
+__all__ = ["ProjectsCreateResponse", "ProjectsImportTasksResponse", "ProjectsListResponse", "ProjectsUpdateResponse"]
