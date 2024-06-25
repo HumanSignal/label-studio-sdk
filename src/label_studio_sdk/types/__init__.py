@@ -3,14 +3,22 @@
 from .annotation import Annotation
 from .annotation_filter_options import AnnotationFilterOptions
 from .annotation_last_action import AnnotationLastAction
+from .annotations_dm_field import AnnotationsDmField
+from .annotations_dm_field_last_action import AnnotationsDmFieldLastAction
 from .azure_blob_export_storage import AzureBlobExportStorage
 from .azure_blob_export_storage_status import AzureBlobExportStorageStatus
 from .azure_blob_import_storage import AzureBlobImportStorage
 from .azure_blob_import_storage_status import AzureBlobImportStorageStatus
 from .base_task import BaseTask
+from .base_task_file_upload import BaseTaskFileUpload
+from .base_task_updated_by import BaseTaskUpdatedBy
 from .base_user import BaseUser
 from .converted_format import ConvertedFormat
 from .converted_format_status import ConvertedFormatStatus
+from .data_manager_task_serializer import DataManagerTaskSerializer
+from .data_manager_task_serializer_annotators_item import DataManagerTaskSerializerAnnotatorsItem
+from .data_manager_task_serializer_drafts_item import DataManagerTaskSerializerDraftsItem
+from .data_manager_task_serializer_predictions_item import DataManagerTaskSerializerPredictionsItem
 from .export import Export
 from .export_convert import ExportConvert
 from .export_create import ExportCreate
@@ -48,6 +56,7 @@ from .s3import_storage_status import S3ImportStorageStatus
 from .serialization_option import SerializationOption
 from .serialization_options import SerializationOptions
 from .task import Task
+from .task_annotators_item import TaskAnnotatorsItem
 from .task_filter_options import TaskFilterOptions
 from .user_simple import UserSimple
 from .view import View
@@ -60,14 +69,22 @@ __all__ = [
     "Annotation",
     "AnnotationFilterOptions",
     "AnnotationLastAction",
+    "AnnotationsDmField",
+    "AnnotationsDmFieldLastAction",
     "AzureBlobExportStorage",
     "AzureBlobExportStorageStatus",
     "AzureBlobImportStorage",
     "AzureBlobImportStorageStatus",
     "BaseTask",
+    "BaseTaskFileUpload",
+    "BaseTaskUpdatedBy",
     "BaseUser",
     "ConvertedFormat",
     "ConvertedFormatStatus",
+    "DataManagerTaskSerializer",
+    "DataManagerTaskSerializerAnnotatorsItem",
+    "DataManagerTaskSerializerDraftsItem",
+    "DataManagerTaskSerializerPredictionsItem",
     "Export",
     "ExportConvert",
     "ExportCreate",
@@ -105,6 +122,7 @@ __all__ = [
     "SerializationOption",
     "SerializationOptions",
     "Task",
+    "TaskAnnotatorsItem",
     "TaskFilterOptions",
     "UserSimple",
     "View",
