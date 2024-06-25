@@ -1499,6 +1499,22 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+  BaseTaskUpdatedBy:
+    discriminated: false
+    docs: Last annotator or reviewer who updated this task
+    union:
+      - type: optional<integer>
+        docs: Last annotator who updated this task
+      - type: optional<list<map<string, unknown>>>
+        docs: Last annotators or reviewers who updated this task
+  BaseTaskFileUpload:
+    discriminated: false
+    docs: Uploaded file used as data source for this task
+    union:
+      - type: optional<string>
+        docs: Uploaded file used as data source for this task
+      - type: optional<integer>
+        docs: Uploaded file ID used as data source for this task
   BaseTask:
     properties:
       id: optional<integer>
@@ -1555,10 +1571,10 @@ types:
         type: optional<integer>
         docs: Project ID for this task
       updated_by:
-        type: optional<integer>
+        type: optional<BaseTaskUpdatedBy>
         docs: Last annotator or reviewer who updated this task
       file_upload:
-        type: optional<integer>
+        type: optional<BaseTaskFileUpload>
         docs: Uploaded file used as data source for this task
       comment_authors:
         type: optional<list<integer>>

@@ -87,8 +87,8 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "unresolved_comment_count": 0,
         "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "project": 1,
-        "updated_by": 1,
-        "file_upload": 1,
+        "updated_by": [{"user_id": 1}],
+        "file_upload": "42d46c4c-my-pic.jpeg",
         "comment_authors": [1],
     }
     expected_types: typing.Any = {
@@ -107,8 +107,8 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "unresolved_comment_count": "integer",
         "last_comment_updated_at": "datetime",
         "project": "integer",
-        "updated_by": "integer",
-        "file_upload": "integer",
+        "updated_by": ("list", {0: ("dict", {0: (None, None)})}),
+        "file_upload": None,
         "comment_authors": ("list", {0: "integer"}),
     }
     response = client.tasks.create(data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1)
@@ -291,8 +291,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "unresolved_comment_count": 0,
         "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "project": 1,
-        "updated_by": 1,
-        "file_upload": 1,
+        "updated_by": [{"user_id": 1}],
+        "file_upload": "42d46c4c-my-pic.jpeg",
         "comment_authors": [1],
     }
     expected_types: typing.Any = {
@@ -311,8 +311,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "unresolved_comment_count": "integer",
         "last_comment_updated_at": "datetime",
         "project": "integer",
-        "updated_by": "integer",
-        "file_upload": "integer",
+        "updated_by": ("list", {0: ("dict", {0: (None, None)})}),
+        "file_upload": None,
         "comment_authors": ("list", {0: "integer"}),
     }
     response = client.tasks.update(

@@ -10,6 +10,8 @@ from .azure_blob_export_storage_status import AzureBlobExportStorageStatus
 from .azure_blob_import_storage import AzureBlobImportStorage
 from .azure_blob_import_storage_status import AzureBlobImportStorageStatus
 from .base_task import BaseTask
+from .base_task_file_upload import BaseTaskFileUpload
+from .base_task_updated_by import BaseTaskUpdatedBy
 from .base_user import BaseUser
 from .converted_format import ConvertedFormat
 from .converted_format_status import ConvertedFormatStatus
@@ -74,6 +76,8 @@ __all__ = [
     "AzureBlobImportStorage",
     "AzureBlobImportStorageStatus",
     "BaseTask",
+    "BaseTaskFileUpload",
+    "BaseTaskUpdatedBy",
     "BaseUser",
     "ConvertedFormat",
     "ConvertedFormatStatus",
