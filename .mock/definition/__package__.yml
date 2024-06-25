@@ -1658,6 +1658,11 @@ types:
       result: optional<list<map<string, unknown>>>
       created_at: optional<datetime>
       updated_at: optional<datetime>
+  DataManagerTaskSerializerAnnotatorsItem:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
   DataManagerTaskSerializer:
     properties:
       id: optional<integer>
@@ -1669,7 +1674,7 @@ types:
         type: optional<list<DataManagerTaskSerializerDraftsItem>>
         docs: Drafts for this task
       annotators:
-        type: optional<list<integer>>
+        type: optional<list<DataManagerTaskSerializerAnnotatorsItem>>
         docs: Annotators who annotated this task
       inner_id: optional<integer>
       cancelled_annotations: optional<integer>
