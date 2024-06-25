@@ -50,7 +50,7 @@ def poll_for_completed_tasks_new(
             project=project_id,
             query=json.dumps({"filters": filters}),
             # can't use fields='all' because of maybe-nonexistent task fields
-            fields='all',
+            fields="all",
             # fields=['image', 'annotations'],
         )
         yield from tasks
