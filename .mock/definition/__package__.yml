@@ -1819,6 +1819,11 @@ types:
       updated_at:
         type: optional<datetime>
         docs: Last update time
+  TaskAnnotatorsItem:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
   Task:
     properties:
       id:
@@ -1834,8 +1839,8 @@ types:
         type: optional<list<map<string, unknown>>>
         docs: Drafts for this task
       annotators:
-        type: optional<list<integer>>
-        docs: List of annotators' IDs for this task
+        type: optional<list<TaskAnnotatorsItem>>
+        docs: List of annotators for this task
       inner_id:
         type: optional<integer>
         docs: Inner ID of the task

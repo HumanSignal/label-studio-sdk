@@ -53,6 +53,7 @@ from .s3import_storage_status import S3ImportStorageStatus
 from .serialization_option import SerializationOption
 from .serialization_options import SerializationOptions
 from .task import Task
+from .task_annotators_item import TaskAnnotatorsItem
 from .task_filter_options import TaskFilterOptions
 from .user_simple import UserSimple
 from .view import View
@@ -115,6 +116,7 @@ __all__ = [
     "SerializationOption",
     "SerializationOptions",
     "Task",
+    "TaskAnnotatorsItem",
     "TaskFilterOptions",
     "UserSimple",
     "View",
