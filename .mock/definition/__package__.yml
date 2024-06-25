@@ -1670,7 +1670,7 @@ types:
         docs: Drafts for this task
       annotators:
         type: optional<list<integer>>
-        docs: Annotators IDs who annotated this task
+        docs: Annotators who annotated this task
       inner_id: optional<integer>
       cancelled_annotations: optional<integer>
       total_annotations: optional<integer>

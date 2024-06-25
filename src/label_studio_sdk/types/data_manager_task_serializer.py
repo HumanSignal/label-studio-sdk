@@ -27,7 +27,7 @@ class DataManagerTaskSerializer(pydantic_v1.BaseModel):
 
     annotators: typing.Optional[typing.List[int]] = pydantic_v1.Field(default=None)
     """
-    Annotators IDs who annotated this task
+    Annotators who annotated this task
     """
 
     inner_id: typing.Optional[int] = None
