@@ -16,6 +16,7 @@ from .exports.client import AsyncExportsClient, ExportsClient
 from .types.projects_create_response import ProjectsCreateResponse
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from .types.projects_list_response import ProjectsListResponse
+from .types.projects_update_response import ProjectsUpdateResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -303,7 +304,25 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def update(self, id: int, *, request: Project, request_options: typing.Optional[RequestOptions] = None) -> Project:
+    def update(
+        self,
+        id: int,
+        *,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        label_config: typing.Optional[str] = OMIT,
+        expert_instruction: typing.Optional[str] = OMIT,
+        show_instruction: typing.Optional[bool] = OMIT,
+        show_skip_button: typing.Optional[bool] = OMIT,
+        enable_empty_annotation: typing.Optional[bool] = OMIT,
+        show_annotation_history: typing.Optional[bool] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsUpdateResponse:
         """
         Update the project settings for a specific project. For more information, see the following:
 
@@ -324,19 +343,55 @@ class ProjectsClient:
         id : int
             A unique integer value identifying this project.
 
-        request : Project
+        title : typing.Optional[str]
+            Project title
+
+        description : typing.Optional[str]
+            Project description
+
+        label_config : typing.Optional[str]
+            Label config in XML format
+
+        expert_instruction : typing.Optional[str]
+            Labeling instructions to show to the user
+
+        show_instruction : typing.Optional[bool]
+            Show labeling instructions
+
+        show_skip_button : typing.Optional[bool]
+            Show skip button
+
+        enable_empty_annotation : typing.Optional[bool]
+            Allow empty annotations
+
+        show_annotation_history : typing.Optional[bool]
+            Show annotation history
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal preannotations interactively. If set to True, predictions will be shown to the user only after selecting the area of interest
+
+        show_collab_predictions : typing.Optional[bool]
+            Show predictions to annotators
+
+        maximum_annotations : typing.Optional[int]
+            Maximum annotations per task
+
+        color : typing.Optional[str]
+            Project color in HEX format
+
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Project
+        ProjectsUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import Project
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -344,18 +399,31 @@ class ProjectsClient:
         )
         client.projects.update(
             id=1,
-            request=Project(),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/",
             method="PATCH",
-            json=request,
+            json={
+                "title": title,
+                "description": description,
+                "label_config": label_config,
+                "expert_instruction": expert_instruction,
+                "show_instruction": show_instruction,
+                "show_skip_button": show_skip_button,
+                "enable_empty_annotation": enable_empty_annotation,
+                "show_annotation_history": show_annotation_history,
+                "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "show_collab_predictions": show_collab_predictions,
+                "maximum_annotations": maximum_annotations,
+                "color": color,
+                "control_weights": control_weights,
+            },
             request_options=request_options,
             omit=OMIT,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(ProjectsUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -820,8 +888,24 @@ class AsyncProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: Project, request_options: typing.Optional[RequestOptions] = None
-    ) -> Project:
+        self,
+        id: int,
+        *,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        label_config: typing.Optional[str] = OMIT,
+        expert_instruction: typing.Optional[str] = OMIT,
+        show_instruction: typing.Optional[bool] = OMIT,
+        show_skip_button: typing.Optional[bool] = OMIT,
+        enable_empty_annotation: typing.Optional[bool] = OMIT,
+        show_annotation_history: typing.Optional[bool] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsUpdateResponse:
         """
         Update the project settings for a specific project. For more information, see the following:
 
@@ -842,19 +926,55 @@ class AsyncProjectsClient:
         id : int
             A unique integer value identifying this project.
 
-        request : Project
+        title : typing.Optional[str]
+            Project title
+
+        description : typing.Optional[str]
+            Project description
+
+        label_config : typing.Optional[str]
+            Label config in XML format
+
+        expert_instruction : typing.Optional[str]
+            Labeling instructions to show to the user
+
+        show_instruction : typing.Optional[bool]
+            Show labeling instructions
+
+        show_skip_button : typing.Optional[bool]
+            Show skip button
+
+        enable_empty_annotation : typing.Optional[bool]
+            Allow empty annotations
+
+        show_annotation_history : typing.Optional[bool]
+            Show annotation history
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal preannotations interactively. If set to True, predictions will be shown to the user only after selecting the area of interest
+
+        show_collab_predictions : typing.Optional[bool]
+            Show predictions to annotators
+
+        maximum_annotations : typing.Optional[int]
+            Maximum annotations per task
+
+        color : typing.Optional[str]
+            Project color in HEX format
+
+        control_weights : typing.Optional[typing.Dict[str, typing.Any]]
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Project
+        ProjectsUpdateResponse
 
 
         Examples
         --------
-        from label_studio_sdk import Project
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -862,18 +982,31 @@ class AsyncProjectsClient:
         )
         await client.projects.update(
             id=1,
-            request=Project(),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/",
             method="PATCH",
-            json=request,
+            json={
+                "title": title,
+                "description": description,
+                "label_config": label_config,
+                "expert_instruction": expert_instruction,
+                "show_instruction": show_instruction,
+                "show_skip_button": show_skip_button,
+                "enable_empty_annotation": enable_empty_annotation,
+                "show_annotation_history": show_annotation_history,
+                "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "show_collab_predictions": show_collab_predictions,
+                "maximum_annotations": maximum_annotations,
+                "color": color,
+                "control_weights": control_weights,
+            },
             request_options=request_options,
             omit=OMIT,
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(ProjectsUpdateResponse, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
