@@ -10,10 +10,13 @@ from .azure_blob_export_storage_status import AzureBlobExportStorageStatus
 from .azure_blob_import_storage import AzureBlobImportStorage
 from .azure_blob_import_storage_status import AzureBlobImportStorageStatus
 from .base_task import BaseTask
+from .base_task_file_upload import BaseTaskFileUpload
+from .base_task_updated_by import BaseTaskUpdatedBy
 from .base_user import BaseUser
 from .converted_format import ConvertedFormat
 from .converted_format_status import ConvertedFormatStatus
 from .data_manager_task_serializer import DataManagerTaskSerializer
+from .data_manager_task_serializer_annotators_item import DataManagerTaskSerializerAnnotatorsItem
 from .data_manager_task_serializer_drafts_item import DataManagerTaskSerializerDraftsItem
 from .data_manager_task_serializer_predictions_item import DataManagerTaskSerializerPredictionsItem
 from .export import Export
@@ -53,6 +56,7 @@ from .s3import_storage_status import S3ImportStorageStatus
 from .serialization_option import SerializationOption
 from .serialization_options import SerializationOptions
 from .task import Task
+from .task_annotators_item import TaskAnnotatorsItem
 from .task_filter_options import TaskFilterOptions
 from .user_simple import UserSimple
 from .view import View
@@ -72,10 +76,13 @@ __all__ = [
     "AzureBlobImportStorage",
     "AzureBlobImportStorageStatus",
     "BaseTask",
+    "BaseTaskFileUpload",
+    "BaseTaskUpdatedBy",
     "BaseUser",
     "ConvertedFormat",
     "ConvertedFormatStatus",
     "DataManagerTaskSerializer",
+    "DataManagerTaskSerializerAnnotatorsItem",
     "DataManagerTaskSerializerDraftsItem",
     "DataManagerTaskSerializerPredictionsItem",
     "Export",
@@ -115,6 +122,7 @@ __all__ = [
     "SerializationOption",
     "SerializationOptions",
     "Task",
+    "TaskAnnotatorsItem",
     "TaskFilterOptions",
     "UserSimple",
     "View",
