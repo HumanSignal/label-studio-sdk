@@ -135,7 +135,7 @@ def save_brush_images_from_annotation(
     out_format="numpy",
 ):
     layers = decode_from_annotation(results)
-    image_base = image_name.split('.')[0]
+    image_base = ".".join(image_name.split('.')[0:-1])
 
     for name in layers:
         sanitized_name = name.replace("/", "-").replace("\\", "-")
