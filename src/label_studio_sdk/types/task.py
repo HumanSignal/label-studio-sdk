@@ -5,6 +5,7 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from .task_annotators_item import TaskAnnotatorsItem
 
 
 class Task(pydantic_v1.BaseModel):
@@ -28,9 +29,9 @@ class Task(pydantic_v1.BaseModel):
     Drafts for this task
     """
 
-    annotators: typing.Optional[typing.List[int]] = pydantic_v1.Field(default=None)
+    annotators: typing.Optional[typing.List[TaskAnnotatorsItem]] = pydantic_v1.Field(default=None)
     """
-    List of annotators' IDs for this task
+    List of annotators for this task
     """
 
     inner_id: typing.Optional[int] = pydantic_v1.Field(default=None)

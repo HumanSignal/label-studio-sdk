@@ -11,10 +11,13 @@ from .types import (
     AzureBlobImportStorage,
     AzureBlobImportStorageStatus,
     BaseTask,
+    BaseTaskFileUpload,
+    BaseTaskUpdatedBy,
     BaseUser,
     ConvertedFormat,
     ConvertedFormatStatus,
     DataManagerTaskSerializer,
+    DataManagerTaskSerializerAnnotatorsItem,
     DataManagerTaskSerializerDraftsItem,
     DataManagerTaskSerializerPredictionsItem,
     Export,
@@ -54,6 +57,7 @@ from .types import (
     SerializationOption,
     SerializationOptions,
     Task,
+    TaskAnnotatorsItem,
     TaskFilterOptions,
     UserSimple,
     View,
@@ -102,7 +106,7 @@ from .ml import (
     MlUpdateResponse,
     MlUpdateResponseAuthMethod,
 )
-from .projects import ProjectsCreateResponse, ProjectsImportTasksResponse, ProjectsListResponse
+from .projects import ProjectsCreateResponse, ProjectsImportTasksResponse, ProjectsListResponse, ProjectsUpdateResponse
 from .tasks import TasksListRequestFields, TasksListResponse
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
 from .version import __version__
@@ -149,11 +153,14 @@ __all__ = [
     "AzureBlobImportStorageStatus",
     "BadRequestError",
     "BaseTask",
+    "BaseTaskFileUpload",
+    "BaseTaskUpdatedBy",
     "BaseUser",
     "Client",
     "ConvertedFormat",
     "ConvertedFormatStatus",
     "DataManagerTaskSerializer",
+    "DataManagerTaskSerializerAnnotatorsItem",
     "DataManagerTaskSerializerDraftsItem",
     "DataManagerTaskSerializerPredictionsItem",
     "Export",
@@ -195,6 +202,7 @@ __all__ = [
     "ProjectsCreateResponse",
     "ProjectsImportTasksResponse",
     "ProjectsListResponse",
+    "ProjectsUpdateResponse",
     "RedisExportStorage",
     "RedisExportStorageStatus",
     "RedisImportStorage",
@@ -206,6 +214,7 @@ __all__ = [
     "SerializationOption",
     "SerializationOptions",
     "Task",
+    "TaskAnnotatorsItem",
     "TaskFilterOptions",
     "TasksListRequestFields",
     "TasksListResponse",

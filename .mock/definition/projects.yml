@@ -66,6 +66,59 @@ types:
           first label Car should be twice as important as Airplane, then you
           need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
           {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
+  ProjectsUpdateResponse:
+    docs: Project
+    properties:
+      title:
+        type: optional<string>
+        docs: Project title
+      description:
+        type: optional<string>
+        docs: Project description
+      label_config:
+        type: optional<string>
+        docs: Label config in XML format
+      expert_instruction:
+        type: optional<string>
+        docs: Labeling instructions to show to the user
+      show_instruction:
+        type: optional<boolean>
+        docs: Show labeling instructions
+      show_skip_button:
+        type: optional<boolean>
+        docs: Show skip button
+      enable_empty_annotation:
+        type: optional<boolean>
+        docs: Allow empty annotations
+      show_annotation_history:
+        type: optional<boolean>
+        docs: Show annotation history
+      reveal_preannotations_interactively:
+        type: optional<boolean>
+        docs: >-
+          Reveal preannotations interactively. If set to True, predictions will
+          be shown to the user only after selecting the area of interest
+      show_collab_predictions:
+        type: optional<boolean>
+        docs: Show predictions to annotators
+      maximum_annotations:
+        type: optional<integer>
+        docs: Maximum annotations per task
+      color:
+        type: optional<string>
+        docs: Project color in HEX format
+        default: '#FFFFFF'
+      control_weights:
+        type: optional<map<string, unknown>>
+        docs: >-
+          Dict of weights for each control tag in metric calculation. Each
+          control tag (e.g. label or choice) will have its own key in control
+          weight dict with weight for each label and overall weight. For
+          example, if a bounding box annotation with a control tag named my_bbox
+          should be included with 0.33 weight in agreement calculation, and the
+          first label Car should be twice as important as Airplane, then you
+          need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
   ProjectsImportTasksResponse:
     docs: Task creation response
     properties:
@@ -460,68 +513,89 @@ service:
           docs: A unique integer value identifying this project.
       display-name: Update a project
       request:
-        body: root.Project
+        name: ProjectsUpdateRequest
+        body:
+          properties:
+            title:
+              type: optional<string>
+              docs: Project title
+            description:
+              type: optional<string>
+              docs: Project description
+            label_config:
+              type: optional<string>
+              docs: Label config in XML format
+            expert_instruction:
+              type: optional<string>
+              docs: Labeling instructions to show to the user
+            show_instruction:
+              type: optional<boolean>
+              docs: Show labeling instructions
+            show_skip_button:
+              type: optional<boolean>
+              docs: Show skip button
+            enable_empty_annotation:
+              type: optional<boolean>
+              docs: Allow empty annotations
+            show_annotation_history:
+              type: optional<boolean>
+              docs: Show annotation history
+            reveal_preannotations_interactively:
+              type: optional<boolean>
+              docs: >-
+                Reveal preannotations interactively. If set to True, predictions
+                will be shown to the user only after selecting the area of
+                interest
+            show_collab_predictions:
+              type: optional<boolean>
+              docs: Show predictions to annotators
+            maximum_annotations:
+              type: optional<integer>
+              docs: Maximum annotations per task
+            color:
+              type: optional<string>
+              docs: Project color in HEX format
+              default: '#FFFFFF'
+            control_weights:
+              type: optional<map<string, unknown>>
+              docs: >-
+                Dict of weights for each control tag in metric calculation. Each
+                control tag (e.g. label or choice) will have its own key in
+                control weight dict with weight for each label and overall
+                weight. For example, if a bounding box annotation with a control
+                tag named my_bbox should be included with 0.33 weight in
+                agreement calculation, and the first label Car should be twice
+                as important as Airplane, then you need to specify: {'my_bbox':
+                {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane':
+                0.5}, 'overall': 0.33}
       response:
         docs: ''
-        type: root.Project
+        type: ProjectsUpdateResponse
       examples:
         - path-parameters:
             id: 1
           request: {}
           response:
             body:
-              id: 1
-              title: title
-              description: description
-              label_config: label_config
-              expert_instruction: expert_instruction
+              title: My project
+              description: My first project
+              label_config: <View>[...]</View>
+              expert_instruction: Label all cats
               show_instruction: true
               show_skip_button: true
               enable_empty_annotation: true
               show_annotation_history: true
-              organization: 1
-              color: color
-              maximum_annotations: 1
-              is_published: true
-              model_version: model_version
-              is_draft: true
-              created_by:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                email: email
-                avatar: avatar
-              created_at: '2024-01-15T09:30:00Z'
-              min_annotations_to_start_training: 1
-              start_training_on_annotation_update: start_training_on_annotation_update
-              show_collab_predictions: true
-              num_tasks_with_annotations: 1
-              task_number: 1
-              useful_annotation_number: 1
-              ground_truth_number: 1
-              skipped_annotations_number: 1
-              total_annotations_number: 1
-              total_predictions_number: 1
-              sampling: Sequential sampling
-              show_ground_truth_first: true
-              show_overlap_first: true
-              overlap_cohort_percentage: 1
-              task_data_login: task_data_login
-              task_data_password: task_data_password
-              control_weights:
-                control_weights:
-                  key: value
-              parsed_label_config:
-                parsed_label_config:
-                  key: value
-              evaluate_predictions_automatically: true
-              config_has_control_tags: config_has_control_tags
-              skip_queue: REQUEUE_FOR_ME
               reveal_preannotations_interactively: true
-              pinned_at: '2024-01-15T09:30:00Z'
-              finished_task_number: 1
-              queue_total: queue_total
-              queue_done: queue_done
+              show_collab_predictions: true
+              maximum_annotations: 1
+              color: color
+              control_weights:
+                my_bbox:
+                  type: RectangleLabels
+                  labels:
+                    Car: 1
+                    Airplaine: 0.5
+                  overall: 0.33
       audiences:
         - public
     import_tasks:
