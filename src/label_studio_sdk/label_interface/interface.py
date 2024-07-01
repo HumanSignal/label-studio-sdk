@@ -192,7 +192,7 @@ class LabelInterface:
     """
 
     @classmethod
-    def create(cls, tags, mapping=None, title=None, pretty=True):
+    def create(cls, tags, mapping=None, title=None, style=None, pretty=True):
         """ Simple way of create UI config, it helps you not to thing much about the name/toName mapping
 
         LabelInterface.create_simple({
@@ -202,8 +202,31 @@ class LabelInterface:
         """
         tuples = CE.convert_tags_description(tags, mapping=mapping)
 
-        if title:
+        if isinstance(title, str):
             tuples = (("Header", { "value": title }, {}),) + tuples
+
+        # in case we have either title or style, then we can iterate
+        # through the tuples and modify the tree
+        if isinstance(title, dict) or isinstance(style, dict):
+            new_tuples = []
+            for t in tuples:
+                tag, attributes, children = t
+                name = attributes.get("name", None)
+
+                # prepend Header tag to the list
+                if isinstance(title, dict) and name in title:
+                    title_tag = ("Header", { "value": title.get(name) }, {})
+                    new_tuples.append(title_tag)
+
+                # modify the style of the element by wrapping it into
+                # a View with style
+                if isinstance(style, dict) and name in style:
+                    parent_tag = ("View", { "style": style.get(name) }, (t,))
+                    new_tuples.append(parent_tag)
+                else:
+                    new_tuples.append(t)
+
+            tuples = new_tuples
         
         tree = CE.tree_from_tuples(*tuples)
         
