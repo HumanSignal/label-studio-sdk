@@ -32,8 +32,7 @@ service:
           response:
             body:
               columns:
-                '0':
-                  id: id
+                - id: id
                   title: ID
                   type: Number
                   help: Task ID
@@ -42,8 +41,7 @@ service:
                     explore: true
                     labeling: false
                   project_defined: false
-                '1':
-                  id: completed_at
+                - id: completed_at
                   title: Completed
                   type: Datetime
                   target: tasks

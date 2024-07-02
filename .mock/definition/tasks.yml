@@ -189,14 +189,13 @@ service:
                 - id: 1
                   predictions:
                     - result:
-                        '0':
-                          from_name: sentiment
+                        - from_name: sentiment
                           to_name: text
                           type: choices
                           value:
                             value:
                               choices:
-                                '0': POSITIVE
+                                - POSITIVE
                       score: 0.9
                       model_version: '1.0'
                       task: 1
@@ -204,14 +203,13 @@ service:
                       updated_at: '2021-01-01T00:00:00Z'
                   annotations:
                     - result:
-                        '0':
-                          from_name: sentiment
+                        - from_name: sentiment
                           to_name: text
                           type: choices
                           value:
                             value:
                               choices:
-                                '0': POSITIVE
+                                - POSITIVE
                       created_at: '2021-01-01T00:00:00Z'
                       updated_at: '2021-01-01T00:00:00Z'
                       completed_by: 1
