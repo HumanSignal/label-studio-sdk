@@ -64,3 +64,26 @@ def test_create_simple():
                ('Choice', {'value': 'two'}, {})
            )) ]
 
+
+def test_create_taxonomy():
+    label_names = ("1", "2", ("3", "4", ("5", "6")))
+    res = CE.taxonomy(label_names)
+
+    assert res == \
+        ('Taxonomy',
+        {},
+        (('Choice', {'value': '1'}, {}),
+            ('Choice', {'value': '2'}, {}),
+            ('Choice',
+                {'value': '3'},
+                (('Choice', {'value': '4'}, {}), ('Choice', {'value': ('5', '6')}, {})))))
+
+
+def test_create_image_labels():
+    tag_type = "RectangleLabels"
+    label_names = ("hello", "world")
+    
+    res = CE.labels(label_names, tag_type=tag_type)
+
+    assert res[0] is tag_type
+    assert len(res[2]) is len(label_names)
