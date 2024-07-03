@@ -192,7 +192,7 @@ class LabelInterface:
     """
 
     @classmethod
-    def create(cls, tags, mapping=None, title=None, style=None, pretty=True):
+    def create(cls, tags, mapping=None, title=None, style=None, pretty=True, *args, **kwargs):
         """ Simple way of create UI config, it helps you not to thing much about the name/toName mapping
 
         LabelInterface.create_simple({
@@ -232,6 +232,25 @@ class LabelInterface:
         
         return CE.tree_to_string(tree, pretty=pretty)
 
+    
+    @classmethod
+    def create_instance(cls, *args, **kwargs):
+        """Create instance is a shortcut to create a config and then
+        parse it right away returning the LabelInterface object
+
+        ```
+        li = LabelInterface.create_instance({ "txt": "Text", "lbl": labels(("person", "org")) })
+        lbl = li.get_control("lbl")
+        reg = lbl.label("person", start=0, end=10)
+        ```
+        
+        The above returns a region that could be serialized to Label
+        Studio JSON format and uploaded to Label Studio
+
+        """
+        config = cls.create(*args, **kwargs)
+        return cls(config=config, **kwargs)
+    
     
     def __init__(self, config: str, tags_mapping=None, *args, **kwargs):
         """
