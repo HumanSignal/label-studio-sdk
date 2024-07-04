@@ -24,8 +24,8 @@ class LabelStudioTag(BaseModel):
         The tag name
     """
 
-    attr: Optional[Dict]
-    tag: Optional[str]
+    attr: Optional[Dict] = {}
+    tag: Optional[str] = ""
 
     def match(
         self,
