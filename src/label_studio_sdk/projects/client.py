@@ -311,6 +311,7 @@ class ProjectsClient:
         title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         label_config: typing.Optional[str] = OMIT,
+        assigned_annotators: typing.Optional[typing.List[int]] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
         show_instruction: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
@@ -351,6 +352,9 @@ class ProjectsClient:
 
         label_config : typing.Optional[str]
             Label config in XML format
+
+        assigned_annotators : typing.Optional[typing.List[int]]
+            List of annotator IDs assigned to the project
 
         expert_instruction : typing.Optional[str]
             Labeling instructions to show to the user
@@ -408,6 +412,7 @@ class ProjectsClient:
                 "title": title,
                 "description": description,
                 "label_config": label_config,
+                "assigned_annotators": assigned_annotators,
                 "expert_instruction": expert_instruction,
                 "show_instruction": show_instruction,
                 "show_skip_button": show_skip_button,
