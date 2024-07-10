@@ -98,7 +98,7 @@ class FilesClient:
     def update(
         self, id: int, *, request: FileUpload, request_options: typing.Optional[RequestOptions] = None
     ) -> FileUpload:
-        """
+        r"""
         Update a specific uploaded file. To get the file upload ID, use [Get files list](list).
 
         You will need to include the file data in the request body. For example:
@@ -369,7 +369,7 @@ class AsyncFilesClient:
     async def update(
         self, id: int, *, request: FileUpload, request_options: typing.Optional[RequestOptions] = None
     ) -> FileUpload:
-        """
+        r"""
         Update a specific uploaded file. To get the file upload ID, use [Get files list](list).
 
         You will need to include the file data in the request body. For example:

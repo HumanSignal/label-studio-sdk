@@ -32,7 +32,6 @@ class Project(pydantic_v1.BaseModel):
     List of annotator IDs assigned to the project
     """
 
-
     expert_instruction: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Labeling instructions in HTML format
