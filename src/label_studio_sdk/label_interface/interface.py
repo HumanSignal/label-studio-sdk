@@ -22,6 +22,7 @@ from label_studio_sdk._legacy.exceptions import (
     LabelStudioValidationErrorSentryIgnored,
 )
 
+from .base import LabelStudioTag
 from .control_tags import (
     ControlTag,
     ChoicesTag,
@@ -30,6 +31,7 @@ from .control_tags import (
 from .object_tags import ObjectTag
 from .label_tags import LabelTag
 from .objects import AnnotationValue, TaskValue, PredictionValue
+from . import create as CE
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -189,6 +191,67 @@ class LabelInterface:
     ```
     """
 
+    @classmethod
+    def create(cls, tags, mapping=None, title=None, style=None, pretty=True, *args, **kwargs):
+        """ Simple way of create UI config, it helps you not to thing much about the name/toName mapping
+
+        LabelInterface.create_simple({
+          "txt": "Text",
+          "chc": choices("positive", "negative")
+        })
+        """
+        tuples = CE.convert_tags_description(tags, mapping=mapping)
+
+        if isinstance(title, str):
+            tuples = (("Header", { "value": title }, {}),) + tuples
+
+        # in case we have either title or style, then we can iterate
+        # through the tuples and modify the tree
+        if isinstance(title, dict) or isinstance(style, dict):
+            new_tuples = []
+            for t in tuples:
+                tag, attributes, children = t
+                name = attributes.get("name", None)
+
+                # prepend Header tag to the list
+                if isinstance(title, dict) and name in title:
+                    title_tag = ("Header", { "value": title.get(name) }, {})
+                    new_tuples.append(title_tag)
+
+                # modify the style of the element by wrapping it into
+                # a View with style
+                if isinstance(style, dict) and name in style:
+                    parent_tag = ("View", { "style": style.get(name) }, (t,))
+                    new_tuples.append(parent_tag)
+                else:
+                    new_tuples.append(t)
+
+            tuples = new_tuples
+        
+        tree = CE.tree_from_tuples(*tuples)
+        
+        return CE.tree_to_string(tree, pretty=pretty)
+
+    
+    @classmethod
+    def create_instance(cls, *args, **kwargs):
+        """Create instance is a shortcut to create a config and then
+        parse it right away returning the LabelInterface object
+
+        ```
+        li = LabelInterface.create_instance({ "txt": "Text", "lbl": labels(("person", "org")) })
+        lbl = li.get_control("lbl")
+        reg = lbl.label("person", start=0, end=10)
+        ```
+        
+        The above returns a region that could be serialized to Label
+        Studio JSON format and uploaded to Label Studio
+
+        """
+        config = cls.create(*args, **kwargs)
+        return cls(config=config, **kwargs)
+    
+    
     def __init__(self, config: str, tags_mapping=None, *args, **kwargs):
         """
         Initialize a LabelInterface instance using a config string.
