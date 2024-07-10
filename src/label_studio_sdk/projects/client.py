@@ -311,6 +311,7 @@ class ProjectsClient:
         title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         label_config: typing.Optional[str] = OMIT,
+        assigned_annotators: typing.Optional[typing.List[int]] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
         show_instruction: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
@@ -351,6 +352,9 @@ class ProjectsClient:
 
         label_config : typing.Optional[str]
             Label config in XML format
+
+        assigned_annotators : typing.Optional[typing.List[BaseUser]]
+            List of annotators assigned to the project
 
         expert_instruction : typing.Optional[str]
             Labeling instructions to show to the user
@@ -408,6 +412,7 @@ class ProjectsClient:
                 "title": title,
                 "description": description,
                 "label_config": label_config,
+                "assigned_annotators": assigned_annotators,
                 "expert_instruction": expert_instruction,
                 "show_instruction": show_instruction,
                 "show_skip_button": show_skip_button,
@@ -440,7 +445,7 @@ class ProjectsClient:
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
-        """
+        r"""
         Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
         
@@ -1023,7 +1028,7 @@ class AsyncProjectsClient:
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
-        """
+        r"""
         Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
         
