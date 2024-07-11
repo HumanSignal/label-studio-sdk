@@ -80,6 +80,9 @@ def _convert_to_tuple(args, tag_type="Choice"):
     Returns:
         A tuple containing all labels in specified format.
     """
+    if not args:
+        return None
+    
     return tuple(((tag_type, {"value": arg}, {})) for arg in args)
 
 
@@ -118,14 +121,15 @@ def _convert(name: str, tag: Union[str, list, tuple, LabelStudioTag]) -> tuple:
     
     if isinstance(tag, LabelStudioTag):
         tag.name = tag.name or name
-        el = tag.tag, tag.attrs
+        child_tag_type = "Choice" if tag.tag in ["Choices", "Taxonomy"] else "Label"
+        el = tag.tag, tag.collect_attrs(), _convert_to_tuple(getattr(tag, "labels", None), tag_type=child_tag_type)
     elif isinstance(tag, (list, tuple)):
         el = (*tag, ()) if len(tag) < 3 else tag
     elif isinstance(tag, str):        
         el = tag, {}, ()
     else:
         raise TypeError("Input tag must be one of str, list, tuple, LabelStudioTag")
-    
+
     el[1].setdefault("name", name)
     
     if el[0].lower() in OT._TAG_TO_CLASS and not el[1].get("value"):
@@ -226,7 +230,7 @@ def convert_tags_description(tags: Dict[str, Any],
         # The value of `toName` key is set based on whether `name` of
         # tag is in the mapping dictionary or the `name` of the first
         # object tag if it's not in mapping
-        if el[0].lower() in CT._TAG_TO_CLASS and "toName" not in el[1]:
+        if el[0].lower() in CT._TAG_TO_CLASS and ("toName" not in el[1] or el[1]["toName"] is None):
             if mapping and el[1].get("name") in mapping:
                 el[1]["toName"] = mapping.get(el[1]["name"])                
             else:
