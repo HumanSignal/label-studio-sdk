@@ -1,5 +1,5 @@
 from typing import Type, Dict, Optional, List, Tuple, Any, Union
-from pydantic import BaseModel, ConfigDict, Field, confloat, field_serializer
+from pydantic import BaseModel, Field, confloat, field_serializer
 
 from .region import Region
 
@@ -56,5 +56,5 @@ class TaskValue(BaseModel):
     """ """
     
     data: Optional[dict]
-    annotations: Optional[List[AnnotationValue]]
-    predictions: Optional[List[PredictionValue]]
+    annotations: Optional[List[AnnotationValue]] = Field(default_factory=list)
+    predictions: Optional[List[PredictionValue]] = Field(default_factory=list)

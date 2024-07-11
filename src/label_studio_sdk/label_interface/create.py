@@ -118,7 +118,7 @@ def _convert(name: str, tag: Union[str, list, tuple, LabelStudioTag]) -> tuple:
     
     if isinstance(tag, LabelStudioTag):
         tag.name = tag.name or name
-        el = tag.tag, tag.attrs
+        el = tag.tag, tag.attr, ()
     elif isinstance(tag, (list, tuple)):
         el = (*tag, ()) if len(tag) < 3 else tag
     elif isinstance(tag, str):        
