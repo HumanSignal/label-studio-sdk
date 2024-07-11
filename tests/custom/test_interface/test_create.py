@@ -1,3 +1,5 @@
+
+from label_studio_sdk.label_interface import LabelInterface
 import label_studio_sdk.label_interface.create as CE
 from label_studio_sdk.label_interface.control_tags import ChoicesTag
 from label_studio_sdk.label_interface.object_tags import TextTag
@@ -87,3 +89,39 @@ def test_create_image_labels():
 
     assert res[0] is tag_type
     assert len(res[2]) is len(label_names)
+
+
+def test_using_lpi_tags():
+    """ """
+    tags = {
+        'choices': ChoicesTag(name='sentiment_class', labels=['Positive', 'Negative', 'Neutral']),
+        'input': TextTag(name='message', value='my_text'),
+    }
+    
+    tuples = CE.convert_tags_description(tags, mapping=None)
+
+    assert len(tags) is 2
+
+    ftag = tuples[0]
+    stag = tuples[1]
+
+    assert ftag[0] == "Choices"
+    assert stag[0] == "Text"    
+    assert ftag[1]["name"] == "sentiment_class"
+    assert ftag[1]["toName"] == "message"
+    assert stag[1]["name"] == "message"
+    assert stag[1]["value"] == '$my_text'
+
+    tags = {
+        'choices': ChoicesTag(labels=['Positive', 'Negative', 'Neutral']),
+        'input': TextTag(),
+    }
+
+    tuples = CE.convert_tags_description(tags, mapping=None)
+    ftag = tuples[0]
+    stag = tuples[1]
+    
+    assert ftag[1]["name"] == "choices"
+    assert ftag[1]["toName"] == "input"
+    assert stag[1]["name"] == "input"
+    assert stag[1]["value"] == "$input"
