@@ -51,7 +51,7 @@ class S3SClient:
         client.import_storage.s3s.list()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/s3s/", method="GET", params={"project": project}, request_options=request_options
+            "api/storages/s3s", method="GET", params={"project": project}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -151,7 +151,7 @@ class S3SClient:
         client.import_storage.s3s.create()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/s3s/",
+            "api/storages/s3s",
             method="POST",
             json={
                 "regex_filter": regex_filter,
@@ -571,7 +571,7 @@ class AsyncS3SClient:
         await client.import_storage.s3s.list()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/s3s/", method="GET", params={"project": project}, request_options=request_options
+            "api/storages/s3s", method="GET", params={"project": project}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -671,7 +671,7 @@ class AsyncS3SClient:
         await client.import_storage.s3s.create()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/s3s/",
+            "api/storages/s3s",
             method="POST",
             json={
                 "regex_filter": regex_filter,

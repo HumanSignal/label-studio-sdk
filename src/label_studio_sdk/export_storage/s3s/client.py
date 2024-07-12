@@ -51,7 +51,7 @@ class S3SClient:
         client.export_storage.s3s.list()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/export/s3s/", method="GET", params={"project": project}, request_options=request_options
+            "api/storages/export/s3s", method="GET", params={"project": project}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -131,7 +131,7 @@ class S3SClient:
         client.export_storage.s3s.create()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/export/s3s/",
+            "api/storages/export/s3s",
             method="POST",
             json={
                 "can_delete_objects": can_delete_objects,
@@ -462,7 +462,7 @@ class AsyncS3SClient:
         await client.export_storage.s3s.list()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/export/s3s/", method="GET", params={"project": project}, request_options=request_options
+            "api/storages/export/s3s", method="GET", params={"project": project}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -542,7 +542,7 @@ class AsyncS3SClient:
         await client.export_storage.s3s.create()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/export/s3s/",
+            "api/storages/export/s3s",
             method="POST",
             json={
                 "can_delete_objects": can_delete_objects,

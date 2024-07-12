@@ -5,7 +5,7 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/export/s3s/
+      path: /api/storages/export/s3s
       method: GET
       auth: true
       docs: >
@@ -49,7 +49,7 @@ service:
       audiences:
         - public
     create:
-      path: /api/storages/export/s3s/
+      path: /api/storages/export/s3s
       method: POST
       auth: true
       docs: >
