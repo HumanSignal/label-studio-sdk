@@ -51,9 +51,9 @@ class AnnotationsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/annotations/{jsonable_encoder(id)}/", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -93,9 +93,9 @@ class AnnotationsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/annotations/{jsonable_encoder(id)}/", method="DELETE", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -182,7 +182,7 @@ class AnnotationsClient:
                         "width": 50,
                         "height": 60,
                         "rotation": 0,
-                        "values": {"rectanglelabels": {"0": "Person"}},
+                        "values": {"rectanglelabels": ["Person"]},
                     },
                 }
             ],
@@ -206,9 +206,9 @@ class AnnotationsClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -247,9 +247,9 @@ class AnnotationsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/tasks/{jsonable_encoder(id)}/annotations/", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(typing.List[Annotation], _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[Annotation], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -348,7 +348,7 @@ class AnnotationsClient:
                         "width": 50,
                         "height": 60,
                         "rotation": 0,
-                        "values": {"rectanglelabels": {"0": "Person"}},
+                        "values": {"rectanglelabels": ["Person"]},
                     },
                 }
             ],
@@ -372,9 +372,9 @@ class AnnotationsClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -418,9 +418,9 @@ class AsyncAnnotationsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/annotations/{jsonable_encoder(id)}/", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -460,9 +460,9 @@ class AsyncAnnotationsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/annotations/{jsonable_encoder(id)}/", method="DELETE", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -549,7 +549,7 @@ class AsyncAnnotationsClient:
                         "width": 50,
                         "height": 60,
                         "rotation": 0,
-                        "values": {"rectanglelabels": {"0": "Person"}},
+                        "values": {"rectanglelabels": ["Person"]},
                     },
                 }
             ],
@@ -573,9 +573,9 @@ class AsyncAnnotationsClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -616,9 +616,9 @@ class AsyncAnnotationsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/tasks/{jsonable_encoder(id)}/annotations/", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(typing.List[Annotation], _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[Annotation], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -717,7 +717,7 @@ class AsyncAnnotationsClient:
                         "width": 50,
                         "height": 60,
                         "rotation": 0,
-                        "values": {"rectanglelabels": {"0": "Person"}},
+                        "values": {"rectanglelabels": ["Person"]},
                     },
                 }
             ],
@@ -741,9 +741,9 @@ class AsyncAnnotationsClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

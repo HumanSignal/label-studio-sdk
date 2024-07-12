@@ -1,0 +1,101 @@
+types:
+  MembersListResponseItem:
+    properties:
+      user:
+        type: optional<map<string, unknown>>
+        docs: User ID of the workspace member
+  MembersCreateResponse:
+    properties:
+      user:
+        type: optional<integer>
+        docs: User ID of the workspace member
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/workspaces/{id}/memberships
+      method: GET
+      auth: true
+      docs: >
+
+        List all workspace memberships for a specific workspace. You will need
+        to provide the workspace ID. You can find this using [List
+        workspaces](list).
+      path-parameters:
+        id:
+          type: integer
+          docs: Workspace ID
+      display-name: List workspace memberships
+      response:
+        docs: ''
+        type: list<MembersListResponseItem>
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              - user:
+                  user:
+                    key: value
+      audiences:
+        - public
+    create:
+      path: /api/workspaces/{id}/memberships
+      method: POST
+      auth: true
+      docs: >
+
+        Create a new workspace membership. You will need to provide the
+        workspace ID. You can find this using [List workspaces](list).
+      path-parameters:
+        id:
+          type: integer
+          docs: Workspace ID
+      display-name: Create workspace membership
+      request:
+        name: MembersCreateRequest
+        body:
+          properties:
+            user:
+              type: optional<integer>
+              docs: User ID of the workspace member
+      response:
+        docs: ''
+        type: MembersCreateResponse
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              user: 1
+      audiences:
+        - public
+    delete:
+      path: /api/workspaces/{id}/memberships
+      method: DELETE
+      auth: true
+      docs: >
+
+        Delete a specific workspace membership. You will need to provide the
+        workspace ID and the user ID. You can find this using [List workspace
+        memberships](list).
+      path-parameters:
+        id:
+          type: integer
+          docs: Workspace ID
+      display-name: Delete workspace membership
+      request:
+        name: MembersDeleteRequest
+        body:
+          properties:
+            user:
+              type: optional<integer>
+              docs: User ID of the workspace member
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+      audiences:
+        - public
