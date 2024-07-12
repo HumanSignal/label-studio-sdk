@@ -53,6 +53,9 @@ from .s3export_storage import S3ExportStorage
 from .s3export_storage_status import S3ExportStorageStatus
 from .s3import_storage import S3ImportStorage
 from .s3import_storage_status import S3ImportStorageStatus
+from .s3s_export_storage import S3SExportStorage
+from .s3s_import_storage import S3SImportStorage
+from .s3s_import_storage_status import S3SImportStorageStatus
 from .serialization_option import SerializationOption
 from .serialization_options import SerializationOptions
 from .task import Task
@@ -119,6 +122,9 @@ __all__ = [
     "S3ExportStorageStatus",
     "S3ImportStorage",
     "S3ImportStorageStatus",
+    "S3SExportStorage",
+    "S3SImportStorage",
+    "S3SImportStorageStatus",
     "SerializationOption",
     "SerializationOptions",
     "Task",

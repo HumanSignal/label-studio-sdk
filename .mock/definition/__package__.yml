@@ -1925,3 +1925,112 @@ types:
       comment_authors:
         type: optional<list<integer>>
         docs: List of comment authors' IDs for this task
+  S3SImportStorageStatus:
+    enum:
+      - initialized
+      - queued
+      - in_progress
+      - failed
+      - completed
+  S3SImportStorage:
+    properties:
+      id: optional<integer>
+      synchronizable: optional<boolean>
+      presign: optional<boolean>
+      last_sync:
+        type: optional<datetime>
+        docs: Last sync finished time
+      last_sync_count:
+        type: optional<integer>
+        docs: Count of tasks synced last time
+      last_sync_job:
+        type: optional<string>
+        docs: Last sync job ID
+        validation:
+          maxLength: 256
+      status: optional<S3SImportStorageStatus>
+      traceback:
+        type: optional<string>
+        docs: Traceback report for the last failed sync
+      meta:
+        type: optional<map<string, unknown>>
+        docs: Meta and debug information about storage processes
+      title:
+        type: optional<string>
+        docs: Cloud storage title
+        validation:
+          maxLength: 256
+      description:
+        type: optional<string>
+        docs: Cloud storage description
+      created_at:
+        type: optional<datetime>
+        docs: Creation time
+      bucket:
+        type: optional<string>
+        docs: S3 bucket name
+      prefix:
+        type: optional<string>
+        docs: S3 bucket prefix
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
+      region_name:
+        type: optional<string>
+        docs: AWS Region
+      external_id:
+        type: optional<string>
+        docs: AWS External ID
+      role_arn:
+        type: optional<string>
+        docs: AWS Role ARN
+      s3_endpoint:
+        type: optional<string>
+        docs: S3 Endpoint
+      presign_ttl:
+        type: optional<integer>
+        docs: Presigned URLs TTL (in minutes)
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan over the bucket content
+      project:
+        type: integer
+        docs: A unique integer value identifying this project.
+  S3SExportStorage:
+    properties:
+      id: optional<integer>
+      title:
+        type: optional<string>
+        docs: Cloud storage title
+        validation:
+          maxLength: 256
+      description:
+        type: optional<string>
+        docs: Cloud storage description
+      created_at:
+        type: optional<datetime>
+        docs: Creation time
+      bucket:
+        type: optional<string>
+        docs: S3 bucket name
+      prefix:
+        type: optional<string>
+        docs: S3 bucket prefix
+      external_id:
+        type: optional<string>
+        docs: AWS External ID
+      role_arn:
+        type: optional<string>
+        docs: AWS Role ARN
+      region_name:
+        type: optional<string>
+        docs: AWS Region
+      s3_endpoint:
+        type: optional<string>
+        docs: S3 Endpoint
+      project:
+        type: integer
+        docs: A unique integer value identifying this project.

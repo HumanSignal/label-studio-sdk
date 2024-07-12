@@ -8,23 +8,21 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import pydantic_v1
 from ...core.request_options import RequestOptions
-from ...types.azure_blob_import_storage import AzureBlobImportStorage
-from .types.azure_create_response import AzureCreateResponse
-from .types.azure_update_response import AzureUpdateResponse
+from ...types.s3s_import_storage import S3SImportStorage
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class AzureClient:
+class S3SClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def list(
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[AzureBlobImportStorage]:
+    ) -> typing.List[S3SImportStorage]:
         """
-        You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure import (source) storage connections for a specific project.
+        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
@@ -40,7 +38,7 @@ class AzureClient:
 
         Returns
         -------
-        typing.List[AzureBlobImportStorage]
+        typing.List[S3SImportStorage]
 
 
         Examples
@@ -50,14 +48,14 @@ class AzureClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure.list()
+        client.import_storage.s3s.list()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/azure/", method="GET", params={"project": project}, request_options=request_options
+            "api/storages/s3s/", method="GET", params={"project": project}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.List[AzureBlobImportStorage], _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(typing.List[S3SImportStorage], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -70,19 +68,22 @@ class AzureClient:
         use_blob_urls: typing.Optional[bool] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureCreateResponse:
+    ) -> S3SImportStorage:
         """
-        Create a new source storage connection to Microsoft Azure Blob storage.
+        Create a new source storage connection to a S3 bucket.
 
-        For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation.
+        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
 
         <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
 
@@ -97,10 +98,13 @@ class AzureClient:
             Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         presign : typing.Optional[bool]
-            Presign URLs for direct download
+            Presign URLs for download
 
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
 
         title : typing.Optional[str]
             Storage title
@@ -111,24 +115,30 @@ class AzureClient:
         project : typing.Optional[int]
             Project ID
 
-        container : typing.Optional[str]
-            Azure blob container
+        bucket : typing.Optional[str]
+            S3 bucket name
 
         prefix : typing.Optional[str]
-            Azure blob prefix name
+            S3 bucket prefix
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
+        external_id : typing.Optional[str]
+            AWS External ID
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        role_arn : typing.Optional[str]
+            AWS Role ARN
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureCreateResponse
+        S3SImportStorage
 
 
         Examples
@@ -138,154 +148,53 @@ class AzureClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure.create()
+        client.import_storage.s3s.create()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/azure/",
+            "api/storages/s3s/",
             method="POST",
             json={
                 "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
                 "title": title,
                 "description": description,
                 "project": project,
-                "container": container,
+                "bucket": bucket,
                 "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
+                "external_id": external_id,
+                "role_arn": role_arn,
+                "region_name": region_name,
+                "s3_endpoint": s3endpoint,
             },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(AzureCreateResponse, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(S3SImportStorage, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SImportStorage:
         """
-        Validate a specific Azure import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        presign : typing.Optional[bool]
-            Presign URLs for direct download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk.client import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.import_storage.azure.validate()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/storages/azure/validate",
-            method="POST",
-            json={
-                "id": id,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "presign": presign,
-                "presign_ttl": presign_ttl,
-                "title": title,
-                "description": description,
-                "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
-        """
-        Get a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
+            Import storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureBlobImportStorage
+        S3SImportStorage
 
 
         Examples
@@ -295,16 +204,16 @@ class AzureClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure.get(
+        client.import_storage.s3s.get(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/azure/{jsonable_encoder(id)}", method="GET", request_options=request_options
+            f"api/storages/s3s/{jsonable_encoder(id)}", method="GET", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(AzureBlobImportStorage, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(S3SImportStorage, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -312,7 +221,7 @@ class AzureClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
 
@@ -321,7 +230,7 @@ class AzureClient:
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
+            Import storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -337,12 +246,12 @@ class AzureClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure.delete(
+        client.import_storage.s3s.delete(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/azure/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
+            f"api/storages/s3s/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -360,24 +269,27 @@ class AzureClient:
         use_blob_urls: typing.Optional[bool] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureUpdateResponse:
+    ) -> S3SImportStorage:
         """
-        Update a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
+            Import storage ID
 
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
@@ -386,10 +298,13 @@ class AzureClient:
             Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         presign : typing.Optional[bool]
-            Presign URLs for direct download
+            Presign URLs for download
 
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
 
         title : typing.Optional[str]
             Storage title
@@ -400,24 +315,30 @@ class AzureClient:
         project : typing.Optional[int]
             Project ID
 
-        container : typing.Optional[str]
-            Azure blob container
+        bucket : typing.Optional[str]
+            S3 bucket name
 
         prefix : typing.Optional[str]
-            Azure blob prefix name
+            S3 bucket prefix
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
+        external_id : typing.Optional[str]
+            AWS External ID
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        role_arn : typing.Optional[str]
+            AWS Role ARN
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureUpdateResponse
+        S3SImportStorage
 
 
         Examples
@@ -427,44 +348,155 @@ class AzureClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure.update(
+        client.import_storage.s3s.update(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/azure/{jsonable_encoder(id)}",
+            f"api/storages/s3s/{jsonable_encoder(id)}",
             method="PATCH",
             json={
                 "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
                 "title": title,
                 "description": description,
                 "project": project,
-                "container": container,
+                "bucket": bucket,
                 "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
+                "external_id": external_id,
+                "role_arn": role_arn,
+                "region_name": region_name,
+                "s3_endpoint": s3endpoint,
             },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(AzureUpdateResponse, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(S3SImportStorage, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
+    def validate(
+        self,
+        *,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
-        Sync tasks from an Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
-        Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
+        Parameters
+        ----------
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
+
+        title : typing.Optional[str]
+            Storage title
+
+        description : typing.Optional[str]
+            Storage description
+
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        external_id : typing.Optional[str]
+            AWS External ID
+
+        role_arn : typing.Optional[str]
+            AWS Role ARN
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.import_storage.s3s.validate()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/storages/s3s/validate",
+            method="POST",
+            json={
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
+                "title": title,
+                "description": description,
+                "project": project,
+                "bucket": bucket,
+                "prefix": prefix,
+                "external_id": external_id,
+                "role_arn": role_arn,
+                "region_name": region_name,
+                "s3_endpoint": s3endpoint,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SImportStorage:
+        """
+        Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         Parameters
         ----------
@@ -476,7 +508,7 @@ class AzureClient:
 
         Returns
         -------
-        AzureBlobImportStorage
+        S3SImportStorage
 
 
         Examples
@@ -486,31 +518,31 @@ class AzureClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure.sync(
+        client.import_storage.s3s.sync(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/azure/{jsonable_encoder(id)}/sync", method="POST", request_options=request_options
+            f"api/storages/s3s/{jsonable_encoder(id)}/sync", method="POST", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(AzureBlobImportStorage, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(S3SImportStorage, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncAzureClient:
+class AsyncS3SClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def list(
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[AzureBlobImportStorage]:
+    ) -> typing.List[S3SImportStorage]:
         """
-        You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure import (source) storage connections for a specific project.
+        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
@@ -526,7 +558,7 @@ class AsyncAzureClient:
 
         Returns
         -------
-        typing.List[AzureBlobImportStorage]
+        typing.List[S3SImportStorage]
 
 
         Examples
@@ -536,14 +568,14 @@ class AsyncAzureClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.azure.list()
+        await client.import_storage.s3s.list()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/azure/", method="GET", params={"project": project}, request_options=request_options
+            "api/storages/s3s/", method="GET", params={"project": project}, request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.List[AzureBlobImportStorage], _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(typing.List[S3SImportStorage], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -556,19 +588,22 @@ class AsyncAzureClient:
         use_blob_urls: typing.Optional[bool] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureCreateResponse:
+    ) -> S3SImportStorage:
         """
-        Create a new source storage connection to Microsoft Azure Blob storage.
+        Create a new source storage connection to a S3 bucket.
 
-        For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation.
+        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
 
         <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
 
@@ -583,10 +618,13 @@ class AsyncAzureClient:
             Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         presign : typing.Optional[bool]
-            Presign URLs for direct download
+            Presign URLs for download
 
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
 
         title : typing.Optional[str]
             Storage title
@@ -597,24 +635,30 @@ class AsyncAzureClient:
         project : typing.Optional[int]
             Project ID
 
-        container : typing.Optional[str]
-            Azure blob container
+        bucket : typing.Optional[str]
+            S3 bucket name
 
         prefix : typing.Optional[str]
-            Azure blob prefix name
+            S3 bucket prefix
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
+        external_id : typing.Optional[str]
+            AWS External ID
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        role_arn : typing.Optional[str]
+            AWS Role ARN
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureCreateResponse
+        S3SImportStorage
 
 
         Examples
@@ -624,154 +668,53 @@ class AsyncAzureClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.azure.create()
+        await client.import_storage.s3s.create()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/azure/",
+            "api/storages/s3s/",
             method="POST",
             json={
                 "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
                 "title": title,
                 "description": description,
                 "project": project,
-                "container": container,
+                "bucket": bucket,
                 "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
+                "external_id": external_id,
+                "role_arn": role_arn,
+                "region_name": region_name,
+                "s3_endpoint": s3endpoint,
             },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(AzureCreateResponse, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(S3SImportStorage, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SImportStorage:
         """
-        Validate a specific Azure import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        presign : typing.Optional[bool]
-            Presign URLs for direct download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        container : typing.Optional[str]
-            Azure blob container
-
-        prefix : typing.Optional[str]
-            Azure blob prefix name
-
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        account_key : typing.Optional[str]
-            Azure Blob account key
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk.client import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        await client.import_storage.azure.validate()
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/azure/validate",
-            method="POST",
-            json={
-                "id": id,
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "presign": presign,
-                "presign_ttl": presign_ttl,
-                "title": title,
-                "description": description,
-                "project": project,
-                "container": container,
-                "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
-        """
-        Get a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
+            Import storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureBlobImportStorage
+        S3SImportStorage
 
 
         Examples
@@ -781,16 +724,16 @@ class AsyncAzureClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.azure.get(
+        await client.import_storage.s3s.get(
             id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/azure/{jsonable_encoder(id)}", method="GET", request_options=request_options
+            f"api/storages/s3s/{jsonable_encoder(id)}", method="GET", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(AzureBlobImportStorage, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(S3SImportStorage, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -798,7 +741,7 @@ class AsyncAzureClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
 
@@ -807,7 +750,7 @@ class AsyncAzureClient:
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
+            Import storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -823,12 +766,12 @@ class AsyncAzureClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.azure.delete(
+        await client.import_storage.s3s.delete(
             id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/azure/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
+            f"api/storages/s3s/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -846,24 +789,27 @@ class AsyncAzureClient:
         use_blob_urls: typing.Optional[bool] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        container: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
         prefix: typing.Optional[str] = OMIT,
-        account_name: typing.Optional[str] = OMIT,
-        account_key: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureUpdateResponse:
+    ) -> S3SImportStorage:
         """
-        Update a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this azure blob import storage.
+            Import storage ID
 
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
@@ -872,10 +818,13 @@ class AsyncAzureClient:
             Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
 
         presign : typing.Optional[bool]
-            Presign URLs for direct download
+            Presign URLs for download
 
         presign_ttl : typing.Optional[int]
             Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
 
         title : typing.Optional[str]
             Storage title
@@ -886,24 +835,30 @@ class AsyncAzureClient:
         project : typing.Optional[int]
             Project ID
 
-        container : typing.Optional[str]
-            Azure blob container
+        bucket : typing.Optional[str]
+            S3 bucket name
 
         prefix : typing.Optional[str]
-            Azure blob prefix name
+            S3 bucket prefix
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
+        external_id : typing.Optional[str]
+            AWS External ID
 
-        account_key : typing.Optional[str]
-            Azure Blob account key
+        role_arn : typing.Optional[str]
+            AWS Role ARN
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureUpdateResponse
+        S3SImportStorage
 
 
         Examples
@@ -913,44 +868,155 @@ class AsyncAzureClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.azure.update(
+        await client.import_storage.s3s.update(
             id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/azure/{jsonable_encoder(id)}",
+            f"api/storages/s3s/{jsonable_encoder(id)}",
             method="PATCH",
             json={
                 "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
                 "title": title,
                 "description": description,
                 "project": project,
-                "container": container,
+                "bucket": bucket,
                 "prefix": prefix,
-                "account_name": account_name,
-                "account_key": account_key,
+                "external_id": external_id,
+                "role_arn": role_arn,
+                "region_name": region_name,
+                "s3_endpoint": s3endpoint,
             },
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(AzureUpdateResponse, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(S3SImportStorage, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
+    async def validate(
+        self,
+        *,
+        regex_filter: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
-        Sync tasks from an Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
-        Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
+        Parameters
+        ----------
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
 
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+
+        presign : typing.Optional[bool]
+            Presign URLs for download
+
+        presign_ttl : typing.Optional[int]
+            Presign TTL in minutes
+
+        recursive_scan : typing.Optional[bool]
+            Scan recursively
+
+        title : typing.Optional[str]
+            Storage title
+
+        description : typing.Optional[str]
+            Storage description
+
+        project : typing.Optional[int]
+            Project ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        external_id : typing.Optional[str]
+            AWS External ID
+
+        role_arn : typing.Optional[str]
+            AWS Role ARN
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.import_storage.s3s.validate()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/storages/s3s/validate",
+            method="POST",
+            json={
+                "regex_filter": regex_filter,
+                "use_blob_urls": use_blob_urls,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "recursive_scan": recursive_scan,
+                "title": title,
+                "description": description,
+                "project": project,
+                "bucket": bucket,
+                "prefix": prefix,
+                "external_id": external_id,
+                "role_arn": role_arn,
+                "region_name": region_name,
+                "s3_endpoint": s3endpoint,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SImportStorage:
+        """
+        Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         Parameters
         ----------
@@ -962,7 +1028,7 @@ class AsyncAzureClient:
 
         Returns
         -------
-        AzureBlobImportStorage
+        S3SImportStorage
 
 
         Examples
@@ -972,16 +1038,16 @@ class AsyncAzureClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.import_storage.azure.sync(
+        await client.import_storage.s3s.sync(
             id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/azure/{jsonable_encoder(id)}/sync", method="POST", request_options=request_options
+            f"api/storages/s3s/{jsonable_encoder(id)}/sync", method="POST", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(AzureBlobImportStorage, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(S3SImportStorage, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
