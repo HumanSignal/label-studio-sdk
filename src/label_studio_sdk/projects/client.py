@@ -130,6 +130,7 @@ class ProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsCreateResponse:
         """
@@ -184,6 +185,9 @@ class ProjectsClient:
         control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
+        workspace : typing.Optional[int]
+            Workspace ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -218,6 +222,7 @@ class ProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "color": color,
                 "control_weights": control_weights,
+                "workspace": workspace,
             },
             request_options=request_options,
             omit=OMIT,
@@ -326,6 +331,7 @@ class ProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsUpdateResponse:
         """
@@ -387,6 +393,9 @@ class ProjectsClient:
         control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
+        workspace : typing.Optional[int]
+            Workspace ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -423,6 +432,7 @@ class ProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "color": color,
                 "control_weights": control_weights,
+                "workspace": workspace,
             },
             request_options=request_options,
             omit=OMIT,
@@ -718,6 +728,7 @@ class AsyncProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsCreateResponse:
         """
@@ -772,6 +783,9 @@ class AsyncProjectsClient:
         control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
+        workspace : typing.Optional[int]
+            Workspace ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -806,6 +820,7 @@ class AsyncProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "color": color,
                 "control_weights": control_weights,
+                "workspace": workspace,
             },
             request_options=request_options,
             omit=OMIT,
@@ -914,6 +929,7 @@ class AsyncProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsUpdateResponse:
         """
@@ -975,6 +991,9 @@ class AsyncProjectsClient:
         control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
+        workspace : typing.Optional[int]
+            Workspace ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1011,6 +1030,7 @@ class AsyncProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "color": color,
                 "control_weights": control_weights,
+                "workspace": workspace,
             },
             request_options=request_options,
             omit=OMIT,

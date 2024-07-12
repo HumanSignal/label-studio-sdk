@@ -68,6 +68,7 @@ from .types import (
     WebhookActionsItem,
     WebhookSerializerForUpdate,
     WebhookSerializerForUpdateActionsItem,
+    Workspace,
 )
 from .errors import BadRequestError, InternalServerError
 from . import (
@@ -83,6 +84,7 @@ from . import (
     users,
     views,
     webhooks,
+    workspaces,
 )
 from ._legacy import Client
 from .actions import (
@@ -249,6 +251,7 @@ __all__ = [
     "WebhookSerializerForUpdate",
     "WebhookSerializerForUpdateActionsItem",
     "WebhooksUpdateRequestActionsItem",
+    "Workspace",
     "__version__",
     "actions",
     "annotations",
@@ -262,4 +265,5 @@ __all__ = [
     "users",
     "views",
     "webhooks",
+    "workspaces",
 ]

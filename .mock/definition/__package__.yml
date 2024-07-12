@@ -1925,6 +1925,38 @@ types:
       comment_authors:
         type: optional<list<integer>>
         docs: List of comment authors' IDs for this task
+  Workspace:
+    properties:
+      id:
+        type: optional<integer>
+        docs: Unique ID of the workspace
+      title:
+        type: optional<string>
+        docs: Workspace title
+      description:
+        type: optional<string>
+        docs: Workspace description
+      is_public:
+        type: optional<boolean>
+        docs: Whether the workspace is public or not
+      is_personal:
+        type: optional<boolean>
+        docs: Whether the workspace is personal or not
+      is_archived:
+        type: optional<boolean>
+        docs: Whether the workspace is archived or not
+      created_at:
+        type: optional<datetime>
+        docs: Creation time of the workspace
+      updated_at:
+        type: optional<datetime>
+        docs: Last updated time of the workspace
+      created_by:
+        type: optional<integer>
+        docs: User ID of the workspace creator
+      color:
+        type: optional<string>
+        docs: Workspace color
   S3SImportStorageStatus:
     enum:
       - initialized

@@ -2580,6 +2580,14 @@ client.projects.create()
 <dl>
 <dd>
 
+**workspace:** `typing.Optional[int]` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2901,6 +2909,14 @@ client.projects.update(
 <dd>
 
 **control_weights:** `typing.Optional[typing.Dict[str, typing.Any]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace:** `typing.Optional[int]` — Workspace ID
     
 </dd>
 </dl>
@@ -15058,6 +15074,652 @@ client.export_storage.s3s.validate()
 <dd>
 
 **s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Workspaces
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all workspaces for your organization.
+
+Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
+
+For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new workspace.
+
+Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
+
+For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Workspace title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Workspace description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_public:** `typing.Optional[bool]` — Is workspace public
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_personal:** `typing.Optional[bool]` — Is workspace personal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**color:** `typing.Optional[str]` — Workspace color in HEX format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get information about a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Workspace title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Workspace description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_public:** `typing.Optional[bool]` — Is workspace public
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_personal:** `typing.Optional[bool]` — Is workspace personal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**color:** `typing.Optional[str]` — Workspace color in HEX format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Workspaces Members
+<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all workspace memberships for a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.members.list(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new workspace membership. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.members.create(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user:** `typing.Optional[int]` — User ID of the workspace member
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific workspace membership. You will need to provide the workspace ID and the user ID. You can find this using [List workspace memberships](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.members.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user:** `typing.Optional[int]` — User ID of the workspace member
     
 </dd>
 </dl>

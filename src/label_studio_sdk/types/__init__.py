@@ -67,6 +67,7 @@ from .webhook import Webhook
 from .webhook_actions_item import WebhookActionsItem
 from .webhook_serializer_for_update import WebhookSerializerForUpdate
 from .webhook_serializer_for_update_actions_item import WebhookSerializerForUpdateActionsItem
+from .workspace import Workspace
 
 __all__ = [
     "Annotation",
@@ -136,4 +137,5 @@ __all__ = [
     "WebhookActionsItem",
     "WebhookSerializerForUpdate",
     "WebhookSerializerForUpdateActionsItem",
+    "Workspace",
 ]
