@@ -54,6 +54,9 @@ from .types import (
     S3ExportStorageStatus,
     S3ImportStorage,
     S3ImportStorageStatus,
+    S3SExportStorage,
+    S3SImportStorage,
+    S3SImportStorageStatus,
     SerializationOption,
     SerializationOptions,
     Task,
@@ -65,6 +68,7 @@ from .types import (
     WebhookActionsItem,
     WebhookSerializerForUpdate,
     WebhookSerializerForUpdateActionsItem,
+    Workspace,
 )
 from .errors import BadRequestError, InternalServerError
 from . import (
@@ -80,6 +84,7 @@ from . import (
     users,
     views,
     webhooks,
+    workspaces,
 )
 from ._legacy import Client
 from .actions import (
@@ -211,6 +216,9 @@ __all__ = [
     "S3ExportStorageStatus",
     "S3ImportStorage",
     "S3ImportStorageStatus",
+    "S3SExportStorage",
+    "S3SImportStorage",
+    "S3SImportStorageStatus",
     "SerializationOption",
     "SerializationOptions",
     "Task",
@@ -243,6 +251,7 @@ __all__ = [
     "WebhookSerializerForUpdate",
     "WebhookSerializerForUpdateActionsItem",
     "WebhooksUpdateRequestActionsItem",
+    "Workspace",
     "__version__",
     "actions",
     "annotations",
@@ -256,4 +265,5 @@ __all__ = [
     "users",
     "views",
     "webhooks",
+    "workspaces",
 ]

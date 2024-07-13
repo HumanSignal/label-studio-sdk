@@ -25,7 +25,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                         "width": 50,
                         "height": 60,
                         "rotation": 0,
-                        "values": {"rectanglelabels": {"0": "Person"}},
+                        "values": {"rectanglelabels": ["Person"]},
                     },
                 }
             ],
@@ -104,7 +104,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                     "width": 50,
                     "height": 60,
                     "rotation": 0,
-                    "values": {"rectanglelabels": {"0": "Person"}},
+                    "values": {"rectanglelabels": ["Person"]},
                 },
             }
         ],
@@ -168,7 +168,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                     "width": 50,
                     "height": 60,
                     "rotation": 0,
-                    "values": {"rectanglelabels": {"0": "Person"}},
+                    "values": {"rectanglelabels": ["Person"]},
                 },
             }
         ],
@@ -192,7 +192,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                     "width": 50,
                     "height": 60,
                     "rotation": 0,
-                    "values": {"rectanglelabels": {"0": "Person"}},
+                    "values": {"rectanglelabels": ["Person"]},
                 },
             }
         ],
@@ -219,7 +219,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
                     "width": 50,
                     "height": 60,
                     "rotation": 0,
-                    "values": {"rectanglelabels": {"0": "Person"}},
+                    "values": {"rectanglelabels": ["Person"]},
                 },
             }
         ],
@@ -299,7 +299,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                     "width": 50,
                     "height": 60,
                     "rotation": 0,
-                    "values": {"rectanglelabels": {"0": "Person"}},
+                    "values": {"rectanglelabels": ["Person"]},
                 },
             }
         ],
@@ -364,7 +364,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                     "width": 50,
                     "height": 60,
                     "rotation": 0,
-                    "values": {"rectanglelabels": {"0": "Person"}},
+                    "values": {"rectanglelabels": ["Person"]},
                 },
             }
         ],
@@ -389,7 +389,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                     "width": 50,
                     "height": 60,
                     "rotation": 0,
-                    "values": {"rectanglelabels": {"0": "Person"}},
+                    "values": {"rectanglelabels": ["Person"]},
                 },
             }
         ],

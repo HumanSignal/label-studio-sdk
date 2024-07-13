@@ -81,7 +81,12 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.list()
+        response = client.projects.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
         page = page or 1
         _response = self._client_wrapper.httpx_client.request(
@@ -90,20 +95,20 @@ class ProjectsClient:
             params={"ordering": ordering, "ids": ids, "title": title, "page": page, "page_size": page_size},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(ProjectsListResponse, _response.json())  # type: ignore
-            _has_next = True
-            _get_next = lambda: self.list(
-                ordering=ordering,
-                ids=ids,
-                title=title,
-                page=page + 1,
-                page_size=page_size,
-                request_options=request_options,
-            )
-            _items = _parsed_response.results
-            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(ProjectsListResponse, _response.json())  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list(
+                    ordering=ordering,
+                    ids=ids,
+                    title=title,
+                    page=page + 1,
+                    page_size=page_size,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.results
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -125,6 +130,7 @@ class ProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsCreateResponse:
         """
@@ -179,6 +185,9 @@ class ProjectsClient:
         control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
+        workspace : typing.Optional[int]
+            Workspace ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -213,13 +222,14 @@ class ProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "color": color,
                 "control_weights": control_weights,
+                "workspace": workspace,
             },
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectsCreateResponse, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ProjectsCreateResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -256,9 +266,9 @@ class ProjectsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -296,9 +306,9 @@ class ProjectsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/", method="DELETE", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -321,6 +331,7 @@ class ProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsUpdateResponse:
         """
@@ -382,6 +393,9 @@ class ProjectsClient:
         control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
+        workspace : typing.Optional[int]
+            Workspace ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -418,13 +432,14 @@ class ProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "color": color,
                 "control_weights": control_weights,
+                "workspace": workspace,
             },
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectsUpdateResponse, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ProjectsUpdateResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -541,11 +556,11 @@ class ProjectsClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
-        if _response.status_code == 400:
-            raise BadRequestError(pydantic_v1.parse_obj_as(typing.Any, _response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(pydantic_v1.parse_obj_as(typing.Any, _response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -596,9 +611,9 @@ class ProjectsClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectLabelConfig, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ProjectLabelConfig, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -664,7 +679,12 @@ class AsyncProjectsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.projects.list()
+        response = await client.projects.list()
+        async for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        async for page in response.iter_pages():
+            yield page
         """
         page = page or 1
         _response = await self._client_wrapper.httpx_client.request(
@@ -673,20 +693,20 @@ class AsyncProjectsClient:
             params={"ordering": ordering, "ids": ids, "title": title, "page": page, "page_size": page_size},
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(ProjectsListResponse, _response.json())  # type: ignore
-            _has_next = True
-            _get_next = lambda: self.list(
-                ordering=ordering,
-                ids=ids,
-                title=title,
-                page=page + 1,
-                page_size=page_size,
-                request_options=request_options,
-            )
-            _items = _parsed_response.results
-            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(ProjectsListResponse, _response.json())  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list(
+                    ordering=ordering,
+                    ids=ids,
+                    title=title,
+                    page=page + 1,
+                    page_size=page_size,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.results
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -708,6 +728,7 @@ class AsyncProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsCreateResponse:
         """
@@ -762,6 +783,9 @@ class AsyncProjectsClient:
         control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
+        workspace : typing.Optional[int]
+            Workspace ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -796,13 +820,14 @@ class AsyncProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "color": color,
                 "control_weights": control_weights,
+                "workspace": workspace,
             },
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectsCreateResponse, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ProjectsCreateResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -839,9 +864,9 @@ class AsyncProjectsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Project, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -879,9 +904,9 @@ class AsyncProjectsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/", method="DELETE", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -904,6 +929,7 @@ class AsyncProjectsClient:
         maximum_annotations: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsUpdateResponse:
         """
@@ -965,6 +991,9 @@ class AsyncProjectsClient:
         control_weights : typing.Optional[typing.Dict[str, typing.Any]]
             Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
 
+        workspace : typing.Optional[int]
+            Workspace ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1001,13 +1030,14 @@ class AsyncProjectsClient:
                 "maximum_annotations": maximum_annotations,
                 "color": color,
                 "control_weights": control_weights,
+                "workspace": workspace,
             },
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectsUpdateResponse, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ProjectsUpdateResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -1124,11 +1154,11 @@ class AsyncProjectsClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
-        if _response.status_code == 400:
-            raise BadRequestError(pydantic_v1.parse_obj_as(typing.Any, _response.json()))  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ProjectsImportTasksResponse, _response.json())  # type: ignore
+            if _response.status_code == 400:
+                raise BadRequestError(pydantic_v1.parse_obj_as(typing.Any, _response.json()))  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -1179,9 +1209,9 @@ class AsyncProjectsClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectLabelConfig, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ProjectLabelConfig, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -20,13 +20,13 @@ def serialize_regions(result):
 
 class PredictionValue(BaseModel):
     """ """
-
     model_version: Optional[Any] = None
     score: Optional[float] = 0.00
     result: Optional[List[Union[Dict[str, Any], Region]]]
 
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
+        protected_namespaces = ()
 
     @field_serializer('result')
     def serialize_result(self, result):
@@ -45,7 +45,7 @@ class AnnotationValue(BaseModel):
     result: Optional[List[Union[Dict[str, Any], Region]]]
     
     class Config:
-        allow_population_by_field_name = True
+        populate_by_name = True
 
     @field_serializer('result')
     def serialize_result(self, result):
@@ -56,5 +56,5 @@ class TaskValue(BaseModel):
     """ """
     
     data: Optional[dict]
-    annotations: Optional[List[AnnotationValue]]
-    predictions: Optional[List[PredictionValue]]
+    annotations: Optional[List[AnnotationValue]] = Field(default_factory=list)
+    predictions: Optional[List[PredictionValue]] = Field(default_factory=list)

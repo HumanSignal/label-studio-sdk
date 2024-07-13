@@ -304,6 +304,11 @@ class LabelInterface:
     ##### NEW API
 
     @property
+    def config(self):
+        """Returns the XML configuration string"""
+        return self._config
+
+    @property
     def controls(self):
         """Returns list of control tags"""
         return self._controls and self._controls.values()
