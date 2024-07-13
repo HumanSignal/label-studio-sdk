@@ -72,6 +72,9 @@ service:
             is_personal:
               type: optional<boolean>
               docs: Is workspace personal
+            is_archived:
+              type: optional<boolean>
+              docs: Is workspace archived
             color:
               type: optional<string>
               docs: Workspace color in HEX format
@@ -175,6 +178,9 @@ service:
             is_personal:
               type: optional<boolean>
               docs: Is workspace personal
+            is_archived:
+              type: optional<boolean>
+              docs: Is workspace archived
             color:
               type: optional<string>
               docs: Workspace color in HEX format
