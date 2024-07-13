@@ -332,6 +332,9 @@ service:
                 as important as Airplane, then you need to specify: {'my_bbox':
                 {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane':
                 0.5}, 'overall': 0.33}
+            workspace:
+              type: optional<integer>
+              docs: Workspace ID
       response:
         docs: ''
         type: ProjectsCreateResponse
@@ -568,6 +571,9 @@ service:
                 as important as Airplane, then you need to specify: {'my_bbox':
                 {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane':
                 0.5}, 'overall': 0.33}
+            workspace:
+              type: optional<integer>
+              docs: Workspace ID
       response:
         docs: ''
         type: ProjectsUpdateResponse

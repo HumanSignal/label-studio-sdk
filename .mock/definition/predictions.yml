@@ -61,7 +61,7 @@ service:
                       rotation: 0
                       values:
                         rectanglelabels:
-                          '0': Person
+                          - Person
                 model_version: yolo-v8
                 created_ago: created_ago
                 score: 0.95
@@ -160,7 +160,7 @@ service:
                   rotation: 0
                   values:
                     rectanglelabels:
-                      '0': Person
+                      - Person
             score: 0.95
             model_version: yolo-v8
           response:
@@ -181,7 +181,7 @@ service:
                     rotation: 0
                     values:
                       rectanglelabels:
-                        '0': Person
+                        - Person
               model_version: yolo-v8
               created_ago: created_ago
               score: 0.95
@@ -241,7 +241,7 @@ service:
                     rotation: 0
                     values:
                       rectanglelabels:
-                        '0': Person
+                        - Person
               model_version: yolo-v8
               created_ago: created_ago
               score: 0.95
@@ -316,7 +316,7 @@ service:
                   rotation: 0
                   values:
                     rectanglelabels:
-                      '0': Person
+                      - Person
             score: 0.95
             model_version: yolo-v8
           response:
@@ -337,7 +337,7 @@ service:
                     rotation: 0
                     values:
                       rectanglelabels:
-                        '0': Person
+                        - Person
               model_version: yolo-v8
               created_ago: created_ago
               score: 0.95
@@ -438,7 +438,7 @@ service:
                   rotation: 0
                   values:
                     rectanglelabels:
-                      '0': Person
+                      - Person
             score: 0.95
             model_version: yolo-v8
           response:
@@ -459,7 +459,7 @@ service:
                     rotation: 0
                     values:
                       rectanglelabels:
-                        '0': Person
+                        - Person
               model_version: yolo-v8
               created_ago: created_ago
               score: 0.95
