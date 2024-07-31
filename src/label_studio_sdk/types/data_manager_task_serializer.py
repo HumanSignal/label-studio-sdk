@@ -105,6 +105,16 @@ class DataManagerTaskSerializer(pydantic_v1.BaseModel):
     Users who wrote comments
     """
 
+    annotated_by: typing.Optional[typing.List[int]] = pydantic_v1.Field(default=None)
+    """
+    Users who annotated this task
+    """
+
+    skipped_by: typing.Optional[typing.List[int]] = pydantic_v1.Field(default=None)
+    """
+    Users who skipped this task
+    """
+
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)
