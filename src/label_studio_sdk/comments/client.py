@@ -77,7 +77,7 @@ class CommentsClient:
         project: typing.Optional[int] = OMIT,
         text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> Comment:
         """
         Create a new comment.
 
@@ -94,7 +94,8 @@ class CommentsClient:
 
         Returns
         -------
-        None
+        Comment
+
 
         Examples
         --------
@@ -114,7 +115,7 @@ class CommentsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -185,7 +186,7 @@ class AsyncCommentsClient:
         project: typing.Optional[int] = OMIT,
         text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> Comment:
         """
         Create a new comment.
 
@@ -202,7 +203,8 @@ class AsyncCommentsClient:
 
         Returns
         -------
-        None
+        Comment
+
 
         Examples
         --------
@@ -222,7 +224,7 @@ class AsyncCommentsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
