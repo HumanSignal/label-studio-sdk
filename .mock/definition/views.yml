@@ -370,7 +370,7 @@ types:
         docs: String
       - type: integer
         docs: Integer
-      - type: double
+      - type: float
         docs: Float
       - type: boolean
         docs: Boolean
@@ -678,7 +678,7 @@ types:
         docs: String
       - type: integer
         docs: Integer
-      - type: double
+      - type: float
         docs: Float
       - type: boolean
         docs: Boolean
