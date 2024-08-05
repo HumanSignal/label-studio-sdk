@@ -31,7 +31,7 @@ packages = [
 Repository = 'https://github.com/HumanSignal/label-studio-sdk'
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 Pillow = ">=10.0.1"
 appdirs = ">=1.4.3"
 httpx = ">=0.21.2"
@@ -43,6 +43,7 @@ pandas = ">=0.24.0"
 pydantic = ">= 1.9.2"
 requests = ">=2.22.0"
 requests-mock = "1.12.1"
+scikit-learn = "1.5.1"
 typing_extensions = ">= 4.0.0"
 ujson = ">=5.8.0"
 xmljson = "0.2.1"
