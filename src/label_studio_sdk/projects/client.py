@@ -541,7 +541,7 @@ class ProjectsClient:
         )
         client.projects.import_tasks(
             id=1,
-            request=[{}],
+            request=[{"key": "value"}],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1139,7 +1139,7 @@ class AsyncProjectsClient:
         )
         await client.projects.import_tasks(
             id=1,
-            request=[{}],
+            request=[{"key": "value"}],
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
