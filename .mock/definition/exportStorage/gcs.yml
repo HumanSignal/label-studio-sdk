@@ -50,8 +50,7 @@ service:
                 status: initialized
                 traceback: traceback
                 meta:
-                  meta:
-                    key: value
+                  key: value
                 title: title
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
@@ -214,8 +213,7 @@ service:
               status: initialized
               traceback: traceback
               meta:
-                meta:
-                  key: value
+                key: value
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
@@ -363,8 +361,7 @@ service:
               status: initialized
               traceback: traceback
               meta:
-                meta:
-                  key: value
+                key: value
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'

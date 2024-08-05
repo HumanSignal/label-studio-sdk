@@ -22,7 +22,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "basic_auth_pass": "basic_auth_pass",
             "basic_auth_pass_is_set": "basic_auth_pass_is_set",
             "description": "description",
-            "extra_params": {"extra_params": {"key": "value"}},
+            "extra_params": {"key": "value"},
             "model_version": "model_version",
             "timeout": 1.1,
             "created_at": "2024-01-15T09:30:00Z",
@@ -74,7 +74,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "auth_method": "NONE",
         "basic_auth_user": "basic_auth_user",
         "basic_auth_pass": "basic_auth_pass",
-        "extra_params": {"extra_params": {"key": "value"}},
+        "extra_params": {"key": "value"},
         "timeout": 1,
     }
     expected_types: typing.Any = {
@@ -110,7 +110,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "basic_auth_pass": "basic_auth_pass",
         "basic_auth_pass_is_set": "basic_auth_pass_is_set",
         "description": "description",
-        "extra_params": {"extra_params": {"key": "value"}},
+        "extra_params": {"key": "value"},
         "model_version": "model_version",
         "timeout": 1.1,
         "created_at": "2024-01-15T09:30:00Z",
@@ -163,7 +163,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "auth_method": "NONE",
         "basic_auth_user": "basic_auth_user",
         "basic_auth_pass": "basic_auth_pass",
-        "extra_params": {"extra_params": {"key": "value"}},
+        "extra_params": {"key": "value"},
         "timeout": 1,
     }
     expected_types: typing.Any = {

@@ -65,7 +65,6 @@ class WorkspacesClient:
         description: typing.Optional[str] = OMIT,
         is_public: typing.Optional[bool] = OMIT,
         is_personal: typing.Optional[bool] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
@@ -89,9 +88,6 @@ class WorkspacesClient:
 
         is_personal : typing.Optional[bool]
             Is workspace personal
-
-        is_archived : typing.Optional[bool]
-            Is workspace archived
 
         color : typing.Optional[str]
             Workspace color in HEX format
@@ -121,7 +117,6 @@ class WorkspacesClient:
                 "description": description,
                 "is_public": is_public,
                 "is_personal": is_personal,
-                "is_archived": is_archived,
                 "color": color,
             },
             request_options=request_options,
@@ -220,7 +215,6 @@ class WorkspacesClient:
         description: typing.Optional[str] = OMIT,
         is_public: typing.Optional[bool] = OMIT,
         is_personal: typing.Optional[bool] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
@@ -243,9 +237,6 @@ class WorkspacesClient:
 
         is_personal : typing.Optional[bool]
             Is workspace personal
-
-        is_archived : typing.Optional[bool]
-            Is workspace archived
 
         color : typing.Optional[str]
             Workspace color in HEX format
@@ -277,7 +268,6 @@ class WorkspacesClient:
                 "description": description,
                 "is_public": is_public,
                 "is_personal": is_personal,
-                "is_archived": is_archived,
                 "color": color,
             },
             request_options=request_options,
@@ -342,7 +332,6 @@ class AsyncWorkspacesClient:
         description: typing.Optional[str] = OMIT,
         is_public: typing.Optional[bool] = OMIT,
         is_personal: typing.Optional[bool] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
@@ -366,9 +355,6 @@ class AsyncWorkspacesClient:
 
         is_personal : typing.Optional[bool]
             Is workspace personal
-
-        is_archived : typing.Optional[bool]
-            Is workspace archived
 
         color : typing.Optional[str]
             Workspace color in HEX format
@@ -398,7 +384,6 @@ class AsyncWorkspacesClient:
                 "description": description,
                 "is_public": is_public,
                 "is_personal": is_personal,
-                "is_archived": is_archived,
                 "color": color,
             },
             request_options=request_options,
@@ -497,7 +482,6 @@ class AsyncWorkspacesClient:
         description: typing.Optional[str] = OMIT,
         is_public: typing.Optional[bool] = OMIT,
         is_personal: typing.Optional[bool] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
@@ -520,9 +504,6 @@ class AsyncWorkspacesClient:
 
         is_personal : typing.Optional[bool]
             Is workspace personal
-
-        is_archived : typing.Optional[bool]
-            Is workspace archived
 
         color : typing.Optional[str]
             Workspace color in HEX format
@@ -554,7 +535,6 @@ class AsyncWorkspacesClient:
                 "description": description,
                 "is_public": is_public,
                 "is_personal": is_personal,
-                "is_archived": is_archived,
                 "color": color,
             },
             request_options=request_options,

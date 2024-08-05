@@ -241,6 +241,10 @@ service:
                   overlap_cohort_percentage: 1
                   task_data_login: task_data_login
                   task_data_password: task_data_password
+                  control_weights:
+                    key: value
+                  parsed_label_config:
+                    key: value
                   evaluate_predictions_automatically: true
                   config_has_control_tags: config_has_control_tags
                   skip_queue: REQUEUE_FOR_ME
@@ -437,11 +441,9 @@ service:
               task_data_login: user
               task_data_password: secret
               control_weights:
-                control_weights:
-                  key: value
+                key: value
               parsed_label_config:
-                parsed_label_config:
-                  key: value
+                key: value
               evaluate_predictions_automatically: false
               config_has_control_tags: config_has_control_tags
               skip_queue: REQUEUE_FOR_ME
@@ -742,7 +744,7 @@ service:
         - path-parameters:
             id: 1
           request:
-            - {}
+            - key: value
           response:
             body:
               task_count: 1
@@ -786,15 +788,12 @@ service:
               prediction_count: 1
               duration: 1
               file_upload_ids:
-                file_upload_ids:
-                  key: value
+                key: value
               files_as_tasks_list: true
               found_formats:
-                found_formats:
-                  key: value
+                key: value
               data_columns:
-                data_columns:
-                  key: value
+                key: value
               traceback: traceback
               project: 1
       audiences:
