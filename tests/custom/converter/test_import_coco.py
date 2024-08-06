@@ -16,9 +16,6 @@ def test_import_coco_base():
     out_json_file = os.path.join(output_dir, "coco_import_output.json")
 
     import_coco.convert_coco_to_ls(input_file=input_json_file, out_file=out_json_file)
-    # list files in output dir
-    print(os.listdir(output_dir))
-
     out_config_file = os.path.join(output_dir, "coco_import_output.label_config.xml")
 
     assert os.path.exists(out_config_file), f"> {out_config_file} is not generated"
