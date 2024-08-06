@@ -37,6 +37,11 @@ from PIL import Image
 from collections import defaultdict
 from itertools import groupby
 
+from label_studio_sdk.converter.utils import (
+    download,
+    ensure_dir,
+)
+
 logger = logging.getLogger(__name__)
 
 
@@ -170,6 +175,89 @@ def convert_task_dir(items, out_dir, out_format="numpy"):
 
 # convert_task_dir('/ls/test/completions', '/ls/test/completions/output', 'numpy')
 
+def convert_to_brush(
+    self,
+    input_data,
+    output_dir,
+    output_image_dir=None,
+    output_label_dir=None,
+    is_dir=True,
+    out_format="png",
+):
+    """Convert data in a specific format to either PNG or Numpy format.
+
+    Parameters
+    ----------
+    input_data : str
+        The input data a directory.
+    output_dir : str
+        The directory to store the output files in.
+    output_image_dir : str, optional
+        The directory to store the image files in. If not provided, it will default to a subdirectory called 'images' in output_dir.
+    output_label_dir : str, optional
+        The directory to store the label files in. If not provided, it will default to a subdirectory called 'masks' in output_dir.
+    is_dir : bool, optional
+        A boolean indicating whether `input_data` is a directory (True) or a JSON file (False).
+    output_format : str, optional
+        A string either 'png' or 'numpy' indicating which mask format to use.
+    """
+    ensure_dir(output_dir)
+    if output_image_dir is not None:
+        ensure_dir(output_image_dir)
+    else:
+        output_image_dir = os.path.join(output_dir, "images")
+        os.makedirs(output_image_dir, exist_ok=True)
+    if output_label_dir is not None:
+        ensure_dir(output_label_dir)
+    else:
+        output_label_dir = os.path.join(output_dir, "masks")
+        os.makedirs(output_label_dir, exist_ok=True)
+    categories, category_name_to_id = self._get_labels()
+    data_key = self._data_keys[0]
+
+    # Write all segmentation PNGs or Numpy masks
+    items = (
+        self.iter_from_dir(input_data)
+        if is_dir
+        else self.iter_from_json_file(input_data)
+    )
+    convert_task_dir(items, output_label_dir, out_format)
+ 
+    # Write all raw images to the "images" folder
+    item_iterator = (
+        self.iter_from_dir(input_data)
+        if is_dir
+        else self.iter_from_json_file(input_data)
+    )
+    for item_idx, item in enumerate(item_iterator):
+        # get image path(s) and label file path
+        image_paths = item["input"][data_key]
+        image_paths = [image_paths] if isinstance(image_paths, str) else image_paths
+        # download image(s)
+        image_path = None
+        # TODO: for multi-page annotation, this code won't produce correct relationships between page and annotated shapes
+        # fixing the issue in RND-84
+        for image_path in reversed(image_paths):
+            if not os.path.exists(image_path):
+                try:
+                    image_path = download(
+                        image_path,
+                        output_image_dir,
+                        project_dir=self.project_dir,
+                        return_relative_path=True,
+                        upload_dir=self.upload_dir,
+                        download_resources=self.download_resources,
+                    )
+                except:
+                    logger.info(
+                        "Unable to download {image_path}. The item {item} will be skipped".format(
+                            image_path=image_path, item=item
+                        ),
+                        exc_info=True,
+                    )
+        if not image_path:
+            logger.error(f"No image path found for item #{item_idx}")
+            continue
 
 ### Brush Import ###
 
