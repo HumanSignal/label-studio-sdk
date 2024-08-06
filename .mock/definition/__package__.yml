@@ -1,20 +1,19 @@
 errors:
+  BadRequestError:
+    status-code: 400
+    type: unknown
+  NotFoundError:
+    status-code: 404
+    type: unknown
+    docs: Project not found
   InternalServerError:
     status-code: 500
     type: string
     docs: Predicting error
-  NotFoundError:
-    status-code: 404
-    type: unknown
-    docs: Member not found
   MethodNotAllowedError:
     status-code: 405
     type: unknown
     docs: User cannot soft delete self.
-  BadRequestError:
-    status-code: 400
-    type: string
-    docs: ''
 types:
   AnnotationLastAction:
     enum:
@@ -1500,6 +1499,22 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+  BaseTaskUpdatedBy:
+    discriminated: false
+    docs: Last annotator or reviewer who updated this task
+    union:
+      - type: optional<integer>
+        docs: Last annotator who updated this task
+      - type: optional<list<map<string, unknown>>>
+        docs: Last annotators or reviewers who updated this task
+  BaseTaskFileUpload:
+    discriminated: false
+    docs: Uploaded file used as data source for this task
+    union:
+      - type: optional<string>
+        docs: Uploaded file used as data source for this task
+      - type: optional<integer>
+        docs: Uploaded file ID used as data source for this task
   BaseTask:
     properties:
       id: optional<integer>
@@ -1556,11 +1571,182 @@ types:
         type: optional<integer>
         docs: Project ID for this task
       updated_by:
-        type: optional<integer>
+        type: optional<BaseTaskUpdatedBy>
         docs: Last annotator or reviewer who updated this task
       file_upload:
-        type: optional<integer>
+        type: optional<BaseTaskFileUpload>
         docs: Uploaded file used as data source for this task
+      comment_authors:
+        type: optional<list<integer>>
+        docs: Users who wrote comments
+  AnnotationsDmFieldLastAction:
+    enum:
+      - prediction
+      - propagated_annotation
+      - imported
+      - submitted
+      - updated
+      - skipped
+      - accepted
+      - rejected
+      - fixed_and_accepted
+      - deleted_review
+    docs: Action which was performed in the last annotation history item
+  AnnotationsDmField:
+    properties:
+      id: optional<integer>
+      result:
+        type: optional<list<map<string, unknown>>>
+        docs: List of annotation results for the task
+      created_username:
+        type: optional<string>
+        docs: Username string
+      created_ago:
+        type: optional<string>
+        docs: Time delta from creation time
+        default: ''
+        validation:
+          minLength: 1
+      completed_by:
+        type: optional<map<string, unknown>>
+        docs: User details who completed this annotation.
+      unique_id:
+        type: optional<string>
+        validation:
+          minLength: 1
+      was_cancelled:
+        type: optional<boolean>
+        docs: User skipped the task
+      ground_truth:
+        type: optional<boolean>
+        docs: This annotation is a Ground Truth (ground_truth)
+      created_at:
+        type: optional<datetime>
+        docs: Creation time
+      updated_at:
+        type: optional<datetime>
+        docs: Last updated time
+      draft_created_at:
+        type: optional<datetime>
+        docs: Draft creation time
+      lead_time:
+        type: optional<double>
+        docs: How much time it took to annotate the task
+      import_id:
+        type: optional<integer>
+        docs: >-
+          Original annotation ID that was at the import step or NULL if this
+          annotation wasn't imported
+      last_action:
+        type: optional<AnnotationsDmFieldLastAction>
+        docs: Action which was performed in the last annotation history item
+      task:
+        type: optional<integer>
+        docs: Corresponding task for this annotation
+      project:
+        type: optional<integer>
+        docs: Project ID for this annotation
+      updated_by:
+        type: optional<integer>
+        docs: Last user who updated this annotation
+      parent_prediction:
+        type: optional<integer>
+        docs: Points to the prediction from which this annotation was created
+      parent_annotation:
+        type: optional<integer>
+        docs: Points to the parent annotation from which this annotation was created
+      last_created_by:
+        type: optional<integer>
+        docs: User who created the last annotation history item
+  DataManagerTaskSerializerPredictionsItem:
+    properties:
+      result: optional<list<map<string, unknown>>>
+      score: optional<double>
+      model_version: optional<string>
+      model: optional<map<string, unknown>>
+      model_run: optional<map<string, unknown>>
+      task: optional<integer>
+      project: optional<double>
+      created_at: optional<datetime>
+      updated_at: optional<datetime>
+  DataManagerTaskSerializerDraftsItem:
+    properties:
+      result: optional<list<map<string, unknown>>>
+      created_at: optional<datetime>
+      updated_at: optional<datetime>
+  DataManagerTaskSerializerAnnotatorsItem:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+  DataManagerTaskSerializer:
+    properties:
+      id: optional<integer>
+      predictions:
+        type: optional<list<DataManagerTaskSerializerPredictionsItem>>
+        docs: Predictions for this task
+      annotations: optional<list<AnnotationsDmField>>
+      drafts:
+        type: optional<list<DataManagerTaskSerializerDraftsItem>>
+        docs: Drafts for this task
+      annotators:
+        type: optional<list<DataManagerTaskSerializerAnnotatorsItem>>
+        docs: Annotators who annotated this task
+      inner_id: optional<integer>
+      cancelled_annotations: optional<integer>
+      total_annotations: optional<integer>
+      total_predictions: optional<integer>
+      completed_at: optional<datetime>
+      annotations_results: optional<string>
+      predictions_results: optional<string>
+      predictions_score: optional<double>
+      file_upload: optional<string>
+      storage_filename: optional<string>
+      annotations_ids: optional<string>
+      predictions_model_versions: optional<string>
+      avg_lead_time: optional<double>
+      draft_exists: optional<boolean>
+      updated_by:
+        type: optional<list<map<string, unknown>>>
+        docs: User IDs who updated this task
+      data:
+        docs: >-
+          User imported or uploaded data for a task. Data is formatted according
+          to the project label config. You can find examples of data for your
+          project on the Import page in the Label Studio Data Manager UI.
+        type: map<string, unknown>
+      meta:
+        type: optional<map<string, unknown>>
+        docs: >-
+          Meta is user imported (uploaded) data and can be useful as input for
+          an ML Backend for embeddings, advanced vectors, and other info. It is
+          passed to ML during training/predicting steps.
+      created_at:
+        type: optional<datetime>
+        docs: Time a task was created
+      updated_at:
+        type: optional<datetime>
+        docs: Last time a task was updated
+      is_labeled:
+        type: optional<boolean>
+        docs: >-
+          True if the number of annotations for this task is greater than or
+          equal to the number of maximum_completions for the project
+      overlap:
+        type: optional<integer>
+        docs: Number of distinct annotators that processed the current task
+      comment_count:
+        type: optional<integer>
+        docs: Number of comments in the task including all annotations
+      unresolved_comment_count:
+        type: optional<integer>
+        docs: Number of unresolved comments in the task including all annotations
+      last_comment_updated_at:
+        type: optional<datetime>
+        docs: When the last comment was updated
+      project:
+        type: optional<integer>
+        docs: Project ID for this task
       comment_authors:
         type: optional<list<integer>>
         docs: Users who wrote comments
@@ -1654,6 +1840,11 @@ types:
       updated_at:
         type: optional<datetime>
         docs: Last update time
+  TaskAnnotatorsItem:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
   Task:
     properties:
       id:
@@ -1669,8 +1860,8 @@ types:
         type: optional<list<map<string, unknown>>>
         docs: Drafts for this task
       annotators:
-        type: optional<list<integer>>
-        docs: List of annotators' IDs for this task
+        type: optional<list<TaskAnnotatorsItem>>
+        docs: List of annotators for this task
       inner_id:
         type: optional<integer>
         docs: Inner ID of the task
@@ -1734,3 +1925,144 @@ types:
       comment_authors:
         type: optional<list<integer>>
         docs: List of comment authors' IDs for this task
+  Workspace:
+    properties:
+      id:
+        type: optional<integer>
+        docs: Unique ID of the workspace
+      title:
+        type: optional<string>
+        docs: Workspace title
+      description:
+        type: optional<string>
+        docs: Workspace description
+      is_public:
+        type: optional<boolean>
+        docs: Whether the workspace is public or not
+      is_personal:
+        type: optional<boolean>
+        docs: Whether the workspace is personal or not
+      is_archived:
+        type: optional<boolean>
+        docs: Whether the workspace is archived or not
+      created_at:
+        type: optional<datetime>
+        docs: Creation time of the workspace
+      updated_at:
+        type: optional<datetime>
+        docs: Last updated time of the workspace
+      created_by:
+        type: optional<integer>
+        docs: User ID of the workspace creator
+      color:
+        type: optional<string>
+        docs: Workspace color
+  S3SImportStorageStatus:
+    enum:
+      - initialized
+      - queued
+      - in_progress
+      - failed
+      - completed
+  S3SImportStorage:
+    properties:
+      id: optional<integer>
+      synchronizable: optional<boolean>
+      presign: optional<boolean>
+      last_sync:
+        type: optional<datetime>
+        docs: Last sync finished time
+      last_sync_count:
+        type: optional<integer>
+        docs: Count of tasks synced last time
+      last_sync_job:
+        type: optional<string>
+        docs: Last sync job ID
+        validation:
+          maxLength: 256
+      status: optional<S3SImportStorageStatus>
+      traceback:
+        type: optional<string>
+        docs: Traceback report for the last failed sync
+      meta:
+        type: optional<map<string, unknown>>
+        docs: Meta and debug information about storage processes
+      title:
+        type: optional<string>
+        docs: Cloud storage title
+        validation:
+          maxLength: 256
+      description:
+        type: optional<string>
+        docs: Cloud storage description
+      created_at:
+        type: optional<datetime>
+        docs: Creation time
+      bucket:
+        type: optional<string>
+        docs: S3 bucket name
+      prefix:
+        type: optional<string>
+        docs: S3 bucket prefix
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
+      region_name:
+        type: optional<string>
+        docs: AWS Region
+      external_id:
+        type: optional<string>
+        docs: AWS External ID
+      role_arn:
+        type: optional<string>
+        docs: AWS Role ARN
+      s3_endpoint:
+        type: optional<string>
+        docs: S3 Endpoint
+      presign_ttl:
+        type: optional<integer>
+        docs: Presigned URLs TTL (in minutes)
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan over the bucket content
+      project:
+        type: integer
+        docs: A unique integer value identifying this project.
+  S3SExportStorage:
+    properties:
+      id: optional<integer>
+      title:
+        type: optional<string>
+        docs: Cloud storage title
+        validation:
+          maxLength: 256
+      description:
+        type: optional<string>
+        docs: Cloud storage description
+      created_at:
+        type: optional<datetime>
+        docs: Creation time
+      bucket:
+        type: optional<string>
+        docs: S3 bucket name
+      prefix:
+        type: optional<string>
+        docs: S3 bucket prefix
+      external_id:
+        type: optional<string>
+        docs: AWS External ID
+      role_arn:
+        type: optional<string>
+        docs: AWS Role ARN
+      region_name:
+        type: optional<string>
+        docs: AWS Region
+      s3_endpoint:
+        type: optional<string>
+        docs: S3 Endpoint
+      project:
+        type: integer
+        docs: A unique integer value identifying this project.

@@ -5,6 +5,8 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from .base_task_file_upload import BaseTaskFileUpload
+from .base_task_updated_by import BaseTaskUpdatedBy
 
 
 class BaseTask(pydantic_v1.BaseModel):
@@ -79,12 +81,12 @@ class BaseTask(pydantic_v1.BaseModel):
     Project ID for this task
     """
 
-    updated_by: typing.Optional[int] = pydantic_v1.Field(default=None)
+    updated_by: typing.Optional[BaseTaskUpdatedBy] = pydantic_v1.Field(default=None)
     """
     Last annotator or reviewer who updated this task
     """
 
-    file_upload: typing.Optional[int] = pydantic_v1.Field(default=None)
+    file_upload: typing.Optional[BaseTaskFileUpload] = pydantic_v1.Field(default=None)
     """
     Uploaded file used as data source for this task
     """

@@ -20,6 +20,7 @@ from .tasks.client import AsyncTasksClient, TasksClient
 from .users.client import AsyncUsersClient, UsersClient
 from .views.client import AsyncViewsClient, ViewsClient
 from .webhooks.client import AsyncWebhooksClient, WebhooksClient
+from .workspaces.client import AsyncWorkspacesClient, WorkspacesClient
 
 
 class LabelStudioBase:
@@ -96,6 +97,7 @@ class LabelStudioBase:
         self.import_storage = ImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = ExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
+        self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncLabelStudioBase:
@@ -172,6 +174,7 @@ class AsyncLabelStudioBase:
         self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
+        self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: LabelStudioEnvironment) -> str:

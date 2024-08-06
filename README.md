@@ -11,7 +11,8 @@
 > ```sh
 > git clone https://github.com/HumanSignal/label-studio-sdk.git
 > cd label-studio-sdk
-> git checkout previous-version
+> git fetch origin
+> git checkout release/0.0.34
 > ```
 > 
 > OR you can change your import statements as follows:
@@ -61,18 +62,16 @@ Check more examples [here](https://api.labelstud.io/).
 ## Create a new project
 
 ```python
+from label_studio_sdk.label_interface import LabelInterface
+from label_studio_sdk.label_interface.create import labels
+
 project = ls.projects.create(
     name="Project name",
     description="Project description",
-    label_config="""
-    <View>
-        <Image name="image" value="$image" />
-        <RectangleLabels name="label" toName="image">
-            <Label value="cat" />
-            <Label value="dog" />
-        </RectangleLabels>
-    </View>
-    """
+    label_config=LabelInterface.create({
+      "image": "Image",
+      "bbox": labels(["cat", "dog"], tag_type="RectangleLabels")
+    })
 )
 ```
 

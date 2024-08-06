@@ -10,6 +10,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 from ..types.base_task import BaseTask
+from ..types.data_manager_task_serializer import DataManagerTaskSerializer
 from ..types.project_import import ProjectImport
 from ..types.task import Task
 from .types.tasks_list_request_fields import TasksListRequestFields
@@ -67,9 +68,9 @@ class TasksClient:
             method="GET",
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectImport, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ProjectImport, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -107,9 +108,9 @@ class TasksClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/tasks/", method="DELETE", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -163,7 +164,7 @@ class TasksClient:
             Specify which fields to include in the response
 
         query : typing.Optional[str]
-            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check Data Manager > Create View for more details about filters, selectedItems and ordering.
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check [Data Manager > Create View > see `data` field](#tag/Data-Manager/operation/api_dm_views_create) for more details about filters, selectedItems and ordering.
 
             - **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/> Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
             - **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/> Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
@@ -185,7 +186,12 @@ class TasksClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.tasks.list()
+        response = client.tasks.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
         page = page or 1
         _response = self._client_wrapper.httpx_client.request(
@@ -204,24 +210,24 @@ class TasksClient:
             },
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(TasksListResponse, _response.json())  # type: ignore
-            _has_next = True
-            _get_next = lambda: self.list(
-                page=page + 1,
-                page_size=page_size,
-                view=view,
-                project=project,
-                resolve_uri=resolve_uri,
-                fields=fields,
-                review=review,
-                include=include,
-                query=query,
-                request_options=request_options,
-            )
-            _items = _parsed_response.tasks
-            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(TasksListResponse, _response.json())  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list(
+                    page=page + 1,
+                    page_size=page_size,
+                    view=view,
+                    project=project,
+                    resolve_uri=resolve_uri,
+                    fields=fields,
+                    review=review,
+                    include=include,
+                    query=query,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.tasks
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -276,15 +282,15 @@ class TasksClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> BaseTask:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DataManagerTaskSerializer:
         """
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
         The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
@@ -299,7 +305,7 @@ class TasksClient:
 
         Returns
         -------
-        BaseTask
+        DataManagerTaskSerializer
             Task
 
         Examples
@@ -316,9 +322,9 @@ class TasksClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/tasks/{jsonable_encoder(id)}/", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(DataManagerTaskSerializer, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -358,9 +364,9 @@ class TasksClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/tasks/{jsonable_encoder(id)}/", method="DELETE", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -418,9 +424,9 @@ class TasksClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -475,9 +481,9 @@ class AsyncTasksClient:
             method="GET",
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ProjectImport, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ProjectImport, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -515,9 +521,9 @@ class AsyncTasksClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/tasks/", method="DELETE", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -571,7 +577,7 @@ class AsyncTasksClient:
             Specify which fields to include in the response
 
         query : typing.Optional[str]
-            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check Data Manager > Create View for more details about filters, selectedItems and ordering.
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check [Data Manager > Create View > see `data` field](#tag/Data-Manager/operation/api_dm_views_create) for more details about filters, selectedItems and ordering.
 
             - **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/> Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
             - **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/> Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
@@ -593,7 +599,12 @@ class AsyncTasksClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.tasks.list()
+        response = await client.tasks.list()
+        async for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        async for page in response.iter_pages():
+            yield page
         """
         page = page or 1
         _response = await self._client_wrapper.httpx_client.request(
@@ -612,24 +623,24 @@ class AsyncTasksClient:
             },
             request_options=request_options,
         )
-        if 200 <= _response.status_code < 300:
-            _parsed_response = pydantic_v1.parse_obj_as(TasksListResponse, _response.json())  # type: ignore
-            _has_next = True
-            _get_next = lambda: self.list(
-                page=page + 1,
-                page_size=page_size,
-                view=view,
-                project=project,
-                resolve_uri=resolve_uri,
-                fields=fields,
-                review=review,
-                include=include,
-                query=query,
-                request_options=request_options,
-            )
-            _items = _parsed_response.tasks
-            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = pydantic_v1.parse_obj_as(TasksListResponse, _response.json())  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list(
+                    page=page + 1,
+                    page_size=page_size,
+                    view=view,
+                    project=project,
+                    resolve_uri=resolve_uri,
+                    fields=fields,
+                    review=review,
+                    include=include,
+                    query=query,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.tasks
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -684,15 +695,17 @@ class AsyncTasksClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> BaseTask:
+    async def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DataManagerTaskSerializer:
         """
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
         The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
@@ -707,7 +720,7 @@ class AsyncTasksClient:
 
         Returns
         -------
-        BaseTask
+        DataManagerTaskSerializer
             Task
 
         Examples
@@ -724,9 +737,9 @@ class AsyncTasksClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/tasks/{jsonable_encoder(id)}/", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(DataManagerTaskSerializer, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -766,9 +779,9 @@ class AsyncTasksClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/tasks/{jsonable_encoder(id)}/", method="DELETE", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return
         try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -826,9 +839,9 @@ class AsyncTasksClient:
             request_options=request_options,
             omit=OMIT,
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(BaseTask, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
