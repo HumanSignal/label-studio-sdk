@@ -12,6 +12,7 @@ from .gcs.client import AsyncGcsClient, GcsClient
 from .local.client import AsyncLocalClient, LocalClient
 from .redis.client import AsyncRedisClient, RedisClient
 from .s3.client import AsyncS3Client, S3Client
+from .s3s.client import AsyncS3SClient, S3SClient
 from .types.import_storage_list_types_response_item import ImportStorageListTypesResponseItem
 
 
@@ -23,6 +24,7 @@ class ImportStorageClient:
         self.local = LocalClient(client_wrapper=self._client_wrapper)
         self.redis = RedisClient(client_wrapper=self._client_wrapper)
         self.s3 = S3Client(client_wrapper=self._client_wrapper)
+        self.s3s = S3SClient(client_wrapper=self._client_wrapper)
 
     def list_types(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -52,9 +54,9 @@ class ImportStorageClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/types", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(typing.List[ImportStorageListTypesResponseItem], _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[ImportStorageListTypesResponseItem], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -69,6 +71,7 @@ class AsyncImportStorageClient:
         self.local = AsyncLocalClient(client_wrapper=self._client_wrapper)
         self.redis = AsyncRedisClient(client_wrapper=self._client_wrapper)
         self.s3 = AsyncS3Client(client_wrapper=self._client_wrapper)
+        self.s3s = AsyncS3SClient(client_wrapper=self._client_wrapper)
 
     async def list_types(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -98,9 +101,9 @@ class AsyncImportStorageClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/storages/types", method="GET", request_options=request_options
         )
-        if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(typing.List[ImportStorageListTypesResponseItem], _response.json())  # type: ignore
         try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[ImportStorageListTypesResponseItem], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -144,7 +144,14 @@ class ObjectTag(LabelStudioTag):
         """Check if value has variable"""
         pattern = re.compile(r"^\$[^, ]+$")
         return bool(pattern.fullmatch(self.value))
-    
+
+    def collect_attrs(self):
+        """Return tag attrs as a single dict"""
+        return {
+            **self.attr,
+            "name": self.name,
+            "value": '$' + self.value if self.value is not None else None
+        }
 
     # and have generate_example in each
     def generate_example_value(self, mode="upload", secure_mode=False):
@@ -174,7 +181,8 @@ class ObjectTag(LabelStudioTag):
 
 class AudioTag(ObjectTag):
     """ """
-
+    tag: str = "Audio"
+    
     def _generate_example(self, examples, only_urls=False):
         """ """
         return examples.get("Audio")
@@ -182,7 +190,8 @@ class AudioTag(ObjectTag):
 
 class ImageTag(ObjectTag):
     """ """
-
+    tag: str = "Image"
+    
     def _generate_example(self, examples, only_urls=False):
         """ """
         return examples.get("Image")
@@ -190,7 +199,8 @@ class ImageTag(ObjectTag):
 
 class TableTag(ObjectTag):
     """ """
-
+    tag: str = "Table"
+    
     def _generate_example(self, examples, only_urls=False):
         """ """
         return examples.get("Table")
@@ -198,7 +208,8 @@ class TableTag(ObjectTag):
 
 class TextTag(ObjectTag):
     """ """
-
+    tag: str = "Text"
+    
     def _generate_example(self, examples, only_urls=False):
         """ """
         if only_urls:
@@ -209,7 +220,8 @@ class TextTag(ObjectTag):
 
 class VideoTag(ObjectTag):
     """ """
-
+    tag: str = "Video"
+    
     def _generate_example(self, examples, only_urls=False):
         """ """
         return examples.get("Video")
@@ -217,7 +229,8 @@ class VideoTag(ObjectTag):
 
 class HyperTextTag(ObjectTag):
     """ """
-
+    tag: str = "HyperText"
+    
     def _generate_example(self, examples, only_urls=False):
         """ """
         examples = data_examples(mode="upload")
@@ -229,7 +242,8 @@ class HyperTextTag(ObjectTag):
 
 class ListTag(ObjectTag):
     """ """
-
+    tag: str = "List"
+    
     def _generate_example(self, examples, only_urls=False):
         """ """
         examples = data_examples(mode="upload")
@@ -238,7 +252,8 @@ class ListTag(ObjectTag):
 
 class ParagraphsTag(ObjectTag):
     """ """
-
+    tag: str = "Paragraphs"
+    
     def _generate_example(self, examples, only_urls=False):
         """ """
         # Paragraphs special case - replace nameKey/textKey if presented
@@ -259,7 +274,8 @@ class ParagraphsTag(ObjectTag):
 
 class TimeSeriesTag(ObjectTag):
     """ """
-
+    tag: str = "TimeSeries"
+    
     def _generate_example(self, examples, only_urls=False):
         """ """
         p = self.attr

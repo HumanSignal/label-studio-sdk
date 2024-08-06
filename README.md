@@ -17,7 +17,7 @@
 > 
 > OR you can change your import statements as follows:
 > ```python
-> from label_studio_sdk._legacy import Client
+> from label_studio_sdk import Client
 > from label_studio_sdk.data_manager import Filters, Column, Operator, Type
 > from label_studio_sdk._legacy import Project
 > ```
@@ -62,18 +62,16 @@ Check more examples [here](https://api.labelstud.io/).
 ## Create a new project
 
 ```python
+from label_studio_sdk.label_interface import LabelInterface
+from label_studio_sdk.label_interface.create import labels
+
 project = ls.projects.create(
     name="Project name",
     description="Project description",
-    label_config="""
-    <View>
-        <Image name="image" value="$image" />
-        <RectangleLabels name="label" toName="image">
-            <Label value="cat" />
-            <Label value="dog" />
-        </RectangleLabels>
-    </View>
-    """
+    label_config=LabelInterface.create({
+      "image": "Image",
+      "bbox": labels(["cat", "dog"], tag_type="RectangleLabels")
+    })
 )
 ```
 

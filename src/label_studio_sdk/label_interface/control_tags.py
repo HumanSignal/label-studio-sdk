@@ -145,6 +145,14 @@ class ControlTag(LabelStudioTag):
 
         return tag_class(**tag_info)
 
+    def collect_attrs(self):
+        """Return tag attrs as a single dict"""
+        return {
+            **self.attr,
+            "name": self.name,
+            "toName": self.to_name
+        }
+    
     def get_object(self, name=None):
         """
         This method retrieves the object tag that the control tag maps to.
@@ -473,7 +481,7 @@ class ChoicesValue(BaseModel):
 
 class ChoicesTag(ControlTag):
     """ """
-
+    tag: str = "Choices"
     _label_attr_name: str = "choices"
     _value_class: Type[ChoicesValue] = ChoicesValue
 
@@ -484,7 +492,7 @@ class LabelsValue(SpanSelection):
 
 class LabelsTag(ControlTag):
     """ """
-
+    tag: str = "Labels"
     _label_attr_name: str = "labels"
     _value_class: Type[LabelsValue] = LabelsValue
 
@@ -534,7 +542,7 @@ class BrushLabelsValue(BrushValue):
 
 class BrushTag(ControlTag):
     """ """
-
+    tag: str = "Brush"
     _value_class: Type[BrushValue] = BrushValue
 
     # def validate_value(self, value) -> bool:
@@ -546,7 +554,7 @@ class BrushTag(ControlTag):
 
 class BrushLabelsTag(BrushTag):
     """ """
-
+    tag: str = "BrushLabels"
     _label_attr_name: str = "brushlabels"
     _value_class: Type[BrushLabelsValue] = BrushLabelsValue
 
@@ -565,13 +573,13 @@ class EllipseLabelsValue(EllipseValue):
 
 class EllipseTag(ControlTag):
     """ """
-
+    tag: str = "Ellipse"
     _value_class: Type[EllipseValue] = EllipseValue
 
 
 class EllipseLabelsTag(ControlTag):
     """ """
-
+    tag: str = "EllipseLabels"
     _label_attr_name: str = "ellipselabels"
     _value_class: Type[EllipseLabelsValue] = EllipseLabelsValue
 
@@ -587,13 +595,13 @@ class KeyPointLabelsValue(KeyPointValue):
 
 class KeyPointTag(ControlTag):
     """ """
-
+    tag: str = "KeyPoint"
     _value_class: Type[KeyPointValue] = KeyPointValue
 
 
 class KeyPointLabelsTag(ControlTag):
     """ """
-
+    tag: str = "KeyPointLabels"
     _label_attr_name: str = "keypointlabels"
     _value_class: Type[KeyPointLabelsValue] = KeyPointLabelsValue
 
@@ -608,13 +616,13 @@ class PolygonLabelsValue(PolygonValue):
 
 class PolygonTag(ControlTag):
     """ """
-
+    tag: str = "Polygon"
     _value_class: Type[PolygonValue] = PolygonValue
 
 
 class PolygonLabelsTag(ControlTag):
     """ """
-
+    tag: str = "PolygonLabels"
     _label_attr_name: str = "polygonlabels"
     _value_class: Type[PolygonLabelsValue] = PolygonLabelsValue
 
@@ -633,13 +641,13 @@ class RectangleLabelsValue(RectangleValue):
 
 class RectangleTag(ControlTag):
     """ """
-
+    tag: str = "Rectangle"
     _value_class: Type[RectangleValue] = RectangleValue
 
 
 class RectangleLabelsTag(ControlTag):
     """ """
-
+    tag: str = "RectangleLabels"
     _label_attr_name: str = "rectanglelabels"
     _value_class: Type[RectangleLabelsValue] = RectangleLabelsValue
 
@@ -663,6 +671,7 @@ class VideoRectangleValue(BaseModel):
     
 class VideoRectangleTag(ControlTag):
     """ """
+    tag: str = "VideoRectangle"
     _label_attr_name: str = "labels"
     _value_class: Type[VideoRectangleValue] = VideoRectangleValue
     
@@ -673,6 +682,7 @@ class NumberValue(BaseModel):
 
 class NumberTag(ControlTag):
     """ """
+    tag: str = "Number"
     _value_class: Type[NumberValue] = NumberValue
     
 
@@ -682,6 +692,7 @@ class DateTimeValue(BaseModel):
     
 class DateTimeTag(ControlTag):
     """ """
+    tag: str = "DateTime"
     _value_class: Type[DateTimeValue] = DateTimeValue
 
 
@@ -691,7 +702,7 @@ class HyperTextLabelsValue(SpanSelectionOffsets):
 
 class HyperTextLabelsTag(ControlTag):
     """ """
-
+    tag: str = "HyperTextLabels"
     _label_attr_name: str = "htmllabels"
     _value_class: Type[HyperTextLabelsValue] = HyperTextLabelsValue
 
@@ -702,7 +713,7 @@ class PairwiseValue(BaseModel):
 
 class PairwiseTag(ControlTag):
     """ """
-
+    tag: str = "Pairwise"
     _value_class: Type[PairwiseValue] = PairwiseValue
 
     def label(self, side):
@@ -717,7 +728,7 @@ class ParagraphLabelsValue(SpanSelectionOffsets):
 
 class ParagraphLabelsTag(ControlTag):
     """ """
-
+    tag: str = "ParagraphsLabels"
     _label_attr_name: str = "paragraphlabels"
     _value_class: Type[ParagraphLabelsValue] = ParagraphLabelsValue
 
@@ -736,6 +747,7 @@ class RankerValue(BaseModel):
     
 class RankerTag(ControlTag):
     """ """
+    tag: str = "Ranker"
     _value_class: Type[RankerValue] = RankerValue
 
 
@@ -745,11 +757,13 @@ class RatingValue(BaseModel):
 
 class RatingTag(ControlTag):
     """ """
+    tag: str = "Rating"
     _value_class: Type[RatingValue] = RatingValue
 
 
 class RelationsTag(ControlTag):
     """ """
+    tag: str = "Relations"
     def validate_value(self, ) -> bool:
         """ """
         raise NotImplemented("""Should not be called directly, instead
@@ -768,7 +782,7 @@ class TaxonomyValue(BaseModel):
 
 class TaxonomyTag(ControlTag):
     """ """
-
+    tag: str = "Taxonomy"
     _value_class: Type[TaxonomyValue] = TaxonomyValue
 
 
@@ -778,7 +792,7 @@ class TextAreaValue(BaseModel):
 
 class TextAreaTag(ControlTag):
     """ """
-
+    tag: str = "TextArea"
     _value_class: Type[TextAreaValue] = TextAreaValue
 
 
@@ -789,6 +803,6 @@ class TimeSeriesValue(SpanSelection):
 
 class TimeSeriesLabelsTag(ControlTag):
     """ """
-
+    tag: str = "TimeSeriesLabels"
     _label_attr_name: str = "timeserieslabels"
     _value_class: Type[TimeSeriesValue] = TimeSeriesValue

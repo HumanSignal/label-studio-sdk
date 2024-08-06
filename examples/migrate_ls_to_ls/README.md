@@ -66,7 +66,7 @@ pip install label-studio-sdk==0.0.34
     ```
     python3 migrate-ls-to-ls.py --project-ids=123,456 \
         --src-url http://localhost:8000 --src-key <src-token> \
-        --dst-url https://app.heartex.com --dst-key <dst-token>
+        --dst-url https://app.humansignal.com --dst-key <dst-token>
     ```
 
     To migrate all projects:
@@ -74,7 +74,7 @@ pip install label-studio-sdk==0.0.34
     ```
     python3 migrate-ls-to-ls.py \
         --src-url http://localhost:8000 --src-key <src-token> \
-        --dst-url https://app.heartex.com --dst-key <dst-token>
+        --dst-url https://app.humansignal.com --dst-key <dst-token>
     ```
 
 5. Migrate all projects to the specific workspace (optional)
@@ -85,7 +85,7 @@ pip install label-studio-sdk==0.0.34
     ```
     python3 migrate-ls-to-ls.py --project-ids=123,456 \ 
         --src-url http://localhost:8000 --src-key <src-token> \ 
-        --dst-url https://app.heartex.com --dst-key <dst-token> \
+        --dst-url https://app.humansignal.com --dst-key <dst-token> \
         --dest-workspace <workspace-id>
     ```
 
