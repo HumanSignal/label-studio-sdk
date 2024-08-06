@@ -28,7 +28,29 @@ def get_precision_recall_f1_per_choice(annotations: Iterable[Dict], predictions:
         predictions: Iterable of prediction dicts
 
     Returns:
-        Dict with keys as choice names and values as tuples of (precision, recall, f1)
+        Dict of the following format:
+        {
+            'precision': {
+                'choice1': 0.5,
+                'choice2': 0.7,
+                ...
+            },
+            'recall': {
+                'choice1': 0.5,
+                'choice2': 0.7,
+                ...
+            },
+            'f1': {
+                'choice1': 0.5,
+                'choice2': 0.7,
+                ...
+            },
+            'support': {
+                'choice1': 10,
+                'choice2': 20,
+                ...
+            },
+        }
     """
 
     annotation_choices = [_get_single_choice(annotation) for annotation in annotations]
@@ -41,11 +63,9 @@ def get_precision_recall_f1_per_choice(annotations: Iterable[Dict], predictions:
         average=None, labels=unique_choices)
 
     results = {}
-    for choice, metrics in zip(unique_choices, metrics_per_choice):
-        results[choice] = {
-            'precision': metrics[0],
-            'recall': metrics[1],
-            'f1': metrics[2],
-        }
+    for metric_name, metric_per_choice in zip(['precision', 'recall', 'f1', 'support'], metrics_per_choice):
+        results[metric_name] = {}
+        for choice, metric in zip(unique_choices, metric_per_choice):
+            results[metric_name][choice] = metric
 
     return results
