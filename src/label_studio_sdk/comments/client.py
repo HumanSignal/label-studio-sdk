@@ -76,6 +76,7 @@ class CommentsClient:
         annotation: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
         text: typing.Optional[str] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> Comment:
         """
@@ -88,6 +89,8 @@ class CommentsClient:
         project : typing.Optional[int]
 
         text : typing.Optional[str]
+
+        is_resolved : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -109,7 +112,7 @@ class CommentsClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/comments/",
             method="POST",
-            json={"annotation": annotation, "project": project, "text": text},
+            json={"annotation": annotation, "project": project, "text": text, "is_resolved": is_resolved},
             request_options=request_options,
             omit=OMIT,
         )
@@ -185,6 +188,7 @@ class AsyncCommentsClient:
         annotation: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
         text: typing.Optional[str] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> Comment:
         """
@@ -197,6 +201,8 @@ class AsyncCommentsClient:
         project : typing.Optional[int]
 
         text : typing.Optional[str]
+
+        is_resolved : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -218,7 +224,7 @@ class AsyncCommentsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/comments/",
             method="POST",
-            json={"annotation": annotation, "project": project, "text": text},
+            json={"annotation": annotation, "project": project, "text": text, "is_resolved": is_resolved},
             request_options=request_options,
             omit=OMIT,
         )
