@@ -5,6 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 from ..types.comment import Comment
@@ -23,7 +24,7 @@ class CommentsClient:
         project: typing.Optional[int] = None,
         expand_created_by: typing.Optional[bool] = None,
         annotation: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Comment]:
         """
         Get a list of comments for a specific project.
@@ -77,7 +78,7 @@ class CommentsClient:
         project: typing.Optional[int] = OMIT,
         text: typing.Optional[str] = OMIT,
         is_resolved: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Comment:
         """
         Create a new comment.
@@ -124,6 +125,143 @@ class CommentsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Comment:
+        """
+        Get a specific comment.
+
+        Parameters
+        ----------
+        id : int
+            Comment ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Comment
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.comments.get(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/comments/{jsonable_encoder(id)}", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a specific comment.
+
+        Parameters
+        ----------
+        id : int
+            Comment ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.comments.delete(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/comments/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update(
+        self,
+        id: int,
+        *,
+        annotation: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        text: typing.Optional[str] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Comment:
+        """
+        Update a specific comment.
+
+        Parameters
+        ----------
+        id : int
+            Comment ID
+
+        annotation : typing.Optional[int]
+
+        project : typing.Optional[int]
+
+        text : typing.Optional[str]
+
+        is_resolved : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Comment
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.comments.update(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/comments/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={"annotation": annotation, "project": project, "text": text, "is_resolved": is_resolved},
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncCommentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -135,7 +273,7 @@ class AsyncCommentsClient:
         project: typing.Optional[int] = None,
         expand_created_by: typing.Optional[bool] = None,
         annotation: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Comment]:
         """
         Get a list of comments for a specific project.
@@ -189,7 +327,7 @@ class AsyncCommentsClient:
         project: typing.Optional[int] = OMIT,
         text: typing.Optional[str] = OMIT,
         is_resolved: typing.Optional[bool] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Comment:
         """
         Create a new comment.
@@ -224,6 +362,143 @@ class AsyncCommentsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/comments/",
             method="POST",
+            json={"annotation": annotation, "project": project, "text": text, "is_resolved": is_resolved},
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Comment:
+        """
+        Get a specific comment.
+
+        Parameters
+        ----------
+        id : int
+            Comment ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Comment
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.comments.get(
+            id=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/comments/{jsonable_encoder(id)}", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a specific comment.
+
+        Parameters
+        ----------
+        id : int
+            Comment ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.comments.delete(
+            id=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/comments/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update(
+        self,
+        id: int,
+        *,
+        annotation: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        text: typing.Optional[str] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Comment:
+        """
+        Update a specific comment.
+
+        Parameters
+        ----------
+        id : int
+            Comment ID
+
+        annotation : typing.Optional[int]
+
+        project : typing.Optional[int]
+
+        text : typing.Optional[str]
+
+        is_resolved : typing.Optional[bool]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Comment
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.comments.update(
+            id=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/comments/{jsonable_encoder(id)}",
+            method="PATCH",
             json={"annotation": annotation, "project": project, "text": text, "is_resolved": is_resolved},
             request_options=request_options,
             omit=OMIT,
