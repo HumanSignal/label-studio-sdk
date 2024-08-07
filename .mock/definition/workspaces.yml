@@ -76,6 +76,9 @@ service:
               type: optional<string>
               docs: Workspace color in HEX format
               default: '#FFFFFF'
+            is_archived:
+              type: optional<boolean>
+              docs: Is workspace archived
       response:
         docs: ''
         type: root.Workspace
@@ -179,6 +182,9 @@ service:
               type: optional<string>
               docs: Workspace color in HEX format
               default: '#FFFFFF'
+            is_archived:
+              type: optional<boolean>
+              docs: Is workspace archived
       response:
         docs: ''
         type: root.Workspace

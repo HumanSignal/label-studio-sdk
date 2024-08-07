@@ -339,6 +339,9 @@ service:
             workspace:
               type: optional<integer>
               docs: Workspace ID
+            model_version:
+              type: optional<string>
+              docs: Model version
       response:
         docs: ''
         type: ProjectsCreateResponse
@@ -576,6 +579,9 @@ service:
             workspace:
               type: optional<integer>
               docs: Workspace ID
+            model_version:
+              type: optional<string>
+              docs: Model version
       response:
         docs: ''
         type: ProjectsUpdateResponse

@@ -131,6 +131,7 @@ class ProjectsClient:
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         workspace: typing.Optional[int] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsCreateResponse:
         """
@@ -188,6 +189,9 @@ class ProjectsClient:
         workspace : typing.Optional[int]
             Workspace ID
 
+        model_version : typing.Optional[str]
+            Model version
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -223,6 +227,7 @@ class ProjectsClient:
                 "color": color,
                 "control_weights": control_weights,
                 "workspace": workspace,
+                "model_version": model_version,
             },
             request_options=request_options,
             omit=OMIT,
@@ -332,6 +337,7 @@ class ProjectsClient:
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         workspace: typing.Optional[int] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsUpdateResponse:
         """
@@ -396,6 +402,9 @@ class ProjectsClient:
         workspace : typing.Optional[int]
             Workspace ID
 
+        model_version : typing.Optional[str]
+            Model version
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -433,6 +442,7 @@ class ProjectsClient:
                 "color": color,
                 "control_weights": control_weights,
                 "workspace": workspace,
+                "model_version": model_version,
             },
             request_options=request_options,
             omit=OMIT,
@@ -729,6 +739,7 @@ class AsyncProjectsClient:
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         workspace: typing.Optional[int] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsCreateResponse:
         """
@@ -786,6 +797,9 @@ class AsyncProjectsClient:
         workspace : typing.Optional[int]
             Workspace ID
 
+        model_version : typing.Optional[str]
+            Model version
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -821,6 +835,7 @@ class AsyncProjectsClient:
                 "color": color,
                 "control_weights": control_weights,
                 "workspace": workspace,
+                "model_version": model_version,
             },
             request_options=request_options,
             omit=OMIT,
@@ -930,6 +945,7 @@ class AsyncProjectsClient:
         color: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         workspace: typing.Optional[int] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsUpdateResponse:
         """
@@ -994,6 +1010,9 @@ class AsyncProjectsClient:
         workspace : typing.Optional[int]
             Workspace ID
 
+        model_version : typing.Optional[str]
+            Model version
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1031,6 +1050,7 @@ class AsyncProjectsClient:
                 "color": color,
                 "control_weights": control_weights,
                 "workspace": workspace,
+                "model_version": model_version,
             },
             request_options=request_options,
             omit=OMIT,

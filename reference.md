@@ -2588,6 +2588,14 @@ client.projects.create()
 <dl>
 <dd>
 
+**model_version:** `typing.Optional[str]` — Model version
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2917,6 +2925,14 @@ client.projects.update(
 <dd>
 
 **workspace:** `typing.Optional[int]` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_version:** `typing.Optional[str]` — Model version
     
 </dd>
 </dl>
@@ -15669,6 +15685,14 @@ client.workspaces.create()
 <dl>
 <dd>
 
+**is_archived:** `typing.Optional[bool]` — Is workspace archived
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -15912,6 +15936,14 @@ client.workspaces.update(
 <dd>
 
 **color:** `typing.Optional[str]` — Workspace color in HEX format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_archived:** `typing.Optional[bool]` — Is workspace archived
     
 </dd>
 </dl>
