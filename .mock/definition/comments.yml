@@ -57,6 +57,7 @@ service:
             annotation: optional<integer>
             project: optional<integer>
             text: optional<string>
+            is_resolved: optional<boolean>
       response:
         docs: ''
         type: root.Comment
