@@ -1,5 +1,14 @@
+import logging
 from typing import List, Dict, Iterable
-from sklearn.metrics import precision_recall_fscore_support
+
+logger = logging.getLogger(__name__)
+
+try:
+    # TODO: after python 3.8 support is dropped (Oct'24), remove try-except block
+    from sklearn.metrics import precision_recall_fscore_support
+except ImportError:
+    logger.warning('scikit-learn is not installed. Please install scikit-learn to use this module.')
+    precision_recall_fscore_support = None
 
 
 def _get_single_choice(annotation: Dict):
@@ -52,6 +61,9 @@ def get_precision_recall_f1_per_choice(annotations: Iterable[Dict], predictions:
             },
         }
     """
+
+    if precision_recall_fscore_support is None:
+        raise ImportError('scikit-learn is not installed. Please install scikit-learn to use this module.')
 
     annotation_choices = [_get_single_choice(annotation) for annotation in annotations]
     prediction_choices = [_get_single_choice(prediction) for prediction in predictions]
