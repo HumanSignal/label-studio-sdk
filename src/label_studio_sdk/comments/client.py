@@ -8,34 +8,44 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
-from ..types.workspace import Workspace
-from .members.client import AsyncMembersClient, MembersClient
+from ..types.comment import Comment
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class WorkspacesClient:
+class CommentsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.members = MembersClient(client_wrapper=self._client_wrapper)
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Workspace]:
+    def list(
+        self,
+        *,
+        project: typing.Optional[int] = None,
+        expand_created_by: typing.Optional[bool] = None,
+        annotation: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[Comment]:
         """
-        List all workspaces for your organization.
-
-        Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
-
-        For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+        Get a list of comments for a specific project.
 
         Parameters
         ----------
+        project : typing.Optional[int]
+            Project ID
+
+        expand_created_by : typing.Optional[bool]
+            Expand the created_by field with object instead of ID
+
+        annotation : typing.Optional[int]
+            Annotation ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[Workspace]
+        typing.List[Comment]
 
 
         Examples
@@ -45,14 +55,17 @@ class WorkspacesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.workspaces.list()
+        client.comments.list()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/workspaces", method="GET", request_options=request_options
+            "api/comments/",
+            method="GET",
+            params={"project": project, "expand_created_by": expand_created_by, "annotation": annotation},
+            request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.List[Workspace], _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(typing.List[Comment], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -61,47 +74,31 @@ class WorkspacesClient:
     def create(
         self,
         *,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        is_public: typing.Optional[bool] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
-        color: typing.Optional[str] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
+        annotation: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        text: typing.Optional[str] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Workspace:
+    ) -> Comment:
         """
-        Create a new workspace.
-
-        Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
-
-        For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+        Create a new comment.
 
         Parameters
         ----------
-        title : typing.Optional[str]
-            Workspace title
+        annotation : typing.Optional[int]
 
-        description : typing.Optional[str]
-            Workspace description
+        project : typing.Optional[int]
 
-        is_public : typing.Optional[bool]
-            Is workspace public
+        text : typing.Optional[str]
 
-        is_personal : typing.Optional[bool]
-            Is workspace personal
-
-        color : typing.Optional[str]
-            Workspace color in HEX format
-
-        is_archived : typing.Optional[bool]
-            Is workspace archived
+        is_resolved : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Workspace
+        Comment
 
 
         Examples
@@ -111,45 +108,38 @@ class WorkspacesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.workspaces.create()
+        client.comments.create()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/workspaces",
+            "api/comments/",
             method="POST",
-            json={
-                "title": title,
-                "description": description,
-                "is_public": is_public,
-                "is_personal": is_personal,
-                "color": color,
-                "is_archived": is_archived,
-            },
+            json={"annotation": annotation, "project": project, "text": text, "is_resolved": is_resolved},
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(Workspace, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Workspace:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Comment:
         """
-        Get information about a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Get a specific comment.
 
         Parameters
         ----------
         id : int
-            Workspace ID
+            Comment ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Workspace
+        Comment
 
 
         Examples
@@ -159,16 +149,16 @@ class WorkspacesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.workspaces.get(
+        client.comments.get(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}", method="GET", request_options=request_options
+            f"api/comments/{jsonable_encoder(id)}", method="GET", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(Workspace, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -176,12 +166,12 @@ class WorkspacesClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Delete a specific comment.
 
         Parameters
         ----------
         id : int
-            Workspace ID
+            Comment ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -197,12 +187,12 @@ class WorkspacesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.workspaces.delete(
+        client.comments.delete(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
+            f"api/comments/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -216,46 +206,34 @@ class WorkspacesClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        is_public: typing.Optional[bool] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
-        color: typing.Optional[str] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
+        annotation: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        text: typing.Optional[str] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Workspace:
+    ) -> Comment:
         """
-        Update a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Update a specific comment.
 
         Parameters
         ----------
         id : int
-            Workspace ID
+            Comment ID
 
-        title : typing.Optional[str]
-            Workspace title
+        annotation : typing.Optional[int]
 
-        description : typing.Optional[str]
-            Workspace description
+        project : typing.Optional[int]
 
-        is_public : typing.Optional[bool]
-            Is workspace public
+        text : typing.Optional[str]
 
-        is_personal : typing.Optional[bool]
-            Is workspace personal
-
-        color : typing.Optional[str]
-            Workspace color in HEX format
-
-        is_archived : typing.Optional[bool]
-            Is workspace archived
+        is_resolved : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Workspace
+        Comment
 
 
         Examples
@@ -265,54 +243,58 @@ class WorkspacesClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.workspaces.update(
+        client.comments.update(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}",
+            f"api/comments/{jsonable_encoder(id)}",
             method="PATCH",
-            json={
-                "title": title,
-                "description": description,
-                "is_public": is_public,
-                "is_personal": is_personal,
-                "color": color,
-                "is_archived": is_archived,
-            },
+            json={"annotation": annotation, "project": project, "text": text, "is_resolved": is_resolved},
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(Workspace, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncWorkspacesClient:
+class AsyncCommentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Workspace]:
+    async def list(
+        self,
+        *,
+        project: typing.Optional[int] = None,
+        expand_created_by: typing.Optional[bool] = None,
+        annotation: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[Comment]:
         """
-        List all workspaces for your organization.
-
-        Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
-
-        For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+        Get a list of comments for a specific project.
 
         Parameters
         ----------
+        project : typing.Optional[int]
+            Project ID
+
+        expand_created_by : typing.Optional[bool]
+            Expand the created_by field with object instead of ID
+
+        annotation : typing.Optional[int]
+            Annotation ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[Workspace]
+        typing.List[Comment]
 
 
         Examples
@@ -322,14 +304,17 @@ class AsyncWorkspacesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.workspaces.list()
+        await client.comments.list()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/workspaces", method="GET", request_options=request_options
+            "api/comments/",
+            method="GET",
+            params={"project": project, "expand_created_by": expand_created_by, "annotation": annotation},
+            request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(typing.List[Workspace], _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(typing.List[Comment], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -338,47 +323,31 @@ class AsyncWorkspacesClient:
     async def create(
         self,
         *,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        is_public: typing.Optional[bool] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
-        color: typing.Optional[str] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
+        annotation: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        text: typing.Optional[str] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Workspace:
+    ) -> Comment:
         """
-        Create a new workspace.
-
-        Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
-
-        For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+        Create a new comment.
 
         Parameters
         ----------
-        title : typing.Optional[str]
-            Workspace title
+        annotation : typing.Optional[int]
 
-        description : typing.Optional[str]
-            Workspace description
+        project : typing.Optional[int]
 
-        is_public : typing.Optional[bool]
-            Is workspace public
+        text : typing.Optional[str]
 
-        is_personal : typing.Optional[bool]
-            Is workspace personal
-
-        color : typing.Optional[str]
-            Workspace color in HEX format
-
-        is_archived : typing.Optional[bool]
-            Is workspace archived
+        is_resolved : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Workspace
+        Comment
 
 
         Examples
@@ -388,45 +357,38 @@ class AsyncWorkspacesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.workspaces.create()
+        await client.comments.create()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/workspaces",
+            "api/comments/",
             method="POST",
-            json={
-                "title": title,
-                "description": description,
-                "is_public": is_public,
-                "is_personal": is_personal,
-                "color": color,
-                "is_archived": is_archived,
-            },
+            json={"annotation": annotation, "project": project, "text": text, "is_resolved": is_resolved},
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(Workspace, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Workspace:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Comment:
         """
-        Get information about a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Get a specific comment.
 
         Parameters
         ----------
         id : int
-            Workspace ID
+            Comment ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Workspace
+        Comment
 
 
         Examples
@@ -436,16 +398,16 @@ class AsyncWorkspacesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.workspaces.get(
+        await client.comments.get(
             id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}", method="GET", request_options=request_options
+            f"api/comments/{jsonable_encoder(id)}", method="GET", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(Workspace, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -453,12 +415,12 @@ class AsyncWorkspacesClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Delete a specific comment.
 
         Parameters
         ----------
         id : int
-            Workspace ID
+            Comment ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -474,12 +436,12 @@ class AsyncWorkspacesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.workspaces.delete(
+        await client.comments.delete(
             id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
+            f"api/comments/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -493,46 +455,34 @@ class AsyncWorkspacesClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        is_public: typing.Optional[bool] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
-        color: typing.Optional[str] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
+        annotation: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        text: typing.Optional[str] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Workspace:
+    ) -> Comment:
         """
-        Update a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Update a specific comment.
 
         Parameters
         ----------
         id : int
-            Workspace ID
+            Comment ID
 
-        title : typing.Optional[str]
-            Workspace title
+        annotation : typing.Optional[int]
 
-        description : typing.Optional[str]
-            Workspace description
+        project : typing.Optional[int]
 
-        is_public : typing.Optional[bool]
-            Is workspace public
+        text : typing.Optional[str]
 
-        is_personal : typing.Optional[bool]
-            Is workspace personal
-
-        color : typing.Optional[str]
-            Workspace color in HEX format
-
-        is_archived : typing.Optional[bool]
-            Is workspace archived
+        is_resolved : typing.Optional[bool]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Workspace
+        Comment
 
 
         Examples
@@ -542,27 +492,20 @@ class AsyncWorkspacesClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.workspaces.update(
+        await client.comments.update(
             id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}",
+            f"api/comments/{jsonable_encoder(id)}",
             method="PATCH",
-            json={
-                "title": title,
-                "description": description,
-                "is_public": is_public,
-                "is_personal": is_personal,
-                "color": color,
-                "is_archived": is_archived,
-            },
+            json={"annotation": annotation, "project": project, "text": text, "is_resolved": is_resolved},
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(Workspace, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
