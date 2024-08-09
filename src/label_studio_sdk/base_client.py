@@ -7,6 +7,7 @@ import httpx
 
 from .actions.client import ActionsClient, AsyncActionsClient
 from .annotations.client import AnnotationsClient, AsyncAnnotationsClient
+from .comments.client import AsyncCommentsClient, CommentsClient
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .environment import LabelStudioEnvironment
@@ -97,6 +98,7 @@ class LabelStudioBase:
         self.import_storage = ImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = ExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
+        self.comments = CommentsClient(client_wrapper=self._client_wrapper)
         self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
 
 
@@ -174,6 +176,7 @@ class AsyncLabelStudioBase:
         self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
+        self.comments = AsyncCommentsClient(client_wrapper=self._client_wrapper)
         self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
 
 

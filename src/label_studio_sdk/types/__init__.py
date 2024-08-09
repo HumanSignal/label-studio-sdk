@@ -13,6 +13,8 @@ from .base_task import BaseTask
 from .base_task_file_upload import BaseTaskFileUpload
 from .base_task_updated_by import BaseTaskUpdatedBy
 from .base_user import BaseUser
+from .comment import Comment
+from .comment_created_by import CommentCreatedBy
 from .converted_format import ConvertedFormat
 from .converted_format_status import ConvertedFormatStatus
 from .data_manager_task_serializer import DataManagerTaskSerializer
@@ -83,6 +85,8 @@ __all__ = [
     "BaseTaskFileUpload",
     "BaseTaskUpdatedBy",
     "BaseUser",
+    "Comment",
+    "CommentCreatedBy",
     "ConvertedFormat",
     "ConvertedFormatStatus",
     "DataManagerTaskSerializer",

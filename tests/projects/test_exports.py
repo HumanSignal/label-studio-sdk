@@ -34,7 +34,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "finished_at": "2024-01-15T09:30:00Z",
             "status": "created",
             "md5": "md5",
-            "counters": {"counters": {"key": "value"}},
+            "counters": {"key": "value"},
             "converted_formats": [{"export_type": "export_type"}],
         }
     ]
@@ -76,7 +76,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "finished_at": "2024-01-15T09:30:00Z",
         "status": "created",
         "md5": "md5",
-        "counters": {"counters": {"key": "value"}},
+        "counters": {"key": "value"},
         "converted_formats": [{"id": 1, "status": "created", "export_type": "export_type", "traceback": "traceback"}],
         "task_filter_options": {
             "view": 1,
@@ -142,7 +142,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "finished_at": "2024-01-15T09:30:00Z",
         "status": "created",
         "md5": "md5",
-        "counters": {"counters": {"key": "value"}},
+        "counters": {"key": "value"},
         "converted_formats": [{"id": 1, "status": "created", "export_type": "export_type", "traceback": "traceback"}],
     }
     expected_types: typing.Any = {

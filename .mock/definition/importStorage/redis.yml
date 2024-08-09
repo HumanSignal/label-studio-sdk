@@ -50,8 +50,7 @@ service:
                 status: initialized
                 traceback: traceback
                 meta:
-                  meta:
-                    key: value
+                  key: value
                 title: title
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
@@ -93,6 +92,7 @@ service:
                 your bucket contains images, you can use this option to generate
                 URLs for these images. If set to False, it will read the content
                 of the file and load it into Label Studio.
+              default: false
             title:
               type: optional<string>
               docs: Storage title
@@ -161,6 +161,7 @@ service:
                 your bucket contains images, you can use this option to generate
                 URLs for these images. If set to False, it will read the content
                 of the file and load it into Label Studio.
+              default: false
             title:
               type: optional<string>
               docs: Storage title
@@ -227,8 +228,7 @@ service:
               status: initialized
               traceback: traceback
               meta:
-                meta:
-                  key: value
+                key: value
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
@@ -302,6 +302,7 @@ service:
                 your bucket contains images, you can use this option to generate
                 URLs for these images. If set to False, it will read the content
                 of the file and load it into Label Studio.
+              default: false
             title:
               type: optional<string>
               docs: Storage title
@@ -392,8 +393,7 @@ service:
               status: initialized
               traceback: traceback
               meta:
-                meta:
-                  key: value
+                key: value
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
@@ -416,6 +416,7 @@ types:
           bucket contains images, you can use this option to generate URLs for
           these images. If set to False, it will read the content of the file
           and load it into Label Studio.
+        default: false
       title:
         type: optional<string>
         docs: Storage title
@@ -451,6 +452,7 @@ types:
           bucket contains images, you can use this option to generate URLs for
           these images. If set to False, it will read the content of the file
           and load it into Label Studio.
+        default: false
       title:
         type: optional<string>
         docs: Storage title
