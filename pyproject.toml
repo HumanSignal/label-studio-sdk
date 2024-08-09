@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "label-studio-sdk"
-version = "1.0.5"
+version = "1.0.5-dev0"
 description = ""
 readme = "README.md"
 authors = []
@@ -39,7 +39,6 @@ ijson = ">=3.2.3"
 jsonschema = ">=4.23.0"
 lxml = ">=4.2.5"
 nltk = "3.6.7"
-numpy = "<2.0.0"
 pandas = ">=0.24.0"
 pydantic = ">= 1.9.2"
 requests = ">=2.22.0"
