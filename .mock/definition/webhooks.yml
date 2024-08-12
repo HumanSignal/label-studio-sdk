@@ -41,8 +41,7 @@ service:
                 send_payload: true
                 send_for_all_actions: true
                 headers:
-                  headers:
-                    key: value
+                  key: value
                 is_active: true
                 actions:
                   - PROJECT_CREATED
@@ -90,8 +89,7 @@ service:
               send_payload: true
               send_for_all_actions: true
               headers:
-                headers:
-                  key: value
+                key: value
               is_active: true
               actions:
                 - PROJECT_CREATED
@@ -152,8 +150,7 @@ service:
               send_payload: true
               send_for_all_actions: true
               headers:
-                headers:
-                  key: value
+                key: value
               is_active: true
               actions:
                 - PROJECT_CREATED
@@ -212,8 +209,7 @@ service:
               send_payload: true
               send_for_all_actions: true
               headers:
-                headers:
-                  key: value
+                key: value
               is_active: true
               actions:
                 - PROJECT_CREATED
@@ -303,8 +299,7 @@ service:
               send_payload: true
               send_for_all_actions: true
               headers:
-                headers:
-                  key: value
+                key: value
               is_active: true
               actions:
                 - PROJECT_CREATED

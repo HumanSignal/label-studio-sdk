@@ -89,8 +89,8 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "overlap_cohort_percentage": 100,
         "task_data_login": "user",
         "task_data_password": "secret",
-        "control_weights": {"control_weights": {"key": "value"}},
-        "parsed_label_config": {"parsed_label_config": {"key": "value"}},
+        "control_weights": {"key": "value"},
+        "parsed_label_config": {"key": "value"},
         "evaluate_predictions_automatically": False,
         "config_has_control_tags": "config_has_control_tags",
         "skip_queue": "REQUEUE_FOR_ME",
@@ -220,10 +220,10 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
         "found_formats": ("list", {0: None}),
         "data_columns": ("list", {0: None}),
     }
-    response = client.projects.import_tasks(id=1, request=[{}])
+    response = client.projects.import_tasks(id=1, request=[{"key": "value"}])
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.import_tasks(id=1, request=[{}])
+    async_response = await async_client.projects.import_tasks(id=1, request=[{"key": "value"}])
     validate_response(async_response, expected_response, expected_types)
 
 
