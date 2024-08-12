@@ -10,7 +10,7 @@ from .utilities import validate_response
 async def test_create_many_status(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "id": 1,
-        "preannotated_from_fields": {"preannotated_from_fields": {"key": "value"}},
+        "preannotated_from_fields": {"key": "value"},
         "commit_to_project": True,
         "return_task_ids": True,
         "status": "created",
@@ -24,12 +24,12 @@ async def test_create_many_status(client: LabelStudio, async_client: AsyncLabelS
         "annotation_count": 1,
         "prediction_count": 1,
         "duration": 1,
-        "file_upload_ids": {"file_upload_ids": {"key": "value"}},
+        "file_upload_ids": {"key": "value"},
         "could_be_tasks_list": True,
-        "found_formats": {"found_formats": {"key": "value"}},
-        "data_columns": {"data_columns": {"key": "value"}},
-        "tasks": {"tasks": {"key": "value"}},
-        "task_ids": {"task_ids": {"key": "value"}},
+        "found_formats": {"key": "value"},
+        "data_columns": {"key": "value"},
+        "tasks": {"key": "value"},
+        "task_ids": {"key": "value"},
         "project": 1,
     }
     expected_types: typing.Any = {
@@ -74,7 +74,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_response: typing.Any = {
         "id": 1,
         "data": {"image": "https://example.com/image.jpg", "text": "Hello, AI!"},
-        "meta": {"meta": {"key": "value"}},
+        "meta": {"key": "value"},
         "created_at": "2024-06-18T23:45:46Z",
         "updated_at": "2024-06-18T23:45:46Z",
         "is_labeled": False,
@@ -125,9 +125,11 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "id": 13,
         "predictions": [
             {
-                "result": [{}],
+                "result": [{"key": "value"}],
                 "score": 1.1,
                 "model_version": "model_version",
+                "model": {"key": "value"},
+                "model_run": {"key": "value"},
                 "task": 1,
                 "project": 1.1,
                 "created_at": "2024-01-15T09:30:00Z",
@@ -137,9 +139,10 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "annotations": [
             {
                 "id": 1,
-                "result": [{}],
+                "result": [{"key": "value"}],
                 "created_username": "created_username",
                 "created_ago": "created_ago",
+                "completed_by": {"key": "value"},
                 "unique_id": "unique_id",
                 "was_cancelled": True,
                 "ground_truth": True,
@@ -157,7 +160,9 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
                 "last_created_by": 1,
             }
         ],
-        "drafts": [{"result": [{}], "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"}],
+        "drafts": [
+            {"result": [{"key": "value"}], "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"}
+        ],
         "annotators": [1],
         "inner_id": 2,
         "cancelled_annotations": 0,
@@ -173,9 +178,9 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "predictions_model_versions": "",
         "avg_lead_time": 1.1,
         "draft_exists": False,
-        "updated_by": [{"updated_by": {"key": "value"}}],
+        "updated_by": [{"key": "value"}],
         "data": {"image": "/data/upload/1/6b25fc23-some_3.mp4"},
-        "meta": {"meta": {"key": "value"}},
+        "meta": {"key": "value"},
         "created_at": "2024-06-18T23:45:46Z",
         "updated_at": "2024-06-18T23:45:46Z",
         "is_labeled": False,
@@ -192,9 +197,11 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             "list",
             {
                 0: {
-                    "result": ("list", {0: ("dict", {})}),
+                    "result": ("list", {0: ("dict", {0: (None, None)})}),
                     "score": None,
                     "model_version": None,
+                    "model": ("dict", {0: (None, None)}),
+                    "model_run": ("dict", {0: (None, None)}),
                     "task": "integer",
                     "project": None,
                     "created_at": "datetime",
@@ -207,9 +214,10 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             {
                 0: {
                     "id": "integer",
-                    "result": ("list", {0: ("dict", {})}),
+                    "result": ("list", {0: ("dict", {0: (None, None)})}),
                     "created_username": None,
                     "created_ago": None,
+                    "completed_by": ("dict", {0: (None, None)}),
                     "unique_id": None,
                     "was_cancelled": None,
                     "ground_truth": None,
@@ -230,7 +238,13 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         ),
         "drafts": (
             "list",
-            {0: {"result": ("list", {0: ("dict", {})}), "created_at": "datetime", "updated_at": "datetime"}},
+            {
+                0: {
+                    "result": ("list", {0: ("dict", {0: (None, None)})}),
+                    "created_at": "datetime",
+                    "updated_at": "datetime",
+                }
+            },
         ),
         "annotators": ("list", {0: "integer"}),
         "inner_id": "integer",
@@ -278,7 +292,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_response: typing.Any = {
         "id": 1,
         "data": {"image": "https://example.com/image.jpg", "text": "Hello, AI!"},
-        "meta": {"meta": {"key": "value"}},
+        "meta": {"key": "value"},
         "created_at": "2024-06-18T23:45:46Z",
         "updated_at": "2024-06-18T23:45:46Z",
         "is_labeled": False,
