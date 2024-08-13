@@ -690,12 +690,15 @@ types:
           `only` - include all tasks with at least one not skipped
           annotation<br>`exclude` - exclude all tasks with at least one not
           skipped annotation
-      only_with_annotations: optional<boolean>
+      only_with_annotations:
+        type: optional<boolean>
+        default: false
   AnnotationFilterOptions:
     properties:
       usual:
         type: optional<boolean>
         docs: Include not skipped and not ground truth annotations
+        default: true
       ground_truth:
         type: optional<boolean>
         docs: Include ground truth annotations
@@ -708,6 +711,7 @@ types:
       only_id:
         type: optional<boolean>
         docs: Include a full json body or IDs only
+        default: false
   SerializationOptions:
     properties:
       drafts: optional<SerializationOption>
@@ -715,10 +719,12 @@ types:
       include_annotation_history:
         type: optional<boolean>
         docs: Include annotation history
+        default: false
       annotations__completed_by: optional<SerializationOption>
       interpolate_key_frames:
         type: optional<boolean>
         docs: Interpolate video key frames
+        default: false
   ExportCreateStatus:
     enum:
       - created
@@ -830,8 +836,12 @@ types:
       type:
         type: optional<string>
         default: azure
-      synchronizable: optional<boolean>
-      presign: optional<boolean>
+      synchronizable:
+        type: optional<boolean>
+        default: true
+      presign:
+        type: optional<boolean>
+        default: true
       container:
         type: optional<string>
         docs: Azure blob container
@@ -898,7 +908,9 @@ types:
       type:
         type: optional<string>
         default: azure
-      synchronizable: optional<boolean>
+      synchronizable:
+        type: optional<boolean>
+        default: true
       container:
         type: optional<string>
         docs: Azure blob container
@@ -965,7 +977,9 @@ types:
       type:
         type: optional<string>
         default: gcs
-      synchronizable: optional<boolean>
+      synchronizable:
+        type: optional<boolean>
+        default: true
       bucket:
         type: optional<string>
         docs: GCS bucket name
@@ -1032,7 +1046,9 @@ types:
       type:
         type: optional<string>
         default: localfiles
-      synchronizable: optional<boolean>
+      synchronizable:
+        type: optional<boolean>
+        default: true
       path:
         type: optional<string>
         docs: Local path
@@ -1090,7 +1106,9 @@ types:
       type:
         type: optional<string>
         default: redis
-      synchronizable: optional<boolean>
+      synchronizable:
+        type: optional<boolean>
+        default: true
       path:
         type: optional<string>
         docs: Storage prefix (optional)
@@ -1160,7 +1178,9 @@ types:
       type:
         type: optional<string>
         default: s3
-      synchronizable: optional<boolean>
+      synchronizable:
+        type: optional<boolean>
+        default: true
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -1239,8 +1259,12 @@ types:
       type:
         type: optional<string>
         default: gcs
-      synchronizable: optional<boolean>
-      presign: optional<boolean>
+      synchronizable:
+        type: optional<boolean>
+        default: true
+      presign:
+        type: optional<boolean>
+        default: true
       bucket:
         type: optional<string>
         docs: GCS bucket name
@@ -1307,7 +1331,9 @@ types:
       type:
         type: optional<string>
         default: localfiles
-      synchronizable: optional<boolean>
+      synchronizable:
+        type: optional<boolean>
+        default: true
       path:
         type: optional<string>
         docs: Local path
@@ -1362,7 +1388,9 @@ types:
       type:
         type: optional<string>
         default: redis
-      synchronizable: optional<boolean>
+      synchronizable:
+        type: optional<boolean>
+        default: true
       path:
         type: optional<string>
         docs: Storage prefix (optional)
@@ -1429,8 +1457,12 @@ types:
       type:
         type: optional<string>
         default: s3
-      synchronizable: optional<boolean>
-      presign: optional<boolean>
+      synchronizable:
+        type: optional<boolean>
+        default: true
+      presign:
+        type: optional<boolean>
+        default: true
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -1967,8 +1999,12 @@ types:
   S3SImportStorage:
     properties:
       id: optional<integer>
-      synchronizable: optional<boolean>
-      presign: optional<boolean>
+      synchronizable:
+        type: optional<boolean>
+        default: true
+      presign:
+        type: optional<boolean>
+        default: true
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -2066,3 +2102,20 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+  CommentCreatedBy:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+  Comment:
+    properties:
+      id: integer
+      text: string
+      project: integer
+      task: integer
+      annotation: integer
+      created_by: CommentCreatedBy
+      created_at: datetime
+      updated_at: datetime
+      is_resolved: optional<boolean>
+      resolved_at: optional<datetime>
