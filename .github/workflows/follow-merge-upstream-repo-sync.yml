@@ -68,7 +68,7 @@ jobs:
 
       - name: Set Fern Generator Branch
         env:
-          BRANCH_NAME: "${{ github.event.client_payload.branch_name }}"
+          BRANCH_NAME: "${{ steps.get-branch.outputs.branch_name }}"
         working-directory: "${{ env.FERN_WORKDIR }}"
         run: yq e --inplace ".groups.python-sdk-staging.generators[0].github.branch |= \"${BRANCH_NAME}\"" "fern/generators.yml"
 
@@ -83,11 +83,11 @@ jobs:
         run: fern generate --group python-sdk-staging --log-level debug
 
       - name: Find or Create PR
-        uses: ./.github/actions-hub/actions/github-find-or-create-branch
+        uses: ./.github/actions-hub/actions/github-find-or-create-pull-request
         id: get-pr
         with:
           github-token: ${{ secrets.GIT_PAT }}
-          branch_name: "${{ github.event.client_payload.branch_name }}"
+          branch_name: "${{ steps.get-branch.outputs.branch_name }}"
           title: "${{ github.event.client_payload.title }}"
 
       - name: Convert to ready for review
