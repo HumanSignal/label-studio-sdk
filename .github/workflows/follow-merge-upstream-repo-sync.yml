@@ -31,7 +31,7 @@ jobs:
           set -xeuo pipefail
           
           case "${REPO_NAME}" in
-            */label-studio-sdk)
+            */label-studio-client-generator)
               ;;
             *)
               echo "::error::Repository ${REPO_NAME} is not supported"
