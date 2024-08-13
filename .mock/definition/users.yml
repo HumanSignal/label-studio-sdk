@@ -1,0 +1,301 @@
+types:
+  UsersResetTokenResponse:
+    docs: User token
+    properties:
+      token:
+        type: optional<string>
+        docs: Token
+  UsersGetTokenResponse:
+    docs: User token
+    properties:
+      detail:
+        type: optional<string>
+        docs: Token
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    reset_token:
+      path: /api/current-user/reset-token/
+      method: POST
+      auth: true
+      docs: >-
+        Reset your access token or API key. When reset, any scripts or
+        automations you have in place will need to be updated with the new key.
+      display-name: Reset user token
+      response:
+        docs: User token response
+        type: UsersResetTokenResponse
+      examples:
+        - response:
+            body:
+              token: token
+      audiences:
+        - public
+    get_token:
+      path: /api/current-user/token
+      method: GET
+      auth: true
+      docs: >-
+        Get a access token to authenticate to the API as the current user. To
+        find this in the Label Studio interface, click **Account & Settings** in
+        the upper right. For more information, see [Access
+        Token](https://labelstud.io/guide/user_account#Access-token).
+      display-name: Get user token
+      response:
+        docs: User token response
+        type: UsersGetTokenResponse
+      examples:
+        - response:
+            body:
+              detail: detail
+      audiences:
+        - public
+    whoami:
+      path: /api/current-user/whoami
+      method: GET
+      auth: true
+      docs: >-
+        Get information about your user account, such as your username, email,
+        and user ID.
+      display-name: Retrieve my user
+      response:
+        docs: ''
+        type: root.BaseUser
+      examples:
+        - response:
+            body:
+              id: 1
+              first_name: first_name
+              last_name: last_name
+              username: username
+              email: email
+              last_activity: '2024-01-15T09:30:00Z'
+              avatar: avatar
+              initials: initials
+              phone: phone
+              active_organization: 1
+              allow_newsletters: true
+      audiences:
+        - public
+    list:
+      path: /api/users/
+      method: GET
+      auth: true
+      docs: |
+
+        List all users in your Label Studio organization. 
+      display-name: List users
+      response:
+        docs: ''
+        type: list<root.BaseUser>
+      examples:
+        - response:
+            body:
+              - id: 1
+                first_name: first_name
+                last_name: last_name
+                username: username
+                email: email
+                last_activity: '2024-01-15T09:30:00Z'
+                avatar: avatar
+                initials: initials
+                phone: phone
+                active_organization: 1
+                allow_newsletters: true
+      audiences:
+        - public
+    create:
+      path: /api/users/
+      method: POST
+      auth: true
+      docs: |
+
+        Create a user in Label Studio.
+      display-name: Create a user
+      request:
+        name: UsersCreateRequest
+        body:
+          properties:
+            id:
+              type: optional<integer>
+              docs: User ID
+            first_name:
+              type: optional<string>
+              docs: First name of the user
+            last_name:
+              type: optional<string>
+              docs: Last name of the user
+            username:
+              type: optional<string>
+              docs: Username of the user
+            email:
+              type: optional<string>
+              docs: Email of the user
+            avatar:
+              type: optional<string>
+              docs: Avatar URL of the user
+            initials:
+              type: optional<string>
+              docs: Initials of the user
+            phone:
+              type: optional<string>
+              docs: Phone number of the user
+            allow_newsletters:
+              type: optional<boolean>
+              docs: Whether the user allows newsletters
+      response:
+        docs: ''
+        type: root.BaseUser
+      examples:
+        - request: {}
+          response:
+            body:
+              id: 1
+              first_name: first_name
+              last_name: last_name
+              username: username
+              email: email
+              last_activity: '2024-01-15T09:30:00Z'
+              avatar: avatar
+              initials: initials
+              phone: phone
+              active_organization: 1
+              allow_newsletters: true
+      audiences:
+        - public
+    get:
+      path: /api/users/{id}/
+      method: GET
+      auth: true
+      docs: >
+
+        Get info about a specific Label Studio user. 
+
+        You will need to provide their user ID. You can find a list of all user
+        IDs using [List users](list). 
+      path-parameters:
+        id:
+          type: integer
+          docs: User ID
+      display-name: Get user info
+      response:
+        docs: ''
+        type: root.BaseUser
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              first_name: first_name
+              last_name: last_name
+              username: username
+              email: email
+              last_activity: '2024-01-15T09:30:00Z'
+              avatar: avatar
+              initials: initials
+              phone: phone
+              active_organization: 1
+              allow_newsletters: true
+      audiences:
+        - public
+    delete:
+      path: /api/users/{id}/
+      method: DELETE
+      auth: true
+      docs: >
+
+        Delete a specific Label Studio user.
+
+
+        You will need to provide their user ID. You can find a list of all user
+        IDs using [List users](list).
+
+
+        <Warning>Use caution when deleting a user, as this can cause issues such
+        as breaking the "Annotated by" filter or leaving orphaned
+        records.</Warning>
+      path-parameters:
+        id:
+          type: integer
+          docs: User ID
+      display-name: Delete user
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - public
+    update:
+      path: /api/users/{id}/
+      method: PATCH
+      auth: true
+      docs: >
+
+        Update details for a specific Label Studio user, such as their name or
+        contact information. 
+
+
+        You will need to provide their user ID. You can find a list of all user
+        IDs using [List users](list). 
+      path-parameters:
+        id:
+          type: integer
+          docs: User ID
+      display-name: Update user details
+      request:
+        name: UsersUpdateRequest
+        body:
+          properties:
+            id:
+              type: optional<integer>
+              docs: User ID
+              name: usersUpdateRequestId
+            first_name:
+              type: optional<string>
+              docs: First name of the user
+            last_name:
+              type: optional<string>
+              docs: Last name of the user
+            username:
+              type: optional<string>
+              docs: Username of the user
+            email:
+              type: optional<string>
+              docs: Email of the user
+            avatar:
+              type: optional<string>
+              docs: Avatar URL of the user
+            initials:
+              type: optional<string>
+              docs: Initials of the user
+            phone:
+              type: optional<string>
+              docs: Phone number of the user
+            allow_newsletters:
+              type: optional<boolean>
+              docs: Whether the user allows newsletters
+      response:
+        docs: ''
+        type: root.BaseUser
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              id: 1
+              first_name: first_name
+              last_name: last_name
+              username: username
+              email: email
+              last_activity: '2024-01-15T09:30:00Z'
+              avatar: avatar
+              initials: initials
+              phone: phone
+              active_organization: 1
+              allow_newsletters: true
+      audiences:
+        - public
+imports:
+  root: __package__.yml

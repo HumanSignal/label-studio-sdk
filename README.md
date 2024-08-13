@@ -1,61 +1,184 @@
-# CI test
-# Label Studio Python SDK
+# HumansignalOrg Python Library
 
-Use this Python SDK to integrate Label Studio into your data science and machine learning pipelines to make data labeling simpler. 
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
+[![pypi](https://img.shields.io/pypi/v/label-studio-sdk)](https://pypi.python.org/pypi/label-studio-sdk)
 
-With the Label Studio Python SDK, you can perform the following tasks in a Python script:
-- Create a Label Studio project, including setting up a labeling configuration. 
-- Import tasks from external or local storage, including pre-annotated tasks.
-- Modify project settings, such as task sampling or the model version used to display predictions. 
-- Create annotations from predictions or pre-annotated tasks. 
-- Retrieve task annotations, including specific subsets of tasks.  
-See the [Label Studio SDK Tutorial](https://labelstud.io/guide/sdk.html) for example code snippets and additional details. 
+The HumansignalOrg Python library provides convenient access to the HumansignalOrg API from Python.
 
-If you want to take action not supported natively by the SDK, you can [call the API](https://labelstud.io/api) directly and consider contributing to the SDK.
+## Create a new project
 
-## About the SDK
-
-This is the first release of the Label Studio SDK. It supports Label Studio Enterprise, Label Studio Teams, and Label Studio Community.
-
-- **Find a bug?** [Create a GitHub issue](https://github.com/heartexlabs/label-studio-sdk/issues)!
-- **Have a question?** [Join the Slack Community](https://slack.labelstud.io/?source=github-sdk)!
-- **Want to contribute?** [See the contributing guide](https://github.com/heartexlabs/label-studio-sdk/CONTRIBUTING.md)
-
-## Quickstart
-To start using the SDK in your machine learning and data science projects and pipelines, do the following:
-
-1. Install the SDK using pip: `pip install label-studio-sdk`
-2. Import `label_studio_sdk` in your Python script.
-3. Connect to the API and create a project:
 ```python
-from label_studio_sdk import Client
+from label_studio_sdk.label_interface import LabelInterface
+from label_studio_sdk.label_interface.create import labels
 
-ls = Client(url='http://localhost:8080', api_key='YOUR-API-KEY')
-ls.start_project(title='New Project', label_config='<View></View>')
+project = ls.projects.create(
+    name="Project name",
+    description="Project description",
+    label_config=LabelInterface.create({
+      "image": "Image",
+      "bbox": labels(["cat", "dog"], tag_type="RectangleLabels")
+    })
+)
 ```
 
-## Available classes and methods
+## Create a new task
+    
+```python
+task = ls.tasks.create(
+    project=project.id,
+    data={"image": "https://example.com/image.jpg"}
+)
+```
+Now you can open the project `PROJECT_ID` in the Label Studio UI and create annotations for the task.
 
-The Label Studio SDK includes the following:
-- a Client module to handle authentication
-- a Data Manager module for filtering tasks in Label Studio
-- a Project module to take actions related to Label Studio labeling projects 
-- a Utils module for working with the labeling configuration
+## Export annotations
 
-For all the details, see the [reference documentation](https://labelstud.io/sdk) or [review the code directly](https://github.com/heartexlabs/label-studio-sdk/tree/master/label_studio_sdk). 
+```python
+annotations = [
+    task.annotations
+    for task in ls.tasks.list(project=project.id, fields='all')
+    if task.annotations
+]
+```
 
-## Error logging
 
-To see error logs, you can use `stderr` (we use `logger.error()` for error output). If you use console to run SDK commands, you will see all errors there. 
+## Installation
 
-## Contribute to the SDK
+```sh
+pip install label-studio-sdk
+```
 
-If you want to extend the SDK:
+## Usage
 
-1. Pull this repository. 
-2. Install the SDK locally 
-3. Follow the [contributing guidance](CONTRIBUTING.md) 
+Instantiate and use the client with the following:
 
-## Examples
+```python
+from label_studio_sdk.client import LabelStudio
 
-Please check [the examples folder](examples), there are many of very useful codes that you can learn from. 
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.annotations.create(
+    id=1,
+    result=[
+        {
+            "original_width": 1920,
+            "original_height": 1080,
+            "image_rotation": 0,
+            "from_name": "bboxes",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "value": {
+                "x": 20,
+                "y": 30,
+                "width": 50,
+                "height": 60,
+                "rotation": 0,
+                "values": {"rectanglelabels": ["Person"]},
+            },
+        }
+    ],
+    was_cancelled=False,
+    ground_truth=True,
+)
+```
+
+## Async Client
+
+The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+
+```python
+from label_studio_sdk.client import AsyncLabelStudio
+
+client = AsyncLabelStudio(
+    api_key="YOUR_API_KEY",
+)
+await client.annotations.create(
+    id=1,
+    result=[
+        {
+            "original_width": 1920,
+            "original_height": 1080,
+            "image_rotation": 0,
+            "from_name": "bboxes",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "value": {
+                "x": 20,
+                "y": 30,
+                "width": 50,
+                "height": 60,
+                "rotation": 0,
+                "values": {"rectanglelabels": ["Person"]},
+            },
+        }
+    ],
+    was_cancelled=False,
+    ground_truth=True,
+)
+```
+
+## Pagination
+
+Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+response = client.projects.list()
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+```
+
+## Advanced
+
+### Timeouts
+By default, requests time out after 60 seconds. You can configure this with a 
+timeout option at the client or request level.
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+ls = LabelStudio(
+    # All timeouts set to 20 seconds
+    timeout=20.0
+)
+
+ls.projects.create(..., {
+    # Override timeout for a specific method
+    timeout=20.0
+})
+```
+
+### Custom HTTP client
+You can override the httpx client to customize it for your use-case. Some common use-cases 
+include support for proxies and transports.
+
+```python
+import httpx
+
+from label_studio_sdk.client import LabelStudio
+
+ls = LabelStudio(
+    http_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
+
+## Contributing
+
+While we value open-source contributions to this SDK, this library is generated programmatically.
+Additions made directly to this library would have to be moved over to our generation code,
+otherwise they would be overwritten upon the next generated release. Feel free to open a PR as
+a proof of concept, but know that we will not be able to merge it as-is. We suggest opening
+an issue first to discuss with us!
+
+On the other hand, contributions to the README are always very welcome!

@@ -1,0 +1,423 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /api/annotations/{id}/
+      method: GET
+      auth: true
+      docs: >
+
+        Tasks can have multiple annotations. Use this call to retrieve a
+        specific annotation using its ID. 
+
+
+        You can find the ID in the Label Studio UI listed at the top of the
+        annotation in its tab. It is also listed in the History panel when
+        viewing the annotation. Or you can use [Get all task annotations](list)
+        to find all annotation IDs.  
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this annotation.
+      display-name: Get annotation by its ID
+      response:
+        docs: Retrieved annotation
+        type: root.Annotation
+      examples:
+        - name: response
+          path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              result:
+                - original_width: 1920
+                  original_height: 1080
+                  image_rotation: 0
+                  from_name: bboxes
+                  to_name: image
+                  type: rectanglelabels
+                  value:
+                    x: 20
+                    'y': 30
+                    width: 50
+                    height: 60
+                    rotation: 0
+                    values:
+                      rectanglelabels:
+                        - Person
+              created_username: created_username
+              created_ago: created_ago
+              completed_by: 1
+              unique_id: unique_id
+              was_cancelled: false
+              ground_truth: false
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              draft_created_at: '2024-01-15T09:30:00Z'
+              lead_time: 10
+              import_id: 1
+              last_action: prediction
+              task: 1
+              project: 1
+              updated_by: 1
+              parent_prediction: 1
+              parent_annotation: 1
+              last_created_by: 1
+      audiences:
+        - public
+    delete:
+      path: /api/annotations/{id}/
+      method: DELETE
+      auth: true
+      docs: >
+
+        Delete an annotation. 
+
+
+        <Warning>This action can't be undone!</Warning>
+
+
+        You will need to supply the annotation's unique ID. You can find the ID
+        in the Label Studio UI listed at the top of the annotation in its tab.
+        It is also listed in the History panel when viewing the annotation. Or
+        you can use [Get all task annotations](list) to find all annotation
+        IDs.  
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this annotation.
+      display-name: Delete annotation
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - public
+    update:
+      path: /api/annotations/{id}/
+      method: PATCH
+      auth: true
+      docs: >
+
+        Update attributes for an existing annotation. 
+
+
+        You will need to supply the annotation's unique ID. You can find the ID
+        in the Label Studio UI listed at the top of the annotation in its tab.
+        It is also listed in the History panel when viewing the annotation. Or
+        you can use [Get all task annotations](list) to find all annotation
+        IDs.  
+
+
+        For information about the JSON format used in the result, see [Label
+        Studio JSON format of annotated
+        tasks](https://labelstud.io/guide/export#Label-Studio-JSON-format-of-annotated-tasks).
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this annotation.
+      display-name: Update an annotation
+      request:
+        name: AnnotationsUpdateRequest
+        body:
+          properties:
+            result:
+              type: optional<list<map<string, unknown>>>
+              docs: >-
+                Labeling result in JSON format. Read more about the format in
+                [the Label Studio
+                documentation.](https://labelstud.io/guide/task_format)
+            task:
+              type: optional<integer>
+              docs: Corresponding task for this annotation
+            project:
+              type: optional<integer>
+              docs: Project ID for this annotation
+            completed_by:
+              type: optional<integer>
+              docs: User ID of the person who created this annotation
+            updated_by:
+              type: optional<integer>
+              docs: Last user who updated this annotation
+            was_cancelled:
+              type: optional<boolean>
+              docs: User skipped the task
+            ground_truth:
+              type: optional<boolean>
+              docs: This annotation is a Ground Truth
+            lead_time:
+              type: optional<double>
+              docs: How much time it took to annotate the task (in seconds)
+      response:
+        docs: Updated annotation
+        type: root.Annotation
+      examples:
+        - name: response
+          path-parameters:
+            id: 1
+          request:
+            result:
+              - original_width: 1920
+                original_height: 1080
+                image_rotation: 0
+                from_name: bboxes
+                to_name: image
+                type: rectanglelabels
+                value:
+                  x: 20
+                  'y': 30
+                  width: 50
+                  height: 60
+                  rotation: 0
+                  values:
+                    rectanglelabels:
+                      - Person
+            was_cancelled: false
+            ground_truth: true
+          response:
+            body:
+              id: 1
+              result:
+                - original_width: 1920
+                  original_height: 1080
+                  image_rotation: 0
+                  from_name: bboxes
+                  to_name: image
+                  type: rectanglelabels
+                  value:
+                    x: 20
+                    'y': 30
+                    width: 50
+                    height: 60
+                    rotation: 0
+                    values:
+                      rectanglelabels:
+                        - Person
+              created_username: created_username
+              created_ago: created_ago
+              completed_by: 1
+              unique_id: unique_id
+              was_cancelled: false
+              ground_truth: false
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              draft_created_at: '2024-01-15T09:30:00Z'
+              lead_time: 10
+              import_id: 1
+              last_action: prediction
+              task: 1
+              project: 1
+              updated_by: 1
+              parent_prediction: 1
+              parent_annotation: 1
+              last_created_by: 1
+      audiences:
+        - public
+    list:
+      path: /api/tasks/{id}/annotations/
+      method: GET
+      auth: true
+      docs: >
+
+        List all annotations for a task.
+
+
+        You will need to supply the task ID. You can find this in Label Studio
+        by opening a task and checking the URL. It is also listed at the top of
+        the labeling interface. Or you can use [Get tasks list](../tasks/list). 
+      path-parameters:
+        id:
+          type: integer
+          docs: Task ID
+      display-name: Get all task annotations
+      response:
+        docs: Annotation
+        type: list<root.Annotation>
+      examples:
+        - name: response
+          path-parameters:
+            id: 1
+          response:
+            body:
+              - id: 1
+                result:
+                  - original_width: 1920
+                    original_height: 1080
+                    image_rotation: 0
+                    from_name: bboxes
+                    to_name: image
+                    type: rectanglelabels
+                    value:
+                      x: 20
+                      'y': 30
+                      width: 50
+                      height: 60
+                      rotation: 0
+                      values:
+                        rectanglelabels:
+                          - Person
+                created_username: created_username
+                created_ago: created_ago
+                completed_by: 1
+                unique_id: unique_id
+                was_cancelled: false
+                ground_truth: false
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+                draft_created_at: '2024-01-15T09:30:00Z'
+                lead_time: 10
+                import_id: 1
+                last_action: prediction
+                task: 1
+                project: 1
+                updated_by: 1
+                parent_prediction: 1
+                parent_annotation: 1
+                last_created_by: 1
+      audiences:
+        - public
+    create:
+      path: /api/tasks/{id}/annotations/
+      method: POST
+      auth: true
+      docs: >
+
+        Add annotations to a task like an annotator does. 
+
+
+        You will need to supply the task ID. You can find this in Label Studio
+        by opening a task and checking the URL. It is also listed at the top of
+        the labeling interface. Or you can use [Get tasks list](../tasks/list). 
+
+
+
+        The content of the result field depends on your labeling configuration.
+        For example, send the following data as part of your POST 
+
+        request to send an empty annotation with the ID of the user who
+        completed the task:
+
+
+        ```json
+
+        {
+
+        "result": {},
+
+        "was_cancelled": true,
+
+        "ground_truth": true,
+
+        "lead_time": 0,
+
+        "task": 0
+
+        "completed_by": 123
+
+        } 
+
+        ```
+      path-parameters:
+        id:
+          type: integer
+          docs: Task ID
+      display-name: Create annotation
+      request:
+        name: AnnotationsCreateRequest
+        body:
+          properties:
+            result:
+              type: optional<list<map<string, unknown>>>
+              docs: >-
+                Labeling result in JSON format. Read more about the format in
+                [the Label Studio
+                documentation.](https://labelstud.io/guide/task_format)
+            task:
+              type: optional<integer>
+              docs: Corresponding task for this annotation
+            project:
+              type: optional<integer>
+              docs: Project ID for this annotation
+            completed_by:
+              type: optional<integer>
+              docs: User ID of the person who created this annotation
+            updated_by:
+              type: optional<integer>
+              docs: Last user who updated this annotation
+            was_cancelled:
+              type: optional<boolean>
+              docs: User skipped the task
+            ground_truth:
+              type: optional<boolean>
+              docs: This annotation is a Ground Truth
+            lead_time:
+              type: optional<double>
+              docs: How much time it took to annotate the task (in seconds)
+      response:
+        docs: Created annotation
+        type: root.Annotation
+      examples:
+        - name: response
+          path-parameters:
+            id: 1
+          request:
+            result:
+              - original_width: 1920
+                original_height: 1080
+                image_rotation: 0
+                from_name: bboxes
+                to_name: image
+                type: rectanglelabels
+                value:
+                  x: 20
+                  'y': 30
+                  width: 50
+                  height: 60
+                  rotation: 0
+                  values:
+                    rectanglelabels:
+                      - Person
+            was_cancelled: false
+            ground_truth: true
+          response:
+            body:
+              id: 1
+              result:
+                - original_width: 1920
+                  original_height: 1080
+                  image_rotation: 0
+                  from_name: bboxes
+                  to_name: image
+                  type: rectanglelabels
+                  value:
+                    x: 20
+                    'y': 30
+                    width: 50
+                    height: 60
+                    rotation: 0
+                    values:
+                      rectanglelabels:
+                        - Person
+              created_username: created_username
+              created_ago: created_ago
+              completed_by: 1
+              unique_id: unique_id
+              was_cancelled: false
+              ground_truth: false
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              draft_created_at: '2024-01-15T09:30:00Z'
+              lead_time: 10
+              import_id: 1
+              last_action: prediction
+              task: 1
+              project: 1
+              updated_by: 1
+              parent_prediction: 1
+              parent_annotation: 1
+              last_created_by: 1
+      audiences:
+        - public
