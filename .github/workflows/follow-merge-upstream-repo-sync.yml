@@ -69,8 +69,11 @@ jobs:
       - name: Set Fern Generator Branch
         env:
           BRANCH_NAME: "${{ steps.get-branch.outputs.branch_name }}"
+          FERN_GENERATOR_PATH: "fern/generators.yml"
         working-directory: "${{ env.FERN_WORKDIR }}"
-        run: yq e --inplace ".groups.python-sdk-staging.generators[0].github.branch |= \"${BRANCH_NAME}\"" "fern/generators.yml"
+        run: |
+          yq e --inplace ".groups.python-sdk-staging.generators[0].github.branch |= \"${BRANCH_NAME}\"" "${FERN_GENERATOR_PATH}"
+          cat "${FERN_GENERATOR_PATH}"
 
       - name: Check Fern API is valid
         working-directory: "${{ env.FERN_WORKDIR }}"
