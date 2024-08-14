@@ -13941,7 +13941,7 @@ client.prompts.versions.create(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">run</a>(...)</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">create_run</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -13974,7 +13974,7 @@ from label_studio_sdk.client import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.prompts.versions.run(
+client.prompts.versions.create_run(
     id=1,
     version_id=1,
     request=PromptRun(

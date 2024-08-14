@@ -41,7 +41,7 @@ service:
               organization: 1
       audiences:
         - public
-    run:
+    create_run:
       path: /api/prompts/{id}/versions/{version_id}/inference-runs
       method: POST
       auth: true

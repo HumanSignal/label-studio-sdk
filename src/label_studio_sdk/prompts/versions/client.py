@@ -73,7 +73,7 @@ class VersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def run(
+    def create_run(
         self, id: int, version_id: int, *, request: PromptRun, request_options: typing.Optional[RequestOptions] = None
     ) -> PromptRun:
         """
@@ -105,7 +105,7 @@ class VersionsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.prompts.versions.run(
+        client.prompts.versions.create_run(
             id=1,
             version_id=1,
             request=PromptRun(
@@ -188,7 +188,7 @@ class AsyncVersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def run(
+    async def create_run(
         self, id: int, version_id: int, *, request: PromptRun, request_options: typing.Optional[RequestOptions] = None
     ) -> PromptRun:
         """
@@ -220,7 +220,7 @@ class AsyncVersionsClient:
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        await client.prompts.versions.run(
+        await client.prompts.versions.create_run(
             id=1,
             version_id=1,
             request=PromptRun(

@@ -44,7 +44,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_run(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_create_run(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "organization": 1,
         "project": 1,
@@ -77,10 +77,12 @@ async def test_run(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "predictions_updated_at": "datetime",
         "completed_at": "datetime",
     }
-    response = client.prompts.versions.run(id=1, version_id=1, request=PromptRun(project=1, project_subset="All"))
+    response = client.prompts.versions.create_run(
+        id=1, version_id=1, request=PromptRun(project=1, project_subset="All")
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.run(
+    async_response = await async_client.prompts.versions.create_run(
         id=1, version_id=1, request=PromptRun(project=1, project_subset="All")
     )
     validate_response(async_response, expected_response, expected_types)
