@@ -58,6 +58,7 @@ jobs:
         with:
           token: ${{ secrets.GIT_PAT }}
           repository: ${{ github.event.client_payload.repo_name }}
+          ref: ${{ github.event.client_payload.branch_name }}
           path: "${{ env.FERN_WORKDIR }}"
 
       - name: Setup node
@@ -92,6 +93,13 @@ jobs:
           github-token: ${{ secrets.GIT_PAT }}
           branch_name: "${{ steps.get-branch.outputs.branch_name }}"
           title: "${{ github.event.client_payload.title }}"
+
+      - name: Add PR Reviewers
+        uses: ./.github/actions-hub/actions/github-find-or-create-pull-request
+        with:
+          github-token: ${{ secrets.GIT_PAT }}
+          pullrequest_number: "${{ steps.get-pr.outputs.number }}"
+          reviewers: "${{ github.event.client_payload.actor }}"
 
       - name: Convert to ready for review
         if: |
