@@ -13644,9 +13644,23 @@ client.webhooks.update(
 </details>
 
 ## Prompts
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_predictions</a>()</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_predictions</a>(...)</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new batch prediction.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -13674,6 +13688,30 @@ client.prompts.batch_predictions()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**job_id:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**modelrun_id:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**results:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

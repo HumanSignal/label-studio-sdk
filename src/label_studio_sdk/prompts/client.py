@@ -5,23 +5,44 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
+from .types.prompts_batch_predictions_response import PromptsBatchPredictionsResponse
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class PromptsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def batch_predictions(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def batch_predictions(
+        self,
+        *,
+        job_id: typing.Optional[str] = OMIT,
+        modelrun_id: typing.Optional[int] = OMIT,
+        results: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> PromptsBatchPredictionsResponse:
         """
+        Create a new batch prediction.
+
         Parameters
         ----------
+        job_id : typing.Optional[str]
+
+        modelrun_id : typing.Optional[int]
+
+        results : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        PromptsBatchPredictionsResponse
+
 
         Examples
         --------
@@ -33,11 +54,15 @@ class PromptsClient:
         client.prompts.batch_predictions()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/model-run/batch-predictions/", method="POST", request_options=request_options
+            "api/model-run/batch-predictions/",
+            method="POST",
+            json={"job_id": job_id, "modelrun_id": modelrun_id, "results": results},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return pydantic_v1.parse_obj_as(PromptsBatchPredictionsResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -48,16 +73,32 @@ class AsyncPromptsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def batch_predictions(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def batch_predictions(
+        self,
+        *,
+        job_id: typing.Optional[str] = OMIT,
+        modelrun_id: typing.Optional[int] = OMIT,
+        results: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> PromptsBatchPredictionsResponse:
         """
+        Create a new batch prediction.
+
         Parameters
         ----------
+        job_id : typing.Optional[str]
+
+        modelrun_id : typing.Optional[int]
+
+        results : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        PromptsBatchPredictionsResponse
+
 
         Examples
         --------
@@ -69,11 +110,15 @@ class AsyncPromptsClient:
         await client.prompts.batch_predictions()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/model-run/batch-predictions/", method="POST", request_options=request_options
+            "api/model-run/batch-predictions/",
+            method="POST",
+            json={"job_id": job_id, "modelrun_id": modelrun_id, "results": results},
+            request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return pydantic_v1.parse_obj_as(PromptsBatchPredictionsResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

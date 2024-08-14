@@ -1,3 +1,7 @@
+types:
+  PromptsBatchPredictionsResponse:
+    properties:
+      detail: optional<string>
 service:
   auth: false
   base-path: ''
@@ -6,7 +10,23 @@ service:
       path: /api/model-run/batch-predictions/
       method: POST
       auth: true
+      docs: |
+        Create a new batch prediction.
+      display-name: Create batch predictions
+      request:
+        name: PromptsBatchPredictionsRequest
+        body:
+          properties:
+            job_id: optional<string>
+            modelrun_id: optional<integer>
+            results: optional<list<map<string, unknown>>>
+      response:
+        docs: ''
+        type: PromptsBatchPredictionsResponse
       examples:
-        - {}
+        - request: {}
+          response:
+            body:
+              detail: detail
       audiences:
         - public
