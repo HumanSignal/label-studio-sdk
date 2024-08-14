@@ -2307,6 +2307,90 @@ types:
         docs: List of associated projects IDs
     source:
       openapi: openapi/openapi.yaml
+  PromptVersionProvider:
+    enum:
+      - OpenAI
+      - AzureOpenAI
+    source:
+      openapi: openapi/openapi.yaml
+  PromptVersionCreatedBy:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  PromptVersionOrganization:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  PromptVersion:
+    properties:
+      title:
+        type: string
+        validation:
+          maxLength: 500
+      parent_model: optional<integer>
+      prompt: string
+      provider: PromptVersionProvider
+      provider_model_id: string
+      created_by: optional<PromptVersionCreatedBy>
+      created_at: optional<datetime>
+      updated_at: optional<datetime>
+      organization: optional<PromptVersionOrganization>
+    source:
+      openapi: openapi/openapi.yaml
+  PromptRunOrganization:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  PromptRunCreatedBy:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  PromptRunProjectSubset:
+    enum:
+      - All
+      - HasGT
+      - Sample
+    source:
+      openapi: openapi/openapi.yaml
+  PromptRunStatus:
+    enum:
+      - Pending
+      - InProgress
+      - Completed
+      - Failed
+      - Canceled
+    source:
+      openapi: openapi/openapi.yaml
+  PromptRun:
+    properties:
+      organization: optional<PromptRunOrganization>
+      project: integer
+      model_version: optional<string>
+      created_by: optional<PromptRunCreatedBy>
+      project_subset: PromptRunProjectSubset
+      status: optional<PromptRunStatus>
+      job_id: optional<string>
+      total_predictions: optional<integer>
+      total_correct_predictions: optional<integer>
+      total_tasks: optional<integer>
+      created_at: optional<datetime>
+      triggered_at: optional<datetime>
+      predictions_updated_at: optional<datetime>
+      completed_at: optional<datetime>
+    source:
+      openapi: openapi/openapi.yaml
   CommentCreatedBy:
     discriminated: false
     union:

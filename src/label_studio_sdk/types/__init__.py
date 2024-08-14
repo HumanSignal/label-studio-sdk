@@ -50,6 +50,15 @@ from .project_skip_queue import ProjectSkipQueue
 from .prompt import Prompt
 from .prompt_created_by import PromptCreatedBy
 from .prompt_organization import PromptOrganization
+from .prompt_run import PromptRun
+from .prompt_run_created_by import PromptRunCreatedBy
+from .prompt_run_organization import PromptRunOrganization
+from .prompt_run_project_subset import PromptRunProjectSubset
+from .prompt_run_status import PromptRunStatus
+from .prompt_version import PromptVersion
+from .prompt_version_created_by import PromptVersionCreatedBy
+from .prompt_version_organization import PromptVersionOrganization
+from .prompt_version_provider import PromptVersionProvider
 from .redis_export_storage import RedisExportStorage
 from .redis_export_storage_status import RedisExportStorageStatus
 from .redis_import_storage import RedisImportStorage
@@ -125,6 +134,15 @@ __all__ = [
     "Prompt",
     "PromptCreatedBy",
     "PromptOrganization",
+    "PromptRun",
+    "PromptRunCreatedBy",
+    "PromptRunOrganization",
+    "PromptRunProjectSubset",
+    "PromptRunStatus",
+    "PromptVersion",
+    "PromptVersionCreatedBy",
+    "PromptVersionOrganization",
+    "PromptVersionProvider",
     "RedisExportStorage",
     "RedisExportStorageStatus",
     "RedisImportStorage",
