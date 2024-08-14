@@ -477,3 +477,5 @@ service:
               project: 1
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml

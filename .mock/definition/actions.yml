@@ -87,6 +87,8 @@ service:
               - tasks:total_annotations
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
   ActionsCreateRequestId:
     enum:
@@ -100,6 +102,8 @@ types:
       - delete_tasks_predictions
       - delete_reviewers
       - delete_annotators
+    source:
+      openapi: openapi/openapi.yaml
   ActionsCreateRequestFiltersConjunction:
     enum:
       - or
@@ -109,6 +113,8 @@ types:
       "and") will be applied to all items in the filters list. It is not
       possible to combine "or" and "and" within one list of filters. All filters
       will be either combined with "or" or with "and", but not a mix of both.
+    source:
+      openapi: openapi/openapi.yaml
   ActionsCreateRequestFiltersItemsItemFilter:
     enum:
       - value: filter:tasks:agreement
@@ -202,6 +208,8 @@ types:
       Number of unresolved comments in a
       task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the task
       was updated at (e.g. new annotation was created, review added, etc)</li>
+    source:
+      openapi: openapi/openapi.yaml
   ActionsCreateRequestFiltersItemsItemOperator:
     enum:
       - contains
@@ -231,6 +239,8 @@ types:
       to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
       not between min and max values, so the filter `value` should be e.g.
       `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
+    source:
+      openapi: openapi/openapi.yaml
   ActionsCreateRequestFiltersItemsItemValue:
     discriminated: false
     docs: Value to filter by
@@ -243,8 +253,10 @@ types:
         docs: Float
       - type: boolean
         docs: Boolean
-      - docs: List of strings or integers
-        type: map<string, unknown>
+      - type: map<string, unknown>
+        docs: List of strings or integers
+    source:
+      openapi: openapi/openapi.yaml
   ActionsCreateRequestFiltersItemsItem:
     properties:
       filter:
@@ -326,6 +338,8 @@ types:
       value:
         type: ActionsCreateRequestFiltersItemsItemValue
         docs: Value to filter by
+    source:
+      openapi: openapi/openapi.yaml
   ActionsCreateRequestFilters:
     docs: >-
       Filters to apply on tasks. You can use [the helper class `Filters` from
@@ -345,6 +359,8 @@ types:
       items:
         docs: List of filter items
         type: list<ActionsCreateRequestFiltersItemsItem>
+    source:
+      openapi: openapi/openapi.yaml
   ActionsCreateRequestSelectedItemsIncluded:
     properties:
       all:
@@ -353,6 +369,8 @@ types:
       included:
         type: optional<list<integer>>
         docs: List of included task IDs
+    source:
+      openapi: openapi/openapi.yaml
   ActionsCreateRequestSelectedItemsExcluded:
     properties:
       all:
@@ -361,6 +379,8 @@ types:
       excluded:
         type: optional<list<integer>>
         docs: List of excluded task IDs
+    source:
+      openapi: openapi/openapi.yaml
   ActionsCreateRequestSelectedItems:
     discriminated: false
     docs: >-
@@ -371,6 +391,8 @@ types:
     union:
       - ActionsCreateRequestSelectedItemsIncluded
       - ActionsCreateRequestSelectedItemsExcluded
+    source:
+      openapi: openapi/openapi.yaml
   ActionsCreateRequestOrderingItem:
     enum:
       - value: tasks:agreement
@@ -417,3 +439,5 @@ types:
         name: TasksUnresolvedCommentCount
       - value: tasks:updated_at
         name: TasksUpdatedAt
+    source:
+      openapi: openapi/openapi.yaml

@@ -2,9 +2,81 @@
 
 import typing
 
+from label_studio_sdk import Prompt
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 
 from .utilities import validate_response
+
+
+async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = [
+        {
+            "title": "title",
+            "description": "description",
+            "created_by": 1,
+            "created_at": "2024-01-15T09:30:00Z",
+            "updated_at": "2024-01-15T09:30:00Z",
+            "organization": 1,
+            "input_fields": ["input_fields"],
+            "output_classes": ["output_classes"],
+            "associated_projects": [1],
+        }
+    ]
+    expected_types: typing.Any = (
+        "list",
+        {
+            0: {
+                "title": None,
+                "description": None,
+                "created_by": "integer",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "organization": "integer",
+                "input_fields": ("list", {0: None}),
+                "output_classes": ("list", {0: None}),
+                "associated_projects": ("list", {0: "integer"}),
+            }
+        },
+    )
+    response = client.prompts.list()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.list()
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "title": "title",
+        "description": "description",
+        "created_by": 1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "updated_at": "2024-01-15T09:30:00Z",
+        "organization": 1,
+        "input_fields": ["input_fields"],
+        "output_classes": ["output_classes"],
+        "associated_projects": [1],
+    }
+    expected_types: typing.Any = {
+        "title": None,
+        "description": None,
+        "created_by": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "organization": "integer",
+        "input_fields": ("list", {0: None}),
+        "output_classes": ("list", {0: None}),
+        "associated_projects": ("list", {0: "integer"}),
+    }
+    response = client.prompts.create(
+        request=Prompt(title="title", input_fields=["input_fields"], output_classes=["output_classes"])
+    )
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.create(
+        request=Prompt(title="title", input_fields=["input_fields"], output_classes=["output_classes"])
+    )
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_batch_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:

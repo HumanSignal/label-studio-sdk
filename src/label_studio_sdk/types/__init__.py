@@ -47,6 +47,9 @@ from .project_import_status import ProjectImportStatus
 from .project_label_config import ProjectLabelConfig
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
+from .prompt import Prompt
+from .prompt_created_by import PromptCreatedBy
+from .prompt_organization import PromptOrganization
 from .redis_export_storage import RedisExportStorage
 from .redis_export_storage_status import RedisExportStorageStatus
 from .redis_import_storage import RedisImportStorage
@@ -119,6 +122,9 @@ __all__ = [
     "ProjectLabelConfig",
     "ProjectSampling",
     "ProjectSkipQueue",
+    "Prompt",
+    "PromptCreatedBy",
+    "PromptOrganization",
     "RedisExportStorage",
     "RedisExportStorageStatus",
     "RedisImportStorage",

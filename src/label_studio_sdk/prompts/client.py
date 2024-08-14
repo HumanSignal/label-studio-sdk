@@ -7,6 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
+from ..types.prompt import Prompt
 from .types.prompts_batch_predictions_response import PromptsBatchPredictionsResponse
 
 # this is used as the default value for optional parameters
@@ -16,6 +17,83 @@ OMIT = typing.cast(typing.Any, ...)
 class PromptsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Prompt]:
+        """
+        Get a list of prompts.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[Prompt]
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.list()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/prompts/", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[Prompt], _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def create(self, *, request: Prompt, request_options: typing.Optional[RequestOptions] = None) -> Prompt:
+        """
+        Create a new prompt.
+
+        Parameters
+        ----------
+        request : Prompt
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Prompt
+
+
+        Examples
+        --------
+        from label_studio_sdk import Prompt
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.create(
+            request=Prompt(
+                title="title",
+                input_fields=["input_fields"],
+                output_classes=["output_classes"],
+            ),
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/prompts/", method="POST", json=request, request_options=request_options, omit=OMIT
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Prompt, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def batch_predictions(
         self,
@@ -69,6 +147,83 @@ class PromptsClient:
 class AsyncPromptsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Prompt]:
+        """
+        Get a list of prompts.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[Prompt]
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.list()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/prompts/", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[Prompt], _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def create(self, *, request: Prompt, request_options: typing.Optional[RequestOptions] = None) -> Prompt:
+        """
+        Create a new prompt.
+
+        Parameters
+        ----------
+        request : Prompt
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Prompt
+
+
+        Examples
+        --------
+        from label_studio_sdk import Prompt
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.create(
+            request=Prompt(
+                title="title",
+                input_fields=["input_fields"],
+                output_classes=["output_classes"],
+            ),
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/prompts/", method="POST", json=request, request_options=request_options, omit=OMIT
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Prompt, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def batch_predictions(
         self,

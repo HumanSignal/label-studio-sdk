@@ -28,8 +28,12 @@ service:
                 title: title
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
   ExportStorageListTypesResponseItem:
     properties:
       name: optional<string>
       title: optional<string>
+    source:
+      openapi: openapi/openapi.yaml

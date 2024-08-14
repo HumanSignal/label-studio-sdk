@@ -1,11 +1,71 @@
-types:
-  PromptsBatchPredictionsResponse:
-    properties:
-      detail: optional<string>
+imports:
+  root: __package__.yml
 service:
   auth: false
   base-path: ''
   endpoints:
+    list:
+      path: /api/prompts/
+      method: GET
+      auth: true
+      docs: |
+        Get a list of prompts.
+      display-name: List prompts
+      response:
+        docs: ''
+        type: list<root.Prompt>
+      examples:
+        - response:
+            body:
+              - title: title
+                description: description
+                created_by: 1
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+                organization: 1
+                input_fields:
+                  - input_fields
+                output_classes:
+                  - output_classes
+                associated_projects:
+                  - 1
+      audiences:
+        - public
+    create:
+      path: /api/prompts/
+      method: POST
+      auth: true
+      docs: |
+        Create a new prompt.
+      display-name: Create prompt
+      request:
+        body: root.Prompt
+      response:
+        docs: ''
+        type: root.Prompt
+      examples:
+        - request:
+            title: title
+            input_fields:
+              - input_fields
+            output_classes:
+              - output_classes
+          response:
+            body:
+              title: title
+              description: description
+              created_by: 1
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              organization: 1
+              input_fields:
+                - input_fields
+              output_classes:
+                - output_classes
+              associated_projects:
+                - 1
+      audiences:
+        - public
     batch_predictions:
       path: /api/model-run/batch-predictions/
       method: POST
@@ -29,3 +89,11 @@ service:
               detail: detail
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
+types:
+  PromptsBatchPredictionsResponse:
+    properties:
+      detail: optional<string>
+    source:
+      openapi: openapi/openapi.yaml

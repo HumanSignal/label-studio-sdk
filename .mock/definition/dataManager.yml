@@ -106,6 +106,8 @@ service:
               project: 1
       audiences:
         - internal
+  source:
+    openapi: openapi/openapi.yaml
 types:
   ApiDmViewsUpdateRequestDataFiltersConjunction:
     enum:
@@ -116,6 +118,8 @@ types:
       "and") will be applied to all items in the filters list. It is not
       possible to combine "or" and "and" within one list of filters. All filters
       will be either combined with "or" or with "and", but not a mix of both.
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateRequestDataFiltersItemsItemFilter:
     enum:
       - value: filter:tasks:agreement
@@ -209,6 +213,8 @@ types:
       Number of unresolved comments in a
       task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the task
       was updated at (e.g. new annotation was created, review added, etc)</li>
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateRequestDataFiltersItemsItemOperator:
     enum:
       - contains
@@ -238,6 +244,8 @@ types:
       to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
       not between min and max values, so the filter `value` should be e.g.
       `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateRequestDataFiltersItemsItemValue:
     discriminated: false
     docs: Value to filter by
@@ -250,8 +258,10 @@ types:
         docs: Float
       - type: boolean
         docs: Boolean
-      - docs: List of strings or integers
-        type: map<string, unknown>
+      - type: map<string, unknown>
+        docs: List of strings or integers
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateRequestDataFiltersItemsItem:
     properties:
       filter:
@@ -333,6 +343,8 @@ types:
       value:
         type: ApiDmViewsUpdateRequestDataFiltersItemsItemValue
         docs: Value to filter by
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateRequestDataFilters:
     docs: >-
       Filters to apply on tasks. You can use [the helper class `Filters` from
@@ -352,6 +364,8 @@ types:
       items:
         docs: List of filter items
         type: list<ApiDmViewsUpdateRequestDataFiltersItemsItem>
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateRequestDataOrderingItem:
     enum:
       - value: tasks:agreement
@@ -398,6 +412,8 @@ types:
         name: TasksUnresolvedCommentCount
       - value: tasks:updated_at
         name: TasksUpdatedAt
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateRequestData:
     docs: Custom view data
     properties:
@@ -415,6 +431,8 @@ types:
           List of fields to order by. Fields are similar to filters but without
           the `filter:` prefix. To reverse the order, add a minus sign before
           the field name, e.g. `-tasks:created_at`.
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateResponseDataFiltersConjunction:
     enum:
       - or
@@ -424,6 +442,8 @@ types:
       "and") will be applied to all items in the filters list. It is not
       possible to combine "or" and "and" within one list of filters. All filters
       will be either combined with "or" or with "and", but not a mix of both.
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateResponseDataFiltersItemsItemFilter:
     enum:
       - value: filter:tasks:agreement
@@ -517,6 +537,8 @@ types:
       Number of unresolved comments in a
       task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the task
       was updated at (e.g. new annotation was created, review added, etc)</li>
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateResponseDataFiltersItemsItemOperator:
     enum:
       - contains
@@ -546,6 +568,8 @@ types:
       to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
       not between min and max values, so the filter `value` should be e.g.
       `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateResponseDataFiltersItemsItemValue:
     discriminated: false
     docs: Value to filter by
@@ -558,8 +582,10 @@ types:
         docs: Float
       - type: boolean
         docs: Boolean
-      - docs: List of strings or integers
-        type: map<string, unknown>
+      - type: map<string, unknown>
+        docs: List of strings or integers
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateResponseDataFiltersItemsItem:
     properties:
       filter:
@@ -641,6 +667,8 @@ types:
       value:
         type: ApiDmViewsUpdateResponseDataFiltersItemsItemValue
         docs: Value to filter by
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateResponseDataFilters:
     docs: >-
       Filters to apply on tasks. You can use [the helper class `Filters` from
@@ -660,6 +688,8 @@ types:
       items:
         docs: List of filter items
         type: list<ApiDmViewsUpdateResponseDataFiltersItemsItem>
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateResponseDataOrderingItem:
     enum:
       - value: tasks:agreement
@@ -706,6 +736,8 @@ types:
         name: TasksUnresolvedCommentCount
       - value: tasks:updated_at
         name: TasksUpdatedAt
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateResponseData:
     docs: Custom view data
     properties:
@@ -723,6 +755,8 @@ types:
           List of fields to order by. Fields are similar to filters but without
           the `filter:` prefix. To reverse the order, add a minus sign before
           the field name, e.g. `-tasks:created_at`.
+    source:
+      openapi: openapi/openapi.yaml
   ApiDmViewsUpdateResponse:
     properties:
       data:
@@ -731,3 +765,5 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
+    source:
+      openapi: openapi/openapi.yaml
