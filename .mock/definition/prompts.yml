@@ -1,0 +1,12 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    batch_predictions:
+      path: /api/model-run/batch-predictions/
+      method: POST
+      auth: true
+      examples:
+        - {}
+      audiences:
+        - public
