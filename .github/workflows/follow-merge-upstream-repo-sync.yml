@@ -50,7 +50,7 @@ jobs:
         uses: ./.github/actions-hub/actions/github-find-or-create-branch
         id: get-branch
         with:
-          github-token: ${{ secrets.GIT_PAT }}
+          github_token: ${{ secrets.GIT_PAT }}
           branch_name: "${{ github.event.client_payload.branch_name }}"
 
       - name: Checkout repo
@@ -90,21 +90,23 @@ jobs:
         uses: ./.github/actions-hub/actions/github-find-or-create-pull-request
         id: get-pr
         with:
-          github-token: ${{ secrets.GIT_PAT }}
+          github_token: ${{ secrets.GIT_PAT }}
           branch_name: "${{ steps.get-branch.outputs.branch_name }}"
           title: "${{ github.event.client_payload.title }}"
 
       - name: Add PR Reviewers
         uses: ./.github/actions-hub/actions/github-add-pull-request-reviewers
+        continue-on-error: true
         with:
-          github-token: ${{ secrets.GIT_PAT }}
+          github_token: ${{ secrets.GIT_PAT }}
           pullrequest_number: "${{ steps.get-pr.outputs.number }}"
           reviewers: "${{ github.event.client_payload.actor }}"
 
       - name: Link PR
         uses: ./.github/actions-hub/actions/github-link-upstream-pull-request
+        continue-on-error: true
         with:
-          github-token: ${{ secrets.GIT_PAT }}
+          github_token: ${{ secrets.GIT_PAT }}
           pullrequest_number: "${{ steps.get-pr.outputs.number }}"
           upstream_pullrequest_link: "${{ github.event.client_payload.html_url }}"
 
