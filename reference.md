@@ -13692,14 +13692,6 @@ client.prompts.batch_predictions()
 <dl>
 <dd>
 
-**job_id:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **modelrun_id:** `typing.Optional[int]` 
     
 </dd>

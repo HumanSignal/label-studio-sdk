@@ -17,7 +17,6 @@ service:
         name: PromptsBatchPredictionsRequest
         body:
           properties:
-            job_id: optional<string>
             modelrun_id: optional<integer>
             results: optional<list<map<string, unknown>>>
       response:

@@ -20,7 +20,6 @@ class PromptsClient:
     def batch_predictions(
         self,
         *,
-        job_id: typing.Optional[str] = OMIT,
         modelrun_id: typing.Optional[int] = OMIT,
         results: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
@@ -30,8 +29,6 @@ class PromptsClient:
 
         Parameters
         ----------
-        job_id : typing.Optional[str]
-
         modelrun_id : typing.Optional[int]
 
         results : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
@@ -56,7 +53,7 @@ class PromptsClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/model-run/batch-predictions/",
             method="POST",
-            json={"job_id": job_id, "modelrun_id": modelrun_id, "results": results},
+            json={"modelrun_id": modelrun_id, "results": results},
             request_options=request_options,
             omit=OMIT,
         )
@@ -76,7 +73,6 @@ class AsyncPromptsClient:
     async def batch_predictions(
         self,
         *,
-        job_id: typing.Optional[str] = OMIT,
         modelrun_id: typing.Optional[int] = OMIT,
         results: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
@@ -86,8 +82,6 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
-        job_id : typing.Optional[str]
-
         modelrun_id : typing.Optional[int]
 
         results : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
@@ -112,7 +106,7 @@ class AsyncPromptsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/model-run/batch-predictions/",
             method="POST",
-            json={"job_id": job_id, "modelrun_id": modelrun_id, "results": results},
+            json={"modelrun_id": modelrun_id, "results": results},
             request_options=request_options,
             omit=OMIT,
         )
