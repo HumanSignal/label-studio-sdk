@@ -300,13 +300,13 @@ class LabelInterface:
         self._labels = labels
         self._tree = tree
 
-    def create_regions(self, data: Dict) -> List[Region]:
+    def create_regions(self, data: Dict[str, Union[Dict, List[Dict]]]) -> List[Region]:
         """
         Takes raw data representation and maps keys to control tag names.
         If name is not found, it will be skipped
 
         Args:
-            data (Dict): Raw data representation. Example: {"choices_name": "Positive", "labels_name": [{"start": 0, "end": 10, "value": "person"}]}
+            data (Dict): Raw data representation. Example: {"choices_name": "Positive", "labels_name": [{"start": 0, "end": 10, "label": "person"}]}
             raise_if_control_not_found (bool): Raise an exception if control tag is not found.
         """
         regions = []
@@ -316,7 +316,11 @@ class LabelInterface:
                 continue
 
             control = self._controls[control_tag_name]
-            regions.append(control.label(**payload))
+            if isinstance(payload, Dict):
+                payload = [payload]
+            for item in payload:
+                # TODO: allow control.label to process custom payload outside of those strictly containing "label"
+                regions.append(control.label(**item))
 
         return regions
 
