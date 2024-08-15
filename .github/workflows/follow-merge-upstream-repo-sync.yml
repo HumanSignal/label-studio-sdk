@@ -64,6 +64,9 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
 
+      - name: Setup Poetry
+        uses: Gr1N/setup-poetry@v9
+
       - name: Download Fern
         run: npm install -g fern-api
 
