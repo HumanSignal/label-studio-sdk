@@ -46,7 +46,7 @@ service:
       method: POST
       auth: true
       docs: |
-        Run a prompt.
+        Run a prompt inference.
       path-parameters:
         id:
           type: integer
@@ -54,12 +54,12 @@ service:
         version_id:
           type: integer
           docs: Prompt Version ID
-      display-name: Run prompt
+      display-name: Run prompt inference
       request:
-        body: root.PromptRun
+        body: root.InferenceRun
       response:
         docs: ''
-        type: root.PromptRun
+        type: root.InferenceRun
       examples:
         - path-parameters:
             id: 1

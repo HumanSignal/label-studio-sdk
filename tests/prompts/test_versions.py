@@ -2,7 +2,6 @@
 
 import typing
 
-from label_studio_sdk import PromptRun, PromptVersion
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 
 from ..utilities import validate_response
@@ -32,14 +31,12 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "organization": "integer",
     }
     response = client.prompts.versions.create(
-        id=1,
-        request=PromptVersion(title="title", prompt="prompt", provider="OpenAI", provider_model_id="provider_model_id"),
+        id=1, title="title", prompt="prompt", provider="OpenAI", provider_model_id="provider_model_id"
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.prompts.versions.create(
-        id=1,
-        request=PromptVersion(title="title", prompt="prompt", provider="OpenAI", provider_model_id="provider_model_id"),
+        id=1, title="title", prompt="prompt", provider="OpenAI", provider_model_id="provider_model_id"
     )
     validate_response(async_response, expected_response, expected_types)
 
@@ -77,12 +74,8 @@ async def test_create_run(client: LabelStudio, async_client: AsyncLabelStudio) -
         "predictions_updated_at": "datetime",
         "completed_at": "datetime",
     }
-    response = client.prompts.versions.create_run(
-        id=1, version_id=1, request=PromptRun(project=1, project_subset="All")
-    )
+    response = client.prompts.versions.create_run(id=1, version_id=1, project=1, project_subset="All")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.create_run(
-        id=1, version_id=1, request=PromptRun(project=1, project_subset="All")
-    )
+    async_response = await async_client.prompts.versions.create_run(id=1, version_id=1, project=1, project_subset="All")
     validate_response(async_response, expected_response, expected_types)

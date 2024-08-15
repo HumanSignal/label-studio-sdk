@@ -2343,28 +2343,28 @@ types:
       organization: optional<PromptVersionOrganization>
     source:
       openapi: openapi/openapi.yaml
-  PromptRunOrganization:
+  InferenceRunOrganization:
     discriminated: false
     union:
       - integer
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
-  PromptRunCreatedBy:
+  InferenceRunCreatedBy:
     discriminated: false
     union:
       - integer
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
-  PromptRunProjectSubset:
+  InferenceRunProjectSubset:
     enum:
       - All
       - HasGT
       - Sample
     source:
       openapi: openapi/openapi.yaml
-  PromptRunStatus:
+  InferenceRunStatus:
     enum:
       - Pending
       - InProgress
@@ -2373,14 +2373,14 @@ types:
       - Canceled
     source:
       openapi: openapi/openapi.yaml
-  PromptRun:
+  InferenceRun:
     properties:
-      organization: optional<PromptRunOrganization>
+      organization: optional<InferenceRunOrganization>
       project: integer
       model_version: optional<string>
-      created_by: optional<PromptRunCreatedBy>
-      project_subset: PromptRunProjectSubset
-      status: optional<PromptRunStatus>
+      created_by: optional<InferenceRunCreatedBy>
+      project_subset: InferenceRunProjectSubset
+      status: optional<InferenceRunStatus>
       job_id: optional<string>
       total_predictions: optional<integer>
       total_correct_predictions: optional<integer>

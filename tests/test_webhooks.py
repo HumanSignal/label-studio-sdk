@@ -2,7 +2,6 @@
 
 import typing
 
-from label_studio_sdk import Webhook, WebhookSerializerForUpdate
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 
 from .utilities import validate_response
@@ -76,10 +75,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_at": "datetime",
         "updated_at": "datetime",
     }
-    response = client.webhooks.create(request=Webhook(url="url"))
+    response = client.webhooks.create(url="url")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.webhooks.create(request=Webhook(url="url"))
+    async_response = await async_client.webhooks.create(url="url")
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -158,8 +157,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_at": "datetime",
         "updated_at": "datetime",
     }
-    response = client.webhooks.update(id=1, url="url", request=WebhookSerializerForUpdate(url="url"))
+    response = client.webhooks.update(id_=1, url="url", webhook_serializer_for_update_url="url")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.webhooks.update(id=1, url="url", request=WebhookSerializerForUpdate(url="url"))
+    async_response = await async_client.webhooks.update(id_=1, url="url", webhook_serializer_for_update_url="url")
     validate_response(async_response, expected_response, expected_types)

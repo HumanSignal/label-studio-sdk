@@ -96,7 +96,12 @@ class FilesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update(
-        self, id: int, *, request: FileUpload, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id_: int,
+        *,
+        id: typing.Optional[int] = OMIT,
+        file: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> FileUpload:
         """
         Update a specific uploaded file. To get the file upload ID, use [Get files list](list).
@@ -109,10 +114,12 @@ class FilesClient:
 
         Parameters
         ----------
-        id : int
+        id_ : int
             A unique integer value identifying this file upload.
 
-        request : FileUpload
+        id : typing.Optional[int]
+
+        file : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -124,21 +131,19 @@ class FilesClient:
 
         Examples
         --------
-        from label_studio_sdk import FileUpload
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
         client.files.update(
-            id=1,
-            request=FileUpload(),
+            id_=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/import/file-upload/{jsonable_encoder(id)}",
+            f"api/import/file-upload/{jsonable_encoder(id_)}",
             method="PATCH",
-            json=request,
+            json={"id": id, "file": file},
             request_options=request_options,
             omit=OMIT,
         )
@@ -367,7 +372,12 @@ class AsyncFilesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update(
-        self, id: int, *, request: FileUpload, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id_: int,
+        *,
+        id: typing.Optional[int] = OMIT,
+        file: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> FileUpload:
         """
         Update a specific uploaded file. To get the file upload ID, use [Get files list](list).
@@ -380,10 +390,12 @@ class AsyncFilesClient:
 
         Parameters
         ----------
-        id : int
+        id_ : int
             A unique integer value identifying this file upload.
 
-        request : FileUpload
+        id : typing.Optional[int]
+
+        file : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -395,21 +407,19 @@ class AsyncFilesClient:
 
         Examples
         --------
-        from label_studio_sdk import FileUpload
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
         await client.files.update(
-            id=1,
-            request=FileUpload(),
+            id_=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/import/file-upload/{jsonable_encoder(id)}",
+            f"api/import/file-upload/{jsonable_encoder(id_)}",
             method="PATCH",
-            json=request,
+            json={"id": id, "file": file},
             request_options=request_options,
             omit=OMIT,
         )

@@ -2,7 +2,6 @@
 
 import typing
 
-from label_studio_sdk import ProjectLabelConfig
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 
 from .utilities import validate_response
@@ -230,10 +229,8 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
 async def test_validate_config(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"label_config": "label_config"}
     expected_types: typing.Any = {"label_config": None}
-    response = client.projects.validate_config(id=1, request=ProjectLabelConfig(label_config="label_config"))
+    response = client.projects.validate_config(id=1, label_config="label_config")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.validate_config(
-        id=1, request=ProjectLabelConfig(label_config="label_config")
-    )
+    async_response = await async_client.projects.validate_config(id=1, label_config="label_config")
     validate_response(async_response, expected_response, expected_types)

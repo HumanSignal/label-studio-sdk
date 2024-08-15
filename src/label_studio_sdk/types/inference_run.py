@@ -5,19 +5,19 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from .prompt_run_created_by import PromptRunCreatedBy
-from .prompt_run_organization import PromptRunOrganization
-from .prompt_run_project_subset import PromptRunProjectSubset
-from .prompt_run_status import PromptRunStatus
+from .inference_run_created_by import InferenceRunCreatedBy
+from .inference_run_organization import InferenceRunOrganization
+from .inference_run_project_subset import InferenceRunProjectSubset
+from .inference_run_status import InferenceRunStatus
 
 
-class PromptRun(pydantic_v1.BaseModel):
-    organization: typing.Optional[PromptRunOrganization] = None
+class InferenceRun(pydantic_v1.BaseModel):
+    organization: typing.Optional[InferenceRunOrganization] = None
     project: int
     model_version: typing.Optional[str] = None
-    created_by: typing.Optional[PromptRunCreatedBy] = None
-    project_subset: PromptRunProjectSubset
-    status: typing.Optional[PromptRunStatus] = None
+    created_by: typing.Optional[InferenceRunCreatedBy] = None
+    project_subset: InferenceRunProjectSubset
+    status: typing.Optional[InferenceRunStatus] = None
     job_id: typing.Optional[str] = None
     total_predictions: typing.Optional[int] = None
     total_correct_predictions: typing.Optional[int] = None

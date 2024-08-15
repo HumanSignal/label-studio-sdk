@@ -33,6 +33,11 @@ from .gcs_export_storage import GcsExportStorage
 from .gcs_export_storage_status import GcsExportStorageStatus
 from .gcs_import_storage import GcsImportStorage
 from .gcs_import_storage_status import GcsImportStorageStatus
+from .inference_run import InferenceRun
+from .inference_run_created_by import InferenceRunCreatedBy
+from .inference_run_organization import InferenceRunOrganization
+from .inference_run_project_subset import InferenceRunProjectSubset
+from .inference_run_status import InferenceRunStatus
 from .local_files_export_storage import LocalFilesExportStorage
 from .local_files_export_storage_status import LocalFilesExportStorageStatus
 from .local_files_import_storage import LocalFilesImportStorage
@@ -50,11 +55,6 @@ from .project_skip_queue import ProjectSkipQueue
 from .prompt import Prompt
 from .prompt_created_by import PromptCreatedBy
 from .prompt_organization import PromptOrganization
-from .prompt_run import PromptRun
-from .prompt_run_created_by import PromptRunCreatedBy
-from .prompt_run_organization import PromptRunOrganization
-from .prompt_run_project_subset import PromptRunProjectSubset
-from .prompt_run_status import PromptRunStatus
 from .prompt_version import PromptVersion
 from .prompt_version_created_by import PromptVersionCreatedBy
 from .prompt_version_organization import PromptVersionOrganization
@@ -117,6 +117,11 @@ __all__ = [
     "GcsExportStorageStatus",
     "GcsImportStorage",
     "GcsImportStorageStatus",
+    "InferenceRun",
+    "InferenceRunCreatedBy",
+    "InferenceRunOrganization",
+    "InferenceRunProjectSubset",
+    "InferenceRunStatus",
     "LocalFilesExportStorage",
     "LocalFilesExportStorageStatus",
     "LocalFilesImportStorage",
@@ -134,11 +139,6 @@ __all__ = [
     "Prompt",
     "PromptCreatedBy",
     "PromptOrganization",
-    "PromptRun",
-    "PromptRunCreatedBy",
-    "PromptRunOrganization",
-    "PromptRunProjectSubset",
-    "PromptRunStatus",
     "PromptVersion",
     "PromptVersionCreatedBy",
     "PromptVersionOrganization",

@@ -2,7 +2,6 @@
 
 import typing
 
-from label_studio_sdk import Prompt
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 
 from .utilities import validate_response
@@ -68,13 +67,11 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "output_classes": ("list", {0: None}),
         "associated_projects": ("list", {0: "integer"}),
     }
-    response = client.prompts.create(
-        request=Prompt(title="title", input_fields=["input_fields"], output_classes=["output_classes"])
-    )
+    response = client.prompts.create(title="title", input_fields=["input_fields"], output_classes=["output_classes"])
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.prompts.create(
-        request=Prompt(title="title", input_fields=["input_fields"], output_classes=["output_classes"])
+        title="title", input_fields=["input_fields"], output_classes=["output_classes"]
     )
     validate_response(async_response, expected_response, expected_types)
 
