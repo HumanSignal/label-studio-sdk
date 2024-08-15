@@ -2305,6 +2305,9 @@ types:
       associated_projects:
         type: optional<list<integer>>
         docs: List of associated projects IDs
+      skill_name:
+        type: optional<string>
+        docs: Name of the skill
     source:
       openapi: openapi/openapi.yaml
   PromptVersionProvider:

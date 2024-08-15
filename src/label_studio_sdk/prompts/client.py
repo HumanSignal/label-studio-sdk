@@ -69,6 +69,7 @@ class PromptsClient:
         updated_at: typing.Optional[dt.datetime] = OMIT,
         organization: typing.Optional[PromptOrganization] = OMIT,
         associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        skill_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> Prompt:
         """
@@ -102,6 +103,9 @@ class PromptsClient:
 
         associated_projects : typing.Optional[typing.Sequence[int]]
             List of associated projects IDs
+
+        skill_name : typing.Optional[str]
+            Name of the skill
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -137,6 +141,7 @@ class PromptsClient:
                 "input_fields": input_fields,
                 "output_classes": output_classes,
                 "associated_projects": associated_projects,
+                "skill_name": skill_name,
             },
             request_options=request_options,
             omit=OMIT,
@@ -249,6 +254,7 @@ class AsyncPromptsClient:
         updated_at: typing.Optional[dt.datetime] = OMIT,
         organization: typing.Optional[PromptOrganization] = OMIT,
         associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        skill_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> Prompt:
         """
@@ -282,6 +288,9 @@ class AsyncPromptsClient:
 
         associated_projects : typing.Optional[typing.Sequence[int]]
             List of associated projects IDs
+
+        skill_name : typing.Optional[str]
+            Name of the skill
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -317,6 +326,7 @@ class AsyncPromptsClient:
                 "input_fields": input_fields,
                 "output_classes": output_classes,
                 "associated_projects": associated_projects,
+                "skill_name": skill_name,
             },
             request_options=request_options,
             omit=OMIT,

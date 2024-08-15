@@ -19,6 +19,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "input_fields": ["input_fields"],
             "output_classes": ["output_classes"],
             "associated_projects": [1],
+            "skill_name": "skill_name",
         }
     ]
     expected_types: typing.Any = (
@@ -34,6 +35,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "input_fields": ("list", {0: None}),
                 "output_classes": ("list", {0: None}),
                 "associated_projects": ("list", {0: "integer"}),
+                "skill_name": None,
             }
         },
     )
@@ -55,6 +57,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "input_fields": ["input_fields"],
         "output_classes": ["output_classes"],
         "associated_projects": [1],
+        "skill_name": "skill_name",
     }
     expected_types: typing.Any = {
         "title": None,
@@ -66,6 +69,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "input_fields": ("list", {0: None}),
         "output_classes": ("list", {0: None}),
         "associated_projects": ("list", {0: "integer"}),
+        "skill_name": None,
     }
     response = client.prompts.create(title="title", input_fields=["input_fields"], output_classes=["output_classes"])
     validate_response(response, expected_response, expected_types)

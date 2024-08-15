@@ -14068,6 +14068,14 @@ client.prompts.create(
 <dl>
 <dd>
 
+**skill_name:** `typing.Optional[str]` — Name of the skill
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>

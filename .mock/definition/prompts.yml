@@ -29,6 +29,7 @@ service:
                   - output_classes
                 associated_projects:
                   - 1
+                skill_name: skill_name
       audiences:
         - public
     create:
@@ -64,6 +65,7 @@ service:
                 - output_classes
               associated_projects:
                 - 1
+              skill_name: skill_name
       audiences:
         - public
     batch_predictions:
