@@ -47,5 +47,6 @@ tests/custom/test_interface
 .github/workflows/tests.yml
 .github/workflows/pr-labeler.yml
 .github/workflows/follow-merge-sync-pr-lso.yml
+.github/workflows/follow-merge-upstream-repo-sync.yml
 .github/workflows/update-draft-release.yml
 .github/dependabot.yml

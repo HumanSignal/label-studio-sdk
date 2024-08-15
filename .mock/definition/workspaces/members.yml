@@ -36,8 +36,7 @@ service:
           response:
             body:
               - user:
-                  user:
-                    key: value
+                  key: value
       audiences:
         - public
     create:

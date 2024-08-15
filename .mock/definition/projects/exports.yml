@@ -158,8 +158,7 @@ service:
                 status: created
                 md5: md5
                 counters:
-                  counters:
-                    key: value
+                  key: value
                 converted_formats:
                   - export_type: export_type
       audiences:
@@ -215,8 +214,7 @@ service:
               status: created
               md5: md5
               counters:
-                counters:
-                  key: value
+                key: value
               converted_formats:
                 - id: 1
                   status: created
@@ -290,8 +288,7 @@ service:
               status: created
               md5: md5
               counters:
-                counters:
-                  key: value
+                key: value
               converted_formats:
                 - id: 1
                   status: created

@@ -40,14 +40,11 @@ service:
                       operator: operator
                   conjunction: conjunction
                 data:
-                  data:
-                    key: value
+                  key: value
                 ordering:
-                  ordering:
-                    key: value
+                  key: value
                 selected_items:
-                  selected_items:
-                    key: value
+                  key: value
                 user: 1
                 project: 1
       audiences:
@@ -93,14 +90,11 @@ service:
                     operator: operator
                 conjunction: conjunction
               data:
-                data:
-                  key: value
+                key: value
               ordering:
-                ordering:
-                  key: value
+                key: value
               selected_items:
-                selected_items:
-                  key: value
+                key: value
               user: 1
               project: 1
       audiences:
@@ -159,14 +153,11 @@ service:
                     operator: operator
                 conjunction: conjunction
               data:
-                data:
-                  key: value
+                key: value
               ordering:
-                ordering:
-                  key: value
+                key: value
               selected_items:
-                selected_items:
-                  key: value
+                key: value
               user: 1
               project: 1
       audiences:
@@ -230,14 +221,11 @@ service:
                     operator: operator
                 conjunction: conjunction
               data:
-                data:
-                  key: value
+                key: value
               ordering:
-                ordering:
-                  key: value
+                key: value
               selected_items:
-                selected_items:
-                  key: value
+                key: value
               user: 1
               project: 1
       audiences:
@@ -382,7 +370,7 @@ types:
         docs: String
       - type: integer
         docs: Integer
-      - type: double
+      - type: float
         docs: Float
       - type: boolean
         docs: Boolean
@@ -690,7 +678,7 @@ types:
         docs: String
       - type: integer
         docs: Integer
-      - type: double
+      - type: float
         docs: Float
       - type: boolean
         docs: Boolean
