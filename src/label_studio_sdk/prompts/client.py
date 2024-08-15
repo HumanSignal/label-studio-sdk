@@ -188,7 +188,7 @@ class PromptsClient:
         client.prompts.batch_predictions()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/model-run/batch-predictions/",
+            "api/model-run/batch-predictions",
             method="POST",
             json={"modelrun_id": modelrun_id, "results": results},
             request_options=request_options,
@@ -373,7 +373,7 @@ class AsyncPromptsClient:
         await client.prompts.batch_predictions()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/model-run/batch-predictions/",
+            "api/model-run/batch-predictions",
             method="POST",
             json={"modelrun_id": modelrun_id, "results": results},
             request_options=request_options,

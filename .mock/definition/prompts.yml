@@ -69,7 +69,7 @@ service:
       audiences:
         - public
     batch_predictions:
-      path: /api/model-run/batch-predictions/
+      path: /api/model-run/batch-predictions
       method: POST
       auth: true
       docs: |
