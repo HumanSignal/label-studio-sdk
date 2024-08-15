@@ -45,6 +45,11 @@ from .local_files_import_storage_status import LocalFilesImportStorageStatus
 from .ml_backend import MlBackend
 from .ml_backend_auth_method import MlBackendAuthMethod
 from .ml_backend_state import MlBackendState
+from .model_provider_connection import ModelProviderConnection
+from .model_provider_connection_created_by import ModelProviderConnectionCreatedBy
+from .model_provider_connection_organization import ModelProviderConnectionOrganization
+from .model_provider_connection_provider import ModelProviderConnectionProvider
+from .model_provider_connection_scope import ModelProviderConnectionScope
 from .prediction import Prediction
 from .project import Project
 from .project_import import ProjectImport
@@ -129,6 +134,11 @@ __all__ = [
     "MlBackend",
     "MlBackendAuthMethod",
     "MlBackendState",
+    "ModelProviderConnection",
+    "ModelProviderConnectionCreatedBy",
+    "ModelProviderConnectionOrganization",
+    "ModelProviderConnectionProvider",
+    "ModelProviderConnectionScope",
     "Prediction",
     "Project",
     "ProjectImport",

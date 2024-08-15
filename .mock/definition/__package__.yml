@@ -2391,6 +2391,46 @@ types:
       completed_at: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
+  ModelProviderConnectionProvider:
+    enum:
+      - OpenAI
+      - AzureOpenAI
+    source:
+      openapi: openapi/openapi.yaml
+  ModelProviderConnectionScope:
+    enum:
+      - Organization
+      - User
+      - Model
+    source:
+      openapi: openapi/openapi.yaml
+  ModelProviderConnectionOrganization:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  ModelProviderConnectionCreatedBy:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  ModelProviderConnection:
+    properties:
+      provider: ModelProviderConnectionProvider
+      api_key: optional<string>
+      deployment_name: optional<string>
+      endpoint: optional<string>
+      scope: optional<ModelProviderConnectionScope>
+      organization: optional<ModelProviderConnectionOrganization>
+      created_by: optional<ModelProviderConnectionCreatedBy>
+      created_at: optional<datetime>
+      updated_at: optional<datetime>
+    source:
+      openapi: openapi/openapi.yaml
   CommentCreatedBy:
     discriminated: false
     union:
