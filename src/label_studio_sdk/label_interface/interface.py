@@ -316,10 +316,16 @@ class LabelInterface:
                 continue
 
             control = self._controls[control_tag_name]
+            # TODO: I don't really like this part, looks like a workaround
+            # 1. we should allow control.label to process custom payload outside of those strictly containing "label"
+            # 2. we should be less open regarding the payload type and defining the strict typing elsewhere,
+            # but likely that requires rewriting of how ControlTag.label() is working now
+            if isinstance(payload, str):
+                payload = {'label': payload}
             if isinstance(payload, Dict):
                 payload = [payload]
             for item in payload:
-                # TODO: allow control.label to process custom payload outside of those strictly containing "label"
+
                 regions.append(control.label(**item))
 
         return regions
