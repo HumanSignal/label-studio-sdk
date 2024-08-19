@@ -62,7 +62,7 @@ jobs:
           path: "${{ env.FERN_WORKDIR }}"
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
 
       - name: Setup Poetry
         uses: Gr1N/setup-poetry@v9
