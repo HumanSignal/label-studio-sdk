@@ -501,12 +501,16 @@ service:
                 - 1
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
   TasksListRequestFields:
     enum:
       - all
       - task_only
     default: task_only
+    source:
+      openapi: openapi/openapi.yaml
   TasksListResponse:
     properties:
       tasks:
@@ -523,3 +527,5 @@ types:
       total_predictions:
         type: optional<integer>
         docs: Total number of predictions
+    source:
+      openapi: openapi/openapi.yaml

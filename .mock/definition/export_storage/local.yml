@@ -345,6 +345,8 @@ service:
               project: 1
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
   LocalCreateResponse:
     properties:
@@ -371,6 +373,8 @@ types:
           for these images. If set to False, it will read the content of the
           file and load it into Label Studio.
         default: false
+    source:
+      openapi: openapi/openapi.yaml
   LocalUpdateResponse:
     properties:
       title:
@@ -396,3 +400,5 @@ types:
           for these images. If set to False, it will read the content of the
           file and load it into Label Studio.
         default: false
+    source:
+      openapi: openapi/openapi.yaml

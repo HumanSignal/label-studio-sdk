@@ -5,14 +5,14 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/redis/
+      path: /api/storages/gcs/
       method: GET
       auth: true
       docs: >
 
-        You can connect your Redis database to Label Studio as a source storage
-        or target storage. Use this API request to get a list of all Redis
-        import (source) storage connections for a specific project. 
+        You can connect your Google Cloud Storage bucket to Label Studio as a
+        source storage or target storage. Use this API request to get a list of
+        all Google import (source) storage connections for a specific project. 
 
 
         The project ID can be found in the URL when viewing the project in Label
@@ -24,26 +24,27 @@ service:
         from external storage](https://labelstud.io/guide/storage).
       display-name: List import storages
       request:
-        name: RedisListRequest
+        name: GcsListRequest
         query-parameters:
           project:
             type: optional<integer>
             docs: Project ID
       response:
         docs: ''
-        type: list<root.RedisImportStorage>
+        type: list<root.GcsImportStorage>
       examples:
         - response:
             body:
               - id: 1
                 type: type
                 synchronizable: true
-                path: path
-                host: host
-                port: port
-                password: password
+                presign: true
+                bucket: bucket
+                prefix: prefix
                 regex_filter: regex_filter
                 use_blob_urls: true
+                google_application_credentials: google_application_credentials
+                google_project_id: google_project_id
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
@@ -54,22 +55,28 @@ service:
                 title: title
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
-                db: 1
+                presign_ttl: 1
                 project: 1
       audiences:
         - public
     create:
-      path: /api/storages/redis/
+      path: /api/storages/gcs/
       method: POST
       auth: true
       docs: >
 
-        Create a new source storage connection to a Redis database. 
+        Create a new source storage connection to a Google Cloud Storage
+        bucket. 
 
 
-        For information about the required fields and prerequisites, see [Redis
-        database](https://labelstud.io/guide/storage#Redis-database) in the
-        Label Studio documentation. 
+        For information about the required fields and prerequisites, see [Google
+        Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage)
+        in the Label Studio documentation. 
+
+
+        <Info>Ensure you configure CORS before adding cloud storage. This
+        ensures you will be able to see the content of the data rather than just
+        a link.</Info>
 
 
         <Tip>After you add the storage, you should validate the connection
@@ -77,7 +84,7 @@ service:
         until you [sync your connection](sync).</Tip>
       display-name: Create import storage
       request:
-        name: RedisCreateRequest
+        name: GcsCreateRequest
         body:
           properties:
             regex_filter:
@@ -93,6 +100,14 @@ service:
                 URLs for these images. If set to False, it will read the content
                 of the file and load it into Label Studio.
               default: false
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for direct download
+              default: true
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
             title:
               type: optional<string>
               docs: Storage title
@@ -102,48 +117,53 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            path:
+            bucket:
               type: optional<string>
-              docs: Storage prefix (optional)
-            host:
+              docs: GCS bucket name
+            prefix:
               type: optional<string>
-              docs: Server Host IP (optional)
-            port:
+              docs: GCS bucket prefix
+            google_application_credentials:
               type: optional<string>
-              docs: Server Port (optional)
-            password:
+              docs: >-
+                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
+                official Google Cloud Authentication documentation for more
+                details.
+            google_project_id:
               type: optional<string>
-              docs: Server Password (optional)
+              docs: Google project ID
       response:
         docs: ''
-        type: RedisCreateResponse
+        type: GcsCreateResponse
       examples:
         - request: {}
           response:
             body:
               regex_filter: regex_filter
               use_blob_urls: true
+              presign: true
+              presign_ttl: 1
               title: title
               description: description
               project: 1
-              path: path
-              host: host
-              port: port
-              password: password
+              bucket: bucket
+              prefix: prefix
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
       audiences:
         - public
     validate:
-      path: /api/storages/redis/validate
+      path: /api/storages/gcs/validate
       method: POST
       auth: true
       docs: >
 
-        Validate a specific Redis import storage connection. This is useful to
+        Validate a specific GCS import storage connection. This is useful to
         ensure that the storage configuration settings are correct and
         operational before attempting to import data.
       display-name: Validate import storage
       request:
-        name: RedisValidateRequest
+        name: GcsValidateRequest
         body:
           properties:
             id:
@@ -162,6 +182,14 @@ service:
                 URLs for these images. If set to False, it will read the content
                 of the file and load it into Label Studio.
               default: false
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for direct download
+              default: true
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
             title:
               type: optional<string>
               docs: Storage title
@@ -171,29 +199,32 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            path:
+            bucket:
               type: optional<string>
-              docs: Storage prefix (optional)
-            host:
+              docs: GCS bucket name
+            prefix:
               type: optional<string>
-              docs: Server Host IP (optional)
-            port:
+              docs: GCS bucket prefix
+            google_application_credentials:
               type: optional<string>
-              docs: Server Port (optional)
-            password:
+              docs: >-
+                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
+                official Google Cloud Authentication documentation for more
+                details.
+            google_project_id:
               type: optional<string>
-              docs: Server Password (optional)
+              docs: Google project ID
       examples:
         - request: {}
       audiences:
         - public
     get:
-      path: /api/storages/redis/{id}
+      path: /api/storages/gcs/{id}
       method: GET
       auth: true
       docs: >
 
-        Get a specific Redis import storage connection. You will need to provide
+        Get a specific GCS import storage connection. You will need to provide
         the import storage ID. You can find this using [List import
         storages](list). 
 
@@ -203,11 +234,11 @@ service:
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this redis import storage.
+          docs: A unique integer value identifying this gcs import storage.
       display-name: Get import storage
       response:
         docs: ''
-        type: root.RedisImportStorage
+        type: root.GcsImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -216,12 +247,13 @@ service:
               id: 1
               type: type
               synchronizable: true
-              path: path
-              host: host
-              port: port
-              password: password
+              presign: true
+              bucket: bucket
+              prefix: prefix
               regex_filter: regex_filter
               use_blob_urls: true
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -232,17 +264,17 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              db: 1
+              presign_ttl: 1
               project: 1
       audiences:
         - public
     delete:
-      path: /api/storages/redis/{id}
+      path: /api/storages/gcs/{id}
       method: DELETE
       auth: true
       docs: >
 
-        Delete a specific Redis import storage connection. You will need to
+        Delete a specific GCS import storage connection. You will need to
         provide the import storage ID. You can find this using [List import
         storages](list). 
 
@@ -261,7 +293,7 @@ service:
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this redis import storage.
+          docs: A unique integer value identifying this gcs import storage.
       display-name: Delete import storage
       examples:
         - path-parameters:
@@ -269,12 +301,12 @@ service:
       audiences:
         - public
     update:
-      path: /api/storages/redis/{id}
+      path: /api/storages/gcs/{id}
       method: PATCH
       auth: true
       docs: >
 
-        Update a specific Redis import storage connection. You will need to
+        Update a specific GCS import storage connection. You will need to
         provide the import storage ID. You can find this using [List import
         storages](list). 
 
@@ -284,10 +316,10 @@ service:
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this redis import storage.
+          docs: A unique integer value identifying this gcs import storage.
       display-name: Update import storage
       request:
-        name: RedisUpdateRequest
+        name: GcsUpdateRequest
         body:
           properties:
             regex_filter:
@@ -303,6 +335,14 @@ service:
                 URLs for these images. If set to False, it will read the content
                 of the file and load it into Label Studio.
               default: false
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for direct download
+              default: true
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
             title:
               type: optional<string>
               docs: Storage title
@@ -312,21 +352,24 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            path:
+            bucket:
               type: optional<string>
-              docs: Storage prefix (optional)
-            host:
+              docs: GCS bucket name
+            prefix:
               type: optional<string>
-              docs: Server Host IP (optional)
-            port:
+              docs: GCS bucket prefix
+            google_application_credentials:
               type: optional<string>
-              docs: Server Port (optional)
-            password:
+              docs: >-
+                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
+                official Google Cloud Authentication documentation for more
+                details.
+            google_project_id:
               type: optional<string>
-              docs: Server Password (optional)
+              docs: Google project ID
       response:
         docs: ''
-        type: RedisUpdateResponse
+        type: GcsUpdateResponse
       examples:
         - path-parameters:
             id: 1
@@ -335,31 +378,32 @@ service:
             body:
               regex_filter: regex_filter
               use_blob_urls: true
+              presign: true
+              presign_ttl: 1
               title: title
               description: description
               project: 1
-              path: path
-              host: host
-              port: port
-              password: password
+              bucket: bucket
+              prefix: prefix
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
       audiences:
         - public
     sync:
-      path: /api/storages/redis/{id}/sync
+      path: /api/storages/gcs/{id}/sync
       method: POST
       auth: true
       docs: >
 
-        Sync tasks from a Redis import storage connection. You will need to
+        Sync tasks from a GCS import storage connection. You will need to
         provide the import storage ID. You can find this using [List import
         storages](list). 
 
 
-        Sync operations with external databases only go one way. They either
-        create tasks from objects in the database (source/import storage) or
-        push annotations to the output database (export/target storage).
-        Changing something on the database side doesn’t guarantee consistency in
-        results.
+        Sync operations with external buckets only go one way. They either
+        create tasks from objects in the bucket (source/import storage) or push
+        annotations to the output bucket (export/target storage). Changing
+        something on the bucket side doesn’t guarantee consistency in results.
 
 
         <Note>Before proceeding, you should review [How sync operations work -
@@ -372,7 +416,7 @@ service:
       display-name: Sync import storage
       response:
         docs: ''
-        type: root.RedisImportStorage
+        type: root.GcsImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -381,12 +425,13 @@ service:
               id: 1
               type: type
               synchronizable: true
-              path: path
-              host: host
-              port: port
-              password: password
+              presign: true
+              bucket: bucket
+              prefix: prefix
               regex_filter: regex_filter
               use_blob_urls: true
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -397,12 +442,14 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              db: 1
+              presign_ttl: 1
               project: 1
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
-  RedisCreateResponse:
+  GcsCreateResponse:
     properties:
       regex_filter:
         type: optional<string>
@@ -417,6 +464,14 @@ types:
           these images. If set to False, it will read the content of the file
           and load it into Label Studio.
         default: false
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for direct download
+        default: true
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes
+        default: 1
       title:
         type: optional<string>
         docs: Storage title
@@ -426,19 +481,23 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      path:
+      bucket:
         type: optional<string>
-        docs: Storage prefix (optional)
-      host:
+        docs: GCS bucket name
+      prefix:
         type: optional<string>
-        docs: Server Host IP (optional)
-      port:
+        docs: GCS bucket prefix
+      google_application_credentials:
         type: optional<string>
-        docs: Server Port (optional)
-      password:
+        docs: >-
+          The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
+          official Google Cloud Authentication documentation for more details.
+      google_project_id:
         type: optional<string>
-        docs: Server Password (optional)
-  RedisUpdateResponse:
+        docs: Google project ID
+    source:
+      openapi: openapi/openapi.yaml
+  GcsUpdateResponse:
     properties:
       regex_filter:
         type: optional<string>
@@ -453,6 +512,14 @@ types:
           these images. If set to False, it will read the content of the file
           and load it into Label Studio.
         default: false
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for direct download
+        default: true
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes
+        default: 1
       title:
         type: optional<string>
         docs: Storage title
@@ -462,15 +529,19 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      path:
+      bucket:
         type: optional<string>
-        docs: Storage prefix (optional)
-      host:
+        docs: GCS bucket name
+      prefix:
         type: optional<string>
-        docs: Server Host IP (optional)
-      port:
+        docs: GCS bucket prefix
+      google_application_credentials:
         type: optional<string>
-        docs: Server Port (optional)
-      password:
+        docs: >-
+          The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
+          official Google Cloud Authentication documentation for more details.
+      google_project_id:
         type: optional<string>
-        docs: Server Password (optional)
+        docs: Google project ID
+    source:
+      openapi: openapi/openapi.yaml

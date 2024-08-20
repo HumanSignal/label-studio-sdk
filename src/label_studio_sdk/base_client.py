@@ -15,8 +15,10 @@ from .export_storage.client import AsyncExportStorageClient, ExportStorageClient
 from .files.client import AsyncFilesClient, FilesClient
 from .import_storage.client import AsyncImportStorageClient, ImportStorageClient
 from .ml.client import AsyncMlClient, MlClient
+from .model_providers.client import AsyncModelProvidersClient, ModelProvidersClient
 from .predictions.client import AsyncPredictionsClient, PredictionsClient
 from .projects.client import AsyncProjectsClient, ProjectsClient
+from .prompts.client import AsyncPromptsClient, PromptsClient
 from .tasks.client import AsyncTasksClient, TasksClient
 from .users.client import AsyncUsersClient, UsersClient
 from .views.client import AsyncViewsClient, ViewsClient
@@ -98,6 +100,8 @@ class LabelStudioBase:
         self.import_storage = ImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = ExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
+        self.prompts = PromptsClient(client_wrapper=self._client_wrapper)
+        self.model_providers = ModelProvidersClient(client_wrapper=self._client_wrapper)
         self.comments = CommentsClient(client_wrapper=self._client_wrapper)
         self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
 
@@ -176,6 +180,8 @@ class AsyncLabelStudioBase:
         self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
+        self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
+        self.model_providers = AsyncModelProvidersClient(client_wrapper=self._client_wrapper)
         self.comments = AsyncCommentsClient(client_wrapper=self._client_wrapper)
         self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
 

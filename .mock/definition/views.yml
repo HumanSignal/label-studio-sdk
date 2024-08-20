@@ -230,6 +230,8 @@ service:
               project: 1
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
   ViewsCreateRequestDataFiltersConjunction:
     enum:
@@ -240,6 +242,8 @@ types:
       "and") will be applied to all items in the filters list. It is not
       possible to combine "or" and "and" within one list of filters. All filters
       will be either combined with "or" or with "and", but not a mix of both.
+    source:
+      openapi: openapi/openapi.yaml
   ViewsCreateRequestDataFiltersItemsItemFilter:
     enum:
       - value: filter:tasks:agreement
@@ -333,6 +337,8 @@ types:
       Number of unresolved comments in a
       task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the task
       was updated at (e.g. new annotation was created, review added, etc)</li>
+    source:
+      openapi: openapi/openapi.yaml
   ViewsCreateRequestDataFiltersItemsItemOperator:
     enum:
       - contains
@@ -362,6 +368,8 @@ types:
       to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
       not between min and max values, so the filter `value` should be e.g.
       `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
+    source:
+      openapi: openapi/openapi.yaml
   ViewsCreateRequestDataFiltersItemsItemValue:
     discriminated: false
     docs: Value to filter by
@@ -374,8 +382,10 @@ types:
         docs: Float
       - type: boolean
         docs: Boolean
-      - docs: List of strings or integers
-        type: map<string, unknown>
+      - type: map<string, unknown>
+        docs: List of strings or integers
+    source:
+      openapi: openapi/openapi.yaml
   ViewsCreateRequestDataFiltersItemsItem:
     properties:
       filter:
@@ -457,6 +467,8 @@ types:
       value:
         type: ViewsCreateRequestDataFiltersItemsItemValue
         docs: Value to filter by
+    source:
+      openapi: openapi/openapi.yaml
   ViewsCreateRequestDataFilters:
     docs: >-
       Filters to apply on tasks. You can use [the helper class `Filters` from
@@ -476,6 +488,8 @@ types:
       items:
         docs: List of filter items
         type: list<ViewsCreateRequestDataFiltersItemsItem>
+    source:
+      openapi: openapi/openapi.yaml
   ViewsCreateRequestDataOrderingItem:
     enum:
       - value: tasks:agreement
@@ -522,6 +536,8 @@ types:
         name: TasksUnresolvedCommentCount
       - value: tasks:updated_at
         name: TasksUpdatedAt
+    source:
+      openapi: openapi/openapi.yaml
   ViewsCreateRequestData:
     docs: Custom view data
     properties:
@@ -539,6 +555,8 @@ types:
           List of fields to order by. Fields are similar to filters but without
           the `filter:` prefix. To reverse the order, add a minus sign before
           the field name, e.g. `-tasks:created_at`.
+    source:
+      openapi: openapi/openapi.yaml
   ViewsUpdateRequestDataFiltersConjunction:
     enum:
       - or
@@ -548,6 +566,8 @@ types:
       "and") will be applied to all items in the filters list. It is not
       possible to combine "or" and "and" within one list of filters. All filters
       will be either combined with "or" or with "and", but not a mix of both.
+    source:
+      openapi: openapi/openapi.yaml
   ViewsUpdateRequestDataFiltersItemsItemFilter:
     enum:
       - value: filter:tasks:agreement
@@ -641,6 +661,8 @@ types:
       Number of unresolved comments in a
       task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the task
       was updated at (e.g. new annotation was created, review added, etc)</li>
+    source:
+      openapi: openapi/openapi.yaml
   ViewsUpdateRequestDataFiltersItemsItemOperator:
     enum:
       - contains
@@ -670,6 +692,8 @@ types:
       to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
       not between min and max values, so the filter `value` should be e.g.
       `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
+    source:
+      openapi: openapi/openapi.yaml
   ViewsUpdateRequestDataFiltersItemsItemValue:
     discriminated: false
     docs: Value to filter by
@@ -682,8 +706,10 @@ types:
         docs: Float
       - type: boolean
         docs: Boolean
-      - docs: List of strings or integers
-        type: map<string, unknown>
+      - type: map<string, unknown>
+        docs: List of strings or integers
+    source:
+      openapi: openapi/openapi.yaml
   ViewsUpdateRequestDataFiltersItemsItem:
     properties:
       filter:
@@ -765,6 +791,8 @@ types:
       value:
         type: ViewsUpdateRequestDataFiltersItemsItemValue
         docs: Value to filter by
+    source:
+      openapi: openapi/openapi.yaml
   ViewsUpdateRequestDataFilters:
     docs: >-
       Filters to apply on tasks. You can use [the helper class `Filters` from
@@ -784,6 +812,8 @@ types:
       items:
         docs: List of filter items
         type: list<ViewsUpdateRequestDataFiltersItemsItem>
+    source:
+      openapi: openapi/openapi.yaml
   ViewsUpdateRequestDataOrderingItem:
     enum:
       - value: tasks:agreement
@@ -830,6 +860,8 @@ types:
         name: TasksUnresolvedCommentCount
       - value: tasks:updated_at
         name: TasksUpdatedAt
+    source:
+      openapi: openapi/openapi.yaml
   ViewsUpdateRequestData:
     docs: Custom view data
     properties:
@@ -847,3 +879,5 @@ types:
           List of fields to order by. Fields are similar to filters but without
           the `filter:` prefix. To reverse the order, add a minus sign before
           the field name, e.g. `-tasks:created_at`.
+    source:
+      openapi: openapi/openapi.yaml

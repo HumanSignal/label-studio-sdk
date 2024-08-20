@@ -5,16 +5,14 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/localfiles/
+      path: /api/storages/redis/
       method: GET
       auth: true
       docs: >
 
-        If you have local files that you want to add to Label Studio from a
-        specific directory, you can set up a specific local directory on the
-        machine where LS is running as source or target storage. Use this API
-        request to get a list of all local file import (source) storage
-        connections for a specific project. 
+        You can connect your Redis database to Label Studio as a source storage
+        or target storage. Use this API request to get a list of all Redis
+        import (source) storage connections for a specific project. 
 
 
         The project ID can be found in the URL when viewing the project in Label
@@ -26,14 +24,14 @@ service:
         from external storage](https://labelstud.io/guide/storage).
       display-name: List import storages
       request:
-        name: LocalListRequest
+        name: RedisListRequest
         query-parameters:
           project:
             type: optional<integer>
             docs: Project ID
       response:
         docs: ''
-        type: list<root.LocalFilesImportStorage>
+        type: list<root.RedisImportStorage>
       examples:
         - response:
             body:
@@ -41,6 +39,9 @@ service:
                 type: type
                 synchronizable: true
                 path: path
+                host: host
+                port: port
+                password: password
                 regex_filter: regex_filter
                 use_blob_urls: true
                 last_sync: '2024-01-15T09:30:00Z'
@@ -53,21 +54,22 @@ service:
                 title: title
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
+                db: 1
                 project: 1
       audiences:
         - public
     create:
-      path: /api/storages/localfiles/
+      path: /api/storages/redis/
       method: POST
       auth: true
       docs: >
 
-        Create a new source storage connection to a local file directory. 
+        Create a new source storage connection to a Redis database. 
 
 
-        For information about the required fields and prerequisites, see [Local
-        storage](https://labelstud.io/guide/storage#Local-storage) in the Label
-        Studio documentation. 
+        For information about the required fields and prerequisites, see [Redis
+        database](https://labelstud.io/guide/storage#Redis-database) in the
+        Label Studio documentation. 
 
 
         <Tip>After you add the storage, you should validate the connection
@@ -75,9 +77,22 @@ service:
         until you [sync your connection](sync).</Tip>
       display-name: Create import storage
       request:
-        name: LocalCreateRequest
+        name: RedisCreateRequest
         body:
           properties:
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
             title:
               type: optional<string>
               docs: Storage title
@@ -89,50 +104,64 @@ service:
               docs: Project ID
             path:
               type: optional<string>
-              docs: Path to local directory
-            regex_filter:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: Regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your directory contains images, you can use this option to
-                generate URLs for these images. If set to False, it will read
-                the content of the file and load it into Label Studio.
-              default: false
+              docs: Server Host IP (optional)
+            port:
+              type: optional<string>
+              docs: Server Port (optional)
+            password:
+              type: optional<string>
+              docs: Server Password (optional)
       response:
         docs: ''
-        type: LocalCreateResponse
+        type: RedisCreateResponse
       examples:
         - request: {}
           response:
             body:
+              regex_filter: regex_filter
+              use_blob_urls: true
               title: title
               description: description
               project: 1
               path: path
-              regex_filter: regex_filter
-              use_blob_urls: true
+              host: host
+              port: port
+              password: password
       audiences:
         - public
     validate:
-      path: /api/storages/localfiles/validate
+      path: /api/storages/redis/validate
       method: POST
       auth: true
       docs: >
 
-        Validate a specific local file import storage connection. This is useful
-        to ensure that the storage configuration settings are correct and
+        Validate a specific Redis import storage connection. This is useful to
+        ensure that the storage configuration settings are correct and
         operational before attempting to import data.
       display-name: Validate import storage
       request:
-        name: LocalValidateRequest
+        name: RedisValidateRequest
         body:
           properties:
             id:
               type: optional<integer>
               docs: Storage ID. If set, storage with specified ID will be updated
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
             title:
               type: optional<string>
               docs: Storage title
@@ -144,30 +173,28 @@ service:
               docs: Project ID
             path:
               type: optional<string>
-              docs: Path to local directory
-            regex_filter:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: Regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your directory contains images, you can use this option to
-                generate URLs for these images. If set to False, it will read
-                the content of the file and load it into Label Studio.
-              default: false
+              docs: Server Host IP (optional)
+            port:
+              type: optional<string>
+              docs: Server Port (optional)
+            password:
+              type: optional<string>
+              docs: Server Password (optional)
       examples:
         - request: {}
       audiences:
         - public
     get:
-      path: /api/storages/localfiles/{id}
+      path: /api/storages/redis/{id}
       method: GET
       auth: true
       docs: >
 
-        Get a specific local file import storage connection. You will need to
-        provide the import storage ID. You can find this using [List import
+        Get a specific Redis import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import
         storages](list). 
 
 
@@ -176,11 +203,11 @@ service:
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this local files import storage.
+          docs: A unique integer value identifying this redis import storage.
       display-name: Get import storage
       response:
         docs: ''
-        type: root.LocalFilesImportStorage
+        type: root.RedisImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -190,6 +217,9 @@ service:
               type: type
               synchronizable: true
               path: path
+              host: host
+              port: port
+              password: password
               regex_filter: regex_filter
               use_blob_urls: true
               last_sync: '2024-01-15T09:30:00Z'
@@ -202,16 +232,17 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
+              db: 1
               project: 1
       audiences:
         - public
     delete:
-      path: /api/storages/localfiles/{id}
+      path: /api/storages/redis/{id}
       method: DELETE
       auth: true
       docs: >
 
-        Delete a specific local import storage connection. You will need to
+        Delete a specific Redis import storage connection. You will need to
         provide the import storage ID. You can find this using [List import
         storages](list). 
 
@@ -230,7 +261,7 @@ service:
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this local files import storage.
+          docs: A unique integer value identifying this redis import storage.
       display-name: Delete import storage
       examples:
         - path-parameters:
@@ -238,12 +269,12 @@ service:
       audiences:
         - public
     update:
-      path: /api/storages/localfiles/{id}
+      path: /api/storages/redis/{id}
       method: PATCH
       auth: true
       docs: >
 
-        Update a specific local import storage connection. You will need to
+        Update a specific Redis import storage connection. You will need to
         provide the import storage ID. You can find this using [List import
         storages](list). 
 
@@ -253,12 +284,25 @@ service:
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this local files import storage.
+          docs: A unique integer value identifying this redis import storage.
       display-name: Update import storage
       request:
-        name: LocalUpdateRequest
+        name: RedisUpdateRequest
         body:
           properties:
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
             title:
               type: optional<string>
               docs: Storage title
@@ -270,51 +314,52 @@ service:
               docs: Project ID
             path:
               type: optional<string>
-              docs: Path to local directory
-            regex_filter:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: Regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your directory contains images, you can use this option to
-                generate URLs for these images. If set to False, it will read
-                the content of the file and load it into Label Studio.
-              default: false
+              docs: Server Host IP (optional)
+            port:
+              type: optional<string>
+              docs: Server Port (optional)
+            password:
+              type: optional<string>
+              docs: Server Password (optional)
       response:
         docs: ''
-        type: LocalUpdateResponse
+        type: RedisUpdateResponse
       examples:
         - path-parameters:
             id: 1
           request: {}
           response:
             body:
+              regex_filter: regex_filter
+              use_blob_urls: true
               title: title
               description: description
               project: 1
               path: path
-              regex_filter: regex_filter
-              use_blob_urls: true
+              host: host
+              port: port
+              password: password
       audiences:
         - public
     sync:
-      path: /api/storages/localfiles/{id}/sync
+      path: /api/storages/redis/{id}/sync
       method: POST
       auth: true
       docs: >
 
-        Sync tasks from a local import storage connection. You will need to
+        Sync tasks from a Redis import storage connection. You will need to
         provide the import storage ID. You can find this using [List import
         storages](list). 
 
 
-        Sync operations with external sources only go one way. They either
-        create tasks from objects in the source directory (source/import
-        storage) or push annotations to the output directory (export/target
-        storage). Changing something on the local file side doesn’t guarantee
-        consistency in results.
+        Sync operations with external databases only go one way. They either
+        create tasks from objects in the database (source/import storage) or
+        push annotations to the output database (export/target storage).
+        Changing something on the database side doesn’t guarantee consistency in
+        results.
 
 
         <Note>Before proceeding, you should review [How sync operations work -
@@ -327,7 +372,7 @@ service:
       display-name: Sync import storage
       response:
         docs: ''
-        type: root.LocalFilesImportStorage
+        type: root.RedisImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -337,6 +382,9 @@ service:
               type: type
               synchronizable: true
               path: path
+              host: host
+              port: port
+              password: password
               regex_filter: regex_filter
               use_blob_urls: true
               last_sync: '2024-01-15T09:30:00Z'
@@ -349,12 +397,28 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
+              db: 1
               project: 1
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
-  LocalCreateResponse:
+  RedisCreateResponse:
     properties:
+      regex_filter:
+        type: optional<string>
+        docs: >-
+          Cloud storage regex for filtering objects. You must specify it
+          otherwise no objects will be imported.
+      use_blob_urls:
+        type: optional<boolean>
+        docs: >-
+          Interpret objects as BLOBs and generate URLs. For example, if your
+          bucket contains images, you can use this option to generate URLs for
+          these images. If set to False, it will read the content of the file
+          and load it into Label Studio.
+        default: false
       title:
         type: optional<string>
         docs: Storage title
@@ -366,20 +430,33 @@ types:
         docs: Project ID
       path:
         type: optional<string>
-        docs: Path to local directory
+        docs: Storage prefix (optional)
+      host:
+        type: optional<string>
+        docs: Server Host IP (optional)
+      port:
+        type: optional<string>
+        docs: Server Port (optional)
+      password:
+        type: optional<string>
+        docs: Server Password (optional)
+    source:
+      openapi: openapi/openapi.yaml
+  RedisUpdateResponse:
+    properties:
       regex_filter:
         type: optional<string>
-        docs: Regex for filtering objects
+        docs: >-
+          Cloud storage regex for filtering objects. You must specify it
+          otherwise no objects will be imported.
       use_blob_urls:
         type: optional<boolean>
         docs: >-
           Interpret objects as BLOBs and generate URLs. For example, if your
-          directory contains images, you can use this option to generate URLs
-          for these images. If set to False, it will read the content of the
-          file and load it into Label Studio.
+          bucket contains images, you can use this option to generate URLs for
+          these images. If set to False, it will read the content of the file
+          and load it into Label Studio.
         default: false
-  LocalUpdateResponse:
-    properties:
       title:
         type: optional<string>
         docs: Storage title
@@ -391,15 +468,15 @@ types:
         docs: Project ID
       path:
         type: optional<string>
-        docs: Path to local directory
-      regex_filter:
+        docs: Storage prefix (optional)
+      host:
         type: optional<string>
-        docs: Regex for filtering objects
-      use_blob_urls:
-        type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          directory contains images, you can use this option to generate URLs
-          for these images. If set to False, it will read the content of the
-          file and load it into Label Studio.
-        default: false
+        docs: Server Host IP (optional)
+      port:
+        type: optional<string>
+        docs: Server Port (optional)
+      password:
+        type: optional<string>
+        docs: Server Password (optional)
+    source:
+      openapi: openapi/openapi.yaml

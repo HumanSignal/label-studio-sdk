@@ -5,12 +5,16 @@ types:
       token:
         type: optional<string>
         docs: Token
+    source:
+      openapi: openapi/openapi.yaml
   UsersGetTokenResponse:
     docs: User token
     properties:
       detail:
         type: optional<string>
         docs: Token
+    source:
+      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
@@ -297,5 +301,7 @@ service:
               allow_newsletters: true
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 imports:
   root: __package__.yml

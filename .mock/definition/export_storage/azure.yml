@@ -5,14 +5,14 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/azure/
+      path: /api/storages/export/azure
       method: GET
       auth: true
       docs: >
 
         You can connect your Microsoft Azure Blob storage container to Label
         Studio as a source storage or target storage. Use this API request to
-        get a list of all Azure import (source) storage connections for a
+        get a list of all Azure export (target) storage connections for a
         specific project. 
 
 
@@ -23,7 +23,7 @@ service:
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      display-name: List import storages
+      display-name: List export storages
       request:
         name: AzureListRequest
         query-parameters:
@@ -32,14 +32,13 @@ service:
             docs: Project ID
       response:
         docs: ''
-        type: list<root.AzureBlobImportStorage>
+        type: list<root.AzureBlobExportStorage>
       examples:
         - response:
             body:
               - id: 1
                 type: type
                 synchronizable: true
-                presign: true
                 container: container
                 prefix: prefix
                 regex_filter: regex_filter
@@ -56,17 +55,17 @@ service:
                 title: title
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
-                presign_ttl: 1
+                can_delete_objects: true
                 project: 1
       audiences:
         - public
     create:
-      path: /api/storages/azure/
+      path: /api/storages/export/azure
       method: POST
       auth: true
       docs: >
 
-        Create a new source storage connection to Microsoft Azure Blob storage. 
+        Create a new target storage connection to Microsoft Azure Blob storage. 
 
 
         For information about the required fields and prerequisites, see
@@ -75,40 +74,18 @@ service:
         in the Label Studio documentation. 
 
 
-        <Info>Ensure you configure CORS before adding cloud storage. This
-        ensures you will be able to see the content of the data rather than just
-        a link.</Info>
-
-
         <Tip>After you add the storage, you should validate the connection
-        before attempting to sync your data. Your data will not be imported
+        before attempting to sync your data. Your data will not be exported
         until you [sync your connection](sync).</Tip>
       display-name: Create new storage
       request:
         name: AzureCreateRequest
         body:
           properties:
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
+            can_delete_objects:
               type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
+              docs: Deletion from storage enabled
               default: false
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for direct download
-              default: true
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
             title:
               type: optional<string>
               docs: Storage title
@@ -137,10 +114,7 @@ service:
         - request: {}
           response:
             body:
-              regex_filter: regex_filter
-              use_blob_urls: true
-              presign: true
-              presign_ttl: 1
+              can_delete_objects: true
               title: title
               description: description
               project: 1
@@ -151,15 +125,15 @@ service:
       audiences:
         - public
     validate:
-      path: /api/storages/azure/validate
+      path: /api/storages/export/azure/validate
       method: POST
       auth: true
       docs: >
 
-        Validate a specific Azure import storage connection. This is useful to
+        Validate a specific Azure export storage connection. This is useful to
         ensure that the storage configuration settings are correct and
-        operational before attempting to import data.
-      display-name: Validate import storage
+        operational before attempting to export data.
+      display-name: Validate export storage
       request:
         name: AzureValidateRequest
         body:
@@ -167,27 +141,10 @@ service:
             id:
               type: optional<integer>
               docs: Storage ID. If set, storage with specified ID will be updated
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
+            can_delete_objects:
               type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
+              docs: Deletion from storage enabled
               default: false
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for direct download
-              default: true
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
             title:
               type: optional<string>
               docs: Storage title
@@ -214,13 +171,13 @@ service:
       audiences:
         - public
     get:
-      path: /api/storages/azure/{id}
+      path: /api/storages/export/azure/{id}
       method: GET
       auth: true
       docs: >
 
-        Get a specific Azure import storage connection. You will need to provide
-        the import storage ID. You can find this using [List import
+        Get a specific Azure export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export
         storages](list). 
 
 
@@ -229,11 +186,11 @@ service:
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this azure blob import storage.
-      display-name: Get import storage
+          docs: A unique integer value identifying this azure blob export storage.
+      display-name: Get export storage
       response:
         docs: ''
-        type: root.AzureBlobImportStorage
+        type: root.AzureBlobExportStorage
       examples:
         - path-parameters:
             id: 1
@@ -242,7 +199,6 @@ service:
               id: 1
               type: type
               synchronizable: true
-              presign: true
               container: container
               prefix: prefix
               regex_filter: regex_filter
@@ -259,50 +215,44 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              presign_ttl: 1
+              can_delete_objects: true
               project: 1
       audiences:
         - public
     delete:
-      path: /api/storages/azure/{id}
+      path: /api/storages/export/azure/{id}
       method: DELETE
       auth: true
       docs: >
 
-        Delete a specific Azure import storage connection. You will need to
-        provide the import storage ID. You can find this using [List import
+        Delete a specific Azure export storage connection. You will need to
+        provide the export storage ID. You can find this using [List export
         storages](list). 
 
 
-        Deleting a source storage connection does not affect tasks with synced
-        data in Label Studio. The sync process is designed to import new or
-        updated tasks from the connected storage into the project, but it does
-        not track deletions of files from the storage. Therefore, if you remove
-        the external storage connection, the tasks that were created from that
-        storage will remain in the project.
-
-
-        If you want to remove the tasks that were synced from the external
-        storage, you will need to delete them manually from within the Label
-        Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+        Deleting an export/target storage connection does not affect tasks with
+        synced data in Label Studio. If you want to remove the tasks that were
+        synced from the external storage, you will need to delete them manually
+        from within the Label Studio UI or use the [Delete
+        tasks](../../tasks/delete-all-tasks) API. 
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this azure blob import storage.
-      display-name: Delete import storage
+          docs: A unique integer value identifying this azure blob export storage.
+      display-name: Delete export storage
       examples:
         - path-parameters:
             id: 1
       audiences:
         - public
     update:
-      path: /api/storages/azure/{id}
+      path: /api/storages/export/azure/{id}
       method: PATCH
       auth: true
       docs: >
 
-        Update a specific Azure import storage connection. You will need to
-        provide the import storage ID. You can find this using [List import
+        Update a specific Azure export storage connection. You will need to
+        provide the export storage ID. You can find this using [List export
         storages](list). 
 
 
@@ -311,33 +261,16 @@ service:
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this azure blob import storage.
-      display-name: Update import storage
+          docs: A unique integer value identifying this azure blob export storage.
+      display-name: Update export storage
       request:
         name: AzureUpdateRequest
         body:
           properties:
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
+            can_delete_objects:
               type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
+              docs: Deletion from storage enabled
               default: false
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for direct download
-              default: true
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
             title:
               type: optional<string>
               docs: Storage title
@@ -368,10 +301,7 @@ service:
           request: {}
           response:
             body:
-              regex_filter: regex_filter
-              use_blob_urls: true
-              presign: true
-              presign_ttl: 1
+              can_delete_objects: true
               title: title
               description: description
               project: 1
@@ -382,13 +312,13 @@ service:
       audiences:
         - public
     sync:
-      path: /api/storages/azure/{id}/sync
+      path: /api/storages/export/azure/{id}/sync
       method: POST
       auth: true
       docs: >
 
-        Sync tasks from an Azure import storage connection. You will need to
-        provide the import storage ID. You can find this using [List import
+        Sync tasks to an Azure export/target storage connection. You will need
+        to provide the export storage ID. You can find this using [List export
         storages](list). 
 
 
@@ -403,22 +333,19 @@ service:
         Source storage](https://labelstud.io/guide/storage#Source-storage) to
         ensure that your data remains secure and private.</Note> 
       path-parameters:
-        id:
-          type: integer
-          docs: Storage ID
-      display-name: Sync import storage
+        id: string
+      display-name: Sync export storage
       response:
         docs: ''
-        type: root.AzureBlobImportStorage
+        type: root.AzureBlobExportStorage
       examples:
         - path-parameters:
-            id: 1
+            id: id
           response:
             body:
               id: 1
               type: type
               synchronizable: true
-              presign: true
               container: container
               prefix: prefix
               regex_filter: regex_filter
@@ -435,34 +362,19 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              presign_ttl: 1
+              can_delete_objects: true
               project: 1
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
   AzureCreateResponse:
     properties:
-      regex_filter:
-        type: optional<string>
-        docs: >-
-          Cloud storage regex for filtering objects. You must specify it
-          otherwise no objects will be imported.
-      use_blob_urls:
+      can_delete_objects:
         type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          bucket contains images, you can use this option to generate URLs for
-          these images. If set to False, it will read the content of the file
-          and load it into Label Studio.
+        docs: Deletion from storage enabled
         default: false
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for direct download
-        default: true
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in minutes
-        default: 1
       title:
         type: optional<string>
         docs: Storage title
@@ -484,29 +396,14 @@ types:
       account_key:
         type: optional<string>
         docs: Azure Blob account key
+    source:
+      openapi: openapi/openapi.yaml
   AzureUpdateResponse:
     properties:
-      regex_filter:
-        type: optional<string>
-        docs: >-
-          Cloud storage regex for filtering objects. You must specify it
-          otherwise no objects will be imported.
-      use_blob_urls:
+      can_delete_objects:
         type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          bucket contains images, you can use this option to generate URLs for
-          these images. If set to False, it will read the content of the file
-          and load it into Label Studio.
+        docs: Deletion from storage enabled
         default: false
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for direct download
-        default: true
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in minutes
-        default: 1
       title:
         type: optional<string>
         docs: Storage title
@@ -528,3 +425,5 @@ types:
       account_key:
         type: optional<string>
         docs: Azure Blob account key
+    source:
+      openapi: openapi/openapi.yaml

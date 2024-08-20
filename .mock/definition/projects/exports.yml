@@ -409,5 +409,7 @@ service:
             export_pk: export_pk
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 imports:
   root: ../__package__.yml
