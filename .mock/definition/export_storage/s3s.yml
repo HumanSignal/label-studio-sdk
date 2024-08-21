@@ -288,3 +288,5 @@ service:
         - request: {}
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml

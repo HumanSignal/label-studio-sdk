@@ -5,14 +5,14 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/export/s3
+      path: /api/storages/export/redis
       method: GET
       auth: true
       docs: >
 
-        You can connect your S3 bucket to Label Studio as a source storage or
-        target storage. Use this API request to get a list of all S3 export
-        (target) storage connections for a specific project. 
+        You can connect your Redis database to Label Studio as a source storage
+        or target storage. Use this API request to get a list of all Redis
+        export (target) storage connections for a specific project. 
 
 
         The project ID can be found in the URL when viewing the project in Label
@@ -24,20 +24,26 @@ service:
         from external storage](https://labelstud.io/guide/storage).
       display-name: List export storages
       request:
-        name: S3ListRequest
+        name: RedisListRequest
         query-parameters:
           project:
             type: optional<integer>
             docs: Project ID
       response:
         docs: ''
-        type: list<root.S3ExportStorage>
+        type: list<root.RedisExportStorage>
       examples:
         - response:
             body:
               - id: 1
                 type: type
                 synchronizable: true
+                path: path
+                host: host
+                port: port
+                password: password
+                regex_filter: regex_filter
+                use_blob_urls: true
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
@@ -49,31 +55,22 @@ service:
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
                 can_delete_objects: true
-                bucket: bucket
-                prefix: prefix
-                regex_filter: regex_filter
-                use_blob_urls: true
-                aws_access_key_id: aws_access_key_id
-                aws_secret_access_key: aws_secret_access_key
-                aws_session_token: aws_session_token
-                aws_sse_kms_key_id: aws_sse_kms_key_id
-                region_name: region_name
-                s3_endpoint: s3_endpoint
+                db: 1
                 project: 1
       audiences:
         - public
     create:
-      path: /api/storages/export/s3
+      path: /api/storages/export/redis
       method: POST
       auth: true
       docs: >
 
-        Create a new target storage connection to S3 storage. 
+        Create a new target storage connection to Redis. 
 
 
-        For information about the required fields and prerequisites, see [Amazon
-        S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio
-        documentation. 
+        For information about the required fields and prerequisites, see [Redis
+        database](https://labelstud.io/guide/storage#Redis-database) in the
+        Label Studio documentation. 
 
 
         <Tip>After you add the storage, you should validate the connection
@@ -81,9 +78,12 @@ service:
         until you [sync your connection](sync).</Tip>
       display-name: Create new storage
       request:
-        name: S3CreateRequest
+        name: RedisCreateRequest
         body:
           properties:
+            db:
+              type: optional<integer>
+              docs: Database ID of database to use
             can_delete_objects:
               type: optional<boolean>
               docs: Deletion from storage enabled.
@@ -96,68 +96,56 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            path:
               type: optional<string>
-              docs: S3 bucket name
-            prefix:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: S3 bucket prefix
-            aws_access_key_id:
+              docs: Server Host IP (optional)
+            port:
               type: optional<string>
-              docs: AWS_ACCESS_KEY_ID
-            aws_secret_access_key:
+              docs: Server Port (optional)
+            password:
               type: optional<string>
-              docs: AWS_SECRET_ACCESS_KEY
-            aws_session_token:
-              type: optional<string>
-              docs: AWS_SESSION_TOKEN
-            aws_sse_kms_key_id:
-              type: optional<string>
-              docs: AWS SSE KMS Key ID
-            region_name:
-              type: optional<string>
-              docs: AWS Region
-            s3_endpoint:
-              type: optional<string>
-              docs: S3 Endpoint
+              docs: Server Password (optional)
       response:
         docs: ''
-        type: S3CreateResponse
+        type: RedisCreateResponse
       examples:
         - request: {}
           response:
             body:
+              db: 1
               can_delete_objects: true
               title: title
               description: description
               project: 1
-              bucket: bucket
-              prefix: prefix
-              aws_access_key_id: aws_access_key_id
-              aws_secret_access_key: aws_secret_access_key
-              aws_session_token: aws_session_token
-              aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
+              path: path
+              host: host
+              port: port
+              password: password
       audiences:
         - public
     validate:
-      path: /api/storages/export/s3/validate
+      path: /api/storages/export/redis/validate
       method: POST
       auth: true
       docs: >
 
-        Validate a specific S3 export storage connection. This is useful to
+        Validate a specific Redis export storage connection. This is useful to
         ensure that the storage configuration settings are correct and
         operational before attempting to export data.
       display-name: Validate export storage
       request:
-        name: S3ValidateRequest
+        name: RedisValidateRequest
         body:
           properties:
             id:
               type: optional<integer>
               docs: Storage ID. If set, storage with specified ID will be updated
+            db:
+              type: optional<integer>
+              docs: Database ID of database to use
             can_delete_objects:
               type: optional<boolean>
               docs: Deletion from storage enabled.
@@ -170,41 +158,29 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            path:
               type: optional<string>
-              docs: S3 bucket name
-            prefix:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: S3 bucket prefix
-            aws_access_key_id:
+              docs: Server Host IP (optional)
+            port:
               type: optional<string>
-              docs: AWS_ACCESS_KEY_ID
-            aws_secret_access_key:
+              docs: Server Port (optional)
+            password:
               type: optional<string>
-              docs: AWS_SECRET_ACCESS_KEY
-            aws_session_token:
-              type: optional<string>
-              docs: AWS_SESSION_TOKEN
-            aws_sse_kms_key_id:
-              type: optional<string>
-              docs: AWS SSE KMS Key ID
-            region_name:
-              type: optional<string>
-              docs: AWS Region
-            s3_endpoint:
-              type: optional<string>
-              docs: S3 Endpoint
+              docs: Server Password (optional)
       examples:
         - request: {}
       audiences:
         - public
     get:
-      path: /api/storages/export/s3/{id}
+      path: /api/storages/export/redis/{id}
       method: GET
       auth: true
       docs: >
 
-        Get a specific S3 export storage connection. You will need to provide
+        Get a specific Redis export storage connection. You will need to provide
         the export storage ID. You can find this using [List export
         storages](list). 
 
@@ -214,11 +190,11 @@ service:
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 export storage.
+          docs: A unique integer value identifying this redis export storage.
       display-name: Get export storage
       response:
         docs: ''
-        type: root.S3ExportStorage
+        type: root.RedisExportStorage
       examples:
         - path-parameters:
             id: 1
@@ -227,6 +203,12 @@ service:
               id: 1
               type: type
               synchronizable: true
+              path: path
+              host: host
+              port: port
+              password: password
+              regex_filter: regex_filter
+              use_blob_urls: true
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -238,27 +220,18 @@ service:
               description: description
               created_at: '2024-01-15T09:30:00Z'
               can_delete_objects: true
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              aws_access_key_id: aws_access_key_id
-              aws_secret_access_key: aws_secret_access_key
-              aws_session_token: aws_session_token
-              aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
+              db: 1
               project: 1
       audiences:
         - public
     delete:
-      path: /api/storages/export/s3/{id}
+      path: /api/storages/export/redis/{id}
       method: DELETE
       auth: true
       docs: >
 
-        Delete a specific S3 export storage connection. You will need to provide
-        the export storage ID. You can find this using [List export
+        Delete a specific Redis export storage connection. You will need to
+        provide the export storage ID. You can find this using [List export
         storages](list). 
 
 
@@ -270,7 +243,7 @@ service:
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 export storage.
+          docs: A unique integer value identifying this redis export storage.
       display-name: Delete export storage
       examples:
         - path-parameters:
@@ -278,13 +251,13 @@ service:
       audiences:
         - public
     update:
-      path: /api/storages/export/s3/{id}
+      path: /api/storages/export/redis/{id}
       method: PATCH
       auth: true
       docs: >
 
-        Update a specific S3 export storage connection. You will need to provide
-        the export storage ID. You can find this using [List export
+        Update a specific Redis export storage connection. You will need to
+        provide the export storage ID. You can find this using [List export
         storages](list). 
 
 
@@ -293,12 +266,15 @@ service:
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 export storage.
+          docs: A unique integer value identifying this redis export storage.
       display-name: Update export storage
       request:
-        name: S3UpdateRequest
+        name: RedisUpdateRequest
         body:
           properties:
+            db:
+              type: optional<integer>
+              docs: Database ID of database to use
             can_delete_objects:
               type: optional<boolean>
               docs: Deletion from storage enabled.
@@ -311,68 +287,54 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            path:
               type: optional<string>
-              docs: S3 bucket name
-            prefix:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: S3 bucket prefix
-            aws_access_key_id:
+              docs: Server Host IP (optional)
+            port:
               type: optional<string>
-              docs: AWS_ACCESS_KEY_ID
-            aws_secret_access_key:
+              docs: Server Port (optional)
+            password:
               type: optional<string>
-              docs: AWS_SECRET_ACCESS_KEY
-            aws_session_token:
-              type: optional<string>
-              docs: AWS_SESSION_TOKEN
-            aws_sse_kms_key_id:
-              type: optional<string>
-              docs: AWS SSE KMS Key ID
-            region_name:
-              type: optional<string>
-              docs: AWS Region
-            s3_endpoint:
-              type: optional<string>
-              docs: S3 Endpoint
+              docs: Server Password (optional)
       response:
         docs: ''
-        type: S3UpdateResponse
+        type: RedisUpdateResponse
       examples:
         - path-parameters:
             id: 1
           request: {}
           response:
             body:
+              db: 1
               can_delete_objects: true
               title: title
               description: description
               project: 1
-              bucket: bucket
-              prefix: prefix
-              aws_access_key_id: aws_access_key_id
-              aws_secret_access_key: aws_secret_access_key
-              aws_session_token: aws_session_token
-              aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
+              path: path
+              host: host
+              port: port
+              password: password
       audiences:
         - public
     sync:
-      path: /api/storages/export/s3/{id}/sync
+      path: /api/storages/export/redis/{id}/sync
       method: POST
       auth: true
       docs: >
 
-        Sync tasks to an S3 export/target storage connection. You will need to
-        provide the export storage ID. You can find this using [List export
+        Sync tasks to an Redis export/target storage connection. You will need
+        to provide the export storage ID. You can find this using [List export
         storages](list). 
 
 
-        Sync operations with external buckets only go one way. They either
-        create tasks from objects in the bucket (source/import storage) or push
-        annotations to the output bucket (export/target storage). Changing
-        something on the bucket side doesn’t guarantee consistency in results.
+        Sync operations with external databases only go one way. They either
+        create tasks from objects in the database (source/import storage) or
+        push annotations to the output database (export/target storage).
+        Changing something on the database side doesn’t guarantee consistency in
+        results.
 
 
         <Note>Before proceeding, you should review [How sync operations work -
@@ -383,7 +345,7 @@ service:
       display-name: Sync export storage
       response:
         docs: ''
-        type: root.S3ExportStorage
+        type: root.RedisExportStorage
       examples:
         - path-parameters:
             id: id
@@ -392,6 +354,12 @@ service:
               id: 1
               type: type
               synchronizable: true
+              path: path
+              host: host
+              port: port
+              password: password
+              regex_filter: regex_filter
+              use_blob_urls: true
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -403,22 +371,18 @@ service:
               description: description
               created_at: '2024-01-15T09:30:00Z'
               can_delete_objects: true
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              aws_access_key_id: aws_access_key_id
-              aws_secret_access_key: aws_secret_access_key
-              aws_session_token: aws_session_token
-              aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
+              db: 1
               project: 1
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
-  S3CreateResponse:
+  RedisCreateResponse:
     properties:
+      db:
+        type: optional<integer>
+        docs: Database ID of database to use
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled.
@@ -431,32 +395,25 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      bucket:
+      path:
         type: optional<string>
-        docs: S3 bucket name
-      prefix:
+        docs: Storage prefix (optional)
+      host:
         type: optional<string>
-        docs: S3 bucket prefix
-      aws_access_key_id:
+        docs: Server Host IP (optional)
+      port:
         type: optional<string>
-        docs: AWS_ACCESS_KEY_ID
-      aws_secret_access_key:
+        docs: Server Port (optional)
+      password:
         type: optional<string>
-        docs: AWS_SECRET_ACCESS_KEY
-      aws_session_token:
-        type: optional<string>
-        docs: AWS_SESSION_TOKEN
-      aws_sse_kms_key_id:
-        type: optional<string>
-        docs: AWS SSE KMS Key ID
-      region_name:
-        type: optional<string>
-        docs: AWS Region
-      s3_endpoint:
-        type: optional<string>
-        docs: S3 Endpoint
-  S3UpdateResponse:
+        docs: Server Password (optional)
+    source:
+      openapi: openapi/openapi.yaml
+  RedisUpdateResponse:
     properties:
+      db:
+        type: optional<integer>
+        docs: Database ID of database to use
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled.
@@ -469,27 +426,17 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      bucket:
+      path:
         type: optional<string>
-        docs: S3 bucket name
-      prefix:
+        docs: Storage prefix (optional)
+      host:
         type: optional<string>
-        docs: S3 bucket prefix
-      aws_access_key_id:
+        docs: Server Host IP (optional)
+      port:
         type: optional<string>
-        docs: AWS_ACCESS_KEY_ID
-      aws_secret_access_key:
+        docs: Server Port (optional)
+      password:
         type: optional<string>
-        docs: AWS_SECRET_ACCESS_KEY
-      aws_session_token:
-        type: optional<string>
-        docs: AWS_SESSION_TOKEN
-      aws_sse_kms_key_id:
-        type: optional<string>
-        docs: AWS SSE KMS Key ID
-      region_name:
-        type: optional<string>
-        docs: AWS Region
-      s3_endpoint:
-        type: optional<string>
-        docs: S3 Endpoint
+        docs: Server Password (optional)
+    source:
+      openapi: openapi/openapi.yaml

@@ -2,7 +2,6 @@
 
 import typing
 
-from label_studio_sdk import ExportConvert, ExportCreate
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 
 from ..utilities import validate_response
@@ -120,10 +119,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "interpolate_key_frames": None,
         },
     }
-    response = client.projects.exports.create(id=1, request=ExportCreate())
+    response = client.projects.exports.create(id_=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.exports.create(id=1, request=ExportCreate())
+    async_response = await async_client.projects.exports.create(id_=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -173,14 +172,10 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_convert(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"export_type": "export_type"}
     expected_types: typing.Any = {"export_type": None}
-    response = client.projects.exports.convert(
-        id=1, export_pk="export_pk", request=ExportConvert(export_type="export_type")
-    )
+    response = client.projects.exports.convert(id=1, export_pk="export_pk", export_type="export_type")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.exports.convert(
-        id=1, export_pk="export_pk", request=ExportConvert(export_type="export_type")
-    )
+    async_response = await async_client.projects.exports.convert(id=1, export_pk="export_pk", export_type="export_type")
     validate_response(async_response, expected_response, expected_types)
 
 

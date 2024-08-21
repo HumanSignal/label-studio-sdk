@@ -30,8 +30,10 @@ from .control_tags import (
 )
 from .object_tags import ObjectTag
 from .label_tags import LabelTag
-from .objects import AnnotationValue, TaskValue, PredictionValue
+from .objects import AnnotationValue, TaskValue, PredictionValue, Region
 from . import create as CE
+
+logger = logging.getLogger(__name__)
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -250,8 +252,7 @@ class LabelInterface:
         """
         config = cls.create(*args, **kwargs)
         return cls(config=config, **kwargs)
-    
-    
+
     def __init__(self, config: str, tags_mapping=None, *args, **kwargs):
         """
         Initialize a LabelInterface instance using a config string.
@@ -299,9 +300,35 @@ class LabelInterface:
         self._labels = labels
         self._tree = tree
 
-        
+    def create_regions(self, data: Dict[str, Union[Dict, List[Dict]]]) -> List[Region]:
+        """
+        Takes raw data representation and maps keys to control tag names.
+        If name is not found, it will be skipped
 
-    ##### NEW API
+        Args:
+            data (Dict): Raw data representation. Example: {"choices_name": "Positive", "labels_name": [{"start": 0, "end": 10, "label": "person"}]}
+            raise_if_control_not_found (bool): Raise an exception if control tag is not found.
+        """
+        regions = []
+        for control_tag_name, payload in data.items():
+            if control_tag_name not in self._controls:
+                logger.info(f"Control tag '{control_tag_name}' not found in the config")
+                continue
+
+            control = self._controls[control_tag_name]
+            # TODO: I don't really like this part, looks like a workaround
+            # 1. we should allow control.label to process custom payload outside of those strictly containing "label"
+            # 2. we should be less open regarding the payload type and defining the strict typing elsewhere,
+            # but likely that requires rewriting of how ControlTag.label() is working now
+            if isinstance(payload, str):
+                payload = {'label': payload}
+            if isinstance(payload, Dict):
+                payload = [payload]
+            for item in payload:
+
+                regions.append(control.label(**item))
+
+        return regions
 
     @property
     def config(self):

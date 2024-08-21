@@ -307,6 +307,8 @@ service:
               updated_at: '2024-01-15T09:30:00Z'
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
   ApiWebhooksUpdateRequestActionsItem:
     enum:
@@ -322,6 +324,8 @@ types:
       - LABEL_LINK_CREATED
       - LABEL_LINK_UPDATED
       - LABEL_LINK_DELETED
+    source:
+      openapi: openapi/openapi.yaml
   WebhooksUpdateRequestActionsItem:
     enum:
       - PROJECT_CREATED
@@ -336,3 +340,5 @@ types:
       - LABEL_LINK_CREATED
       - LABEL_LINK_UPDATED
       - LABEL_LINK_DELETED
+    source:
+      openapi: openapi/openapi.yaml

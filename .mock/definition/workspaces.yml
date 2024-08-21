@@ -206,3 +206,5 @@ service:
               color: color
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml

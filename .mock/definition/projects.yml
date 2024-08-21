@@ -13,6 +13,8 @@ types:
         validation:
           format: uri
       results: list<root.Project>
+    source:
+      openapi: openapi/openapi.yaml
   ProjectsCreateResponse:
     docs: Project
     properties:
@@ -66,6 +68,8 @@ types:
           first label Car should be twice as important as Airplane, then you
           need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
           {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
+    source:
+      openapi: openapi/openapi.yaml
   ProjectsUpdateResponse:
     docs: Project
     properties:
@@ -119,6 +123,8 @@ types:
           first label Car should be twice as important as Airplane, then you
           need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
           {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
+    source:
+      openapi: openapi/openapi.yaml
   ProjectsImportTasksResponse:
     docs: Task creation response
     properties:
@@ -146,6 +152,8 @@ types:
       data_columns:
         type: optional<list<string>>
         docs: The list of found data columns
+    source:
+      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
@@ -876,3 +884,5 @@ service:
               label_config: label_config
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml

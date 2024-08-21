@@ -4,11 +4,15 @@ types:
       user:
         type: optional<map<string, unknown>>
         docs: User ID of the workspace member
+    source:
+      openapi: openapi/openapi.yaml
   MembersCreateResponse:
     properties:
       user:
         type: optional<integer>
         docs: User ID of the workspace member
+    source:
+      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
@@ -98,3 +102,5 @@ service:
           request: {}
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
