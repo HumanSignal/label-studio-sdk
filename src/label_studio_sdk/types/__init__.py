@@ -35,6 +35,10 @@ from .gcs_import_storage import GcsImportStorage
 from .gcs_import_storage_status import GcsImportStorageStatus
 from .inference_run import InferenceRun
 from .inference_run_created_by import InferenceRunCreatedBy
+from .inference_run_indicators_item import InferenceRunIndicatorsItem
+from .inference_run_indicators_item_addidional_kpis_item import InferenceRunIndicatorsItemAddidionalKpisItem
+from .inference_run_indicators_item_main_kpi import InferenceRunIndicatorsItemMainKpi
+from .inference_run_indicators_item_main_kpi_values import InferenceRunIndicatorsItemMainKpiValues
 from .inference_run_organization import InferenceRunOrganization
 from .inference_run_project_subset import InferenceRunProjectSubset
 from .inference_run_status import InferenceRunStatus
@@ -124,6 +128,10 @@ __all__ = [
     "GcsImportStorageStatus",
     "InferenceRun",
     "InferenceRunCreatedBy",
+    "InferenceRunIndicatorsItem",
+    "InferenceRunIndicatorsItemAddidionalKpisItem",
+    "InferenceRunIndicatorsItemMainKpi",
+    "InferenceRunIndicatorsItemMainKpiValues",
     "InferenceRunOrganization",
     "InferenceRunProjectSubset",
     "InferenceRunStatus",

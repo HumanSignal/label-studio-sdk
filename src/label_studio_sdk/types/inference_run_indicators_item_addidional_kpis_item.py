@@ -5,26 +5,11 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from .inference_run_created_by import InferenceRunCreatedBy
-from .inference_run_indicators_item import InferenceRunIndicatorsItem
-from .inference_run_organization import InferenceRunOrganization
-from .inference_run_project_subset import InferenceRunProjectSubset
-from .inference_run_status import InferenceRunStatus
 
 
-class InferenceRun(pydantic_v1.BaseModel):
-    organization: typing.Optional[InferenceRunOrganization] = None
-    project: int
-    model_version: typing.Optional[str] = None
-    created_by: typing.Optional[InferenceRunCreatedBy] = None
-    project_subset: InferenceRunProjectSubset
-    status: typing.Optional[InferenceRunStatus] = None
-    job_id: typing.Optional[str] = None
-    created_at: typing.Optional[dt.datetime] = None
-    triggered_at: typing.Optional[dt.datetime] = None
-    predictions_updated_at: typing.Optional[dt.datetime] = None
-    completed_at: typing.Optional[dt.datetime] = None
-    indicators: typing.Optional[typing.List[InferenceRunIndicatorsItem]] = None
+class InferenceRunIndicatorsItemAddidionalKpisItem(pydantic_v1.BaseModel):
+    key: typing.Optional[str] = None
+    label: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

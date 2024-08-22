@@ -50,13 +50,11 @@ async def test_create_run(client: LabelStudio, async_client: AsyncLabelStudio) -
         "project_subset": "All",
         "status": "Pending",
         "job_id": "job_id",
-        "total_predictions": 1,
-        "total_correct_predictions": 1,
-        "total_tasks": 1,
         "created_at": "2024-01-15T09:30:00Z",
         "triggered_at": "2024-01-15T09:30:00Z",
         "predictions_updated_at": "2024-01-15T09:30:00Z",
         "completed_at": "2024-01-15T09:30:00Z",
+        "indicators": [{"key": "key", "title": "title", "addidional_kpis": [{}]}],
     }
     expected_types: typing.Any = {
         "organization": "integer",
@@ -66,13 +64,11 @@ async def test_create_run(client: LabelStudio, async_client: AsyncLabelStudio) -
         "project_subset": None,
         "status": None,
         "job_id": None,
-        "total_predictions": "integer",
-        "total_correct_predictions": "integer",
-        "total_tasks": "integer",
         "created_at": "datetime",
         "triggered_at": "datetime",
         "predictions_updated_at": "datetime",
         "completed_at": "datetime",
+        "indicators": ("list", {0: {"key": None, "title": None, "addidional_kpis": ("list", {0: {}})}}),
     }
     response = client.prompts.versions.create_run(id=1, version_id=1, project=1, project_subset="All")
     validate_response(response, expected_response, expected_types)

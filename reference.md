@@ -14436,30 +14436,6 @@ client.prompts.versions.create_run(
 <dl>
 <dd>
 
-**total_predictions:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**total_correct_predictions:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**total_tasks:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **created_at:** `typing.Optional[dt.datetime]` 
     
 </dd>
@@ -14485,6 +14461,14 @@ client.prompts.versions.create_run(
 <dd>
 
 **completed_at:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**indicators:** `typing.Optional[typing.Sequence[InferenceRunIndicatorsItem]]` 
     
 </dd>
 </dl>

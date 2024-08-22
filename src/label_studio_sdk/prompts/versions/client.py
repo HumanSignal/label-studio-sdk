@@ -11,6 +11,7 @@ from ...core.pydantic_utilities import pydantic_v1
 from ...core.request_options import RequestOptions
 from ...types.inference_run import InferenceRun
 from ...types.inference_run_created_by import InferenceRunCreatedBy
+from ...types.inference_run_indicators_item import InferenceRunIndicatorsItem
 from ...types.inference_run_organization import InferenceRunOrganization
 from ...types.inference_run_project_subset import InferenceRunProjectSubset
 from ...types.inference_run_status import InferenceRunStatus
@@ -128,13 +129,11 @@ class VersionsClient:
         created_by: typing.Optional[InferenceRunCreatedBy] = OMIT,
         status: typing.Optional[InferenceRunStatus] = OMIT,
         job_id: typing.Optional[str] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
-        total_correct_predictions: typing.Optional[int] = OMIT,
-        total_tasks: typing.Optional[int] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         triggered_at: typing.Optional[dt.datetime] = OMIT,
         predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
         completed_at: typing.Optional[dt.datetime] = OMIT,
+        indicators: typing.Optional[typing.Sequence[InferenceRunIndicatorsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> InferenceRun:
         """
@@ -162,12 +161,6 @@ class VersionsClient:
 
         job_id : typing.Optional[str]
 
-        total_predictions : typing.Optional[int]
-
-        total_correct_predictions : typing.Optional[int]
-
-        total_tasks : typing.Optional[int]
-
         created_at : typing.Optional[dt.datetime]
 
         triggered_at : typing.Optional[dt.datetime]
@@ -175,6 +168,8 @@ class VersionsClient:
         predictions_updated_at : typing.Optional[dt.datetime]
 
         completed_at : typing.Optional[dt.datetime]
+
+        indicators : typing.Optional[typing.Sequence[InferenceRunIndicatorsItem]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -209,13 +204,11 @@ class VersionsClient:
                 "project_subset": project_subset,
                 "status": status,
                 "job_id": job_id,
-                "total_predictions": total_predictions,
-                "total_correct_predictions": total_correct_predictions,
-                "total_tasks": total_tasks,
                 "created_at": created_at,
                 "triggered_at": triggered_at,
                 "predictions_updated_at": predictions_updated_at,
                 "completed_at": completed_at,
+                "indicators": indicators,
             },
             request_options=request_options,
             omit=OMIT,
@@ -334,13 +327,11 @@ class AsyncVersionsClient:
         created_by: typing.Optional[InferenceRunCreatedBy] = OMIT,
         status: typing.Optional[InferenceRunStatus] = OMIT,
         job_id: typing.Optional[str] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
-        total_correct_predictions: typing.Optional[int] = OMIT,
-        total_tasks: typing.Optional[int] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         triggered_at: typing.Optional[dt.datetime] = OMIT,
         predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
         completed_at: typing.Optional[dt.datetime] = OMIT,
+        indicators: typing.Optional[typing.Sequence[InferenceRunIndicatorsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> InferenceRun:
         """
@@ -368,12 +359,6 @@ class AsyncVersionsClient:
 
         job_id : typing.Optional[str]
 
-        total_predictions : typing.Optional[int]
-
-        total_correct_predictions : typing.Optional[int]
-
-        total_tasks : typing.Optional[int]
-
         created_at : typing.Optional[dt.datetime]
 
         triggered_at : typing.Optional[dt.datetime]
@@ -381,6 +366,8 @@ class AsyncVersionsClient:
         predictions_updated_at : typing.Optional[dt.datetime]
 
         completed_at : typing.Optional[dt.datetime]
+
+        indicators : typing.Optional[typing.Sequence[InferenceRunIndicatorsItem]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -415,13 +402,11 @@ class AsyncVersionsClient:
                 "project_subset": project_subset,
                 "status": status,
                 "job_id": job_id,
-                "total_predictions": total_predictions,
-                "total_correct_predictions": total_correct_predictions,
-                "total_tasks": total_tasks,
                 "created_at": created_at,
                 "triggered_at": triggered_at,
                 "predictions_updated_at": predictions_updated_at,
                 "completed_at": completed_at,
+                "indicators": indicators,
             },
             request_options=request_options,
             omit=OMIT,

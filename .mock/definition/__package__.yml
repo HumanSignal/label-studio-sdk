@@ -2376,6 +2376,34 @@ types:
       - Canceled
     source:
       openapi: openapi/openapi.yaml
+  InferenceRunIndicatorsItemMainKpiValues:
+    properties:
+      accuracy: optional<string>
+      num_successful_predictions: optional<integer>
+      num_correct_predictions: optional<integer>
+    source:
+      openapi: openapi/openapi.yaml
+  InferenceRunIndicatorsItemMainKpi:
+    properties:
+      title: optional<string>
+      values: optional<InferenceRunIndicatorsItemMainKpiValues>
+    source:
+      openapi: openapi/openapi.yaml
+  InferenceRunIndicatorsItemAddidionalKpisItem:
+    properties:
+      key: optional<string>
+      label: optional<string>
+    source:
+      openapi: openapi/openapi.yaml
+  InferenceRunIndicatorsItem:
+    properties:
+      key: optional<string>
+      title: optional<string>
+      main_kpi: optional<InferenceRunIndicatorsItemMainKpi>
+      addidional_kpis: optional<list<InferenceRunIndicatorsItemAddidionalKpisItem>>
+      extra_kpis: optional<list<unknown>>
+    source:
+      openapi: openapi/openapi.yaml
   InferenceRun:
     properties:
       organization: optional<InferenceRunOrganization>
@@ -2385,13 +2413,11 @@ types:
       project_subset: InferenceRunProjectSubset
       status: optional<InferenceRunStatus>
       job_id: optional<string>
-      total_predictions: optional<integer>
-      total_correct_predictions: optional<integer>
-      total_tasks: optional<integer>
       created_at: optional<datetime>
       triggered_at: optional<datetime>
       predictions_updated_at: optional<datetime>
       completed_at: optional<datetime>
+      indicators: optional<list<InferenceRunIndicatorsItem>>
     source:
       openapi: openapi/openapi.yaml
   ModelProviderConnectionProvider:
