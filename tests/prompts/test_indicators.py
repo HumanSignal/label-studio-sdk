@@ -12,9 +12,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         {
             "key": "key",
             "title": "title",
-            "main_kpi": {"title": "title"},
-            "additional_kpis": [{}],
-            "extra_kpis": [{"key": "value"}],
+            "main_kpi": "main_kpi",
+            "secondary_kpi": "secondary_kpi",
+            "additional_kpis": [{"key": "value"}],
+            "extra_kpis": [{}],
         }
     ]
     expected_types: typing.Any = (
@@ -23,9 +24,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             0: {
                 "key": None,
                 "title": None,
-                "main_kpi": {"title": None},
-                "additional_kpis": ("list", {0: {}}),
-                "extra_kpis": ("list", {0: None}),
+                "main_kpi": None,
+                "secondary_kpi": None,
+                "additional_kpis": ("list", {0: ("dict", {0: (None, None)})}),
+                "extra_kpis": ("list", {0: {}}),
             }
         },
     )

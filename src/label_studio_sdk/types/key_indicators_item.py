@@ -5,16 +5,24 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from .key_indicators_item_additional_kpis_item import KeyIndicatorsItemAdditionalKpisItem
-from .key_indicators_item_main_kpi import KeyIndicatorsItemMainKpi
+from .key_indicators_item_extra_kpis_item import KeyIndicatorsItemExtraKpisItem
 
 
 class KeyIndicatorsItem(pydantic_v1.BaseModel):
-    key: typing.Optional[str] = None
-    title: typing.Optional[str] = None
-    main_kpi: typing.Optional[KeyIndicatorsItemMainKpi] = None
-    additional_kpis: typing.Optional[typing.List[KeyIndicatorsItemAdditionalKpisItem]] = None
-    extra_kpis: typing.Optional[typing.List[typing.Any]] = None
+    key: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    The key for this KPI, where you can find the value from inside main_kpi
+    """
+
+    title: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    The title for this metric, to be displayed to the user
+    """
+
+    main_kpi: typing.Optional[str] = None
+    secondary_kpi: typing.Optional[str] = None
+    additional_kpis: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
+    extra_kpis: typing.Optional[typing.List[KeyIndicatorsItemExtraKpisItem]] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -27,12 +27,12 @@ service:
             body:
               - key: key
                 title: title
-                main_kpi:
-                  title: title
+                main_kpi: main_kpi
+                secondary_kpi: secondary_kpi
                 additional_kpis:
-                  - {}
-                extra_kpis:
                   - key: value
+                extra_kpis:
+                  - {}
       audiences:
         - public
     get:

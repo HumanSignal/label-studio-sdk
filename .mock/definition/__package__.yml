@@ -2391,32 +2391,32 @@ types:
       completed_at: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
-  KeyIndicatorsItemMainKpiValues:
+  KeyIndicatorsItemExtraKpisItem:
     properties:
-      accuracy: optional<double>
-      num_successful_predictions: optional<integer>
-      num_correct_predictions: optional<integer>
-    source:
-      openapi: openapi/openapi.yaml
-  KeyIndicatorsItemMainKpi:
-    properties:
-      title: optional<string>
-      values: optional<KeyIndicatorsItemMainKpiValues>
-    source:
-      openapi: openapi/openapi.yaml
-  KeyIndicatorsItemAdditionalKpisItem:
-    properties:
-      key: optional<string>
-      label: optional<string>
+      key:
+        type: optional<string>
+        docs: >-
+          The key for this KPI, where you can find the value from inside
+          main_kpi
+      label:
+        type: optional<string>
+        docs: The label for this KPI, to be displayed to the user
     source:
       openapi: openapi/openapi.yaml
   KeyIndicatorsItem:
     properties:
-      key: optional<string>
-      title: optional<string>
-      main_kpi: optional<KeyIndicatorsItemMainKpi>
-      additional_kpis: optional<list<KeyIndicatorsItemAdditionalKpisItem>>
-      extra_kpis: optional<list<unknown>>
+      key:
+        type: optional<string>
+        docs: >-
+          The key for this KPI, where you can find the value from inside
+          main_kpi
+      title:
+        type: optional<string>
+        docs: The title for this metric, to be displayed to the user
+      main_kpi: optional<string>
+      secondary_kpi: optional<string>
+      additional_kpis: optional<list<map<string, unknown>>>
+      extra_kpis: optional<list<KeyIndicatorsItemExtraKpisItem>>
     source:
       openapi: openapi/openapi.yaml
   KeyIndicators: list<KeyIndicatorsItem>

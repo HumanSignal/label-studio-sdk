@@ -41,9 +41,7 @@ from .inference_run_status import InferenceRunStatus
 from .key_indicator_value import KeyIndicatorValue
 from .key_indicators import KeyIndicators
 from .key_indicators_item import KeyIndicatorsItem
-from .key_indicators_item_additional_kpis_item import KeyIndicatorsItemAdditionalKpisItem
-from .key_indicators_item_main_kpi import KeyIndicatorsItemMainKpi
-from .key_indicators_item_main_kpi_values import KeyIndicatorsItemMainKpiValues
+from .key_indicators_item_extra_kpis_item import KeyIndicatorsItemExtraKpisItem
 from .local_files_export_storage import LocalFilesExportStorage
 from .local_files_export_storage_status import LocalFilesExportStorageStatus
 from .local_files_import_storage import LocalFilesImportStorage
@@ -136,9 +134,7 @@ __all__ = [
     "KeyIndicatorValue",
     "KeyIndicators",
     "KeyIndicatorsItem",
-    "KeyIndicatorsItemAdditionalKpisItem",
-    "KeyIndicatorsItemMainKpi",
-    "KeyIndicatorsItemMainKpiValues",
+    "KeyIndicatorsItemExtraKpisItem",
     "LocalFilesExportStorage",
     "LocalFilesExportStorageStatus",
     "LocalFilesImportStorage",
