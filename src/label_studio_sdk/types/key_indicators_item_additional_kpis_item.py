@@ -5,31 +5,17 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from .key_indicators_item_additional_kpis_item import KeyIndicatorsItemAdditionalKpisItem
-from .key_indicators_item_extra_kpis_item import KeyIndicatorsItemExtraKpisItem
 
 
-class KeyIndicatorsItem(pydantic_v1.BaseModel):
-    key: str = pydantic_v1.Field()
+class KeyIndicatorsItemAdditionalKpisItem(pydantic_v1.BaseModel):
+    key: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     The key for this KPI, where you can find the value from inside main_kpi
     """
 
-    title: str = pydantic_v1.Field()
+    label: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
-    The title for this metric, to be displayed to the user
-    """
-
-    main_kpi: str
-    secondary_kpi: typing.Optional[str] = None
-    additional_kpis: typing.Optional[typing.List[KeyIndicatorsItemAdditionalKpisItem]] = pydantic_v1.Field(default=None)
-    """
-    Additional KPIs to be displayed at the bottom of the box
-    """
-
-    extra_kpis: typing.Optional[typing.List[KeyIndicatorsItemExtraKpisItem]] = pydantic_v1.Field(default=None)
-    """
-    Extra KPIs to be displayed in the hover-tootip for that indicator
+    The label for this KPI, to be displayed to the user
     """
 
     def json(self, **kwargs: typing.Any) -> str:

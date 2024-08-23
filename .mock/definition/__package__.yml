@@ -2391,6 +2391,18 @@ types:
       completed_at: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
+  KeyIndicatorsItemAdditionalKpisItem:
+    properties:
+      key:
+        type: optional<string>
+        docs: >-
+          The key for this KPI, where you can find the value from inside
+          main_kpi
+      label:
+        type: optional<string>
+        docs: The label for this KPI, to be displayed to the user
+    source:
+      openapi: openapi/openapi.yaml
   KeyIndicatorsItemExtraKpisItem:
     properties:
       key:
@@ -2406,17 +2418,21 @@ types:
   KeyIndicatorsItem:
     properties:
       key:
-        type: optional<string>
+        type: string
         docs: >-
           The key for this KPI, where you can find the value from inside
           main_kpi
       title:
-        type: optional<string>
+        type: string
         docs: The title for this metric, to be displayed to the user
-      main_kpi: optional<string>
+      main_kpi: string
       secondary_kpi: optional<string>
-      additional_kpis: optional<list<map<string, unknown>>>
-      extra_kpis: optional<list<KeyIndicatorsItemExtraKpisItem>>
+      additional_kpis:
+        type: optional<list<KeyIndicatorsItemAdditionalKpisItem>>
+        docs: Additional KPIs to be displayed at the bottom of the box
+      extra_kpis:
+        type: optional<list<KeyIndicatorsItemExtraKpisItem>>
+        docs: Extra KPIs to be displayed in the hover-tootip for that indicator
     source:
       openapi: openapi/openapi.yaml
   KeyIndicators: list<KeyIndicatorsItem>

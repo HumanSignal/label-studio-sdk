@@ -30,7 +30,7 @@ service:
                 main_kpi: main_kpi
                 secondary_kpi: secondary_kpi
                 additional_kpis:
-                  - key: value
+                  - {}
                 extra_kpis:
                   - {}
       audiences:

@@ -14,7 +14,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "title": "title",
             "main_kpi": "main_kpi",
             "secondary_kpi": "secondary_kpi",
-            "additional_kpis": [{"key": "value"}],
+            "additional_kpis": [{}],
             "extra_kpis": [{}],
         }
     ]
@@ -26,7 +26,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "title": None,
                 "main_kpi": None,
                 "secondary_kpi": None,
-                "additional_kpis": ("list", {0: ("dict", {0: (None, None)})}),
+                "additional_kpis": ("list", {0: {}}),
                 "extra_kpis": ("list", {0: {}}),
             }
         },
