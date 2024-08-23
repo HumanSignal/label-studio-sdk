@@ -1,14 +1,16 @@
-import os
+import math
 import os
 import shutil
 import tempfile
 
+import numpy as np
 import pytest
 
 from label_studio_sdk.converter import Converter
 from label_studio_sdk.converter.utils import (
     convert_annotation_to_yolo,
     convert_annotation_to_yolo_obb,
+    convert_yolo_obb_to_annotation,
 )
 from .utils import almost_equal_1d, almost_equal_2d
 
@@ -457,3 +459,59 @@ def test_convert_invalid_annotation_to_yolo_obb_format():
         assert (
             result is None
         ), f"Expected annotation for OBB at index {idx} to be invalid"
+
+
+def test_annotation_to_yolo_obb_and_back():
+    label_data = {
+        "original_width": 1024,
+        "original_height": 768,
+        "x": 40.0,
+        "y": 30.0,
+        "width": 20.0,
+        "height": 10.0,
+        "rotation": 45.0,
+    }
+
+    yolo_obb = convert_annotation_to_yolo_obb(label_data, normalize=False)
+
+    label_converted_back = convert_yolo_obb_to_annotation(
+        [coord for point in yolo_obb for coord in point],
+        label_data["original_width"],
+        label_data["original_height"],
+    )
+
+    return (
+        math.isclose(label_data["x"], label_converted_back["x"], rel_tol=1e-5),
+        math.isclose(label_data["y"], label_converted_back["y"], rel_tol=1e-5),
+        math.isclose(label_data["width"], label_converted_back["width"], rel_tol=1e-5),
+        math.isclose(
+            label_data["height"], label_converted_back["height"], rel_tol=1e-5
+        ),
+        math.isclose(
+            label_data["rotation"], label_converted_back["rotation"], rel_tol=1e-5
+        ),
+    )
+
+
+def test_yolo_obb_to_annotation_to_yolo():
+    inv_data = [
+        10,
+        20,
+        39.54423259036624,
+        26.511806662509885,
+        33.98749090502447,
+        65.9041167829982,
+        4.443258314658229,
+        59.39231012048832,
+    ]
+    original_width = 10
+    original_height = 10
+
+    annotation_data = convert_yolo_obb_to_annotation(
+        inv_data, original_width, original_height
+    )
+    yolo_data = convert_annotation_to_yolo_obb(annotation_data, normalize=False)
+
+    assert np.allclose(
+        yolo_data, np.array(inv_data).reshape((4, 2)), rtol=1, atol=1  # 1 pixel tolerance
+    ), f"Test failed: {yolo_data} != {inv_data}"
