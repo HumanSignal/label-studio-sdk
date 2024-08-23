@@ -17,9 +17,10 @@ from urllib.parse import urlparse
 import numpy as np
 import requests
 from PIL import Image
-from label_studio_sdk._extensions.label_studio_tools.core.utils.params import get_env
 from lxml import etree
 from nltk.tokenize.treebank import TreebankWordTokenizer
+
+from label_studio_sdk._extensions.label_studio_tools.core.utils.params import get_env
 
 logger = logging.getLogger(__name__)
 
@@ -422,7 +423,7 @@ def convert_annotation_to_yolo(label):
     return x, y, w, h
 
 
-def convert_annotation_to_yolo_obb(label):
+def convert_annotation_to_yolo_obb(label, normalize=True):
     """
     Convert LS annotation to Yolo OBB format.
 
@@ -435,6 +436,7 @@ def convert_annotation_to_yolo_obb(label):
             - width (float): Width of the object in percentage of the original width.
             - height (float): Height of the object in percentage of the original height.
             - rotation (float, optional): Rotation angle of the object in degrees (default is 0).
+        normalize (bool, optional): Whether to normalize the coordinates to the range [0, 1] (default is True).
 
     Returns:
         list of tuple or None: List of tuples containing the coordinates of the object in Yolo OBB format.
@@ -470,4 +472,71 @@ def convert_annotation_to_yolo_obb(label):
     ]
 
     # Normalize coordinates
-    return [(coord[0] / org_width, coord[1] / org_height) for coord in coords]
+    if normalize:
+        return [(coord[0] / org_width, coord[1] / org_height) for coord in coords]
+    else:
+        return coords
+
+
+def convert_yolo_obb_to_annotation(xyxyxyxy, original_width, original_height):
+    """
+    Convert YOLO Oriented Bounding Box (OBB) format to Label Studio format.
+
+    Args:
+        xyxyxyxy (list): List of 8 float values representing the absolute pixel coordinates
+                         of the OBB in the format [x1, y1, x2, y2, x3, y3, x4, y4].
+        original_width (int): Original width of the image.
+        original_height (int): Original height of the image.
+
+    Returns:
+        dict: Dictionary containing the converted bounding box with the following keys:
+              - x: X-coordinate of the top-left corner of the bounding box in percentage.
+              - y: Y-coordinate of the top-left corner of the bounding box in percentage.
+              - width: Width of the bounding box in percentage.
+              - height: Height of the bounding box in percentage.
+              - rotation: Rotation angle of the bounding box in degrees.
+    """
+    # Reshape the coordinates into a 4x2 matrix
+    coords = np.array(xyxyxyxy, dtype=np.float64).reshape((4, 2))
+
+    # Calculate the center of the bounding box
+    center_x = np.mean(coords[:, 0])
+    center_y = np.mean(coords[:, 1])
+
+    # Calculate the width and height of the bounding box
+    width = np.linalg.norm(coords[0] - coords[1])
+    height = np.linalg.norm(coords[0] - coords[3])
+
+    # Calculate the rotation angle
+    dx = coords[1, 0] - coords[0, 0]
+    dy = coords[1, 1] - coords[0, 1]
+    r = np.degrees(np.arctan2(dy, dx))
+
+    # Find the top-left corner (x, y)
+    top_left_x = (
+        center_x
+        - (width / 2) * np.cos(np.radians(r))
+        + (height / 2) * np.sin(np.radians(r))
+    )
+    top_left_y = (
+        center_y
+        - (width / 2) * np.sin(np.radians(r))
+        - (height / 2) * np.cos(np.radians(r))
+    )
+
+    # Normalize the values
+    x = (top_left_x / original_width) * 100
+    y = (top_left_y / original_height) * 100
+    width = (width / original_width) * 100
+    height = (height / original_height) * 100
+
+    # Create the dictionary for Label Studio
+    return {
+        "x": x,
+        "y": y,
+        "width": width,
+        "height": height,
+        "rotation": r,
+        "original_width": original_width,
+        "original_height": original_height,
+    }
