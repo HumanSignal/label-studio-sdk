@@ -38,6 +38,7 @@ from .inference_run_created_by import InferenceRunCreatedBy
 from .inference_run_organization import InferenceRunOrganization
 from .inference_run_project_subset import InferenceRunProjectSubset
 from .inference_run_status import InferenceRunStatus
+from .key_indicator_value import KeyIndicatorValue
 from .key_indicators import KeyIndicators
 from .key_indicators_item import KeyIndicatorsItem
 from .key_indicators_item_additional_kpis_item import KeyIndicatorsItemAdditionalKpisItem
@@ -132,6 +133,7 @@ __all__ = [
     "InferenceRunOrganization",
     "InferenceRunProjectSubset",
     "InferenceRunStatus",
+    "KeyIndicatorValue",
     "KeyIndicators",
     "KeyIndicatorsItem",
     "KeyIndicatorsItemAdditionalKpisItem",

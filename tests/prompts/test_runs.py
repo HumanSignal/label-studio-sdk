@@ -20,7 +20,6 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         "triggered_at": "2024-01-15T09:30:00Z",
         "predictions_updated_at": "2024-01-15T09:30:00Z",
         "completed_at": "2024-01-15T09:30:00Z",
-        "indicators": [{"key": "key", "title": "title", "additional_kpis": [{}]}],
     }
     expected_types: typing.Any = {
         "organization": "integer",
@@ -34,7 +33,6 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         "triggered_at": "datetime",
         "predictions_updated_at": "datetime",
         "completed_at": "datetime",
-        "indicators": ("list", {0: {"key": None, "title": None, "additional_kpis": ("list", {0: {}})}}),
     }
     response = client.prompts.runs.list(id=1, version_id=1, project=1, project_subset="All")
     validate_response(response, expected_response, expected_types)
@@ -56,7 +54,6 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "triggered_at": "2024-01-15T09:30:00Z",
         "predictions_updated_at": "2024-01-15T09:30:00Z",
         "completed_at": "2024-01-15T09:30:00Z",
-        "indicators": [{"key": "key", "title": "title", "additional_kpis": [{}]}],
     }
     expected_types: typing.Any = {
         "organization": "integer",
@@ -70,7 +67,6 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "triggered_at": "datetime",
         "predictions_updated_at": "datetime",
         "completed_at": "datetime",
-        "indicators": ("list", {0: {"key": None, "title": None, "additional_kpis": ("list", {0: {}})}}),
     }
     response = client.prompts.runs.create(id=1, version_id=1, project=1, project_subset="All")
     validate_response(response, expected_response, expected_types)

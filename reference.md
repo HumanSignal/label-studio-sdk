@@ -14566,7 +14566,149 @@ client.prompts.runs.create(
 <dl>
 <dd>
 
-**indicators:** `typing.Optional[KeyIndicators]` 
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Prompts Indicators
+<details><summary><code>client.prompts.indicators.<a href="src/label_studio_sdk/prompts/indicators/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get key indicators for the Prompt dashboard.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.indicators.list(
+    run_id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**run_id:** `int` — Inference run ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.indicators.<a href="src/label_studio_sdk/prompts/indicators/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific key indicator for the Prompt dashboard.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.indicators.get(
+    key="key",
+    run_id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**key:** `str` — Key of the indicator
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**run_id:** `int` — Inference run ID
     
 </dd>
 </dl>

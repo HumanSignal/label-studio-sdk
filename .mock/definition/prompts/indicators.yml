@@ -1,0 +1,71 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/prompts/indicators
+      method: GET
+      auth: true
+      docs: |
+        Get key indicators for the Prompt dashboard.
+      display-name: Get key indicators
+      request:
+        name: IndicatorsListRequest
+        query-parameters:
+          run_id:
+            type: integer
+            docs: Inference run ID
+      response:
+        docs: ''
+        type: root.KeyIndicators
+      examples:
+        - query-parameters:
+            run_id: 1
+          response:
+            body:
+              - key: key
+                title: title
+                main_kpi:
+                  title: title
+                additional_kpis:
+                  - {}
+                extra_kpis:
+                  - key: value
+      audiences:
+        - public
+    get:
+      path: /api/prompts/indicators/{key}
+      method: GET
+      auth: true
+      docs: |
+        Get a specific key indicator for the Prompt dashboard.
+      path-parameters:
+        key:
+          type: string
+          docs: Key of the indicator
+      display-name: Get key indicator
+      request:
+        name: IndicatorsGetRequest
+        query-parameters:
+          run_id:
+            type: integer
+            docs: Inference run ID
+      response:
+        docs: ''
+        type: root.KeyIndicatorValue
+      examples:
+        - path-parameters:
+            key: key
+          query-parameters:
+            run_id: 1
+          response:
+            body:
+              title: title
+              values:
+                key: value
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

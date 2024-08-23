@@ -14,7 +14,6 @@ from ...types.inference_run_created_by import InferenceRunCreatedBy
 from ...types.inference_run_organization import InferenceRunOrganization
 from ...types.inference_run_project_subset import InferenceRunProjectSubset
 from ...types.inference_run_status import InferenceRunStatus
-from ...types.key_indicators import KeyIndicators
 from .types.runs_list_request_project_subset import RunsListRequestProjectSubset
 
 # this is used as the default value for optional parameters
@@ -103,7 +102,6 @@ class RunsClient:
         triggered_at: typing.Optional[dt.datetime] = OMIT,
         predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
         completed_at: typing.Optional[dt.datetime] = OMIT,
-        indicators: typing.Optional[KeyIndicators] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> InferenceRun:
         """
@@ -138,8 +136,6 @@ class RunsClient:
         predictions_updated_at : typing.Optional[dt.datetime]
 
         completed_at : typing.Optional[dt.datetime]
-
-        indicators : typing.Optional[KeyIndicators]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -178,7 +174,6 @@ class RunsClient:
                 "triggered_at": triggered_at,
                 "predictions_updated_at": predictions_updated_at,
                 "completed_at": completed_at,
-                "indicators": indicators,
             },
             request_options=request_options,
             omit=OMIT,
@@ -274,7 +269,6 @@ class AsyncRunsClient:
         triggered_at: typing.Optional[dt.datetime] = OMIT,
         predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
         completed_at: typing.Optional[dt.datetime] = OMIT,
-        indicators: typing.Optional[KeyIndicators] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> InferenceRun:
         """
@@ -309,8 +303,6 @@ class AsyncRunsClient:
         predictions_updated_at : typing.Optional[dt.datetime]
 
         completed_at : typing.Optional[dt.datetime]
-
-        indicators : typing.Optional[KeyIndicators]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -349,7 +341,6 @@ class AsyncRunsClient:
                 "triggered_at": triggered_at,
                 "predictions_updated_at": predictions_updated_at,
                 "completed_at": completed_at,
-                "indicators": indicators,
             },
             request_options=request_options,
             omit=OMIT,

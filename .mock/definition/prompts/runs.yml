@@ -60,11 +60,6 @@ service:
               triggered_at: '2024-01-15T09:30:00Z'
               predictions_updated_at: '2024-01-15T09:30:00Z'
               completed_at: '2024-01-15T09:30:00Z'
-              indicators:
-                - key: key
-                  title: title
-                  additional_kpis:
-                    - {}
       audiences:
         - public
     create:
@@ -106,11 +101,6 @@ service:
               triggered_at: '2024-01-15T09:30:00Z'
               predictions_updated_at: '2024-01-15T09:30:00Z'
               completed_at: '2024-01-15T09:30:00Z'
-              indicators:
-                - key: key
-                  title: title
-                  additional_kpis:
-                    - {}
       audiences:
         - public
   source:
