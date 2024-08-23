@@ -7,8 +7,8 @@ from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
-class InferenceRunIndicatorsItemMainKpiValues(pydantic_v1.BaseModel):
-    accuracy: typing.Optional[str] = None
+class KeyIndicatorsItemMainKpiValues(pydantic_v1.BaseModel):
+    accuracy: typing.Optional[float] = None
     num_successful_predictions: typing.Optional[int] = None
     num_correct_predictions: typing.Optional[int] = None
 

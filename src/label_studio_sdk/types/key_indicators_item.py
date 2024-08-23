@@ -5,12 +5,16 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from .inference_run_indicators_item_main_kpi_values import InferenceRunIndicatorsItemMainKpiValues
+from .key_indicators_item_additional_kpis_item import KeyIndicatorsItemAdditionalKpisItem
+from .key_indicators_item_main_kpi import KeyIndicatorsItemMainKpi
 
 
-class InferenceRunIndicatorsItemMainKpi(pydantic_v1.BaseModel):
+class KeyIndicatorsItem(pydantic_v1.BaseModel):
+    key: typing.Optional[str] = None
     title: typing.Optional[str] = None
-    values: typing.Optional[InferenceRunIndicatorsItemMainKpiValues] = None
+    main_kpi: typing.Optional[KeyIndicatorsItemMainKpi] = None
+    additional_kpis: typing.Optional[typing.List[KeyIndicatorsItemAdditionalKpisItem]] = None
+    extra_kpis: typing.Optional[typing.List[typing.Any]] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

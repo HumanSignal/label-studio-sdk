@@ -14311,7 +14311,105 @@ client.prompts.versions.create(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">create_run</a>(...)</code></summary>
+## Prompts Runs
+<details><summary><code>client.prompts.runs.<a href="src/label_studio_sdk/prompts/runs/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get information (status, etadata, etc) about an existing inference run
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.runs.list(
+    id=1,
+    version_id=1,
+    project=1,
+    project_subset="All",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Prompt ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `int` — Prompt Version ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — The ID of the project that this Interence Run makes predictions on
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_subset:** `RunsListRequestProjectSubset` — Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.runs.<a href="src/label_studio_sdk/prompts/runs/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14343,7 +14441,7 @@ from label_studio_sdk.client import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.prompts.versions.create_run(
+client.prompts.runs.create(
     id=1,
     version_id=1,
     project=1,
@@ -14468,7 +14566,7 @@ client.prompts.versions.create_run(
 <dl>
 <dd>
 
-**indicators:** `typing.Optional[typing.Sequence[InferenceRunIndicatorsItem]]` 
+**indicators:** `typing.Optional[KeyIndicators]` 
     
 </dd>
 </dl>
