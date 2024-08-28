@@ -5,24 +5,31 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/prompts/indicators
+      path: >-
+        /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{pk}/indicators
       method: GET
       auth: true
       docs: |
         Get key indicators for the Prompt dashboard.
+      path-parameters:
+        prompt_id:
+          type: integer
+          docs: Prompt ID
+        version_id:
+          type: integer
+          docs: Prompt Version ID
+        pk:
+          type: integer
+          docs: Inference run ID
       display-name: Get key indicators
-      request:
-        name: IndicatorsListRequest
-        query-parameters:
-          run_id:
-            type: integer
-            docs: Inference run ID
       response:
         docs: ''
         type: root.KeyIndicators
       examples:
-        - query-parameters:
-            run_id: 1
+        - path-parameters:
+            prompt_id: 1
+            version_id: 1
+            pk: 1
           response:
             body:
               - key: key
@@ -36,30 +43,35 @@ service:
       audiences:
         - public
     get:
-      path: /api/prompts/indicators/{key}
+      path: >-
+        /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{pk}/indicators/{indicator_key}
       method: GET
       auth: true
       docs: |
         Get a specific key indicator for the Prompt dashboard.
       path-parameters:
-        key:
+        prompt_id:
+          type: integer
+          docs: Prompt ID
+        version_id:
+          type: integer
+          docs: Prompt Version ID
+        pk:
+          type: integer
+          docs: Inference run ID
+        indicator_key:
           type: string
           docs: Key of the indicator
       display-name: Get key indicator
-      request:
-        name: IndicatorsGetRequest
-        query-parameters:
-          run_id:
-            type: integer
-            docs: Inference run ID
       response:
         docs: ''
         type: root.KeyIndicatorValue
       examples:
         - path-parameters:
-            key: key
-          query-parameters:
-            run_id: 1
+            prompt_id: 1
+            version_id: 1
+            pk: 1
+            indicator_key: indicator_key
           response:
             body:
               title: title

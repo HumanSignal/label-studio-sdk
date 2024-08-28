@@ -16,13 +16,21 @@ class IndicatorsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, *, run_id: int, request_options: typing.Optional[RequestOptions] = None) -> KeyIndicators:
+    def list(
+        self, prompt_id: int, version_id: int, pk: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> KeyIndicators:
         """
         Get key indicators for the Prompt dashboard.
 
         Parameters
         ----------
-        run_id : int
+        prompt_id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        pk : int
             Inference run ID
 
         request_options : typing.Optional[RequestOptions]
@@ -41,11 +49,15 @@ class IndicatorsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.indicators.list(
-            run_id=1,
+            prompt_id=1,
+            version_id=1,
+            pk=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/prompts/indicators", method="GET", params={"run_id": run_id}, request_options=request_options
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs/{jsonable_encoder(pk)}/indicators",
+            method="GET",
+            request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -56,18 +68,30 @@ class IndicatorsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, key: str, *, run_id: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        prompt_id: int,
+        version_id: int,
+        pk: int,
+        indicator_key: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> KeyIndicatorValue:
         """
         Get a specific key indicator for the Prompt dashboard.
 
         Parameters
         ----------
-        key : str
-            Key of the indicator
+        prompt_id : int
+            Prompt ID
 
-        run_id : int
+        version_id : int
+            Prompt Version ID
+
+        pk : int
             Inference run ID
+
+        indicator_key : str
+            Key of the indicator
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -85,14 +109,15 @@ class IndicatorsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.indicators.get(
-            key="key",
-            run_id=1,
+            prompt_id=1,
+            version_id=1,
+            pk=1,
+            indicator_key="indicator_key",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/indicators/{jsonable_encoder(key)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs/{jsonable_encoder(pk)}/indicators/{jsonable_encoder(indicator_key)}",
             method="GET",
-            params={"run_id": run_id},
             request_options=request_options,
         )
         try:
@@ -108,13 +133,21 @@ class AsyncIndicatorsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(self, *, run_id: int, request_options: typing.Optional[RequestOptions] = None) -> KeyIndicators:
+    async def list(
+        self, prompt_id: int, version_id: int, pk: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> KeyIndicators:
         """
         Get key indicators for the Prompt dashboard.
 
         Parameters
         ----------
-        run_id : int
+        prompt_id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        pk : int
             Inference run ID
 
         request_options : typing.Optional[RequestOptions]
@@ -133,11 +166,15 @@ class AsyncIndicatorsClient:
             api_key="YOUR_API_KEY",
         )
         await client.prompts.indicators.list(
-            run_id=1,
+            prompt_id=1,
+            version_id=1,
+            pk=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/prompts/indicators", method="GET", params={"run_id": run_id}, request_options=request_options
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs/{jsonable_encoder(pk)}/indicators",
+            method="GET",
+            request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -148,18 +185,30 @@ class AsyncIndicatorsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, key: str, *, run_id: int, request_options: typing.Optional[RequestOptions] = None
+        self,
+        prompt_id: int,
+        version_id: int,
+        pk: int,
+        indicator_key: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> KeyIndicatorValue:
         """
         Get a specific key indicator for the Prompt dashboard.
 
         Parameters
         ----------
-        key : str
-            Key of the indicator
+        prompt_id : int
+            Prompt ID
 
-        run_id : int
+        version_id : int
+            Prompt Version ID
+
+        pk : int
             Inference run ID
+
+        indicator_key : str
+            Key of the indicator
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -177,14 +226,15 @@ class AsyncIndicatorsClient:
             api_key="YOUR_API_KEY",
         )
         await client.prompts.indicators.get(
-            key="key",
-            run_id=1,
+            prompt_id=1,
+            version_id=1,
+            pk=1,
+            indicator_key="indicator_key",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/indicators/{jsonable_encoder(key)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs/{jsonable_encoder(pk)}/indicators/{jsonable_encoder(indicator_key)}",
             method="GET",
-            params={"run_id": run_id},
             request_options=request_options,
         )
         try:

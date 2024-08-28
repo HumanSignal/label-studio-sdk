@@ -14612,7 +14612,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.indicators.list(
-    run_id=1,
+    prompt_id=1,
+    version_id=1,
+    pk=1,
 )
 
 ```
@@ -14629,7 +14631,23 @@ client.prompts.indicators.list(
 <dl>
 <dd>
 
-**run_id:** `int` — Inference run ID
+**prompt_id:** `int` — Prompt ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `int` — Prompt Version ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pk:** `int` — Inference run ID
     
 </dd>
 </dl>
@@ -14682,8 +14700,10 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.indicators.get(
-    key="key",
-    run_id=1,
+    prompt_id=1,
+    version_id=1,
+    pk=1,
+    indicator_key="indicator_key",
 )
 
 ```
@@ -14700,7 +14720,7 @@ client.prompts.indicators.get(
 <dl>
 <dd>
 
-**key:** `str` — Key of the indicator
+**prompt_id:** `int` — Prompt ID
     
 </dd>
 </dl>
@@ -14708,7 +14728,23 @@ client.prompts.indicators.get(
 <dl>
 <dd>
 
-**run_id:** `int` — Inference run ID
+**version_id:** `int` — Prompt Version ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pk:** `int` — Inference run ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**indicator_key:** `str` — Key of the indicator
     
 </dd>
 </dl>
