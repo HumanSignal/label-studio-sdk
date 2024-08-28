@@ -31,20 +31,18 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.prompts.indicators.list(prompt_id=1, version_id=1, pk=1)
+    response = client.prompts.indicators.list(pk=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.indicators.list(prompt_id=1, version_id=1, pk=1)
+    async_response = await async_client.prompts.indicators.list(pk=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"title": "title", "values": {"key": "value"}}
     expected_types: typing.Any = {"title": None, "values": ("dict", {0: (None, None)})}
-    response = client.prompts.indicators.get(prompt_id=1, version_id=1, pk=1, indicator_key="indicator_key")
+    response = client.prompts.indicators.get(key="key", pk=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.indicators.get(
-        prompt_id=1, version_id=1, pk=1, indicator_key="indicator_key"
-    )
+    async_response = await async_client.prompts.indicators.get(key="key", pk=1)
     validate_response(async_response, expected_response, expected_types)

@@ -5,30 +5,23 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: >-
-        /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{pk}/indicators
+      path: /api/prompts/indicators
       method: GET
       auth: true
       docs: |
         Get key indicators for the Prompt dashboard.
-      path-parameters:
-        prompt_id:
-          type: integer
-          docs: Prompt ID
-        version_id:
-          type: integer
-          docs: Prompt Version ID
-        pk:
-          type: integer
-          docs: Inference run ID
       display-name: Get key indicators
+      request:
+        name: IndicatorsListRequest
+        query-parameters:
+          pk:
+            type: integer
+            docs: Inference run ID
       response:
         docs: ''
         type: root.KeyIndicators
       examples:
-        - path-parameters:
-            prompt_id: 1
-            version_id: 1
+        - query-parameters:
             pk: 1
           response:
             body:
@@ -43,35 +36,30 @@ service:
       audiences:
         - public
     get:
-      path: >-
-        /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{pk}/indicators/{indicator_key}
+      path: /api/prompts/indicators/{key}
       method: GET
       auth: true
       docs: |
         Get a specific key indicator for the Prompt dashboard.
       path-parameters:
-        prompt_id:
-          type: integer
-          docs: Prompt ID
-        version_id:
-          type: integer
-          docs: Prompt Version ID
-        pk:
-          type: integer
-          docs: Inference run ID
-        indicator_key:
+        key:
           type: string
           docs: Key of the indicator
       display-name: Get key indicator
+      request:
+        name: IndicatorsGetRequest
+        query-parameters:
+          pk:
+            type: integer
+            docs: Inference run ID
       response:
         docs: ''
         type: root.KeyIndicatorValue
       examples:
         - path-parameters:
-            prompt_id: 1
-            version_id: 1
+            key: key
+          query-parameters:
             pk: 1
-            indicator_key: indicator_key
           response:
             body:
               title: title
