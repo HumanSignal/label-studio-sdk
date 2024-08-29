@@ -5,23 +5,21 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/prompts/indicators
+      path: /api/inference-runs/{pk}/indicators
       method: GET
       auth: true
       docs: |
         Get key indicators for the Prompt dashboard.
+      path-parameters:
+        pk:
+          type: integer
+          docs: Inference run ID
       display-name: Get key indicators
-      request:
-        name: IndicatorsListRequest
-        query-parameters:
-          pk:
-            type: integer
-            docs: Inference run ID
       response:
         docs: ''
         type: root.KeyIndicators
       examples:
-        - query-parameters:
+        - path-parameters:
             pk: 1
           response:
             body:
@@ -36,29 +34,25 @@ service:
       audiences:
         - public
     get:
-      path: /api/prompts/indicators/{key}
+      path: /api/inference-runs/{pk}/indicators/{indicator_key}
       method: GET
       auth: true
       docs: |
         Get a specific key indicator for the Prompt dashboard.
       path-parameters:
-        key:
+        indicator_key:
           type: string
           docs: Key of the indicator
+        pk:
+          type: integer
+          docs: Inference run ID
       display-name: Get key indicator
-      request:
-        name: IndicatorsGetRequest
-        query-parameters:
-          pk:
-            type: integer
-            docs: Inference run ID
       response:
         docs: ''
         type: root.KeyIndicatorValue
       examples:
         - path-parameters:
-            key: key
-          query-parameters:
+            indicator_key: indicator_key
             pk: 1
           response:
             body:

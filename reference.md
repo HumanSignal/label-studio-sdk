@@ -14682,7 +14682,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.indicators.get(
-    key="key",
+    indicator_key="indicator_key",
     pk=1,
 )
 
@@ -14700,7 +14700,7 @@ client.prompts.indicators.get(
 <dl>
 <dd>
 
-**key:** `str` — Key of the indicator
+**indicator_key:** `str` — Key of the indicator
     
 </dd>
 </dl>

@@ -16,7 +16,7 @@ class IndicatorsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, *, pk: int, request_options: typing.Optional[RequestOptions] = None) -> KeyIndicators:
+    def list(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> KeyIndicators:
         """
         Get key indicators for the Prompt dashboard.
 
@@ -45,7 +45,7 @@ class IndicatorsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/prompts/indicators", method="GET", params={"pk": pk}, request_options=request_options
+            f"api/inference-runs/{jsonable_encoder(pk)}/indicators", method="GET", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -55,13 +55,15 @@ class IndicatorsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, key: str, *, pk: int, request_options: typing.Optional[RequestOptions] = None) -> KeyIndicatorValue:
+    def get(
+        self, indicator_key: str, pk: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> KeyIndicatorValue:
         """
         Get a specific key indicator for the Prompt dashboard.
 
         Parameters
         ----------
-        key : str
+        indicator_key : str
             Key of the indicator
 
         pk : int
@@ -83,14 +85,13 @@ class IndicatorsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.indicators.get(
-            key="key",
+            indicator_key="indicator_key",
             pk=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/indicators/{jsonable_encoder(key)}",
+            f"api/inference-runs/{jsonable_encoder(pk)}/indicators/{jsonable_encoder(indicator_key)}",
             method="GET",
-            params={"pk": pk},
             request_options=request_options,
         )
         try:
@@ -106,7 +107,7 @@ class AsyncIndicatorsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(self, *, pk: int, request_options: typing.Optional[RequestOptions] = None) -> KeyIndicators:
+    async def list(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> KeyIndicators:
         """
         Get key indicators for the Prompt dashboard.
 
@@ -135,7 +136,7 @@ class AsyncIndicatorsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/prompts/indicators", method="GET", params={"pk": pk}, request_options=request_options
+            f"api/inference-runs/{jsonable_encoder(pk)}/indicators", method="GET", request_options=request_options
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -146,14 +147,14 @@ class AsyncIndicatorsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, key: str, *, pk: int, request_options: typing.Optional[RequestOptions] = None
+        self, indicator_key: str, pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> KeyIndicatorValue:
         """
         Get a specific key indicator for the Prompt dashboard.
 
         Parameters
         ----------
-        key : str
+        indicator_key : str
             Key of the indicator
 
         pk : int
@@ -175,14 +176,13 @@ class AsyncIndicatorsClient:
             api_key="YOUR_API_KEY",
         )
         await client.prompts.indicators.get(
-            key="key",
+            indicator_key="indicator_key",
             pk=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/indicators/{jsonable_encoder(key)}",
+            f"api/inference-runs/{jsonable_encoder(pk)}/indicators/{jsonable_encoder(indicator_key)}",
             method="GET",
-            params={"pk": pk},
             request_options=request_options,
         )
         try:
