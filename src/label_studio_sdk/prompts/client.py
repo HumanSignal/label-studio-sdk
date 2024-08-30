@@ -11,6 +11,8 @@ from ..core.request_options import RequestOptions
 from ..types.prompt import Prompt
 from ..types.prompt_created_by import PromptCreatedBy
 from ..types.prompt_organization import PromptOrganization
+from .indicators.client import AsyncIndicatorsClient, IndicatorsClient
+from .runs.client import AsyncRunsClient, RunsClient
 from .types.prompts_batch_predictions_response import PromptsBatchPredictionsResponse
 from .versions.client import AsyncVersionsClient, VersionsClient
 
@@ -22,6 +24,8 @@ class PromptsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.versions = VersionsClient(client_wrapper=self._client_wrapper)
+        self.runs = RunsClient(client_wrapper=self._client_wrapper)
+        self.indicators = IndicatorsClient(client_wrapper=self._client_wrapper)
 
     def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Prompt]:
         """
@@ -207,6 +211,8 @@ class AsyncPromptsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
+        self.runs = AsyncRunsClient(client_wrapper=self._client_wrapper)
+        self.indicators = AsyncIndicatorsClient(client_wrapper=self._client_wrapper)
 
     async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Prompt]:
         """

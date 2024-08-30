@@ -5,24 +5,32 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
-from .inference_run_created_by import InferenceRunCreatedBy
-from .inference_run_organization import InferenceRunOrganization
-from .inference_run_project_subset import InferenceRunProjectSubset
-from .inference_run_status import InferenceRunStatus
+from .key_indicators_item_additional_kpis_item import KeyIndicatorsItemAdditionalKpisItem
+from .key_indicators_item_extra_kpis_item import KeyIndicatorsItemExtraKpisItem
 
 
-class InferenceRun(pydantic_v1.BaseModel):
-    organization: typing.Optional[InferenceRunOrganization] = None
-    project: int
-    model_version: typing.Optional[str] = None
-    created_by: typing.Optional[InferenceRunCreatedBy] = None
-    project_subset: InferenceRunProjectSubset
-    status: typing.Optional[InferenceRunStatus] = None
-    job_id: typing.Optional[str] = None
-    created_at: typing.Optional[dt.datetime] = None
-    triggered_at: typing.Optional[dt.datetime] = None
-    predictions_updated_at: typing.Optional[dt.datetime] = None
-    completed_at: typing.Optional[dt.datetime] = None
+class KeyIndicatorsItem(pydantic_v1.BaseModel):
+    key: str = pydantic_v1.Field()
+    """
+    The key for this KPI, where you can find the value from inside main_kpi
+    """
+
+    title: str = pydantic_v1.Field()
+    """
+    The title for this metric, to be displayed to the user
+    """
+
+    main_kpi: str
+    secondary_kpi: typing.Optional[str] = None
+    additional_kpis: typing.Optional[typing.List[KeyIndicatorsItemAdditionalKpisItem]] = pydantic_v1.Field(default=None)
+    """
+    Additional KPIs to be displayed at the bottom of the box
+    """
+
+    extra_kpis: typing.Optional[typing.List[KeyIndicatorsItemExtraKpisItem]] = pydantic_v1.Field(default=None)
+    """
+    Extra KPIs to be displayed in the hover-tootip for that indicator
+    """
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

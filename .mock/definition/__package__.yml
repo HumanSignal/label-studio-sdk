@@ -2385,13 +2385,61 @@ types:
       project_subset: InferenceRunProjectSubset
       status: optional<InferenceRunStatus>
       job_id: optional<string>
-      total_predictions: optional<integer>
-      total_correct_predictions: optional<integer>
-      total_tasks: optional<integer>
       created_at: optional<datetime>
       triggered_at: optional<datetime>
       predictions_updated_at: optional<datetime>
       completed_at: optional<datetime>
+    source:
+      openapi: openapi/openapi.yaml
+  KeyIndicatorsItemAdditionalKpisItem:
+    properties:
+      key:
+        type: optional<string>
+        docs: >-
+          The key for this KPI, where you can find the value from inside
+          main_kpi
+      label:
+        type: optional<string>
+        docs: The label for this KPI, to be displayed to the user
+    source:
+      openapi: openapi/openapi.yaml
+  KeyIndicatorsItemExtraKpisItem:
+    properties:
+      key:
+        type: optional<string>
+        docs: >-
+          The key for this KPI, where you can find the value from inside
+          main_kpi
+      label:
+        type: optional<string>
+        docs: The label for this KPI, to be displayed to the user
+    source:
+      openapi: openapi/openapi.yaml
+  KeyIndicatorsItem:
+    properties:
+      key:
+        type: string
+        docs: >-
+          The key for this KPI, where you can find the value from inside
+          main_kpi
+      title:
+        type: string
+        docs: The title for this metric, to be displayed to the user
+      main_kpi: string
+      secondary_kpi: optional<string>
+      additional_kpis:
+        type: optional<list<KeyIndicatorsItemAdditionalKpisItem>>
+        docs: Additional KPIs to be displayed at the bottom of the box
+      extra_kpis:
+        type: optional<list<KeyIndicatorsItemExtraKpisItem>>
+        docs: Extra KPIs to be displayed in the hover-tootip for that indicator
+    source:
+      openapi: openapi/openapi.yaml
+  KeyIndicators: list<KeyIndicatorsItem>
+  KeyIndicatorValue:
+    properties:
+      title: optional<string>
+      values: optional<map<string, unknown>>
     source:
       openapi: openapi/openapi.yaml
   ModelProviderConnectionProvider:

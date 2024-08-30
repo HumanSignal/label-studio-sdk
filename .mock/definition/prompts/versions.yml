@@ -41,49 +41,5 @@ service:
               organization: 1
       audiences:
         - public
-    create_run:
-      path: /api/prompts/{id}/versions/{version_id}/inference-runs
-      method: POST
-      auth: true
-      docs: |
-        Run a prompt inference.
-      path-parameters:
-        id:
-          type: integer
-          docs: Prompt ID
-        version_id:
-          type: integer
-          docs: Prompt Version ID
-      display-name: Run prompt inference
-      request:
-        body: root.InferenceRun
-      response:
-        docs: ''
-        type: root.InferenceRun
-      examples:
-        - path-parameters:
-            id: 1
-            version_id: 1
-          request:
-            project: 1
-            project_subset: All
-          response:
-            body:
-              organization: 1
-              project: 1
-              model_version: model_version
-              created_by: 1
-              project_subset: All
-              status: Pending
-              job_id: job_id
-              total_predictions: 1
-              total_correct_predictions: 1
-              total_tasks: 1
-              created_at: '2024-01-15T09:30:00Z'
-              triggered_at: '2024-01-15T09:30:00Z'
-              predictions_updated_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-      audiences:
-        - public
   source:
     openapi: openapi/openapi.yaml
