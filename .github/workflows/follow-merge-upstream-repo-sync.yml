@@ -49,8 +49,6 @@ jobs:
       - name: Parse Follow Merge dispatch event payload
         uses: ./.github/actions-hub/actions/follow-merge-parse-payload
         id: fm
-        with:
-          payload: "${{ toJSON(github.event.client_payload) }}"
 
       - name: Find or Create branch
         uses: ./.github/actions-hub/actions/github-find-or-create-branch
