@@ -7,9 +7,8 @@ from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
-class AnnotationsCreateBulkResponse(pydantic_v1.BaseModel):
-    success: typing.Optional[bool] = None
-    message: typing.Optional[str] = None
+class AnnotationsCreateBulkResponseItem(pydantic_v1.BaseModel):
+    id: typing.Optional[int] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

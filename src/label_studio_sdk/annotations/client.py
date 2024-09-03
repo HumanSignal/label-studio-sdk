@@ -9,7 +9,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 from ..types.annotation import Annotation
-from .types.annotations_create_bulk_response import AnnotationsCreateBulkResponse
+from .types.annotations_create_bulk_response_item import AnnotationsCreateBulkResponseItem
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -389,7 +389,7 @@ class AnnotationsClient:
         project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AnnotationsCreateBulkResponse:
+    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
         """
         Create multiple annotations for specific tasks in a bulk operation.
 
@@ -408,7 +408,7 @@ class AnnotationsClient:
 
         Returns
         -------
-        AnnotationsCreateBulkResponse
+        typing.List[AnnotationsCreateBulkResponseItem]
             Annotations created successfully
 
         Examples
@@ -429,7 +429,7 @@ class AnnotationsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(AnnotationsCreateBulkResponse, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(typing.List[AnnotationsCreateBulkResponseItem], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -812,7 +812,7 @@ class AsyncAnnotationsClient:
         project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AnnotationsCreateBulkResponse:
+    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
         """
         Create multiple annotations for specific tasks in a bulk operation.
 
@@ -831,7 +831,7 @@ class AsyncAnnotationsClient:
 
         Returns
         -------
-        AnnotationsCreateBulkResponse
+        typing.List[AnnotationsCreateBulkResponseItem]
             Annotations created successfully
 
         Examples
@@ -852,7 +852,7 @@ class AsyncAnnotationsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(AnnotationsCreateBulkResponse, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(typing.List[AnnotationsCreateBulkResponseItem], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

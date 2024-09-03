@@ -438,21 +438,19 @@ service:
             result: optional<map<string, unknown>>
       response:
         docs: Annotations created successfully
-        type: AnnotationsCreateBulkResponse
+        type: list<AnnotationsCreateBulkResponseItem>
       examples:
         - request: {}
           response:
             body:
-              success: true
-              message: message
+              - id: 1
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
 types:
-  AnnotationsCreateBulkResponse:
+  AnnotationsCreateBulkResponseItem:
     properties:
-      success: optional<boolean>
-      message: optional<string>
+      id: optional<integer>
     source:
       openapi: openapi/openapi.yaml
