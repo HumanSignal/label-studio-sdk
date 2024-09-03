@@ -397,17 +397,23 @@ service:
             id: id
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
   MlCreateRequestAuthMethod:
     enum:
       - NONE
       - BASIC_AUTH
     docs: Auth method
+    source:
+      openapi: openapi/openapi.yaml
   MlCreateResponseAuthMethod:
     enum:
       - NONE
       - BASIC_AUTH
     docs: Auth method
+    source:
+      openapi: openapi/openapi.yaml
   MlCreateResponse:
     properties:
       url:
@@ -440,16 +446,22 @@ types:
       timeout:
         type: optional<integer>
         docs: Response model timeout
+    source:
+      openapi: openapi/openapi.yaml
   MlUpdateRequestAuthMethod:
     enum:
       - NONE
       - BASIC_AUTH
     docs: Auth method
+    source:
+      openapi: openapi/openapi.yaml
   MlUpdateResponseAuthMethod:
     enum:
       - NONE
       - BASIC_AUTH
     docs: Auth method
+    source:
+      openapi: openapi/openapi.yaml
   MlUpdateResponse:
     properties:
       url:
@@ -482,3 +494,5 @@ types:
       timeout:
         type: optional<integer>
         docs: Response model timeout
+    source:
+      openapi: openapi/openapi.yaml

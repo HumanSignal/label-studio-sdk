@@ -13,6 +13,8 @@ types:
         validation:
           format: uri
       results: list<root.OrganizationMemberUser>
+    source:
+      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
@@ -73,3 +75,5 @@ service:
         - path-parameters:
             id: id
             user_pk: 1
+  source:
+    openapi: openapi/openapi.yaml

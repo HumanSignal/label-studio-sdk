@@ -1,0 +1,39 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/storages/export
+      method: GET
+      auth: true
+      docs: Retrieve a list of the export storages of all types with their IDs.
+      display-name: List all export storages from the project
+      examples:
+        - {}
+      audiences:
+        - internal
+    list_types:
+      path: /api/storages/export/types
+      method: GET
+      auth: true
+      docs: Retrieve a list of the export storages types.
+      display-name: List all export storages types
+      response:
+        docs: ''
+        type: list<ExportStorageListTypesResponseItem>
+      examples:
+        - response:
+            body:
+              - name: name
+                title: title
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml
+types:
+  ExportStorageListTypesResponseItem:
+    properties:
+      name: optional<string>
+      title: optional<string>
+    source:
+      openapi: openapi/openapi.yaml

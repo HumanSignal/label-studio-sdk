@@ -421,3 +421,5 @@ service:
               last_created_by: 1
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml

@@ -112,3 +112,5 @@ service:
               created_by: 1
               users:
                 - 1
+  source:
+    openapi: openapi/openapi.yaml

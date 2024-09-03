@@ -2,7 +2,6 @@
 
 import typing
 
-from label_studio_sdk import FileUpload
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 
 from .utilities import validate_response
@@ -28,10 +27,10 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"id": 1, "file": "file"}
     expected_types: typing.Any = {"id": "integer", "file": None}
-    response = client.files.update(id=1, request=FileUpload())
+    response = client.files.update(id_=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.files.update(id=1, request=FileUpload())
+    async_response = await async_client.files.update(id_=1)
     validate_response(async_response, expected_response, expected_types)
 
 
