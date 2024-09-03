@@ -447,3 +447,13 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         ground_truth=True,
     )
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_create_bulk(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"success": True, "message": "message"}
+    expected_types: typing.Any = {"success": None, "message": None}
+    response = client.annotations.create_bulk()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.annotations.create_bulk()
+    validate_response(async_response, expected_response, expected_types)
