@@ -46,19 +46,23 @@ jobs:
           repository: HumanSignal/actions-hub
           path: ./.github/actions-hub
 
+      - name: Parse Follow Merge dispatch event payload
+        uses: ./.github/actions-hub/actions/follow-merge-parse-payload
+        id: fm
+
       - name: Find or Create branch
         uses: ./.github/actions-hub/actions/github-find-or-create-branch
         id: get-branch
         with:
           github_token: ${{ secrets.GIT_PAT }}
-          branch_name: "${{ github.event.client_payload.branch_name }}"
+          branch_name: "${{ steps.fm.outputs.branch_name }}"
 
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GIT_PAT }}
-          repository: ${{ github.event.client_payload.repo_name }}
-          ref: ${{ github.event.client_payload.branch_name }}
+          repository: ${{ steps.fm.outputs.repo_name }}
+          ref: ${{ steps.fm.outputs.branch_name }}
           path: "${{ env.FERN_WORKDIR }}"
 
       - name: Setup node
@@ -95,9 +99,9 @@ jobs:
         with:
           github_token: ${{ secrets.GIT_PAT }}
           branch_name: "${{ steps.get-branch.outputs.branch_name }}"
-          title: "${{ github.event.client_payload.title }}"
+          title: "${{ steps.fm.outputs.title }}"
           description: |
-            Hi @${{ github.event.client_payload.actor }}!
+            Hi @${{ steps.fm.outputs.actor }}!
             
             This PR was automaticaly generated via Follow Merge. 
             Please ensure that all linked upstream Pull Requests are merged before proceeding with this one.
@@ -108,7 +112,7 @@ jobs:
         with:
           github_token: ${{ secrets.GIT_PAT }}
           pullrequest_number: "${{ steps.get-pr.outputs.number }}"
-          reviewers: "${{ github.event.client_payload.actor }}"
+          reviewers: "${{ steps.fm.outputs.actor }}"
 
       - name: Link PR
         uses: ./.github/actions-hub/actions/github-link-upstream-pull-request
@@ -116,11 +120,10 @@ jobs:
         with:
           github_token: ${{ secrets.GIT_PAT }}
           pullrequest_number: "${{ steps.get-pr.outputs.number }}"
-          upstream_pullrequest_link: "${{ github.event.client_payload.html_url }}"
+          upstream_pullrequest_link: "${{ steps.fm.outputs.pr_html_url }}"
 
       - name: Convert to ready for review
-        if: |
-          github.event.client_payload.event_action == 'merged'
+        if: steps.fm.outputs.event_action == 'merged'
         id: ready-for-review-pr
         shell: bash
         env:
@@ -139,8 +142,7 @@ jobs:
 
       - name: Enable AutoMerge
         id: enable-pr-automerge
-        if: |
-          github.event.client_payload.event_action == 'merged'
+        if: steps.fm.outputs.event_action == 'merged'
         shell: bash
         env:
           GIT_PAT: ${{ secrets.GIT_PAT }}
