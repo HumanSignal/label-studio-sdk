@@ -9,7 +9,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.client_payload.branch_name }}
 
 env:
-  FERN_WORKDIR: "fern"
+  UPSTREAM_REPO_WORKDIR: "upstream"
 
 jobs:
   open:
@@ -63,7 +63,7 @@ jobs:
           token: ${{ secrets.GIT_PAT }}
           repository: ${{ steps.fm.outputs.repo_name }}
           ref: ${{ steps.fm.outputs.branch_name }}
-          path: "${{ env.FERN_WORKDIR }}"
+          path: "${{ env.UPSTREAM_REPO_WORKDIR }}"
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -78,19 +78,19 @@ jobs:
         env:
           BRANCH_NAME: "${{ steps.get-branch.outputs.branch_name }}"
           FERN_GENERATOR_PATH: "fern/generators.yml"
-        working-directory: "${{ env.FERN_WORKDIR }}"
+        working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
         run: |
           yq e --inplace ".groups.python-sdk-staging.generators[0].github.branch |= \"${BRANCH_NAME}\"" "${FERN_GENERATOR_PATH}"
           cat "${FERN_GENERATOR_PATH}"
 
       - name: Check Fern API is valid
-        working-directory: "${{ env.FERN_WORKDIR }}"
+        working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
         run: fern check
 
       - name: Generate Python SDK
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-        working-directory: "${{ env.FERN_WORKDIR }}"
+        working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
         run: fern generate --group python-sdk-staging --log-level debug
 
       - name: Find or Create PR
@@ -157,6 +157,17 @@ jobs:
                 }
               }
             }'
+
+      - name: Notify on failure
+        uses: ./.github/actions-hub/actions/github-create-comment
+        if: failure()
+        with:
+          github_token: ${{ secrets.GIT_PAT }}
+          repository: "${{ steps.fm.outputs.repo_name }}"
+          issue_number: "${{ steps.fm.outputs.pr_number }}"
+          body: |
+            Follow Merge downstrem workflow has failed. 
+            > [Workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
 
   others:
