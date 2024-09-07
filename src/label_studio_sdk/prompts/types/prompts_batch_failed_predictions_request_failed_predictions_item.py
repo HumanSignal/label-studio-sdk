@@ -7,7 +7,7 @@ from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
-class PromptsBatchFailedPredictionsRequestResultsItem(pydantic_v1.BaseModel):
+class PromptsBatchFailedPredictionsRequestFailedPredictionsItem(pydantic_v1.BaseModel):
     task_id: typing.Optional[int] = pydantic_v1.Field(default=None)
     """
     Task ID to associate the prediction with

@@ -13,7 +13,9 @@ from ..types.prompt_created_by import PromptCreatedBy
 from ..types.prompt_organization import PromptOrganization
 from .indicators.client import AsyncIndicatorsClient, IndicatorsClient
 from .runs.client import AsyncRunsClient, RunsClient
-from .types.prompts_batch_failed_predictions_request_results_item import PromptsBatchFailedPredictionsRequestResultsItem
+from .types.prompts_batch_failed_predictions_request_failed_predictions_item import (
+    PromptsBatchFailedPredictionsRequestFailedPredictionsItem,
+)
 from .types.prompts_batch_failed_predictions_response import PromptsBatchFailedPredictionsResponse
 from .types.prompts_batch_predictions_request_results_item import PromptsBatchPredictionsRequestResultsItem
 from .types.prompts_batch_predictions_response import PromptsBatchPredictionsResponse
@@ -214,7 +216,9 @@ class PromptsClient:
         self,
         *,
         modelrun_id: typing.Optional[int] = OMIT,
-        results: typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestResultsItem]] = OMIT,
+        failed_predictions: typing.Optional[
+            typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> PromptsBatchFailedPredictionsResponse:
         """
@@ -225,7 +229,7 @@ class PromptsClient:
         modelrun_id : typing.Optional[int]
             Model Run ID where the failed predictions came from
 
-        results : typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestResultsItem]]
+        failed_predictions : typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -247,7 +251,7 @@ class PromptsClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/model-run/batch-failed-predictions",
             method="POST",
-            json={"modelrun_id": modelrun_id, "results": results},
+            json={"modelrun_id": modelrun_id, "failed_predictions": failed_predictions},
             request_options=request_options,
             omit=OMIT,
         )
@@ -451,7 +455,9 @@ class AsyncPromptsClient:
         self,
         *,
         modelrun_id: typing.Optional[int] = OMIT,
-        results: typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestResultsItem]] = OMIT,
+        failed_predictions: typing.Optional[
+            typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
+        ] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> PromptsBatchFailedPredictionsResponse:
         """
@@ -462,7 +468,7 @@ class AsyncPromptsClient:
         modelrun_id : typing.Optional[int]
             Model Run ID where the failed predictions came from
 
-        results : typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestResultsItem]]
+        failed_predictions : typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -484,7 +490,7 @@ class AsyncPromptsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/model-run/batch-failed-predictions",
             method="POST",
-            json={"modelrun_id": modelrun_id, "results": results},
+            json={"modelrun_id": modelrun_id, "failed_predictions": failed_predictions},
             request_options=request_options,
             omit=OMIT,
         )

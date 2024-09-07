@@ -14220,8 +14220,8 @@ client.prompts.batch_failed_predictions()
 <dl>
 <dd>
 
-**results:** `typing.Optional[
-    typing.Sequence[PromptsBatchFailedPredictionsRequestResultsItem]
+**failed_predictions:** `typing.Optional[
+    typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
 ]` 
     
 </dd>

@@ -107,7 +107,8 @@ service:
             modelrun_id:
               type: optional<integer>
               docs: Model Run ID where the failed predictions came from
-            results: optional<list<PromptsBatchFailedPredictionsRequestResultsItem>>
+            failed_predictions: >-
+              optional<list<PromptsBatchFailedPredictionsRequestFailedPredictionsItem>>
       response:
         docs: ''
         type: PromptsBatchFailedPredictionsResponse
@@ -162,7 +163,7 @@ types:
       detail: optional<string>
     source:
       openapi: openapi/openapi.yaml
-  PromptsBatchFailedPredictionsRequestResultsItem:
+  PromptsBatchFailedPredictionsRequestFailedPredictionsItem:
     properties:
       task_id:
         type: optional<integer>

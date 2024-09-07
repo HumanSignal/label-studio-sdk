@@ -140,7 +140,7 @@ from .ml import (
 )
 from .projects import ProjectsCreateResponse, ProjectsImportTasksResponse, ProjectsListResponse, ProjectsUpdateResponse
 from .prompts import (
-    PromptsBatchFailedPredictionsRequestResultsItem,
+    PromptsBatchFailedPredictionsRequestFailedPredictionsItem,
     PromptsBatchFailedPredictionsResponse,
     PromptsBatchPredictionsRequestResultsItem,
     PromptsBatchPredictionsResponse,
@@ -265,7 +265,7 @@ __all__ = [
     "PromptVersionCreatedBy",
     "PromptVersionOrganization",
     "PromptVersionProvider",
-    "PromptsBatchFailedPredictionsRequestResultsItem",
+    "PromptsBatchFailedPredictionsRequestFailedPredictionsItem",
     "PromptsBatchFailedPredictionsResponse",
     "PromptsBatchPredictionsRequestResultsItem",
     "PromptsBatchPredictionsResponse",
