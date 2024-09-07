@@ -88,3 +88,13 @@ async def test_batch_predictions(client: LabelStudio, async_client: AsyncLabelSt
 
     async_response = await async_client.prompts.batch_predictions()
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_batch_failed_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"detail": "detail"}
+    expected_types: typing.Any = {"detail": None}
+    response = client.prompts.batch_failed_predictions()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.batch_failed_predictions()
+    validate_response(async_response, expected_response, expected_types)

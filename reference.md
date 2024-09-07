@@ -14136,7 +14136,7 @@ client.prompts.batch_predictions()
 <dl>
 <dd>
 
-**modelrun_id:** `typing.Optional[int]` 
+**modelrun_id:** `typing.Optional[int]` — Model Run ID to associate the prediction with
     
 </dd>
 </dl>
@@ -14144,7 +14144,85 @@ client.prompts.batch_predictions()
 <dl>
 <dd>
 
-**results:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` 
+**results:** `typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_failed_predictions</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new batch of failed predictions.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.batch_failed_predictions()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**modelrun_id:** `typing.Optional[int]` — Model Run ID where the failed predictions came from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**results:** `typing.Optional[
+    typing.Sequence[PromptsBatchFailedPredictionsRequestResultsItem]
+]` 
     
 </dd>
 </dl>

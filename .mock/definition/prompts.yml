@@ -79,8 +79,10 @@ service:
         name: PromptsBatchPredictionsRequest
         body:
           properties:
-            modelrun_id: optional<integer>
-            results: optional<list<map<string, unknown>>>
+            modelrun_id:
+              type: optional<integer>
+              docs: Model Run ID to associate the prediction with
+            results: optional<list<PromptsBatchPredictionsRequestResultsItem>>
       response:
         docs: ''
         type: PromptsBatchPredictionsResponse
@@ -91,10 +93,90 @@ service:
               detail: detail
       audiences:
         - public
+        - null
+    batch_failed_predictions:
+      path: /api/model-run/batch-failed-predictions
+      method: POST
+      auth: true
+      docs: |
+        Create a new batch of failed predictions.
+      display-name: Create batch of failed predictions
+      request:
+        name: PromptsBatchFailedPredictionsRequest
+        body:
+          properties:
+            modelrun_id:
+              type: optional<integer>
+              docs: Model Run ID where the failed predictions came from
+            results: optional<list<PromptsBatchFailedPredictionsRequestResultsItem>>
+      response:
+        docs: ''
+        type: PromptsBatchFailedPredictionsResponse
+      examples:
+        - request: {}
+          response:
+            body:
+              detail: detail
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml
 types:
+  PromptsBatchPredictionsRequestResultsItem:
+    properties:
+      task_id:
+        type: optional<integer>
+        docs: Task ID to associate the prediction with
+      output:
+        type: optional<map<string, unknown>>
+        docs: >
+          Prediction output that contains keys from labeling config. Each key
+          must be a valid control tag name from the labeling config. For
+          example, given the output: ```json {"sentiment": "positive"} ``` it
+          will be converted to the internal LS annotation format: ```json {
+            "value": {
+              "choices": ["positive"]
+            },
+            "from_name": "label",
+            "to_name": "",
+            ...
+          } ```
+      prompt_tokens:
+        type: optional<integer>
+        docs: Number of tokens in the prompt
+      completion_tokens:
+        type: optional<integer>
+        docs: Number of tokens in the completion
+      prompt_cost_usd:
+        type: optional<float>
+        docs: Cost of the prompt (in USD)
+      completion_cost_usd:
+        type: optional<float>
+        docs: Cost of the completion (in USD)
+      total_cost_usd:
+        type: optional<float>
+        docs: Total cost of the inference (in USD)
+    source:
+      openapi: openapi/openapi.yaml
   PromptsBatchPredictionsResponse:
+    properties:
+      detail: optional<string>
+    source:
+      openapi: openapi/openapi.yaml
+  PromptsBatchFailedPredictionsRequestResultsItem:
+    properties:
+      task_id:
+        type: optional<integer>
+        docs: Task ID to associate the prediction with
+      error_type:
+        type: optional<string>
+        docs: Type of error (e.g. "Timeout", "Rate Limit", etc)
+      message:
+        type: optional<string>
+        docs: Error message details
+    source:
+      openapi: openapi/openapi.yaml
+  PromptsBatchFailedPredictionsResponse:
     properties:
       detail: optional<string>
     source:

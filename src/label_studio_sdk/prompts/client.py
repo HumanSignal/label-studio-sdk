@@ -13,6 +13,9 @@ from ..types.prompt_created_by import PromptCreatedBy
 from ..types.prompt_organization import PromptOrganization
 from .indicators.client import AsyncIndicatorsClient, IndicatorsClient
 from .runs.client import AsyncRunsClient, RunsClient
+from .types.prompts_batch_failed_predictions_request_results_item import PromptsBatchFailedPredictionsRequestResultsItem
+from .types.prompts_batch_failed_predictions_response import PromptsBatchFailedPredictionsResponse
+from .types.prompts_batch_predictions_request_results_item import PromptsBatchPredictionsRequestResultsItem
 from .types.prompts_batch_predictions_response import PromptsBatchPredictionsResponse
 from .versions.client import AsyncVersionsClient, VersionsClient
 
@@ -162,7 +165,7 @@ class PromptsClient:
         self,
         *,
         modelrun_id: typing.Optional[int] = OMIT,
-        results: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
+        results: typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> PromptsBatchPredictionsResponse:
         """
@@ -171,8 +174,9 @@ class PromptsClient:
         Parameters
         ----------
         modelrun_id : typing.Optional[int]
+            Model Run ID to associate the prediction with
 
-        results : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
+        results : typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -201,6 +205,55 @@ class PromptsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return pydantic_v1.parse_obj_as(PromptsBatchPredictionsResponse, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def batch_failed_predictions(
+        self,
+        *,
+        modelrun_id: typing.Optional[int] = OMIT,
+        results: typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestResultsItem]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> PromptsBatchFailedPredictionsResponse:
+        """
+        Create a new batch of failed predictions.
+
+        Parameters
+        ----------
+        modelrun_id : typing.Optional[int]
+            Model Run ID where the failed predictions came from
+
+        results : typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestResultsItem]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PromptsBatchFailedPredictionsResponse
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.batch_failed_predictions()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/model-run/batch-failed-predictions",
+            method="POST",
+            json={"modelrun_id": modelrun_id, "results": results},
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(PromptsBatchFailedPredictionsResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -349,7 +402,7 @@ class AsyncPromptsClient:
         self,
         *,
         modelrun_id: typing.Optional[int] = OMIT,
-        results: typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]] = OMIT,
+        results: typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None
     ) -> PromptsBatchPredictionsResponse:
         """
@@ -358,8 +411,9 @@ class AsyncPromptsClient:
         Parameters
         ----------
         modelrun_id : typing.Optional[int]
+            Model Run ID to associate the prediction with
 
-        results : typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]
+        results : typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -388,6 +442,55 @@ class AsyncPromptsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return pydantic_v1.parse_obj_as(PromptsBatchPredictionsResponse, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def batch_failed_predictions(
+        self,
+        *,
+        modelrun_id: typing.Optional[int] = OMIT,
+        results: typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestResultsItem]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None
+    ) -> PromptsBatchFailedPredictionsResponse:
+        """
+        Create a new batch of failed predictions.
+
+        Parameters
+        ----------
+        modelrun_id : typing.Optional[int]
+            Model Run ID where the failed predictions came from
+
+        results : typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestResultsItem]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PromptsBatchFailedPredictionsResponse
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.batch_failed_predictions()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/model-run/batch-failed-predictions",
+            method="POST",
+            json={"modelrun_id": modelrun_id, "results": results},
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(PromptsBatchFailedPredictionsResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
