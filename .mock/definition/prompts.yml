@@ -93,7 +93,6 @@ service:
               detail: detail
       audiences:
         - public
-        - null
     batch_failed_predictions:
       path: /api/model-run/batch-failed-predictions
       method: POST
