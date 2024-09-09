@@ -9,6 +9,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 from ..types.annotation import Annotation
+from .types.annotations_create_bulk_response_item import AnnotationsCreateBulkResponseItem
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -380,6 +381,60 @@ class AnnotationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def create_bulk(
+        self,
+        *,
+        tasks: typing.Optional[typing.Sequence[int]] = OMIT,
+        lead_time: typing.Optional[float] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        result: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
+        """
+        Create multiple annotations for specific tasks in a bulk operation.
+
+        Parameters
+        ----------
+        tasks : typing.Optional[typing.Sequence[int]]
+
+        lead_time : typing.Optional[float]
+
+        project : typing.Optional[int]
+
+        result : typing.Optional[typing.Dict[str, typing.Any]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[AnnotationsCreateBulkResponseItem]
+            Annotations created successfully
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.annotations.create_bulk()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/annotations/bulk",
+            method="POST",
+            json={"tasks": tasks, "lead_time": lead_time, "project": project, "result": result},
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[AnnotationsCreateBulkResponseItem], _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncAnnotationsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -744,6 +799,60 @@ class AsyncAnnotationsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return pydantic_v1.parse_obj_as(Annotation, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def create_bulk(
+        self,
+        *,
+        tasks: typing.Optional[typing.Sequence[int]] = OMIT,
+        lead_time: typing.Optional[float] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        result: typing.Optional[typing.Dict[str, typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
+        """
+        Create multiple annotations for specific tasks in a bulk operation.
+
+        Parameters
+        ----------
+        tasks : typing.Optional[typing.Sequence[int]]
+
+        lead_time : typing.Optional[float]
+
+        project : typing.Optional[int]
+
+        result : typing.Optional[typing.Dict[str, typing.Any]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[AnnotationsCreateBulkResponseItem]
+            Annotations created successfully
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.annotations.create_bulk()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/annotations/bulk",
+            method="POST",
+            json={"tasks": tasks, "lead_time": lead_time, "project": project, "result": result},
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[AnnotationsCreateBulkResponseItem], _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

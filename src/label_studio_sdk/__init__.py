@@ -127,6 +127,7 @@ from .actions import (
     ActionsCreateRequestSelectedItemsExcluded,
     ActionsCreateRequestSelectedItemsIncluded,
 )
+from .annotations import AnnotationsCreateBulkResponseItem
 from .environment import LabelStudioEnvironment
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
@@ -178,6 +179,7 @@ __all__ = [
     "Annotation",
     "AnnotationFilterOptions",
     "AnnotationLastAction",
+    "AnnotationsCreateBulkResponseItem",
     "AnnotationsDmField",
     "AnnotationsDmFieldLastAction",
     "AzureBlobExportStorage",
