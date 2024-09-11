@@ -26,6 +26,7 @@ jobs:
       - uses: hmarr/debug-action@v3.0.0
 
       - name: Check user's membership
+        if: github.actor != 'fern-api[bot]'
         uses: actions/github-script@v7
         id: check-membership
         with:
