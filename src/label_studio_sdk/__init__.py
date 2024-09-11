@@ -127,6 +127,7 @@ from .actions import (
     ActionsCreateRequestSelectedItemsExcluded,
     ActionsCreateRequestSelectedItemsIncluded,
 )
+from .annotations import AnnotationsCreateBulkResponseItem
 from .environment import LabelStudioEnvironment
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
@@ -139,7 +140,12 @@ from .ml import (
     MlUpdateResponseAuthMethod,
 )
 from .projects import ProjectsCreateResponse, ProjectsImportTasksResponse, ProjectsListResponse, ProjectsUpdateResponse
-from .prompts import PromptsBatchPredictionsResponse
+from .prompts import (
+    PromptsBatchFailedPredictionsRequestFailedPredictionsItem,
+    PromptsBatchFailedPredictionsResponse,
+    PromptsBatchPredictionsRequestResultsItem,
+    PromptsBatchPredictionsResponse,
+)
 from .tasks import TasksListRequestFields, TasksListResponse
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
 from .version import __version__
@@ -178,6 +184,7 @@ __all__ = [
     "Annotation",
     "AnnotationFilterOptions",
     "AnnotationLastAction",
+    "AnnotationsCreateBulkResponseItem",
     "AnnotationsDmField",
     "AnnotationsDmFieldLastAction",
     "AzureBlobExportStorage",
@@ -260,6 +267,9 @@ __all__ = [
     "PromptVersionCreatedBy",
     "PromptVersionOrganization",
     "PromptVersionProvider",
+    "PromptsBatchFailedPredictionsRequestFailedPredictionsItem",
+    "PromptsBatchFailedPredictionsResponse",
+    "PromptsBatchPredictionsRequestResultsItem",
     "PromptsBatchPredictionsResponse",
     "RedisExportStorage",
     "RedisExportStorageStatus",

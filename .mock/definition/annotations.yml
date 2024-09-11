@@ -421,5 +421,36 @@ service:
               last_created_by: 1
       audiences:
         - public
+    createBulk:
+      path: /api/annotations/bulk
+      method: POST
+      auth: true
+      docs: |
+        Create multiple annotations for specific tasks in a bulk operation.
+      display-name: Create annotations in bulk
+      request:
+        name: AnnotationsCreateBulkRequest
+        body:
+          properties:
+            tasks: optional<list<integer>>
+            lead_time: optional<double>
+            project: optional<integer>
+            result: optional<map<string, unknown>>
+      response:
+        docs: Annotations created successfully
+        type: list<AnnotationsCreateBulkResponseItem>
+      examples:
+        - request: {}
+          response:
+            body:
+              - id: 1
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml
+types:
+  AnnotationsCreateBulkResponseItem:
+    properties:
+      id: optional<integer>
+    source:
+      openapi: openapi/openapi.yaml
