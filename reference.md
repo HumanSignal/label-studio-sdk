@@ -14437,6 +14437,14 @@ client.prompts.versions.create(
 <dl>
 <dd>
 
+**model_provider_connection:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **created_by:** `typing.Optional[PromptVersionCreatedBy]` 
     
 </dd>

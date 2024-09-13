@@ -32,6 +32,7 @@ service:
             body:
               title: title
               parent_model: 1
+              model_provider_connection: 1
               prompt: prompt
               provider: OpenAI
               provider_model_id: provider_model_id

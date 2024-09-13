@@ -2337,6 +2337,7 @@ types:
         validation:
           maxLength: 500
       parent_model: optional<integer>
+      model_provider_connection: optional<integer>
       prompt: string
       provider: PromptVersionProvider
       provider_model_id: string
