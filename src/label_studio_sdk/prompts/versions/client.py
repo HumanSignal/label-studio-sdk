@@ -31,6 +31,7 @@ class VersionsClient:
         provider: PromptVersionProvider,
         provider_model_id: str,
         parent_model: typing.Optional[int] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
         created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
@@ -92,6 +93,7 @@ class VersionsClient:
             json={
                 "title": title,
                 "parent_model": parent_model,
+                "model_provider_connection": model_provider_connection,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
@@ -125,6 +127,7 @@ class AsyncVersionsClient:
         provider: PromptVersionProvider,
         provider_model_id: str,
         parent_model: typing.Optional[int] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
         created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
@@ -186,6 +189,7 @@ class AsyncVersionsClient:
             json={
                 "title": title,
                 "parent_model": parent_model,
+                "model_provider_connection": model_provider_connection,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
