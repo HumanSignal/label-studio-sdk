@@ -11,6 +11,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_response: typing.Any = {
         "title": "title",
         "parent_model": 1,
+        "model_provider_connection": 1,
         "prompt": "prompt",
         "provider": "OpenAI",
         "provider_model_id": "provider_model_id",
@@ -22,6 +23,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_types: typing.Any = {
         "title": None,
         "parent_model": "integer",
+        "model_provider_connection": "integer",
         "prompt": None,
         "provider": None,
         "provider_model_id": None,

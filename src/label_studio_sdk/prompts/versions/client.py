@@ -56,6 +56,8 @@ class VersionsClient:
 
         parent_model : typing.Optional[int]
 
+        model_provider_connection : typing.Optional[int]
+
         created_by : typing.Optional[PromptVersionCreatedBy]
 
         created_at : typing.Optional[dt.datetime]
@@ -151,6 +153,8 @@ class AsyncVersionsClient:
         provider_model_id : str
 
         parent_model : typing.Optional[int]
+
+        model_provider_connection : typing.Optional[int]
 
         created_by : typing.Optional[PromptVersionCreatedBy]
 
