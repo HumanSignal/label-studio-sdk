@@ -53,11 +53,7 @@ service:
       examples:
         - path-parameters:
             id: 1
-          request:
-            title: title
-            prompt: prompt
-            provider: OpenAI
-            provider_model_id: provider_model_id
+          request: {}
           response:
             body:
               title: title
@@ -148,11 +144,7 @@ service:
         - path-parameters:
             id: 1
             version_id: 1
-          request:
-            title: title
-            prompt: prompt
-            provider: OpenAI
-            provider_model_id: provider_model_id
+          request: {}
           response:
             body:
               title: title

@@ -65,11 +65,11 @@ class VersionsClient:
         self,
         id: int,
         *,
-        title: str,
-        prompt: str,
-        provider: PromptVersionProvider,
-        provider_model_id: str,
+        title: typing.Optional[str] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
+        prompt: typing.Optional[str] = OMIT,
+        provider: typing.Optional[PromptVersionProvider] = OMIT,
+        provider_model_id: typing.Optional[str] = OMIT,
         created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
@@ -84,15 +84,15 @@ class VersionsClient:
         id : int
             Prompt ID
 
-        title : str
-
-        prompt : str
-
-        provider : PromptVersionProvider
-
-        provider_model_id : str
+        title : typing.Optional[str]
 
         parent_model : typing.Optional[int]
+
+        prompt : typing.Optional[str]
+
+        provider : typing.Optional[PromptVersionProvider]
+
+        provider_model_id : typing.Optional[str]
 
         created_by : typing.Optional[PromptVersionCreatedBy]
 
@@ -119,10 +119,6 @@ class VersionsClient:
         )
         client.prompts.versions.create(
             id=1,
-            title="title",
-            prompt="prompt",
-            provider="OpenAI",
-            provider_model_id="provider_model_id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -246,11 +242,11 @@ class VersionsClient:
         id: int,
         version_id: int,
         *,
-        title: str,
-        prompt: str,
-        provider: PromptVersionProvider,
-        provider_model_id: str,
+        title: typing.Optional[str] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
+        prompt: typing.Optional[str] = OMIT,
+        provider: typing.Optional[PromptVersionProvider] = OMIT,
+        provider_model_id: typing.Optional[str] = OMIT,
         created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
@@ -268,15 +264,15 @@ class VersionsClient:
         version_id : int
             Prompt Version ID
 
-        title : str
-
-        prompt : str
-
-        provider : PromptVersionProvider
-
-        provider_model_id : str
+        title : typing.Optional[str]
 
         parent_model : typing.Optional[int]
+
+        prompt : typing.Optional[str]
+
+        provider : typing.Optional[PromptVersionProvider]
+
+        provider_model_id : typing.Optional[str]
 
         created_by : typing.Optional[PromptVersionCreatedBy]
 
@@ -304,10 +300,6 @@ class VersionsClient:
         client.prompts.versions.update(
             id=1,
             version_id=1,
-            title="title",
-            prompt="prompt",
-            provider="OpenAI",
-            provider_model_id="provider_model_id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -385,11 +377,11 @@ class AsyncVersionsClient:
         self,
         id: int,
         *,
-        title: str,
-        prompt: str,
-        provider: PromptVersionProvider,
-        provider_model_id: str,
+        title: typing.Optional[str] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
+        prompt: typing.Optional[str] = OMIT,
+        provider: typing.Optional[PromptVersionProvider] = OMIT,
+        provider_model_id: typing.Optional[str] = OMIT,
         created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
@@ -404,15 +396,15 @@ class AsyncVersionsClient:
         id : int
             Prompt ID
 
-        title : str
-
-        prompt : str
-
-        provider : PromptVersionProvider
-
-        provider_model_id : str
+        title : typing.Optional[str]
 
         parent_model : typing.Optional[int]
+
+        prompt : typing.Optional[str]
+
+        provider : typing.Optional[PromptVersionProvider]
+
+        provider_model_id : typing.Optional[str]
 
         created_by : typing.Optional[PromptVersionCreatedBy]
 
@@ -439,10 +431,6 @@ class AsyncVersionsClient:
         )
         await client.prompts.versions.create(
             id=1,
-            title="title",
-            prompt="prompt",
-            provider="OpenAI",
-            provider_model_id="provider_model_id",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -568,11 +556,11 @@ class AsyncVersionsClient:
         id: int,
         version_id: int,
         *,
-        title: str,
-        prompt: str,
-        provider: PromptVersionProvider,
-        provider_model_id: str,
+        title: typing.Optional[str] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
+        prompt: typing.Optional[str] = OMIT,
+        provider: typing.Optional[PromptVersionProvider] = OMIT,
+        provider_model_id: typing.Optional[str] = OMIT,
         created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
@@ -590,15 +578,15 @@ class AsyncVersionsClient:
         version_id : int
             Prompt Version ID
 
-        title : str
-
-        prompt : str
-
-        provider : PromptVersionProvider
-
-        provider_model_id : str
+        title : typing.Optional[str]
 
         parent_model : typing.Optional[int]
+
+        prompt : typing.Optional[str]
+
+        provider : typing.Optional[PromptVersionProvider]
+
+        provider_model_id : typing.Optional[str]
 
         created_by : typing.Optional[PromptVersionCreatedBy]
 
@@ -626,10 +614,6 @@ class AsyncVersionsClient:
         await client.prompts.versions.update(
             id=1,
             version_id=1,
-            title="title",
-            prompt="prompt",
-            provider="OpenAI",
-            provider_model_id="provider_model_id",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

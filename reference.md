@@ -14732,10 +14732,6 @@ client = LabelStudio(
 )
 client.prompts.versions.create(
     id=1,
-    title="title",
-    prompt="prompt",
-    provider="OpenAI",
-    provider_model_id="provider_model_id",
 )
 
 ```
@@ -14760,31 +14756,7 @@ client.prompts.versions.create(
 <dl>
 <dd>
 
-**title:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider:** `PromptVersionProvider` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider_model_id:** `str` 
+**title:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -14793,6 +14765,30 @@ client.prompts.versions.create(
 <dd>
 
 **parent_model:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provider:** `typing.Optional[PromptVersionProvider]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provider_model_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -15037,10 +15033,6 @@ client = LabelStudio(
 client.prompts.versions.update(
     id=1,
     version_id=1,
-    title="title",
-    prompt="prompt",
-    provider="OpenAI",
-    provider_model_id="provider_model_id",
 )
 
 ```
@@ -15073,31 +15065,7 @@ client.prompts.versions.update(
 <dl>
 <dd>
 
-**title:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider:** `PromptVersionProvider` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider_model_id:** `str` 
+**title:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -15106,6 +15074,30 @@ client.prompts.versions.update(
 <dd>
 
 **parent_model:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provider:** `typing.Optional[PromptVersionProvider]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provider_model_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>

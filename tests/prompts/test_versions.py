@@ -67,14 +67,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "updated_at": "datetime",
         "organization": "integer",
     }
-    response = client.prompts.versions.create(
-        id=1, title="title", prompt="prompt", provider="OpenAI", provider_model_id="provider_model_id"
-    )
+    response = client.prompts.versions.create(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.create(
-        id=1, title="title", prompt="prompt", provider="OpenAI", provider_model_id="provider_model_id"
-    )
+    async_response = await async_client.prompts.versions.create(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -138,12 +134,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "updated_at": "datetime",
         "organization": "integer",
     }
-    response = client.prompts.versions.update(
-        id=1, version_id=1, title="title", prompt="prompt", provider="OpenAI", provider_model_id="provider_model_id"
-    )
+    response = client.prompts.versions.update(id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.update(
-        id=1, version_id=1, title="title", prompt="prompt", provider="OpenAI", provider_model_id="provider_model_id"
-    )
+    async_response = await async_client.prompts.versions.update(id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
