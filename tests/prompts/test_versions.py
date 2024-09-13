@@ -7,6 +7,43 @@ from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
 from ..utilities import validate_response
 
 
+async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = [
+        {
+            "title": "title",
+            "parent_model": 1,
+            "prompt": "prompt",
+            "provider": "OpenAI",
+            "provider_model_id": "provider_model_id",
+            "created_by": 1,
+            "created_at": "2024-01-15T09:30:00Z",
+            "updated_at": "2024-01-15T09:30:00Z",
+            "organization": 1,
+        }
+    ]
+    expected_types: typing.Any = (
+        "list",
+        {
+            0: {
+                "title": None,
+                "parent_model": "integer",
+                "prompt": None,
+                "provider": None,
+                "provider_model_id": None,
+                "created_by": "integer",
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "organization": "integer",
+            }
+        },
+    )
+    response = client.prompts.versions.list(id=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.versions.list(id=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "title": "title",
@@ -37,5 +74,76 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
     async_response = await async_client.prompts.versions.create(
         id=1, title="title", prompt="prompt", provider="OpenAI", provider_model_id="provider_model_id"
+    )
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "title": "title",
+        "parent_model": 1,
+        "prompt": "prompt",
+        "provider": "OpenAI",
+        "provider_model_id": "provider_model_id",
+        "created_by": 1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "updated_at": "2024-01-15T09:30:00Z",
+        "organization": 1,
+    }
+    expected_types: typing.Any = {
+        "title": None,
+        "parent_model": "integer",
+        "prompt": None,
+        "provider": None,
+        "provider_model_id": None,
+        "created_by": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "organization": "integer",
+    }
+    response = client.prompts.versions.get(id=1, version_id=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.versions.get(id=1, version_id=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert client.prompts.versions.delete(id=1, version_id=1) is None  # type: ignore[func-returns-value]
+
+    assert await async_client.prompts.versions.delete(id=1, version_id=1) is None  # type: ignore[func-returns-value]
+
+
+async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "title": "title",
+        "parent_model": 1,
+        "prompt": "prompt",
+        "provider": "OpenAI",
+        "provider_model_id": "provider_model_id",
+        "created_by": 1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "updated_at": "2024-01-15T09:30:00Z",
+        "organization": 1,
+    }
+    expected_types: typing.Any = {
+        "title": None,
+        "parent_model": "integer",
+        "prompt": None,
+        "provider": None,
+        "provider_model_id": None,
+        "created_by": "integer",
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "organization": "integer",
+    }
+    response = client.prompts.versions.update(
+        id=1, version_id=1, title="title", prompt="prompt", provider="OpenAI", provider_model_id="provider_model_id"
+    )
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.versions.update(
+        id=1, version_id=1, title="title", prompt="prompt", provider="OpenAI", provider_model_id="provider_model_id"
     )
     validate_response(async_response, expected_response, expected_types)

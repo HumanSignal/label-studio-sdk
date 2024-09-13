@@ -22,6 +22,45 @@ class VersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[PromptVersion]:
+        """
+        Get a list of prompt versions.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[PromptVersion]
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.versions.list(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/versions", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[PromptVersion], _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def create(
         self,
         id: int,
@@ -111,10 +150,236 @@ class VersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get(
+        self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> PromptVersion:
+        """
+        Get a prompt version by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PromptVersion
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.versions.get(
+            id=1,
+            version_id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(PromptVersion, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete(self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a prompt version by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.versions.delete(
+            id=1,
+            version_id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update(
+        self,
+        id: int,
+        version_id: int,
+        *,
+        title: str,
+        prompt: str,
+        provider: PromptVersionProvider,
+        provider_model_id: str,
+        parent_model: typing.Optional[int] = OMIT,
+        created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
+        created_at: typing.Optional[dt.datetime] = OMIT,
+        updated_at: typing.Optional[dt.datetime] = OMIT,
+        organization: typing.Optional[PromptVersionOrganization] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PromptVersion:
+        """
+        Update a prompt version by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        title : str
+
+        prompt : str
+
+        provider : PromptVersionProvider
+
+        provider_model_id : str
+
+        parent_model : typing.Optional[int]
+
+        created_by : typing.Optional[PromptVersionCreatedBy]
+
+        created_at : typing.Optional[dt.datetime]
+
+        updated_at : typing.Optional[dt.datetime]
+
+        organization : typing.Optional[PromptVersionOrganization]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PromptVersion
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.versions.update(
+            id=1,
+            version_id=1,
+            title="title",
+            prompt="prompt",
+            provider="OpenAI",
+            provider_model_id="provider_model_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
+            method="PATCH",
+            json={
+                "title": title,
+                "parent_model": parent_model,
+                "prompt": prompt,
+                "provider": provider,
+                "provider_model_id": provider_model_id,
+                "created_by": created_by,
+                "created_at": created_at,
+                "updated_at": updated_at,
+                "organization": organization,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(PromptVersion, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def list(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[PromptVersion]:
+        """
+        Get a list of prompt versions.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[PromptVersion]
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.versions.list(
+            id=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/versions", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[PromptVersion], _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
         self,
@@ -183,6 +448,193 @@ class AsyncVersionsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/prompts/{jsonable_encoder(id)}/versions",
             method="POST",
+            json={
+                "title": title,
+                "parent_model": parent_model,
+                "prompt": prompt,
+                "provider": provider,
+                "provider_model_id": provider_model_id,
+                "created_by": created_by,
+                "created_at": created_at,
+                "updated_at": updated_at,
+                "organization": organization,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(PromptVersion, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(
+        self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> PromptVersion:
+        """
+        Get a prompt version by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PromptVersion
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.versions.get(
+            id=1,
+            version_id=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(PromptVersion, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete(
+        self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Delete a prompt version by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.versions.delete(
+            id=1,
+            version_id=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update(
+        self,
+        id: int,
+        version_id: int,
+        *,
+        title: str,
+        prompt: str,
+        provider: PromptVersionProvider,
+        provider_model_id: str,
+        parent_model: typing.Optional[int] = OMIT,
+        created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
+        created_at: typing.Optional[dt.datetime] = OMIT,
+        updated_at: typing.Optional[dt.datetime] = OMIT,
+        organization: typing.Optional[PromptVersionOrganization] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PromptVersion:
+        """
+        Update a prompt version by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        title : str
+
+        prompt : str
+
+        provider : PromptVersionProvider
+
+        provider_model_id : str
+
+        parent_model : typing.Optional[int]
+
+        created_by : typing.Optional[PromptVersionCreatedBy]
+
+        created_at : typing.Optional[dt.datetime]
+
+        updated_at : typing.Optional[dt.datetime]
+
+        organization : typing.Optional[PromptVersionOrganization]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PromptVersion
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.versions.update(
+            id=1,
+            version_id=1,
+            title="title",
+            prompt="prompt",
+            provider="OpenAI",
+            provider_model_id="provider_model_id",
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
+            method="PATCH",
             json={
                 "title": title,
                 "parent_model": parent_model,
