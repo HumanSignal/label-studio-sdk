@@ -67,6 +67,7 @@ class VersionsClient:
         *,
         title: typing.Optional[str] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[PromptVersionProvider] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
@@ -87,6 +88,8 @@ class VersionsClient:
         title : typing.Optional[str]
 
         parent_model : typing.Optional[int]
+
+        model_provider_connection : typing.Optional[int]
 
         prompt : typing.Optional[str]
 
@@ -127,6 +130,7 @@ class VersionsClient:
             json={
                 "title": title,
                 "parent_model": parent_model,
+                "model_provider_connection": model_provider_connection,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
@@ -244,6 +248,7 @@ class VersionsClient:
         *,
         title: typing.Optional[str] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[PromptVersionProvider] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
@@ -267,6 +272,8 @@ class VersionsClient:
         title : typing.Optional[str]
 
         parent_model : typing.Optional[int]
+
+        model_provider_connection : typing.Optional[int]
 
         prompt : typing.Optional[str]
 
@@ -308,6 +315,7 @@ class VersionsClient:
             json={
                 "title": title,
                 "parent_model": parent_model,
+                "model_provider_connection": model_provider_connection,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
@@ -379,6 +387,7 @@ class AsyncVersionsClient:
         *,
         title: typing.Optional[str] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[PromptVersionProvider] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
@@ -399,6 +408,8 @@ class AsyncVersionsClient:
         title : typing.Optional[str]
 
         parent_model : typing.Optional[int]
+
+        model_provider_connection : typing.Optional[int]
 
         prompt : typing.Optional[str]
 
@@ -439,6 +450,7 @@ class AsyncVersionsClient:
             json={
                 "title": title,
                 "parent_model": parent_model,
+                "model_provider_connection": model_provider_connection,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
@@ -558,6 +570,7 @@ class AsyncVersionsClient:
         *,
         title: typing.Optional[str] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[PromptVersionProvider] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
@@ -581,6 +594,8 @@ class AsyncVersionsClient:
         title : typing.Optional[str]
 
         parent_model : typing.Optional[int]
+
+        model_provider_connection : typing.Optional[int]
 
         prompt : typing.Optional[str]
 
@@ -622,6 +637,7 @@ class AsyncVersionsClient:
             json={
                 "title": title,
                 "parent_model": parent_model,
+                "model_provider_connection": model_provider_connection,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,

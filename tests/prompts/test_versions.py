@@ -12,6 +12,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         {
             "title": "title",
             "parent_model": 1,
+            "model_provider_connection": 1,
             "prompt": "prompt",
             "provider": "OpenAI",
             "provider_model_id": "provider_model_id",
@@ -27,6 +28,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             0: {
                 "title": None,
                 "parent_model": "integer",
+                "model_provider_connection": "integer",
                 "prompt": None,
                 "provider": None,
                 "provider_model_id": None,
@@ -48,6 +50,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_response: typing.Any = {
         "title": "title",
         "parent_model": 1,
+        "model_provider_connection": 1,
         "prompt": "prompt",
         "provider": "OpenAI",
         "provider_model_id": "provider_model_id",
@@ -59,6 +62,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_types: typing.Any = {
         "title": None,
         "parent_model": "integer",
+        "model_provider_connection": "integer",
         "prompt": None,
         "provider": None,
         "provider_model_id": None,
@@ -78,6 +82,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "title": "title",
         "parent_model": 1,
+        "model_provider_connection": 1,
         "prompt": "prompt",
         "provider": "OpenAI",
         "provider_model_id": "provider_model_id",
@@ -89,6 +94,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_types: typing.Any = {
         "title": None,
         "parent_model": "integer",
+        "model_provider_connection": "integer",
         "prompt": None,
         "provider": None,
         "provider_model_id": None,
@@ -115,6 +121,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_response: typing.Any = {
         "title": "title",
         "parent_model": 1,
+        "model_provider_connection": 1,
         "prompt": "prompt",
         "provider": "OpenAI",
         "provider_model_id": "provider_model_id",
@@ -126,6 +133,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_types: typing.Any = {
         "title": None,
         "parent_model": "integer",
+        "model_provider_connection": "integer",
         "prompt": None,
         "provider": None,
         "provider_model_id": None,

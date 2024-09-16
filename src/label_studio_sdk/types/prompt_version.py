@@ -13,6 +13,7 @@ from .prompt_version_provider import PromptVersionProvider
 class PromptVersion(pydantic_v1.BaseModel):
     title: typing.Optional[str] = None
     parent_model: typing.Optional[int] = None
+    model_provider_connection: typing.Optional[int] = None
     prompt: typing.Optional[str] = None
     provider: typing.Optional[PromptVersionProvider] = None
     provider_model_id: typing.Optional[str] = None

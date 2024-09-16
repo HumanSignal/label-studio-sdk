@@ -14772,6 +14772,14 @@ client.prompts.versions.create(
 <dl>
 <dd>
 
+**model_provider_connection:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **prompt:** `typing.Optional[str]` 
     
 </dd>
@@ -15074,6 +15082,14 @@ client.prompts.versions.update(
 <dd>
 
 **parent_model:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_provider_connection:** `typing.Optional[int]` 
     
 </dd>
 </dl>
