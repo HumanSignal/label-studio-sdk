@@ -68,6 +68,98 @@ service:
               skill_name: skill_name
       audiences:
         - public
+    get:
+      path: /api/prompts/{id}
+      method: GET
+      auth: true
+      docs: |
+        Get a prompt by ID.
+      path-parameters:
+        id:
+          type: integer
+          docs: Prompt ID
+      display-name: Get prompt
+      response:
+        docs: ''
+        type: root.Prompt
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              title: title
+              description: description
+              created_by: 1
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              organization: 1
+              input_fields:
+                - input_fields
+              output_classes:
+                - output_classes
+              associated_projects:
+                - 1
+              skill_name: skill_name
+      audiences:
+        - public
+    delete:
+      path: /api/prompts/{id}
+      method: DELETE
+      auth: true
+      docs: |
+        Delete a prompt by ID.
+      path-parameters:
+        id:
+          type: integer
+          docs: Prompt ID
+      display-name: Delete prompt
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - public
+    update:
+      path: /api/prompts/{id}
+      method: PATCH
+      auth: true
+      docs: |
+        Update a prompt by ID.
+      path-parameters:
+        id:
+          type: integer
+          docs: Prompt ID
+      display-name: Update prompt
+      request:
+        body: root.Prompt
+      response:
+        docs: ''
+        type: root.Prompt
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            title: title
+            input_fields:
+              - input_fields
+            output_classes:
+              - output_classes
+          response:
+            body:
+              title: title
+              description: description
+              created_by: 1
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              organization: 1
+              input_fields:
+                - input_fields
+              output_classes:
+                - output_classes
+              associated_projects:
+                - 1
+              skill_name: skill_name
+      audiences:
+        - public
     batch_predictions:
       path: /api/model-run/batch-predictions
       method: POST
