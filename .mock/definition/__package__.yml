@@ -2333,14 +2333,14 @@ types:
   PromptVersion:
     properties:
       title:
-        type: string
+        type: optional<string>
         validation:
           maxLength: 500
       parent_model: optional<integer>
       model_provider_connection: optional<integer>
-      prompt: string
-      provider: PromptVersionProvider
-      provider_model_id: string
+      prompt: optional<string>
+      provider: optional<PromptVersionProvider>
+      provider_model_id: optional<string>
       created_by: optional<PromptVersionCreatedBy>
       created_at: optional<datetime>
       updated_at: optional<datetime>

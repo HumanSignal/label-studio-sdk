@@ -11,12 +11,12 @@ from .prompt_version_provider import PromptVersionProvider
 
 
 class PromptVersion(pydantic_v1.BaseModel):
-    title: str
+    title: typing.Optional[str] = None
     parent_model: typing.Optional[int] = None
     model_provider_connection: typing.Optional[int] = None
-    prompt: str
-    provider: PromptVersionProvider
-    provider_model_id: str
+    prompt: typing.Optional[str] = None
+    provider: typing.Optional[PromptVersionProvider] = None
+    provider_model_id: typing.Optional[str] = None
     created_by: typing.Optional[PromptVersionCreatedBy] = None
     created_at: typing.Optional[dt.datetime] = None
     updated_at: typing.Optional[dt.datetime] = None

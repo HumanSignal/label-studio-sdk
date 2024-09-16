@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 from ..types.prompt import Prompt
@@ -79,7 +80,7 @@ class PromptsClient:
         organization: typing.Optional[PromptOrganization] = OMIT,
         associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         skill_name: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Prompt:
         """
         Create a new prompt.
@@ -163,12 +164,191 @@ class PromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Prompt:
+        """
+        Get a prompt by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Prompt
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.get(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Prompt, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a prompt by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.delete(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update(
+        self,
+        id: int,
+        *,
+        title: str,
+        input_fields: typing.Sequence[str],
+        output_classes: typing.Sequence[str],
+        description: typing.Optional[str] = OMIT,
+        created_by: typing.Optional[PromptCreatedBy] = OMIT,
+        created_at: typing.Optional[dt.datetime] = OMIT,
+        updated_at: typing.Optional[dt.datetime] = OMIT,
+        organization: typing.Optional[PromptOrganization] = OMIT,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        skill_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Prompt:
+        """
+        Update a prompt by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        title : str
+            Title of the prompt
+
+        input_fields : typing.Sequence[str]
+            List of input fields
+
+        output_classes : typing.Sequence[str]
+            List of output classes
+
+        description : typing.Optional[str]
+            Description of the prompt
+
+        created_by : typing.Optional[PromptCreatedBy]
+            User ID of the creator of the prompt
+
+        created_at : typing.Optional[dt.datetime]
+            Date and time the prompt was created
+
+        updated_at : typing.Optional[dt.datetime]
+            Date and time the prompt was last updated
+
+        organization : typing.Optional[PromptOrganization]
+            Organization ID of the prompt
+
+        associated_projects : typing.Optional[typing.Sequence[int]]
+            List of associated projects IDs
+
+        skill_name : typing.Optional[str]
+            Name of the skill
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Prompt
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.update(
+            id=1,
+            title="title",
+            input_fields=["input_fields"],
+            output_classes=["output_classes"],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "title": title,
+                "description": description,
+                "created_by": created_by,
+                "created_at": created_at,
+                "updated_at": updated_at,
+                "organization": organization,
+                "input_fields": input_fields,
+                "output_classes": output_classes,
+                "associated_projects": associated_projects,
+                "skill_name": skill_name,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Prompt, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def batch_predictions(
         self,
         *,
         modelrun_id: typing.Optional[int] = OMIT,
         results: typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PromptsBatchPredictionsResponse:
         """
         Create a new batch prediction.
@@ -219,7 +399,7 @@ class PromptsClient:
         failed_predictions: typing.Optional[
             typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
         ] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PromptsBatchFailedPredictionsResponse:
         """
         Create a new batch of failed predictions.
@@ -318,7 +498,7 @@ class AsyncPromptsClient:
         organization: typing.Optional[PromptOrganization] = OMIT,
         associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         skill_name: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Prompt:
         """
         Create a new prompt.
@@ -402,12 +582,191 @@ class AsyncPromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Prompt:
+        """
+        Get a prompt by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Prompt
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.get(
+            id=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Prompt, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a prompt by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.delete(
+            id=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}", method="DELETE", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update(
+        self,
+        id: int,
+        *,
+        title: str,
+        input_fields: typing.Sequence[str],
+        output_classes: typing.Sequence[str],
+        description: typing.Optional[str] = OMIT,
+        created_by: typing.Optional[PromptCreatedBy] = OMIT,
+        created_at: typing.Optional[dt.datetime] = OMIT,
+        updated_at: typing.Optional[dt.datetime] = OMIT,
+        organization: typing.Optional[PromptOrganization] = OMIT,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        skill_name: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Prompt:
+        """
+        Update a prompt by ID.
+
+        Parameters
+        ----------
+        id : int
+            Prompt ID
+
+        title : str
+            Title of the prompt
+
+        input_fields : typing.Sequence[str]
+            List of input fields
+
+        output_classes : typing.Sequence[str]
+            List of output classes
+
+        description : typing.Optional[str]
+            Description of the prompt
+
+        created_by : typing.Optional[PromptCreatedBy]
+            User ID of the creator of the prompt
+
+        created_at : typing.Optional[dt.datetime]
+            Date and time the prompt was created
+
+        updated_at : typing.Optional[dt.datetime]
+            Date and time the prompt was last updated
+
+        organization : typing.Optional[PromptOrganization]
+            Organization ID of the prompt
+
+        associated_projects : typing.Optional[typing.Sequence[int]]
+            List of associated projects IDs
+
+        skill_name : typing.Optional[str]
+            Name of the skill
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Prompt
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.update(
+            id=1,
+            title="title",
+            input_fields=["input_fields"],
+            output_classes=["output_classes"],
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}",
+            method="PATCH",
+            json={
+                "title": title,
+                "description": description,
+                "created_by": created_by,
+                "created_at": created_at,
+                "updated_at": updated_at,
+                "organization": organization,
+                "input_fields": input_fields,
+                "output_classes": output_classes,
+                "associated_projects": associated_projects,
+                "skill_name": skill_name,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(Prompt, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def batch_predictions(
         self,
         *,
         modelrun_id: typing.Optional[int] = OMIT,
         results: typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PromptsBatchPredictionsResponse:
         """
         Create a new batch prediction.
@@ -458,7 +817,7 @@ class AsyncPromptsClient:
         failed_predictions: typing.Optional[
             typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
         ] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PromptsBatchFailedPredictionsResponse:
         """
         Create a new batch of failed predictions.
