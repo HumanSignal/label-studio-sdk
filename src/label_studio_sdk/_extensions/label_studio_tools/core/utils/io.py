@@ -1,15 +1,14 @@
-import logging
-import io
-import shutil
-import urllib
 import hashlib
-import requests
+import io
+import logging
 import os
-
-from appdirs import user_cache_dir, user_data_dir
-from urllib.parse import urlparse, urljoin
+import shutil
 from contextlib import contextmanager
 from tempfile import mkdtemp
+from urllib.parse import urlparse
+
+import requests
+from appdirs import user_cache_dir, user_data_dir
 
 from label_studio_sdk._extensions.label_studio_tools.core.utils.params import get_env
 
@@ -79,6 +78,11 @@ def get_local_path(
             f"Using `localhost` ({hostname}) in LABEL_STUDIO_URL, "
             f"`localhost` is not accessible inside of docker containers. "
             f"You can check your IP with utilities like `ifconfig` and set it as LABEL_STUDIO_URL."
+        )
+    if not (hostname.startswith("http://") or hostname.startswith("https://")):
+        raise ValueError(
+            f"Invalid hostname in LABEL_STUDIO_URL: {hostname}. "
+            "Please provide full URL starting with protocol (http:// or https://)."
         )
 
     # fix file upload url
