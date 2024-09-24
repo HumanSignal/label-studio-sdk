@@ -3,7 +3,6 @@
 import typing
 
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
-
 from .utilities import validate_response
 
 
@@ -157,8 +156,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_at": "datetime",
         "updated_at": "datetime",
     }
-    response = client.webhooks.update(id_=1, url="url", webhook_serializer_for_update_url="url")
+    response = client.webhooks.update(id_=1, url="url")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.webhooks.update(id_=1, url="url", webhook_serializer_for_update_url="url")
+    async_response = await async_client.webhooks.update(id_=1, url="url")
     validate_response(async_response, expected_response, expected_types)
