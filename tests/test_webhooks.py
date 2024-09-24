@@ -3,7 +3,6 @@
 import typing
 
 from label_studio_sdk.client import AsyncLabelStudio, LabelStudio
-
 from .utilities import validate_response
 
 
