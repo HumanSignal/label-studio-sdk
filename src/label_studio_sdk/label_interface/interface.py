@@ -300,7 +300,7 @@ class LabelInterface:
         self._labels = labels
         self._tree = tree
 
-    def create_regions(self, data: Dict[str, Union[Dict, List[Dict]]]) -> List[Region]:
+    def create_regions(self, data: Dict[str, Union[str, Dict, List[str], List[Dict]]]) -> List[Region]:
         """
         Takes raw data representation and maps keys to control tag names.
         If name is not found, it will be skipped
@@ -320,7 +320,7 @@ class LabelInterface:
             # 1. we should allow control.label to process custom payload outside of those strictly containing "label"
             # 2. we should be less open regarding the payload type and defining the strict typing elsewhere,
             # but likely that requires rewriting of how ControlTag.label() is working now
-            if isinstance(payload, str):
+            if isinstance(payload, str) or isinstance(payload, list):
                 payload = {'label': payload}
             if isinstance(payload, Dict):
                 payload = [payload]
