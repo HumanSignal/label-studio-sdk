@@ -163,3 +163,5 @@ service:
             filename: filename
       audiences:
         - public
+  source:
+    openapi: openapi/openapi.yaml

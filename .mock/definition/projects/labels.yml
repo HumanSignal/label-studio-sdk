@@ -13,6 +13,8 @@ types:
         validation:
           format: uri
       results: list<root.LabelLink>
+    source:
+      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
@@ -163,3 +165,5 @@ service:
         - {}
       audiences:
         - internal
+  source:
+    openapi: openapi/openapi.yaml

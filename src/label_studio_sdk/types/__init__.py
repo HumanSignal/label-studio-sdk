@@ -33,6 +33,16 @@ from .gcs_export_storage import GcsExportStorage
 from .gcs_export_storage_status import GcsExportStorageStatus
 from .gcs_import_storage import GcsImportStorage
 from .gcs_import_storage_status import GcsImportStorageStatus
+from .inference_run import InferenceRun
+from .inference_run_created_by import InferenceRunCreatedBy
+from .inference_run_organization import InferenceRunOrganization
+from .inference_run_project_subset import InferenceRunProjectSubset
+from .inference_run_status import InferenceRunStatus
+from .key_indicator_value import KeyIndicatorValue
+from .key_indicators import KeyIndicators
+from .key_indicators_item import KeyIndicatorsItem
+from .key_indicators_item_additional_kpis_item import KeyIndicatorsItemAdditionalKpisItem
+from .key_indicators_item_extra_kpis_item import KeyIndicatorsItemExtraKpisItem
 from .local_files_export_storage import LocalFilesExportStorage
 from .local_files_export_storage_status import LocalFilesExportStorageStatus
 from .local_files_import_storage import LocalFilesImportStorage
@@ -40,6 +50,11 @@ from .local_files_import_storage_status import LocalFilesImportStorageStatus
 from .ml_backend import MlBackend
 from .ml_backend_auth_method import MlBackendAuthMethod
 from .ml_backend_state import MlBackendState
+from .model_provider_connection import ModelProviderConnection
+from .model_provider_connection_created_by import ModelProviderConnectionCreatedBy
+from .model_provider_connection_organization import ModelProviderConnectionOrganization
+from .model_provider_connection_provider import ModelProviderConnectionProvider
+from .model_provider_connection_scope import ModelProviderConnectionScope
 from .prediction import Prediction
 from .project import Project
 from .project_import import ProjectImport
@@ -47,6 +62,13 @@ from .project_import_status import ProjectImportStatus
 from .project_label_config import ProjectLabelConfig
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
+from .prompt import Prompt
+from .prompt_created_by import PromptCreatedBy
+from .prompt_organization import PromptOrganization
+from .prompt_version import PromptVersion
+from .prompt_version_created_by import PromptVersionCreatedBy
+from .prompt_version_organization import PromptVersionOrganization
+from .prompt_version_provider import PromptVersionProvider
 from .redis_export_storage import RedisExportStorage
 from .redis_export_storage_status import RedisExportStorageStatus
 from .redis_import_storage import RedisImportStorage
@@ -105,6 +127,16 @@ __all__ = [
     "GcsExportStorageStatus",
     "GcsImportStorage",
     "GcsImportStorageStatus",
+    "InferenceRun",
+    "InferenceRunCreatedBy",
+    "InferenceRunOrganization",
+    "InferenceRunProjectSubset",
+    "InferenceRunStatus",
+    "KeyIndicatorValue",
+    "KeyIndicators",
+    "KeyIndicatorsItem",
+    "KeyIndicatorsItemAdditionalKpisItem",
+    "KeyIndicatorsItemExtraKpisItem",
     "LocalFilesExportStorage",
     "LocalFilesExportStorageStatus",
     "LocalFilesImportStorage",
@@ -112,6 +144,11 @@ __all__ = [
     "MlBackend",
     "MlBackendAuthMethod",
     "MlBackendState",
+    "ModelProviderConnection",
+    "ModelProviderConnectionCreatedBy",
+    "ModelProviderConnectionOrganization",
+    "ModelProviderConnectionProvider",
+    "ModelProviderConnectionScope",
     "Prediction",
     "Project",
     "ProjectImport",
@@ -119,6 +156,13 @@ __all__ = [
     "ProjectLabelConfig",
     "ProjectSampling",
     "ProjectSkipQueue",
+    "Prompt",
+    "PromptCreatedBy",
+    "PromptOrganization",
+    "PromptVersion",
+    "PromptVersionCreatedBy",
+    "PromptVersionOrganization",
+    "PromptVersionProvider",
     "RedisExportStorage",
     "RedisExportStorageStatus",
     "RedisImportStorage",

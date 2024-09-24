@@ -9,7 +9,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.client_payload.branch_name }}
 
 env:
-  FERN_WORKDIR: "fern"
+  UPSTREAM_REPO_WORKDIR: "upstream"
 
 jobs:
   open:
@@ -46,23 +46,28 @@ jobs:
           repository: HumanSignal/actions-hub
           path: ./.github/actions-hub
 
+      - name: Parse Follow Merge dispatch event payload
+        uses: ./.github/actions-hub/actions/follow-merge-parse-payload
+        id: fm
+
       - name: Find or Create branch
         uses: ./.github/actions-hub/actions/github-find-or-create-branch
         id: get-branch
         with:
           github_token: ${{ secrets.GIT_PAT }}
-          branch_name: "${{ github.event.client_payload.branch_name }}"
+          branch_name: "${{ steps.fm.outputs.branch_name }}"
 
       - name: Checkout repo
         uses: actions/checkout@v4
+        if: steps.fm.outputs.repo_name && steps.fm.outputs.branch_name
         with:
           token: ${{ secrets.GIT_PAT }}
-          repository: ${{ github.event.client_payload.repo_name }}
-          ref: ${{ github.event.client_payload.branch_name }}
-          path: "${{ env.FERN_WORKDIR }}"
+          repository: ${{ steps.fm.outputs.repo_name }}
+          ref: ${{ steps.fm.outputs.branch_name }}
+          path: "${{ env.UPSTREAM_REPO_WORKDIR }}"
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
 
       - name: Setup Poetry
         uses: Gr1N/setup-poetry@v9
@@ -74,19 +79,19 @@ jobs:
         env:
           BRANCH_NAME: "${{ steps.get-branch.outputs.branch_name }}"
           FERN_GENERATOR_PATH: "fern/generators.yml"
-        working-directory: "${{ env.FERN_WORKDIR }}"
+        working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
         run: |
           yq e --inplace ".groups.python-sdk-staging.generators[0].github.branch |= \"${BRANCH_NAME}\"" "${FERN_GENERATOR_PATH}"
           cat "${FERN_GENERATOR_PATH}"
 
       - name: Check Fern API is valid
-        working-directory: "${{ env.FERN_WORKDIR }}"
+        working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
         run: fern check
 
       - name: Generate Python SDK
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-        working-directory: "${{ env.FERN_WORKDIR }}"
+        working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
         run: fern generate --group python-sdk-staging --log-level debug
 
       - name: Find or Create PR
@@ -95,9 +100,9 @@ jobs:
         with:
           github_token: ${{ secrets.GIT_PAT }}
           branch_name: "${{ steps.get-branch.outputs.branch_name }}"
-          title: "${{ github.event.client_payload.title }}"
+          title: "${{ steps.fm.outputs.title }}"
           description: |
-            Hi @${{ github.event.client_payload.actor }}!
+            Hi @${{ steps.fm.outputs.actor }}!
             
             This PR was automaticaly generated via Follow Merge. 
             Please ensure that all linked upstream Pull Requests are merged before proceeding with this one.
@@ -108,7 +113,7 @@ jobs:
         with:
           github_token: ${{ secrets.GIT_PAT }}
           pullrequest_number: "${{ steps.get-pr.outputs.number }}"
-          reviewers: "${{ github.event.client_payload.actor }}"
+          reviewers: "${{ steps.fm.outputs.actor }}"
 
       - name: Link PR
         uses: ./.github/actions-hub/actions/github-link-upstream-pull-request
@@ -116,11 +121,10 @@ jobs:
         with:
           github_token: ${{ secrets.GIT_PAT }}
           pullrequest_number: "${{ steps.get-pr.outputs.number }}"
-          upstream_pullrequest_link: "${{ github.event.client_payload.html_url }}"
+          upstream_pullrequest_link: "${{ steps.fm.outputs.pr_html_url }}"
 
       - name: Convert to ready for review
-        if: |
-          github.event.client_payload.event_action == 'merged'
+        if: steps.fm.outputs.event_action == 'merged'
         id: ready-for-review-pr
         shell: bash
         env:
@@ -139,8 +143,7 @@ jobs:
 
       - name: Enable AutoMerge
         id: enable-pr-automerge
-        if: |
-          github.event.client_payload.event_action == 'merged'
+        if: steps.fm.outputs.event_action == 'merged'
         shell: bash
         env:
           GIT_PAT: ${{ secrets.GIT_PAT }}
@@ -155,6 +158,17 @@ jobs:
                 }
               }
             }'
+
+      - name: Notify on failure
+        uses: ./.github/actions-hub/actions/github-create-comment
+        if: failure()
+        with:
+          github_token: ${{ secrets.GIT_PAT }}
+          repository: "${{ steps.fm.outputs.repo_name }}"
+          issue_number: "${{ steps.fm.outputs.pr_number }}"
+          body: |
+            Follow Merge downstream workflow has been failed. 
+            > [Workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
 
   others:

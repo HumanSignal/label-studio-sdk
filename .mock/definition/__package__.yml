@@ -28,6 +28,8 @@ types:
       - fixed_and_accepted
       - deleted_review
     docs: Action which was performed in the last annotation history item
+    source:
+      openapi: openapi/openapi.yaml
   Annotation:
     properties:
       id: optional<integer>
@@ -92,6 +94,8 @@ types:
       last_created_by:
         type: optional<integer>
         docs: User who created the last annotation history item
+    source:
+      openapi: openapi/openapi.yaml
   BaseUser:
     properties:
       id: optional<integer>
@@ -124,6 +128,8 @@ types:
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
+    source:
+      openapi: openapi/openapi.yaml
   Filter:
     properties:
       id: optional<integer>
@@ -151,6 +157,8 @@ types:
       value:
         type: optional<map<string, unknown>>
         docs: Filter value
+    source:
+      openapi: openapi/openapi.yaml
   FilterGroup:
     properties:
       id: optional<integer>
@@ -161,6 +169,8 @@ types:
         validation:
           minLength: 1
           maxLength: 1024
+    source:
+      openapi: openapi/openapi.yaml
   View:
     properties:
       id: optional<integer>
@@ -180,10 +190,14 @@ types:
       project:
         type: integer
         docs: Project ID
+    source:
+      openapi: openapi/openapi.yaml
   FileUpload:
     properties:
       id: optional<integer>
       file: optional<string>
+    source:
+      openapi: openapi/openapi.yaml
   OrganizationInvite:
     properties:
       token:
@@ -194,6 +208,8 @@ types:
         type: optional<string>
         validation:
           minLength: 1
+    source:
+      openapi: openapi/openapi.yaml
   LabelLink:
     properties:
       id: optional<integer>
@@ -206,6 +222,8 @@ types:
           maxLength: 2048
       project: integer
       label: integer
+    source:
+      openapi: openapi/openapi.yaml
   Label:
     properties:
       id: optional<integer>
@@ -217,8 +235,8 @@ types:
         type: optional<datetime>
         docs: Time of label modification
       value:
-        docs: Label value
         type: map<string, unknown>
+        docs: Label value
       title:
         type: string
         docs: Label title
@@ -239,6 +257,8 @@ types:
         docs: User who approved this label
       organization: integer
       projects: optional<list<integer>>
+    source:
+      openapi: openapi/openapi.yaml
   LabelCreate:
     properties:
       id: optional<integer>
@@ -256,8 +276,8 @@ types:
         type: optional<datetime>
         docs: Time of label modification
       value:
-        docs: Label value
         type: map<string, unknown>
+        docs: Label value
       title:
         type: string
         docs: Label title
@@ -274,6 +294,8 @@ types:
         type: optional<integer>
         docs: User who approved this label
       projects: optional<list<integer>>
+    source:
+      openapi: openapi/openapi.yaml
   MlBackendState:
     enum:
       - CO
@@ -281,10 +303,14 @@ types:
       - ER
       - TR
       - PR
+    source:
+      openapi: openapi/openapi.yaml
   MlBackendAuthMethod:
     enum:
       - NONE
       - BASIC_AUTH
+    source:
+      openapi: openapi/openapi.yaml
   MlBackend:
     properties:
       id: optional<integer>
@@ -332,6 +358,8 @@ types:
           If false, model version is set by the user, if true - getting latest
           version from backend.
       project: integer
+    source:
+      openapi: openapi/openapi.yaml
   OrganizationId:
     properties:
       id: optional<integer>
@@ -345,6 +373,8 @@ types:
         validation:
           format: email
           maxLength: 254
+    source:
+      openapi: openapi/openapi.yaml
   Organization:
     properties:
       id: optional<integer>
@@ -366,6 +396,8 @@ types:
           maxLength: 254
       created_by: optional<integer>
       users: optional<list<integer>>
+    source:
+      openapi: openapi/openapi.yaml
   UserSerializerWithProjects:
     properties:
       id: optional<integer>
@@ -400,6 +432,8 @@ types:
         docs: Allow sending newsletters to user
       created_projects: optional<string>
       contributed_to_projects: optional<string>
+    source:
+      openapi: openapi/openapi.yaml
   OrganizationMemberUser:
     properties:
       id: optional<integer>
@@ -407,6 +441,8 @@ types:
         type: integer
         docs: Organization ID
       user: UserSerializerWithProjects
+    source:
+      openapi: openapi/openapi.yaml
   Prediction:
     properties:
       id: optional<integer>
@@ -447,6 +483,8 @@ types:
         docs: A run of a ModelVersion that created the prediction.
       task: integer
       project: optional<integer>
+    source:
+      openapi: openapi/openapi.yaml
   UserSimple:
     docs: Project owner
     properties:
@@ -465,6 +503,8 @@ types:
           format: email
           maxLength: 254
       avatar: optional<string>
+    source:
+      openapi: openapi/openapi.yaml
   ProjectSampling:
     enum:
       - value: Sequential sampling
@@ -473,11 +513,15 @@ types:
         name: UniformSampling
       - value: Uncertainty sampling
         name: UncertaintySampling
+    source:
+      openapi: openapi/openapi.yaml
   ProjectSkipQueue:
     enum:
       - REQUEUE_FOR_ME
       - REQUEUE_FOR_OTHERS
       - IGNORE_SKIPPED
+    source:
+      openapi: openapi/openapi.yaml
   Project:
     properties:
       id: optional<integer>
@@ -616,6 +660,8 @@ types:
         docs: Finished tasks
       queue_total: optional<string>
       queue_done: optional<string>
+    source:
+      openapi: openapi/openapi.yaml
   ProjectLabelConfig:
     properties:
       label_config:
@@ -623,12 +669,16 @@ types:
         docs: Label config in XML format. See more about it in documentation
         validation:
           minLength: 1
+    source:
+      openapi: openapi/openapi.yaml
   ConvertedFormatStatus:
     enum:
       - created
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   ConvertedFormat:
     properties:
       id: optional<integer>
@@ -641,12 +691,16 @@ types:
       traceback:
         type: optional<string>
         docs: Traceback report in case of errors
+    source:
+      openapi: openapi/openapi.yaml
   ExportStatus:
     enum:
       - created
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   Export:
     properties:
       title:
@@ -669,6 +723,8 @@ types:
           maxLength: 128
       counters: optional<map<string, unknown>>
       converted_formats: optional<list<ConvertedFormat>>
+    source:
+      openapi: openapi/openapi.yaml
   TaskFilterOptions:
     properties:
       view:
@@ -693,6 +749,8 @@ types:
       only_with_annotations:
         type: optional<boolean>
         default: false
+    source:
+      openapi: openapi/openapi.yaml
   AnnotationFilterOptions:
     properties:
       usual:
@@ -705,6 +763,8 @@ types:
       skipped:
         type: optional<boolean>
         docs: Include skipped annotations
+    source:
+      openapi: openapi/openapi.yaml
   SerializationOption:
     docs: JSON dict with parameters
     properties:
@@ -712,6 +772,8 @@ types:
         type: optional<boolean>
         docs: Include a full json body or IDs only
         default: false
+    source:
+      openapi: openapi/openapi.yaml
   SerializationOptions:
     properties:
       drafts: optional<SerializationOption>
@@ -725,12 +787,16 @@ types:
         type: optional<boolean>
         docs: Interpolate video key frames
         default: false
+    source:
+      openapi: openapi/openapi.yaml
   ExportCreateStatus:
     enum:
       - created
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   ExportCreate:
     properties:
       title:
@@ -756,6 +822,8 @@ types:
       task_filter_options: optional<TaskFilterOptions>
       annotation_filter_options: optional<AnnotationFilterOptions>
       serialization_options: optional<SerializationOptions>
+    source:
+      openapi: openapi/openapi.yaml
   ExportConvert:
     properties:
       export_type:
@@ -763,12 +831,16 @@ types:
         docs: Export file format.
         validation:
           minLength: 1
+    source:
+      openapi: openapi/openapi.yaml
   ProjectImportStatus:
     enum:
       - created
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   ProjectImport:
     properties:
       id: optional<integer>
@@ -802,12 +874,16 @@ types:
       tasks: optional<map<string, unknown>>
       task_ids: optional<map<string, unknown>>
       project: optional<integer>
+    source:
+      openapi: openapi/openapi.yaml
   ProjectReimportStatus:
     enum:
       - created
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   ProjectReimport:
     properties:
       id: optional<integer>
@@ -823,6 +899,8 @@ types:
       data_columns: optional<map<string, unknown>>
       traceback: optional<string>
       project: optional<integer>
+    source:
+      openapi: openapi/openapi.yaml
   AzureBlobImportStorageStatus:
     enum:
       - initialized
@@ -830,6 +908,8 @@ types:
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   AzureBlobImportStorage:
     properties:
       id: optional<integer>
@@ -895,6 +975,8 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   AzureBlobExportStorageStatus:
     enum:
       - initialized
@@ -902,6 +984,8 @@ types:
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   AzureBlobExportStorage:
     properties:
       id: optional<integer>
@@ -964,6 +1048,8 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   GcsExportStorageStatus:
     enum:
       - initialized
@@ -971,6 +1057,8 @@ types:
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   GcsExportStorage:
     properties:
       id: optional<integer>
@@ -1033,6 +1121,8 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   LocalFilesExportStorageStatus:
     enum:
       - initialized
@@ -1040,6 +1130,8 @@ types:
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   LocalFilesExportStorage:
     properties:
       id: optional<integer>
@@ -1093,6 +1185,8 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   RedisExportStorageStatus:
     enum:
       - initialized
@@ -1100,6 +1194,8 @@ types:
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   RedisExportStorage:
     properties:
       id: optional<integer>
@@ -1165,6 +1261,8 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   S3ExportStorageStatus:
     enum:
       - initialized
@@ -1172,6 +1270,8 @@ types:
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   S3ExportStorage:
     properties:
       id: optional<integer>
@@ -1246,6 +1346,8 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   GcsImportStorageStatus:
     enum:
       - initialized
@@ -1253,6 +1355,8 @@ types:
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   GcsImportStorage:
     properties:
       id: optional<integer>
@@ -1318,6 +1422,8 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   LocalFilesImportStorageStatus:
     enum:
       - initialized
@@ -1325,6 +1431,8 @@ types:
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   LocalFilesImportStorage:
     properties:
       id: optional<integer>
@@ -1375,6 +1483,8 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   RedisImportStorageStatus:
     enum:
       - initialized
@@ -1382,6 +1492,8 @@ types:
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   RedisImportStorage:
     properties:
       id: optional<integer>
@@ -1444,6 +1556,8 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   S3ImportStorageStatus:
     enum:
       - initialized
@@ -1451,6 +1565,8 @@ types:
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   S3ImportStorage:
     properties:
       id: optional<integer>
@@ -1531,6 +1647,8 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   BaseTaskUpdatedBy:
     discriminated: false
     docs: Last annotator or reviewer who updated this task
@@ -1539,6 +1657,8 @@ types:
         docs: Last annotator who updated this task
       - type: optional<list<map<string, unknown>>>
         docs: Last annotators or reviewers who updated this task
+    source:
+      openapi: openapi/openapi.yaml
   BaseTaskFileUpload:
     discriminated: false
     docs: Uploaded file used as data source for this task
@@ -1547,15 +1667,17 @@ types:
         docs: Uploaded file used as data source for this task
       - type: optional<integer>
         docs: Uploaded file ID used as data source for this task
+    source:
+      openapi: openapi/openapi.yaml
   BaseTask:
     properties:
       id: optional<integer>
       data:
+        type: map<string, unknown>
         docs: >-
           User imported or uploaded data for a task. Data is formatted according
           to the project label config. You can find examples of data for your
           project on the Import page in the Label Studio Data Manager UI.
-        type: map<string, unknown>
       meta:
         type: optional<map<string, unknown>>
         docs: >-
@@ -1611,6 +1733,8 @@ types:
       comment_authors:
         type: optional<list<integer>>
         docs: Users who wrote comments
+    source:
+      openapi: openapi/openapi.yaml
   AnnotationsDmFieldLastAction:
     enum:
       - prediction
@@ -1624,6 +1748,8 @@ types:
       - fixed_and_accepted
       - deleted_review
     docs: Action which was performed in the last annotation history item
+    source:
+      openapi: openapi/openapi.yaml
   AnnotationsDmField:
     properties:
       id: optional<integer>
@@ -1690,6 +1816,8 @@ types:
       last_created_by:
         type: optional<integer>
         docs: User who created the last annotation history item
+    source:
+      openapi: openapi/openapi.yaml
   DataManagerTaskSerializerPredictionsItem:
     properties:
       result: optional<list<map<string, unknown>>>
@@ -1701,16 +1829,22 @@ types:
       project: optional<double>
       created_at: optional<datetime>
       updated_at: optional<datetime>
+    source:
+      openapi: openapi/openapi.yaml
   DataManagerTaskSerializerDraftsItem:
     properties:
       result: optional<list<map<string, unknown>>>
       created_at: optional<datetime>
       updated_at: optional<datetime>
+    source:
+      openapi: openapi/openapi.yaml
   DataManagerTaskSerializerAnnotatorsItem:
     discriminated: false
     union:
       - integer
       - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
   DataManagerTaskSerializer:
     properties:
       id: optional<integer>
@@ -1742,11 +1876,11 @@ types:
         type: optional<list<map<string, unknown>>>
         docs: User IDs who updated this task
       data:
+        type: map<string, unknown>
         docs: >-
           User imported or uploaded data for a task. Data is formatted according
           to the project label config. You can find examples of data for your
           project on the Import page in the Label Studio Data Manager UI.
-        type: map<string, unknown>
       meta:
         type: optional<map<string, unknown>>
         docs: >-
@@ -1782,6 +1916,8 @@ types:
       comment_authors:
         type: optional<list<integer>>
         docs: Users who wrote comments
+    source:
+      openapi: openapi/openapi.yaml
   WebhookActionsItem:
     enum:
       - PROJECT_CREATED
@@ -1796,6 +1932,8 @@ types:
       - LABEL_LINK_CREATED
       - LABEL_LINK_UPDATED
       - LABEL_LINK_DELETED
+    source:
+      openapi: openapi/openapi.yaml
   Webhook:
     properties:
       id: optional<integer>
@@ -1827,6 +1965,8 @@ types:
       updated_at:
         type: optional<datetime>
         docs: Last update time
+    source:
+      openapi: openapi/openapi.yaml
   WebhookSerializerForUpdateActionsItem:
     enum:
       - PROJECT_CREATED
@@ -1841,6 +1981,8 @@ types:
       - LABEL_LINK_CREATED
       - LABEL_LINK_UPDATED
       - LABEL_LINK_DELETED
+    source:
+      openapi: openapi/openapi.yaml
   WebhookSerializerForUpdate:
     properties:
       id: optional<integer>
@@ -1872,11 +2014,15 @@ types:
       updated_at:
         type: optional<datetime>
         docs: Last update time
+    source:
+      openapi: openapi/openapi.yaml
   TaskAnnotatorsItem:
     discriminated: false
     union:
       - integer
       - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
   Task:
     properties:
       id:
@@ -1957,6 +2103,8 @@ types:
       comment_authors:
         type: optional<list<integer>>
         docs: List of comment authors' IDs for this task
+    source:
+      openapi: openapi/openapi.yaml
   Workspace:
     properties:
       id:
@@ -1989,6 +2137,8 @@ types:
       color:
         type: optional<string>
         docs: Workspace color
+    source:
+      openapi: openapi/openapi.yaml
   S3SImportStorageStatus:
     enum:
       - initialized
@@ -1996,6 +2146,8 @@ types:
       - in_progress
       - failed
       - completed
+    source:
+      openapi: openapi/openapi.yaml
   S3SImportStorage:
     properties:
       id: optional<integer>
@@ -2067,6 +2219,8 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   S3SExportStorage:
     properties:
       id: optional<integer>
@@ -2102,11 +2256,240 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
+  PromptCreatedBy:
+    discriminated: false
+    docs: User ID of the creator of the prompt
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  PromptOrganization:
+    discriminated: false
+    docs: Organization ID of the prompt
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  Prompt:
+    properties:
+      title:
+        type: string
+        docs: Title of the prompt
+        validation:
+          maxLength: 500
+      description:
+        type: optional<string>
+        docs: Description of the prompt
+      created_by:
+        type: optional<PromptCreatedBy>
+        docs: User ID of the creator of the prompt
+      created_at:
+        type: optional<datetime>
+        docs: Date and time the prompt was created
+      updated_at:
+        type: optional<datetime>
+        docs: Date and time the prompt was last updated
+      organization:
+        type: optional<PromptOrganization>
+        docs: Organization ID of the prompt
+      input_fields:
+        docs: List of input fields
+        type: list<string>
+      output_classes:
+        docs: List of output classes
+        type: list<string>
+      associated_projects:
+        type: optional<list<integer>>
+        docs: List of associated projects IDs
+      skill_name:
+        type: optional<string>
+        docs: Name of the skill
+    source:
+      openapi: openapi/openapi.yaml
+  PromptVersionProvider:
+    enum:
+      - OpenAI
+      - AzureOpenAI
+    source:
+      openapi: openapi/openapi.yaml
+  PromptVersionCreatedBy:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  PromptVersionOrganization:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  PromptVersion:
+    properties:
+      title:
+        type: optional<string>
+        validation:
+          maxLength: 500
+      parent_model: optional<integer>
+      model_provider_connection: optional<integer>
+      prompt: optional<string>
+      provider: optional<PromptVersionProvider>
+      provider_model_id: optional<string>
+      created_by: optional<PromptVersionCreatedBy>
+      created_at: optional<datetime>
+      updated_at: optional<datetime>
+      organization: optional<PromptVersionOrganization>
+    source:
+      openapi: openapi/openapi.yaml
+  InferenceRunOrganization:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  InferenceRunCreatedBy:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  InferenceRunProjectSubset:
+    enum:
+      - All
+      - HasGT
+      - Sample
+    source:
+      openapi: openapi/openapi.yaml
+  InferenceRunStatus:
+    enum:
+      - Pending
+      - InProgress
+      - Completed
+      - Failed
+      - Canceled
+    source:
+      openapi: openapi/openapi.yaml
+  InferenceRun:
+    properties:
+      organization: optional<InferenceRunOrganization>
+      project: integer
+      model_version: optional<string>
+      created_by: optional<InferenceRunCreatedBy>
+      project_subset: InferenceRunProjectSubset
+      status: optional<InferenceRunStatus>
+      job_id: optional<string>
+      created_at: optional<datetime>
+      triggered_at: optional<datetime>
+      predictions_updated_at: optional<datetime>
+      completed_at: optional<datetime>
+    source:
+      openapi: openapi/openapi.yaml
+  KeyIndicatorsItemAdditionalKpisItem:
+    properties:
+      key:
+        type: optional<string>
+        docs: >-
+          The key for this KPI, where you can find the value from inside
+          main_kpi
+      label:
+        type: optional<string>
+        docs: The label for this KPI, to be displayed to the user
+    source:
+      openapi: openapi/openapi.yaml
+  KeyIndicatorsItemExtraKpisItem:
+    properties:
+      key:
+        type: optional<string>
+        docs: >-
+          The key for this KPI, where you can find the value from inside
+          main_kpi
+      label:
+        type: optional<string>
+        docs: The label for this KPI, to be displayed to the user
+    source:
+      openapi: openapi/openapi.yaml
+  KeyIndicatorsItem:
+    properties:
+      key:
+        type: string
+        docs: >-
+          The key for this KPI, where you can find the value from inside
+          main_kpi
+      title:
+        type: string
+        docs: The title for this metric, to be displayed to the user
+      main_kpi: string
+      secondary_kpi: optional<string>
+      additional_kpis:
+        type: optional<list<KeyIndicatorsItemAdditionalKpisItem>>
+        docs: Additional KPIs to be displayed at the bottom of the box
+      extra_kpis:
+        type: optional<list<KeyIndicatorsItemExtraKpisItem>>
+        docs: Extra KPIs to be displayed in the hover-tootip for that indicator
+    source:
+      openapi: openapi/openapi.yaml
+  KeyIndicators: list<KeyIndicatorsItem>
+  KeyIndicatorValue:
+    properties:
+      title: optional<string>
+      values: optional<map<string, unknown>>
+    source:
+      openapi: openapi/openapi.yaml
+  ModelProviderConnectionProvider:
+    enum:
+      - OpenAI
+      - AzureOpenAI
+    source:
+      openapi: openapi/openapi.yaml
+  ModelProviderConnectionScope:
+    enum:
+      - Organization
+      - User
+      - Model
+    source:
+      openapi: openapi/openapi.yaml
+  ModelProviderConnectionOrganization:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  ModelProviderConnectionCreatedBy:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  ModelProviderConnection:
+    properties:
+      provider: ModelProviderConnectionProvider
+      api_key: optional<string>
+      deployment_name: optional<string>
+      endpoint: optional<string>
+      scope: optional<ModelProviderConnectionScope>
+      organization: optional<ModelProviderConnectionOrganization>
+      created_by: optional<ModelProviderConnectionCreatedBy>
+      created_at: optional<datetime>
+      updated_at: optional<datetime>
+    source:
+      openapi: openapi/openapi.yaml
   CommentCreatedBy:
     discriminated: false
     union:
       - integer
       - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
   Comment:
     properties:
       id: integer
@@ -2119,3 +2502,5 @@ types:
       updated_at: datetime
       is_resolved: optional<boolean>
       resolved_at: optional<datetime>
+    source:
+      openapi: openapi/openapi.yaml

@@ -180,13 +180,17 @@ def download_and_cache(
     # File specified by remote URL - download and cache it
     cache_dir = cache_dir or get_cache_dir()
     parsed_url = urlparse(url)
-    url_filename = (
-        # /data/local-files?d=dir/1.jpg => 1.jpg
-        os.path.basename(url)
-        if is_local_storage_file or is_cloud_storage_file
-        # /some/url/1.jpg?expire=xxx => 1.jpg
-        else os.path.basename(parsed_url.path)
-    )
+
+    # local storage: /data/local-files?d=dir/1.jpg => 1.jpg
+    if is_local_storage_file:
+        url_filename = os.path.basename(url.split('?d=')[1])
+    # cloud storage: s3://bucket/1.jpg => 1.jpg
+    elif is_cloud_storage_file:
+        url_filename = os.path.basename(url)
+    # all others: /some/url/1.jpg?expire=xxx => 1.jpg
+    else:
+        url_filename = os.path.basename(parsed_url.path)
+
     url_hash = hashlib.md5(url.encode()).hexdigest()[:8]
     filepath = os.path.join(cache_dir, url_hash + "__" + url_filename)
 

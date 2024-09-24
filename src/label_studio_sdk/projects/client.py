@@ -577,7 +577,7 @@ class ProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def validate_config(
-        self, id: int, *, request: ProjectLabelConfig, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, label_config: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectLabelConfig:
         """
         Determine whether the label configuration for a specific project is valid. For more information about setting up labeling configs, see [Configure labeling interface](https://labelstud.io/guide/setup) and our [Tags reference](https://labelstud.io/tags/).
@@ -589,7 +589,8 @@ class ProjectsClient:
         id : int
             A unique integer value identifying this project.
 
-        request : ProjectLabelConfig
+        label_config : str
+            Label config in XML format. See more about it in documentation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -601,7 +602,6 @@ class ProjectsClient:
 
         Examples
         --------
-        from label_studio_sdk import ProjectLabelConfig
         from label_studio_sdk.client import LabelStudio
 
         client = LabelStudio(
@@ -609,15 +609,13 @@ class ProjectsClient:
         )
         client.projects.validate_config(
             id=1,
-            request=ProjectLabelConfig(
-                label_config="label_config",
-            ),
+            label_config="label_config",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/validate/",
             method="POST",
-            json=request,
+            json={"label_config": label_config},
             request_options=request_options,
             omit=OMIT,
         )
@@ -1185,7 +1183,7 @@ class AsyncProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def validate_config(
-        self, id: int, *, request: ProjectLabelConfig, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, label_config: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectLabelConfig:
         """
         Determine whether the label configuration for a specific project is valid. For more information about setting up labeling configs, see [Configure labeling interface](https://labelstud.io/guide/setup) and our [Tags reference](https://labelstud.io/tags/).
@@ -1197,7 +1195,8 @@ class AsyncProjectsClient:
         id : int
             A unique integer value identifying this project.
 
-        request : ProjectLabelConfig
+        label_config : str
+            Label config in XML format. See more about it in documentation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1209,7 +1208,6 @@ class AsyncProjectsClient:
 
         Examples
         --------
-        from label_studio_sdk import ProjectLabelConfig
         from label_studio_sdk.client import AsyncLabelStudio
 
         client = AsyncLabelStudio(
@@ -1217,15 +1215,13 @@ class AsyncProjectsClient:
         )
         await client.projects.validate_config(
             id=1,
-            request=ProjectLabelConfig(
-                label_config="label_config",
-            ),
+            label_config="label_config",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/validate/",
             method="POST",
-            json=request,
+            json={"label_config": label_config},
             request_options=request_options,
             omit=OMIT,
         )
