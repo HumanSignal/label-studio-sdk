@@ -300,7 +300,7 @@ class LabelInterface:
         self._labels = labels
         self._tree = tree
 
-    def create_regions(self, data: Dict[str, Union[Dict, List[str], List[Dict]]]) -> List[Region]:
+    def create_regions(self, data: Dict[str, Union[str, Dict, List[str], List[Dict]]]) -> List[Region]:
         """
         Takes raw data representation and maps keys to control tag names.
         If name is not found, it will be skipped
