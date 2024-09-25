@@ -80,7 +80,9 @@ def get_local_path(
             f"`localhost` is not accessible inside of docker containers. "
             f"You can check your IP with utilities like `ifconfig` and set it as LABEL_STUDIO_URL."
         )
-    if not (hostname.startswith("http://") or hostname.startswith("https://")):
+    if hostname and not (
+        hostname.startswith("http://") or hostname.startswith("https://")
+    ):
         raise ValueError(
             f"Invalid hostname in LABEL_STUDIO_URL: {hostname}. "
             "Please provide full URL starting with protocol (http:// or https://)."
