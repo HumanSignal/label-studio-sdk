@@ -364,13 +364,13 @@ class WebhooksClient:
         send_for_all_actions : bool
             If value is False - used only for actions from WebhookAction
 
-        headers : str
+        headers : typing.Optional[str]
             Key Value Json of headers
 
         is_active : bool
             If value is False the webhook is disabled
 
-        actions : typing.Union[WebhooksUpdateRequestActionsItem, typing.Sequence[WebhooksUpdateRequestActionsItem]]
+        actions : typing.Optional[typing.Union[WebhooksUpdateRequestActionsItem, typing.Sequence[WebhooksUpdateRequestActionsItem]]]
 
         id : typing.Optional[int]
 
