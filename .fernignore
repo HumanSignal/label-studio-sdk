@@ -27,6 +27,8 @@ tests/custom/converter
 tests/custom/label_studio_tools
 tests/custom/legacy
 tests/custom/test_interface
+# TODO: fix webhooks !
+tests/test_webhooks.py
 
 # manual workflows
 .github/workflows/ci.yml
