@@ -156,12 +156,15 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_at": "no_validate",
         "updated_at": "no_validate",
     }
+    webhook = client.webhooks.create(url="http://test-url.com")
+    expected_response["id"] = webhook.id
+
     response = client.webhooks.update(
-        id_=1, url="http://test-url.com", webhook_serializer_for_update_url="url"
+        id_=webhook.id, url="http://test-url.com", webhook_serializer_for_update_url="url"
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.webhooks.update(
-        id_=1, url="http://test-url.com", webhook_serializer_for_update_url="url"
+        id_=webhook.id, url="http://test-url.com", webhook_serializer_for_update_url="url"
     )
     validate_response(async_response, expected_response, expected_types)
