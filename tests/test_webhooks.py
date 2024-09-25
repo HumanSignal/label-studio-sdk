@@ -156,7 +156,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_at": "no_validate",
         "updated_at": "no_validate",
     }
-    webhook = client.webhooks.create(url="http://test-url.com")
+    webhook = client.webhooks.create(url="http://test-url.com", project=1)
     expected_response["id"] = webhook.id
 
     response = client.webhooks.update(
