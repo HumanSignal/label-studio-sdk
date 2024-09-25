@@ -134,37 +134,34 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "id": 1,
         "organization": 1,
         "project": 1,
-        "url": "http://test-url.com",
+        "url": "url",
         "send_payload": True,
         "send_for_all_actions": True,
         "headers": {"key": "value"},
         "is_active": True,
-        "actions": [],
+        "actions": ["PROJECT_CREATED"],
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
         "id": "integer",
         "organization": "integer",
-        "project": "no_validate",
+        "project": "integer",
         "url": None,
         "send_payload": None,
         "send_for_all_actions": None,
-        "headers": "no_validate",
+        "headers": ("dict", {0: (None, None)}),
         "is_active": None,
-        "actions": "no_validate",
-        "created_at": "no_validate",
-        "updated_at": "no_validate",
+        "actions": ("list", {0: None}),
+        "created_at": "datetime",
+        "updated_at": "datetime",
     }
-    webhook = client.webhooks.create(url="http://test-url.com", project=1)
-    expected_response["id"] = webhook.id
-
     response = client.webhooks.update(
-        id_=webhook.id, url="http://test-url.com", webhook_serializer_for_update_url="url"
+        id_=1, url="url", webhook_serializer_for_update_url="url"
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.webhooks.update(
-        id_=webhook.id, url="http://test-url.com", webhook_serializer_for_update_url="url"
+        id_=1, url="url", webhook_serializer_for_update_url="url"
     )
     validate_response(async_response, expected_response, expected_types)
