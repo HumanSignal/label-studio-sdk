@@ -16,6 +16,7 @@ _DIR_APP_NAME = "label-studio"
 LOCAL_FILES_DOCUMENT_ROOT = get_env(
     "LOCAL_FILES_DOCUMENT_ROOT", default=os.path.abspath(os.sep)
 )
+VERIFY_SSL = get_env("VERIFY_SSL", default=True, is_bool=True)
 
 logger = logging.getLogger(__name__)
 
@@ -213,8 +214,15 @@ def download_and_cache(
             ):
                 headers["Authorization"] = "Token " + access_token
                 logger.debug("Authorization token is used for download_and_cache")
-            r = requests.get(url, stream=True, headers=headers)
-            r.raise_for_status()
+            try:
+                r = requests.get(url, stream=True, headers=headers, verify=VERIFY_SSL)
+                r.raise_for_status()
+            except requests.exceptions.SSLError as e:
+                logger.error(
+                    f"SSL error during requests.get('{url}'): {e}\n"
+                    f"Try to set VERIFY_SSL=False in environment variables to bypass SSL verification."
+                )
+                raise e
             with io.open(filepath, mode="wb") as fout:
                 fout.write(r.content)
     return filepath
