@@ -2,6 +2,7 @@
 
 # READMEs
 README.md
+LICENSE
 
 # manual extensions, use generators.yml to include specific top-level imports from here
 # this directory also includes legacy label_studio_tools/ package
