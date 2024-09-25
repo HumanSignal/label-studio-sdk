@@ -750,10 +750,10 @@ class AsyncWebhooksClient:
         *,
         url: str,
         webhook_serializer_for_update_url: str,
-        send_payload: typing.Optional[bool] = None,
-        send_for_all_actions: typing.Optional[bool] = None,
+        send_payload: bool = True,
+        send_for_all_actions: bool = True,
         headers: typing.Optional[str] = None,
-        is_active: typing.Optional[bool] = None,
+        is_active: bool = True,
         actions: typing.Optional[
             typing.Union[
                 WebhooksUpdateRequestActionsItem,
@@ -855,6 +855,8 @@ class AsyncWebhooksClient:
             webhook_serializer_for_update_url="url",
         )
         """
+        actions = [] if actions is None else actions
+        headers = {} if headers is None else headers
         _response = await self._client_wrapper.httpx_client.request(
             f"api/webhooks/{jsonable_encoder(id_)}/",
             method="PATCH",
