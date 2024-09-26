@@ -5,8 +5,8 @@ Usage:
 > python3 migrate-ls-to-ls.py --src-url src-ls.com --src-key <src-token> --dst-url dst-ls.com --dst-key <dst-token> --project-ids=123,456
 
 **Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
-While the newer versions v1.0 and above still support the functionalities of the old version
-(see `label_studio_sdk._legacy` for reference), we recommend using the latest Label Studio SDK v1.0 or higher.
+The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
+[`label_studio_sdk._legacy`](../../README.md) in your script.
 """
 
 import json

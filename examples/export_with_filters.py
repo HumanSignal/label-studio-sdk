@@ -5,9 +5,9 @@ LS API doesn't support it yet. However, it's achievable by creating a view
 with a filter and then exporting a snapshot using this view.
 This approach is hidden behind the `project.export()` method.
 
-**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
-While the newer versions v1.0 and above still support the functionalities of the old version
-(see `label_studio_sdk._legacy` for reference), we recommend using the latest Label Studio SDK v1.0 or higher.
+**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34). 
+The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
+[`label_studio_sdk._legacy`](../README.md) in your script.
 """
 
 from label_studio_sdk import Client
