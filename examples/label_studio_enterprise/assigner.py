@@ -1,6 +1,10 @@
 """ This script runs every 10 seconds and assigns users to a new batch of tasks filtered by the specified column.
 
-Notes:
+**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
+While the newer versions v1.0 and above still support the functionalities of the old version
+(see `label_studio_sdk._legacy` for reference), we recommend using the latest Label Studio SDK v1.0 or higher.
+
+Advanced notes:
     1. Don't forget to enable Manual mode in Annotation settings
     2. Be careful when adding email users: users who are not members of the project or workspace will break Data Manager
 
@@ -13,10 +17,11 @@ Install:
 Demo video:
     https://www.youtube.com/watch?v=IeqrsCYYQ8k
 """
-import time
-import math
-import label_studio_sdk
 
+import math
+import time
+
+import label_studio_sdk
 from label_studio_sdk.data_manager import Filters, Column, Operator, Type
 
 

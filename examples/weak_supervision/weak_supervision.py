@@ -1,8 +1,15 @@
+"""
+**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
+While the newer versions v1.0 and above still support the functionalities of the old version
+(see `label_studio_sdk._legacy` for reference), we recommend using the latest Label Studio SDK v1.0 or higher.
+"""
+
 import random
 import re
 
-from label_studio_sdk import Client
 import pandas as pd
+
+from label_studio_sdk import Client
 
 ls = Client(
     url="http://localhost:8080", api_key="d6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3"

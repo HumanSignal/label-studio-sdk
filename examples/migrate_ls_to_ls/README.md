@@ -22,11 +22,15 @@ Each new run of this script will generate new projects on the destination instan
 
 **Note:** Create a new workspace and get its ID for projects to be mgiratated. 
 
-**SDK v0.0.34**
+**SDK v1.0 or higher**
 
 ```
-pip install label-studio-sdk==0.0.34
+pip install -U label-studio-sdk
 ```
+
+**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
+While the newer versions v1.0 and above still support the functionalities of the old version
+(see `label_studio_sdk._legacy` for reference), we recommend using the latest Label Studio SDK v1.0 or higher.
 
 # How it works? 
 

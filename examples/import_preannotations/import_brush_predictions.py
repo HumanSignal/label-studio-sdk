@@ -1,9 +1,16 @@
+"""
+**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
+While the newer versions v1.0 and above still support the functionalities of the old version
+(see `label_studio_sdk._legacy` for reference), we recommend using the latest Label Studio SDK v1.0 or higher.
+"""
+
 # Create a new project with several tasks and brush preannotations
 # Contributed by https://github.com/berombau:
 # https://github.com/heartexlabs/label-studio-sdk/issues/19#issuecomment-992327281
 
 import numpy as np
-import label_studio_converter.brush as brush
+
+import label_studio_sdk.converter.brush as brush
 from label_studio_sdk import Client
 
 LABEL_STUDIO_URL = "http://localhost:8080"

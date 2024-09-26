@@ -1,5 +1,12 @@
+"""
+**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
+While the newer versions v1.0 and above still support the functionalities of the old version
+(see `label_studio_sdk._legacy` for reference), we recommend using the latest Label Studio SDK v1.0 or higher.
+"""
+
 import os
 import time
+
 from label_studio_sdk import Client
 
 LABEL_STUDIO_URL = os.getenv("LABEL_STUDIO_URL", default="http://localhost:8080")
