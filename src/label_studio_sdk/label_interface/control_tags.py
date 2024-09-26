@@ -93,6 +93,24 @@ class ControlTag(LabelStudioTag):
             and tag.tag not in _NOT_CONTROL_TAGS
         )
 
+    def to_json_schema(self):
+        """
+        Converts the current ControlTag instance into a JSON Schema.
+
+        Returns:
+            dict: A dictionary representing the JSON Schema.
+        """
+        return {
+            "type": "object",
+            "properties": {
+                self.name: {
+                    "type": "string",
+                    "description": self.name,
+                }
+            },
+            "required": [self.name]
+        }
+
     @classmethod
     def parse_node(cls, tag: xml.etree.ElementTree.Element, tags_mapping=None) -> "ControlTag":
         """

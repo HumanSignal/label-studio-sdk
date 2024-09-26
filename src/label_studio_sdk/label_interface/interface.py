@@ -537,6 +537,22 @@ class LabelInterface:
 
         return tree
     
+    def to_json_schema(self):
+        """
+        Converts the current LabelInterface instance into a JSON Schema.
+
+        Returns:
+            dict: A dictionary representing the JSON Schema.
+        """
+        controls, objects, labels, _ = self.parse(self._config)
+        return {
+            "type": "object",
+            "properties": {
+                name: control.to_json_schema() for name, control in controls.items()
+            },
+            "required": list(controls.keys())
+        }
+    
     def parse(self, config_string: str) -> Tuple[Dict, Dict, Dict, etree._Element]:
         """Parses the received configuration string into dictionaries
         of ControlTags, ObjectTags, and Labels, along with an XML tree
