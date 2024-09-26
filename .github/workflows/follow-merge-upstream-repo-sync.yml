@@ -75,13 +75,14 @@ jobs:
       - name: Download Fern
         run: npm install -g fern-api
 
-      - name: Set Fern Generator Branch
+      - name: Set Fern Generator Branch and Mode
         env:
           BRANCH_NAME: "${{ steps.get-branch.outputs.branch_name }}"
           FERN_GENERATOR_PATH: "fern/generators.yml"
         working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
         run: |
           yq e --inplace ".groups.python-sdk-staging.generators[0].github.branch |= \"${BRANCH_NAME}\"" "${FERN_GENERATOR_PATH}"
+          yq e --inplace ".groups.python-sdk-staging.generators[0].github.mode |= \"push\"" "${FERN_GENERATOR_PATH}"
           cat "${FERN_GENERATOR_PATH}"
 
       - name: Check Fern API is valid
