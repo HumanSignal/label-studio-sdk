@@ -100,16 +100,7 @@ class ControlTag(LabelStudioTag):
         Returns:
             dict: A dictionary representing the JSON Schema.
         """
-        return {
-            "type": "object",
-            "properties": {
-                self.name: {
-                    "type": "string",
-                    "description": self.name,
-                }
-            },
-            "required": [self.name]
-        }
+        return {"type": "string"}
 
     @classmethod
     def parse_node(cls, tag: xml.etree.ElementTree.Element, tags_mapping=None) -> "ControlTag":
@@ -503,6 +494,19 @@ class ChoicesTag(ControlTag):
     _label_attr_name: str = "choices"
     _value_class: Type[ChoicesValue] = ChoicesValue
 
+    def to_json_schema(self):
+        """
+        Converts the current ChoicesTag instance into a JSON Schema.
+
+        Returns:
+            dict: A dictionary representing the JSON Schema compatible with OpenAPI 3.
+        """
+        return {
+            "type": "string",
+            "enum": self.labels,
+            "description": f"Choices for {self.to_name[0]}"
+        }
+
 
 class LabelsValue(SpanSelection):
     labels: List[str]
@@ -514,6 +518,41 @@ class LabelsTag(ControlTag):
     _label_attr_name: str = "labels"
     _value_class: Type[LabelsValue] = LabelsValue
 
+    def to_json_schema(self):
+        """
+        Converts the current LabelsTag instance into a JSON Schema.
+
+        Returns:
+            dict: A dictionary representing the JSON Schema compatible with OpenAPI 3.
+        """
+        return {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["start", "end", "labels"],
+                "properties": {
+                    "start": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "end": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "labels": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": self.labels
+                        }
+                    },
+                    "text": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": f"Labels and span indices for {self.to_name[0]}"
+        }
 
 ## Image tags
 
@@ -702,6 +741,25 @@ class NumberTag(ControlTag):
     """ """
     tag: str = "Number"
     _value_class: Type[NumberValue] = NumberValue
+
+    def to_json_schema(self):
+        """
+        Converts the current NumberTag instance into a JSON Schema.
+
+        Returns:
+            dict: A dictionary representing the JSON Schema compatible with OpenAPI 3.
+        """
+        schema = {
+            "type": "number",
+            "description": f"Number for {self.to_name[0]}"
+        }
+        
+        if 'min' in self.attr:
+            schema["minimum"] = float(self.attr['min'])
+        if 'max' in self.attr:
+            schema["maximum"] = float(self.attr['max'])
+        
+        return schema
     
 
 class DateTimeValue(BaseModel):
@@ -712,6 +770,19 @@ class DateTimeTag(ControlTag):
     """ """
     tag: str = "DateTime"
     _value_class: Type[DateTimeValue] = DateTimeValue
+
+    def to_json_schema(self):
+        """
+        Converts the current DateTimeTag instance into a JSON Schema.
+
+        Returns:
+            dict: A dictionary representing the JSON Schema compatible with OpenAPI 3.
+        """
+        return {
+            "type": "string",
+            "format": "date-time",
+            "description": f"Date and time for {self.to_name[0]}"
+        }
 
 
 class HyperTextLabelsValue(SpanSelectionOffsets):
@@ -738,6 +809,19 @@ class PairwiseTag(ControlTag):
         """ """
         value = PairwiseValue(selected=side)
         return Region(from_tag=self, to_tag=self, value=value)
+
+    def to_json_schema(self):
+        """
+        Converts the current PairwiseTag instance into a JSON Schema.
+
+        Returns:
+            dict: A dictionary representing the JSON Schema compatible with OpenAPI 3.
+        """
+        return {
+            "type": "string",
+            "enum": ["left", "right"],
+            "description": f"Pairwise selection between {self.to_name[0]} (left) and {self.to_name[1]} (right)"
+        }
 
 
 class ParagraphLabelsValue(SpanSelectionOffsets):
@@ -778,6 +862,21 @@ class RatingTag(ControlTag):
     tag: str = "Rating"
     _value_class: Type[RatingValue] = RatingValue
 
+    def to_json_schema(self):
+        """
+        Converts the current RatingTag instance into a JSON Schema.
+
+        Returns:
+            dict: A dictionary representing the JSON Schema compatible with OpenAPI 3.
+        """
+        max_rating = int(self.attr.get('maxRating', 5))  # Default to 5 if not specified
+        return {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": max_rating,
+            "description": f"Rating for {self.to_name[0]} (0 to {max_rating})"
+        }
+
 
 class RelationsTag(ControlTag):
     """ """
@@ -803,6 +902,26 @@ class TaxonomyTag(ControlTag):
     tag: str = "Taxonomy"
     _value_class: Type[TaxonomyValue] = TaxonomyValue
 
+    def to_json_schema(self):
+        """
+        Converts the current TaxonomyTag instance into a JSON Schema.
+
+        Returns:
+            dict: A dictionary representing the JSON Schema compatible with OpenAPI 3.
+        """
+        return {
+            "type": "array",
+            "items": {
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    # TODO: enforce the order of the enums according to the taxonomy tree
+                    "enum": self.labels
+                }
+            },
+            "description": f"Taxonomy for {self.to_name[0]}. Each item is a path from root to selected node."
+        }
+
 
 class TextAreaValue(BaseModel):
     text: List[str]
@@ -812,6 +931,19 @@ class TextAreaTag(ControlTag):
     """ """
     tag: str = "TextArea"
     _value_class: Type[TextAreaValue] = TextAreaValue
+
+    def to_json_schema(self):
+        """
+        Converts the current TextAreaTag instance into a JSON Schema.
+
+        Returns:
+            dict: A dictionary representing the JSON Schema compatible with OpenAPI 3.
+        """
+        return {
+            "type": "string",
+            "description": f"Text for {self.to_name[0]}"
+        }
+
 
 
 class TimeSeriesValue(SpanSelection):
