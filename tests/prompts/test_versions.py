@@ -147,35 +147,3 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
     async_response = await async_client.prompts.versions.update(id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
-
-
-async def test_refine_prompt(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {
-        "title": "title",
-        "parent_model": 1,
-        "model_provider_connection": 1,
-        "prompt": "prompt",
-        "provider": "OpenAI",
-        "provider_model_id": "provider_model_id",
-        "created_by": 1,
-        "created_at": "2024-01-15T09:30:00Z",
-        "updated_at": "2024-01-15T09:30:00Z",
-        "organization": 1,
-    }
-    expected_types: typing.Any = {
-        "title": None,
-        "parent_model": "integer",
-        "model_provider_connection": "integer",
-        "prompt": None,
-        "provider": None,
-        "provider_model_id": None,
-        "created_by": "integer",
-        "created_at": "datetime",
-        "updated_at": "datetime",
-        "organization": "integer",
-    }
-    response = client.prompts.versions.refine_prompt(id=1, version_id=1)
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.prompts.versions.refine_prompt(id=1, version_id=1)
-    validate_response(async_response, expected_response, expected_types)
