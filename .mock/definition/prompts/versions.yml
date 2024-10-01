@@ -163,7 +163,7 @@ service:
       audiences:
         - public
     refine_prompt:
-      path: /api/prompts/{prompt_id}/versions/{version_id}/refine-prompt
+      path: /api/prompts/{prompt_id}/versions/{version_id}/refine
       method: POST
       auth: true
       docs: >

@@ -386,7 +386,7 @@ class VersionsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/refine-prompt",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/refine",
             method="POST",
             json={
                 "teacher_model_provider_connection_id": teacher_model_provider_connection_id,
@@ -777,7 +777,7 @@ class AsyncVersionsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/refine-prompt",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/refine",
             method="POST",
             json={
                 "teacher_model_provider_connection_id": teacher_model_provider_connection_id,
