@@ -163,14 +163,14 @@ service:
       audiences:
         - public
     refine_prompt:
-      path: /api/prompts/{id}/versions/{version_id}/refine-prompt
+      path: /api/prompts/{prompt_id}/versions/{version_id}/refine
       method: POST
       auth: true
       docs: >
         Refine a prompt version using a teacher model and save the refined
         prompt as a new version.
       path-parameters:
-        id:
+        prompt_id:
           type: integer
           docs: Prompt ID
         version_id:
@@ -195,7 +195,7 @@ service:
         type: root.PromptVersion
       examples:
         - path-parameters:
-            id: 1
+            prompt_id: 1
             version_id: 1
           request: {}
           response:

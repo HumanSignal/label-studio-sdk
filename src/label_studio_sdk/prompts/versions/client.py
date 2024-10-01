@@ -337,7 +337,7 @@ class VersionsClient:
 
     def refine_prompt(
         self,
-        id: int,
+        prompt_id: int,
         version_id: int,
         *,
         teacher_model_provider_connection_id: typing.Optional[int] = OMIT,
@@ -350,7 +350,7 @@ class VersionsClient:
 
         Parameters
         ----------
-        id : int
+        prompt_id : int
             Prompt ID
 
         version_id : int
@@ -381,12 +381,12 @@ class VersionsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.versions.refine_prompt(
-            id=1,
+            prompt_id=1,
             version_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}/refine-prompt",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/refine",
             method="POST",
             json={
                 "teacher_model_provider_connection_id": teacher_model_provider_connection_id,
@@ -728,7 +728,7 @@ class AsyncVersionsClient:
 
     async def refine_prompt(
         self,
-        id: int,
+        prompt_id: int,
         version_id: int,
         *,
         teacher_model_provider_connection_id: typing.Optional[int] = OMIT,
@@ -741,7 +741,7 @@ class AsyncVersionsClient:
 
         Parameters
         ----------
-        id : int
+        prompt_id : int
             Prompt ID
 
         version_id : int
@@ -772,12 +772,12 @@ class AsyncVersionsClient:
             api_key="YOUR_API_KEY",
         )
         await client.prompts.versions.refine_prompt(
-            id=1,
+            prompt_id=1,
             version_id=1,
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}/refine-prompt",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/refine",
             method="POST",
             json={
                 "teacher_model_provider_connection_id": teacher_model_provider_connection_id,
