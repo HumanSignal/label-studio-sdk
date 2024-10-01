@@ -15198,7 +15198,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.versions.refine_prompt(
-    id=1,
+    prompt_id=1,
     version_id=1,
 )
 
@@ -15216,7 +15216,7 @@ client.prompts.versions.refine_prompt(
 <dl>
 <dd>
 
-**id:** `int` — Prompt ID
+**prompt_id:** `int` — Prompt ID
     
 </dd>
 </dl>

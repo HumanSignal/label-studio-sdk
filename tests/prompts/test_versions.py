@@ -174,8 +174,8 @@ async def test_refine_prompt(client: LabelStudio, async_client: AsyncLabelStudio
         "updated_at": "datetime",
         "organization": "integer",
     }
-    response = client.prompts.versions.refine_prompt(id=1, version_id=1)
+    response = client.prompts.versions.refine_prompt(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.refine_prompt(id=1, version_id=1)
+    async_response = await async_client.prompts.versions.refine_prompt(prompt_id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
