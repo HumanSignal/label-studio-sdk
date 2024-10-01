@@ -321,7 +321,7 @@ class LabelInterface:
             # 2. we should be less open regarding the payload type and defining the strict typing elsewhere,
             # but likely that requires rewriting of how ControlTag.label() is working now
             if isinstance(payload, str):
-                payload = {'label': payload}
+                payload = {'label': payload, 'text': [payload]}
             elif isinstance(payload, list):
                 if len(payload) > 0:
                     if isinstance(payload[0], str):

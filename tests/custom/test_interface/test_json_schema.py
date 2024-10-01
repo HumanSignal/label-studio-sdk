@@ -1,4 +1,5 @@
 import pytest
+import json
 from datetime import datetime, timezone
 from label_studio_sdk.label_interface.interface import LabelInterface
 from label_studio_sdk.label_interface.control_tags import ControlTag
@@ -200,7 +201,119 @@ def test_to_json_schema(config, expected_json_schema, input_arg, expected_result
     json_schema = interface.to_json_schema()
     assert json_schema == expected_json_schema
 
-    # convert JSON Schema to Pydantic
     with json_schema_to_pydantic(json_schema) as ResponseModel:
         instance = ResponseModel(**input_arg)
         assert instance.model_dump() == expected_result
+
+
+
+def process_json_schema(json_schema, input_arg, queue):
+    with json_schema_to_pydantic(json_schema) as ResponseModel:
+        instance = ResponseModel(**input_arg)
+        queue.put(instance.model_dump())
+
+def test_concurrent_json_schema_to_pydantic():
+    import multiprocessing
+    json_schema = {
+        "type": "object",
+        "properties": {
+            "sentiment": {
+                "type": "string",
+                "description": "Choices for doc",
+                "enum": ["Positive", "Negative", "Neutral"],
+            }
+        },
+        "required": ["sentiment"]
+    }
+    input_arg1 = {"sentiment": "Positive"}
+    input_arg2 = {"sentiment": "Negative"}
+    
+    queue = multiprocessing.Queue()
+    
+    p1 = multiprocessing.Process(target=process_json_schema, args=(json_schema, input_arg1, queue))
+    p2 = multiprocessing.Process(target=process_json_schema, args=(json_schema, input_arg2, queue))
+    
+    p1.start()
+    p2.start()
+    
+    p1.join()
+    p2.join()
+    
+    results = [queue.get() for _ in range(2)]
+    
+    assert {"sentiment": "Positive"} in results
+    assert {"sentiment": "Negative"} in results
+    assert len(results) == 2
+
+
+def process_json_schema_threaded(json_schema, input_arg, results, index):
+    with json_schema_to_pydantic(json_schema) as ResponseModel:
+        instance = ResponseModel(**input_arg)
+        results[index] = instance.model_dump()
+
+def test_concurrent_json_schema_to_pydantic_threaded():
+    import threading
+    import time
+    
+    json_schema = {
+        "type": "object",
+        "properties": {
+            "sentiment": {
+                "type": "string",
+                "description": "Choices for doc",
+                "enum": ["Positive", "Negative", "Neutral"],
+            }
+        },
+        "required": ["sentiment"]
+    }
+    input_args = [
+        {"sentiment": "Positive"},
+        {"sentiment": "Negative"},
+        {"sentiment": "Neutral"},
+        {"sentiment": "Positive"}
+    ]
+    
+    results = [None] * len(input_args)
+    threads = []
+
+    # Create and start threads
+    for i, input_arg in enumerate(input_args):
+        thread = threading.Thread(target=process_json_schema_threaded, args=(json_schema, input_arg, results, i))
+        threads.append(thread)
+        thread.start()
+
+    # Wait for all threads to complete
+    for thread in threads:
+        thread.join()
+
+    # Verify results
+    assert {"sentiment": "Positive"} in results
+    assert {"sentiment": "Negative"} in results
+    assert {"sentiment": "Neutral"} in results
+    assert results.count({"sentiment": "Positive"}) == 2
+    assert len(results) == 4
+    assert None not in results
+
+    # Verify thread safety by running multiple times
+    for _ in range(10):
+        results = [None] * len(input_args)
+        threads = []
+
+        start_time = time.time()
+        for i, input_arg in enumerate(input_args):
+            thread = threading.Thread(target=process_json_schema_threaded, args=(json_schema, input_arg, results, i))
+            threads.append(thread)
+            thread.start()
+
+        for thread in threads:
+            thread.join()
+
+        end_time = time.time()
+
+        assert set(result["sentiment"] for result in results) == set(["Positive", "Negative", "Neutral"])
+        assert results.count({"sentiment": "Positive"}) == 2
+        assert len(results) == 4
+        assert None not in results
+
+        # Check if execution time is reasonable (adjust as needed)
+        assert end_time - start_time < 1.0, f"Execution took too long: {end_time - start_time} seconds"
