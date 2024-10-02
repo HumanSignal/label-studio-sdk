@@ -741,6 +741,7 @@ class NumberTag(ControlTag):
     """ """
     tag: str = "Number"
     _value_class: Type[NumberValue] = NumberValue
+    _label_attr_name: str = "number"
 
     def to_json_schema(self):
         """
@@ -770,6 +771,7 @@ class DateTimeTag(ControlTag):
     """ """
     tag: str = "DateTime"
     _value_class: Type[DateTimeValue] = DateTimeValue
+    _label_attr_name: str = "datetime"
 
     def to_json_schema(self):
         """
@@ -804,6 +806,7 @@ class PairwiseTag(ControlTag):
     """ """
     tag: str = "Pairwise"
     _value_class: Type[PairwiseValue] = PairwiseValue
+    _label_attr_name: str = "selected"
 
     def label(self, side):
         """ """
@@ -861,6 +864,7 @@ class RatingTag(ControlTag):
     """ """
     tag: str = "Rating"
     _value_class: Type[RatingValue] = RatingValue
+    _label_attr_name: str = "rating"
 
     def to_json_schema(self):
         """
@@ -901,6 +905,7 @@ class TaxonomyTag(ControlTag):
     """ """
     tag: str = "Taxonomy"
     _value_class: Type[TaxonomyValue] = TaxonomyValue
+    _label_attr_name: str = "taxonomy"
 
     def to_json_schema(self):
         """
@@ -931,6 +936,7 @@ class TextAreaTag(ControlTag):
     """ """
     tag: str = "TextArea"
     _value_class: Type[TextAreaValue] = TextAreaValue
+    _label_attr_name: str = "text"
 
     def to_json_schema(self):
         """
