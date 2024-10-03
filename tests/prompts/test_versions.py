@@ -149,6 +149,18 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
+async def test_cost_estimate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = 1.1
+    expected_types: typing.Any = None
+    response = client.prompts.versions.cost_estimate(prompt_id=1, version_id=1, project_id=1, project_subset=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.versions.cost_estimate(
+        prompt_id=1, version_id=1, project_id=1, project_subset=1
+    )
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_refine_prompt(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "title": "title",

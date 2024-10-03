@@ -335,6 +335,68 @@ class VersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def cost_estimate(
+        self,
+        prompt_id: int,
+        version_id: int,
+        *,
+        project_id: int,
+        project_subset: int,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> float:
+        """
+        Get cost estimate for running a prompt version on a particular project/subset
+
+        Parameters
+        ----------
+        prompt_id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        project_id : int
+            ID of the project to get an estimate for running on
+
+        project_subset : int
+            Subset of the project to get an estimate for running on (e.g. 'All', 'Sample', or 'HasGT')
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        float
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.versions.cost_estimate(
+            prompt_id=1,
+            version_id=1,
+            project_id=1,
+            project_subset=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/cost-estimate",
+            method="POST",
+            params={"project_id": project_id, "project_subset": project_subset},
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(float, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def refine_prompt(
         self,
         prompt_id: int,
@@ -721,6 +783,68 @@ class AsyncVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return pydantic_v1.parse_obj_as(PromptVersion, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def cost_estimate(
+        self,
+        prompt_id: int,
+        version_id: int,
+        *,
+        project_id: int,
+        project_subset: int,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> float:
+        """
+        Get cost estimate for running a prompt version on a particular project/subset
+
+        Parameters
+        ----------
+        prompt_id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        project_id : int
+            ID of the project to get an estimate for running on
+
+        project_subset : int
+            Subset of the project to get an estimate for running on (e.g. 'All', 'Sample', or 'HasGT')
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        float
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.versions.cost_estimate(
+            prompt_id=1,
+            version_id=1,
+            project_id=1,
+            project_subset=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/cost-estimate",
+            method="POST",
+            params={"project_id": project_id, "project_subset": project_subset},
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(float, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
