@@ -192,7 +192,7 @@ service:
               docs: Project ID to target the refined prompt for
       response:
         docs: ''
-        type: root.PromptVersion
+        type: root.RefinedPromptResponse
       examples:
         - path-parameters:
             prompt_id: 1
@@ -201,15 +201,9 @@ service:
           response:
             body:
               title: title
-              parent_model: 1
-              model_provider_connection: 1
+              reasoning: reasoning
               prompt: prompt
-              provider: OpenAI
-              provider_model_id: provider_model_id
-              created_by: 1
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              organization: 1
+              refinement_job_id: refinement_job_id
       audiences:
         - public
   source:

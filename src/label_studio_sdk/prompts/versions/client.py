@@ -13,6 +13,7 @@ from ...types.prompt_version import PromptVersion
 from ...types.prompt_version_created_by import PromptVersionCreatedBy
 from ...types.prompt_version_organization import PromptVersionOrganization
 from ...types.prompt_version_provider import PromptVersionProvider
+from ...types.refined_prompt_response import RefinedPromptResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -344,7 +345,7 @@ class VersionsClient:
         teacher_model_name: typing.Optional[str] = OMIT,
         project_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PromptVersion:
+    ) -> RefinedPromptResponse:
         """
         Refine a prompt version using a teacher model and save the refined prompt as a new version.
 
@@ -370,7 +371,7 @@ class VersionsClient:
 
         Returns
         -------
-        PromptVersion
+        RefinedPromptResponse
 
 
         Examples
@@ -398,7 +399,7 @@ class VersionsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(PromptVersion, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(RefinedPromptResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -735,7 +736,7 @@ class AsyncVersionsClient:
         teacher_model_name: typing.Optional[str] = OMIT,
         project_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PromptVersion:
+    ) -> RefinedPromptResponse:
         """
         Refine a prompt version using a teacher model and save the refined prompt as a new version.
 
@@ -761,7 +762,7 @@ class AsyncVersionsClient:
 
         Returns
         -------
-        PromptVersion
+        RefinedPromptResponse
 
 
         Examples
@@ -789,7 +790,7 @@ class AsyncVersionsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(PromptVersion, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(RefinedPromptResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
