@@ -2347,6 +2347,22 @@ types:
       organization: optional<PromptVersionOrganization>
     source:
       openapi: openapi/openapi.yaml
+  RefinedPromptResponse:
+    properties:
+      title:
+        type: string
+        docs: Title of the refined prompt
+      reasoning:
+        type: string
+        docs: Reasoning behind the refinement
+      prompt:
+        type: string
+        docs: The refined prompt text
+      refinement_job_id:
+        type: string
+        docs: Unique identifier for the refinement job
+    source:
+      openapi: openapi/openapi.yaml
   InferenceRunOrganization:
     discriminated: false
     union:
