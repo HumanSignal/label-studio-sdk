@@ -149,14 +149,43 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
+async def test_get_refined_prompt(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "title": "title",
+        "reasoning": "reasoning",
+        "prompt": "prompt",
+        "refinement_job_id": "refinement_job_id",
+        "refinement_status": "Pending",
+    }
+    expected_types: typing.Any = {
+        "title": None,
+        "reasoning": None,
+        "prompt": None,
+        "refinement_job_id": None,
+        "refinement_status": None,
+    }
+    response = client.prompts.versions.get_refined_prompt(prompt_id=1, version_id=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.versions.get_refined_prompt(prompt_id=1, version_id=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_refine_prompt(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "title": "title",
         "reasoning": "reasoning",
         "prompt": "prompt",
         "refinement_job_id": "refinement_job_id",
+        "refinement_status": "Pending",
     }
-    expected_types: typing.Any = {"title": None, "reasoning": None, "prompt": None, "refinement_job_id": None}
+    expected_types: typing.Any = {
+        "title": None,
+        "reasoning": None,
+        "prompt": None,
+        "refinement_job_id": None,
+        "refinement_status": None,
+    }
     response = client.prompts.versions.refine_prompt(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
