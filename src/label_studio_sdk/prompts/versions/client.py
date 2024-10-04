@@ -336,6 +336,63 @@ class VersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_refined_prompt(
+        self,
+        prompt_id: int,
+        version_id: int,
+        *,
+        refinement_job_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RefinedPromptResponse:
+        """
+        Get the refined prompt based on the `refinement_job_id`.
+
+        Parameters
+        ----------
+        prompt_id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        refinement_job_id : str
+            Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RefinedPromptResponse
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.versions.get_refined_prompt(
+            prompt_id=1,
+            version_id=1,
+            refinement_job_id="refinement_job_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/refine",
+            method="GET",
+            params={"refinement_job_id": refinement_job_id},
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(RefinedPromptResponse, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def refine_prompt(
         self,
         prompt_id: int,
@@ -722,6 +779,63 @@ class AsyncVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return pydantic_v1.parse_obj_as(PromptVersion, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_refined_prompt(
+        self,
+        prompt_id: int,
+        version_id: int,
+        *,
+        refinement_job_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RefinedPromptResponse:
+        """
+        Get the refined prompt based on the `refinement_job_id`.
+
+        Parameters
+        ----------
+        prompt_id : int
+            Prompt ID
+
+        version_id : int
+            Prompt Version ID
+
+        refinement_job_id : str
+            Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RefinedPromptResponse
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.prompts.versions.get_refined_prompt(
+            prompt_id=1,
+            version_id=1,
+            refinement_job_id="refinement_job_id",
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/refine",
+            method="GET",
+            params={"refinement_job_id": refinement_job_id},
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(RefinedPromptResponse, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

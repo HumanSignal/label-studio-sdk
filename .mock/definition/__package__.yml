@@ -2347,20 +2347,34 @@ types:
       organization: optional<PromptVersionOrganization>
     source:
       openapi: openapi/openapi.yaml
+  RefinedPromptResponseRefinementStatus:
+    enum:
+      - Pending
+      - InProgress
+      - Completed
+      - Failed
+    docs: Status of the refinement job
+    default: Pending
+    source:
+      openapi: openapi/openapi.yaml
   RefinedPromptResponse:
     properties:
       title:
-        type: string
+        type: optional<string>
         docs: Title of the refined prompt
       reasoning:
-        type: string
+        type: optional<string>
         docs: Reasoning behind the refinement
       prompt:
         type: string
         docs: The refined prompt text
       refinement_job_id:
-        type: string
+        type: optional<string>
         docs: Unique identifier for the refinement job
+      refinement_status:
+        type: optional<RefinedPromptResponseRefinementStatus>
+        docs: Status of the refinement job
+        default: Pending
     source:
       openapi: openapi/openapi.yaml
   InferenceRunOrganization:
