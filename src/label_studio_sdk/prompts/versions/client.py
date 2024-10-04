@@ -398,6 +398,7 @@ class VersionsClient:
         prompt_id: int,
         version_id: int,
         *,
+        async_: typing.Optional[bool] = None,
         teacher_model_provider_connection_id: typing.Optional[int] = OMIT,
         teacher_model_name: typing.Optional[str] = OMIT,
         project_id: typing.Optional[int] = OMIT,
@@ -413,6 +414,9 @@ class VersionsClient:
 
         version_id : int
             Base Prompt Version ID
+
+        async_ : typing.Optional[bool]
+            Run the refinement job asynchronously
 
         teacher_model_provider_connection_id : typing.Optional[int]
             Model Provider Connection ID to use to refine the prompt
@@ -446,6 +450,7 @@ class VersionsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/refine",
             method="POST",
+            params={"async": async_},
             json={
                 "teacher_model_provider_connection_id": teacher_model_provider_connection_id,
                 "teacher_model_name": teacher_model_name,
@@ -846,6 +851,7 @@ class AsyncVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
+        async_: typing.Optional[bool] = None,
         teacher_model_provider_connection_id: typing.Optional[int] = OMIT,
         teacher_model_name: typing.Optional[str] = OMIT,
         project_id: typing.Optional[int] = OMIT,
@@ -861,6 +867,9 @@ class AsyncVersionsClient:
 
         version_id : int
             Base Prompt Version ID
+
+        async_ : typing.Optional[bool]
+            Run the refinement job asynchronously
 
         teacher_model_provider_connection_id : typing.Optional[int]
             Model Provider Connection ID to use to refine the prompt
@@ -894,6 +903,7 @@ class AsyncVersionsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/refine",
             method="POST",
+            params={"async": async_},
             json={
                 "teacher_model_provider_connection_id": teacher_model_provider_connection_id,
                 "teacher_model_name": teacher_model_name,

@@ -219,6 +219,10 @@ service:
       display-name: Refine a prompt version
       request:
         name: VersionsRefinePromptRequest
+        query-parameters:
+          async:
+            type: optional<boolean>
+            docs: Run the refinement job asynchronously
         body:
           properties:
             teacher_model_provider_connection_id:

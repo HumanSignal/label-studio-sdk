@@ -15320,6 +15320,14 @@ client.prompts.versions.refine_prompt(
 <dl>
 <dd>
 
+**async_:** `typing.Optional[bool]` — Run the refinement job asynchronously
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **teacher_model_provider_connection_id:** `typing.Optional[int]` — Model Provider Connection ID to use to refine the prompt
     
 </dd>
