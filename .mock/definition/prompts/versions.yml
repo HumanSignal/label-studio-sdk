@@ -162,6 +162,46 @@ service:
               organization: 1
       audiences:
         - public
+    get_refined_prompt:
+      path: /api/prompts/{prompt_id}/versions/{version_id}/refine
+      method: GET
+      auth: true
+      docs: |
+        Get the refined prompt based on the `refinement_job_id`.
+      path-parameters:
+        prompt_id:
+          type: integer
+          docs: Prompt ID
+        version_id:
+          type: integer
+          docs: Prompt Version ID
+      display-name: Get refined prompt
+      request:
+        name: VersionsGetRefinedPromptRequest
+        query-parameters:
+          refinement_job_id:
+            type: string
+            docs: >-
+              Refinement Job ID acquired from the `POST
+              /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
+      response:
+        docs: ''
+        type: root.RefinedPromptResponse
+      examples:
+        - path-parameters:
+            prompt_id: 1
+            version_id: 1
+          query-parameters:
+            refinement_job_id: refinement_job_id
+          response:
+            body:
+              title: title
+              reasoning: reasoning
+              prompt: prompt
+              refinement_job_id: refinement_job_id
+              refinement_status: Pending
+      audiences:
+        - public
     refine_prompt:
       path: /api/prompts/{prompt_id}/versions/{version_id}/refine
       method: POST
@@ -204,6 +244,7 @@ service:
               reasoning: reasoning
               prompt: prompt
               refinement_job_id: refinement_job_id
+              refinement_status: Pending
       audiences:
         - public
   source:

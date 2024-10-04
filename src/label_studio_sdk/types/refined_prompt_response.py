@@ -5,15 +5,16 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from .refined_prompt_response_refinement_status import RefinedPromptResponseRefinementStatus
 
 
 class RefinedPromptResponse(pydantic_v1.BaseModel):
-    title: str = pydantic_v1.Field()
+    title: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Title of the refined prompt
     """
 
-    reasoning: str = pydantic_v1.Field()
+    reasoning: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Reasoning behind the refinement
     """
@@ -23,9 +24,14 @@ class RefinedPromptResponse(pydantic_v1.BaseModel):
     The refined prompt text
     """
 
-    refinement_job_id: str = pydantic_v1.Field()
+    refinement_job_id: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Unique identifier for the refinement job
+    """
+
+    refinement_status: typing.Optional[RefinedPromptResponseRefinementStatus] = pydantic_v1.Field(default=None)
+    """
+    Status of the refinement job
     """
 
     def json(self, **kwargs: typing.Any) -> str:
