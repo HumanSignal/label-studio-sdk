@@ -341,7 +341,7 @@ class VersionsClient:
         prompt_id: int,
         version_id: int,
         *,
-        refinement_job_id: typing.Optional[str] = None,
+        refinement_job_id: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
@@ -355,7 +355,7 @@ class VersionsClient:
         version_id : int
             Prompt Version ID
 
-        refinement_job_id : typing.Optional[str]
+        refinement_job_id : str
             Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
 
         request_options : typing.Optional[RequestOptions]
@@ -376,6 +376,7 @@ class VersionsClient:
         client.prompts.versions.get_refined_prompt(
             prompt_id=1,
             version_id=1,
+            refinement_job_id="refinement_job_id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -788,7 +789,7 @@ class AsyncVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
-        refinement_job_id: typing.Optional[str] = None,
+        refinement_job_id: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
@@ -802,7 +803,7 @@ class AsyncVersionsClient:
         version_id : int
             Prompt Version ID
 
-        refinement_job_id : typing.Optional[str]
+        refinement_job_id : str
             Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
 
         request_options : typing.Optional[RequestOptions]
@@ -823,6 +824,7 @@ class AsyncVersionsClient:
         await client.prompts.versions.get_refined_prompt(
             prompt_id=1,
             version_id=1,
+            refinement_job_id="refinement_job_id",
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

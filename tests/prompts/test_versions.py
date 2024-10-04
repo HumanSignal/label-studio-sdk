@@ -164,10 +164,14 @@ async def test_get_refined_prompt(client: LabelStudio, async_client: AsyncLabelS
         "refinement_job_id": None,
         "refinement_status": None,
     }
-    response = client.prompts.versions.get_refined_prompt(prompt_id=1, version_id=1)
+    response = client.prompts.versions.get_refined_prompt(
+        prompt_id=1, version_id=1, refinement_job_id="refinement_job_id"
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.get_refined_prompt(prompt_id=1, version_id=1)
+    async_response = await async_client.prompts.versions.get_refined_prompt(
+        prompt_id=1, version_id=1, refinement_job_id="refinement_job_id"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 

@@ -15200,6 +15200,7 @@ client = LabelStudio(
 client.prompts.versions.get_refined_prompt(
     prompt_id=1,
     version_id=1,
+    refinement_job_id="refinement_job_id",
 )
 
 ```
@@ -15232,7 +15233,7 @@ client.prompts.versions.get_refined_prompt(
 <dl>
 <dd>
 
-**refinement_job_id:** `typing.Optional[str]` — Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
+**refinement_job_id:** `str` — Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
     
 </dd>
 </dl>

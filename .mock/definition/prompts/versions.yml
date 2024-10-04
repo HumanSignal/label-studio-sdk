@@ -180,7 +180,7 @@ service:
         name: VersionsGetRefinedPromptRequest
         query-parameters:
           refinement_job_id:
-            type: optional<string>
+            type: string
             docs: >-
               Refinement Job ID acquired from the `POST
               /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
@@ -191,6 +191,8 @@ service:
         - path-parameters:
             prompt_id: 1
             version_id: 1
+          query-parameters:
+            refinement_job_id: refinement_job_id
           response:
             body:
               title: title
