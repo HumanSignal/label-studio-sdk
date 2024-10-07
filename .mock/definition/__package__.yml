@@ -2347,6 +2347,19 @@ types:
       organization: optional<PromptVersionOrganization>
     source:
       openapi: openapi/openapi.yaml
+  InferenceRunCostEstimate:
+    properties:
+      prompt_cost_usd:
+        type: optional<float>
+        docs: Cost of the prompt (in USD)
+      completion_cost_usd:
+        type: optional<float>
+        docs: Cost of the completion (in USD)
+      total_cost_usd:
+        type: optional<float>
+        docs: Total cost of the inference (in USD)
+    source:
+      openapi: openapi/openapi.yaml
   InferenceRunOrganization:
     discriminated: false
     union:

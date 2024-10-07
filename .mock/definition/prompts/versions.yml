@@ -192,7 +192,7 @@ service:
               'All', 'Sample', or 'HasGT')
       response:
         docs: ''
-        type: float
+        type: root.InferenceRunCostEstimate
       examples:
         - path-parameters:
             prompt_id: 1
@@ -201,7 +201,10 @@ service:
             project_id: 1
             project_subset: 1
           response:
-            body: 1.1
+            body:
+              prompt_cost_usd: 1.1
+              completion_cost_usd: 1.1
+              total_cost_usd: 1.1
       audiences:
         - public
     refine_prompt:

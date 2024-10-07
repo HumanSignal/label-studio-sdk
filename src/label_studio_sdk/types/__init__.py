@@ -34,6 +34,7 @@ from .gcs_export_storage_status import GcsExportStorageStatus
 from .gcs_import_storage import GcsImportStorage
 from .gcs_import_storage_status import GcsImportStorageStatus
 from .inference_run import InferenceRun
+from .inference_run_cost_estimate import InferenceRunCostEstimate
 from .inference_run_created_by import InferenceRunCreatedBy
 from .inference_run_organization import InferenceRunOrganization
 from .inference_run_project_subset import InferenceRunProjectSubset
@@ -128,6 +129,7 @@ __all__ = [
     "GcsImportStorage",
     "GcsImportStorageStatus",
     "InferenceRun",
+    "InferenceRunCostEstimate",
     "InferenceRunCreatedBy",
     "InferenceRunOrganization",
     "InferenceRunProjectSubset",

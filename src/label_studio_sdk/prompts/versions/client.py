@@ -9,6 +9,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import pydantic_v1
 from ...core.request_options import RequestOptions
+from ...types.inference_run_cost_estimate import InferenceRunCostEstimate
 from ...types.prompt_version import PromptVersion
 from ...types.prompt_version_created_by import PromptVersionCreatedBy
 from ...types.prompt_version_organization import PromptVersionOrganization
@@ -343,7 +344,7 @@ class VersionsClient:
         project_id: int,
         project_subset: int,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> float:
+    ) -> InferenceRunCostEstimate:
         """
         Get cost estimate for running a prompt version on a particular project/subset
 
@@ -366,7 +367,7 @@ class VersionsClient:
 
         Returns
         -------
-        float
+        InferenceRunCostEstimate
 
 
         Examples
@@ -391,7 +392,7 @@ class VersionsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(float, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(InferenceRunCostEstimate, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -796,7 +797,7 @@ class AsyncVersionsClient:
         project_id: int,
         project_subset: int,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> float:
+    ) -> InferenceRunCostEstimate:
         """
         Get cost estimate for running a prompt version on a particular project/subset
 
@@ -819,7 +820,7 @@ class AsyncVersionsClient:
 
         Returns
         -------
-        float
+        InferenceRunCostEstimate
 
 
         Examples
@@ -844,7 +845,7 @@ class AsyncVersionsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(float, _response.json())  # type: ignore
+                return pydantic_v1.parse_obj_as(InferenceRunCostEstimate, _response.json())  # type: ignore
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
