@@ -156,6 +156,19 @@ async def test_get_refined_prompt(client: LabelStudio, async_client: AsyncLabelS
         "prompt": "prompt",
         "refinement_job_id": "refinement_job_id",
         "refinement_status": "Pending",
+        "total_cost": 1.1,
+        "previous_version": {
+            "title": "title",
+            "parent_model": 1,
+            "model_provider_connection": 1,
+            "prompt": "prompt",
+            "provider": "OpenAI",
+            "provider_model_id": "provider_model_id",
+            "created_by": 1,
+            "created_at": "2024-01-15T09:30:00Z",
+            "updated_at": "2024-01-15T09:30:00Z",
+            "organization": 1,
+        },
     }
     expected_types: typing.Any = {
         "title": None,
@@ -163,6 +176,19 @@ async def test_get_refined_prompt(client: LabelStudio, async_client: AsyncLabelS
         "prompt": None,
         "refinement_job_id": None,
         "refinement_status": None,
+        "total_cost": None,
+        "previous_version": {
+            "title": None,
+            "parent_model": "integer",
+            "model_provider_connection": "integer",
+            "prompt": None,
+            "provider": None,
+            "provider_model_id": None,
+            "created_by": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "organization": "integer",
+        },
     }
     response = client.prompts.versions.get_refined_prompt(
         prompt_id=1, version_id=1, refinement_job_id="refinement_job_id"
@@ -182,6 +208,19 @@ async def test_refine_prompt(client: LabelStudio, async_client: AsyncLabelStudio
         "prompt": "prompt",
         "refinement_job_id": "refinement_job_id",
         "refinement_status": "Pending",
+        "total_cost": 1.1,
+        "previous_version": {
+            "title": "title",
+            "parent_model": 1,
+            "model_provider_connection": 1,
+            "prompt": "prompt",
+            "provider": "OpenAI",
+            "provider_model_id": "provider_model_id",
+            "created_by": 1,
+            "created_at": "2024-01-15T09:30:00Z",
+            "updated_at": "2024-01-15T09:30:00Z",
+            "organization": 1,
+        },
     }
     expected_types: typing.Any = {
         "title": None,
@@ -189,6 +228,19 @@ async def test_refine_prompt(client: LabelStudio, async_client: AsyncLabelStudio
         "prompt": None,
         "refinement_job_id": None,
         "refinement_status": None,
+        "total_cost": None,
+        "previous_version": {
+            "title": None,
+            "parent_model": "integer",
+            "model_provider_connection": "integer",
+            "prompt": None,
+            "provider": None,
+            "provider_model_id": None,
+            "created_by": "integer",
+            "created_at": "datetime",
+            "updated_at": "datetime",
+            "organization": "integer",
+        },
     }
     response = client.prompts.versions.refine_prompt(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)

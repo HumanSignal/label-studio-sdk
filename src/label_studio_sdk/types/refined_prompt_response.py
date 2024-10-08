@@ -5,6 +5,7 @@ import typing
 
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from .prompt_version import PromptVersion
 from .refined_prompt_response_refinement_status import RefinedPromptResponseRefinementStatus
 
 
@@ -32,6 +33,16 @@ class RefinedPromptResponse(pydantic_v1.BaseModel):
     refinement_status: typing.Optional[RefinedPromptResponseRefinementStatus] = pydantic_v1.Field(default=None)
     """
     Status of the refinement job
+    """
+
+    total_cost: typing.Optional[float] = pydantic_v1.Field(default=None)
+    """
+    Total cost of the refinement job (in USD)
+    """
+
+    previous_version: typing.Optional[PromptVersion] = pydantic_v1.Field(default=None)
+    """
+    Previous version of the prompt
     """
 
     def json(self, **kwargs: typing.Any) -> str:

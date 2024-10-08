@@ -2375,6 +2375,12 @@ types:
         type: optional<RefinedPromptResponseRefinementStatus>
         docs: Status of the refinement job
         default: Pending
+      total_cost:
+        type: optional<float>
+        docs: Total cost of the refinement job (in USD)
+      previous_version:
+        type: optional<PromptVersion>
+        docs: Previous version of the prompt
     source:
       openapi: openapi/openapi.yaml
   InferenceRunOrganization:
