@@ -202,9 +202,9 @@ service:
             project_subset: 1
           response:
             body:
-              prompt_cost_usd: 1.1
-              completion_cost_usd: 1.1
-              total_cost_usd: 1.1
+              prompt_cost_usd: prompt_cost_usd
+              completion_cost_usd: completion_cost_usd
+              total_cost_usd: total_cost_usd
       audiences:
         - public
     get_refined_prompt:

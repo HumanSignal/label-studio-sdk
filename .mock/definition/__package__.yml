@@ -2350,13 +2350,13 @@ types:
   InferenceRunCostEstimate:
     properties:
       prompt_cost_usd:
-        type: optional<float>
+        type: optional<string>
         docs: Cost of the prompt (in USD)
       completion_cost_usd:
-        type: optional<float>
+        type: optional<string>
         docs: Cost of the completion (in USD)
       total_cost_usd:
-        type: optional<float>
+        type: optional<string>
         docs: Total cost of the inference (in USD)
     source:
       openapi: openapi/openapi.yaml

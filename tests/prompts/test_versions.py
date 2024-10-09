@@ -150,7 +150,11 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_cost_estimate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"prompt_cost_usd": 1.1, "completion_cost_usd": 1.1, "total_cost_usd": 1.1}
+    expected_response: typing.Any = {
+        "prompt_cost_usd": "prompt_cost_usd",
+        "completion_cost_usd": "completion_cost_usd",
+        "total_cost_usd": "total_cost_usd",
+    }
     expected_types: typing.Any = {"prompt_cost_usd": None, "completion_cost_usd": None, "total_cost_usd": None}
     response = client.prompts.versions.cost_estimate(prompt_id=1, version_id=1, project_id=1, project_subset=1)
     validate_response(response, expected_response, expected_types)

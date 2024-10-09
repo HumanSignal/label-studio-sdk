@@ -8,17 +8,17 @@ from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
 class InferenceRunCostEstimate(pydantic_v1.BaseModel):
-    prompt_cost_usd: typing.Optional[float] = pydantic_v1.Field(default=None)
+    prompt_cost_usd: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Cost of the prompt (in USD)
     """
 
-    completion_cost_usd: typing.Optional[float] = pydantic_v1.Field(default=None)
+    completion_cost_usd: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Cost of the completion (in USD)
     """
 
-    total_cost_usd: typing.Optional[float] = pydantic_v1.Field(default=None)
+    total_cost_usd: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Total cost of the inference (in USD)
     """
