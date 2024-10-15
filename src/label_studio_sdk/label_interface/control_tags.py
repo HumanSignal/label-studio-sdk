@@ -773,6 +773,11 @@ class DateTimeTag(ControlTag):
     _value_class: Type[DateTimeValue] = DateTimeValue
     _label_attr_name: str = "datetime"
 
+    def _label_simple(self, to_name: Optional[str] = None, *args, **kwargs) -> Region:
+        # TODO: temporary fix to force datetime to be a string
+        kwargs['datetime'] = kwargs['datetime'][0]
+        return super()._label_simple(to_name, *args, **kwargs)
+
     def to_json_schema(self):
         """
         Converts the current DateTimeTag instance into a JSON Schema.
