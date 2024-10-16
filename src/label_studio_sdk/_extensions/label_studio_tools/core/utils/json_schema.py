@@ -5,28 +5,34 @@ import functools
 from typing import Type, Dict, Any, Tuple, Generator
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from datamodel_code_generator import InputFileType, generate, DataModelType, LiteralType
+from datamodel_code_generator import DataModelType, PythonVersion, LiteralType
+from datamodel_code_generator.model import get_data_model_types
+from datamodel_code_generator.parser.jsonschema import JsonSchemaParser
 from pydantic import BaseModel
-from io import StringIO
 from contextlib import contextmanager
 
 
 @functools.lru_cache(maxsize=128)
 def _generate_model_code(json_schema_str: str, class_name: str = 'MyModel') -> str:
-    with TemporaryDirectory() as temp_dir:
-        temp_file = Path(temp_dir) / "schema.py"
-        
-        generate(
-            json_schema_str,
-            input_file_type=InputFileType.JsonSchema,
-            input_filename="schema.json",
-            output=temp_file,
-            output_model_type=DataModelType.PydanticV2BaseModel,
-            enum_field_as_literal=LiteralType.All,
-            class_name=class_name
-        )
-        
-        return temp_file.read_text()
+
+    data_model_types = get_data_model_types(
+        DataModelType.PydanticV2BaseModel,
+        target_python_version=PythonVersion.PY_311
+    )
+
+    parser = JsonSchemaParser(
+        json_schema_str,
+        data_model_type=data_model_types.data_model,
+        data_model_root_type=data_model_types.root_model,
+        data_model_field_type=data_model_types.field_model,
+        data_type_manager_type=data_model_types.data_type_manager,
+        dump_resolve_reference_action=data_model_types.dump_resolve_reference_action,
+        enum_field_as_literal=LiteralType.All,
+        class_name=class_name
+    )
+
+    model_code = parser.parse()
+    return model_code
 
 @contextmanager
 def json_schema_to_pydantic(json_schema: dict, class_name: str = 'MyModel') -> Generator[Type[BaseModel], None, None]:
