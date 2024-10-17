@@ -23,7 +23,7 @@ class InferenceRunCostEstimate(pydantic_v1.BaseModel):
     Total cost of the inference (in USD)
     """
 
-    error: typing.Optional[bool] = pydantic_v1.Field(default=None)
+    is_error: typing.Optional[bool] = pydantic_v1.Field(default=None)
     """
     Whether an error occurred or not
     """

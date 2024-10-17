@@ -2358,7 +2358,7 @@ types:
       total_cost_usd:
         type: optional<string>
         docs: Total cost of the inference (in USD)
-      error:
+      is_error:
         type: optional<boolean>
         docs: Whether an error occurred or not
       error_type:

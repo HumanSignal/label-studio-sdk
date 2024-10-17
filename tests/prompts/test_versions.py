@@ -154,7 +154,7 @@ async def test_cost_estimate(client: LabelStudio, async_client: AsyncLabelStudio
         "prompt_cost_usd": "prompt_cost_usd",
         "completion_cost_usd": "completion_cost_usd",
         "total_cost_usd": "total_cost_usd",
-        "error": True,
+        "is_error": True,
         "error_type": "error_type",
         "error_message": "error_message",
     }
@@ -162,7 +162,7 @@ async def test_cost_estimate(client: LabelStudio, async_client: AsyncLabelStudio
         "prompt_cost_usd": None,
         "completion_cost_usd": None,
         "total_cost_usd": None,
-        "error": None,
+        "is_error": None,
         "error_type": None,
         "error_message": None,
     }
