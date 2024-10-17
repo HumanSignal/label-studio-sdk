@@ -162,6 +162,54 @@ service:
               organization: 1
       audiences:
         - public
+    cost_estimate:
+      path: /api/prompts/{prompt_id}/versions/{version_id}/cost-estimate
+      method: POST
+      auth: true
+      docs: >
+        Get cost estimate for running a prompt version on a particular
+        project/subset
+      path-parameters:
+        prompt_id:
+          type: integer
+          docs: Prompt ID
+        version_id:
+          type: integer
+          docs: Prompt Version ID
+      display-name: >-
+        Get cost estimate for running a prompt version on a particular
+        project/subset
+      request:
+        name: VersionsCostEstimateRequest
+        query-parameters:
+          project_id:
+            type: integer
+            docs: ID of the project to get an estimate for running on
+          project_subset:
+            type: integer
+            docs: >-
+              Subset of the project to get an estimate for running on (e.g.
+              'All', 'Sample', or 'HasGT')
+      response:
+        docs: ''
+        type: root.InferenceRunCostEstimate
+      examples:
+        - path-parameters:
+            prompt_id: 1
+            version_id: 1
+          query-parameters:
+            project_id: 1
+            project_subset: 1
+          response:
+            body:
+              prompt_cost_usd: prompt_cost_usd
+              completion_cost_usd: completion_cost_usd
+              total_cost_usd: total_cost_usd
+              is_error: true
+              error_type: error_type
+              error_message: error_message
+      audiences:
+        - public
     get_refined_prompt:
       path: /api/prompts/{prompt_id}/versions/{version_id}/refine
       method: GET

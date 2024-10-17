@@ -15165,6 +15165,103 @@ client.prompts.versions.update(
 </dl>
 </details>
 
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">cost_estimate</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get cost estimate for running a prompt version on a particular project/subset
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.versions.cost_estimate(
+    prompt_id=1,
+    version_id=1,
+    project_id=1,
+    project_subset=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**prompt_id:** `int` — Prompt ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `int` — Prompt Version ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_id:** `int` — ID of the project to get an estimate for running on
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_subset:** `int` — Subset of the project to get an estimate for running on (e.g. 'All', 'Sample', or 'HasGT')
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get_refined_prompt</a>(...)</code></summary>
 <dl>
 <dd>
