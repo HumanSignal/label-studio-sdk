@@ -23,6 +23,21 @@ class InferenceRunCostEstimate(pydantic_v1.BaseModel):
     Total cost of the inference (in USD)
     """
 
+    error: typing.Optional[bool] = pydantic_v1.Field(default=None)
+    """
+    Whether an error occurred or not
+    """
+
+    error_type: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Type of error (e.g. "Timeout", "Rate Limit", etc)
+    """
+
+    error_message: typing.Optional[str] = pydantic_v1.Field(default=None)
+    """
+    Error message details
+    """
+
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
         return super().json(**kwargs_with_defaults)

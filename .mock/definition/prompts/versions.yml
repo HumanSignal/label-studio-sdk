@@ -205,6 +205,9 @@ service:
               prompt_cost_usd: prompt_cost_usd
               completion_cost_usd: completion_cost_usd
               total_cost_usd: total_cost_usd
+              error: true
+              error_type: error_type
+              error_message: error_message
       audiences:
         - public
     get_refined_prompt:

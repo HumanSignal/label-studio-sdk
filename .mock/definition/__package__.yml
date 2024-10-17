@@ -2358,6 +2358,15 @@ types:
       total_cost_usd:
         type: optional<string>
         docs: Total cost of the inference (in USD)
+      error:
+        type: optional<boolean>
+        docs: Whether an error occurred or not
+      error_type:
+        type: optional<string>
+        docs: Type of error (e.g. "Timeout", "Rate Limit", etc)
+      error_message:
+        type: optional<string>
+        docs: Error message details
     source:
       openapi: openapi/openapi.yaml
   RefinedPromptResponseRefinementStatus:
