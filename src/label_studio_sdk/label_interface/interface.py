@@ -320,7 +320,7 @@ class LabelInterface:
             # 1. we should allow control.label to process custom payload outside of those strictly containing "label"
             # 2. we should be less open regarding the payload type and defining the strict typing elsewhere,
             # but likely that requires rewriting of how ControlTag.label() is working now
-            if isinstance(payload, str):
+            if isinstance(payload, (str, int, float)):
                 payload = {'label': payload}
             elif isinstance(payload, list):
                 if len(payload) > 0:
@@ -331,6 +331,7 @@ class LabelInterface:
 
             if isinstance(payload, Dict):
                 payload = [payload]
+
             for item in payload:
                 regions.append(control.label(**item))
 
@@ -531,11 +532,25 @@ class LabelInterface:
         tree.task_loaded = True
         
         for obj in tree.objects:
-            print(obj.value_is_variable, obj.value_name)
             if obj.value_is_variable and obj.value_name in task:
                 obj.value = task.get(obj.value_name)
 
         return tree
+    
+    def to_json_schema(self):
+        """
+        Converts the current LabelInterface instance into a JSON Schema.
+
+        Returns:
+            dict: A dictionary representing the JSON Schema.
+        """
+        return {
+            "type": "object",
+            "properties": {
+                name: control.to_json_schema() for name, control in self._controls.items()
+            },
+            "required": list(self._controls.keys())
+        }
     
     def parse(self, config_string: str) -> Tuple[Dict, Dict, Dict, etree._Element]:
         """Parses the received configuration string into dictionaries

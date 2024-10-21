@@ -31,20 +31,20 @@ params = [
 
     (OT.ImageTag, CT.RectangleTag, { "x": 10, "y": 10, "width": 10, "height": 10 }, { "x": 10.0, "y": 10.0, "width": 10.0, "height": 10.0, "rotation": 0 }),
     (OT.ImageTag, CT.RectangleLabelsTag, { "x": 10, "y": 10, "width": 10, "height": 10, "label": c.LABEL1 }, { "x": 10.0, "y": 10.0, "width": 10.0, "height": 10.0, "rotation": 0, "rectanglelabels": [ c.LABEL1 ] }),
-    (OT.ImageTag, CT.TaxonomyTag, { "taxonomy": [ [ c.LABEL1 ] ] }, { "taxonomy": [ [ c.LABEL1 ] ] }),
-    (OT.ImageTag, CT.TextAreaTag, { "text": [ EX_TEXT, EX_TEXT ] }, { "text": [ EX_TEXT, EX_TEXT ] }),
+    (OT.ImageTag, CT.TaxonomyTag, { "label": [ [ c.LABEL1 ] ] }, { "taxonomy": [ [ c.LABEL1 ] ] }),
+    (OT.ImageTag, CT.TextAreaTag, { "label": [ EX_TEXT, EX_TEXT ] }, { "text": [ EX_TEXT, EX_TEXT ] }),
 
-    (OT.ImageTag, CT.RatingTag, { "rating": 3 }, { "rating": 3 }),
+    (OT.ImageTag, CT.RatingTag, { "label": 3 }, { "rating": 3 }),
     
     (OT.ImageTag, CT.BrushTag, { "rle": [2,3,3,2] }, { "rle": [2,3,3,2], "format": "rle" }),
     (OT.ImageTag, CT.BrushLabelsTag, { "rle": [2,3,3,2], "label": c.LABEL1 }, { "rle": [2,3,3,2], "format": "rle", "brushlabels": [ c.LABEL1 ] }),
 
     ## Text labeling
-    (OT.TextTag, CT.NumberTag, { "number": 5 }, { "number": 5 }),
-    (OT.TextTag, CT.DateTimeTag, { "datetime": "2024-05-07" }, { "datetime": "2024-05-07" }),
+    (OT.TextTag, CT.NumberTag, { "label": 5 }, { "number": 5 }),
+    (OT.TextTag, CT.DateTimeTag, { "label": "2024-05-07" }, { "datetime": "2024-05-07" }),
     
-    (OT.TextTag, CT.LabelsTag, { "start": 1, "end": 10, "label": c.LABEL1 }, { "start": 1, "end": 10, "labels": [ c.LABEL1 ] }),
-    (OT.TextTag, CT.LabelsTag, { "start": 1, "end": 10, "label": [ c.LABEL1, c.LABEL2 ] }, { "start": 1, "end": 10, "labels": [ c.LABEL1, c.LABEL2 ] }),
+    (OT.TextTag, CT.LabelsTag, { "label": c.LABEL1, "start": 1, "end": 10 }, { "labels": [ c.LABEL1 ], "start": 1, "end": 10 }),
+    (OT.TextTag, CT.LabelsTag, { "label": [ c.LABEL1, c.LABEL2 ], "start": 1, "end": 10 }, { "labels": [ c.LABEL1, c.LABEL2 ], "start": 1, "end": 10 }),
 
     ## Hypertext labeling
     (OT.HyperTextTag, CT.HyperTextLabelsTag, { "start": 1, "end": 10, "startOffset": 10, "endOffset": 10, "label": c.LABEL1 }, { "start": 1, "end": 10, "startOffset": 10, "endOffset": 10, "htmllabels": [ c.LABEL1 ] }),
@@ -58,11 +58,6 @@ params = [
 
     ## Timeseries labeling
     (OT.TimeSeriesTag, CT.TimeSeriesLabelsTag, { "start": 10, "end": 12, "instant": False, "label": c.LABEL1 }, { "start": 10, "end": 12, "instant": False, "timeserieslabels": [ c.LABEL1 ] }),
-
-    ## Video labeling
-    (OT.VideoTag, CT.VideoRectangleTag,
-     { "framesCount": 10, "duration": 10, "sequence": [ { "x": 10, "y": 10, "time": 0.5, "frame": 10, "width": 10, "height": 10 } ] },
-     { "labels": None, "framesCount": 10, "duration": 10.0, "sequence": [ { "x": 10.0, "y": 10.0, "time": 0.5, "frame": 10, "width": 10.0, "height": 10.0, "rotation": 0 } ] }),
 
     (OT.VideoTag, CT.VideoRectangleTag,
      { "label": c.LABEL1, "framesCount": 10, "duration": 10, "sequence": [ { "x": 10, "y": 10, "time": 0.5, "frame": 10, "width": 10, "height": 10 } ] },

@@ -36,7 +36,7 @@ def test_validate():
 def test_textarea_label():
     conf = LabelInterface(c.TEXTAREA_CONF)
 
-    region = conf.get_control(c.FROM_NAME).label(text=["Hello", "World"])
+    region = conf.get_control(c.FROM_NAME).label(label=["Hello", "World"])
 
 
 def test_label_with_choices():
