@@ -270,11 +270,11 @@ class ControlTag(LabelStudioTag):
 
     def _validate_labels(self, labels):
         """Check that labels is a subset of self.labels, used for
-        example when you're validate the annotaion or prediction to
+        example when you're validate the annotation or prediction to
         make sure there no undefined labels used.
 
         """
-        if not self.labels:
+        if not self.labels or not labels:
             return True
 
         return set(labels).issubset(set(self.labels))
@@ -424,7 +424,7 @@ class ControlTag(LabelStudioTag):
             )
 
         kwargs[self._label_attr_name] = label
-
+        
         return self._label_simple(to_name=to_name, **kwargs)
 
     def label(
@@ -455,7 +455,7 @@ class ControlTag(LabelStudioTag):
         Region
             A new Region object with the specified label applied.
         """
-        if hasattr(self, "_label_attr_name"):
+        if hasattr(self, "_label_attr_name") and label is not None:
             return self._label_with_labels(
                 label=label, to_name=to_name, *args, **kwargs
             )
