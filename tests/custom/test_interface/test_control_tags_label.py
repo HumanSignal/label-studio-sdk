@@ -59,11 +59,6 @@ params = [
     ## Timeseries labeling
     (OT.TimeSeriesTag, CT.TimeSeriesLabelsTag, { "start": 10, "end": 12, "instant": False, "label": c.LABEL1 }, { "start": 10, "end": 12, "instant": False, "timeserieslabels": [ c.LABEL1 ] }),
 
-    ## Video labeling
-    (OT.VideoTag, CT.VideoRectangleTag,
-     { "framesCount": 10, "duration": 10, "sequence": [ { "x": 10, "y": 10, "time": 0.5, "frame": 10, "width": 10, "height": 10 } ] },
-     { "labels": None, "framesCount": 10, "duration": 10.0, "sequence": [ { "x": 10.0, "y": 10.0, "time": 0.5, "frame": 10, "width": 10.0, "height": 10.0, "rotation": 0 } ] }),
-
     (OT.VideoTag, CT.VideoRectangleTag,
      { "label": c.LABEL1, "framesCount": 10, "duration": 10, "sequence": [ { "x": 10, "y": 10, "time": 0.5, "frame": 10, "width": 10, "height": 10 } ] },
      { "labels": [ c.LABEL1 ], "framesCount": 10, "duration": 10.0, "sequence": [ { "x": 10.0, "y": 10.0, "time": 0.5, "frame": 10, "width": 10.0, "height": 10.0, "rotation": 0 } ] })
