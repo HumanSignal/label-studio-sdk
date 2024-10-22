@@ -495,6 +495,10 @@ class ChoicesTag(ControlTag):
     _label_attr_name: str = "choices"
     _value_class: Type[ChoicesValue] = ChoicesValue
 
+    @property
+    def is_multiple_choice(self):
+        return self.attr.get("choice") == "multiple"
+
     def to_json_schema(self):
         """
         Converts the current ChoicesTag instance into a JSON Schema.
@@ -502,6 +506,17 @@ class ChoicesTag(ControlTag):
         Returns:
             dict: A dictionary representing the JSON Schema compatible with OpenAPI 3.
         """
+        if self.is_multiple_choice:
+            return {
+                "type": "array",
+                "items": {
+                    "type": "string",
+                    "enum": self.labels,
+                },
+                "uniqueItems": True,
+                "description": f"Choices for {self.to_name[0]}",
+            }
+
         return {
             "type": "string",
             "enum": self.labels,

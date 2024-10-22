@@ -34,6 +34,36 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
         {"sentiment": "Positive"},
         {"sentiment": "Positive"}
     ),
+    # multiple choice
+    (
+        """
+        <View>
+          <Choices name="sentiment" toName="doc" choice="multiple">
+            <Choice value="Positive" />
+            <Choice value="Negative" />
+            <Choice value="Neutral" />
+          </Choices>
+          <Text name="doc" value="$text" />
+        </View>
+        """,
+        {
+            "type": "object",
+            "properties": {
+                "sentiment": {
+                    "description": "Choices for doc",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": ["Positive", "Negative", "Neutral"]
+                    },
+                    "uniqueItems": True,
+                }
+            },
+            "required": ["sentiment"]
+        },
+        {"sentiment": ["Positive", "Negative"]},
+        {"sentiment": ["Positive", "Negative"]}
+    ),
     # ner
     (
         """
@@ -188,6 +218,7 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
     # ...
 ], ids=[
     "simple_choices",
+    "multiple_choices",
     "ner",
     "classification_with_textarea",
     "complex_interface"
