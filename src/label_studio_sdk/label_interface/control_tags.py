@@ -344,10 +344,11 @@ class ControlTag(LabelStudioTag):
 
             return to_name
         else:
-            if len(self.to_name) > 1:
-                raise Exception(
-                    "Multiple to_name in control tag, specify to_name in function"
-                )
+            # TODO: "Pairwise" tag has multiple to_name
+            # if len(self.to_name) > 1:
+            #     raise Exception(
+            #         "Multiple to_name in control tag, specify to_name in function"
+            #     )
 
             return self.to_name[0]
 
@@ -813,9 +814,10 @@ class PairwiseTag(ControlTag):
     _value_class: Type[PairwiseValue] = PairwiseValue
     _label_attr_name: str = "selected"
 
-    def label(self, side):
+    def label(self, label):
         """ """
-        value = PairwiseValue(selected=side)
+        value = PairwiseValue(selected=label)
+        # <Pairwise> tag has equal from_name and to_name, and string label that's not a list of strings
         return Region(from_tag=self, to_tag=self, value=value)
 
     def to_json_schema(self):
