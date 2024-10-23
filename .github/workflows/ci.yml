@@ -19,22 +19,26 @@ jobs:
 #      - name: Compile
 #        run: poetry run mypy .
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: "Checkout repo"
         uses: actions/checkout@v4
-      - name: Set up python
+
+      - name: "Install poetry"
+        run: pipx install poetry
+
+      - name: "Set up Python"
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
-      - name: Bootstrap poetry
-        run: |
-          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
-      - name: Install dependencies
+          python-version: '3.12'
+          cache: 'poetry'
+
+      - name: "Install dependencies"
         run: poetry install
 
       - name: Install Fern
         run: npm install -g fern-api
+
       - name: Test
         run: fern test --command "poetry run pytest -rP ."
 
