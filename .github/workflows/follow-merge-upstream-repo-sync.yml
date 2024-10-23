@@ -69,8 +69,15 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
 
-      - name: Setup Poetry
-        uses: Gr1N/setup-poetry@v9
+      - name: "Install poetry"
+        run: pipx install poetry
+
+      - name: "Set up Python"
+        id: setup_python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'poetry'
 
       - name: Download Fern
         run: npm install -g fern-api
