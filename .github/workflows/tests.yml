@@ -48,12 +48,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: 'poetry'
 
-      - name: Install dependencies
-        run: poetry install --no-interaction --no-root
+      - name: "Install dependencies"
+        run: poetry install
 
-      - name: Install app
-        run: poetry install --no-interaction
+      - name: Install Fern
+        run: npm install -g fern-api
 
-      - name: Run tests
-        run: |
-          poetry run pytest ./tests/custom/ -vv
+      - name: Test
+        run: fern test --command "poetry run pytest -rP ."
