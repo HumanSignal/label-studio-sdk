@@ -462,6 +462,23 @@ class ControlTag(LabelStudioTag):
             )
         else:
             return self._label_simple(to_name=to_name, *args, **kwargs)
+        
+    def get_labels(self, regions: List[Dict]):
+        """
+        Returns the simplified representation of the label. Sort of a reverse to label() method to retrieve an input `label` from an output regions
+        """
+        values = [region.get('value') for region in regions if region.get('from_name') == self.name]
+        values = list(filter(lambda x: x is not None, values))
+        if not hasattr(self, "_label_attr_name"):
+            return values
+        labels = []
+        for value in values:
+            if len(value) == 1 and self._label_attr_name in value:
+                v = value[self._label_attr_name]
+                labels.append(v[0] if len(v) == 1 else v)
+            else:
+                labels.append(value)
+        return labels
 
     def as_tuple(self):
         """ """
