@@ -478,7 +478,7 @@ class ControlTag(LabelStudioTag):
                 labels.append(v[0] if len(v) == 1 else v)
             else:
                 labels.append(value)
-        return labels
+        return labels[0] if len(labels) == 1 else labels
 
     def as_tuple(self):
         """ """
