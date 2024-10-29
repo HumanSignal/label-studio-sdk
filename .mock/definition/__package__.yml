@@ -2398,7 +2398,7 @@ types:
         docs: Status of the refinement job
         default: Pending
       total_cost:
-        type: optional<float>
+        type: optional<string>
         docs: Total cost of the refinement job (in USD)
       previous_version:
         type: optional<PromptVersion>

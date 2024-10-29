@@ -35,7 +35,7 @@ class RefinedPromptResponse(pydantic_v1.BaseModel):
     Status of the refinement job
     """
 
-    total_cost: typing.Optional[float] = pydantic_v1.Field(default=None)
+    total_cost: typing.Optional[str] = pydantic_v1.Field(default=None)
     """
     Total cost of the refinement job (in USD)
     """

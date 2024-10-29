@@ -182,7 +182,7 @@ async def test_get_refined_prompt(client: LabelStudio, async_client: AsyncLabelS
         "prompt": "prompt",
         "refinement_job_id": "refinement_job_id",
         "refinement_status": "Pending",
-        "total_cost": 1.1,
+        "total_cost": "total_cost",
         "previous_version": {
             "title": "title",
             "parent_model": 1,
@@ -234,7 +234,7 @@ async def test_refine_prompt(client: LabelStudio, async_client: AsyncLabelStudio
         "prompt": "prompt",
         "refinement_job_id": "refinement_job_id",
         "refinement_status": "Pending",
-        "total_cost": 1.1,
+        "total_cost": "total_cost",
         "previous_version": {
             "title": "title",
             "parent_model": 1,
