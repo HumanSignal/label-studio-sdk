@@ -32,6 +32,7 @@ tests/custom/test_interface
 tests/test_webhooks.py
 
 # manual workflows
+.github/workflows/ci.yml
 .github/workflows/build_pypi.yml
 .github/workflows/codeql.yml
 .github/workflows/docs.yml
