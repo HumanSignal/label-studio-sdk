@@ -296,10 +296,10 @@ isort = ">=4.3.21,<6.0"
 jinja2 = ">=2.10.1,<4.0"
 packaging = "*"
 pydantic = [
+    {version = ">=1.10.0,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.4.0 || >2.4.0,<3.0", extras = ["email"], markers = "python_version >= \"3.12\" and python_version < \"4.0\""},
+    {version = ">=1.10.0,<2.4.0 || >2.4.0,<3.0", extras = ["email"], markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
     {version = ">=1.5.1,<2.4.0 || >2.4.0,<3.0", extras = ["email"], markers = "python_version < \"3.10\""},
     {version = ">=1.9.0,<2.4.0 || >2.4.0,<3.0", extras = ["email"], markers = "python_version >= \"3.10\" and python_version < \"3.11\""},
-    {version = ">=1.10.0,<2.4.0 || >2.4.0,<3.0", extras = ["email"], markers = "python_version >= \"3.11\" and python_version < \"3.12\""},
-    {version = ">=1.10.0,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.4.0 || >2.4.0,<3.0", extras = ["email"], markers = "python_version >= \"3.12\" and python_version < \"4.0\""},
 ]
 pyyaml = ">=6.0.1"
 toml = {version = ">=0.10.0,<1.0.0", markers = "python_version < \"3.11\""}
@@ -1061,9 +1061,9 @@ files = [
 
 [package.dependencies]
 numpy = [
+    {version = ">=1.23.2", markers = "python_version >= \"3.11\""},
     {version = ">=1.20.3", markers = "python_version < \"3.10\""},
     {version = ">=1.21.0", markers = "python_version >= \"3.10\" and python_version < \"3.11\""},
-    {version = ">=1.23.2", markers = "python_version >= \"3.11\""},
 ]
 python-dateutil = ">=2.8.2"
 pytz = ">=2020.1"
@@ -1258,8 +1258,8 @@ annotated-types = ">=0.6.0"
 email-validator = {version = ">=2.0.0", optional = true, markers = "extra == \"email\""}
 pydantic-core = "2.23.4"
 typing-extensions = [
-    {version = ">=4.6.1", markers = "python_version < \"3.13\""},
     {version = ">=4.12.2", markers = "python_version >= \"3.13\""},
+    {version = ">=4.6.1", markers = "python_version < \"3.13\""},
 ]
 
 [package.extras]
@@ -1808,13 +1808,13 @@ files = [
 
 [[package]]
 name = "tqdm"
-version = "4.66.5"
+version = "4.66.6"
 description = "Fast, Extensible Progress Meter"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "tqdm-4.66.5-py3-none-any.whl", hash = "sha256:90279a3770753eafc9194a0364852159802111925aa30eb3f9d85b0e805ac7cd"},
-    {file = "tqdm-4.66.5.tar.gz", hash = "sha256:e1020aef2e5096702d8a025ac7d16b1577279c9d63f8375b63083e9a5f0fcbad"},
+    {file = "tqdm-4.66.6-py3-none-any.whl", hash = "sha256:223e8b5359c2efc4b30555531f09e9f2f3589bcd7fdd389271191031b49b7a63"},
+    {file = "tqdm-4.66.6.tar.gz", hash = "sha256:4bdd694238bef1485ce839d67967ab50af8f9272aab687c0d7702a01da0be090"},
 ]
 
 [package.dependencies]
@@ -1996,4 +1996,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "8670e71f91171212fad0a2a7af739c0a103aec7f02925fa83611d87abc9bf388"
+content-hash = "2c1704ebc55c06304a71cb09459f7ace94b9cdadcad51b9a0a078f20c502e2e3"
