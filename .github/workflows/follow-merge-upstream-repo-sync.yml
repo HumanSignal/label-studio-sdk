@@ -77,7 +77,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: 'poetry'
+#          cache: 'poetry' # Disable cache since label-studio-client-generator does not have poetry.lock
 
       - name: Download Fern
         run: npm install -g fern-api
