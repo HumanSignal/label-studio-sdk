@@ -48,6 +48,7 @@ tests/test_webhooks.py
 .github/workflows/tests.yml
 .github/workflows/update-draft-release.yml
 .github/pr-title-checker-config.json
+.github/release.yml
 .github/autolabeler.yml
 .github/CODEOWNERS
 .github/dependabot.yml
