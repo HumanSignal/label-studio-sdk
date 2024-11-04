@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 from ..types.model_provider_connection import ModelProviderConnection
@@ -22,6 +23,40 @@ class ModelProvidersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ModelProviderConnection]:
+        """
+        Get all model provider connections created by the user in the current organization.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ModelProviderConnection]
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.model_providers.list()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/model-provider-connections/", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[ModelProviderConnection], _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def create(
         self,
         *,
@@ -34,7 +69,7 @@ class ModelProvidersClient:
         created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
         Create a new model provider connection.
@@ -103,10 +138,209 @@ class ModelProvidersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
+        """
+        Get a model provider connection by ID.
+
+        Parameters
+        ----------
+        pk : int
+            Model Provider Connection ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProviderConnection
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.model_providers.get(
+            pk=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(pk)}", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ModelProviderConnection, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a model provider connection by ID.
+
+        Parameters
+        ----------
+        pk : int
+            Model Provider Connection ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.model_providers.delete(
+            pk=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(pk)}", method="DELETE", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update(
+        self,
+        pk: int,
+        *,
+        provider: ModelProviderConnectionProvider,
+        api_key: typing.Optional[str] = OMIT,
+        deployment_name: typing.Optional[str] = OMIT,
+        endpoint: typing.Optional[str] = OMIT,
+        scope: typing.Optional[ModelProviderConnectionScope] = OMIT,
+        organization: typing.Optional[ModelProviderConnectionOrganization] = OMIT,
+        created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
+        created_at: typing.Optional[dt.datetime] = OMIT,
+        updated_at: typing.Optional[dt.datetime] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ModelProviderConnection:
+        """
+        Update a model provider connection by ID.
+
+        Parameters
+        ----------
+        pk : int
+            Model Provider Connection ID
+
+        provider : ModelProviderConnectionProvider
+
+        api_key : typing.Optional[str]
+
+        deployment_name : typing.Optional[str]
+
+        endpoint : typing.Optional[str]
+
+        scope : typing.Optional[ModelProviderConnectionScope]
+
+        organization : typing.Optional[ModelProviderConnectionOrganization]
+
+        created_by : typing.Optional[ModelProviderConnectionCreatedBy]
+
+        created_at : typing.Optional[dt.datetime]
+
+        updated_at : typing.Optional[dt.datetime]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProviderConnection
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.model_providers.update(
+            pk=1,
+            provider="OpenAI",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(pk)}",
+            method="PATCH",
+            json={
+                "provider": provider,
+                "api_key": api_key,
+                "deployment_name": deployment_name,
+                "endpoint": endpoint,
+                "scope": scope,
+                "organization": organization,
+                "created_by": created_by,
+                "created_at": created_at,
+                "updated_at": updated_at,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ModelProviderConnection, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncModelProvidersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def list(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ModelProviderConnection]:
+        """
+        Get all model provider connections created by the user in the current organization.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ModelProviderConnection]
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.model_providers.list()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/model-provider-connections/", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(typing.List[ModelProviderConnection], _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
         self,
@@ -120,7 +354,7 @@ class AsyncModelProvidersClient:
         created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
         Create a new model provider connection.
@@ -167,6 +401,169 @@ class AsyncModelProvidersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/model-provider-connections/",
             method="POST",
+            json={
+                "provider": provider,
+                "api_key": api_key,
+                "deployment_name": deployment_name,
+                "endpoint": endpoint,
+                "scope": scope,
+                "organization": organization,
+                "created_by": created_by,
+                "created_at": created_at,
+                "updated_at": updated_at,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ModelProviderConnection, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
+        """
+        Get a model provider connection by ID.
+
+        Parameters
+        ----------
+        pk : int
+            Model Provider Connection ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProviderConnection
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.model_providers.get(
+            pk=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(pk)}", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return pydantic_v1.parse_obj_as(ModelProviderConnection, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a model provider connection by ID.
+
+        Parameters
+        ----------
+        pk : int
+            Model Provider Connection ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.model_providers.delete(
+            pk=1,
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(pk)}", method="DELETE", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update(
+        self,
+        pk: int,
+        *,
+        provider: ModelProviderConnectionProvider,
+        api_key: typing.Optional[str] = OMIT,
+        deployment_name: typing.Optional[str] = OMIT,
+        endpoint: typing.Optional[str] = OMIT,
+        scope: typing.Optional[ModelProviderConnectionScope] = OMIT,
+        organization: typing.Optional[ModelProviderConnectionOrganization] = OMIT,
+        created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
+        created_at: typing.Optional[dt.datetime] = OMIT,
+        updated_at: typing.Optional[dt.datetime] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ModelProviderConnection:
+        """
+        Update a model provider connection by ID.
+
+        Parameters
+        ----------
+        pk : int
+            Model Provider Connection ID
+
+        provider : ModelProviderConnectionProvider
+
+        api_key : typing.Optional[str]
+
+        deployment_name : typing.Optional[str]
+
+        endpoint : typing.Optional[str]
+
+        scope : typing.Optional[ModelProviderConnectionScope]
+
+        organization : typing.Optional[ModelProviderConnectionOrganization]
+
+        created_by : typing.Optional[ModelProviderConnectionCreatedBy]
+
+        created_at : typing.Optional[dt.datetime]
+
+        updated_at : typing.Optional[dt.datetime]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProviderConnection
+
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.model_providers.update(
+            pk=1,
+            provider="OpenAI",
+        )
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(pk)}",
+            method="PATCH",
             json={
                 "provider": provider,
                 "api_key": api_key,

@@ -4,6 +4,31 @@ service:
   auth: false
   base-path: ''
   endpoints:
+    list:
+      path: /api/model-provider-connections/
+      method: GET
+      auth: true
+      docs: >
+        Get all model provider connections created by the user in the current
+        organization.
+      display-name: Get model provider connections
+      response:
+        docs: ''
+        type: list<root.ModelProviderConnection>
+      examples:
+        - response:
+            body:
+              - provider: OpenAI
+                api_key: api_key
+                deployment_name: deployment_name
+                endpoint: endpoint
+                scope: Organization
+                organization: 1
+                created_by: 1
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
     create:
       path: /api/model-provider-connections/
       method: POST
@@ -18,6 +43,86 @@ service:
         type: root.ModelProviderConnection
       examples:
         - request:
+            provider: OpenAI
+          response:
+            body:
+              provider: OpenAI
+              api_key: api_key
+              deployment_name: deployment_name
+              endpoint: endpoint
+              scope: Organization
+              organization: 1
+              created_by: 1
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
+    get:
+      path: /api/model-provider-connections/{pk}
+      method: GET
+      auth: true
+      docs: |
+        Get a model provider connection by ID.
+      path-parameters:
+        pk:
+          type: integer
+          docs: Model Provider Connection ID
+      display-name: Get model provider connection
+      response:
+        docs: ''
+        type: root.ModelProviderConnection
+      examples:
+        - path-parameters:
+            pk: 1
+          response:
+            body:
+              provider: OpenAI
+              api_key: api_key
+              deployment_name: deployment_name
+              endpoint: endpoint
+              scope: Organization
+              organization: 1
+              created_by: 1
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
+    delete:
+      path: /api/model-provider-connections/{pk}
+      method: DELETE
+      auth: true
+      docs: |
+        Delete a model provider connection by ID.
+      path-parameters:
+        pk:
+          type: integer
+          docs: Model Provider Connection ID
+      display-name: Delete model provider connection
+      examples:
+        - path-parameters:
+            pk: 1
+      audiences:
+        - public
+    update:
+      path: /api/model-provider-connections/{pk}
+      method: PATCH
+      auth: true
+      docs: |
+        Update a model provider connection by ID.
+      path-parameters:
+        pk:
+          type: integer
+          docs: Model Provider Connection ID
+      display-name: Update model provider connection
+      request:
+        body: root.ModelProviderConnection
+      response:
+        docs: ''
+        type: root.ModelProviderConnection
+      examples:
+        - path-parameters:
+            pk: 1
+          request:
             provider: OpenAI
           response:
             body:
