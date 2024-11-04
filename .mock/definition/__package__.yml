@@ -2023,6 +2023,13 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+  TaskCommentAuthorsItem:
+    discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
   Task:
     properties:
       id:
@@ -2101,8 +2108,8 @@ types:
         type: optional<integer>
         docs: Project ID for this task
       comment_authors:
-        type: optional<list<integer>>
-        docs: List of comment authors' IDs for this task
+        type: optional<list<TaskCommentAuthorsItem>>
+        docs: List of comment authors for this task
     source:
       openapi: openapi/openapi.yaml
   Workspace:
