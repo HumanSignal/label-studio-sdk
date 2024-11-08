@@ -6,6 +6,7 @@ import typing
 from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .task_annotators_item import TaskAnnotatorsItem
+from .task_comment_authors_item import TaskCommentAuthorsItem
 
 
 class Task(pydantic_v1.BaseModel):
@@ -134,9 +135,9 @@ class Task(pydantic_v1.BaseModel):
     Project ID for this task
     """
 
-    comment_authors: typing.Optional[typing.List[int]] = pydantic_v1.Field(default=None)
+    comment_authors: typing.Optional[typing.List[TaskCommentAuthorsItem]] = pydantic_v1.Field(default=None)
     """
-    List of comment authors' IDs for this task
+    List of comment authors for this task
     """
 
     def json(self, **kwargs: typing.Any) -> str:

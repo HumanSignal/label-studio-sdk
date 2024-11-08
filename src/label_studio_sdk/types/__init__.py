@@ -87,6 +87,7 @@ from .serialization_option import SerializationOption
 from .serialization_options import SerializationOptions
 from .task import Task
 from .task_annotators_item import TaskAnnotatorsItem
+from .task_comment_authors_item import TaskCommentAuthorsItem
 from .task_filter_options import TaskFilterOptions
 from .user_simple import UserSimple
 from .view import View
@@ -184,6 +185,7 @@ __all__ = [
     "SerializationOptions",
     "Task",
     "TaskAnnotatorsItem",
+    "TaskCommentAuthorsItem",
     "TaskFilterOptions",
     "UserSimple",
     "View",
