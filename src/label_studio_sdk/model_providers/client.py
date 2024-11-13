@@ -75,6 +75,7 @@ class ModelProvidersClient:
         budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
         budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
         budget_total_spent: typing.Optional[float] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -113,7 +114,10 @@ class ModelProvidersClient:
             Budget reset period for the model provider connection (null if not reset)
 
         budget_total_spent : typing.Optional[float]
-            Tracked total budget spent for the given provider connection
+            Tracked total budget spent for the given provider connection within the current budget period
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -152,6 +156,7 @@ class ModelProvidersClient:
                 "budget_last_reset_date": budget_last_reset_date,
                 "budget_reset_period": budget_reset_period,
                 "budget_total_spent": budget_total_spent,
+                "budget_alert_threshold": budget_alert_threshold,
             },
             request_options=request_options,
             omit=OMIT,
@@ -259,6 +264,7 @@ class ModelProvidersClient:
         budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
         budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
         budget_total_spent: typing.Optional[float] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -300,7 +306,10 @@ class ModelProvidersClient:
             Budget reset period for the model provider connection (null if not reset)
 
         budget_total_spent : typing.Optional[float]
-            Tracked total budget spent for the given provider connection
+            Tracked total budget spent for the given provider connection within the current budget period
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -340,6 +349,7 @@ class ModelProvidersClient:
                 "budget_last_reset_date": budget_last_reset_date,
                 "budget_reset_period": budget_reset_period,
                 "budget_total_spent": budget_total_spent,
+                "budget_alert_threshold": budget_alert_threshold,
             },
             request_options=request_options,
             omit=OMIT,
@@ -410,6 +420,7 @@ class AsyncModelProvidersClient:
         budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
         budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
         budget_total_spent: typing.Optional[float] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -448,7 +459,10 @@ class AsyncModelProvidersClient:
             Budget reset period for the model provider connection (null if not reset)
 
         budget_total_spent : typing.Optional[float]
-            Tracked total budget spent for the given provider connection
+            Tracked total budget spent for the given provider connection within the current budget period
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -487,6 +501,7 @@ class AsyncModelProvidersClient:
                 "budget_last_reset_date": budget_last_reset_date,
                 "budget_reset_period": budget_reset_period,
                 "budget_total_spent": budget_total_spent,
+                "budget_alert_threshold": budget_alert_threshold,
             },
             request_options=request_options,
             omit=OMIT,
@@ -594,6 +609,7 @@ class AsyncModelProvidersClient:
         budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
         budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
         budget_total_spent: typing.Optional[float] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -635,7 +651,10 @@ class AsyncModelProvidersClient:
             Budget reset period for the model provider connection (null if not reset)
 
         budget_total_spent : typing.Optional[float]
-            Tracked total budget spent for the given provider connection
+            Tracked total budget spent for the given provider connection within the current budget period
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -675,6 +694,7 @@ class AsyncModelProvidersClient:
                 "budget_last_reset_date": budget_last_reset_date,
                 "budget_reset_period": budget_reset_period,
                 "budget_total_spent": budget_total_spent,
+                "budget_alert_threshold": budget_alert_threshold,
             },
             request_options=request_options,
             omit=OMIT,

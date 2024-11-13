@@ -24,6 +24,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "budget_last_reset_date": "2024-01-15T09:30:00Z",
             "budget_reset_period": "Monthly",
             "budget_total_spent": 1.1,
+            "budget_alert_threshold": 1.1,
         }
     ]
     expected_types: typing.Any = (
@@ -44,6 +45,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "budget_last_reset_date": "datetime",
                 "budget_reset_period": None,
                 "budget_total_spent": None,
+                "budget_alert_threshold": None,
             }
         },
     )
@@ -70,6 +72,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "budget_last_reset_date": "2024-01-15T09:30:00Z",
         "budget_reset_period": "Monthly",
         "budget_total_spent": 1.1,
+        "budget_alert_threshold": 1.1,
     }
     expected_types: typing.Any = {
         "provider": None,
@@ -86,6 +89,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "budget_last_reset_date": "datetime",
         "budget_reset_period": None,
         "budget_total_spent": None,
+        "budget_alert_threshold": None,
     }
     response = client.model_providers.create(provider="OpenAI")
     validate_response(response, expected_response, expected_types)
@@ -110,6 +114,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "budget_last_reset_date": "2024-01-15T09:30:00Z",
         "budget_reset_period": "Monthly",
         "budget_total_spent": 1.1,
+        "budget_alert_threshold": 1.1,
     }
     expected_types: typing.Any = {
         "provider": None,
@@ -126,6 +131,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "budget_last_reset_date": "datetime",
         "budget_reset_period": None,
         "budget_total_spent": None,
+        "budget_alert_threshold": None,
     }
     response = client.model_providers.get(pk=1)
     validate_response(response, expected_response, expected_types)
@@ -157,6 +163,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "budget_last_reset_date": "2024-01-15T09:30:00Z",
         "budget_reset_period": "Monthly",
         "budget_total_spent": 1.1,
+        "budget_alert_threshold": 1.1,
     }
     expected_types: typing.Any = {
         "provider": None,
@@ -173,6 +180,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "budget_last_reset_date": "datetime",
         "budget_reset_period": None,
         "budget_total_spent": None,
+        "budget_alert_threshold": None,
     }
     response = client.model_providers.update(pk=1, provider="OpenAI")
     validate_response(response, expected_response, expected_types)

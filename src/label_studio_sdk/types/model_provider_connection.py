@@ -44,7 +44,12 @@ class ModelProviderConnection(pydantic_v1.BaseModel):
 
     budget_total_spent: typing.Optional[float] = pydantic_v1.Field(default=None)
     """
-    Tracked total budget spent for the given provider connection
+    Tracked total budget spent for the given provider connection within the current budget period
+    """
+
+    budget_alert_threshold: typing.Optional[float] = pydantic_v1.Field(default=None)
+    """
+    Budget alert threshold for the given provider connection
     """
 
     def json(self, **kwargs: typing.Any) -> str:

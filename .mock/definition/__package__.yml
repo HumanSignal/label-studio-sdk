@@ -2576,7 +2576,12 @@ types:
         default: None
       budget_total_spent:
         type: optional<double>
-        docs: Tracked total budget spent for the given provider connection
+        docs: >-
+          Tracked total budget spent for the given provider connection within
+          the current budget period
+      budget_alert_threshold:
+        type: optional<double>
+        docs: Budget alert threshold for the given provider connection
     source:
       openapi: openapi/openapi.yaml
   CommentCreatedBy:

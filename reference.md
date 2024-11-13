@@ -16093,7 +16093,15 @@ client.model_providers.create(
 <dl>
 <dd>
 
-**budget_total_spent:** `typing.Optional[float]` — Tracked total budget spent for the given provider connection
+**budget_total_spent:** `typing.Optional[float]` — Tracked total budget spent for the given provider connection within the current budget period
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
     
 </dd>
 </dl>
@@ -16416,7 +16424,15 @@ client.model_providers.update(
 <dl>
 <dd>
 
-**budget_total_spent:** `typing.Optional[float]` — Tracked total budget spent for the given provider connection
+**budget_total_spent:** `typing.Optional[float]` — Tracked total budget spent for the given provider connection within the current budget period
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
     
 </dd>
 </dl>
