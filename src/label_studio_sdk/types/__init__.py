@@ -52,6 +52,7 @@ from .ml_backend import MlBackend
 from .ml_backend_auth_method import MlBackendAuthMethod
 from .ml_backend_state import MlBackendState
 from .model_provider_connection import ModelProviderConnection
+from .model_provider_connection_budget_reset_period import ModelProviderConnectionBudgetResetPeriod
 from .model_provider_connection_created_by import ModelProviderConnectionCreatedBy
 from .model_provider_connection_organization import ModelProviderConnectionOrganization
 from .model_provider_connection_provider import ModelProviderConnectionProvider
@@ -150,6 +151,7 @@ __all__ = [
     "MlBackendAuthMethod",
     "MlBackendState",
     "ModelProviderConnection",
+    "ModelProviderConnectionBudgetResetPeriod",
     "ModelProviderConnectionCreatedBy",
     "ModelProviderConnectionOrganization",
     "ModelProviderConnectionProvider",

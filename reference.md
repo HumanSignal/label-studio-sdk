@@ -16061,6 +16061,46 @@ client.model_providers.create(
 <dl>
 <dd>
 
+**is_internal:** `typing.Optional[bool]` — Whether the model provider connection is internal, not visible to the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_limit:** `typing.Optional[float]` — Budget limit for the model provider connection (null if unlimited)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_last_reset_date:** `typing.Optional[dt.datetime]` — Date and time the budget was last reset
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_reset_period:** `typing.Optional[ModelProviderConnectionBudgetResetPeriod]` — Budget reset period for the model provider connection (null if not reset)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_total_spent:** `typing.Optional[float]` — Tracked total budget spent for the given provider connection
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -16337,6 +16377,46 @@ client.model_providers.update(
 <dd>
 
 **updated_at:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_internal:** `typing.Optional[bool]` — Whether the model provider connection is internal, not visible to the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_limit:** `typing.Optional[float]` — Budget limit for the model provider connection (null if unlimited)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_last_reset_date:** `typing.Optional[dt.datetime]` — Date and time the budget was last reset
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_reset_period:** `typing.Optional[ModelProviderConnectionBudgetResetPeriod]` — Budget reset period for the model provider connection (null if not reset)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_total_spent:** `typing.Optional[float]` — Tracked total budget spent for the given provider connection
     
 </dd>
 </dl>

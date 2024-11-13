@@ -10,6 +10,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.request_options import RequestOptions
 from ..types.model_provider_connection import ModelProviderConnection
+from ..types.model_provider_connection_budget_reset_period import ModelProviderConnectionBudgetResetPeriod
 from ..types.model_provider_connection_created_by import ModelProviderConnectionCreatedBy
 from ..types.model_provider_connection_organization import ModelProviderConnectionOrganization
 from ..types.model_provider_connection_provider import ModelProviderConnectionProvider
@@ -69,6 +70,11 @@ class ModelProvidersClient:
         created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
+        is_internal: typing.Optional[bool] = OMIT,
+        budget_limit: typing.Optional[float] = OMIT,
+        budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
+        budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
+        budget_total_spent: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -93,6 +99,21 @@ class ModelProvidersClient:
         created_at : typing.Optional[dt.datetime]
 
         updated_at : typing.Optional[dt.datetime]
+
+        is_internal : typing.Optional[bool]
+            Whether the model provider connection is internal, not visible to the user.
+
+        budget_limit : typing.Optional[float]
+            Budget limit for the model provider connection (null if unlimited)
+
+        budget_last_reset_date : typing.Optional[dt.datetime]
+            Date and time the budget was last reset
+
+        budget_reset_period : typing.Optional[ModelProviderConnectionBudgetResetPeriod]
+            Budget reset period for the model provider connection (null if not reset)
+
+        budget_total_spent : typing.Optional[float]
+            Tracked total budget spent for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -126,6 +147,11 @@ class ModelProvidersClient:
                 "created_by": created_by,
                 "created_at": created_at,
                 "updated_at": updated_at,
+                "is_internal": is_internal,
+                "budget_limit": budget_limit,
+                "budget_last_reset_date": budget_last_reset_date,
+                "budget_reset_period": budget_reset_period,
+                "budget_total_spent": budget_total_spent,
             },
             request_options=request_options,
             omit=OMIT,
@@ -228,6 +254,11 @@ class ModelProvidersClient:
         created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
+        is_internal: typing.Optional[bool] = OMIT,
+        budget_limit: typing.Optional[float] = OMIT,
+        budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
+        budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
+        budget_total_spent: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -255,6 +286,21 @@ class ModelProvidersClient:
         created_at : typing.Optional[dt.datetime]
 
         updated_at : typing.Optional[dt.datetime]
+
+        is_internal : typing.Optional[bool]
+            Whether the model provider connection is internal, not visible to the user.
+
+        budget_limit : typing.Optional[float]
+            Budget limit for the model provider connection (null if unlimited)
+
+        budget_last_reset_date : typing.Optional[dt.datetime]
+            Date and time the budget was last reset
+
+        budget_reset_period : typing.Optional[ModelProviderConnectionBudgetResetPeriod]
+            Budget reset period for the model provider connection (null if not reset)
+
+        budget_total_spent : typing.Optional[float]
+            Tracked total budget spent for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -289,6 +335,11 @@ class ModelProvidersClient:
                 "created_by": created_by,
                 "created_at": created_at,
                 "updated_at": updated_at,
+                "is_internal": is_internal,
+                "budget_limit": budget_limit,
+                "budget_last_reset_date": budget_last_reset_date,
+                "budget_reset_period": budget_reset_period,
+                "budget_total_spent": budget_total_spent,
             },
             request_options=request_options,
             omit=OMIT,
@@ -354,6 +405,11 @@ class AsyncModelProvidersClient:
         created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
+        is_internal: typing.Optional[bool] = OMIT,
+        budget_limit: typing.Optional[float] = OMIT,
+        budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
+        budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
+        budget_total_spent: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -378,6 +434,21 @@ class AsyncModelProvidersClient:
         created_at : typing.Optional[dt.datetime]
 
         updated_at : typing.Optional[dt.datetime]
+
+        is_internal : typing.Optional[bool]
+            Whether the model provider connection is internal, not visible to the user.
+
+        budget_limit : typing.Optional[float]
+            Budget limit for the model provider connection (null if unlimited)
+
+        budget_last_reset_date : typing.Optional[dt.datetime]
+            Date and time the budget was last reset
+
+        budget_reset_period : typing.Optional[ModelProviderConnectionBudgetResetPeriod]
+            Budget reset period for the model provider connection (null if not reset)
+
+        budget_total_spent : typing.Optional[float]
+            Tracked total budget spent for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -411,6 +482,11 @@ class AsyncModelProvidersClient:
                 "created_by": created_by,
                 "created_at": created_at,
                 "updated_at": updated_at,
+                "is_internal": is_internal,
+                "budget_limit": budget_limit,
+                "budget_last_reset_date": budget_last_reset_date,
+                "budget_reset_period": budget_reset_period,
+                "budget_total_spent": budget_total_spent,
             },
             request_options=request_options,
             omit=OMIT,
@@ -513,6 +589,11 @@ class AsyncModelProvidersClient:
         created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
+        is_internal: typing.Optional[bool] = OMIT,
+        budget_limit: typing.Optional[float] = OMIT,
+        budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
+        budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
+        budget_total_spent: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -540,6 +621,21 @@ class AsyncModelProvidersClient:
         created_at : typing.Optional[dt.datetime]
 
         updated_at : typing.Optional[dt.datetime]
+
+        is_internal : typing.Optional[bool]
+            Whether the model provider connection is internal, not visible to the user.
+
+        budget_limit : typing.Optional[float]
+            Budget limit for the model provider connection (null if unlimited)
+
+        budget_last_reset_date : typing.Optional[dt.datetime]
+            Date and time the budget was last reset
+
+        budget_reset_period : typing.Optional[ModelProviderConnectionBudgetResetPeriod]
+            Budget reset period for the model provider connection (null if not reset)
+
+        budget_total_spent : typing.Optional[float]
+            Tracked total budget spent for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -574,6 +670,11 @@ class AsyncModelProvidersClient:
                 "created_by": created_by,
                 "created_at": created_at,
                 "updated_at": updated_at,
+                "is_internal": is_internal,
+                "budget_limit": budget_limit,
+                "budget_last_reset_date": budget_last_reset_date,
+                "budget_reset_period": budget_reset_period,
+                "budget_total_spent": budget_total_spent,
             },
             request_options=request_options,
             omit=OMIT,

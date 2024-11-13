@@ -2512,6 +2512,7 @@ types:
     enum:
       - OpenAI
       - AzureOpenAI
+      - Custom
     source:
       openapi: openapi/openapi.yaml
   ModelProviderConnectionScope:
@@ -2535,6 +2536,15 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+  ModelProviderConnectionBudgetResetPeriod:
+    enum:
+      - Monthly
+      - Yearly
+      - None
+    docs: Budget reset period for the model provider connection (null if not reset)
+    default: None
+    source:
+      openapi: openapi/openapi.yaml
   ModelProviderConnection:
     properties:
       provider: ModelProviderConnectionProvider
@@ -2546,6 +2556,27 @@ types:
       created_by: optional<ModelProviderConnectionCreatedBy>
       created_at: optional<datetime>
       updated_at: optional<datetime>
+      is_internal:
+        type: optional<boolean>
+        docs: >-
+          Whether the model provider connection is internal, not visible to the
+          user.
+        default: false
+      budget_limit:
+        type: optional<double>
+        docs: Budget limit for the model provider connection (null if unlimited)
+      budget_last_reset_date:
+        type: optional<datetime>
+        docs: Date and time the budget was last reset
+      budget_reset_period:
+        type: optional<ModelProviderConnectionBudgetResetPeriod>
+        docs: >-
+          Budget reset period for the model provider connection (null if not
+          reset)
+        default: None
+      budget_total_spent:
+        type: optional<double>
+        docs: Tracked total budget spent for the given provider connection
     source:
       openapi: openapi/openapi.yaml
   CommentCreatedBy:
