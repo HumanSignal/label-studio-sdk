@@ -27,6 +27,12 @@ service:
                 created_by: 1
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
+                is_internal: true
+                budget_limit: 1.1
+                budget_last_reset_date: '2024-01-15T09:30:00Z'
+                budget_reset_period: Monthly
+                budget_total_spent: 1.1
+                budget_alert_threshold: 1.1
       audiences:
         - public
     create:
@@ -55,6 +61,12 @@ service:
               created_by: 1
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+              is_internal: true
+              budget_limit: 1.1
+              budget_last_reset_date: '2024-01-15T09:30:00Z'
+              budget_reset_period: Monthly
+              budget_total_spent: 1.1
+              budget_alert_threshold: 1.1
       audiences:
         - public
     get:
@@ -85,6 +97,12 @@ service:
               created_by: 1
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+              is_internal: true
+              budget_limit: 1.1
+              budget_last_reset_date: '2024-01-15T09:30:00Z'
+              budget_reset_period: Monthly
+              budget_total_spent: 1.1
+              budget_alert_threshold: 1.1
       audiences:
         - public
     delete:
@@ -135,6 +153,12 @@ service:
               created_by: 1
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+              is_internal: true
+              budget_limit: 1.1
+              budget_last_reset_date: '2024-01-15T09:30:00Z'
+              budget_reset_period: Monthly
+              budget_total_spent: 1.1
+              budget_alert_threshold: 1.1
       audiences:
         - public
   source:
