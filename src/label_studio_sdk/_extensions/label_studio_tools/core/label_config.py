@@ -84,9 +84,9 @@ def parse_config(config_string):
                 "valueType": tag.attrib.get("valueType"),
             }
             if 'value' in tag.attrib:
-                inputs[tag.attrib["name"]]["value"] = tag.attrib["value"]
+                inputs[tag.attrib["name"]]["value"] = tag.attrib["value"].lstrip("$")
             elif 'valueList' in tag.attrib:
-                inputs[tag.attrib["name"]]["valueList"] = tag.attrib["valueList"]
+                inputs[tag.attrib["name"]]["valueList"] = tag.attrib["valueList"].lstrip("$")
             else:
                 raise ValueError(
                     'Inspecting tag {tag_name}... found no "value" or "valueList" attributes.'.format(
