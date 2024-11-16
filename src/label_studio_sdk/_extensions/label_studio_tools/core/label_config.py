@@ -38,6 +38,7 @@ def parse_config(config_string):
     """
     if not config_string:
         return {}
+
     try:
         xml_tree = etree.fromstring(config_string)
     except etree.XMLSyntaxError as e:
