@@ -100,7 +100,7 @@ def parse_config(config_string):
             actual_value = tag.attrib.get("alias") or tag.attrib.get("value") or tag.attrib.get("valueList")
             if not actual_value:
                 logger.debug(
-                    'Inspecting tag {tag_name}... found no "value" or "alias" attributes.'.format(
+                    'Inspecting tag {tag_name}... found no "value", "valueList", or "alias" attributes.'.format(
                         tag_name=etree.tostring(tag, encoding="unicode").strip()[:50]
                     )
                 )

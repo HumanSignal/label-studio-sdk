@@ -291,7 +291,7 @@ class Converter(object):
         return list(data_keys), output_tag_names
 
     def _get_supported_formats(self):
-        is_MIG = False
+        is_mig = False
         if len(self._data_keys) > 1:
             return [
                 Format.JSON.name,
@@ -305,7 +305,7 @@ class Converter(object):
             output_tag_types.add(info["type"])
             for input_tag in info["inputs"]:
                 if input_tag.get("valueList"):
-                    is_MIG = True
+                    is_mig = True
                 if input_tag["type"] == "Text" and input_tag.get("valueType") == "url":
                     logger.error('valueType="url" are not supported for text inputs')
                     continue
@@ -314,7 +314,7 @@ class Converter(object):
         all_formats = [f.name for f in Format]
         if not ("Text" in input_tag_types and "Labels" in output_tag_types):
             all_formats.remove(Format.CONLL2003.name)
-        if is_MIG or not (
+        if is_mig or not (
             "Image" in input_tag_types
             and (
                 "RectangleLabels" in output_tag_types
@@ -323,7 +323,7 @@ class Converter(object):
             )
         ):
             all_formats.remove(Format.VOC.name)
-        if is_MIG or not (
+        if is_mig or not (
             "Image" in input_tag_types
             and (
                 "RectangleLabels" in output_tag_types
@@ -352,7 +352,7 @@ class Converter(object):
             and "TextArea" in output_tag_types
         ):
             all_formats.remove(Format.ASR_MANIFEST.name)
-        if is_MIG or ('Video' in input_tag_types and 'TimelineLabels' in output_tag_types):
+        if is_mig or ('Video' in input_tag_types and 'TimelineLabels' in output_tag_types):
             all_formats.remove(Format.YOLO_OBB.name)
 
         return all_formats

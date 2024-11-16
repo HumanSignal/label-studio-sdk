@@ -75,7 +75,7 @@ def test_dynamic_labels_parse_config():
                   <Image name="image" value="$image" zoom="true"/>
                   <PolygonLabels name="label" toName="image"
                                  strokeWidth="3" pointSize="small"
-                                 opacity="0.9" value="$options"    
+                                 opacity="0.9" value="$options"
                   />
                 </View>"""
     )
@@ -93,7 +93,7 @@ def test_no_dynamic_labels_parse_config():
                   <Image name="image" value="$image" zoom="true"/>
                   <PolygonLabels name="label" toName="image"
                                  strokeWidth="3" pointSize="small"
-                                 opacity="0.9"    
+                                 opacity="0.9"
                   />
                 </View>"""
     )
@@ -123,7 +123,7 @@ def test_not_dynamic_labels_parse_config():
                   <Image name="image" value="$image" zoom="true"/>
                   <PolygonLabels name="label" toName="image"
                                  strokeWidth="3" pointSize="small"
-                                 opacity="0.9"    
+                                 opacity="0.9"
                   />
                 </View>"""
     )
@@ -145,3 +145,21 @@ def test_label_config_with_valueType_url():
             </View>"""
     config = parse_config(label_config)
     assert config["text_class"]["inputs"][0]["valueType"] == "url"
+
+
+def test_mig_label_config():
+    """
+    Test MIG config
+    """
+    label_config = """
+    <View>
+      <Image name="image" valueList="$images"/>
+      <RectangleLabels name="labels" toName="image">
+        <Label value="Cat"/>
+        <Label value="Dog"/>
+      </RectangleLabels>
+    </View>
+    """
+
+    config = parse_config(label_config)
+    assert config["labels"]["inputs"][0] == {'type': 'Image', 'valueList': 'images', 'valueType': None}
