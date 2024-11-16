@@ -10,7 +10,6 @@ from copy import deepcopy
 from datetime import datetime
 from enum import Enum
 from glob import glob
-from operator import itemgetter
 from shutil import copy2
 from typing import Optional
 
