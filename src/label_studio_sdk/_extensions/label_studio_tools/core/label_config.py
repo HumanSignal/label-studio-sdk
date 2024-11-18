@@ -82,17 +82,26 @@ def parse_config(config_string):
         elif _is_input_tag(tag):
             inputs[tag.attrib["name"]] = {
                 "type": tag.tag,
-                "value": tag.attrib["value"].lstrip("$"),
                 "valueType": tag.attrib.get("valueType"),
             }
+            if 'value' in tag.attrib:
+                inputs[tag.attrib["name"]]["value"] = tag.attrib["value"].lstrip("$")
+            elif 'valueList' in tag.attrib:
+                inputs[tag.attrib["name"]]["valueList"] = tag.attrib["valueList"].lstrip("$")
+            else:
+                raise ValueError(
+                    'Inspecting tag {tag_name}... found no "value" or "valueList" attributes.'.format(
+                        tag_name=etree.tostring(tag, encoding="unicode").strip()[:50]
+                    )
+                )
         if tag.tag not in _LABEL_TAGS:
             continue
         parent_name = _get_parent_output_tag_name(tag, outputs)
         if parent_name is not None:
-            actual_value = tag.attrib.get("alias") or tag.attrib.get("value")
+            actual_value = tag.attrib.get("alias") or tag.attrib.get("value") or tag.attrib.get("valueList")
             if not actual_value:
                 logger.debug(
-                    'Inspecting tag {tag_name}... found no "value" or "alias" attributes.'.format(
+                    'Inspecting tag {tag_name}... found no "value", "valueList", or "alias" attributes.'.format(
                         tag_name=etree.tostring(tag, encoding="unicode").strip()[:50]
                     )
                 )
@@ -137,7 +146,7 @@ def _is_input_tag(tag):
     """
     Check if tag is input
     """
-    return tag.attrib.get("name") and tag.attrib.get("value")
+    return tag.attrib.get("name") and (tag.attrib.get("value") or tag.attrib.get("valueList"))
 
 
 def _is_output_tag(tag):
