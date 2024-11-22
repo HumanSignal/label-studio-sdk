@@ -15,6 +15,7 @@ from pydantic import BaseModel
 from collections import defaultdict, OrderedDict
 from lxml import etree
 import xmljson
+from jsf import JSF
 
 from label_studio_sdk._legacy.exceptions import (
     LSConfigParseException,
@@ -839,9 +840,23 @@ class LabelInterface:
 
         return task
 
-    def generate_sample_annotation(self):
+    def generate_sample_prediction(self):
         """ """
-        raise NotImplemented()
+        prediction = PredictionValue(
+            model_version='sample model version',
+            result=[
+                {
+                    'from_name': control.name,
+                    'to_name': control.to_name[0],
+                    'type': control.tag,
+                    # TODO: put special case for choices in generation instead of validation
+                    'value': {control._label_attr_name: JSF(control.to_json_schema()).generate()}
+                } for control in self.controls
+            ]
+        )
+        prediction_dct = prediction.model_dump()
+        assert self.validate_prediction(prediction_dct), 'could not generate a sample prediction'
+        return prediction_dct
 
     #####
     ##### COMPATIBILITY LAYER
