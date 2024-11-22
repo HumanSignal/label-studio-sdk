@@ -153,6 +153,14 @@ class ObjectTag(LabelStudioTag):
             "value": '$' + self.value if self.value is not None else None
         }
 
+    @property
+    def is_url(self) -> bool:
+        """
+        Check if the value is a url that should be dereferenced before using.
+        Can only be true for Text, HyperText, or TimeSeries
+        """
+        return self.attr.get('resolver') or (self.value_type == "url")
+
     # and have generate_example in each
     def generate_example_value(self, mode="upload", secure_mode=False):
         """ """
