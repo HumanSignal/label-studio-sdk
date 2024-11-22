@@ -770,7 +770,7 @@ class LabelInterface:
             return False
 
         # type of the region should match the tag name        
-        if control.tag.lower() != region["type"]:
+        if control.tag.lower() != region["type"].lower():
             return False
         
         # make sure that in config it connects to the same tag as
