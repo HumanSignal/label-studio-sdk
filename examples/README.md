@@ -23,6 +23,7 @@ If your data is hosted in Google Cloud Storage (GCS), you can write a Python scr
   * Create a snapshot
   * Check the snapshot status
   * Download the snapshot
+ * [Export YOLO with images](https://github.com/HumanSignal/label-studio-sdk/blob/master/examples/export_yolo_with_images.py) - This script exports labeled data from a Label Studio project and converts it into the YOLO format, including downloading associated images.
 
 
 ## Machine Learning
