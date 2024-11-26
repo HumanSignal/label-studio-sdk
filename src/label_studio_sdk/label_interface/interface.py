@@ -853,13 +853,14 @@ class LabelInterface:
                'value': {'choices': ['Neutral']}}]}
 
         NOTE: `id` field in result is not required when importing predictions; it will be generated automatically.
+        NOTE: for each control tag, depends on tag.to_json_schema() being implemented correctly
         """
         prediction = PredictionValue(
             model_version='sample model version',
-            result=[
-                control.label(JSF(control.to_json_schema()).generate())
+            result=self.create_regions({
+                control.name: JSF(control.to_json_schema()).generate()
                 for control in self.controls
-            ]
+            })
         )
         prediction_dct = prediction.model_dump()
         if self.validate_prediction(prediction_dct):
@@ -884,13 +885,14 @@ class LabelInterface:
                'value': {'choices': ['Negative']}}]}
 
         NOTE: `id` field in result is not required when importing predictions; it will be generated automatically.
+        NOTE: for each control tag, depends on tag.to_json_schema() being implemented correctly
         """
         annotation = AnnotationValue(
             completed_by=-1,  # annotator's user id
-            result=[
-                control.label(JSF(control.to_json_schema()).generate())
+            result=self.create_regions({
+                control.name: JSF(control.to_json_schema()).generate()
                 for control in self.controls
-            ]
+            })
         )
         annotation_dct = annotation.model_dump()
         if self.validate_annotation(annotation_dct):
