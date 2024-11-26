@@ -10,16 +10,7 @@ from pydantic import BaseModel, Field
 
 class Region(BaseModel):
     """
-    Class for Region Tag
-
-    Attributes:
-    -----------
-    id: str
-        The unique identifier of the region
-    x: int
-        The x coordinate of the region
-    y: int
-
+    A Region is an item in the `result` list of a PredictionValue or AnnotationValue.
     """
 
     id: str = Field(default_factory=lambda: str(uuid4()))

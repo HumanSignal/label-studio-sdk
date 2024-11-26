@@ -15,6 +15,7 @@ from pydantic import BaseModel
 from collections import defaultdict, OrderedDict
 from lxml import etree
 import xmljson
+from jsf import JSF
 
 from label_studio_sdk._legacy.exceptions import (
     LSConfigParseException,
@@ -770,7 +771,7 @@ class LabelInterface:
             return False
 
         # type of the region should match the tag name        
-        if control.tag.lower() != region["type"]:
+        if control.tag.lower() != region["type"].lower():
             return False
         
         # make sure that in config it connects to the same tag as
@@ -839,9 +840,67 @@ class LabelInterface:
 
         return task
 
-    def generate_sample_annotation(self):
-        """ """
-        raise NotImplemented()
+    def _generate_sample_regions(self):
+        """ Generate an example of each control tag's JSON schema and validate it as a region"""
+        return self.create_regions({
+            control.name: JSF(control.to_json_schema()).generate()
+            for control in self.controls
+        })
+
+    def generate_sample_prediction(self) -> Optional[dict]:
+        """Generates a sample prediction that is valid for this label config.
+
+        Example:
+            {'model_version': 'sample model version',
+             'score': 0.0,
+             'result': [{'id': 'e7bd76e6-4e88-4eb3-b433-55e03661bf5d',
+               'from_name': 'sentiment',
+               'to_name': 'text',
+               'type': 'choices',
+               'value': {'choices': ['Neutral']}}]}
+
+        NOTE: `id` field in result is not required when importing predictions; it will be generated automatically.
+        NOTE: for each control tag, depends on tag.to_json_schema() being implemented correctly
+        """
+        prediction = PredictionValue(
+            model_version='sample model version',
+            result=self._generate_sample_regions()
+        )
+        prediction_dct = prediction.model_dump()
+        if self.validate_prediction(prediction_dct):
+            return prediction_dct
+        else:
+            logger.debug(f'Sample prediction {prediction_dct} failed validation for label config {self.config}')
+            return None
+
+    def generate_sample_annotation(self) -> Optional[dict]:
+        """Generates a sample annotation that is valid for this label config.
+
+        Example:
+            {'was_cancelled': False,
+             'ground_truth': False,
+             'lead_time': 0.0,
+             'result_count': 0,
+             'completed_by': -1,
+             'result': [{'id': 'b05da11d-3ffc-4657-8b8d-f5bc37cd59ac',
+               'from_name': 'sentiment',
+               'to_name': 'text',
+               'type': 'choices',
+               'value': {'choices': ['Negative']}}]}
+
+        NOTE: `id` field in result is not required when importing predictions; it will be generated automatically.
+        NOTE: for each control tag, depends on tag.to_json_schema() being implemented correctly
+        """
+        annotation = AnnotationValue(
+            completed_by=-1,  # annotator's user id
+            result=self._generate_sample_regions()
+        )
+        annotation_dct = annotation.model_dump()
+        if self.validate_annotation(annotation_dct):
+            return annotation_dct
+        else:
+            logger.debug(f'Sample annotation {annotation_dct} failed validation for label config {self.config}')
+            return None
 
     #####
     ##### COMPATIBILITY LAYER

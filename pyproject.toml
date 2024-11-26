@@ -49,6 +49,7 @@ typing_extensions = ">= 4.0.0"
 ujson = ">=5.8.0"
 xmljson = "0.2.1"
 
+jsf = "^0.11.2"
 [tool.poetry.dev-dependencies]
 mypy = "1.0.1"
 pytest = "^7.4.0"
