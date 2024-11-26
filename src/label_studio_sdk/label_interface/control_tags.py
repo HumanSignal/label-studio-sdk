@@ -505,13 +505,6 @@ class SpanSelectionOffsets(SpanSelection):
 class ChoicesValue(BaseModel):
     choices: List[str]
 
-    # I don't know how Choices predictions with choice != 'multiple' was working without this...
-    @validator("choices", pre=True, always=True)
-    def coerce_to_list(cls, value: Union[str, List[str]]):
-        if isinstance(value, str):
-            return [value]
-        return value
-
 
 class ChoicesTag(ControlTag):
     """ """
@@ -546,15 +539,6 @@ class ChoicesTag(ControlTag):
             "enum": self.labels,
             "description": f"Choices for {self.to_name[0]}"
         }
-
-    def _validate_labels(self, labels):
-        if super()._validate_labels(labels):
-            return True
-
-        # HACK to continue to support single-item output in json schema
-        if not self.is_multiple_choice and isinstance(labels, str):
-            return super()._validate_labels([labels])
-
 
 
 class LabelsValue(SpanSelection):
