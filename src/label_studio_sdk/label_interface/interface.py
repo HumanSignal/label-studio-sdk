@@ -840,6 +840,13 @@ class LabelInterface:
 
         return task
 
+    def _generate_sample_regions(self):
+        """ Generate an example of each control tag's JSON schema and validate it as a region"""
+        return self.create_regions({
+            control.name: JSF(control.to_json_schema()).generate()
+            for control in self.controls
+        })
+
     def generate_sample_prediction(self) -> Optional[dict]:
         """Generates a sample prediction that is valid for this label config.
 
@@ -857,10 +864,7 @@ class LabelInterface:
         """
         prediction = PredictionValue(
             model_version='sample model version',
-            result=self.create_regions({
-                control.name: JSF(control.to_json_schema()).generate()
-                for control in self.controls
-            })
+            result=self._generate_sample_regions()
         )
         prediction_dct = prediction.model_dump()
         if self.validate_prediction(prediction_dct):
@@ -889,10 +893,7 @@ class LabelInterface:
         """
         annotation = AnnotationValue(
             completed_by=-1,  # annotator's user id
-            result=self.create_regions({
-                control.name: JSF(control.to_json_schema()).generate()
-                for control in self.controls
-            })
+            result=self._generate_sample_regions()
         )
         annotation_dct = annotation.model_dump()
         if self.validate_annotation(annotation_dct):
