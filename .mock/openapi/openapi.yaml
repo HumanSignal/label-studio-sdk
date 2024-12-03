@@ -8279,6 +8279,10 @@ components:
           description: Allow sending newsletters to user
           type: boolean
           nullable: true
+        date_joined:
+          title: Date joined
+          type: string
+          format: date-time
     Filter:
       required:
         - column
@@ -8696,6 +8700,11 @@ components:
           format: email
           maxLength: 254
           nullable: true
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+          readOnly: true
     Organization:
       required:
         - title
@@ -8794,6 +8803,10 @@ components:
           description: Allow sending newsletters to user
           type: boolean
           nullable: true
+        date_joined:
+          title: Date joined
+          type: string
+          format: date-time
         created_projects:
           title: Created projects
           type: string

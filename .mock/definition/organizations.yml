@@ -54,6 +54,7 @@ service:
               - id: 1
                 title: title
                 contact_info: contact_info
+                created_at: '2024-01-15T09:30:00Z'
     get:
       path: /api/organizations/{id}
       method: GET

@@ -128,6 +128,7 @@ types:
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
+      date_joined: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
   Filter:
@@ -373,6 +374,7 @@ types:
         validation:
           format: email
           maxLength: 254
+      created_at: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
   Organization:
@@ -430,6 +432,7 @@ types:
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
+      date_joined: optional<datetime>
       created_projects: optional<string>
       contributed_to_projects: optional<string>
     source:
@@ -2263,6 +2266,19 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
+  OrganizationMember:
+    properties:
+      user:
+        type: integer
+        docs: User ID
+      organization:
+        type: integer
+        docs: Organization ID
+      contributed_projects_count: optional<string>
+      annotations_count: optional<string>
+      created_at: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
   PromptCreatedBy:

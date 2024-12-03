@@ -55,6 +55,33 @@ service:
                   organization: 1
                   user:
                     username: username
+    get:
+      path: /api/organizations/{id}/memberships/{user_pk}/
+      method: GET
+      auth: true
+      docs: Get organization member details by user ID.
+      path-parameters:
+        id: string
+        user_pk:
+          type: integer
+          docs: >-
+            A unique integer value identifying the user to get organization
+            details for.
+      display-name: Get organization member details
+      response:
+        docs: ''
+        type: root.OrganizationMember
+      examples:
+        - path-parameters:
+            id: id
+            user_pk: 1
+          response:
+            body:
+              user: 1
+              organization: 1
+              contributed_projects_count: contributed_projects_count
+              annotations_count: annotations_count
+              created_at: '2024-01-15T09:30:00Z'
     delete:
       path: /api/organizations/{id}/memberships/{user_pk}/
       method: DELETE
