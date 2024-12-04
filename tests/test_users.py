@@ -40,6 +40,7 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "phone": "phone",
         "active_organization": 1,
         "allow_newsletters": True,
+        "date_joined": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -53,6 +54,7 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "phone": None,
         "active_organization": "integer",
         "allow_newsletters": None,
+        "date_joined": "datetime",
     }
     response = client.users.whoami()
     validate_response(response, expected_response, expected_types)
@@ -75,6 +77,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "phone": "phone",
             "active_organization": 1,
             "allow_newsletters": True,
+            "date_joined": "2024-01-15T09:30:00Z",
         }
     ]
     expected_types: typing.Any = (
@@ -92,6 +95,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "phone": None,
                 "active_organization": "integer",
                 "allow_newsletters": None,
+                "date_joined": "datetime",
             }
         },
     )
@@ -115,6 +119,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "phone": "phone",
         "active_organization": 1,
         "allow_newsletters": True,
+        "date_joined": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -128,6 +133,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "phone": None,
         "active_organization": "integer",
         "allow_newsletters": None,
+        "date_joined": "datetime",
     }
     response = client.users.create()
     validate_response(response, expected_response, expected_types)
@@ -149,6 +155,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "phone": "phone",
         "active_organization": 1,
         "allow_newsletters": True,
+        "date_joined": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -162,6 +169,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "phone": None,
         "active_organization": "integer",
         "allow_newsletters": None,
+        "date_joined": "datetime",
     }
     response = client.users.get(id=1)
     validate_response(response, expected_response, expected_types)
@@ -190,6 +198,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "phone": "phone",
         "active_organization": 1,
         "allow_newsletters": True,
+        "date_joined": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -203,6 +212,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "phone": None,
         "active_organization": "integer",
         "allow_newsletters": None,
+        "date_joined": "datetime",
     }
     response = client.users.update(id=1)
     validate_response(response, expected_response, expected_types)

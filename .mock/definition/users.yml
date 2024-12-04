@@ -80,6 +80,7 @@ service:
               phone: phone
               active_organization: 1
               allow_newsletters: true
+              date_joined: '2024-01-15T09:30:00Z'
       audiences:
         - public
     list:
@@ -107,6 +108,7 @@ service:
                 phone: phone
                 active_organization: 1
                 allow_newsletters: true
+                date_joined: '2024-01-15T09:30:00Z'
       audiences:
         - public
     create:
@@ -166,6 +168,7 @@ service:
               phone: phone
               active_organization: 1
               allow_newsletters: true
+              date_joined: '2024-01-15T09:30:00Z'
       audiences:
         - public
     get:
@@ -202,6 +205,7 @@ service:
               phone: phone
               active_organization: 1
               allow_newsletters: true
+              date_joined: '2024-01-15T09:30:00Z'
       audiences:
         - public
     delete:
@@ -299,6 +303,7 @@ service:
               phone: phone
               active_organization: 1
               allow_newsletters: true
+              date_joined: '2024-01-15T09:30:00Z'
       audiences:
         - public
   source:
