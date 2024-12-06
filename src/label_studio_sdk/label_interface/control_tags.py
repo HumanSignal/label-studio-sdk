@@ -475,7 +475,7 @@ class ControlTag(LabelStudioTag):
         for value in values:
             if len(value) == 1 and self._label_attr_name in value:
                 v = value[self._label_attr_name]
-                labels.append(v[0] if len(v) == 1 else v)
+                labels.append(v[0] if type(v) == list else v)
             else:
                 labels.append(value)
         return labels[0] if len(labels) == 1 else labels
