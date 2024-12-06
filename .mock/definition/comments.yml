@@ -8,22 +8,26 @@ service:
       path: /api/comments/
       method: GET
       auth: true
-      docs: |
+      docs: >
 
-        Get a list of comments for a specific project.
+        Get a list of comments for the specified annotation, annotators or
+        projects.
       display-name: List comments
       request:
         name: CommentsListRequest
         query-parameters:
-          project:
-            type: optional<integer>
-            docs: Project ID
+          projects:
+            type: optional<string>
+            docs: Comma-separated list of project IDs
           expand_created_by:
             type: optional<boolean>
             docs: Expand the created_by field with object instead of ID
           annotation:
             type: optional<integer>
             docs: Annotation ID
+          annotators:
+            type: optional<string>
+            docs: Comma-separated list of annotator user IDs
       response:
         docs: ''
         type: list<root.Comment>
@@ -165,6 +169,14 @@ service:
               updated_at: '2024-01-15T09:30:00Z'
               is_resolved: true
               resolved_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
+    export:
+      path: /api/comments/export/
+      method: GET
+      auth: true
+      examples:
+        - {}
       audiences:
         - public
   source:

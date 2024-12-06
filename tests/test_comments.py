@@ -147,3 +147,10 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
     async_response = await async_client.comments.update(id=1)
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_export(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert client.comments.export() is None  # type: ignore[func-returns-value]
+
+    assert await async_client.comments.export() is None  # type: ignore[func-returns-value]

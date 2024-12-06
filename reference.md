@@ -16465,7 +16465,7 @@ client.model_providers.update(
 <dl>
 <dd>
 
-Get a list of comments for a specific project.
+Get a list of comments for the specified annotation, annotators or projects.
 </dd>
 </dl>
 </dd>
@@ -16501,7 +16501,7 @@ client.comments.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**projects:** `typing.Optional[str]` — Comma-separated list of project IDs
     
 </dd>
 </dl>
@@ -16518,6 +16518,14 @@ client.comments.list()
 <dd>
 
 **annotation:** `typing.Optional[int]` — Annotation ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotators:** `typing.Optional[str]` — Comma-separated list of annotator user IDs
     
 </dd>
 </dl>
@@ -16855,6 +16863,52 @@ client.comments.update(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">export</a>()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.comments.export()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>

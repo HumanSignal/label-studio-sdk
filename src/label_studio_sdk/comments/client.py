@@ -21,24 +21,28 @@ class CommentsClient:
     def list(
         self,
         *,
-        project: typing.Optional[int] = None,
+        projects: typing.Optional[str] = None,
         expand_created_by: typing.Optional[bool] = None,
         annotation: typing.Optional[int] = None,
+        annotators: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Comment]:
         """
-        Get a list of comments for a specific project.
+        Get a list of comments for the specified annotation, annotators or projects.
 
         Parameters
         ----------
-        project : typing.Optional[int]
-            Project ID
+        projects : typing.Optional[str]
+            Comma-separated list of project IDs
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field with object instead of ID
 
         annotation : typing.Optional[int]
             Annotation ID
+
+        annotators : typing.Optional[str]
+            Comma-separated list of annotator user IDs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -60,7 +64,12 @@ class CommentsClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/comments/",
             method="GET",
-            params={"project": project, "expand_created_by": expand_created_by, "annotation": annotation},
+            params={
+                "projects": projects,
+                "expand_created_by": expand_created_by,
+                "annotation": annotation,
+                "annotators": annotators,
+            },
             request_options=request_options,
         )
         try:
@@ -262,6 +271,37 @@ class CommentsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def export(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.comments.export()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/comments/export/", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncCommentsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -270,24 +310,28 @@ class AsyncCommentsClient:
     async def list(
         self,
         *,
-        project: typing.Optional[int] = None,
+        projects: typing.Optional[str] = None,
         expand_created_by: typing.Optional[bool] = None,
         annotation: typing.Optional[int] = None,
+        annotators: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Comment]:
         """
-        Get a list of comments for a specific project.
+        Get a list of comments for the specified annotation, annotators or projects.
 
         Parameters
         ----------
-        project : typing.Optional[int]
-            Project ID
+        projects : typing.Optional[str]
+            Comma-separated list of project IDs
 
         expand_created_by : typing.Optional[bool]
             Expand the created_by field with object instead of ID
 
         annotation : typing.Optional[int]
             Annotation ID
+
+        annotators : typing.Optional[str]
+            Comma-separated list of annotator user IDs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -309,7 +353,12 @@ class AsyncCommentsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/comments/",
             method="GET",
-            params={"project": project, "expand_created_by": expand_created_by, "annotation": annotation},
+            params={
+                "projects": projects,
+                "expand_created_by": expand_created_by,
+                "annotation": annotation,
+                "annotators": annotators,
+            },
             request_options=request_options,
         )
         try:
@@ -506,6 +555,37 @@ class AsyncCommentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return pydantic_v1.parse_obj_as(Comment, _response.json())  # type: ignore
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def export(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk.client import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        await client.comments.export()
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/comments/export/", method="GET", request_options=request_options
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
