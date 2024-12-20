@@ -7,6 +7,7 @@ from ..core.datetime_utils import serialize_datetime
 from ..core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
+from .prompt import Prompt
 from .user_simple import UserSimple
 
 
@@ -53,6 +54,7 @@ class Project(pydantic_v1.BaseModel):
     """
 
     organization: typing.Optional[int] = None
+    prompt: typing.Optional[Prompt] = None
     color: typing.Optional[str] = None
     maximum_annotations: typing.Optional[int] = pydantic_v1.Field(default=None)
     """
