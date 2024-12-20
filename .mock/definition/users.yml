@@ -306,6 +306,22 @@ service:
               date_joined: '2024-01-15T09:30:00Z'
       audiences:
         - public
+    get_product_tour:
+      path: /api/current-user/product-tour
+      method: GET
+      auth: true
+      examples:
+        - {}
+      audiences:
+        - internal
+    update_product_tour:
+      path: /api/current-user/product-tour
+      method: PATCH
+      auth: true
+      examples:
+        - {}
+      audiences:
+        - internal
   source:
     openapi: openapi/openapi.yaml
 imports:

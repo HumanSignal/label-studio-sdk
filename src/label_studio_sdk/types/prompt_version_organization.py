@@ -2,4 +2,4 @@
 
 import typing
 
-PromptVersionOrganization = typing.Union[int, typing.Dict[str, typing.Any]]
+PromptVersionOrganization = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]
