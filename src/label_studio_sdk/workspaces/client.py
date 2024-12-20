@@ -23,7 +23,6 @@ class WorkspacesClient:
 
     def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Workspace]:
         """
-
         List all workspaces for your organization.
 
         Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
@@ -80,7 +79,6 @@ class WorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-
         Create a new workspace.
 
         Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
@@ -135,9 +133,6 @@ class WorkspacesClient:
                 "color": color,
                 "is_archived": is_archived,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -157,7 +152,6 @@ class WorkspacesClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Workspace:
         """
-
         Get information about a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 
         Parameters
@@ -205,7 +199,6 @@ class WorkspacesClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 
         Parameters
@@ -257,7 +250,6 @@ class WorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-
         Update a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 
         Parameters
@@ -313,9 +305,6 @@ class WorkspacesClient:
                 "color": color,
                 "is_archived": is_archived,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -341,7 +330,6 @@ class AsyncWorkspacesClient:
 
     async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Workspace]:
         """
-
         List all workspaces for your organization.
 
         Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
@@ -406,7 +394,6 @@ class AsyncWorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-
         Create a new workspace.
 
         Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
@@ -469,9 +456,6 @@ class AsyncWorkspacesClient:
                 "color": color,
                 "is_archived": is_archived,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -491,7 +475,6 @@ class AsyncWorkspacesClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Workspace:
         """
-
         Get information about a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 
         Parameters
@@ -547,7 +530,6 @@ class AsyncWorkspacesClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 
         Parameters
@@ -607,7 +589,6 @@ class AsyncWorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-
         Update a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 
         Parameters
@@ -670,9 +651,6 @@ class AsyncWorkspacesClient:
                 "is_personal": is_personal,
                 "color": color,
                 "is_archived": is_archived,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

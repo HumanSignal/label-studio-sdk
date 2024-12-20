@@ -27,7 +27,6 @@ class CommentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Comment]:
         """
-
         Get a list of comments for a specific project.
 
         Parameters
@@ -92,7 +91,6 @@ class CommentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Comment:
         """
-
         Create a new comment.
 
         Parameters
@@ -131,9 +129,6 @@ class CommentsClient:
                 "text": text,
                 "is_resolved": is_resolved,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -153,7 +148,6 @@ class CommentsClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Comment:
         """
-
         Get a specific comment.
 
         Parameters
@@ -201,7 +195,6 @@ class CommentsClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific comment.
 
         Parameters
@@ -251,7 +244,6 @@ class CommentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Comment:
         """
-
         Update a specific comment.
 
         Parameters
@@ -295,9 +287,6 @@ class CommentsClient:
                 "text": text,
                 "is_resolved": is_resolved,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -329,7 +318,6 @@ class AsyncCommentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Comment]:
         """
-
         Get a list of comments for a specific project.
 
         Parameters
@@ -402,7 +390,6 @@ class AsyncCommentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Comment:
         """
-
         Create a new comment.
 
         Parameters
@@ -449,9 +436,6 @@ class AsyncCommentsClient:
                 "text": text,
                 "is_resolved": is_resolved,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -471,7 +455,6 @@ class AsyncCommentsClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Comment:
         """
-
         Get a specific comment.
 
         Parameters
@@ -527,7 +510,6 @@ class AsyncCommentsClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific comment.
 
         Parameters
@@ -585,7 +567,6 @@ class AsyncCommentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Comment:
         """
-
         Update a specific comment.
 
         Parameters
@@ -636,9 +617,6 @@ class AsyncCommentsClient:
                 "project": project,
                 "text": text,
                 "is_resolved": is_resolved,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

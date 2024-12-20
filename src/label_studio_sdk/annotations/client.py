@@ -21,7 +21,6 @@ class AnnotationsClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Annotation:
         """
-
         Tasks can have multiple annotations. Use this call to retrieve a specific annotation using its ID.
 
         You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
@@ -71,7 +70,6 @@ class AnnotationsClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete an annotation.
 
         <Warning>This action can't be undone!</Warning>
@@ -129,7 +127,6 @@ class AnnotationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Annotation:
         """
-
         Update attributes for an existing annotation.
 
         You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
@@ -217,9 +214,6 @@ class AnnotationsClient:
                 "ground_truth": ground_truth,
                 "lead_time": lead_time,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -239,7 +233,6 @@ class AnnotationsClient:
 
     def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Annotation]:
         """
-
         List all annotations for a task.
 
         You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list).
@@ -302,11 +295,9 @@ class AnnotationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Annotation:
         """
-
         Add annotations to a task like an annotator does.
 
         You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list).
-
 
         The content of the result field depends on your labeling configuration. For example, send the following data as part of your POST
         request to send an empty annotation with the ID of the user who completed the task:
@@ -403,9 +394,6 @@ class AnnotationsClient:
                 "ground_truth": ground_truth,
                 "lead_time": lead_time,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -471,9 +459,6 @@ class AnnotationsClient:
                 "project": project,
                 "result": result,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -498,7 +483,6 @@ class AsyncAnnotationsClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Annotation:
         """
-
         Tasks can have multiple annotations. Use this call to retrieve a specific annotation using its ID.
 
         You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
@@ -556,7 +540,6 @@ class AsyncAnnotationsClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete an annotation.
 
         <Warning>This action can't be undone!</Warning>
@@ -622,7 +605,6 @@ class AsyncAnnotationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Annotation:
         """
-
         Update attributes for an existing annotation.
 
         You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
@@ -718,9 +700,6 @@ class AsyncAnnotationsClient:
                 "ground_truth": ground_truth,
                 "lead_time": lead_time,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -742,7 +721,6 @@ class AsyncAnnotationsClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Annotation]:
         """
-
         List all annotations for a task.
 
         You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list).
@@ -813,11 +791,9 @@ class AsyncAnnotationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Annotation:
         """
-
         Add annotations to a task like an annotator does.
 
         You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list).
-
 
         The content of the result field depends on your labeling configuration. For example, send the following data as part of your POST
         request to send an empty annotation with the ID of the user who completed the task:
@@ -922,9 +898,6 @@ class AsyncAnnotationsClient:
                 "ground_truth": ground_truth,
                 "lead_time": lead_time,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -997,9 +970,6 @@ class AsyncAnnotationsClient:
                 "lead_time": lead_time,
                 "project": project,
                 "result": result,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

@@ -5,14 +5,14 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/export/s3
+      path: /api/storages/s3/
       method: GET
       auth: true
       docs: >
 
         You can connect your S3 bucket to Label Studio as a source storage or
-        target storage. Use this API request to get a list of all S3 export
-        (target) storage connections for a specific project. 
+        target storage. Use this API request to get a list of all Google import
+        (source) storage connections for a specific project. 
 
 
         The project ID can be found in the URL when viewing the project in Label
@@ -22,9 +22,7 @@ service:
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: List export storages
+      display-name: List import storages
       request:
         name: S3ListRequest
         query-parameters:
@@ -33,13 +31,14 @@ service:
             docs: Project ID
       response:
         docs: ''
-        type: list<root.S3ExportStorage>
+        type: list<root.S3ImportStorage>
       examples:
         - response:
             body:
               - id: 1
                 type: type
                 synchronizable: true
+                presign: true
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
@@ -50,7 +49,6 @@ service:
                 title: title
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
-                can_delete_objects: true
                 bucket: bucket
                 prefix: prefix
                 regex_filter: regex_filter
@@ -61,16 +59,18 @@ service:
                 aws_sse_kms_key_id: aws_sse_kms_key_id
                 region_name: region_name
                 s3_endpoint: s3_endpoint
+                presign_ttl: 1
+                recursive_scan: true
                 project: 1
       audiences:
         - public
     create:
-      path: /api/storages/export/s3
+      path: /api/storages/s3/
       method: POST
       auth: true
       docs: >
 
-        Create a new target storage connection to S3 storage. 
+        Create a new source storage connection to a S3 bucket. 
 
 
         For information about the required fields and prerequisites, see [Amazon
@@ -78,19 +78,43 @@ service:
         documentation. 
 
 
+        <Info>Ensure you configure CORS before adding cloud storage. This
+        ensures you will be able to see the content of the data rather than just
+        a link.</Info>
+
+
         <Tip>After you add the storage, you should validate the connection
-        before attempting to sync your data. Your data will not be exported
+        before attempting to sync your data. Your data will not be imported
         until you [sync your connection](sync).</Tip>
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Create new storage
+      display-name: Create import storage
       request:
         name: S3CreateRequest
         body:
           properties:
-            can_delete_objects:
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
               type: optional<boolean>
-              docs: Deletion from storage enabled.
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+              default: true
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
             title:
               type: optional<string>
               docs: Storage title
@@ -124,7 +148,6 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
-        content-type: application/json
       response:
         docs: ''
         type: S3CreateResponse
@@ -132,7 +155,11 @@ service:
         - request: {}
           response:
             body:
-              can_delete_objects: true
+              regex_filter: regex_filter
+              use_blob_urls: true
+              presign: true
+              presign_ttl: 1
+              recursive_scan: true
               title: title
               description: description
               project: 1
@@ -147,17 +174,15 @@ service:
       audiences:
         - public
     validate:
-      path: /api/storages/export/s3/validate
+      path: /api/storages/s3/validate
       method: POST
       auth: true
       docs: >
 
-        Validate a specific S3 export storage connection. This is useful to
+        Validate a specific S3 import storage connection. This is useful to
         ensure that the storage configuration settings are correct and
-        operational before attempting to export data.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Validate export storage
+        operational before attempting to import data.
+      display-name: Validate import storage
       request:
         name: S3ValidateRequest
         body:
@@ -165,9 +190,30 @@ service:
             id:
               type: optional<integer>
               docs: Storage ID. If set, storage with specified ID will be updated
-            can_delete_objects:
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
               type: optional<boolean>
-              docs: Deletion from storage enabled.
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+              default: true
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
             title:
               type: optional<string>
               docs: Storage title
@@ -201,34 +247,31 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
-        content-type: application/json
       examples:
         - request: {}
       audiences:
         - public
     get:
-      path: /api/storages/export/s3/{id}
+      path: /api/storages/s3/{id}
       method: GET
       auth: true
       docs: >
 
-        Get a specific S3 export storage connection. You will need to provide
-        the export storage ID. You can find this using [List export
+        Get a specific S3 import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import
         storages](list). 
 
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 export storage.
-      display-name: Get export storage
+          docs: A unique integer value identifying this s3 import storage.
+      display-name: Get import storage
       response:
         docs: ''
-        type: root.S3ExportStorage
+        type: root.S3ImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -237,6 +280,7 @@ service:
               id: 1
               type: type
               synchronizable: true
+              presign: true
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -247,7 +291,6 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              can_delete_objects: true
               bucket: bucket
               prefix: prefix
               regex_filter: regex_filter
@@ -258,64 +301,89 @@ service:
               aws_sse_kms_key_id: aws_sse_kms_key_id
               region_name: region_name
               s3_endpoint: s3_endpoint
+              presign_ttl: 1
+              recursive_scan: true
               project: 1
       audiences:
         - public
     delete:
-      path: /api/storages/export/s3/{id}
+      path: /api/storages/s3/{id}
       method: DELETE
       auth: true
       docs: >
 
-        Delete a specific S3 export storage connection. You will need to provide
-        the export storage ID. You can find this using [List export
+        Delete a specific S3 import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import
         storages](list). 
 
 
-        Deleting an export/target storage connection does not affect tasks with
-        synced data in Label Studio. If you want to remove the tasks that were
-        synced from the external storage, you will need to delete them manually
-        from within the Label Studio UI or use the [Delete
-        tasks](../../tasks/delete-all-tasks) API. 
-      source:
-        openapi: openapi/openapi.yaml
+        Deleting a source storage connection does not affect tasks with synced
+        data in Label Studio. The sync process is designed to import new or
+        updated tasks from the connected storage into the project, but it does
+        not track deletions of files from the storage. Therefore, if you remove
+        the external storage connection, the tasks that were created from that
+        storage will remain in the project.
+
+
+        If you want to remove the tasks that were synced from the external
+        storage, you will need to delete them manually from within the Label
+        Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 export storage.
-      display-name: Delete export storage
+          docs: A unique integer value identifying this s3 import storage.
+      display-name: Delete import storage
       examples:
         - path-parameters:
             id: 1
       audiences:
         - public
     update:
-      path: /api/storages/export/s3/{id}
+      path: /api/storages/s3/{id}
       method: PATCH
       auth: true
       docs: >
 
-        Update a specific S3 export storage connection. You will need to provide
-        the export storage ID. You can find this using [List export
+        Update a specific S3 import storage connection. You will need to provide
+        the import storage ID. You can find this using [List import
         storages](list). 
 
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 export storage.
-      display-name: Update export storage
+          docs: A unique integer value identifying this s3 import storage.
+      display-name: Update import storage
       request:
         name: S3UpdateRequest
         body:
           properties:
-            can_delete_objects:
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
               type: optional<boolean>
-              docs: Deletion from storage enabled.
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+              default: true
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
             title:
               type: optional<string>
               docs: Storage title
@@ -349,7 +417,6 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
-        content-type: application/json
       response:
         docs: ''
         type: S3UpdateResponse
@@ -359,7 +426,11 @@ service:
           request: {}
           response:
             body:
-              can_delete_objects: true
+              regex_filter: regex_filter
+              use_blob_urls: true
+              presign: true
+              presign_ttl: 1
+              recursive_scan: true
               title: title
               description: description
               project: 1
@@ -374,13 +445,13 @@ service:
       audiences:
         - public
     sync:
-      path: /api/storages/export/s3/{id}/sync
+      path: /api/storages/s3/{id}/sync
       method: POST
       auth: true
       docs: >
 
-        Sync tasks to an S3 export/target storage connection. You will need to
-        provide the export storage ID. You can find this using [List export
+        Sync tasks from an S3 import storage connection. You will need to
+        provide the import storage ID. You can find this using [List import
         storages](list). 
 
 
@@ -392,23 +463,24 @@ service:
 
         <Note>Before proceeding, you should review [How sync operations work -
         Source storage](https://labelstud.io/guide/storage#Source-storage) to
-        ensure that your data remains secure and private.</Note> 
-      source:
-        openapi: openapi/openapi.yaml
+        ensure that your data remains secure and private.</Note>
       path-parameters:
-        id: string
-      display-name: Sync export storage
+        id:
+          type: integer
+          docs: Storage ID
+      display-name: Sync import storage
       response:
         docs: ''
-        type: root.S3ExportStorage
+        type: root.S3ImportStorage
       examples:
         - path-parameters:
-            id: id
+            id: 1
           response:
             body:
               id: 1
               type: type
               synchronizable: true
+              presign: true
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -419,7 +491,6 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              can_delete_objects: true
               bucket: bucket
               prefix: prefix
               regex_filter: regex_filter
@@ -430,6 +501,8 @@ service:
               aws_sse_kms_key_id: aws_sse_kms_key_id
               region_name: region_name
               s3_endpoint: s3_endpoint
+              presign_ttl: 1
+              recursive_scan: true
               project: 1
       audiences:
         - public
@@ -438,9 +511,30 @@ service:
 types:
   S3CreateResponse:
     properties:
-      can_delete_objects:
+      regex_filter:
+        type: optional<string>
+        docs: >-
+          Cloud storage regex for filtering objects. You must specify it
+          otherwise no objects will be imported.
+      use_blob_urls:
         type: optional<boolean>
-        docs: Deletion from storage enabled.
+        docs: >-
+          Interpret objects as BLOBs and generate URLs. For example, if your
+          bucket contains images, you can use this option to generate URLs for
+          these images. If set to False, it will read the content of the file
+          and load it into Label Studio.
+        default: false
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for download
+        default: true
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes
+        default: 1
+      recursive_scan:
+        type: optional<boolean>
+        docs: Scan recursively
       title:
         type: optional<string>
         docs: Storage title
@@ -478,9 +572,30 @@ types:
       openapi: openapi/openapi.yaml
   S3UpdateResponse:
     properties:
-      can_delete_objects:
+      regex_filter:
+        type: optional<string>
+        docs: >-
+          Cloud storage regex for filtering objects. You must specify it
+          otherwise no objects will be imported.
+      use_blob_urls:
         type: optional<boolean>
-        docs: Deletion from storage enabled.
+        docs: >-
+          Interpret objects as BLOBs and generate URLs. For example, if your
+          bucket contains images, you can use this option to generate URLs for
+          these images. If set to False, it will read the content of the file
+          and load it into Label Studio.
+        default: false
+      presign:
+        type: optional<boolean>
+        docs: Presign URLs for download
+        default: true
+      presign_ttl:
+        type: optional<integer>
+        docs: Presign TTL in minutes
+        default: 1
+      recursive_scan:
+        type: optional<boolean>
+        docs: Scan recursively
       title:
         type: optional<string>
         docs: Storage title

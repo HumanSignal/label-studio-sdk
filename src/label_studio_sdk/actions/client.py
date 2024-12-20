@@ -146,9 +146,6 @@ class ActionsClient:
                 ),
                 "ordering": ordering,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -306,9 +303,6 @@ class AsyncActionsClient:
                     object_=selected_items, annotation=ActionsCreateRequestSelectedItems, direction="write"
                 ),
                 "ordering": ordering,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

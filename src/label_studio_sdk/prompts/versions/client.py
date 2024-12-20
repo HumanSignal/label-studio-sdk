@@ -573,9 +573,6 @@ class VersionsClient:
                 "teacher_model_name": teacher_model_name,
                 "project_id": project_id,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1213,9 +1210,6 @@ class AsyncVersionsClient:
                 "teacher_model_provider_connection_id": teacher_model_provider_connection_id,
                 "teacher_model_name": teacher_model_name,
                 "project_id": project_id,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

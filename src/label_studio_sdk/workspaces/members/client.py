@@ -23,7 +23,6 @@ class MembersClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[MembersListResponseItem]:
         """
-
         List all workspace memberships for a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 
         Parameters
@@ -73,7 +72,6 @@ class MembersClient:
         self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> MembersCreateResponse:
         """
-
         Create a new workspace membership. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 
         Parameters
@@ -109,9 +107,6 @@ class MembersClient:
             json={
                 "user": user,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -133,7 +128,6 @@ class MembersClient:
         self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-
         Delete a specific workspace membership. You will need to provide the workspace ID and the user ID. You can find this using [List workspace memberships](list).
 
         Parameters
@@ -168,9 +162,6 @@ class MembersClient:
             json={
                 "user": user,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -191,7 +182,6 @@ class AsyncMembersClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[MembersListResponseItem]:
         """
-
         List all workspace memberships for a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 
         Parameters
@@ -249,7 +239,6 @@ class AsyncMembersClient:
         self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> MembersCreateResponse:
         """
-
         Create a new workspace membership. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 
         Parameters
@@ -293,9 +282,6 @@ class AsyncMembersClient:
             json={
                 "user": user,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -317,7 +303,6 @@ class AsyncMembersClient:
         self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-
         Delete a specific workspace membership. You will need to provide the workspace ID and the user ID. You can find this using [List workspace memberships](list).
 
         Parameters
@@ -359,9 +344,6 @@ class AsyncMembersClient:
             method="DELETE",
             json={
                 "user": user,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

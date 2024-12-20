@@ -5,14 +5,15 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/export/localfiles
+      path: /api/storages/export/azure
       method: GET
       auth: true
       docs: >
 
-        You can connect a local file directory to Label Studio as a source
-        storage or target storage. Use this API request to get a list of all
-        local file export (target) storage connections for a specific project. 
+        You can connect your Microsoft Azure Blob storage container to Label
+        Studio as a source storage or target storage. Use this API request to
+        get a list of all Azure export (target) storage connections for a
+        specific project. 
 
 
         The project ID can be found in the URL when viewing the project in Label
@@ -22,27 +23,28 @@ service:
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
       display-name: List export storages
       request:
-        name: LocalListRequest
+        name: AzureListRequest
         query-parameters:
           project:
             type: optional<integer>
             docs: Project ID
       response:
         docs: ''
-        type: list<root.LocalFilesExportStorage>
+        type: list<root.AzureBlobExportStorage>
       examples:
         - response:
             body:
               - id: 1
                 type: type
                 synchronizable: true
-                path: path
+                container: container
+                prefix: prefix
                 regex_filter: regex_filter
                 use_blob_urls: true
+                account_name: account_name
+                account_key: account_key
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
@@ -58,29 +60,32 @@ service:
       audiences:
         - public
     create:
-      path: /api/storages/export/localfiles
+      path: /api/storages/export/azure
       method: POST
       auth: true
       docs: >
 
-        Create a new target storage connection to a local file directory. 
+        Create a new target storage connection to Microsoft Azure Blob storage. 
 
 
-        For information about the required fields and prerequisites, see [Local
-        storage](https://labelstud.io/guide/storage#Local-storage) in the Label
-        Studio documentation. 
+        For information about the required fields and prerequisites, see
+        [Microsoft Azure Blob
+        storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage)
+        in the Label Studio documentation. 
 
 
         <Tip>After you add the storage, you should validate the connection
         before attempting to sync your data. Your data will not be exported
         until you [sync your connection](sync).</Tip>
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Create new storage
       request:
-        name: LocalCreateRequest
+        name: AzureCreateRequest
         body:
           properties:
+            can_delete_objects:
+              type: optional<boolean>
+              docs: Deletion from storage enabled
+              default: false
             title:
               type: optional<string>
               docs: Storage title
@@ -90,55 +95,56 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            path:
+            container:
               type: optional<string>
-              docs: Path to local directory
-            regex_filter:
+              docs: Azure blob container
+            prefix:
               type: optional<string>
-              docs: Regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your directory contains images, you can use this option to
-                generate URLs for these images. If set to False, it will read
-                the content of the file and load it into Label Studio.
-              default: false
-        content-type: application/json
+              docs: Azure blob prefix name
+            account_name:
+              type: optional<string>
+              docs: Azure Blob account name
+            account_key:
+              type: optional<string>
+              docs: Azure Blob account key
       response:
         docs: ''
-        type: LocalCreateResponse
+        type: AzureCreateResponse
       examples:
         - request: {}
           response:
             body:
+              can_delete_objects: true
               title: title
               description: description
               project: 1
-              path: path
-              regex_filter: regex_filter
-              use_blob_urls: true
+              container: container
+              prefix: prefix
+              account_name: account_name
+              account_key: account_key
       audiences:
         - public
     validate:
-      path: /api/storages/export/localfiles/validate
+      path: /api/storages/export/azure/validate
       method: POST
       auth: true
       docs: >
 
-        Validate a specific local file export storage connection. This is useful
-        to ensure that the storage configuration settings are correct and
+        Validate a specific Azure export storage connection. This is useful to
+        ensure that the storage configuration settings are correct and
         operational before attempting to export data.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Validate export storage
       request:
-        name: LocalValidateRequest
+        name: AzureValidateRequest
         body:
           properties:
             id:
               type: optional<integer>
               docs: Storage ID. If set, storage with specified ID will be updated
+            can_delete_objects:
+              type: optional<boolean>
+              docs: Deletion from storage enabled
+              default: false
             title:
               type: optional<string>
               docs: Storage title
@@ -148,48 +154,43 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            path:
+            container:
               type: optional<string>
-              docs: Path to local directory
-            regex_filter:
+              docs: Azure blob container
+            prefix:
               type: optional<string>
-              docs: Regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your directory contains images, you can use this option to
-                generate URLs for these images. If set to False, it will read
-                the content of the file and load it into Label Studio.
-              default: false
-        content-type: application/json
+              docs: Azure blob prefix name
+            account_name:
+              type: optional<string>
+              docs: Azure Blob account name
+            account_key:
+              type: optional<string>
+              docs: Azure Blob account key
       examples:
         - request: {}
       audiences:
         - public
     get:
-      path: /api/storages/export/localfiles/{id}
+      path: /api/storages/export/azure/{id}
       method: GET
       auth: true
       docs: >
 
-        Get a specific local file export storage connection. You will need to
-        provide the export storage ID. You can find this using [List export
+        Get a specific Azure export storage connection. You will need to provide
+        the export storage ID. You can find this using [List export
         storages](list). 
 
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this local files export storage.
+          docs: A unique integer value identifying this azure blob export storage.
       display-name: Get export storage
       response:
         docs: ''
-        type: root.LocalFilesExportStorage
+        type: root.AzureBlobExportStorage
       examples:
         - path-parameters:
             id: 1
@@ -198,9 +199,12 @@ service:
               id: 1
               type: type
               synchronizable: true
-              path: path
+              container: container
+              prefix: prefix
               regex_filter: regex_filter
               use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -216,12 +220,12 @@ service:
       audiences:
         - public
     delete:
-      path: /api/storages/export/localfiles/{id}
+      path: /api/storages/export/azure/{id}
       method: DELETE
       auth: true
       docs: >
 
-        Delete a specific local file export storage connection. You will need to
+        Delete a specific Azure export storage connection. You will need to
         provide the export storage ID. You can find this using [List export
         storages](list). 
 
@@ -231,12 +235,10 @@ service:
         synced from the external storage, you will need to delete them manually
         from within the Label Studio UI or use the [Delete
         tasks](../../tasks/delete-all-tasks) API. 
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this local files export storage.
+          docs: A unique integer value identifying this azure blob export storage.
       display-name: Delete export storage
       examples:
         - path-parameters:
@@ -244,29 +246,31 @@ service:
       audiences:
         - public
     update:
-      path: /api/storages/export/localfiles/{id}
+      path: /api/storages/export/azure/{id}
       method: PATCH
       auth: true
       docs: >
 
-        Update a specific local file export storage connection. You will need to
+        Update a specific Azure export storage connection. You will need to
         provide the export storage ID. You can find this using [List export
         storages](list). 
 
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this local files export storage.
+          docs: A unique integer value identifying this azure blob export storage.
       display-name: Update export storage
       request:
-        name: LocalUpdateRequest
+        name: AzureUpdateRequest
         body:
           properties:
+            can_delete_objects:
+              type: optional<boolean>
+              docs: Deletion from storage enabled
+              default: false
             title:
               type: optional<string>
               docs: Storage title
@@ -276,67 +280,64 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            path:
+            container:
               type: optional<string>
-              docs: Path to local directory
-            regex_filter:
+              docs: Azure blob container
+            prefix:
               type: optional<string>
-              docs: Regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your directory contains images, you can use this option to
-                generate URLs for these images. If set to False, it will read
-                the content of the file and load it into Label Studio.
-              default: false
-        content-type: application/json
+              docs: Azure blob prefix name
+            account_name:
+              type: optional<string>
+              docs: Azure Blob account name
+            account_key:
+              type: optional<string>
+              docs: Azure Blob account key
       response:
         docs: ''
-        type: LocalUpdateResponse
+        type: AzureUpdateResponse
       examples:
         - path-parameters:
             id: 1
           request: {}
           response:
             body:
+              can_delete_objects: true
               title: title
               description: description
               project: 1
-              path: path
-              regex_filter: regex_filter
-              use_blob_urls: true
+              container: container
+              prefix: prefix
+              account_name: account_name
+              account_key: account_key
       audiences:
         - public
     sync:
-      path: /api/storages/export/localfiles/{id}/sync
+      path: /api/storages/export/azure/{id}/sync
       method: POST
       auth: true
       docs: >
 
-        Sync tasks to an local file export/target storage connection. You will
-        need to provide the export storage ID. You can find this using [List
-        export storages](list). 
+        Sync tasks to an Azure export/target storage connection. You will need
+        to provide the export storage ID. You can find this using [List export
+        storages](list). 
 
 
-        Sync operations with external local file directories only go one way.
-        They either create tasks from objects in the directory (source/import
-        storage) or push annotations to the output directory (export/target
-        storage). Changing something on the local file side doesn’t guarantee
-        consistency in results.
+        Sync operations with external containers only go one way. They either
+        create tasks from objects in the container (source/import storage) or
+        push annotations to the output container (export/target storage).
+        Changing something on the Microsoft side doesn’t guarantee consistency
+        in results.
 
 
         <Note>Before proceeding, you should review [How sync operations work -
         Source storage](https://labelstud.io/guide/storage#Source-storage) to
         ensure that your data remains secure and private.</Note> 
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
       display-name: Sync export storage
       response:
         docs: ''
-        type: root.LocalFilesExportStorage
+        type: root.AzureBlobExportStorage
       examples:
         - path-parameters:
             id: id
@@ -345,9 +346,12 @@ service:
               id: 1
               type: type
               synchronizable: true
-              path: path
+              container: container
+              prefix: prefix
               regex_filter: regex_filter
               use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -365,8 +369,12 @@ service:
   source:
     openapi: openapi/openapi.yaml
 types:
-  LocalCreateResponse:
+  AzureCreateResponse:
     properties:
+      can_delete_objects:
+        type: optional<boolean>
+        docs: Deletion from storage enabled
+        default: false
       title:
         type: optional<string>
         docs: Storage title
@@ -376,24 +384,26 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      path:
+      container:
         type: optional<string>
-        docs: Path to local directory
-      regex_filter:
+        docs: Azure blob container
+      prefix:
         type: optional<string>
-        docs: Regex for filtering objects
-      use_blob_urls:
-        type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          directory contains images, you can use this option to generate URLs
-          for these images. If set to False, it will read the content of the
-          file and load it into Label Studio.
-        default: false
+        docs: Azure blob prefix name
+      account_name:
+        type: optional<string>
+        docs: Azure Blob account name
+      account_key:
+        type: optional<string>
+        docs: Azure Blob account key
     source:
       openapi: openapi/openapi.yaml
-  LocalUpdateResponse:
+  AzureUpdateResponse:
     properties:
+      can_delete_objects:
+        type: optional<boolean>
+        docs: Deletion from storage enabled
+        default: false
       title:
         type: optional<string>
         docs: Storage title
@@ -403,19 +413,17 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      path:
+      container:
         type: optional<string>
-        docs: Path to local directory
-      regex_filter:
+        docs: Azure blob container
+      prefix:
         type: optional<string>
-        docs: Regex for filtering objects
-      use_blob_urls:
-        type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          directory contains images, you can use this option to generate URLs
-          for these images. If set to False, it will read the content of the
-          file and load it into Label Studio.
-        default: false
+        docs: Azure blob prefix name
+      account_name:
+        type: optional<string>
+        docs: Azure Blob account name
+      account_key:
+        type: optional<string>
+        docs: Azure Blob account key
     source:
       openapi: openapi/openapi.yaml

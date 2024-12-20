@@ -11,9 +11,9 @@ from .users.client import UsersClient
 from .actions.client import ActionsClient
 from .views.client import ViewsClient
 from .files.client import FilesClient
+from .projects.client import ProjectsClient
 from .ml.client import MlClient
 from .predictions.client import PredictionsClient
-from .projects.client import ProjectsClient
 from .tasks.client import TasksClient
 from .import_storage.client import ImportStorageClient
 from .export_storage.client import ExportStorageClient
@@ -28,9 +28,9 @@ from .users.client import AsyncUsersClient
 from .actions.client import AsyncActionsClient
 from .views.client import AsyncViewsClient
 from .files.client import AsyncFilesClient
+from .projects.client import AsyncProjectsClient
 from .ml.client import AsyncMlClient
 from .predictions.client import AsyncPredictionsClient
-from .projects.client import AsyncProjectsClient
 from .tasks.client import AsyncTasksClient
 from .import_storage.client import AsyncImportStorageClient
 from .export_storage.client import AsyncExportStorageClient
@@ -108,9 +108,9 @@ class LabelStudioBase:
         self.actions = ActionsClient(client_wrapper=self._client_wrapper)
         self.views = ViewsClient(client_wrapper=self._client_wrapper)
         self.files = FilesClient(client_wrapper=self._client_wrapper)
+        self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
         self.ml = MlClient(client_wrapper=self._client_wrapper)
         self.predictions = PredictionsClient(client_wrapper=self._client_wrapper)
-        self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = TasksClient(client_wrapper=self._client_wrapper)
         self.import_storage = ImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = ExportStorageClient(client_wrapper=self._client_wrapper)
@@ -188,9 +188,9 @@ class AsyncLabelStudioBase:
         self.actions = AsyncActionsClient(client_wrapper=self._client_wrapper)
         self.views = AsyncViewsClient(client_wrapper=self._client_wrapper)
         self.files = AsyncFilesClient(client_wrapper=self._client_wrapper)
+        self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
         self.ml = AsyncMlClient(client_wrapper=self._client_wrapper)
         self.predictions = AsyncPredictionsClient(client_wrapper=self._client_wrapper)
-        self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = AsyncTasksClient(client_wrapper=self._client_wrapper)
         self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)

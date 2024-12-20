@@ -430,9 +430,6 @@ class PromptsClient:
                     direction="write",
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -496,9 +493,6 @@ class PromptsClient:
                     annotation=typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem],
                     direction="write",
                 ),
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -966,9 +960,6 @@ class AsyncPromptsClient:
                     direction="write",
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1040,9 +1031,6 @@ class AsyncPromptsClient:
                     annotation=typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem],
                     direction="write",
                 ),
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

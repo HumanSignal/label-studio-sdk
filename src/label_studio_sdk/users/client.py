@@ -148,7 +148,6 @@ class UsersClient:
 
     def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[BaseUser]:
         """
-
         List all users in your Label Studio organization.
 
         Parameters
@@ -204,7 +203,6 @@ class UsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseUser:
         """
-
         Create a user in Label Studio.
 
         Parameters
@@ -267,9 +265,6 @@ class UsersClient:
                 "phone": phone,
                 "allow_newsletters": allow_newsletters,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -289,7 +284,6 @@ class UsersClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
-
         Get info about a specific Label Studio user.
         You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
 
@@ -338,7 +332,6 @@ class UsersClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific Label Studio user.
 
         You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
@@ -397,7 +390,6 @@ class UsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseUser:
         """
-
         Update details for a specific Label Studio user, such as their name or contact information.
 
         You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
@@ -466,9 +458,6 @@ class UsersClient:
                 "initials": initials,
                 "phone": phone,
                 "allow_newsletters": allow_newsletters,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -644,7 +633,6 @@ class AsyncUsersClient:
 
     async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[BaseUser]:
         """
-
         List all users in your Label Studio organization.
 
         Parameters
@@ -708,7 +696,6 @@ class AsyncUsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseUser:
         """
-
         Create a user in Label Studio.
 
         Parameters
@@ -779,9 +766,6 @@ class AsyncUsersClient:
                 "phone": phone,
                 "allow_newsletters": allow_newsletters,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -801,7 +785,6 @@ class AsyncUsersClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
         """
-
         Get info about a specific Label Studio user.
         You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
 
@@ -858,7 +841,6 @@ class AsyncUsersClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific Label Studio user.
 
         You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
@@ -925,7 +907,6 @@ class AsyncUsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseUser:
         """
-
         Update details for a specific Label Studio user, such as their name or contact information.
 
         You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
@@ -1002,9 +983,6 @@ class AsyncUsersClient:
                 "initials": initials,
                 "phone": phone,
                 "allow_newsletters": allow_newsletters,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

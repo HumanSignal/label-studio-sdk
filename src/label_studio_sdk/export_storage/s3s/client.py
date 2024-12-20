@@ -22,7 +22,6 @@ class S3SClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[S3SExportStorage]:
         """
-
         You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all S3 export (target) storage connections for a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
@@ -89,7 +88,6 @@ class S3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3SExportStorage:
         """
-
         Create a new target storage connection to a S3 bucket with IAM role access.
 
         For information about the required fields and prerequisites, see [Amazon S3](https://docs.humansignal.com/guide/storage#Set-up-an-S3-connection-with-IAM-role-access) in the Label Studio documentation.
@@ -158,9 +156,6 @@ class S3SClient:
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -180,7 +175,6 @@ class S3SClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SExportStorage:
         """
-
         Get a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Parameters
@@ -228,7 +222,6 @@ class S3SClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Parameters
@@ -284,7 +277,6 @@ class S3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3SExportStorage:
         """
-
         Update a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Parameters
@@ -356,9 +348,6 @@ class S3SClient:
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -392,7 +381,6 @@ class S3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         Validate a specific S3 export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 
         Parameters
@@ -458,9 +446,6 @@ class S3SClient:
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -481,7 +466,6 @@ class AsyncS3SClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[S3SExportStorage]:
         """
-
         You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all S3 export (target) storage connections for a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
@@ -556,7 +540,6 @@ class AsyncS3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3SExportStorage:
         """
-
         Create a new target storage connection to a S3 bucket with IAM role access.
 
         For information about the required fields and prerequisites, see [Amazon S3](https://docs.humansignal.com/guide/storage#Set-up-an-S3-connection-with-IAM-role-access) in the Label Studio documentation.
@@ -633,9 +616,6 @@ class AsyncS3SClient:
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -655,7 +635,6 @@ class AsyncS3SClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SExportStorage:
         """
-
         Get a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Parameters
@@ -711,7 +690,6 @@ class AsyncS3SClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Parameters
@@ -775,7 +753,6 @@ class AsyncS3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3SExportStorage:
         """
-
         Update a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Parameters
@@ -855,9 +832,6 @@ class AsyncS3SClient:
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -891,7 +865,6 @@ class AsyncS3SClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         Validate a specific S3 export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 
         Parameters
@@ -964,9 +937,6 @@ class AsyncS3SClient:
                 "role_arn": role_arn,
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

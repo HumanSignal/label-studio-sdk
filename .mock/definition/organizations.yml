@@ -11,8 +11,6 @@ service:
       docs: >-
         Get a link to use to invite a new member to an organization in Label
         Studio Enterprise.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Get organization invite link
       response:
         docs: ''
@@ -29,8 +27,6 @@ service:
       docs: >-
         Reset the token used in the invitation link to invite someone to an
         organization.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Reset organization token
       response:
         docs: ''
@@ -48,8 +44,6 @@ service:
 
         Return a list of the organizations you've created or that you have
         access to.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: List your organizations
       response:
         docs: ''
@@ -66,8 +60,6 @@ service:
       method: GET
       auth: true
       docs: Retrieve the settings for a specific organization by ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -95,8 +87,6 @@ service:
       method: PATCH
       auth: true
       docs: Update the settings for a specific organization by ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -104,7 +94,6 @@ service:
       display-name: Update organization settings
       request:
         body: root.Organization
-        content-type: application/json
       response:
         docs: ''
         type: root.Organization

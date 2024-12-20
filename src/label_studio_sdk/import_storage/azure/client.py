@@ -24,7 +24,6 @@ class AzureClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[AzureBlobImportStorage]:
         """
-
         You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure import (source) storage connections for a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
@@ -92,7 +91,6 @@ class AzureClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureCreateResponse:
         """
-
         Create a new source storage connection to Microsoft Azure Blob storage.
 
         For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation.
@@ -169,9 +167,6 @@ class AzureClient:
                 "account_name": account_name,
                 "account_key": account_key,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -207,7 +202,6 @@ class AzureClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         Validate a specific Azure import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
         Parameters
@@ -281,9 +275,6 @@ class AzureClient:
                 "account_name": account_name,
                 "account_key": account_key,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -297,7 +288,6 @@ class AzureClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
-
         Get a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -347,7 +337,6 @@ class AzureClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
@@ -408,7 +397,6 @@ class AzureClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureUpdateResponse:
         """
-
         Update a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -486,9 +474,6 @@ class AzureClient:
                 "account_name": account_name,
                 "account_key": account_key,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -508,7 +493,6 @@ class AzureClient:
 
     def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
-
         Sync tasks from an Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
@@ -567,7 +551,6 @@ class AsyncAzureClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[AzureBlobImportStorage]:
         """
-
         You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure import (source) storage connections for a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
@@ -643,7 +626,6 @@ class AsyncAzureClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureCreateResponse:
         """
-
         Create a new source storage connection to Microsoft Azure Blob storage.
 
         For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation.
@@ -728,9 +710,6 @@ class AsyncAzureClient:
                 "account_name": account_name,
                 "account_key": account_key,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -766,7 +745,6 @@ class AsyncAzureClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         Validate a specific Azure import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 
         Parameters
@@ -848,9 +826,6 @@ class AsyncAzureClient:
                 "account_name": account_name,
                 "account_key": account_key,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -864,7 +839,6 @@ class AsyncAzureClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
-
         Get a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -922,7 +896,6 @@ class AsyncAzureClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
@@ -991,7 +964,6 @@ class AsyncAzureClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AzureUpdateResponse:
         """
-
         Update a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -1077,9 +1049,6 @@ class AsyncAzureClient:
                 "account_name": account_name,
                 "account_key": account_key,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1099,7 +1068,6 @@ class AsyncAzureClient:
 
     async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> AzureBlobImportStorage:
         """
-
         Sync tasks from an Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
         Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.

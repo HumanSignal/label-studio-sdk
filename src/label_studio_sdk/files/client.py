@@ -114,10 +114,10 @@ class FilesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FileUpload:
         """
-
         Update a specific uploaded file. To get the file upload ID, use [Get files list](list).
 
         You will need to include the file data in the request body. For example:
+
         ```bash
         curl -H 'Authorization: Token abc123' \ -X POST 'https://localhost:8080/api/import/file-upload/245' -F ‘file=@path/to/my_file.csv’
         ```
@@ -183,7 +183,6 @@ class FilesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[FileUpload]:
         """
-
         Retrieve the list of uploaded files used to create labeling tasks for a specific project. These are files that have been uploaded directly to Label Studio.
 
         You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
@@ -243,7 +242,6 @@ class FilesClient:
 
     def delete_many(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete uploaded files for a specific project. These are files that have been uploaded directly to Label Studio.
 
         You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
@@ -440,10 +438,10 @@ class AsyncFilesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FileUpload:
         """
-
         Update a specific uploaded file. To get the file upload ID, use [Get files list](list).
 
         You will need to include the file data in the request body. For example:
+
         ```bash
         curl -H 'Authorization: Token abc123' \ -X POST 'https://localhost:8080/api/import/file-upload/245' -F ‘file=@path/to/my_file.csv’
         ```
@@ -517,7 +515,6 @@ class AsyncFilesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[FileUpload]:
         """
-
         Retrieve the list of uploaded files used to create labeling tasks for a specific project. These are files that have been uploaded directly to Label Studio.
 
         You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
@@ -585,7 +582,6 @@ class AsyncFilesClient:
 
     async def delete_many(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete uploaded files for a specific project. These are files that have been uploaded directly to Label Studio.
 
         You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).

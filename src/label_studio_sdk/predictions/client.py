@@ -26,7 +26,6 @@ class PredictionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Prediction]:
         """
-
         Get a list of all predictions. You can optionally filter these by task or by project. If you want to filter, you will need the project ID and/or task ID. Both of these can be found in the Label Studio URL when viewing a task, or you can use [List all projects](../projects/list) and [Get tasks list](../tasks/list).
 
         <Note>The terms "predictions" and pre-annotations" are used interchangeably.</Note>
@@ -93,15 +92,16 @@ class PredictionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
-
         If you have predictions generated for your dataset from a model, either as pre-annotated tasks or pre-labeled tasks, you can import the predictions with your dataset into Label Studio for review and correction.
 
         To import predicted labels into Label Studio, you must use the [Basic Label Studio JSON format](https://labelstud.io/guide/tasks#Basic-Label-Studio-JSON-format) and set up your tasks with the predictions JSON key. The Label Studio ML backend also outputs tasks in this format.
 
         #### JSON format for predictions
+
         Label Studio JSON format for pre-annotations must contain two sections:
-        * A data object which references the source of the data that the pre-annotations apply to. This can be a URL to an audio file, a pre-signed cloud storage link to an image, plain text, a reference to a CSV file stored in Label Studio, or something else.
-        * A predictions array that contains the pre-annotation results for the different types of labeling. See how to add results to the predictions array.
+
+        - A data object which references the source of the data that the pre-annotations apply to. This can be a URL to an audio file, a pre-signed cloud storage link to an image, plain text, a reference to a CSV file stored in Label Studio, or something else.
+        - A predictions array that contains the pre-annotation results for the different types of labeling. See how to add results to the predictions array.
 
         For more information, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations)
 
@@ -166,9 +166,6 @@ class PredictionsClient:
                 "score": score,
                 "model_version": model_version,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -188,7 +185,6 @@ class PredictionsClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Prediction:
         """
-
         Get details about a specific prediction by its ID. To find the prediction ID, use [List predictions](list).
 
         For information about the prediction format, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations).
@@ -238,7 +234,6 @@ class PredictionsClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a prediction. To find the prediction ID, use [List predictions](list).
 
         Parameters
@@ -288,7 +283,6 @@ class PredictionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
-
         Update a prediction. To find the prediction ID, use [List predictions](list).
 
         For information about the prediction format, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations).
@@ -358,9 +352,6 @@ class PredictionsClient:
                 "score": score,
                 "model_version": model_version,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -391,7 +382,6 @@ class AsyncPredictionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Prediction]:
         """
-
         Get a list of all predictions. You can optionally filter these by task or by project. If you want to filter, you will need the project ID and/or task ID. Both of these can be found in the Label Studio URL when viewing a task, or you can use [List all projects](../projects/list) and [Get tasks list](../tasks/list).
 
         <Note>The terms "predictions" and pre-annotations" are used interchangeably.</Note>
@@ -466,15 +456,16 @@ class AsyncPredictionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
-
         If you have predictions generated for your dataset from a model, either as pre-annotated tasks or pre-labeled tasks, you can import the predictions with your dataset into Label Studio for review and correction.
 
         To import predicted labels into Label Studio, you must use the [Basic Label Studio JSON format](https://labelstud.io/guide/tasks#Basic-Label-Studio-JSON-format) and set up your tasks with the predictions JSON key. The Label Studio ML backend also outputs tasks in this format.
 
         #### JSON format for predictions
+
         Label Studio JSON format for pre-annotations must contain two sections:
-        * A data object which references the source of the data that the pre-annotations apply to. This can be a URL to an audio file, a pre-signed cloud storage link to an image, plain text, a reference to a CSV file stored in Label Studio, or something else.
-        * A predictions array that contains the pre-annotation results for the different types of labeling. See how to add results to the predictions array.
+
+        - A data object which references the source of the data that the pre-annotations apply to. This can be a URL to an audio file, a pre-signed cloud storage link to an image, plain text, a reference to a CSV file stored in Label Studio, or something else.
+        - A predictions array that contains the pre-annotation results for the different types of labeling. See how to add results to the predictions array.
 
         For more information, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations)
 
@@ -547,9 +538,6 @@ class AsyncPredictionsClient:
                 "score": score,
                 "model_version": model_version,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -569,7 +557,6 @@ class AsyncPredictionsClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Prediction:
         """
-
         Get details about a specific prediction by its ID. To find the prediction ID, use [List predictions](list).
 
         For information about the prediction format, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations).
@@ -627,7 +614,6 @@ class AsyncPredictionsClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a prediction. To find the prediction ID, use [List predictions](list).
 
         Parameters
@@ -685,7 +671,6 @@ class AsyncPredictionsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
-
         Update a prediction. To find the prediction ID, use [List predictions](list).
 
         For information about the prediction format, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations).
@@ -762,9 +747,6 @@ class AsyncPredictionsClient:
                 "result": result,
                 "score": score,
                 "model_version": model_version,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

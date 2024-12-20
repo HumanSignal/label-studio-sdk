@@ -29,7 +29,6 @@ class TasksClient:
         self, id: int, import_pk: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectImport:
         """
-
         Get information about an async project import operation. This can be especially useful to monitor status, as large import jobs can take time.
 
         You will need the project ID and the unique ID of the import operation.
@@ -86,7 +85,6 @@ class TasksClient:
 
     def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete all tasks from a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
@@ -142,7 +140,6 @@ class TasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Task]:
         """
-
         Retrieve a list of tasks.
 
         You can use the query parameters to filter the list by project and/or view (a tab within the Data Manager). You can also optionally add pagination to make the response easier to parse.
@@ -178,10 +175,10 @@ class TasksClient:
         query : typing.Optional[str]
             Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check [Data Manager > Create View > see `data` field](#tag/Data-Manager/operation/api_dm_views_create) for more details about filters, selectedItems and ordering.
 
-            * **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/>                   Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-            * **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/>                   Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-            * **ordering**: list of fields to order by. Currently, ordering is supported by only one parameter. <br/>
-                               Example: `["completed_at"]`
+            - **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/> Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+            - **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/> Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+            - **ordering**: list of fields to order by. Currently, ordering is supported by only one parameter. <br/>
+              Example: `["completed_at"]`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -259,7 +256,6 @@ class TasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseTask:
         """
-
         Create a new labeling task in Label Studio.
 
         The data you provide depends on your labeling config and data type.
@@ -301,9 +297,6 @@ class TasksClient:
                 "data": data,
                 "project": project,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -323,7 +316,6 @@ class TasksClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DataManagerTaskSerializer:
         """
-
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
         The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
@@ -372,7 +364,6 @@ class TasksClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a task in Label Studio.
 
         You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
@@ -424,7 +415,6 @@ class TasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseTask:
         """
-
         Update the attributes of an existing labeling task.
 
         You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
@@ -468,9 +458,6 @@ class TasksClient:
                 "data": data,
                 "project": project,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -497,7 +484,6 @@ class AsyncTasksClient:
         self, id: int, import_pk: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectImport:
         """
-
         Get information about an async project import operation. This can be especially useful to monitor status, as large import jobs can take time.
 
         You will need the project ID and the unique ID of the import operation.
@@ -562,7 +548,6 @@ class AsyncTasksClient:
 
     async def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete all tasks from a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
@@ -626,7 +611,6 @@ class AsyncTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Task]:
         """
-
         Retrieve a list of tasks.
 
         You can use the query parameters to filter the list by project and/or view (a tab within the Data Manager). You can also optionally add pagination to make the response easier to parse.
@@ -662,10 +646,10 @@ class AsyncTasksClient:
         query : typing.Optional[str]
             Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check [Data Manager > Create View > see `data` field](#tag/Data-Manager/operation/api_dm_views_create) for more details about filters, selectedItems and ordering.
 
-            * **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/>                   Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-            * **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/>                   Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-            * **ordering**: list of fields to order by. Currently, ordering is supported by only one parameter. <br/>
-                               Example: `["completed_at"]`
+            - **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/> Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+            - **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/> Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+            - **ordering**: list of fields to order by. Currently, ordering is supported by only one parameter. <br/>
+              Example: `["completed_at"]`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -751,7 +735,6 @@ class AsyncTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseTask:
         """
-
         Create a new labeling task in Label Studio.
 
         The data you provide depends on your labeling config and data type.
@@ -804,9 +787,6 @@ class AsyncTasksClient:
                 "data": data,
                 "project": project,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -828,7 +808,6 @@ class AsyncTasksClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> DataManagerTaskSerializer:
         """
-
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
         The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
@@ -885,7 +864,6 @@ class AsyncTasksClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a task in Label Studio.
 
         You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
@@ -945,7 +923,6 @@ class AsyncTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BaseTask:
         """
-
         Update the attributes of an existing labeling task.
 
         You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
@@ -999,9 +976,6 @@ class AsyncTasksClient:
             json={
                 "data": data,
                 "project": project,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

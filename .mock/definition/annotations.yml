@@ -18,8 +18,6 @@ service:
         annotation in its tab. It is also listed in the History panel when
         viewing the annotation. Or you can use [Get all task annotations](list)
         to find all annotation IDs.  
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -88,8 +86,6 @@ service:
         It is also listed in the History panel when viewing the annotation. Or
         you can use [Get all task annotations](list) to find all annotation
         IDs.  
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -119,8 +115,6 @@ service:
         For information about the JSON format used in the result, see [Label
         Studio JSON format of annotated
         tasks](https://labelstud.io/guide/export#Label-Studio-JSON-format-of-annotated-tasks).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -157,7 +151,6 @@ service:
             lead_time:
               type: optional<double>
               docs: How much time it took to annotate the task (in seconds)
-        content-type: application/json
       response:
         docs: Updated annotation
         type: root.Annotation
@@ -235,8 +228,6 @@ service:
         You will need to supply the task ID. You can find this in Label Studio
         by opening a task and checking the URL. It is also listed at the top of
         the labeling interface. Or you can use [Get tasks list](../tasks/list). 
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -329,8 +320,6 @@ service:
         } 
 
         ```
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -367,7 +356,6 @@ service:
             lead_time:
               type: optional<double>
               docs: How much time it took to annotate the task (in seconds)
-        content-type: application/json
       response:
         docs: Created annotation
         type: root.Annotation
@@ -439,8 +427,6 @@ service:
       auth: true
       docs: |
         Create multiple annotations for specific tasks in a bulk operation.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Create annotations in bulk
       request:
         name: AnnotationsCreateBulkRequest
@@ -450,7 +436,6 @@ service:
             lead_time: optional<double>
             project: optional<integer>
             result: optional<map<string, unknown>>
-        content-type: application/json
       response:
         docs: Annotations created successfully
         type: list<AnnotationsCreateBulkResponseItem>

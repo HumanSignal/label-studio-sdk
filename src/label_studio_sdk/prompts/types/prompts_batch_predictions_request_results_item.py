@@ -14,14 +14,7 @@ class PromptsBatchPredictionsRequestResultsItem(UniversalBaseModel):
 
     output: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
     """
-    Prediction output that contains keys from labeling config. Each key must be a valid control tag name from the labeling config. For example, given the output: ```json {"sentiment": "positive"} ``` it will be converted to the internal LS annotation format: ```json {
-      "value": {
-        "choices": ["positive"]
-      },
-      "from_name": "label",
-      "to_name": "",
-      ...
-    } ```
+    Prediction output that contains keys from labeling config. Each key must be a valid control tag name from the labeling config. For example, given the output: `json {"sentiment": "positive"} ` it will be converted to the internal LS annotation format: `json { "value": { "choices": ["positive"] }, "from_name": "label", "to_name": "", ... } `
     """
 
     prompt_tokens: typing.Optional[int] = pydantic.Field(default=None)

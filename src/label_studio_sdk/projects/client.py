@@ -40,13 +40,13 @@ class ProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Project]:
         """
-
         Return a list of the projects within your organization.
 
         To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using this API call.
 
         To retrieve a list of your Label Studio projects, update the following command to match your own environment.
         Replace the domain name, port, and authorization token, then run the following from the command line:
+
         ```bash
         curl -X GET https://localhost:8080/api/projects/ -H 'Authorization: Token abc123'
         ```
@@ -149,11 +149,11 @@ class ProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsCreateResponse:
         """
-
         Create a project and set up the labeling interface. For more information about setting up projects, see the following:
-        * [Create and configure projects](https://labelstud.io/guide/setup_project)
-        * [Configure labeling interface](https://labelstud.io/guide/setup)
-        * [Project settings](https://labelstud.io/guide/project_settings)
+
+        - [Create and configure projects](https://labelstud.io/guide/setup_project)
+        - [Configure labeling interface](https://labelstud.io/guide/setup)
+        - [Project settings](https://labelstud.io/guide/project_settings)
 
         ```bash
         curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"label_config": "<View>[...]</View>"}'
@@ -243,9 +243,6 @@ class ProjectsClient:
                 "workspace": workspace,
                 "model_version": model_version,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -312,7 +309,6 @@ class ProjectsClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a project by specified project ID. Deleting a project permanently removes all tasks, annotations, and project data from Label Studio.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
@@ -375,11 +371,11 @@ class ProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsUpdateResponse:
         """
-
         Update the project settings for a specific project. For more information, see the following:
-        * [Create and configure projects](https://labelstud.io/guide/setup_project)
-        * [Configure labeling interface](https://labelstud.io/guide/setup)
-        * [Project settings](https://labelstud.io/guide/project_settings)
+
+        - [Create and configure projects](https://labelstud.io/guide/setup_project)
+        - [Configure labeling interface](https://labelstud.io/guide/setup)
+        - [Project settings](https://labelstud.io/guide/project_settings)
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
 
@@ -478,9 +474,6 @@ class ProjectsClient:
                 "workspace": workspace,
                 "model_version": model_version,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -509,19 +502,19 @@ class ProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
         """
-        
         Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
         
         <Note>
-        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*. 
+        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*.
         
-        For example, if the label configuration has a *$text* variable, then each item in a data object must include a `text` field.
+        For example, if the label configuration has a _$text_ variable, then each item in a data object must include a `text` field.
         </Note>
         
         There are three possible ways to import tasks with this endpoint:
         
         #### 1\. **POST with data**
+        
         Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
         
         Update this example to specify your authorization token and Label Studio instance host, then run the following from
@@ -533,6 +526,7 @@ class ProjectsClient:
         ```
         
         #### 2\. **POST with files**
+        
         Send tasks as files. You can attach multiple files with different names.
         
         - **JSON**: text files in JavaScript object notation format
@@ -549,6 +543,7 @@ class ProjectsClient:
         ```
         
         #### 3\. **POST with URL**
+        
         You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
         
         ```bash
@@ -635,7 +630,6 @@ class ProjectsClient:
         self, id: int, *, label_config: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectLabelConfig:
         """
-
         Determine whether the label configuration for a specific project is valid. For more information about setting up labeling configs, see [Configure labeling interface](https://labelstud.io/guide/setup) and our [Tags reference](https://labelstud.io/tags/).
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
@@ -708,13 +702,13 @@ class AsyncProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Project]:
         """
-
         Return a list of the projects within your organization.
 
         To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using this API call.
 
         To retrieve a list of your Label Studio projects, update the following command to match your own environment.
         Replace the domain name, port, and authorization token, then run the following from the command line:
+
         ```bash
         curl -X GET https://localhost:8080/api/projects/ -H 'Authorization: Token abc123'
         ```
@@ -825,11 +819,11 @@ class AsyncProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsCreateResponse:
         """
-
         Create a project and set up the labeling interface. For more information about setting up projects, see the following:
-        * [Create and configure projects](https://labelstud.io/guide/setup_project)
-        * [Configure labeling interface](https://labelstud.io/guide/setup)
-        * [Project settings](https://labelstud.io/guide/project_settings)
+
+        - [Create and configure projects](https://labelstud.io/guide/setup_project)
+        - [Configure labeling interface](https://labelstud.io/guide/setup)
+        - [Project settings](https://labelstud.io/guide/project_settings)
 
         ```bash
         curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"label_config": "<View>[...]</View>"}'
@@ -927,9 +921,6 @@ class AsyncProjectsClient:
                 "workspace": workspace,
                 "model_version": model_version,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1004,7 +995,6 @@ class AsyncProjectsClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a project by specified project ID. Deleting a project permanently removes all tasks, annotations, and project data from Label Studio.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
@@ -1075,11 +1065,11 @@ class AsyncProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsUpdateResponse:
         """
-
         Update the project settings for a specific project. For more information, see the following:
-        * [Create and configure projects](https://labelstud.io/guide/setup_project)
-        * [Configure labeling interface](https://labelstud.io/guide/setup)
-        * [Project settings](https://labelstud.io/guide/project_settings)
+
+        - [Create and configure projects](https://labelstud.io/guide/setup_project)
+        - [Configure labeling interface](https://labelstud.io/guide/setup)
+        - [Project settings](https://labelstud.io/guide/project_settings)
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
 
@@ -1186,9 +1176,6 @@ class AsyncProjectsClient:
                 "workspace": workspace,
                 "model_version": model_version,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1217,19 +1204,19 @@ class AsyncProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
         """
-        
         Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
         
         <Note>
-        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*. 
+        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*.
         
-        For example, if the label configuration has a *$text* variable, then each item in a data object must include a `text` field.
+        For example, if the label configuration has a _$text_ variable, then each item in a data object must include a `text` field.
         </Note>
         
         There are three possible ways to import tasks with this endpoint:
         
         #### 1\. **POST with data**
+        
         Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
         
         Update this example to specify your authorization token and Label Studio instance host, then run the following from
@@ -1241,6 +1228,7 @@ class AsyncProjectsClient:
         ```
         
         #### 2\. **POST with files**
+        
         Send tasks as files. You can attach multiple files with different names.
         
         - **JSON**: text files in JavaScript object notation format
@@ -1257,6 +1245,7 @@ class AsyncProjectsClient:
         ```
         
         #### 3\. **POST with URL**
+        
         You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
         
         ```bash
@@ -1351,7 +1340,6 @@ class AsyncProjectsClient:
         self, id: int, *, label_config: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectLabelConfig:
         """
-
         Determine whether the label configuration for a specific project is valid. For more information about setting up labeling configs, see [Configure labeling interface](https://labelstud.io/guide/setup) and our [Tags reference](https://labelstud.io/tags/).
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).

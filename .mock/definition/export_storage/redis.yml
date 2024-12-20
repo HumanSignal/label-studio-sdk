@@ -5,14 +5,14 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/export/gcs
+      path: /api/storages/export/redis
       method: GET
       auth: true
       docs: >
 
-        You can connect your Google Cloud Storage bucket to Label Studio as a
-        source storage or target storage. Use this API request to get a list of
-        all GCS export (target) storage connections for a specific project. 
+        You can connect your Redis database to Label Studio as a source storage
+        or target storage. Use this API request to get a list of all Redis
+        export (target) storage connections for a specific project. 
 
 
         The project ID can be found in the URL when viewing the project in Label
@@ -22,30 +22,28 @@ service:
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
       display-name: List export storages
       request:
-        name: GcsListRequest
+        name: RedisListRequest
         query-parameters:
           project:
             type: optional<integer>
             docs: Project ID
       response:
         docs: ''
-        type: list<root.GcsExportStorage>
+        type: list<root.RedisExportStorage>
       examples:
         - response:
             body:
               - id: 1
                 type: type
                 synchronizable: true
-                bucket: bucket
-                prefix: prefix
+                path: path
+                host: host
+                port: port
+                password: password
                 regex_filter: regex_filter
                 use_blob_urls: true
-                google_application_credentials: google_application_credentials
-                google_project_id: google_project_id
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
@@ -57,33 +55,35 @@ service:
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
                 can_delete_objects: true
+                db: 1
                 project: 1
       audiences:
         - public
     create:
-      path: /api/storages/export/gcs
+      path: /api/storages/export/redis
       method: POST
       auth: true
       docs: >
 
-        Create a new target storage connection to Google Cloud Storage. 
+        Create a new target storage connection to Redis. 
 
 
-        For information about the required fields and prerequisites, see [Google
-        Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage)
-        in the Label Studio documentation. 
+        For information about the required fields and prerequisites, see [Redis
+        database](https://labelstud.io/guide/storage#Redis-database) in the
+        Label Studio documentation. 
 
 
         <Tip>After you add the storage, you should validate the connection
         before attempting to sync your data. Your data will not be exported
         until you [sync your connection](sync).</Tip>
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Create new storage
       request:
-        name: GcsCreateRequest
+        name: RedisCreateRequest
         body:
           properties:
+            db:
+              type: optional<integer>
+              docs: Database ID of database to use
             can_delete_objects:
               type: optional<boolean>
               docs: Deletion from storage enabled.
@@ -96,58 +96,56 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            path:
               type: optional<string>
-              docs: GCS bucket name
-            prefix:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: GCS bucket prefix
-            google_application_credentials:
+              docs: Server Host IP (optional)
+            port:
               type: optional<string>
-              docs: >-
-                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-                official Google Cloud Authentication documentation for more
-                details.
-            google_project_id:
+              docs: Server Port (optional)
+            password:
               type: optional<string>
-              docs: Google project ID
-        content-type: application/json
+              docs: Server Password (optional)
       response:
         docs: ''
-        type: GcsCreateResponse
+        type: RedisCreateResponse
       examples:
         - request: {}
           response:
             body:
+              db: 1
               can_delete_objects: true
               title: title
               description: description
               project: 1
-              bucket: bucket
-              prefix: prefix
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
+              path: path
+              host: host
+              port: port
+              password: password
       audiences:
         - public
     validate:
-      path: /api/storages/export/gcs/validate
+      path: /api/storages/export/redis/validate
       method: POST
       auth: true
       docs: >
 
-        Validate a specific GCS export storage connection. This is useful to
+        Validate a specific Redis export storage connection. This is useful to
         ensure that the storage configuration settings are correct and
         operational before attempting to export data.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Validate export storage
       request:
-        name: GcsValidateRequest
+        name: RedisValidateRequest
         body:
           properties:
             id:
               type: optional<integer>
               docs: Storage ID. If set, storage with specified ID will be updated
+            db:
+              type: optional<integer>
+              docs: Database ID of database to use
             can_delete_objects:
               type: optional<boolean>
               docs: Deletion from storage enabled.
@@ -160,49 +158,43 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            path:
               type: optional<string>
-              docs: GCS bucket name
-            prefix:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: GCS bucket prefix
-            google_application_credentials:
+              docs: Server Host IP (optional)
+            port:
               type: optional<string>
-              docs: >-
-                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-                official Google Cloud Authentication documentation for more
-                details.
-            google_project_id:
+              docs: Server Port (optional)
+            password:
               type: optional<string>
-              docs: Google project ID
-        content-type: application/json
+              docs: Server Password (optional)
       examples:
         - request: {}
       audiences:
         - public
     get:
-      path: /api/storages/export/gcs/{id}
+      path: /api/storages/export/redis/{id}
       method: GET
       auth: true
       docs: >
 
-        Get a specific GCS export storage connection. You will need to provide
+        Get a specific Redis export storage connection. You will need to provide
         the export storage ID. You can find this using [List export
         storages](list). 
 
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this gcs export storage.
+          docs: A unique integer value identifying this redis export storage.
       display-name: Get export storage
       response:
         docs: ''
-        type: root.GcsExportStorage
+        type: root.RedisExportStorage
       examples:
         - path-parameters:
             id: 1
@@ -211,12 +203,12 @@ service:
               id: 1
               type: type
               synchronizable: true
-              bucket: bucket
-              prefix: prefix
+              path: path
+              host: host
+              port: port
+              password: password
               regex_filter: regex_filter
               use_blob_urls: true
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -228,16 +220,17 @@ service:
               description: description
               created_at: '2024-01-15T09:30:00Z'
               can_delete_objects: true
+              db: 1
               project: 1
       audiences:
         - public
     delete:
-      path: /api/storages/export/gcs/{id}
+      path: /api/storages/export/redis/{id}
       method: DELETE
       auth: true
       docs: >
 
-        Delete a specific GCS export storage connection. You will need to
+        Delete a specific Redis export storage connection. You will need to
         provide the export storage ID. You can find this using [List export
         storages](list). 
 
@@ -247,12 +240,10 @@ service:
         synced from the external storage, you will need to delete them manually
         from within the Label Studio UI or use the [Delete
         tasks](../../tasks/delete-all-tasks) API. 
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this gcs export storage.
+          docs: A unique integer value identifying this redis export storage.
       display-name: Delete export storage
       examples:
         - path-parameters:
@@ -260,29 +251,30 @@ service:
       audiences:
         - public
     update:
-      path: /api/storages/export/gcs/{id}
+      path: /api/storages/export/redis/{id}
       method: PATCH
       auth: true
       docs: >
 
-        Update a specific GCS export storage connection. You will need to
+        Update a specific Redis export storage connection. You will need to
         provide the export storage ID. You can find this using [List export
         storages](list). 
 
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this gcs export storage.
+          docs: A unique integer value identifying this redis export storage.
       display-name: Update export storage
       request:
-        name: GcsUpdateRequest
+        name: RedisUpdateRequest
         body:
           properties:
+            db:
+              type: optional<integer>
+              docs: Database ID of database to use
             can_delete_objects:
               type: optional<boolean>
               docs: Deletion from storage enabled.
@@ -295,69 +287,65 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            path:
               type: optional<string>
-              docs: GCS bucket name
-            prefix:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: GCS bucket prefix
-            google_application_credentials:
+              docs: Server Host IP (optional)
+            port:
               type: optional<string>
-              docs: >-
-                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-                official Google Cloud Authentication documentation for more
-                details.
-            google_project_id:
+              docs: Server Port (optional)
+            password:
               type: optional<string>
-              docs: Google project ID
-        content-type: application/json
+              docs: Server Password (optional)
       response:
         docs: ''
-        type: GcsUpdateResponse
+        type: RedisUpdateResponse
       examples:
         - path-parameters:
             id: 1
           request: {}
           response:
             body:
+              db: 1
               can_delete_objects: true
               title: title
               description: description
               project: 1
-              bucket: bucket
-              prefix: prefix
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
+              path: path
+              host: host
+              port: port
+              password: password
       audiences:
         - public
     sync:
-      path: /api/storages/export/gcs/{id}/sync
+      path: /api/storages/export/redis/{id}/sync
       method: POST
       auth: true
       docs: >
 
-        Sync tasks to a GCS export/target storage connection. You will need to
-        provide the export storage ID. You can find this using [List export
+        Sync tasks to an Redis export/target storage connection. You will need
+        to provide the export storage ID. You can find this using [List export
         storages](list). 
 
 
-        Sync operations with external buckets only go one way. They either
-        create tasks from objects in the bucket (source/import storage) or push
-        annotations to the output bucket (export/target storage). Changing
-        something on the bucket side doesn’t guarantee consistency in results.
+        Sync operations with external databases only go one way. They either
+        create tasks from objects in the database (source/import storage) or
+        push annotations to the output database (export/target storage).
+        Changing something on the database side doesn’t guarantee consistency in
+        results.
 
 
         <Note>Before proceeding, you should review [How sync operations work -
         Source storage](https://labelstud.io/guide/storage#Source-storage) to
         ensure that your data remains secure and private.</Note> 
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
       display-name: Sync export storage
       response:
         docs: ''
-        type: root.GcsExportStorage
+        type: root.RedisExportStorage
       examples:
         - path-parameters:
             id: id
@@ -366,12 +354,12 @@ service:
               id: 1
               type: type
               synchronizable: true
-              bucket: bucket
-              prefix: prefix
+              path: path
+              host: host
+              port: port
+              password: password
               regex_filter: regex_filter
               use_blob_urls: true
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -383,14 +371,18 @@ service:
               description: description
               created_at: '2024-01-15T09:30:00Z'
               can_delete_objects: true
+              db: 1
               project: 1
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
 types:
-  GcsCreateResponse:
+  RedisCreateResponse:
     properties:
+      db:
+        type: optional<integer>
+        docs: Database ID of database to use
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled.
@@ -403,24 +395,25 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      bucket:
+      path:
         type: optional<string>
-        docs: GCS bucket name
-      prefix:
+        docs: Storage prefix (optional)
+      host:
         type: optional<string>
-        docs: GCS bucket prefix
-      google_application_credentials:
+        docs: Server Host IP (optional)
+      port:
         type: optional<string>
-        docs: >-
-          The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-          official Google Cloud Authentication documentation for more details.
-      google_project_id:
+        docs: Server Port (optional)
+      password:
         type: optional<string>
-        docs: Google project ID
+        docs: Server Password (optional)
     source:
       openapi: openapi/openapi.yaml
-  GcsUpdateResponse:
+  RedisUpdateResponse:
     properties:
+      db:
+        type: optional<integer>
+        docs: Database ID of database to use
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled.
@@ -433,19 +426,17 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      bucket:
+      path:
         type: optional<string>
-        docs: GCS bucket name
-      prefix:
+        docs: Storage prefix (optional)
+      host:
         type: optional<string>
-        docs: GCS bucket prefix
-      google_application_credentials:
+        docs: Server Host IP (optional)
+      port:
         type: optional<string>
-        docs: >-
-          The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-          official Google Cloud Authentication documentation for more details.
-      google_project_id:
+        docs: Server Port (optional)
+      password:
         type: optional<string>
-        docs: Google project ID
+        docs: Server Password (optional)
     source:
       openapi: openapi/openapi.yaml

@@ -24,7 +24,6 @@ class LocalClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[LocalFilesExportStorage]:
         """
-
         You can connect a local file directory to Label Studio as a source storage or target storage. Use this API request to get a list of all local file export (target) storage connections for a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
@@ -87,7 +86,6 @@ class LocalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LocalCreateResponse:
         """
-
         Create a new target storage connection to a local file directory.
 
         For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage) in the Label Studio documentation.
@@ -142,9 +140,6 @@ class LocalClient:
                 "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -175,7 +170,6 @@ class LocalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         Validate a specific local file export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 
         Parameters
@@ -229,9 +223,6 @@ class LocalClient:
                 "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -245,7 +236,6 @@ class LocalClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LocalFilesExportStorage:
         """
-
         Get a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -295,7 +285,6 @@ class LocalClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
@@ -349,7 +338,6 @@ class LocalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LocalUpdateResponse:
         """
-
         Update a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -407,9 +395,6 @@ class LocalClient:
                 "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -429,7 +414,6 @@ class LocalClient:
 
     def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> LocalFilesExportStorage:
         """
-
         Sync tasks to an local file export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Sync operations with external local file directories only go one way. They either create tasks from objects in the directory (source/import storage) or push annotations to the output directory (export/target storage). Changing something on the local file side doesn’t guarantee consistency in results.
@@ -487,7 +471,6 @@ class AsyncLocalClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[LocalFilesExportStorage]:
         """
-
         You can connect a local file directory to Label Studio as a source storage or target storage. Use this API request to get a list of all local file export (target) storage connections for a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
@@ -558,7 +541,6 @@ class AsyncLocalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LocalCreateResponse:
         """
-
         Create a new target storage connection to a local file directory.
 
         For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage) in the Label Studio documentation.
@@ -621,9 +603,6 @@ class AsyncLocalClient:
                 "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -654,7 +633,6 @@ class AsyncLocalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         Validate a specific local file export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 
         Parameters
@@ -716,9 +694,6 @@ class AsyncLocalClient:
                 "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -732,7 +707,6 @@ class AsyncLocalClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LocalFilesExportStorage:
         """
-
         Get a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -790,7 +764,6 @@ class AsyncLocalClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
@@ -852,7 +825,6 @@ class AsyncLocalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LocalUpdateResponse:
         """
-
         Update a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -918,9 +890,6 @@ class AsyncLocalClient:
                 "regex_filter": regex_filter,
                 "use_blob_urls": use_blob_urls,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -942,7 +911,6 @@ class AsyncLocalClient:
         self, id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LocalFilesExportStorage:
         """
-
         Sync tasks to an local file export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Sync operations with external local file directories only go one way. They either create tasks from objects in the directory (source/import storage) or push annotations to the output directory (export/target storage). Changing something on the local file side doesn’t guarantee consistency in results.

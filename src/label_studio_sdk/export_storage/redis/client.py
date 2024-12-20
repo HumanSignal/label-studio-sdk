@@ -24,7 +24,6 @@ class RedisClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[RedisExportStorage]:
         """
-
         You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis export (target) storage connections for a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
@@ -90,7 +89,6 @@ class RedisClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisCreateResponse:
         """
-
         Create a new target storage connection to Redis.
 
         For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation.
@@ -157,9 +155,6 @@ class RedisClient:
                 "port": port,
                 "password": password,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -193,7 +188,6 @@ class RedisClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         Validate a specific Redis export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 
         Parameters
@@ -259,9 +253,6 @@ class RedisClient:
                 "port": port,
                 "password": password,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -275,7 +266,6 @@ class RedisClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
         """
-
         Get a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -325,7 +315,6 @@ class RedisClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
@@ -382,7 +371,6 @@ class RedisClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisUpdateResponse:
         """
-
         Update a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -452,9 +440,6 @@ class RedisClient:
                 "port": port,
                 "password": password,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -474,7 +459,6 @@ class RedisClient:
 
     def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
         """
-
         Sync tasks to an Redis export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.
@@ -532,7 +516,6 @@ class AsyncRedisClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[RedisExportStorage]:
         """
-
         You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis export (target) storage connections for a specific project.
 
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
@@ -606,7 +589,6 @@ class AsyncRedisClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisCreateResponse:
         """
-
         Create a new target storage connection to Redis.
 
         For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation.
@@ -681,9 +663,6 @@ class AsyncRedisClient:
                 "port": port,
                 "password": password,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -717,7 +696,6 @@ class AsyncRedisClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         Validate a specific Redis export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 
         Parameters
@@ -791,9 +769,6 @@ class AsyncRedisClient:
                 "port": port,
                 "password": password,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -807,7 +782,6 @@ class AsyncRedisClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
         """
-
         Get a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -865,7 +839,6 @@ class AsyncRedisClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
@@ -930,7 +903,6 @@ class AsyncRedisClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisUpdateResponse:
         """
-
         Update a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
@@ -1008,9 +980,6 @@ class AsyncRedisClient:
                 "port": port,
                 "password": password,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1030,7 +999,6 @@ class AsyncRedisClient:
 
     async def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
         """
-
         Sync tasks to an Redis export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
         Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.

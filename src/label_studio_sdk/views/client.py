@@ -25,7 +25,6 @@ class ViewsClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[View]:
         """
-
         List all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize which tasks and information appears.
 
         You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
@@ -82,7 +81,6 @@ class ViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-
         Create a new Data Manager view for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks and information appears.
 
         You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
@@ -121,9 +119,6 @@ class ViewsClient:
                 ),
                 "project": project,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -143,7 +138,6 @@ class ViewsClient:
 
     def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks appear.
 
         You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
@@ -176,9 +170,6 @@ class ViewsClient:
             json={
                 "project": project,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -192,7 +183,6 @@ class ViewsClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> View:
         """
-
         Get the details about a specific Data Manager view (tab). You will need to supply the view ID. You can find this using [List views](list).
 
         Parameters
@@ -287,7 +277,6 @@ class ViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-
         You can update a specific Data Manager view (tab) with additional filters and other customizations. You will need to supply the view ID. You can find this using [List views](list).
 
         Parameters
@@ -329,9 +318,6 @@ class ViewsClient:
                 ),
                 "project": project,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -358,7 +344,6 @@ class AsyncViewsClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[View]:
         """
-
         List all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize which tasks and information appears.
 
         You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
@@ -423,7 +408,6 @@ class AsyncViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-
         Create a new Data Manager view for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks and information appears.
 
         You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
@@ -470,9 +454,6 @@ class AsyncViewsClient:
                 ),
                 "project": project,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -492,7 +473,6 @@ class AsyncViewsClient:
 
     async def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks appear.
 
         You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
@@ -533,9 +513,6 @@ class AsyncViewsClient:
             json={
                 "project": project,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -549,7 +526,6 @@ class AsyncViewsClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> View:
         """
-
         Get the details about a specific Data Manager view (tab). You will need to supply the view ID. You can find this using [List views](list).
 
         Parameters
@@ -660,7 +636,6 @@ class AsyncViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-
         You can update a specific Data Manager view (tab) with additional filters and other customizations. You will need to supply the view ID. You can find this using [List views](list).
 
         Parameters
@@ -709,9 +684,6 @@ class AsyncViewsClient:
                     object_=data, annotation=ViewsUpdateRequestData, direction="write"
                 ),
                 "project": project,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,

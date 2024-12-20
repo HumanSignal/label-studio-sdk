@@ -27,9 +27,7 @@ class MlClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[MlBackend]:
         """
-
         List all configured Machine Learning (ML) backends for a specific project by ID. For more information about ML backends, see [Machine learning integration](https://labelstud.io/guide/ml).
-
 
         You will need to provide the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
@@ -93,7 +91,6 @@ class MlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlCreateResponse:
         """
-
         Add an ML backend to a project. For more information about what you need to configure when adding an ML backend, see [Connect the model to Label studio](https://labelstud.io/guide/ml#Connect-the-model-to-Label-Studio).
 
         <Note>If you are using Docker Compose, you may need to adjust your ML backend URL. See [localhost and Docker containers](https://labelstud.io/guide/ml#localhost-and-Docker-containers).</Note>
@@ -164,9 +161,6 @@ class MlClient:
                 "extra_params": extra_params,
                 "timeout": timeout,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -186,7 +180,6 @@ class MlClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> MlBackend:
         """
-
         Get details about a specific ML backend. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
 
         For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
@@ -236,7 +229,6 @@ class MlClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Remove an existing ML backend connection. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
 
         For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
@@ -294,7 +286,6 @@ class MlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlUpdateResponse:
         """
-
         Update the ML backend parameters. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
 
         For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
@@ -368,9 +359,6 @@ class MlClient:
                 "extra_params": extra_params,
                 "timeout": timeout,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -397,7 +385,6 @@ class MlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         Enable interactive pre-annotations for a specific task.
 
         ML-assisted labeling with interactive pre-annotations works with image segmentation and object detection tasks using rectangles, ellipses, polygons, brush masks, and keypoints, as well as with HTML and text named entity recognition tasks. Your ML backend must support the type of labeling that you’re performing, recognize the input that you create, and be able to respond with the relevant output for a prediction. For more information, see [Interactive pre-annotations](https://labelstud.io/guide/ml.html#Interactive-pre-annotations).
@@ -443,9 +430,6 @@ class MlClient:
                 "task": task,
                 "context": context,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -465,7 +449,6 @@ class MlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         After you connect a model to Label Studio as a machine learning backend and annotate at least one task, you can start training the model. Training logs appear in stdout and the console.
 
         For more information, see [Model training](https://labelstud.io/guide/ml.html#Model-training).
@@ -504,9 +487,6 @@ class MlClient:
             json={
                 "use_ground_truth": use_ground_truth,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -530,7 +510,6 @@ class MlClient:
 
     def list_model_versions(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Get available versions of the model. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
 
         Parameters
@@ -577,9 +556,7 @@ class AsyncMlClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[MlBackend]:
         """
-
         List all configured Machine Learning (ML) backends for a specific project by ID. For more information about ML backends, see [Machine learning integration](https://labelstud.io/guide/ml).
-
 
         You will need to provide the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
@@ -651,7 +628,6 @@ class AsyncMlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlCreateResponse:
         """
-
         Add an ML backend to a project. For more information about what you need to configure when adding an ML backend, see [Connect the model to Label studio](https://labelstud.io/guide/ml#Connect-the-model-to-Label-Studio).
 
         <Note>If you are using Docker Compose, you may need to adjust your ML backend URL. See [localhost and Docker containers](https://labelstud.io/guide/ml#localhost-and-Docker-containers).</Note>
@@ -730,9 +706,6 @@ class AsyncMlClient:
                 "extra_params": extra_params,
                 "timeout": timeout,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -752,7 +725,6 @@ class AsyncMlClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> MlBackend:
         """
-
         Get details about a specific ML backend. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
 
         For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
@@ -810,7 +782,6 @@ class AsyncMlClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Remove an existing ML backend connection. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
 
         For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
@@ -876,7 +847,6 @@ class AsyncMlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlUpdateResponse:
         """
-
         Update the ML backend parameters. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
 
         For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
@@ -958,9 +928,6 @@ class AsyncMlClient:
                 "extra_params": extra_params,
                 "timeout": timeout,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -987,7 +954,6 @@ class AsyncMlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         Enable interactive pre-annotations for a specific task.
 
         ML-assisted labeling with interactive pre-annotations works with image segmentation and object detection tasks using rectangles, ellipses, polygons, brush masks, and keypoints, as well as with HTML and text named entity recognition tasks. Your ML backend must support the type of labeling that you’re performing, recognize the input that you create, and be able to respond with the relevant output for a prediction. For more information, see [Interactive pre-annotations](https://labelstud.io/guide/ml.html#Interactive-pre-annotations).
@@ -1041,9 +1007,6 @@ class AsyncMlClient:
                 "task": task,
                 "context": context,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1063,7 +1026,6 @@ class AsyncMlClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
         After you connect a model to Label Studio as a machine learning backend and annotate at least one task, you can start training the model. Training logs appear in stdout and the console.
 
         For more information, see [Model training](https://labelstud.io/guide/ml.html#Model-training).
@@ -1110,9 +1072,6 @@ class AsyncMlClient:
             json={
                 "use_ground_truth": use_ground_truth,
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1136,7 +1095,6 @@ class AsyncMlClient:
 
     async def list_model_versions(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Get available versions of the model. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
 
         Parameters
