@@ -2,4 +2,4 @@
 
 import typing
 
-DataManagerTaskSerializerAnnotatorsItem = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]
+DataManagerTaskSerializerAnnotatorsItem = typing.Union[int, typing.Dict[str, typing.Any]]

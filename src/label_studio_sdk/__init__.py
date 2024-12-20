@@ -133,7 +133,6 @@ from .actions import (
     ActionsCreateRequestSelectedItemsIncluded,
 )
 from .annotations import AnnotationsCreateBulkResponseItem
-from .client import AsyncLabelStudio, LabelStudio
 from .environment import LabelStudioEnvironment
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
@@ -193,7 +192,6 @@ __all__ = [
     "AnnotationsCreateBulkResponseItem",
     "AnnotationsDmField",
     "AnnotationsDmFieldLastAction",
-    "AsyncLabelStudio",
     "AzureBlobExportStorage",
     "AzureBlobExportStorageStatus",
     "AzureBlobImportStorage",
@@ -238,7 +236,6 @@ __all__ = [
     "KeyIndicatorsItem",
     "KeyIndicatorsItemAdditionalKpisItem",
     "KeyIndicatorsItemExtraKpisItem",
-    "LabelStudio",
     "LabelStudioEnvironment",
     "LocalFilesExportStorage",
     "LocalFilesExportStorageStatus",

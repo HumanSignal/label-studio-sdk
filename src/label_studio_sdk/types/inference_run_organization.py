@@ -2,4 +2,4 @@
 
 import typing
 
-InferenceRunOrganization = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]
+InferenceRunOrganization = typing.Union[int, typing.Dict[str, typing.Any]]
