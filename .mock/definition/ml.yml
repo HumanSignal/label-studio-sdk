@@ -19,6 +19,8 @@ service:
         You will need to provide the project ID. This can be found in the URL
         when viewing the project in Label Studio, or you can retrieve all
         project IDs using [List all projects](../projects/list).
+      source:
+        openapi: openapi/openapi.yaml
       display-name: List ML backends
       request:
         name: MlListRequest
@@ -75,6 +77,8 @@ service:
         environment variables to allow the ML backend to interact with those
         files. See [Allow the ML backend to access Label
         Studio](https://labelstud.io/guide/ml#Allow-the-ML-backend-to-access-Label-Studio-data).</Note>
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Add ML backend
       request:
         name: MlCreateRequest
@@ -110,6 +114,7 @@ service:
             timeout:
               type: optional<integer>
               docs: Response model timeout
+        content-type: application/json
       response:
         docs: ''
         type: MlCreateResponse
@@ -143,6 +148,8 @@ service:
 
         For more information, see [Machine learning
         integration](https://labelstud.io/guide/ml).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -191,6 +198,8 @@ service:
 
         For more information, see [Machine learning
         integration](https://labelstud.io/guide/ml).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -213,6 +222,8 @@ service:
 
         For more information, see [Machine learning
         integration](https://labelstud.io/guide/ml).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -252,6 +263,7 @@ service:
             timeout:
               type: optional<integer>
               docs: Response model timeout
+        content-type: application/json
       response:
         docs: ''
         type: MlUpdateResponse
@@ -301,6 +313,8 @@ service:
         is available from the Label Studio URL when viewing the task, or you can
         retrieve it programmatically with [Get task list](../tasks/list). The ML
         backend connection ID is available via [List ML backends](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -316,6 +330,7 @@ service:
             context:
               type: optional<map<string, unknown>>
               docs: Context for ML model
+        content-type: application/json
       examples:
         - path-parameters:
             id: 1
@@ -331,6 +346,8 @@ service:
 
         After you add an ML backend, call this API with the ML backend ID to run
         a test prediction on specific task data               
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -360,6 +377,8 @@ service:
 
         You will need to specify an ID for the backend connection. You can find
         this using [List ML backends](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -372,6 +391,7 @@ service:
             use_ground_truth:
               type: optional<boolean>
               docs: Whether to include ground truth annotations in training
+        content-type: application/json
       errors:
         - root.InternalServerError
       examples:
@@ -389,6 +409,8 @@ service:
         Get available versions of the model. You will need to specify an ID for
         the backend connection. You can find this using [List ML
         backends](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
       display-name: Get model versions
@@ -405,6 +427,7 @@ types:
       - NONE
       - BASIC_AUTH
     docs: Auth method
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   MlCreateResponseAuthMethod:
@@ -412,6 +435,7 @@ types:
       - NONE
       - BASIC_AUTH
     docs: Auth method
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   MlCreateResponse:
@@ -453,6 +477,7 @@ types:
       - NONE
       - BASIC_AUTH
     docs: Auth method
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   MlUpdateResponseAuthMethod:
@@ -460,6 +485,7 @@ types:
       - NONE
       - BASIC_AUTH
     docs: Auth method
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   MlUpdateResponse:

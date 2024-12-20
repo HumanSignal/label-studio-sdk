@@ -10,6 +10,8 @@ service:
       auth: true
       docs: |
         Get key indicators for the Prompt dashboard.
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         pk:
           type: integer
@@ -39,6 +41,8 @@ service:
       auth: true
       docs: |
         Get a specific key indicator for the Prompt dashboard.
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         indicator_key:
           type: string
