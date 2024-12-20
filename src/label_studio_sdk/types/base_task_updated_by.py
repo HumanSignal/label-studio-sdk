@@ -2,4 +2,6 @@
 
 import typing
 
-BaseTaskUpdatedBy = typing.Union[typing.Optional[int], typing.Optional[typing.List[typing.Dict[str, typing.Any]]]]
+BaseTaskUpdatedBy = typing.Union[
+    typing.Optional[int], typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]]
+]
