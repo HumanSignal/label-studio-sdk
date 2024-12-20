@@ -11,6 +11,8 @@ service:
       docs: >-
         Retrieve details about a specific uploaded file. To get the file upload
         ID, use [Get files list](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -35,6 +37,8 @@ service:
       docs: >-
         Delete a specific uploaded file. To get the file upload ID, use [Get
         files list](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -64,6 +68,8 @@ service:
         ‘file=@path/to/my_file.csv’
 
         ```
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -71,6 +77,7 @@ service:
       display-name: Update file upload
       request:
         body: root.FileUpload
+        content-type: application/json
       response:
         docs: ''
         type: root.FileUpload
@@ -98,6 +105,8 @@ service:
         You must provide a project ID. The project ID can be found in the URL
         when viewing the project in Label Studio, or you can retrieve all
         project IDs using [List all projects](../list). 
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -138,6 +147,8 @@ service:
         You must provide a project ID. The project ID can be found in the URL
         when viewing the project in Label Studio, or you can retrieve all
         project IDs using [List all projects](../list). 
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -155,6 +166,8 @@ service:
       docs: >-
         Download a specific uploaded file. If you aren't sure of the file name,
         try [Get files list](list) first.
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         filename: string
       display-name: Download file
