@@ -21,8 +21,6 @@ service:
 
         For more information, see [Set up webhooks in Label
         Studio](https://labelstud.io/guide/webhooks). 
-      source:
-        openapi: openapi/openapi.yaml
       display-name: List all webhooks
       request:
         name: WebhooksListRequest
@@ -73,12 +71,9 @@ service:
         with webhooks: project-level task events and organization events. If you
         want to use organization-level webhook events, you will need to set
         `LABEL_STUDIO_ALLOW_ORGANIZATION_WEBHOOKS=true`. </Note>
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Create a webhook
       request:
         body: root.Webhook
-        content-type: application/json
       response:
         docs: ''
         type: root.Webhook
@@ -111,8 +106,6 @@ service:
         Get descriptions of all available webhook actions to set up webhooks.
         For more information, see the [Webhook event
         reference](https://labelstud.io/guide/webhook_reference).
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Get all webhook actions
       request:
         name: WebhooksInfoRequest
@@ -137,8 +130,6 @@ service:
         For more information about webhooks, see [Set up webhooks in Label
         Studio](https://labelstud.io/guide/webhooks) and the [Webhook event
         reference](https://labelstud.io/guide/webhook_reference).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -172,8 +163,6 @@ service:
       method: PUT
       auth: true
       docs: ''
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -185,10 +174,6 @@ service:
           url:
             type: string
             docs: URL of webhook
-            validation:
-              format: uri
-              minLength: 1
-              maxLength: 2048
           send_payload:
             type: optional<boolean>
             docs: If value is False send only action
@@ -205,7 +190,6 @@ service:
             type: optional<ApiWebhooksUpdateRequestActionsItem>
             allow-multiple: true
         name: ApiWebhooksUpdateRequest
-        content-type: application/json
       response:
         docs: ''
         type: root.WebhookSerializerForUpdate
@@ -246,8 +230,6 @@ service:
         For more information about webhooks, see [Set up webhooks in Label
         Studio](https://labelstud.io/guide/webhooks) and the [Webhook event
         reference](https://labelstud.io/guide/webhook_reference).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -271,8 +253,6 @@ service:
         For more information about webhooks, see [Set up webhooks in Label
         Studio](https://labelstud.io/guide/webhooks) and the [Webhook event
         reference](https://labelstud.io/guide/webhook_reference).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -284,10 +264,6 @@ service:
           url:
             type: string
             docs: URL of webhook
-            validation:
-              format: uri
-              minLength: 1
-              maxLength: 2048
           send_payload:
             type: optional<boolean>
             docs: If value is False send only action
@@ -304,7 +280,6 @@ service:
             type: optional<WebhooksUpdateRequestActionsItem>
             allow-multiple: true
         name: WebhooksUpdateRequest
-        content-type: application/json
       response:
         docs: ''
         type: root.WebhookSerializerForUpdate

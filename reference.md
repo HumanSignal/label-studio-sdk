@@ -12,10 +12,9 @@
 <dl>
 <dd>
 
+Tasks can have multiple annotations. Use this call to retrieve a specific annotation using its ID.
 
-Tasks can have multiple annotations. Use this call to retrieve a specific annotation using its ID. 
-
-You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.  
+You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
 </dd>
 </dl>
 </dd>
@@ -30,7 +29,7 @@ You can find the ID in the Label Studio UI listed at the top of the annotation i
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -85,12 +84,11 @@ client.annotations.get(
 <dl>
 <dd>
 
-
-Delete an annotation. 
+Delete an annotation.
 
 <Warning>This action can't be undone!</Warning>
 
-You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.  
+You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
 </dd>
 </dl>
 </dd>
@@ -105,7 +103,7 @@ You will need to supply the annotation's unique ID. You can find the ID in the L
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -160,10 +158,9 @@ client.annotations.delete(
 <dl>
 <dd>
 
+Update attributes for an existing annotation.
 
-Update attributes for an existing annotation. 
-
-You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.  
+You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
 
 For information about the JSON format used in the result, see [Label Studio JSON format of annotated tasks](https://labelstud.io/guide/export#Label-Studio-JSON-format-of-annotated-tasks).
 </dd>
@@ -180,7 +177,7 @@ For information about the JSON format used in the result, see [Label Studio JSON
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -231,7 +228,7 @@ client.annotations.update(
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
+**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
     
 </dd>
 </dl>
@@ -319,10 +316,9 @@ client.annotations.update(
 <dl>
 <dd>
 
-
 List all annotations for a task.
 
-You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list). 
+You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list).
 </dd>
 </dl>
 </dd>
@@ -337,7 +333,7 @@ You will need to supply the task ID. You can find this in Label Studio by openin
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -392,13 +388,11 @@ client.annotations.list(
 <dl>
 <dd>
 
+Add annotations to a task like an annotator does.
 
-Add annotations to a task like an annotator does. 
+You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list).
 
-You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list). 
-
-
-The content of the result field depends on your labeling configuration. For example, send the following data as part of your POST 
+The content of the result field depends on your labeling configuration. For example, send the following data as part of your POST
 request to send an empty annotation with the ID of the user who completed the task:
 
 ```json
@@ -409,7 +403,7 @@ request to send an empty annotation with the ID of the user who completed the ta
 "lead_time": 0,
 "task": 0
 "completed_by": 123
-} 
+}
 ```
 </dd>
 </dl>
@@ -425,7 +419,7 @@ request to send an empty annotation with the ID of the user who completed the ta
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -476,7 +470,7 @@ client.annotations.create(
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
+**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
     
 </dd>
 </dl>
@@ -579,7 +573,7 @@ Create multiple annotations for specific tasks in a bulk operation.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -624,7 +618,7 @@ client.annotations.create_bulk()
 <dl>
 <dd>
 
-**result:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**result:** `typing.Optional[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -672,7 +666,7 @@ Reset your access token or API key. When reset, any scripts or automations you h
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -732,7 +726,7 @@ Get a access token to authenticate to the API as the current user. To find this 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -792,7 +786,7 @@ Get information about your user account, such as your username, email, and user 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -837,8 +831,7 @@ client.users.whoami()
 <dl>
 <dd>
 
-
-List all users in your Label Studio organization. 
+List all users in your Label Studio organization.
 </dd>
 </dl>
 </dd>
@@ -853,7 +846,7 @@ List all users in your Label Studio organization.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -898,7 +891,6 @@ client.users.list()
 <dl>
 <dd>
 
-
 Create a user in Label Studio.
 </dd>
 </dl>
@@ -914,7 +906,7 @@ Create a user in Label Studio.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1031,9 +1023,8 @@ client.users.create()
 <dl>
 <dd>
 
-
-Get info about a specific Label Studio user. 
-You will need to provide their user ID. You can find a list of all user IDs using [List users](list). 
+Get info about a specific Label Studio user.
+You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
 </dd>
 </dl>
 </dd>
@@ -1048,7 +1039,7 @@ You will need to provide their user ID. You can find a list of all user IDs usin
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1103,7 +1094,6 @@ client.users.get(
 <dl>
 <dd>
 
-
 Delete a specific Label Studio user.
 
 You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
@@ -1123,7 +1113,7 @@ You will need to provide their user ID. You can find a list of all user IDs usin
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1178,10 +1168,9 @@ client.users.delete(
 <dl>
 <dd>
 
+Update details for a specific Label Studio user, such as their name or contact information.
 
-Update details for a specific Label Studio user, such as their name or contact information. 
-
-You will need to provide their user ID. You can find a list of all user IDs using [List users](list). 
+You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
 </dd>
 </dl>
 </dd>
@@ -1196,7 +1185,7 @@ You will need to provide their user ID. You can find a list of all user IDs usin
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1339,7 +1328,7 @@ Retrieve all the registered actions with descriptions that data manager can use.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1399,12 +1388,12 @@ Perform a Data Manager action with the selected tasks and filters. Note: More co
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
-from label_studio_sdk.actions import (
+from label_studio_sdk import (
     ActionsCreateRequestFilters,
     ActionsCreateRequestFiltersItemsItem,
     ActionsCreateRequestSelectedItemsExcluded,
 )
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1517,10 +1506,9 @@ client.actions.create(
 <dl>
 <dd>
 
+List all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize which tasks and information appears.
 
-List all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize which tasks and information appears. 
-
-You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list). 
+You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
 </dd>
 </dl>
 </dd>
@@ -1535,7 +1523,7 @@ You will need to provide the project ID. You can find this in the URL when viewi
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1588,10 +1576,9 @@ client.views.list()
 <dl>
 <dd>
 
+Create a new Data Manager view for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks and information appears.
 
-Create a new Data Manager view for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks and information appears. 
-
-You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list). 
+You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
 </dd>
 </dl>
 </dd>
@@ -1606,7 +1593,7 @@ You will need to provide the project ID. You can find this in the URL when viewi
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1667,8 +1654,7 @@ client.views.create()
 <dl>
 <dd>
 
-
-Delete all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks appear. 
+Delete all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks appear.
 
 You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
 </dd>
@@ -1685,7 +1671,7 @@ You will need to provide the project ID. You can find this in the URL when viewi
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1740,8 +1726,7 @@ client.views.delete_all(
 <dl>
 <dd>
 
-
-Get the details about a specific Data Manager view (tab). You will need to supply the view ID. You can find this using [List views](list).  
+Get the details about a specific Data Manager view (tab). You will need to supply the view ID. You can find this using [List views](list).
 </dd>
 </dl>
 </dd>
@@ -1756,7 +1741,7 @@ Get the details about a specific Data Manager view (tab). You will need to suppl
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1826,7 +1811,7 @@ Delete a specific Data Manager view (tab) by ID. You can find the view using [Li
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1881,8 +1866,7 @@ client.views.delete(
 <dl>
 <dd>
 
-
-You can update a specific Data Manager view (tab) with additional filters and other customizations. You will need to supply the view ID. You can find this using [List views](list).  
+You can update a specific Data Manager view (tab) with additional filters and other customizations. You will need to supply the view ID. You can find this using [List views](list).
 </dd>
 </dl>
 </dd>
@@ -1897,7 +1881,7 @@ You can update a specific Data Manager view (tab) with additional filters and ot
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -1984,7 +1968,7 @@ Retrieve details about a specific uploaded file. To get the file upload ID, use 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -2054,7 +2038,7 @@ Delete a specific uploaded file. To get the file upload ID, use [Get files list]
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -2109,10 +2093,10 @@ client.files.delete(
 <dl>
 <dd>
 
-
-Update a specific uploaded file. To get the file upload ID, use [Get files list](list). 
+Update a specific uploaded file. To get the file upload ID, use [Get files list](list).
 
 You will need to include the file data in the request body. For example:
+
 ```bash
 curl -H 'Authorization: Token abc123' \ -X POST 'https://localhost:8080/api/import/file-upload/245' -F ‘file=@path/to/my_file.csv’
 ```
@@ -2130,7 +2114,7 @@ curl -H 'Authorization: Token abc123' \ -X POST 'https://localhost:8080/api/impo
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -2201,10 +2185,9 @@ client.files.update(
 <dl>
 <dd>
 
+Retrieve the list of uploaded files used to create labeling tasks for a specific project. These are files that have been uploaded directly to Label Studio.
 
-Retrieve the list of uploaded files used to create labeling tasks for a specific project. These are files that have been uploaded directly to Label Studio. 
-
-You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 </dd>
 </dl>
 </dd>
@@ -2219,7 +2202,7 @@ You must provide a project ID. The project ID can be found in the URL when viewi
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -2290,10 +2273,9 @@ client.files.list(
 <dl>
 <dd>
 
+Delete uploaded files for a specific project. These are files that have been uploaded directly to Label Studio.
 
-Delete uploaded files for a specific project. These are files that have been uploaded directly to Label Studio. 
-
-You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 </dd>
 </dl>
 </dd>
@@ -2308,7 +2290,7 @@ You must provide a project ID. The project ID can be found in the URL when viewi
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -2378,7 +2360,7 @@ Download a specific uploaded file. If you aren't sure of the file name, try [Get
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -2421,1247 +2403,6 @@ client.files.download(
 </dl>
 </details>
 
-## Ml
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-List all configured Machine Learning (ML) backends for a specific project by ID. For more information about ML backends, see [Machine learning integration](https://labelstud.io/guide/ml). 
-
-
-You will need to provide the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Add an ML backend to a project. For more information about what you need to configure when adding an ML backend, see [Connect the model to Label studio](https://labelstud.io/guide/ml#Connect-the-model-to-Label-Studio).
-
-<Note>If you are using Docker Compose, you may need to adjust your ML backend URL. See [localhost and Docker containers](https://labelstud.io/guide/ml#localhost-and-Docker-containers).</Note>
-
-<Note>If you are using files that are located in the cloud, local storage, or uploaded to Label Studio, you must configure your environment variables to allow the ML backend to interact with those files. See [Allow the ML backend to access Label Studio](https://labelstud.io/guide/ml#Allow-the-ML-backend-to-access-Label-Studio-data).</Note>
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.create()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**url:** `typing.Optional[str]` — ML backend URL
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_interactive:** `typing.Optional[bool]` — Is interactive
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auth_method:** `typing.Optional[MlCreateRequestAuthMethod]` — Auth method
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**basic_auth_user:** `typing.Optional[str]` — Basic auth user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**basic_auth_pass:** `typing.Optional[str]` — Basic auth password
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extra_params:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Extra parameters
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**timeout:** `typing.Optional[int]` — Response model timeout
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get details about a specific ML backend. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list). 
-
-For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this ml backend.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Remove an existing ML backend connection. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
-
-For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this ml backend.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Update the ML backend parameters. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
-
-For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this ml backend.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**url:** `typing.Optional[str]` — ML backend URL
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_interactive:** `typing.Optional[bool]` — Is interactive
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**auth_method:** `typing.Optional[MlUpdateRequestAuthMethod]` — Auth method
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**basic_auth_user:** `typing.Optional[str]` — Basic auth user
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**basic_auth_pass:** `typing.Optional[str]` — Basic auth password
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extra_params:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Extra parameters
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**timeout:** `typing.Optional[int]` — Response model timeout
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">predict_interactive</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Enable interactive pre-annotations for a specific task. 
-
-ML-assisted labeling with interactive pre-annotations works with image segmentation and object detection tasks using rectangles, ellipses, polygons, brush masks, and keypoints, as well as with HTML and text named entity recognition tasks. Your ML backend must support the type of labeling that you’re performing, recognize the input that you create, and be able to respond with the relevant output for a prediction. For more information, see [Interactive pre-annotations](https://labelstud.io/guide/ml.html#Interactive-pre-annotations).
-
-Before you can use interactive annotations, it must be enabled for you ML backend connection (`"is_interactive": true`). 
-
-You will need the task ID and the ML backend connection ID. The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](../tasks/list). The ML backend connection ID is available via [List ML backends](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.predict_interactive(
-    id=1,
-    task=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this ML backend.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task:** `int` — ID of task to annotate
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**context:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Context for ML model
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">train</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-After you connect a model to Label Studio as a machine learning backend and annotate at least one task, you can start training the model. Training logs appear in stdout and the console.
-
-For more information, see [Model training](https://labelstud.io/guide/ml.html#Model-training).
-
-You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.train(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this ML backend.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_ground_truth:** `typing.Optional[bool]` — Whether to include ground truth annotations in training
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">list_model_versions</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get available versions of the model. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.list_model_versions(
-    id="id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Predictions
-<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get a list of all predictions. You can optionally filter these by task or by project. If you want to filter, you will need the project ID and/or task ID. Both of these can be found in the Label Studio URL when viewing a task, or you can use [List all projects](../projects/list) and [Get tasks list](../tasks/list).
-
-<Note>The terms "predictions" and pre-annotations" are used interchangeably.</Note>
-
-Predictions can be [imported directly into Label Studio](https://labelstud.io/guide/predictions) or [generated by a connected ML backend](https://labelstud.io/guide/ml.html#Pre-annotations-predictions). 
-
-To import predictions via the API, see [Create prediction](create).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.predictions.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**task:** `typing.Optional[int]` — Filter predictions by task ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Filter predictions by project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-If you have predictions generated for your dataset from a model, either as pre-annotated tasks or pre-labeled tasks, you can import the predictions with your dataset into Label Studio for review and correction.
-
-To import predicted labels into Label Studio, you must use the [Basic Label Studio JSON format](https://labelstud.io/guide/tasks#Basic-Label-Studio-JSON-format) and set up your tasks with the predictions JSON key. The Label Studio ML backend also outputs tasks in this format. 
-
-#### JSON format for predictions
-Label Studio JSON format for pre-annotations must contain two sections:
-* A data object which references the source of the data that the pre-annotations apply to. This can be a URL to an audio file, a pre-signed cloud storage link to an image, plain text, a reference to a CSV file stored in Label Studio, or something else. 
-* A predictions array that contains the pre-annotation results for the different types of labeling. See how to add results to the predictions array.
-
-For more information, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations)
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.predictions.create(
-    result=[
-        {
-            "original_width": 1920,
-            "original_height": 1080,
-            "image_rotation": 0,
-            "from_name": "bboxes",
-            "to_name": "image",
-            "type": "rectanglelabels",
-            "value": {
-                "x": 20,
-                "y": 30,
-                "width": 50,
-                "height": 60,
-                "rotation": 0,
-                "values": {"rectanglelabels": ["Person"]},
-            },
-        }
-    ],
-    score=0.95,
-    model_version="yolo-v8",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**task:** `typing.Optional[int]` — Task ID for which the prediction is created
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**score:** `typing.Optional[float]` — Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get details about a specific prediction by its ID. To find the prediction ID, use [List predictions](list).
-
-For information about the prediction format, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations). 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.predictions.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Prediction ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Delete a prediction. To find the prediction ID, use [List predictions](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.predictions.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Prediction ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Update a prediction. To find the prediction ID, use [List predictions](list).
-
-For information about the prediction format, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations). 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.predictions.update(
-    id=1,
-    result=[
-        {
-            "original_width": 1920,
-            "original_height": 1080,
-            "image_rotation": 0,
-            "from_name": "bboxes",
-            "to_name": "image",
-            "type": "rectanglelabels",
-            "value": {
-                "x": 20,
-                "y": 30,
-                "width": 50,
-                "height": 60,
-                "rotation": 0,
-                "values": {"rectanglelabels": ["Person"]},
-            },
-        }
-    ],
-    score=0.95,
-    model_version="yolo-v8",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Prediction ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task:** `typing.Optional[int]` — Task ID for which the prediction is created
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**score:** `typing.Optional[float]` — Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Projects
 <details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list</a>(...)</code></summary>
 <dl>
@@ -3675,13 +2416,13 @@ client.predictions.update(
 <dl>
 <dd>
 
-
 Return a list of the projects within your organization.
 
-To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using this API call. 
+To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using this API call.
 
 To retrieve a list of your Label Studio projects, update the following command to match your own environment.
 Replace the domain name, port, and authorization token, then run the following from the command line:
+
 ```bash
 curl -X GET https://localhost:8080/api/projects/ -H 'Authorization: Token abc123'
 ```
@@ -3699,7 +2440,7 @@ curl -X GET https://localhost:8080/api/projects/ -H 'Authorization: Token abc123
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -3789,11 +2530,11 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-
 Create a project and set up the labeling interface. For more information about setting up projects, see the following:
-* [Create and configure projects](https://labelstud.io/guide/setup_project)
-* [Configure labeling interface](https://labelstud.io/guide/setup)
-* [Project settings](https://labelstud.io/guide/project_settings)
+
+- [Create and configure projects](https://labelstud.io/guide/setup_project)
+- [Configure labeling interface](https://labelstud.io/guide/setup)
+- [Project settings](https://labelstud.io/guide/project_settings)
 
 ```bash
 curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"label_config": "<View>[...]</View>"}'
@@ -3812,7 +2553,7 @@ curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST '
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -3929,7 +2670,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
+**control_weights:** `typing.Optional[typing.Dict[str, typing.Any]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
     
 </dd>
 </dl>
@@ -3992,7 +2733,7 @@ Retrieve information about a specific project by project ID. The project ID can 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -4047,10 +2788,9 @@ client.projects.get(
 <dl>
 <dd>
 
-
 Delete a project by specified project ID. Deleting a project permanently removes all tasks, annotations, and project data from Label Studio.
 
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
 </dd>
 </dl>
 </dd>
@@ -4065,7 +2805,7 @@ The project ID can be found in the URL when viewing the project in Label Studio,
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -4120,13 +2860,13 @@ client.projects.delete(
 <dl>
 <dd>
 
-
 Update the project settings for a specific project. For more information, see the following:
-* [Create and configure projects](https://labelstud.io/guide/setup_project)
-* [Configure labeling interface](https://labelstud.io/guide/setup)
-* [Project settings](https://labelstud.io/guide/project_settings)
 
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list). 
+- [Create and configure projects](https://labelstud.io/guide/setup_project)
+- [Configure labeling interface](https://labelstud.io/guide/setup)
+- [Project settings](https://labelstud.io/guide/project_settings)
+
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
 
 <Warning>
 If you are modifying the labeling config for project that has in-progress work, note the following:
@@ -4147,7 +2887,7 @@ If you are modifying the labeling config for project that has in-progress work, 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -4274,7 +3014,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
+**control_weights:** `typing.Optional[typing.Dict[str, typing.Any]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
     
 </dd>
 </dl>
@@ -4322,19 +3062,19 @@ client.projects.update(
 <dl>
 <dd>
 
-
 Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
 <Note>
-Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*. 
+Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*.
 
-For example, if the label configuration has a *$text* variable, then each item in a data object must include a `text` field.
+For example, if the label configuration has a _$text_ variable, then each item in a data object must include a `text` field.
 </Note>
 
 There are three possible ways to import tasks with this endpoint:
 
 #### 1\. **POST with data**
+
 Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
 
 Update this example to specify your authorization token and Label Studio instance host, then run the following from
@@ -4346,6 +3086,7 @@ curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
 ```
 
 #### 2\. **POST with files**
+
 Send tasks as files. You can attach multiple files with different names.
 
 - **JSON**: text files in JavaScript object notation format
@@ -4362,6 +3103,7 @@ curl -H 'Authorization: Token abc123' \
 ```
 
 #### 3\. **POST with URL**
+
 You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
 
 ```bash
@@ -4385,7 +3127,7 @@ curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -4417,7 +3159,7 @@ client.projects.import_tasks(
 <dl>
 <dd>
 
-**request:** `typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**request:** `typing.Sequence[typing.Dict[str, typing.Any]]` 
     
 </dd>
 </dl>
@@ -4473,10 +3215,9 @@ client.projects.import_tasks(
 <dl>
 <dd>
 
-
 Determine whether the label configuration for a specific project is valid. For more information about setting up labeling configs, see [Configure labeling interface](https://labelstud.io/guide/setup) and our [Tags reference](https://labelstud.io/tags/).
 
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
 </dd>
 </dl>
 </dd>
@@ -4491,7 +3232,7 @@ The project ID can be found in the URL when viewing the project in Label Studio,
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -4543,8 +3284,8 @@ client.projects.validate_config(
 </dl>
 </details>
 
-## Tasks
-<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create_many_status</a>(...)</code></summary>
+## Ml
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4556,14 +3297,9 @@ client.projects.validate_config(
 <dl>
 <dd>
 
+List all configured Machine Learning (ML) backends for a specific project by ID. For more information about ML backends, see [Machine learning integration](https://labelstud.io/guide/ml).
 
-Get information about an async project import operation. This can be especially useful to monitor status, as large import jobs can take time. 
-
-You will need the project ID and the unique ID of the import operation. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
-
-The import ID is returned as part of the response when you call [Import tasks](import-tasks). 
+You will need to provide the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 </dd>
 </dl>
 </dd>
@@ -4578,7 +3314,2031 @@ The import ID is returned as part of the response when you call [Import tasks](i
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.ml.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add an ML backend to a project. For more information about what you need to configure when adding an ML backend, see [Connect the model to Label studio](https://labelstud.io/guide/ml#Connect-the-model-to-Label-Studio).
+
+<Note>If you are using Docker Compose, you may need to adjust your ML backend URL. See [localhost and Docker containers](https://labelstud.io/guide/ml#localhost-and-Docker-containers).</Note>
+
+<Note>If you are using files that are located in the cloud, local storage, or uploaded to Label Studio, you must configure your environment variables to allow the ML backend to interact with those files. See [Allow the ML backend to access Label Studio](https://labelstud.io/guide/ml#Allow-the-ML-backend-to-access-Label-Studio-data).</Note>
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.ml.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**url:** `typing.Optional[str]` — ML backend URL
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_interactive:** `typing.Optional[bool]` — Is interactive
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_method:** `typing.Optional[MlCreateRequestAuthMethod]` — Auth method
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**basic_auth_user:** `typing.Optional[str]` — Basic auth user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**basic_auth_pass:** `typing.Optional[str]` — Basic auth password
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extra_params:** `typing.Optional[typing.Dict[str, typing.Any]]` — Extra parameters
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**timeout:** `typing.Optional[int]` — Response model timeout
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details about a specific ML backend. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
+
+For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.ml.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this ml backend.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove an existing ML backend connection. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
+
+For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.ml.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this ml backend.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the ML backend parameters. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
+
+For more information, see [Machine learning integration](https://labelstud.io/guide/ml).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.ml.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this ml backend.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**url:** `typing.Optional[str]` — ML backend URL
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_interactive:** `typing.Optional[bool]` — Is interactive
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**auth_method:** `typing.Optional[MlUpdateRequestAuthMethod]` — Auth method
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**basic_auth_user:** `typing.Optional[str]` — Basic auth user
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**basic_auth_pass:** `typing.Optional[str]` — Basic auth password
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**extra_params:** `typing.Optional[typing.Dict[str, typing.Any]]` — Extra parameters
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**timeout:** `typing.Optional[int]` — Response model timeout
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">predict_interactive</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Enable interactive pre-annotations for a specific task.
+
+ML-assisted labeling with interactive pre-annotations works with image segmentation and object detection tasks using rectangles, ellipses, polygons, brush masks, and keypoints, as well as with HTML and text named entity recognition tasks. Your ML backend must support the type of labeling that you’re performing, recognize the input that you create, and be able to respond with the relevant output for a prediction. For more information, see [Interactive pre-annotations](https://labelstud.io/guide/ml.html#Interactive-pre-annotations).
+
+Before you can use interactive annotations, it must be enabled for you ML backend connection (`"is_interactive": true`).
+
+You will need the task ID and the ML backend connection ID. The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](../tasks/list). The ML backend connection ID is available via [List ML backends](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.ml.predict_interactive(
+    id=1,
+    task=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this ML backend.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task:** `int` — ID of task to annotate
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**context:** `typing.Optional[typing.Dict[str, typing.Any]]` — Context for ML model
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">train</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+After you connect a model to Label Studio as a machine learning backend and annotate at least one task, you can start training the model. Training logs appear in stdout and the console.
+
+For more information, see [Model training](https://labelstud.io/guide/ml.html#Model-training).
+
+You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.ml.train(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this ML backend.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_ground_truth:** `typing.Optional[bool]` — Whether to include ground truth annotations in training
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ml.<a href="src/label_studio_sdk/ml/client.py">list_model_versions</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get available versions of the model. You will need to specify an ID for the backend connection. You can find this using [List ML backends](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.ml.list_model_versions(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Predictions
+<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a list of all predictions. You can optionally filter these by task or by project. If you want to filter, you will need the project ID and/or task ID. Both of these can be found in the Label Studio URL when viewing a task, or you can use [List all projects](../projects/list) and [Get tasks list](../tasks/list).
+
+<Note>The terms "predictions" and pre-annotations" are used interchangeably.</Note>
+
+Predictions can be [imported directly into Label Studio](https://labelstud.io/guide/predictions) or [generated by a connected ML backend](https://labelstud.io/guide/ml.html#Pre-annotations-predictions).
+
+To import predictions via the API, see [Create prediction](create).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.predictions.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task:** `typing.Optional[int]` — Filter predictions by task ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Filter predictions by project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+If you have predictions generated for your dataset from a model, either as pre-annotated tasks or pre-labeled tasks, you can import the predictions with your dataset into Label Studio for review and correction.
+
+To import predicted labels into Label Studio, you must use the [Basic Label Studio JSON format](https://labelstud.io/guide/tasks#Basic-Label-Studio-JSON-format) and set up your tasks with the predictions JSON key. The Label Studio ML backend also outputs tasks in this format.
+
+#### JSON format for predictions
+
+Label Studio JSON format for pre-annotations must contain two sections:
+
+- A data object which references the source of the data that the pre-annotations apply to. This can be a URL to an audio file, a pre-signed cloud storage link to an image, plain text, a reference to a CSV file stored in Label Studio, or something else.
+- A predictions array that contains the pre-annotation results for the different types of labeling. See how to add results to the predictions array.
+
+For more information, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations)
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.predictions.create(
+    result=[
+        {
+            "original_width": 1920,
+            "original_height": 1080,
+            "image_rotation": 0,
+            "from_name": "bboxes",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "value": {
+                "x": 20,
+                "y": 30,
+                "width": 50,
+                "height": 60,
+                "rotation": 0,
+                "values": {"rectanglelabels": ["Person"]},
+            },
+        }
+    ],
+    score=0.95,
+    model_version="yolo-v8",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task:** `typing.Optional[int]` — Task ID for which the prediction is created
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**score:** `typing.Optional[float]` — Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get details about a specific prediction by its ID. To find the prediction ID, use [List predictions](list).
+
+For information about the prediction format, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.predictions.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Prediction ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a prediction. To find the prediction ID, use [List predictions](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.predictions.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Prediction ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.predictions.<a href="src/label_studio_sdk/predictions/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a prediction. To find the prediction ID, use [List predictions](list).
+
+For information about the prediction format, see [the JSON format reference in the Label Studio documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.predictions.update(
+    id=1,
+    result=[
+        {
+            "original_width": 1920,
+            "original_height": 1080,
+            "image_rotation": 0,
+            "from_name": "bboxes",
+            "to_name": "image",
+            "type": "rectanglelabels",
+            "value": {
+                "x": 20,
+                "y": 30,
+                "width": 50,
+                "height": 60,
+                "rotation": 0,
+                "values": {"rectanglelabels": ["Person"]},
+            },
+        }
+    ],
+    score=0.95,
+    model_version="yolo-v8",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Prediction ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task:** `typing.Optional[int]` — Task ID for which the prediction is created
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**result:** `typing.Optional[typing.Sequence[typing.Dict[str, typing.Any]]]` — Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**score:** `typing.Optional[float]` — Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_version:** `typing.Optional[str]` — Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Projects Exports
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">create_export</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+<Note>If you have a large project it's recommended to use export snapshots, this easy export endpoint might have timeouts.</Note>
+Export annotated tasks as a file in a specific format.
+For example, to export JSON annotations for a project to a file called `annotations.json`,
+run the following from the command line:
+
+```bash
+curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+```
+
+To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+
+```bash
+curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+```
+
+To export specific tasks with IDs of 123 and 345, run the following from the command line:
+
+```bash
+curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
+```
+
+You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.exports.create_export(
+    id=1,
+    export_type="string",
+    download_all_tasks="string",
+    download_resources=True,
+    ids=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**export_type:** `typing.Optional[str]` — Selected export format (JSON by default)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**download_all_tasks:** `typing.Optional[str]` — If true, download all tasks regardless of status. If false, download only annotated tasks.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**download_resources:** `typing.Optional[bool]` — If true, download all resource files such as images, audio, and others relevant to the tasks.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` — Specify a list of task IDs to retrieve only the details for those tasks.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">list_formats</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Before exporting annotations, you can check with formats are supported by the specified project. For more information about export formats, see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
+
+You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.exports.list_formats(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of export file (snapshots) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+
+Included in the response is information about each snapshot, such as who created it and what format it is in.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.exports.list(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new export request to start a background task and generate an export file (snapshot) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+
+A snapshot is a static export of your project's data and annotations at a specific point in time. It captures the current state of your tasks, annotations, and other relevant data, allowing you to download and review them later. Snapshots are particularly useful for large projects as they help avoid timeouts during export operations by processing the data asynchronously.
+
+For more information, see the [Label Studio documentation on exporting annotations](https://labelstud.io/guide/export.html).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.exports.create(
+    id_=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id_:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[UserSimple]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at:** `typing.Optional[dt.datetime]` — Creation time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**finished_at:** `typing.Optional[dt.datetime]` — Complete or fail time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[ExportCreateStatus]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**md5:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**counters:** `typing.Optional[typing.Dict[str, typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**converted_formats:** `typing.Optional[typing.Sequence[ConvertedFormat]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_filter_options:** `typing.Optional[TaskFilterOptions]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation_filter_options:** `typing.Optional[AnnotationFilterOptions]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**serialization_options:** `typing.Optional[SerializationOptions]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve information about a specific export file (snapshot).
+
+You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).
+
+You will also need the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.exports.get(
+    id=1,
+    export_pk="export_pk",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**export_pk:** `str` — Primary key identifying the export file.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an export file by specified export ID.
+
+You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.exports.delete(
+    id=1,
+    export_pk="export_pk",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**export_pk:** `str` — Primary key identifying the export file.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">convert</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+You can use this to convert an export snapshot into the selected format.
+
+To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
+
+You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
+
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.exports.convert(
+    id=1,
+    export_pk="export_pk",
+    export_type="export_type",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**export_pk:** `str` — Primary key identifying the export file.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**export_type:** `str` — Export file format.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">download</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Download an export snapshot as a file in a specified format. To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio).
+
+You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
+
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.exports.download(
+    id=1,
+    export_pk="export_pk",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**export_pk:** `str` — Primary key identifying the export file.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**export_type:** `typing.Optional[str]` — Selected export format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Tasks
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create_many_status</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get information about an async project import operation. This can be especially useful to monitor status, as large import jobs can take time.
+
+You will need the project ID and the unique ID of the import operation.
+
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+The import ID is returned as part of the response when you call [Import tasks](import-tasks).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -4642,10 +5402,9 @@ client.tasks.create_many_status(
 <dl>
 <dd>
 
-
 Delete all tasks from a specific project.
 
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 </dd>
 </dl>
 </dd>
@@ -4660,7 +5419,7 @@ The project ID can be found in the URL when viewing the project in Label Studio,
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -4715,10 +5474,9 @@ client.tasks.delete_all_tasks(
 <dl>
 <dd>
 
+Retrieve a list of tasks.
 
-Retrieve a list of tasks. 
-
-You can use the query parameters to filter the list by project and/or view (a tab within the Data Manager). You can also optionally add pagination to make the response easier to parse. 
+You can use the query parameters to filter the list by project and/or view (a tab within the Data Manager). You can also optionally add pagination to make the response easier to parse.
 
 The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). The view ID can be found using [List views](../views/list).
 </dd>
@@ -4735,7 +5493,7 @@ The project ID can be found in the URL when viewing the project in Label Studio,
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -4829,10 +5587,10 @@ for page in response.iter_pages():
 
 Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check [Data Manager > Create View > see `data` field](#tag/Data-Manager/operation/api_dm_views_create) for more details about filters, selectedItems and ordering.
 
-* **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/>                   Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-* **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/>                   Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-* **ordering**: list of fields to order by. Currently, ordering is supported by only one parameter. <br/>
-                   Example: `["completed_at"]`
+- **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/> Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+- **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/> Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+- **ordering**: list of fields to order by. Currently, ordering is supported by only one parameter. <br/>
+  Example: `["completed_at"]`
     
 </dd>
 </dl>
@@ -4864,12 +5622,11 @@ Additional query to filter tasks. It must be JSON encoded string of dict contain
 <dl>
 <dd>
 
-
 Create a new labeling task in Label Studio.
 
-The data you provide depends on your labeling config and data type. 
+The data you provide depends on your labeling config and data type.
 
-You will also need to provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+You will also need to provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 </dd>
 </dl>
 </dd>
@@ -4884,7 +5641,7 @@ You will also need to provide a project ID. The project ID can be found in the U
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -4908,7 +5665,7 @@ client.tasks.create(
 <dl>
 <dd>
 
-**data:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Task data dictionary with arbitrary keys and values
+**data:** `typing.Optional[typing.Dict[str, typing.Any]]` — Task data dictionary with arbitrary keys and values
     
 </dd>
 </dl>
@@ -4948,9 +5705,8 @@ client.tasks.create(
 <dl>
 <dd>
 
-
 Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
-The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list). 
+The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 </dd>
 </dl>
 </dd>
@@ -4965,7 +5721,7 @@ The task ID is available from the Label Studio URL when viewing the task, or you
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -5020,10 +5776,9 @@ client.tasks.get(
 <dl>
 <dd>
 
+Delete a task in Label Studio.
 
-Delete a task in Label Studio. 
-
-You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list). 
+You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
 <Warning>This action cannot be undone.</Warning>
 </dd>
@@ -5040,7 +5795,7 @@ You will need the task ID. This is available from the Label Studio URL when view
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -5095,10 +5850,9 @@ client.tasks.delete(
 <dl>
 <dd>
 
-
 Update the attributes of an existing labeling task.
 
-You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list). 
+You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 </dd>
 </dl>
 </dd>
@@ -5113,7 +5867,7 @@ You will need the task ID. This is available from the Label Studio URL when view
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -5146,7 +5900,7 @@ client.tasks.update(
 <dl>
 <dd>
 
-**data:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Task data dictionary with arbitrary keys and values
+**data:** `typing.Optional[typing.Dict[str, typing.Any]]` — Task data dictionary with arbitrary keys and values
     
 </dd>
 </dl>
@@ -5202,7 +5956,7 @@ Retrieve a list of the import storages types.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -5219,6 +5973,769 @@ client.import_storage.list_types()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ImportStorage Azure
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure import (source) storage connections for a specific project.
+
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.azure.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new source storage connection to Microsoft Azure Blob storage.
+
+For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation.
+
+<Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
+
+<Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.azure.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_key:** `typing.Optional[str]` — Azure Blob account key
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">validate</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific Azure import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.azure.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_key:** `typing.Optional[str]` — Azure Blob account key
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.azure.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this azure blob import storage.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
+
+If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.azure.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this azure blob import storage.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.azure.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this azure blob import storage.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign URLs for direct download
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**container:** `typing.Optional[str]` — Azure blob container
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — Azure blob prefix name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_name:** `typing.Optional[str]` — Azure Blob account name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**account_key:** `typing.Optional[str]` — Azure Blob account key
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">sync</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sync tasks from an Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
+
+<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.azure.sync(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Storage ID
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -5263,7 +6780,7 @@ Retrieve a list of the export storages types.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -5296,2757 +6813,6 @@ client.export_storage.list_types()
 </dl>
 </details>
 
-## Webhooks
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-List all webhooks set up for your organization. 
-
-Webhooks in Label Studio let you set up integrations that subscribe to certain events that occur inside Label Studio. When an event is triggered, Label Studio sends an HTTP POST request to the configured webhook URL. 
-
-For more information, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks). 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[str]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Create a webhook. 
-Label Studio provides several out-of-the box webhook events, which you can find listed here: [Available Label Studio webhooks](https://labelstud.io/guide/webhooks#Available-Label-Studio-webhooks). 
-
-If you want to create your own custom webhook, refer to [Create custom events for webhooks in Label Studio](https://labelstud.io/guide/webhook_create).
-
-<Note>Label Studio makes two main types of events available to integrate with webhooks: project-level task events and organization events. If you want to use organization-level webhook events, you will need to set `LABEL_STUDIO_ALLOW_ORGANIZATION_WEBHOOKS=true`. </Note>
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.create(
-    url="url",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**url:** `str` — URL of webhook
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**send_payload:** `typing.Optional[bool]` — If value is False send only action
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**headers:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Key Value Json of headers
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_active:** `typing.Optional[bool]` — If value is False the webhook is disabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**actions:** `typing.Optional[typing.Sequence[WebhookActionsItem]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at:** `typing.Optional[dt.datetime]` — Creation time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at:** `typing.Optional[dt.datetime]` — Last update time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">info</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get descriptions of all available webhook actions to set up webhooks. For more information, see the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.info()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**organization_only:** `typing.Optional[bool]` — organization-only or not
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get information about a specific webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
-
-For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Delete a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
-
-For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Update a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
-
-For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.update(
-    id_=1,
-    url="url",
-    webhook_serializer_for_update_url="url",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id_:** `int` — A unique integer value identifying this webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**url:** `str` — URL of webhook
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook_serializer_for_update_url:** `str` — URL of webhook
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**send_payload:** `typing.Optional[bool]` — If value is False send only action
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**headers:** `typing.Optional[str]` — Key Value Json of headers
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_active:** `typing.Optional[bool]` — If value is False the webhook is disabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**actions:** `typing.Optional[
-    typing.Union[
-        WebhooksUpdateRequestActionsItem,
-        typing.Sequence[WebhooksUpdateRequestActionsItem],
-    ]
-]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook_serializer_for_update_send_payload:** `typing.Optional[bool]` — If value is False send only action
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook_serializer_for_update_send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook_serializer_for_update_headers:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Key Value Json of headers
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook_serializer_for_update_is_active:** `typing.Optional[bool]` — If value is False the webhook is disabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**webhook_serializer_for_update_actions:** `typing.Optional[typing.Sequence[WebhookSerializerForUpdateActionsItem]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at:** `typing.Optional[dt.datetime]` — Creation time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at:** `typing.Optional[dt.datetime]` — Last update time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Prompts
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">list</a>()</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a list of prompts.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new prompt.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.create(
-    title="title",
-    input_fields=["input_fields"],
-    output_classes=["output_classes"],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**title:** `str` — Title of the prompt
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_fields:** `typing.Sequence[str]` — List of input fields
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**output_classes:** `typing.Sequence[str]` — List of output classes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Description of the prompt
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[PromptCreatedBy]` — User ID of the creator of the prompt
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at:** `typing.Optional[dt.datetime]` — Date and time the prompt was created
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at:** `typing.Optional[dt.datetime]` — Date and time the prompt was last updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[PromptOrganization]` — Organization ID of the prompt
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` — List of associated projects IDs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**skill_name:** `typing.Optional[str]` — Name of the skill
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a prompt by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Prompt ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a prompt by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Prompt ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a prompt by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.update(
-    id=1,
-    title="title",
-    input_fields=["input_fields"],
-    output_classes=["output_classes"],
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Prompt ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `str` — Title of the prompt
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**input_fields:** `typing.Sequence[str]` — List of input fields
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**output_classes:** `typing.Sequence[str]` — List of output classes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Description of the prompt
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[PromptCreatedBy]` — User ID of the creator of the prompt
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at:** `typing.Optional[dt.datetime]` — Date and time the prompt was created
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at:** `typing.Optional[dt.datetime]` — Date and time the prompt was last updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[PromptOrganization]` — Organization ID of the prompt
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` — List of associated projects IDs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**skill_name:** `typing.Optional[str]` — Name of the skill
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_predictions</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new batch prediction.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.batch_predictions()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**modelrun_id:** `typing.Optional[int]` — Model Run ID to associate the prediction with
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**results:** `typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_failed_predictions</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new batch of failed predictions.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.batch_failed_predictions()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**modelrun_id:** `typing.Optional[int]` — Model Run ID where the failed predictions came from
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**failed_predictions:** `typing.Optional[
-    typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
-]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ModelProviders
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">list</a>()</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get all model provider connections created by the user in the current organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.model_providers.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a new model provider connection.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.model_providers.create(
-    provider="OpenAI",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**provider:** `ModelProviderConnectionProvider` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**api_key:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**deployment_name:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**endpoint:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `typing.Optional[ModelProviderConnectionScope]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[ModelProviderConnectionOrganization]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[ModelProviderConnectionCreatedBy]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at:** `typing.Optional[dt.datetime]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at:** `typing.Optional[dt.datetime]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_internal:** `typing.Optional[bool]` — Whether the model provider connection is internal, not visible to the user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_limit:** `typing.Optional[float]` — Budget limit for the model provider connection (null if unlimited)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_last_reset_date:** `typing.Optional[dt.datetime]` — Date and time the budget was last reset
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_reset_period:** `typing.Optional[ModelProviderConnectionBudgetResetPeriod]` — Budget reset period for the model provider connection (null if not reset)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_total_spent:** `typing.Optional[float]` — Tracked total budget spent for the given provider connection within the current budget period
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a model provider connection by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.model_providers.get(
-    pk=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**pk:** `int` — Model Provider Connection ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a model provider connection by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.model_providers.delete(
-    pk=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**pk:** `int` — Model Provider Connection ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a model provider connection by ID.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.model_providers.update(
-    pk=1,
-    provider="OpenAI",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**pk:** `int` — Model Provider Connection ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provider:** `ModelProviderConnectionProvider` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**api_key:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**deployment_name:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**endpoint:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `typing.Optional[ModelProviderConnectionScope]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[ModelProviderConnectionOrganization]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_by:** `typing.Optional[ModelProviderConnectionCreatedBy]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_at:** `typing.Optional[dt.datetime]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**updated_at:** `typing.Optional[dt.datetime]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_internal:** `typing.Optional[bool]` — Whether the model provider connection is internal, not visible to the user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_limit:** `typing.Optional[float]` — Budget limit for the model provider connection (null if unlimited)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_last_reset_date:** `typing.Optional[dt.datetime]` — Date and time the budget was last reset
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_reset_period:** `typing.Optional[ModelProviderConnectionBudgetResetPeriod]` — Budget reset period for the model provider connection (null if not reset)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_total_spent:** `typing.Optional[float]` — Tracked total budget spent for the given provider connection within the current budget period
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Comments
-<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get a list of comments for a specific project.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.comments.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**expand_created_by:** `typing.Optional[bool]` — Expand the created_by field with object instead of ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**annotation:** `typing.Optional[int]` — Annotation ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Create a new comment.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.comments.create()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**annotation:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_resolved:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get a specific comment.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.comments.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Comment ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Delete a specific comment.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.comments.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Comment ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Update a specific comment.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.comments.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Comment ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**annotation:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_resolved:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Workspaces
-<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">list</a>()</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-List all workspaces for your organization. 
-
-Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. 
-
-For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.workspaces.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Create a new workspace.
-
-Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
-
-For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.workspaces.create()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Workspace title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Workspace description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_public:** `typing.Optional[bool]` — Is workspace public
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_personal:** `typing.Optional[bool]` — Is workspace personal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**color:** `typing.Optional[str]` — Workspace color in HEX format
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_archived:** `typing.Optional[bool]` — Is workspace archived
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get information about a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.workspaces.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Workspace ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Delete a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.workspaces.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Workspace ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Update a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.workspaces.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Workspace ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Workspace title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Workspace description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_public:** `typing.Optional[bool]` — Is workspace public
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_personal:** `typing.Optional[bool]` — Is workspace personal
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**color:** `typing.Optional[str]` — Workspace color in HEX format
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_archived:** `typing.Optional[bool]` — Is workspace archived
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## ExportStorage Azure
 <details><summary><code>client.export_storage.azure.<a href="src/label_studio_sdk/export_storage/azure/client.py">list</a>(...)</code></summary>
 <dl>
@@ -8060,10 +6826,9 @@ client.workspaces.update(
 <dl>
 <dd>
 
+You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure export (target) storage connections for a specific project.
 
-You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure export (target) storage connections for a specific project. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -8080,7 +6845,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -8133,10 +6898,9 @@ client.export_storage.azure.list()
 <dl>
 <dd>
 
+Create a new target storage connection to Microsoft Azure Blob storage.
 
-Create a new target storage connection to Microsoft Azure Blob storage. 
-
-For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation. 
+For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation.
 
 <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
 </dd>
@@ -8153,7 +6917,7 @@ For information about the required fields and prerequisites, see [Microsoft Azur
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -8262,7 +7026,6 @@ client.export_storage.azure.create()
 <dl>
 <dd>
 
-
 Validate a specific Azure export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 </dd>
 </dl>
@@ -8278,7 +7041,7 @@ Validate a specific Azure export storage connection. This is useful to ensure th
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -8395,8 +7158,7 @@ client.export_storage.azure.validate()
 <dl>
 <dd>
 
-
-Get a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Get a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -8413,7 +7175,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -8468,10 +7230,9 @@ client.export_storage.azure.get(
 <dl>
 <dd>
 
+Delete a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
-Delete a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
-
-Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 </dd>
 </dl>
 </dd>
@@ -8486,7 +7247,7 @@ Deleting an export/target storage connection does not affect tasks with synced d
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -8541,8 +7302,7 @@ client.export_storage.azure.delete(
 <dl>
 <dd>
 
-
-Update a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Update a specific Azure export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -8559,7 +7319,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -8678,12 +7438,11 @@ client.export_storage.azure.update(
 <dl>
 <dd>
 
-
-Sync tasks to an Azure export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Sync tasks to an Azure export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
 
-<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 </dd>
 </dl>
 </dd>
@@ -8698,7 +7457,7 @@ Sync operations with external containers only go one way. They either create tas
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -8754,10 +7513,9 @@ client.export_storage.azure.sync(
 <dl>
 <dd>
 
+You can connect your Google Cloud Storage bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all GCS export (target) storage connections for a specific project.
 
-You can connect your Google Cloud Storage bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all GCS export (target) storage connections for a specific project. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -8774,7 +7532,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -8827,10 +7585,9 @@ client.export_storage.gcs.list()
 <dl>
 <dd>
 
+Create a new target storage connection to Google Cloud Storage.
 
-Create a new target storage connection to Google Cloud Storage. 
-
-For information about the required fields and prerequisites, see [Google Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage) in the Label Studio documentation. 
+For information about the required fields and prerequisites, see [Google Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage) in the Label Studio documentation.
 
 <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
 </dd>
@@ -8847,7 +7604,7 @@ For information about the required fields and prerequisites, see [Google Cloud S
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -8956,7 +7713,6 @@ client.export_storage.gcs.create()
 <dl>
 <dd>
 
-
 Validate a specific GCS export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 </dd>
 </dl>
@@ -8972,7 +7728,7 @@ Validate a specific GCS export storage connection. This is useful to ensure that
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -9089,8 +7845,7 @@ client.export_storage.gcs.validate()
 <dl>
 <dd>
 
-
-Get a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Get a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -9107,7 +7862,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -9162,10 +7917,9 @@ client.export_storage.gcs.get(
 <dl>
 <dd>
 
+Delete a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
-Delete a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
-
-Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 </dd>
 </dl>
 </dd>
@@ -9180,7 +7934,7 @@ Deleting an export/target storage connection does not affect tasks with synced d
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -9235,8 +7989,7 @@ client.export_storage.gcs.delete(
 <dl>
 <dd>
 
-
-Update a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Update a specific GCS export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -9253,7 +8006,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -9372,12 +8125,11 @@ client.export_storage.gcs.update(
 <dl>
 <dd>
 
-
-Sync tasks to a GCS export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Sync tasks to a GCS export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
 
-<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 </dd>
 </dl>
 </dd>
@@ -9392,7 +8144,7 @@ Sync operations with external buckets only go one way. They either create tasks 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -9448,10 +8200,9 @@ client.export_storage.gcs.sync(
 <dl>
 <dd>
 
+You can connect a local file directory to Label Studio as a source storage or target storage. Use this API request to get a list of all local file export (target) storage connections for a specific project.
 
-You can connect a local file directory to Label Studio as a source storage or target storage. Use this API request to get a list of all local file export (target) storage connections for a specific project. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -9468,7 +8219,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -9521,10 +8272,9 @@ client.export_storage.local.list()
 <dl>
 <dd>
 
+Create a new target storage connection to a local file directory.
 
-Create a new target storage connection to a local file directory. 
-
-For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage) in the Label Studio documentation. 
+For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage) in the Label Studio documentation.
 
 <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
 </dd>
@@ -9541,7 +8291,7 @@ For information about the required fields and prerequisites, see [Local storage]
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -9634,7 +8384,6 @@ client.export_storage.local.create()
 <dl>
 <dd>
 
-
 Validate a specific local file export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 </dd>
 </dl>
@@ -9650,7 +8399,7 @@ Validate a specific local file export storage connection. This is useful to ensu
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -9751,8 +8500,7 @@ client.export_storage.local.validate()
 <dl>
 <dd>
 
-
-Get a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Get a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -9769,7 +8517,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -9824,10 +8572,9 @@ client.export_storage.local.get(
 <dl>
 <dd>
 
+Delete a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
-Delete a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
-
-Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 </dd>
 </dl>
 </dd>
@@ -9842,7 +8589,7 @@ Deleting an export/target storage connection does not affect tasks with synced d
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -9897,8 +8644,7 @@ client.export_storage.local.delete(
 <dl>
 <dd>
 
-
-Update a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Update a specific local file export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -9915,7 +8661,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -10018,12 +8764,11 @@ client.export_storage.local.update(
 <dl>
 <dd>
 
-
-Sync tasks to an local file export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Sync tasks to an local file export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 Sync operations with external local file directories only go one way. They either create tasks from objects in the directory (source/import storage) or push annotations to the output directory (export/target storage). Changing something on the local file side doesn’t guarantee consistency in results.
 
-<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 </dd>
 </dl>
 </dd>
@@ -10038,7 +8783,7 @@ Sync operations with external local file directories only go one way. They eithe
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -10094,10 +8839,9 @@ client.export_storage.local.sync(
 <dl>
 <dd>
 
+You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis export (target) storage connections for a specific project.
 
-You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis export (target) storage connections for a specific project. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -10114,7 +8858,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -10167,10 +8911,9 @@ client.export_storage.redis.list()
 <dl>
 <dd>
 
+Create a new target storage connection to Redis.
 
-Create a new target storage connection to Redis. 
-
-For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation. 
+For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation.
 
 <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
 </dd>
@@ -10187,7 +8930,7 @@ For information about the required fields and prerequisites, see [Redis database
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -10304,7 +9047,6 @@ client.export_storage.redis.create()
 <dl>
 <dd>
 
-
 Validate a specific Redis export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 </dd>
 </dl>
@@ -10320,7 +9062,7 @@ Validate a specific Redis export storage connection. This is useful to ensure th
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -10445,8 +9187,7 @@ client.export_storage.redis.validate()
 <dl>
 <dd>
 
-
-Get a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Get a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -10463,7 +9204,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -10518,10 +9259,9 @@ client.export_storage.redis.get(
 <dl>
 <dd>
 
+Delete a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
-Delete a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
-
-Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 </dd>
 </dl>
 </dd>
@@ -10536,7 +9276,7 @@ Deleting an export/target storage connection does not affect tasks with synced d
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -10591,8 +9331,7 @@ client.export_storage.redis.delete(
 <dl>
 <dd>
 
-
-Update a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Update a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -10609,7 +9348,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -10736,12 +9475,11 @@ client.export_storage.redis.update(
 <dl>
 <dd>
 
-
-Sync tasks to an Redis export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Sync tasks to an Redis export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.
 
-<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 </dd>
 </dl>
 </dd>
@@ -10756,7 +9494,7 @@ Sync operations with external databases only go one way. They either create task
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -10812,10 +9550,9 @@ client.export_storage.redis.sync(
 <dl>
 <dd>
 
+You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all S3 export (target) storage connections for a specific project.
 
-You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all S3 export (target) storage connections for a specific project. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -10832,7 +9569,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -10885,10 +9622,9 @@ client.export_storage.s3.list()
 <dl>
 <dd>
 
+Create a new target storage connection to S3 storage.
 
-Create a new target storage connection to S3 storage. 
-
-For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation. 
+For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
 
 <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
 </dd>
@@ -10905,7 +9641,7 @@ For information about the required fields and prerequisites, see [Amazon S3](htt
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -11046,7 +9782,6 @@ client.export_storage.s3.create()
 <dl>
 <dd>
 
-
 Validate a specific S3 export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
 </dd>
 </dl>
@@ -11062,7 +9797,7 @@ Validate a specific S3 export storage connection. This is useful to ensure that 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -11211,8 +9946,7 @@ client.export_storage.s3.validate()
 <dl>
 <dd>
 
-
-Get a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Get a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -11229,7 +9963,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -11284,10 +10018,9 @@ client.export_storage.s3.get(
 <dl>
 <dd>
 
+Delete a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
-Delete a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
-
-Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 </dd>
 </dl>
 </dd>
@@ -11302,7 +10035,7 @@ Deleting an export/target storage connection does not affect tasks with synced d
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -11357,8 +10090,7 @@ client.export_storage.s3.delete(
 <dl>
 <dd>
 
-
-Update a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Update a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -11375,7 +10107,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -11526,12 +10258,11 @@ client.export_storage.s3.update(
 <dl>
 <dd>
 
-
-Sync tasks to an S3 export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list). 
+Sync tasks to an S3 export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
 
 Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
 
-<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 </dd>
 </dl>
 </dd>
@@ -11546,7 +10277,7 @@ Sync operations with external buckets only go one way. They either create tasks 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -11589,1427 +10320,6 @@ client.export_storage.s3.sync(
 </dl>
 </details>
 
-## ExportStorage S3S
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all S3 export (target) storage connections for a specific project. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
-
-For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3s.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Create a new target storage connection to a S3 bucket with IAM role access.
-
-For information about the required fields and prerequisites, see [Amazon S3](https://docs.humansignal.com/guide/storage#Set-up-an-S3-connection-with-IAM-role-access) in the Label Studio documentation.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3s.create()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS External ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `typing.Optional[str]` — AWS Role ARN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3s.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Export storage ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Delete a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3s.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Export storage ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Update a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3s.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Export storage ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS External ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `typing.Optional[str]` — AWS Role ARN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">validate</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Validate a specific S3 export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3s.validate()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS External ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `typing.Optional[str]` — AWS Role ARN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ImportStorage Azure
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-You can connect your Microsoft Azure Blob storage container to Label Studio as a source storage or target storage. Use this API request to get a list of all Azure import (source) storage connections for a specific project. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
-
-For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Create a new source storage connection to Microsoft Azure Blob storage. 
-
-For information about the required fields and prerequisites, see [Microsoft Azure Blob storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage) in the Label Studio documentation. 
-
-<Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
-
-<Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.create()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign URLs for direct download
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_key:** `typing.Optional[str]` — Azure Blob account key
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">validate</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Validate a specific Azure import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.validate()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `typing.Optional[int]` — Storage ID. If set, storage with specified ID will be updated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign URLs for direct download
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_key:** `typing.Optional[str]` — Azure Blob account key
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
-
-For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this azure blob import storage.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Delete a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
-
-Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-
-If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this azure blob import storage.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Update a specific Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
-
-For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this azure blob import storage.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign URLs for direct download
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_key:** `typing.Optional[str]` — Azure Blob account key
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">sync</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Sync tasks from an Azure import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
-
-Sync operations with external containers only go one way. They either create tasks from objects in the container (source/import storage) or push annotations to the output container (export/target storage). Changing something on the Microsoft side doesn’t guarantee consistency in results.
-
-<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.sync(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Storage ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## ImportStorage Gcs
 <details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">list</a>(...)</code></summary>
 <dl>
@@ -13023,10 +10333,9 @@ client.import_storage.azure.sync(
 <dl>
 <dd>
 
+You can connect your Google Cloud Storage bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project.
 
-You can connect your Google Cloud Storage bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -13043,7 +10352,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -13096,10 +10405,9 @@ client.import_storage.gcs.list()
 <dl>
 <dd>
 
+Create a new source storage connection to a Google Cloud Storage bucket.
 
-Create a new source storage connection to a Google Cloud Storage bucket. 
-
-For information about the required fields and prerequisites, see [Google Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage) in the Label Studio documentation. 
+For information about the required fields and prerequisites, see [Google Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage) in the Label Studio documentation.
 
 <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
 
@@ -13118,7 +10426,7 @@ For information about the required fields and prerequisites, see [Google Cloud S
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -13251,7 +10559,6 @@ client.import_storage.gcs.create()
 <dl>
 <dd>
 
-
 Validate a specific GCS import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 </dd>
 </dl>
@@ -13267,7 +10574,7 @@ Validate a specific GCS import storage connection. This is useful to ensure that
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -13408,8 +10715,7 @@ client.import_storage.gcs.validate()
 <dl>
 <dd>
 
-
-Get a specific GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Get a specific GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -13426,7 +10732,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -13481,12 +10787,11 @@ client.import_storage.gcs.get(
 <dl>
 <dd>
 
-
-Delete a specific GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Delete a specific GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
 
-If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 </dd>
 </dl>
 </dd>
@@ -13501,7 +10806,7 @@ If you want to remove the tasks that were synced from the external storage, you 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -13556,8 +10861,7 @@ client.import_storage.gcs.delete(
 <dl>
 <dd>
 
-
-Update a specific GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Update a specific GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -13574,7 +10878,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -13717,12 +11021,11 @@ client.import_storage.gcs.update(
 <dl>
 <dd>
 
-
-Sync tasks from a GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Sync tasks from a GCS import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
 
-<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 </dd>
 </dl>
 </dd>
@@ -13737,7 +11040,7 @@ Sync operations with external buckets only go one way. They either create tasks 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -13793,10 +11096,9 @@ client.import_storage.gcs.sync(
 <dl>
 <dd>
 
+If you have local files that you want to add to Label Studio from a specific directory, you can set up a specific local directory on the machine where LS is running as source or target storage. Use this API request to get a list of all local file import (source) storage connections for a specific project.
 
-If you have local files that you want to add to Label Studio from a specific directory, you can set up a specific local directory on the machine where LS is running as source or target storage. Use this API request to get a list of all local file import (source) storage connections for a specific project. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -13813,7 +11115,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -13866,10 +11168,9 @@ client.import_storage.local.list()
 <dl>
 <dd>
 
+Create a new source storage connection to a local file directory.
 
-Create a new source storage connection to a local file directory. 
-
-For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage) in the Label Studio documentation. 
+For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage) in the Label Studio documentation.
 
 <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
 </dd>
@@ -13886,7 +11187,7 @@ For information about the required fields and prerequisites, see [Local storage]
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -13979,7 +11280,6 @@ client.import_storage.local.create()
 <dl>
 <dd>
 
-
 Validate a specific local file import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 </dd>
 </dl>
@@ -13995,7 +11295,7 @@ Validate a specific local file import storage connection. This is useful to ensu
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -14096,8 +11396,7 @@ client.import_storage.local.validate()
 <dl>
 <dd>
 
-
-Get a specific local file import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Get a specific local file import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -14114,7 +11413,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -14169,12 +11468,11 @@ client.import_storage.local.get(
 <dl>
 <dd>
 
-
-Delete a specific local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Delete a specific local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
 
-If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 </dd>
 </dl>
 </dd>
@@ -14189,7 +11487,7 @@ If you want to remove the tasks that were synced from the external storage, you 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -14244,8 +11542,7 @@ client.import_storage.local.delete(
 <dl>
 <dd>
 
-
-Update a specific local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Update a specific local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -14262,7 +11559,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -14365,12 +11662,11 @@ client.import_storage.local.update(
 <dl>
 <dd>
 
-
-Sync tasks from a local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Sync tasks from a local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 Sync operations with external sources only go one way. They either create tasks from objects in the source directory (source/import storage) or push annotations to the output directory (export/target storage). Changing something on the local file side doesn’t guarantee consistency in results.
 
-<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 </dd>
 </dl>
 </dd>
@@ -14385,7 +11681,7 @@ Sync operations with external sources only go one way. They either create tasks 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -14441,10 +11737,9 @@ client.import_storage.local.sync(
 <dl>
 <dd>
 
+You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis import (source) storage connections for a specific project.
 
-You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis import (source) storage connections for a specific project. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -14461,7 +11756,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -14514,10 +11809,9 @@ client.import_storage.redis.list()
 <dl>
 <dd>
 
+Create a new source storage connection to a Redis database.
 
-Create a new source storage connection to a Redis database. 
-
-For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation. 
+For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation.
 
 <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
 </dd>
@@ -14534,7 +11828,7 @@ For information about the required fields and prerequisites, see [Redis database
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -14651,7 +11945,6 @@ client.import_storage.redis.create()
 <dl>
 <dd>
 
-
 Validate a specific Redis import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 </dd>
 </dl>
@@ -14667,7 +11960,7 @@ Validate a specific Redis import storage connection. This is useful to ensure th
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -14792,8 +12085,7 @@ client.import_storage.redis.validate()
 <dl>
 <dd>
 
-
-Get a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Get a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -14810,7 +12102,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -14865,12 +12157,11 @@ client.import_storage.redis.get(
 <dl>
 <dd>
 
-
-Delete a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Delete a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
 
-If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 </dd>
 </dl>
 </dd>
@@ -14885,7 +12176,7 @@ If you want to remove the tasks that were synced from the external storage, you 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -14940,8 +12231,7 @@ client.import_storage.redis.delete(
 <dl>
 <dd>
 
-
-Update a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Update a specific Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -14958,7 +12248,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -15085,12 +12375,11 @@ client.import_storage.redis.update(
 <dl>
 <dd>
 
-
-Sync tasks from a Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Sync tasks from a Redis import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.
 
-<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note> 
+<Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
 </dd>
 </dl>
 </dd>
@@ -15105,7 +12394,7 @@ Sync operations with external databases only go one way. They either create task
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -15161,10 +12450,9 @@ client.import_storage.redis.sync(
 <dl>
 <dd>
 
+You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project.
 
-You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project. 
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -15181,7 +12469,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -15234,10 +12522,9 @@ client.import_storage.s3.list()
 <dl>
 <dd>
 
+Create a new source storage connection to a S3 bucket.
 
-Create a new source storage connection to a S3 bucket. 
-
-For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation. 
+For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
 
 <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
 
@@ -15256,7 +12543,7 @@ For information about the required fields and prerequisites, see [Amazon S3](htt
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -15429,7 +12716,6 @@ client.import_storage.s3.create()
 <dl>
 <dd>
 
-
 Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
 </dd>
 </dl>
@@ -15445,7 +12731,7 @@ Validate a specific S3 import storage connection. This is useful to ensure that 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -15626,8 +12912,7 @@ client.import_storage.s3.validate()
 <dl>
 <dd>
 
-
-Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -15644,7 +12929,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -15699,12 +12984,11 @@ client.import_storage.s3.get(
 <dl>
 <dd>
 
-
-Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
 
-If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
 </dd>
 </dl>
 </dd>
@@ -15719,7 +13003,7 @@ If you want to remove the tasks that were synced from the external storage, you 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -15774,8 +13058,7 @@ client.import_storage.s3.delete(
 <dl>
 <dd>
 
-
-Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
 </dd>
@@ -15792,7 +13075,7 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -15975,8 +13258,7 @@ client.import_storage.s3.update(
 <dl>
 <dd>
 
-
-Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list). 
+Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
 
 Sync operations with external buckets only go one way. They either create tasks from objects in the bucket (source/import storage) or push annotations to the output bucket (export/target storage). Changing something on the bucket side doesn’t guarantee consistency in results.
 
@@ -15995,7 +13277,7 @@ Sync operations with external buckets only go one way. They either create tasks 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -16038,8 +13320,8 @@ client.import_storage.s3.sync(
 </dl>
 </details>
 
-## ImportStorage S3S
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">list</a>(...)</code></summary>
+## Webhooks
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -16051,12 +13333,11 @@ client.import_storage.s3.sync(
 <dl>
 <dd>
 
+List all webhooks set up for your organization.
 
-You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project. 
+Webhooks in Label Studio let you set up integrations that subscribe to certain events that occur inside Label Studio. When an event is triggered, Label Studio sends an HTTP POST request to the configured webhook URL.
 
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
-
-For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+For more information, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks).
 </dd>
 </dl>
 </dd>
@@ -16071,12 +13352,12 @@ For more information about working with external storage, see [Sync data from ex
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.import_storage.s3s.list()
+client.webhooks.list()
 
 ```
 </dd>
@@ -16092,7 +13373,7 @@ client.import_storage.s3s.list()
 <dl>
 <dd>
 
-**project:** `typing.Optional[int]` — Project ID
+**project:** `typing.Optional[str]` — Project ID
     
 </dd>
 </dl>
@@ -16112,7 +13393,7 @@ client.import_storage.s3s.list()
 </dl>
 </details>
 
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -16124,14 +13405,12 @@ client.import_storage.s3s.list()
 <dl>
 <dd>
 
+Create a webhook.
+Label Studio provides several out-of-the box webhook events, which you can find listed here: [Available Label Studio webhooks](https://labelstud.io/guide/webhooks#Available-Label-Studio-webhooks).
 
-Create a new source storage connection to a S3 bucket.
+If you want to create your own custom webhook, refer to [Create custom events for webhooks in Label Studio](https://labelstud.io/guide/webhook_create).
 
-For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
-
-<Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
-
-<Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+<Note>Label Studio makes two main types of events available to integrate with webhooks: project-level task events and organization events. If you want to use organization-level webhook events, you will need to set `LABEL_STUDIO_ALLOW_ORGANIZATION_WEBHOOKS=true`. </Note>
 </dd>
 </dl>
 </dd>
@@ -16146,186 +13425,13 @@ For information about the required fields and prerequisites, see [Amazon S3](htt
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.import_storage.s3s.create()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign URLs for download
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Scan recursively
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS External ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `typing.Optional[str]` — AWS Role ARN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3s.get(
-    id=1,
+client.webhooks.create(
+    url="url",
 )
 
 ```
@@ -16342,741 +13448,7 @@ client.import_storage.s3s.get(
 <dl>
 <dd>
 
-**id:** `int` — Import storage ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-
-If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3s.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Import storage ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3s.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Import storage ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign URLs for download
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Scan recursively
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS External ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `typing.Optional[str]` — AWS Role ARN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">validate</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3s.validate()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` — Presign URLs for download
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**recursive_scan:** `typing.Optional[bool]` — Scan recursively
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — S3 bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — S3 bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — AWS External ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**role_arn:** `typing.Optional[str]` — AWS Role ARN
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_name:** `typing.Optional[str]` — AWS Region
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">sync</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3s.sync(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — Storage ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Projects Exports
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">list_formats</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Before exporting annotations, you can check with formats are supported by the specified project. For more information about export formats, see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
-
-You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.exports.list_formats(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Returns a list of export file (snapshots) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
-
-Included in the response is information about each snapshot, such as who created it and what format it is in. 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.exports.list(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Create a new export request to start a background task and generate an export file (snapshot) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
-
-A snapshot is a static export of your project's data and annotations at a specific point in time. It captures the current state of your tasks, annotations, and other relevant data, allowing you to download and review them later. Snapshots are particularly useful for large projects as they help avoid timeouts during export operations by processing the data asynchronously.
-
-For more information, see the [Label Studio documentation on exporting annotations](https://labelstud.io/guide/export.html).
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.exports.create(
-    id_=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id_:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` 
+**url:** `str` — URL of webhook
     
 </dd>
 </dl>
@@ -17092,7 +13464,55 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-**created_by:** `typing.Optional[UserSimple]` 
+**organization:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_payload:** `typing.Optional[bool]` — If value is False send only action
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**headers:** `typing.Optional[typing.Dict[str, typing.Any]]` — Key Value Json of headers
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — If value is False the webhook is disabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**actions:** `typing.Optional[typing.Sequence[WebhookActionsItem]]` 
     
 </dd>
 </dl>
@@ -17108,63 +13528,7 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-**finished_at:** `typing.Optional[dt.datetime]` — Complete or fail time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[ExportCreateStatus]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**md5:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**counters:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**converted_formats:** `typing.Optional[typing.Sequence[ConvertedFormat]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task_filter_options:** `typing.Optional[TaskFilterOptions]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**annotation_filter_options:** `typing.Optional[AnnotationFilterOptions]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**serialization_options:** `typing.Optional[SerializationOptions]` 
+**updated_at:** `typing.Optional[dt.datetime]` — Last update time
     
 </dd>
 </dl>
@@ -17184,7 +13548,7 @@ client.projects.exports.create(
 </dl>
 </details>
 
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">info</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -17196,12 +13560,7 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-
-Retrieve information about a specific export file (snapshot). 
-
-You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list).   
-
-You will also need the project ID. This can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+Get descriptions of all available webhook actions to set up webhooks. For more information, see the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 </dd>
 </dl>
 </dd>
@@ -17216,15 +13575,12 @@ You will also need the project ID. This can be found in the URL when viewing the
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.exports.get(
-    id=1,
-    export_pk="export_pk",
-)
+client.webhooks.info()
 
 ```
 </dd>
@@ -17240,15 +13596,7 @@ client.projects.exports.get(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**export_pk:** `str` — Primary key identifying the export file.
+**organization_only:** `typing.Optional[bool]` — organization-only or not
     
 </dd>
 </dl>
@@ -17268,7 +13616,7 @@ client.projects.exports.get(
 </dl>
 </details>
 
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -17280,10 +13628,9 @@ client.projects.exports.get(
 <dl>
 <dd>
 
+Get information about a specific webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
 
-Delete an export file by specified export ID.
-
-You will need the export ID. You can find this in the response when you [create the snapshot via the API](create) or using [List all export snapshots](list). 
+For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 </dd>
 </dl>
 </dd>
@@ -17298,14 +13645,13 @@ You will need the export ID. You can find this in the response when you [create 
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.exports.delete(
+client.webhooks.get(
     id=1,
-    export_pk="export_pk",
 )
 
 ```
@@ -17322,15 +13668,7 @@ client.projects.exports.delete(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**export_pk:** `str` — Primary key identifying the export file.
+**id:** `int` — A unique integer value identifying this webhook.
     
 </dd>
 </dl>
@@ -17350,7 +13688,7 @@ client.projects.exports.delete(
 </dl>
 </details>
 
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">convert</a>(...)</code></summary>
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -17362,14 +13700,9 @@ client.projects.exports.delete(
 <dl>
 <dd>
 
+Delete a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
 
-You can use this to convert an export snapshot into the selected format. 
-
-To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
-
-You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 </dd>
 </dl>
 </dd>
@@ -17384,15 +13717,13 @@ The project ID can be found in the URL when viewing the project in Label Studio,
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.exports.convert(
+client.webhooks.delete(
     id=1,
-    export_pk="export_pk",
-    export_type="export_type",
 )
 
 ```
@@ -17409,23 +13740,7 @@ client.projects.exports.convert(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**export_pk:** `str` — Primary key identifying the export file.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**export_type:** `str` — Export file format.
+**id:** `int` — A unique integer value identifying this webhook.
     
 </dd>
 </dl>
@@ -17445,7 +13760,7 @@ client.projects.exports.convert(
 </dl>
 </details>
 
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">download</a>(...)</code></summary>
+<details><summary><code>client.webhooks.<a href="src/label_studio_sdk/webhooks/client.py">update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -17457,12 +13772,9 @@ client.projects.exports.convert(
 <dl>
 <dd>
 
+Update a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
 
-Download an export snapshot as a file in a specified format. To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
-
-You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
+For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
 </dd>
 </dl>
 </dd>
@@ -17477,14 +13789,15 @@ The project ID can be found in the URL when viewing the project in Label Studio,
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.exports.download(
-    id=1,
-    export_pk="export_pk",
+client.webhooks.update(
+    id_=1,
+    url="url",
+    webhook_serializer_for_update_url="url",
 )
 
 ```
@@ -17501,7 +13814,7 @@ client.projects.exports.download(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
+**id_:** `int` — A unique integer value identifying this webhook.
     
 </dd>
 </dl>
@@ -17509,7 +13822,7 @@ client.projects.exports.download(
 <dl>
 <dd>
 
-**export_pk:** `str` — Primary key identifying the export file.
+**url:** `str` — URL of webhook
     
 </dd>
 </dl>
@@ -17517,7 +13830,784 @@ client.projects.exports.download(
 <dl>
 <dd>
 
-**export_type:** `typing.Optional[str]` — Selected export format
+**webhook_serializer_for_update_url:** `str` — URL of webhook
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_payload:** `typing.Optional[bool]` — If value is False send only action
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**headers:** `typing.Optional[str]` — Key Value Json of headers
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_active:** `typing.Optional[bool]` — If value is False the webhook is disabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**actions:** `typing.Optional[
+    typing.Union[
+        WebhooksUpdateRequestActionsItem,
+        typing.Sequence[WebhooksUpdateRequestActionsItem],
+    ]
+]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_serializer_for_update_send_payload:** `typing.Optional[bool]` — If value is False send only action
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_serializer_for_update_send_for_all_actions:** `typing.Optional[bool]` — If value is False - used only for actions from WebhookAction
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_serializer_for_update_headers:** `typing.Optional[typing.Dict[str, typing.Any]]` — Key Value Json of headers
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_serializer_for_update_is_active:** `typing.Optional[bool]` — If value is False the webhook is disabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_serializer_for_update_actions:** `typing.Optional[typing.Sequence[WebhookSerializerForUpdateActionsItem]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at:** `typing.Optional[dt.datetime]` — Creation time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at:** `typing.Optional[dt.datetime]` — Last update time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Prompts
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a list of prompts.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new prompt.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.create(
+    title="title",
+    input_fields=["input_fields"],
+    output_classes=["output_classes"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `str` — Title of the prompt
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_fields:** `typing.Sequence[str]` — List of input fields
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_classes:** `typing.Sequence[str]` — List of output classes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Description of the prompt
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[PromptCreatedBy]` — User ID of the creator of the prompt
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at:** `typing.Optional[dt.datetime]` — Date and time the prompt was created
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at:** `typing.Optional[dt.datetime]` — Date and time the prompt was last updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[PromptOrganization]` — Organization ID of the prompt
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**associated_projects:** `typing.Optional[typing.Sequence[int]]` — List of associated projects IDs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**skill_name:** `typing.Optional[str]` — Name of the skill
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a prompt by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Prompt ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a prompt by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Prompt ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a prompt by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.update(
+    id=1,
+    title="title",
+    input_fields=["input_fields"],
+    output_classes=["output_classes"],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Prompt ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `str` — Title of the prompt
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**input_fields:** `typing.Sequence[str]` — List of input fields
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**output_classes:** `typing.Sequence[str]` — List of output classes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Description of the prompt
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[PromptCreatedBy]` — User ID of the creator of the prompt
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at:** `typing.Optional[dt.datetime]` — Date and time the prompt was created
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at:** `typing.Optional[dt.datetime]` — Date and time the prompt was last updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[PromptOrganization]` — Organization ID of the prompt
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**associated_projects:** `typing.Optional[typing.Sequence[int]]` — List of associated projects IDs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**skill_name:** `typing.Optional[str]` — Name of the skill
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_predictions</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new batch prediction.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.batch_predictions()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**modelrun_id:** `typing.Optional[int]` — Model Run ID to associate the prediction with
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**results:** `typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_failed_predictions</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new batch of failed predictions.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.batch_failed_predictions()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**modelrun_id:** `typing.Optional[int]` — Model Run ID where the failed predictions came from
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**failed_predictions:** `typing.Optional[
+    typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
+]` 
     
 </dd>
 </dl>
@@ -17565,7 +14655,7 @@ Get a list of prompt versions.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -17635,7 +14725,7 @@ Create a new version of a prompt.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -17785,7 +14875,7 @@ Get a prompt version by ID.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -17864,7 +14954,7 @@ Delete a prompt version by ID.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -17943,7 +15033,7 @@ Update a prompt version by ID.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -18102,7 +15192,7 @@ Get cost estimate for running a prompt version on a particular project/subset
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -18199,7 +15289,7 @@ Get the refined prompt based on the `refinement_job_id`.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -18287,7 +15377,7 @@ Refine a prompt version using a teacher model and save the refined prompt as a n
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -18399,7 +15489,7 @@ Get information (status, etadata, etc) about an existing inference run
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -18496,7 +15586,7 @@ Run a prompt inference.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -18666,7 +15756,7 @@ Get key indicators for the Prompt dashboard.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -18736,7 +15826,7 @@ Get a specific key indicator for the Prompt dashboard.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -18788,6 +15878,2900 @@ client.prompts.indicators.get(
 </dl>
 </details>
 
+## ModelProviders
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get all model provider connections created by the user in the current organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.model_providers.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new model provider connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.model_providers.create(
+    provider="OpenAI",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**provider:** `ModelProviderConnectionProvider` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_key:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deployment_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**endpoint:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scope:** `typing.Optional[ModelProviderConnectionScope]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[ModelProviderConnectionOrganization]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[ModelProviderConnectionCreatedBy]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_internal:** `typing.Optional[bool]` — Whether the model provider connection is internal, not visible to the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_limit:** `typing.Optional[float]` — Budget limit for the model provider connection (null if unlimited)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_last_reset_date:** `typing.Optional[dt.datetime]` — Date and time the budget was last reset
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_reset_period:** `typing.Optional[ModelProviderConnectionBudgetResetPeriod]` — Budget reset period for the model provider connection (null if not reset)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_total_spent:** `typing.Optional[float]` — Tracked total budget spent for the given provider connection within the current budget period
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a model provider connection by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.model_providers.get(
+    pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pk:** `int` — Model Provider Connection ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a model provider connection by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.model_providers.delete(
+    pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pk:** `int` — Model Provider Connection ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.model_providers.<a href="src/label_studio_sdk/model_providers/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a model provider connection by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.model_providers.update(
+    pk=1,
+    provider="OpenAI",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pk:** `int` — Model Provider Connection ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**provider:** `ModelProviderConnectionProvider` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_key:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**deployment_name:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**endpoint:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scope:** `typing.Optional[ModelProviderConnectionScope]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[ModelProviderConnectionOrganization]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[ModelProviderConnectionCreatedBy]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_at:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_at:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_internal:** `typing.Optional[bool]` — Whether the model provider connection is internal, not visible to the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_limit:** `typing.Optional[float]` — Budget limit for the model provider connection (null if unlimited)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_last_reset_date:** `typing.Optional[dt.datetime]` — Date and time the budget was last reset
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_reset_period:** `typing.Optional[ModelProviderConnectionBudgetResetPeriod]` — Budget reset period for the model provider connection (null if not reset)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_total_spent:** `typing.Optional[float]` — Tracked total budget spent for the given provider connection within the current budget period
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**budget_alert_threshold:** `typing.Optional[float]` — Budget alert threshold for the given provider connection
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Comments
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a list of comments for a specific project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.comments.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expand_created_by:** `typing.Optional[bool]` — Expand the created_by field with object instead of ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation:** `typing.Optional[int]` — Annotation ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new comment.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.comments.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**annotation:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_resolved:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific comment.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.comments.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Comment ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific comment.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.comments.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Comment ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a specific comment.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.comments.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Comment ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_resolved:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ImportStorage S3S
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project.
+
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.s3s.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new source storage connection to a S3 bucket.
+
+For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
+
+<Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
+
+<Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.s3s.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign URLs for download
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Scan recursively
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS External ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role_arn:** `typing.Optional[str]` — AWS Role ARN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.s3s.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Import storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
+
+If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.s3s.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Import storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+
+For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.s3s.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Import storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign URLs for download
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Scan recursively
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS External ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role_arn:** `typing.Optional[str]` — AWS Role ARN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">validate</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.s3s.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` — Presign URLs for download
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presign TTL in minutes
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Scan recursively
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS External ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role_arn:** `typing.Optional[str]` — AWS Role ARN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">sync</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.import_storage.s3s.sync(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ExportStorage S3S
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all S3 export (target) storage connections for a specific project.
+
+The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
+For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.s3s.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new target storage connection to a S3 bucket with IAM role access.
+
+For information about the required fields and prerequisites, see [Amazon S3](https://docs.humansignal.com/guide/storage#Set-up-an-S3-connection-with-IAM-role-access) in the Label Studio documentation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.s3s.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS External ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role_arn:** `typing.Optional[str]` — AWS Role ARN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.s3s.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Export storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.s3s.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Export storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.s3s.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Export storage ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS External ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role_arn:** `typing.Optional[str]` — AWS Role ARN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">validate</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific S3 export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.export_storage.s3s.validate()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS External ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role_arn:** `typing.Optional[str]` — AWS Role ARN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Workspaces
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">list</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all workspaces for your organization.
+
+Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
+
+For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new workspace.
+
+Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
+
+For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Workspace title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Workspace description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_public:** `typing.Optional[bool]` — Is workspace public
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_personal:** `typing.Optional[bool]` — Is workspace personal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**color:** `typing.Optional[str]` — Workspace color in HEX format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_archived:** `typing.Optional[bool]` — Is workspace archived
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get information about a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.<a href="src/label_studio_sdk/workspaces/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk.client import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Workspace ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Workspace title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Workspace description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_public:** `typing.Optional[bool]` — Is workspace public
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_personal:** `typing.Optional[bool]` — Is workspace personal
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**color:** `typing.Optional[str]` — Workspace color in HEX format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_archived:** `typing.Optional[bool]` — Is workspace archived
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Workspaces Members
 <details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">list</a>(...)</code></summary>
 <dl>
@@ -18800,7 +18784,6 @@ client.prompts.indicators.get(
 
 <dl>
 <dd>
-
 
 List all workspace memberships for a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 </dd>
@@ -18817,7 +18800,7 @@ List all workspace memberships for a specific workspace. You will need to provid
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -18872,7 +18855,6 @@ client.workspaces.members.list(
 <dl>
 <dd>
 
-
 Create a new workspace membership. You will need to provide the workspace ID. You can find this using [List workspaces](list).
 </dd>
 </dl>
@@ -18888,7 +18870,7 @@ Create a new workspace membership. You will need to provide the workspace ID. Yo
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
@@ -18951,7 +18933,6 @@ client.workspaces.members.create(
 <dl>
 <dd>
 
-
 Delete a specific workspace membership. You will need to provide the workspace ID and the user ID. You can find this using [List workspace memberships](list).
 </dd>
 </dl>
@@ -18967,7 +18948,7 @@ Delete a specific workspace membership. You will need to provide the workspace I
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk.client import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",

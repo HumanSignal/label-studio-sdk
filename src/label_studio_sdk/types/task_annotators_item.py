@@ -2,4 +2,4 @@
 
 import typing
 
-TaskAnnotatorsItem = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]
+TaskAnnotatorsItem = typing.Union[int, typing.Dict[str, typing.Any]]

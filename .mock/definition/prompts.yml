@@ -10,8 +10,6 @@ service:
       auth: true
       docs: |
         Get a list of prompts.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: List prompts
       response:
         docs: ''
@@ -40,12 +38,9 @@ service:
       auth: true
       docs: |
         Create a new prompt.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Create prompt
       request:
         body: root.Prompt
-        content-type: application/json
       response:
         docs: ''
         type: root.Prompt
@@ -79,8 +74,6 @@ service:
       auth: true
       docs: |
         Get a prompt by ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -115,8 +108,6 @@ service:
       auth: true
       docs: |
         Delete a prompt by ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -133,8 +124,6 @@ service:
       auth: true
       docs: |
         Update a prompt by ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -142,7 +131,6 @@ service:
       display-name: Update prompt
       request:
         body: root.Prompt
-        content-type: application/json
       response:
         docs: ''
         type: root.Prompt
@@ -178,8 +166,6 @@ service:
       auth: true
       docs: |
         Create a new batch prediction.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Create batch predictions
       request:
         name: PromptsBatchPredictionsRequest
@@ -189,7 +175,6 @@ service:
               type: optional<integer>
               docs: Model Run ID to associate the prediction with
             results: optional<list<PromptsBatchPredictionsRequestResultsItem>>
-        content-type: application/json
       response:
         docs: ''
         type: PromptsBatchPredictionsResponse
@@ -206,8 +191,6 @@ service:
       auth: true
       docs: |
         Create a new batch of failed predictions.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Create batch of failed predictions
       request:
         name: PromptsBatchFailedPredictionsRequest
@@ -218,7 +201,6 @@ service:
               docs: Model Run ID where the failed predictions came from
             failed_predictions: >-
               optional<list<PromptsBatchFailedPredictionsRequestFailedPredictionsItem>>
-        content-type: application/json
       response:
         docs: ''
         type: PromptsBatchFailedPredictionsResponse
@@ -268,7 +250,6 @@ types:
         docs: Total cost of the inference (in USD)
     source:
       openapi: openapi/openapi.yaml
-    inline: true
   PromptsBatchPredictionsResponse:
     properties:
       detail: optional<string>
@@ -287,7 +268,6 @@ types:
         docs: Error message details
     source:
       openapi: openapi/openapi.yaml
-    inline: true
   PromptsBatchFailedPredictionsResponse:
     properties:
       detail: optional<string>

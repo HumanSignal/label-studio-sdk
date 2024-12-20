@@ -10,8 +10,6 @@ service:
       auth: true
       docs: |
         Get a list of prompt versions.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -43,8 +41,6 @@ service:
       auth: true
       docs: |
         Create a new version of a prompt.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -52,7 +48,6 @@ service:
       display-name: Create prompt version
       request:
         body: root.PromptVersion
-        content-type: application/json
       response:
         docs: ''
         type: root.PromptVersion
@@ -80,8 +75,6 @@ service:
       auth: true
       docs: |
         Get a prompt version by ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -117,8 +110,6 @@ service:
       auth: true
       docs: |
         Delete a prompt version by ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -139,8 +130,6 @@ service:
       auth: true
       docs: |
         Update a prompt version by ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -151,7 +140,6 @@ service:
       display-name: Update prompt version
       request:
         body: root.PromptVersion
-        content-type: application/json
       response:
         docs: ''
         type: root.PromptVersion
@@ -181,8 +169,6 @@ service:
       docs: >
         Get cost estimate for running a prompt version on a particular
         project/subset
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         prompt_id:
           type: integer
@@ -230,8 +216,6 @@ service:
       auth: true
       docs: |
         Get the refined prompt based on the `refinement_job_id`.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         prompt_id:
           type: integer
@@ -285,8 +269,6 @@ service:
       docs: >
         Refine a prompt version using a teacher model and save the refined
         prompt as a new version.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         prompt_id:
           type: integer
@@ -312,7 +294,6 @@ service:
             project_id:
               type: optional<integer>
               docs: Project ID to target the refined prompt for
-        content-type: application/json
       response:
         docs: ''
         type: root.RefinedPromptResponse

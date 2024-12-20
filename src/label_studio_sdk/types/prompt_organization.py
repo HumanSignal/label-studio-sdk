@@ -2,4 +2,4 @@
 
 import typing
 
-PromptOrganization = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]
+PromptOrganization = typing.Union[int, typing.Dict[str, typing.Any]]

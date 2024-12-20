@@ -20,8 +20,6 @@ service:
 
         For more information, see [Workspaces in Label
         Studio](https://docs.humansignal.com/guide/workspaces).
-      source:
-        openapi: openapi/openapi.yaml
       display-name: List workspaces
       response:
         docs: ''
@@ -57,8 +55,6 @@ service:
 
         For more information, see [Workspaces in Label
         Studio](https://docs.humansignal.com/guide/workspaces).
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Create workspace
       request:
         name: WorkspacesCreateRequest
@@ -83,7 +79,6 @@ service:
             is_archived:
               type: optional<boolean>
               docs: Is workspace archived
-        content-type: application/json
       response:
         docs: ''
         type: root.Workspace
@@ -111,8 +106,6 @@ service:
 
         Get information about a specific workspace. You will need to provide the
         workspace ID. You can find this using [List workspaces](list).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -146,8 +139,6 @@ service:
 
         Delete a specific workspace. You will need to provide the workspace ID.
         You can find this using [List workspaces](list).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -166,8 +157,6 @@ service:
 
         Update a specific workspace. You will need to provide the workspace ID.
         You can find this using [List workspaces](list).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -196,7 +185,6 @@ service:
             is_archived:
               type: optional<boolean>
               docs: Is workspace archived
-        content-type: application/json
       response:
         docs: ''
         type: root.Workspace

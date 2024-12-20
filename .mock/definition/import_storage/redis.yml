@@ -5,14 +5,14 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/s3/
+      path: /api/storages/redis/
       method: GET
       auth: true
       docs: >
 
-        You can connect your S3 bucket to Label Studio as a source storage or
-        target storage. Use this API request to get a list of all Google import
-        (source) storage connections for a specific project. 
+        You can connect your Redis database to Label Studio as a source storage
+        or target storage. Use this API request to get a list of all Redis
+        import (source) storage connections for a specific project. 
 
 
         The project ID can be found in the URL when viewing the project in Label
@@ -22,25 +22,28 @@ service:
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
       display-name: List import storages
       request:
-        name: S3ListRequest
+        name: RedisListRequest
         query-parameters:
           project:
             type: optional<integer>
             docs: Project ID
       response:
         docs: ''
-        type: list<root.S3ImportStorage>
+        type: list<root.RedisImportStorage>
       examples:
         - response:
             body:
               - id: 1
                 type: type
                 synchronizable: true
-                presign: true
+                path: path
+                host: host
+                port: port
+                password: password
+                regex_filter: regex_filter
+                use_blob_urls: true
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
@@ -51,48 +54,30 @@ service:
                 title: title
                 description: description
                 created_at: '2024-01-15T09:30:00Z'
-                bucket: bucket
-                prefix: prefix
-                regex_filter: regex_filter
-                use_blob_urls: true
-                aws_access_key_id: aws_access_key_id
-                aws_secret_access_key: aws_secret_access_key
-                aws_session_token: aws_session_token
-                aws_sse_kms_key_id: aws_sse_kms_key_id
-                region_name: region_name
-                s3_endpoint: s3_endpoint
-                presign_ttl: 1
-                recursive_scan: true
+                db: 1
                 project: 1
       audiences:
         - public
     create:
-      path: /api/storages/s3/
+      path: /api/storages/redis/
       method: POST
       auth: true
       docs: >
 
-        Create a new source storage connection to a S3 bucket. 
+        Create a new source storage connection to a Redis database. 
 
 
-        For information about the required fields and prerequisites, see [Amazon
-        S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio
-        documentation. 
-
-
-        <Info>Ensure you configure CORS before adding cloud storage. This
-        ensures you will be able to see the content of the data rather than just
-        a link.</Info>
+        For information about the required fields and prerequisites, see [Redis
+        database](https://labelstud.io/guide/storage#Redis-database) in the
+        Label Studio documentation. 
 
 
         <Tip>After you add the storage, you should validate the connection
         before attempting to sync your data. Your data will not be imported
         until you [sync your connection](sync).</Tip>
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Create import storage
       request:
-        name: S3CreateRequest
+        name: RedisCreateRequest
         body:
           properties:
             regex_filter:
@@ -108,17 +93,6 @@ service:
                 URLs for these images. If set to False, it will read the content
                 of the file and load it into Label Studio.
               default: false
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for download
-              default: true
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
-            recursive_scan:
-              type: optional<boolean>
-              docs: Scan recursively
             title:
               type: optional<string>
               docs: Storage title
@@ -128,70 +102,48 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            path:
               type: optional<string>
-              docs: S3 bucket name
-            prefix:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: S3 bucket prefix
-            aws_access_key_id:
+              docs: Server Host IP (optional)
+            port:
               type: optional<string>
-              docs: AWS_ACCESS_KEY_ID
-            aws_secret_access_key:
+              docs: Server Port (optional)
+            password:
               type: optional<string>
-              docs: AWS_SECRET_ACCESS_KEY
-            aws_session_token:
-              type: optional<string>
-              docs: AWS_SESSION_TOKEN
-            aws_sse_kms_key_id:
-              type: optional<string>
-              docs: AWS SSE KMS Key ID
-            region_name:
-              type: optional<string>
-              docs: AWS Region
-            s3_endpoint:
-              type: optional<string>
-              docs: S3 Endpoint
-        content-type: application/json
+              docs: Server Password (optional)
       response:
         docs: ''
-        type: S3CreateResponse
+        type: RedisCreateResponse
       examples:
         - request: {}
           response:
             body:
               regex_filter: regex_filter
               use_blob_urls: true
-              presign: true
-              presign_ttl: 1
-              recursive_scan: true
               title: title
               description: description
               project: 1
-              bucket: bucket
-              prefix: prefix
-              aws_access_key_id: aws_access_key_id
-              aws_secret_access_key: aws_secret_access_key
-              aws_session_token: aws_session_token
-              aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
+              path: path
+              host: host
+              port: port
+              password: password
       audiences:
         - public
     validate:
-      path: /api/storages/s3/validate
+      path: /api/storages/redis/validate
       method: POST
       auth: true
       docs: >
 
-        Validate a specific S3 import storage connection. This is useful to
+        Validate a specific Redis import storage connection. This is useful to
         ensure that the storage configuration settings are correct and
         operational before attempting to import data.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Validate import storage
       request:
-        name: S3ValidateRequest
+        name: RedisValidateRequest
         body:
           properties:
             id:
@@ -210,17 +162,6 @@ service:
                 URLs for these images. If set to False, it will read the content
                 of the file and load it into Label Studio.
               default: false
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for download
-              default: true
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
-            recursive_scan:
-              type: optional<boolean>
-              docs: Scan recursively
             title:
               type: optional<string>
               docs: Storage title
@@ -230,58 +171,43 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            path:
               type: optional<string>
-              docs: S3 bucket name
-            prefix:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: S3 bucket prefix
-            aws_access_key_id:
+              docs: Server Host IP (optional)
+            port:
               type: optional<string>
-              docs: AWS_ACCESS_KEY_ID
-            aws_secret_access_key:
+              docs: Server Port (optional)
+            password:
               type: optional<string>
-              docs: AWS_SECRET_ACCESS_KEY
-            aws_session_token:
-              type: optional<string>
-              docs: AWS_SESSION_TOKEN
-            aws_sse_kms_key_id:
-              type: optional<string>
-              docs: AWS SSE KMS Key ID
-            region_name:
-              type: optional<string>
-              docs: AWS Region
-            s3_endpoint:
-              type: optional<string>
-              docs: S3 Endpoint
-        content-type: application/json
+              docs: Server Password (optional)
       examples:
         - request: {}
       audiences:
         - public
     get:
-      path: /api/storages/s3/{id}
+      path: /api/storages/redis/{id}
       method: GET
       auth: true
       docs: >
 
-        Get a specific S3 import storage connection. You will need to provide
+        Get a specific Redis import storage connection. You will need to provide
         the import storage ID. You can find this using [List import
         storages](list). 
 
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 import storage.
+          docs: A unique integer value identifying this redis import storage.
       display-name: Get import storage
       response:
         docs: ''
-        type: root.S3ImportStorage
+        type: root.RedisImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -290,7 +216,12 @@ service:
               id: 1
               type: type
               synchronizable: true
-              presign: true
+              path: path
+              host: host
+              port: port
+              password: password
+              regex_filter: regex_filter
+              use_blob_urls: true
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -301,29 +232,18 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              aws_access_key_id: aws_access_key_id
-              aws_secret_access_key: aws_secret_access_key
-              aws_session_token: aws_session_token
-              aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
-              presign_ttl: 1
-              recursive_scan: true
+              db: 1
               project: 1
       audiences:
         - public
     delete:
-      path: /api/storages/s3/{id}
+      path: /api/storages/redis/{id}
       method: DELETE
       auth: true
       docs: >
 
-        Delete a specific S3 import storage connection. You will need to provide
-        the import storage ID. You can find this using [List import
+        Delete a specific Redis import storage connection. You will need to
+        provide the import storage ID. You can find this using [List import
         storages](list). 
 
 
@@ -338,12 +258,10 @@ service:
         If you want to remove the tasks that were synced from the external
         storage, you will need to delete them manually from within the Label
         Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 import storage.
+          docs: A unique integer value identifying this redis import storage.
       display-name: Delete import storage
       examples:
         - path-parameters:
@@ -351,27 +269,25 @@ service:
       audiences:
         - public
     update:
-      path: /api/storages/s3/{id}
+      path: /api/storages/redis/{id}
       method: PATCH
       auth: true
       docs: >
 
-        Update a specific S3 import storage connection. You will need to provide
-        the import storage ID. You can find this using [List import
+        Update a specific Redis import storage connection. You will need to
+        provide the import storage ID. You can find this using [List import
         storages](list). 
 
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this s3 import storage.
+          docs: A unique integer value identifying this redis import storage.
       display-name: Update import storage
       request:
-        name: S3UpdateRequest
+        name: RedisUpdateRequest
         body:
           properties:
             regex_filter:
@@ -387,17 +303,6 @@ service:
                 URLs for these images. If set to False, it will read the content
                 of the file and load it into Label Studio.
               default: false
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for download
-              default: true
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
-            recursive_scan:
-              type: optional<boolean>
-              docs: Scan recursively
             title:
               type: optional<string>
               docs: Storage title
@@ -407,34 +312,21 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            path:
               type: optional<string>
-              docs: S3 bucket name
-            prefix:
+              docs: Storage prefix (optional)
+            host:
               type: optional<string>
-              docs: S3 bucket prefix
-            aws_access_key_id:
+              docs: Server Host IP (optional)
+            port:
               type: optional<string>
-              docs: AWS_ACCESS_KEY_ID
-            aws_secret_access_key:
+              docs: Server Port (optional)
+            password:
               type: optional<string>
-              docs: AWS_SECRET_ACCESS_KEY
-            aws_session_token:
-              type: optional<string>
-              docs: AWS_SESSION_TOKEN
-            aws_sse_kms_key_id:
-              type: optional<string>
-              docs: AWS SSE KMS Key ID
-            region_name:
-              type: optional<string>
-              docs: AWS Region
-            s3_endpoint:
-              type: optional<string>
-              docs: S3 Endpoint
-        content-type: application/json
+              docs: Server Password (optional)
       response:
         docs: ''
-        type: S3UpdateResponse
+        type: RedisUpdateResponse
       examples:
         - path-parameters:
             id: 1
@@ -443,44 +335,36 @@ service:
             body:
               regex_filter: regex_filter
               use_blob_urls: true
-              presign: true
-              presign_ttl: 1
-              recursive_scan: true
               title: title
               description: description
               project: 1
-              bucket: bucket
-              prefix: prefix
-              aws_access_key_id: aws_access_key_id
-              aws_secret_access_key: aws_secret_access_key
-              aws_session_token: aws_session_token
-              aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
+              path: path
+              host: host
+              port: port
+              password: password
       audiences:
         - public
     sync:
-      path: /api/storages/s3/{id}/sync
+      path: /api/storages/redis/{id}/sync
       method: POST
       auth: true
       docs: >
 
-        Sync tasks from an S3 import storage connection. You will need to
+        Sync tasks from a Redis import storage connection. You will need to
         provide the import storage ID. You can find this using [List import
         storages](list). 
 
 
-        Sync operations with external buckets only go one way. They either
-        create tasks from objects in the bucket (source/import storage) or push
-        annotations to the output bucket (export/target storage). Changing
-        something on the bucket side doesn’t guarantee consistency in results.
+        Sync operations with external databases only go one way. They either
+        create tasks from objects in the database (source/import storage) or
+        push annotations to the output database (export/target storage).
+        Changing something on the database side doesn’t guarantee consistency in
+        results.
 
 
         <Note>Before proceeding, you should review [How sync operations work -
         Source storage](https://labelstud.io/guide/storage#Source-storage) to
-        ensure that your data remains secure and private.</Note>
-      source:
-        openapi: openapi/openapi.yaml
+        ensure that your data remains secure and private.</Note> 
       path-parameters:
         id:
           type: integer
@@ -488,7 +372,7 @@ service:
       display-name: Sync import storage
       response:
         docs: ''
-        type: root.S3ImportStorage
+        type: root.RedisImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -497,7 +381,12 @@ service:
               id: 1
               type: type
               synchronizable: true
-              presign: true
+              path: path
+              host: host
+              port: port
+              password: password
+              regex_filter: regex_filter
+              use_blob_urls: true
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -508,25 +397,14 @@ service:
               title: title
               description: description
               created_at: '2024-01-15T09:30:00Z'
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              aws_access_key_id: aws_access_key_id
-              aws_secret_access_key: aws_secret_access_key
-              aws_session_token: aws_session_token
-              aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
-              presign_ttl: 1
-              recursive_scan: true
+              db: 1
               project: 1
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
 types:
-  S3CreateResponse:
+  RedisCreateResponse:
     properties:
       regex_filter:
         type: optional<string>
@@ -541,17 +419,6 @@ types:
           these images. If set to False, it will read the content of the file
           and load it into Label Studio.
         default: false
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for download
-        default: true
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in minutes
-        default: 1
-      recursive_scan:
-        type: optional<boolean>
-        docs: Scan recursively
       title:
         type: optional<string>
         docs: Storage title
@@ -561,33 +428,21 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      bucket:
+      path:
         type: optional<string>
-        docs: S3 bucket name
-      prefix:
+        docs: Storage prefix (optional)
+      host:
         type: optional<string>
-        docs: S3 bucket prefix
-      aws_access_key_id:
+        docs: Server Host IP (optional)
+      port:
         type: optional<string>
-        docs: AWS_ACCESS_KEY_ID
-      aws_secret_access_key:
+        docs: Server Port (optional)
+      password:
         type: optional<string>
-        docs: AWS_SECRET_ACCESS_KEY
-      aws_session_token:
-        type: optional<string>
-        docs: AWS_SESSION_TOKEN
-      aws_sse_kms_key_id:
-        type: optional<string>
-        docs: AWS SSE KMS Key ID
-      region_name:
-        type: optional<string>
-        docs: AWS Region
-      s3_endpoint:
-        type: optional<string>
-        docs: S3 Endpoint
+        docs: Server Password (optional)
     source:
       openapi: openapi/openapi.yaml
-  S3UpdateResponse:
+  RedisUpdateResponse:
     properties:
       regex_filter:
         type: optional<string>
@@ -602,17 +457,6 @@ types:
           these images. If set to False, it will read the content of the file
           and load it into Label Studio.
         default: false
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for download
-        default: true
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in minutes
-        default: 1
-      recursive_scan:
-        type: optional<boolean>
-        docs: Scan recursively
       title:
         type: optional<string>
         docs: Storage title
@@ -622,29 +466,17 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      bucket:
+      path:
         type: optional<string>
-        docs: S3 bucket name
-      prefix:
+        docs: Storage prefix (optional)
+      host:
         type: optional<string>
-        docs: S3 bucket prefix
-      aws_access_key_id:
+        docs: Server Host IP (optional)
+      port:
         type: optional<string>
-        docs: AWS_ACCESS_KEY_ID
-      aws_secret_access_key:
+        docs: Server Port (optional)
+      password:
         type: optional<string>
-        docs: AWS_SECRET_ACCESS_KEY
-      aws_session_token:
-        type: optional<string>
-        docs: AWS_SESSION_TOKEN
-      aws_sse_kms_key_id:
-        type: optional<string>
-        docs: AWS SSE KMS Key ID
-      region_name:
-        type: optional<string>
-        docs: AWS Region
-      s3_endpoint:
-        type: optional<string>
-        docs: S3 Endpoint
+        docs: Server Password (optional)
     source:
       openapi: openapi/openapi.yaml

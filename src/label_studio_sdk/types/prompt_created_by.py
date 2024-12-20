@@ -2,4 +2,4 @@
 
 import typing
 
-PromptCreatedBy = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]
+PromptCreatedBy = typing.Union[int, typing.Dict[str, typing.Any]]

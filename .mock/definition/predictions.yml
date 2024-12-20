@@ -28,8 +28,6 @@ service:
 
 
         To import predictions via the API, see [Create prediction](create).
-      source:
-        openapi: openapi/openapi.yaml
       display-name: List predictions
       request:
         name: PredictionsListRequest
@@ -114,8 +112,6 @@ service:
 
         For more information, see [the JSON format reference in the Label Studio
         documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations)
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Create prediction
       request:
         name: PredictionsCreateRequest
@@ -142,7 +138,6 @@ service:
                 Model version - tag for predictions that can be used to filter
                 tasks in Data Manager, as well as select specific model version
                 for showing preannotations in the labeling interface
-        content-type: application/json
       response:
         docs: Created prediction
         type: root.Prediction
@@ -214,8 +209,6 @@ service:
         For information about the prediction format, see [the JSON format
         reference in the Label Studio
         documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations). 
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -267,8 +260,6 @@ service:
       method: PUT
       auth: true
       docs: Overwrite prediction data by prediction ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -299,7 +290,6 @@ service:
                 Model version - tag for predictions that can be used to filter
                 tasks in Data Manager, as well as select specific model version
                 for showing preannotations in the labeling interface
-        content-type: application/json
       response:
         docs: Updated prediction
         type: root.Prediction
@@ -368,8 +358,6 @@ service:
 
         Delete a prediction. To find the prediction ID, use [List
         predictions](list).
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -393,8 +381,6 @@ service:
         For information about the prediction format, see [the JSON format
         reference in the Label Studio
         documentation](https://labelstud.io/guide/predictions#JSON-format-for-pre-annotations). 
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -425,7 +411,6 @@ service:
                 Model version - tag for predictions that can be used to filter
                 tasks in Data Manager, as well as select specific model version
                 for showing preannotations in the labeling interface
-        content-type: application/json
       response:
         docs: Updated prediction
         type: root.Prediction

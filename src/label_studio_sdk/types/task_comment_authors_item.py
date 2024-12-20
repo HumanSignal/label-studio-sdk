@@ -2,4 +2,4 @@
 
 import typing
 
-TaskCommentAuthorsItem = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]
+TaskCommentAuthorsItem = typing.Union[int, typing.Dict[str, typing.Any]]

@@ -2,4 +2,4 @@
 
 import typing
 
-ModelProviderConnectionOrganization = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]
+ModelProviderConnectionOrganization = typing.Union[int, typing.Dict[str, typing.Any]]

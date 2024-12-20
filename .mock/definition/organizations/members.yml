@@ -27,8 +27,6 @@ service:
       pagination:
         offset: $request.page
         results: $response.results
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
       display-name: Get organization members list
@@ -62,8 +60,6 @@ service:
       method: GET
       auth: true
       docs: Get organization member details by user ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
         user_pk:
@@ -91,8 +87,6 @@ service:
       method: DELETE
       auth: true
       docs: Soft delete a member from the organization.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
         user_pk:

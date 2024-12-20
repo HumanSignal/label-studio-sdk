@@ -11,8 +11,6 @@ service:
       docs: >
         Get all model provider connections created by the user in the current
         organization.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Get model provider connections
       response:
         docs: ''
@@ -43,12 +41,9 @@ service:
       auth: true
       docs: |
         Create a new model provider connection.
-      source:
-        openapi: openapi/openapi.yaml
       display-name: Create model provider connection
       request:
         body: root.ModelProviderConnection
-        content-type: application/json
       response:
         docs: ''
         type: root.ModelProviderConnection
@@ -80,8 +75,6 @@ service:
       auth: true
       docs: |
         Get a model provider connection by ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         pk:
           type: integer
@@ -118,8 +111,6 @@ service:
       auth: true
       docs: |
         Delete a model provider connection by ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         pk:
           type: integer
@@ -136,8 +127,6 @@ service:
       auth: true
       docs: |
         Update a model provider connection by ID.
-      source:
-        openapi: openapi/openapi.yaml
       path-parameters:
         pk:
           type: integer
@@ -145,7 +134,6 @@ service:
       display-name: Update model provider connection
       request:
         body: root.ModelProviderConnection
-        content-type: application/json
       response:
         docs: ''
         type: root.ModelProviderConnection
