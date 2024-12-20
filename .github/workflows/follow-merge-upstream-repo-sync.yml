@@ -80,7 +80,7 @@ jobs:
 #          cache: 'poetry' # Disable cache since label-studio-client-generator does not have poetry.lock
 
       - name: Download Fern
-        run: npm install -g fern-api
+        run: npm install -g fern-api@latest
 
       - name: Set Fern Generator Branch and Mode
         env:
