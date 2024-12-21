@@ -920,6 +920,8 @@ class Converter(object):
                             annotations.append([category_id, x, y, w, h])
 
                     elif "polygonlabels" in label or "polygon" in label:
+                        if not ('points' in label):
+                            continue
                         points_abs = [(x / 100, y / 100) for x, y in label["points"]]
                         annotations.append(
                             [category_id]
