@@ -26,6 +26,8 @@ service:
         List all workspace memberships for a specific workspace. You will need
         to provide the workspace ID. You can find this using [List
         workspaces](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -51,6 +53,8 @@ service:
 
         Create a new workspace membership. You will need to provide the
         workspace ID. You can find this using [List workspaces](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -63,6 +67,7 @@ service:
             user:
               type: optional<integer>
               docs: User ID of the workspace member
+        content-type: application/json
       response:
         docs: ''
         type: MembersCreateResponse
@@ -84,6 +89,8 @@ service:
         Delete a specific workspace membership. You will need to provide the
         workspace ID and the user ID. You can find this using [List workspace
         memberships](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -96,6 +103,7 @@ service:
             user:
               type: optional<integer>
               docs: User ID of the workspace member
+        content-type: application/json
       examples:
         - path-parameters:
             id: 1

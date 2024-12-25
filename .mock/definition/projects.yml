@@ -188,6 +188,8 @@ service:
       pagination:
         offset: $request.page
         results: $response.results
+      source:
+        openapi: openapi/openapi.yaml
       display-name: List all projects
       request:
         name: ProjectsListRequest
@@ -293,6 +295,8 @@ service:
         '{"label_config": "<View>[...]</View>"}'
 
         ```
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Create new project
       request:
         name: ProjectsCreateRequest
@@ -356,6 +360,7 @@ service:
             model_version:
               type: optional<string>
               docs: Model version
+        content-type: application/json
       response:
         docs: ''
         type: ProjectsCreateResponse
@@ -389,9 +394,12 @@ service:
       method: POST
       auth: true
       docs: Validate an arbitrary labeling configuration.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Validate label config
       request:
         body: root.ProjectLabelConfig
+        content-type: application/json
       examples:
         - request:
             label_config: label_config
@@ -405,6 +413,8 @@ service:
         Retrieve information about a specific project by project ID. The project
         ID can be found in the URL when viewing the project in Label Studio, or
         you can retrieve all project IDs using [List all projects](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -498,6 +508,8 @@ service:
         The project ID can be found in the URL when viewing the project in Label
         Studio, or you can retrieve all project IDs using [List all
         projects](list). 
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -543,6 +555,8 @@ service:
         might have created in the Data Manager are removed.
 
         </Warning>
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -610,6 +624,7 @@ service:
             model_version:
               type: optional<string>
               docs: Model version
+        content-type: application/json
       response:
         docs: ''
         type: ProjectsUpdateResponse
@@ -743,6 +758,8 @@ service:
 
 
         <br>
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -755,9 +772,11 @@ service:
         query-parameters:
           commit_to_project:
             type: optional<boolean>
+            default: true
             docs: Set to "true" to immediately commit tasks to the project.
           return_task_ids:
             type: optional<boolean>
+            default: false
             docs: Set to "true" to return task IDs in the response.
           preannotated_from_fields:
             type: optional<string>
@@ -769,6 +788,7 @@ service:
               `text` field and a prediction with the `label` field when
               `preannoted_from_fields=["prediction"]`.
         name: ProjectsImportTasksRequest
+        content-type: application/json
       response:
         docs: Tasks successfully imported
         type: ProjectsImportTasksResponse
@@ -799,6 +819,8 @@ service:
       method: GET
       auth: true
       docs: Return data related to async project reimport operation
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -848,6 +870,8 @@ service:
         'Authorization: Token abc123'
 
         ```
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -884,6 +908,8 @@ service:
         The project ID can be found in the URL when viewing the project in Label
         Studio, or you can retrieve all project IDs using [List all
         projects](list). 
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -891,6 +917,7 @@ service:
       display-name: Validate project labeling config
       request:
         body: root.ProjectLabelConfig
+        content-type: application/json
       response:
         docs: ''
         type: root.ProjectLabelConfig
