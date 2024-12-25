@@ -2,6 +2,9 @@ errors:
   BadRequestError:
     status-code: 400
     type: unknown
+    docs: Invalid project ID supplied
+    examples:
+      - value: string
   NotFoundError:
     status-code: 404
     type: unknown
@@ -10,6 +13,8 @@ errors:
     status-code: 500
     type: string
     docs: Predicting error
+    examples:
+      - value: Server responded with an error.
   MethodNotAllowedError:
     status-code: 405
     type: unknown
@@ -28,6 +33,7 @@ types:
       - fixed_and_accepted
       - deleted_review
     docs: Action which was performed in the last annotation history item
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   Annotation:
@@ -304,12 +310,14 @@ types:
       - ER
       - TR
       - PR
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   MlBackendAuthMethod:
     enum:
       - NONE
       - BASIC_AUTH
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   MlBackend:
@@ -516,6 +524,7 @@ types:
         name: UniformSampling
       - value: Uncertainty sampling
         name: UncertaintySampling
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ProjectSkipQueue:
@@ -523,6 +532,7 @@ types:
       - REQUEUE_FOR_ME
       - REQUEUE_FOR_OTHERS
       - IGNORE_SKIPPED
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   Project:
@@ -680,6 +690,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ConvertedFormat:
@@ -702,6 +713,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   Export:
@@ -798,6 +810,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ExportCreate:
@@ -842,6 +855,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ProjectImport:
@@ -885,6 +899,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ProjectReimport:
@@ -911,6 +926,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   AzureBlobImportStorage:
@@ -987,6 +1003,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   AzureBlobExportStorage:
@@ -1060,6 +1077,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   GcsExportStorage:
@@ -1133,6 +1151,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   LocalFilesExportStorage:
@@ -1197,6 +1216,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   RedisExportStorage:
@@ -1273,6 +1293,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   S3ExportStorage:
@@ -1358,6 +1379,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   GcsImportStorage:
@@ -1434,6 +1456,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   LocalFilesImportStorage:
@@ -1495,6 +1518,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   RedisImportStorage:
@@ -1568,6 +1592,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   S3ImportStorage:
@@ -1662,6 +1687,7 @@ types:
         docs: Last annotators or reviewers who updated this task
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   BaseTaskFileUpload:
     discriminated: false
     docs: Uploaded file used as data source for this task
@@ -1672,6 +1698,7 @@ types:
         docs: Uploaded file ID used as data source for this task
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   BaseTask:
     properties:
       id: optional<integer>
@@ -1751,6 +1778,7 @@ types:
       - fixed_and_accepted
       - deleted_review
     docs: Action which was performed in the last annotation history item
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   AnnotationsDmField:
@@ -1823,24 +1851,38 @@ types:
       openapi: openapi/openapi.yaml
   DataManagerTaskSerializerPredictionsItem:
     properties:
-      result: optional<list<map<string, unknown>>>
-      score: optional<double>
-      model_version: optional<string>
-      model: optional<map<string, unknown>>
-      model_run: optional<map<string, unknown>>
-      task: optional<integer>
-      project: optional<double>
-      created_at: optional<datetime>
-      updated_at: optional<datetime>
+      result:
+        type: optional<list<map<string, unknown>>>
+      score:
+        type: optional<double>
+      model_version:
+        type: optional<string>
+      model:
+        type: optional<map<string, unknown>>
+      model_run:
+        type: optional<map<string, unknown>>
+      task:
+        type: optional<integer>
+      project:
+        type: optional<double>
+      created_at:
+        type: optional<datetime>
+      updated_at:
+        type: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   DataManagerTaskSerializerDraftsItem:
     properties:
-      result: optional<list<map<string, unknown>>>
-      created_at: optional<datetime>
-      updated_at: optional<datetime>
+      result:
+        type: optional<list<map<string, unknown>>>
+      created_at:
+        type: optional<datetime>
+      updated_at:
+        type: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   DataManagerTaskSerializerAnnotatorsItem:
     discriminated: false
     union:
@@ -1848,6 +1890,7 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   DataManagerTaskSerializer:
     properties:
       id: optional<integer>
@@ -1935,6 +1978,7 @@ types:
       - LABEL_LINK_CREATED
       - LABEL_LINK_UPDATED
       - LABEL_LINK_DELETED
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   Webhook:
@@ -1984,6 +2028,7 @@ types:
       - LABEL_LINK_CREATED
       - LABEL_LINK_UPDATED
       - LABEL_LINK_DELETED
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   WebhookSerializerForUpdate:
@@ -2026,6 +2071,7 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   TaskCommentAuthorsItem:
     discriminated: false
     union:
@@ -2033,6 +2079,7 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   Task:
     properties:
       id:
@@ -2156,6 +2203,7 @@ types:
       - in_progress
       - failed
       - completed
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   S3SImportStorage:
@@ -2289,6 +2337,7 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   PromptOrganization:
     discriminated: false
     docs: Organization ID of the prompt
@@ -2297,6 +2346,7 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   Prompt:
     properties:
       title:
@@ -2337,6 +2387,7 @@ types:
     enum:
       - OpenAI
       - AzureOpenAI
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   PromptVersionCreatedBy:
@@ -2346,6 +2397,7 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   PromptVersionOrganization:
     discriminated: false
     union:
@@ -2353,6 +2405,7 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   PromptVersion:
     properties:
       title:
@@ -2400,6 +2453,7 @@ types:
       - Failed
     docs: Status of the refinement job
     default: Pending
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   RefinedPromptResponse:
@@ -2435,6 +2489,7 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   InferenceRunCreatedBy:
     discriminated: false
     union:
@@ -2442,11 +2497,13 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   InferenceRunProjectSubset:
     enum:
       - All
       - HasGT
       - Sample
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   InferenceRunStatus:
@@ -2456,6 +2513,7 @@ types:
       - Completed
       - Failed
       - Canceled
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   InferenceRun:
@@ -2464,7 +2522,8 @@ types:
       project: integer
       model_version: optional<string>
       created_by: optional<InferenceRunCreatedBy>
-      project_subset: InferenceRunProjectSubset
+      project_subset:
+        type: InferenceRunProjectSubset
       status: optional<InferenceRunStatus>
       job_id: optional<string>
       created_at: optional<datetime>
@@ -2485,6 +2544,7 @@ types:
         docs: The label for this KPI, to be displayed to the user
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   KeyIndicatorsItemExtraKpisItem:
     properties:
       key:
@@ -2497,6 +2557,7 @@ types:
         docs: The label for this KPI, to be displayed to the user
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   KeyIndicatorsItem:
     properties:
       key:
@@ -2517,11 +2578,14 @@ types:
         docs: Extra KPIs to be displayed in the hover-tootip for that indicator
     source:
       openapi: openapi/openapi.yaml
-  KeyIndicators: list<KeyIndicatorsItem>
+  KeyIndicators:
+    type: list<KeyIndicatorsItem>
   KeyIndicatorValue:
     properties:
-      title: optional<string>
-      values: optional<map<string, unknown>>
+      title:
+        type: optional<string>
+      values:
+        type: optional<map<string, unknown>>
     source:
       openapi: openapi/openapi.yaml
   ModelProviderConnectionProvider:
@@ -2529,6 +2593,7 @@ types:
       - OpenAI
       - AzureOpenAI
       - Custom
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ModelProviderConnectionScope:
@@ -2536,6 +2601,7 @@ types:
       - Organization
       - User
       - Model
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ModelProviderConnectionOrganization:
@@ -2545,6 +2611,7 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ModelProviderConnectionCreatedBy:
     discriminated: false
     union:
@@ -2552,6 +2619,7 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ModelProviderConnectionBudgetResetPeriod:
     enum:
       - Monthly
@@ -2559,12 +2627,15 @@ types:
       - None
     docs: Budget reset period for the model provider connection (null if not reset)
     default: None
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ModelProviderConnection:
     properties:
-      provider: ModelProviderConnectionProvider
-      api_key: optional<string>
+      provider:
+        type: ModelProviderConnectionProvider
+      api_key:
+        type: optional<string>
       deployment_name: optional<string>
       endpoint: optional<string>
       scope: optional<ModelProviderConnectionScope>
@@ -2607,6 +2678,7 @@ types:
       - map<string, unknown>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   Comment:
     properties:
       id: integer
@@ -2615,8 +2687,10 @@ types:
       task: integer
       annotation: integer
       created_by: CommentCreatedBy
-      created_at: datetime
-      updated_at: datetime
+      created_at:
+        type: datetime
+      updated_at:
+        type: datetime
       is_resolved: optional<boolean>
       resolved_at: optional<datetime>
     source:

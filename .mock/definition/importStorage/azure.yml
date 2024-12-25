@@ -5,14 +5,15 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/storages/gcs/
+      path: /api/storages/azure/
       method: GET
       auth: true
       docs: >
 
-        You can connect your Google Cloud Storage bucket to Label Studio as a
-        source storage or target storage. Use this API request to get a list of
-        all Google import (source) storage connections for a specific project. 
+        You can connect your Microsoft Azure Blob storage container to Label
+        Studio as a source storage or target storage. Use this API request to
+        get a list of all Azure import (source) storage connections for a
+        specific project. 
 
 
         The project ID can be found in the URL when viewing the project in Label
@@ -22,16 +23,18 @@ service:
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
+      source:
+        openapi: openapi/openapi.yaml
       display-name: List import storages
       request:
-        name: GcsListRequest
+        name: AzureListRequest
         query-parameters:
           project:
             type: optional<integer>
             docs: Project ID
       response:
         docs: ''
-        type: list<root.GcsImportStorage>
+        type: list<root.AzureBlobImportStorage>
       examples:
         - response:
             body:
@@ -39,12 +42,12 @@ service:
                 type: type
                 synchronizable: true
                 presign: true
-                bucket: bucket
+                container: container
                 prefix: prefix
                 regex_filter: regex_filter
                 use_blob_urls: true
-                google_application_credentials: google_application_credentials
-                google_project_id: google_project_id
+                account_name: account_name
+                account_key: account_key
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
@@ -60,17 +63,17 @@ service:
       audiences:
         - public
     create:
-      path: /api/storages/gcs/
+      path: /api/storages/azure/
       method: POST
       auth: true
       docs: >
 
-        Create a new source storage connection to a Google Cloud Storage
-        bucket. 
+        Create a new source storage connection to Microsoft Azure Blob storage. 
 
 
-        For information about the required fields and prerequisites, see [Google
-        Cloud Storage](https://labelstud.io/guide/storage#Google-Cloud-Storage)
+        For information about the required fields and prerequisites, see
+        [Microsoft Azure Blob
+        storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage)
         in the Label Studio documentation. 
 
 
@@ -82,9 +85,11 @@ service:
         <Tip>After you add the storage, you should validate the connection
         before attempting to sync your data. Your data will not be imported
         until you [sync your connection](sync).</Tip>
-      display-name: Create import storage
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create new storage
       request:
-        name: GcsCreateRequest
+        name: AzureCreateRequest
         body:
           properties:
             regex_filter:
@@ -117,24 +122,22 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            container:
               type: optional<string>
-              docs: GCS bucket name
+              docs: Azure blob container
             prefix:
               type: optional<string>
-              docs: GCS bucket prefix
-            google_application_credentials:
+              docs: Azure blob prefix name
+            account_name:
               type: optional<string>
-              docs: >-
-                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-                official Google Cloud Authentication documentation for more
-                details.
-            google_project_id:
+              docs: Azure Blob account name
+            account_key:
               type: optional<string>
-              docs: Google project ID
+              docs: Azure Blob account key
+        content-type: application/json
       response:
         docs: ''
-        type: GcsCreateResponse
+        type: AzureCreateResponse
       examples:
         - request: {}
           response:
@@ -146,24 +149,26 @@ service:
               title: title
               description: description
               project: 1
-              bucket: bucket
+              container: container
               prefix: prefix
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
+              account_name: account_name
+              account_key: account_key
       audiences:
         - public
     validate:
-      path: /api/storages/gcs/validate
+      path: /api/storages/azure/validate
       method: POST
       auth: true
       docs: >
 
-        Validate a specific GCS import storage connection. This is useful to
+        Validate a specific Azure import storage connection. This is useful to
         ensure that the storage configuration settings are correct and
         operational before attempting to import data.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Validate import storage
       request:
-        name: GcsValidateRequest
+        name: AzureValidateRequest
         body:
           properties:
             id:
@@ -199,46 +204,46 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            container:
               type: optional<string>
-              docs: GCS bucket name
+              docs: Azure blob container
             prefix:
               type: optional<string>
-              docs: GCS bucket prefix
-            google_application_credentials:
+              docs: Azure blob prefix name
+            account_name:
               type: optional<string>
-              docs: >-
-                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-                official Google Cloud Authentication documentation for more
-                details.
-            google_project_id:
+              docs: Azure Blob account name
+            account_key:
               type: optional<string>
-              docs: Google project ID
+              docs: Azure Blob account key
+        content-type: application/json
       examples:
         - request: {}
       audiences:
         - public
     get:
-      path: /api/storages/gcs/{id}
+      path: /api/storages/azure/{id}
       method: GET
       auth: true
       docs: >
 
-        Get a specific GCS import storage connection. You will need to provide
+        Get a specific Azure import storage connection. You will need to provide
         the import storage ID. You can find this using [List import
         storages](list). 
 
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this gcs import storage.
+          docs: A unique integer value identifying this azure blob import storage.
       display-name: Get import storage
       response:
         docs: ''
-        type: root.GcsImportStorage
+        type: root.AzureBlobImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -248,12 +253,12 @@ service:
               type: type
               synchronizable: true
               presign: true
-              bucket: bucket
+              container: container
               prefix: prefix
               regex_filter: regex_filter
               use_blob_urls: true
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
+              account_name: account_name
+              account_key: account_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -269,12 +274,12 @@ service:
       audiences:
         - public
     delete:
-      path: /api/storages/gcs/{id}
+      path: /api/storages/azure/{id}
       method: DELETE
       auth: true
       docs: >
 
-        Delete a specific GCS import storage connection. You will need to
+        Delete a specific Azure import storage connection. You will need to
         provide the import storage ID. You can find this using [List import
         storages](list). 
 
@@ -290,10 +295,12 @@ service:
         If you want to remove the tasks that were synced from the external
         storage, you will need to delete them manually from within the Label
         Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this gcs import storage.
+          docs: A unique integer value identifying this azure blob import storage.
       display-name: Delete import storage
       examples:
         - path-parameters:
@@ -301,25 +308,27 @@ service:
       audiences:
         - public
     update:
-      path: /api/storages/gcs/{id}
+      path: /api/storages/azure/{id}
       method: PATCH
       auth: true
       docs: >
 
-        Update a specific GCS import storage connection. You will need to
+        Update a specific Azure import storage connection. You will need to
         provide the import storage ID. You can find this using [List import
         storages](list). 
 
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
-          docs: A unique integer value identifying this gcs import storage.
+          docs: A unique integer value identifying this azure blob import storage.
       display-name: Update import storage
       request:
-        name: GcsUpdateRequest
+        name: AzureUpdateRequest
         body:
           properties:
             regex_filter:
@@ -352,24 +361,22 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
-            bucket:
+            container:
               type: optional<string>
-              docs: GCS bucket name
+              docs: Azure blob container
             prefix:
               type: optional<string>
-              docs: GCS bucket prefix
-            google_application_credentials:
+              docs: Azure blob prefix name
+            account_name:
               type: optional<string>
-              docs: >-
-                The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-                official Google Cloud Authentication documentation for more
-                details.
-            google_project_id:
+              docs: Azure Blob account name
+            account_key:
               type: optional<string>
-              docs: Google project ID
+              docs: Azure Blob account key
+        content-type: application/json
       response:
         docs: ''
-        type: GcsUpdateResponse
+        type: AzureUpdateResponse
       examples:
         - path-parameters:
             id: 1
@@ -383,32 +390,35 @@ service:
               title: title
               description: description
               project: 1
-              bucket: bucket
+              container: container
               prefix: prefix
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
+              account_name: account_name
+              account_key: account_key
       audiences:
         - public
     sync:
-      path: /api/storages/gcs/{id}/sync
+      path: /api/storages/azure/{id}/sync
       method: POST
       auth: true
       docs: >
 
-        Sync tasks from a GCS import storage connection. You will need to
+        Sync tasks from an Azure import storage connection. You will need to
         provide the import storage ID. You can find this using [List import
         storages](list). 
 
 
-        Sync operations with external buckets only go one way. They either
-        create tasks from objects in the bucket (source/import storage) or push
-        annotations to the output bucket (export/target storage). Changing
-        something on the bucket side doesn’t guarantee consistency in results.
+        Sync operations with external containers only go one way. They either
+        create tasks from objects in the container (source/import storage) or
+        push annotations to the output container (export/target storage).
+        Changing something on the Microsoft side doesn’t guarantee consistency
+        in results.
 
 
         <Note>Before proceeding, you should review [How sync operations work -
         Source storage](https://labelstud.io/guide/storage#Source-storage) to
         ensure that your data remains secure and private.</Note> 
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -416,7 +426,7 @@ service:
       display-name: Sync import storage
       response:
         docs: ''
-        type: root.GcsImportStorage
+        type: root.AzureBlobImportStorage
       examples:
         - path-parameters:
             id: 1
@@ -426,12 +436,12 @@ service:
               type: type
               synchronizable: true
               presign: true
-              bucket: bucket
+              container: container
               prefix: prefix
               regex_filter: regex_filter
               use_blob_urls: true
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
+              account_name: account_name
+              account_key: account_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
@@ -449,7 +459,7 @@ service:
   source:
     openapi: openapi/openapi.yaml
 types:
-  GcsCreateResponse:
+  AzureCreateResponse:
     properties:
       regex_filter:
         type: optional<string>
@@ -481,23 +491,21 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      bucket:
+      container:
         type: optional<string>
-        docs: GCS bucket name
+        docs: Azure blob container
       prefix:
         type: optional<string>
-        docs: GCS bucket prefix
-      google_application_credentials:
+        docs: Azure blob prefix name
+      account_name:
         type: optional<string>
-        docs: >-
-          The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-          official Google Cloud Authentication documentation for more details.
-      google_project_id:
+        docs: Azure Blob account name
+      account_key:
         type: optional<string>
-        docs: Google project ID
+        docs: Azure Blob account key
     source:
       openapi: openapi/openapi.yaml
-  GcsUpdateResponse:
+  AzureUpdateResponse:
     properties:
       regex_filter:
         type: optional<string>
@@ -529,19 +537,17 @@ types:
       project:
         type: optional<integer>
         docs: Project ID
-      bucket:
+      container:
         type: optional<string>
-        docs: GCS bucket name
+        docs: Azure blob container
       prefix:
         type: optional<string>
-        docs: GCS bucket prefix
-      google_application_credentials:
+        docs: Azure blob prefix name
+      account_name:
         type: optional<string>
-        docs: >-
-          The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check
-          official Google Cloud Authentication documentation for more details.
-      google_project_id:
+        docs: Azure Blob account name
+      account_key:
         type: optional<string>
-        docs: Google project ID
+        docs: Azure Blob account key
     source:
       openapi: openapi/openapi.yaml
