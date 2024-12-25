@@ -8982,8 +8982,10 @@ components:
           title: Organization
           type: integer
           nullable: true
-        prompt:
-          $ref: "#/components/schemas/Prompt"
+        prompts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Prompt"
           nullable: true
         color:
           title: Color

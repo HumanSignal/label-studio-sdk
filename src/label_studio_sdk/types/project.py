@@ -54,7 +54,7 @@ class Project(UniversalBaseModel):
     """
 
     organization: typing.Optional[int] = None
-    prompt: typing.Optional[Prompt] = None
+    prompts: typing.Optional[typing.List[Prompt]] = None
     color: typing.Optional[str] = None
     maximum_annotations: typing.Optional[int] = pydantic.Field(default=None)
     """

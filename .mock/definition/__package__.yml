@@ -566,7 +566,7 @@ types:
         type: optional<boolean>
         docs: Show annotation history to annotator
       organization: optional<integer>
-      prompt: optional<Prompt>
+      prompts: optional<list<Prompt>>
       color:
         type: optional<string>
         validation:
