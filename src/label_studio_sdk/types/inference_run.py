@@ -7,6 +7,7 @@ from .inference_run_created_by import InferenceRunCreatedBy
 from .inference_run_project_subset import InferenceRunProjectSubset
 from .inference_run_status import InferenceRunStatus
 import datetime as dt
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
@@ -23,7 +24,11 @@ class InferenceRun(UniversalBaseModel):
     predictions_updated_at: typing.Optional[dt.datetime] = None
     completed_at: typing.Optional[dt.datetime] = None
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

@@ -9,6 +9,7 @@ from .model_provider_connection_created_by import ModelProviderConnectionCreated
 import datetime as dt
 import pydantic
 from .model_provider_connection_budget_reset_period import ModelProviderConnectionBudgetResetPeriod
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ModelProviderConnection(UniversalBaseModel):
@@ -51,7 +52,11 @@ class ModelProviderConnection(UniversalBaseModel):
     Budget alert threshold for the given provider connection
     """
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from .webhook_actions_item import WebhookActionsItem
 import datetime as dt
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Webhook(UniversalBaseModel):
@@ -47,7 +48,11 @@ class Webhook(UniversalBaseModel):
     Last update time
     """
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

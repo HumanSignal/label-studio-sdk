@@ -5,6 +5,7 @@ from .actions_create_request_filters_conjunction import ActionsCreateRequestFilt
 import pydantic
 import typing
 from .actions_create_request_filters_items_item import ActionsCreateRequestFiltersItemsItem
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ActionsCreateRequestFilters(UniversalBaseModel):
@@ -22,7 +23,11 @@ class ActionsCreateRequestFilters(UniversalBaseModel):
     List of filter items
     """
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

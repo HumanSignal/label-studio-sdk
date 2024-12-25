@@ -4,6 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 from .converted_format_status import ConvertedFormatStatus
 import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ConvertedFormat(UniversalBaseModel):
@@ -15,7 +16,11 @@ class ConvertedFormat(UniversalBaseModel):
     Traceback report in case of errors
     """
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

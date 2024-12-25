@@ -7,6 +7,7 @@ import datetime as dt
 import pydantic
 from .export_status import ExportStatus
 from .converted_format import ConvertedFormat
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Export(UniversalBaseModel):
@@ -28,7 +29,11 @@ class Export(UniversalBaseModel):
     counters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
     converted_formats: typing.Optional[typing.List[ConvertedFormat]] = None
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

@@ -6,6 +6,7 @@ from .ml_backend_state import MlBackendState
 import pydantic
 from .ml_backend_auth_method import MlBackendAuthMethod
 import datetime as dt
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class MlBackend(UniversalBaseModel):
@@ -69,7 +70,11 @@ class MlBackend(UniversalBaseModel):
 
     project: int
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

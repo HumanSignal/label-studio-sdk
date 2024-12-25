@@ -5,6 +5,7 @@ import typing
 import pydantic
 from .refined_prompt_response_refinement_status import RefinedPromptResponseRefinementStatus
 from .prompt_version import PromptVersion
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class RefinedPromptResponse(UniversalBaseModel):
@@ -43,7 +44,11 @@ class RefinedPromptResponse(UniversalBaseModel):
     Previous version of the prompt
     """
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

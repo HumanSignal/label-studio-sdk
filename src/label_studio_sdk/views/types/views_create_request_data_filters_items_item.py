@@ -5,6 +5,8 @@ from .views_create_request_data_filters_items_item_filter import ViewsCreateRequ
 import pydantic
 from .views_create_request_data_filters_items_item_operator import ViewsCreateRequestDataFiltersItemsItemOperator
 from .views_create_request_data_filters_items_item_value import ViewsCreateRequestDataFiltersItemsItemValue
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+import typing
 
 
 class ViewsCreateRequestDataFiltersItemsItem(UniversalBaseModel):
@@ -28,7 +30,11 @@ class ViewsCreateRequestDataFiltersItemsItem(UniversalBaseModel):
     Value to filter by
     """
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

@@ -6,6 +6,7 @@ import pydantic
 from .task_annotators_item import TaskAnnotatorsItem
 import datetime as dt
 from .task_comment_authors_item import TaskCommentAuthorsItem
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Task(UniversalBaseModel):
@@ -145,7 +146,11 @@ class Task(UniversalBaseModel):
     List of comment authors for this task
     """
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

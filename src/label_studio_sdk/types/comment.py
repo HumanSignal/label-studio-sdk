@@ -4,6 +4,7 @@ from ..core.pydantic_utilities import UniversalBaseModel
 from .comment_created_by import CommentCreatedBy
 import datetime as dt
 import typing
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
@@ -19,7 +20,11 @@ class Comment(UniversalBaseModel):
     is_resolved: typing.Optional[bool] = None
     resolved_at: typing.Optional[dt.datetime] = None
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

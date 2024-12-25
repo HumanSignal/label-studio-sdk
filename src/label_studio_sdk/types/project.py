@@ -7,6 +7,7 @@ from .user_simple import UserSimple
 import datetime as dt
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Project(UniversalBaseModel):
@@ -178,7 +179,11 @@ class Project(UniversalBaseModel):
     queue_total: typing.Optional[str] = None
     queue_done: typing.Optional[str] = None
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

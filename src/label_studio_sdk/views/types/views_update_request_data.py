@@ -5,6 +5,7 @@ import typing
 from .views_update_request_data_filters import ViewsUpdateRequestDataFilters
 import pydantic
 from .views_update_request_data_ordering_item import ViewsUpdateRequestDataOrderingItem
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ViewsUpdateRequestData(UniversalBaseModel):
@@ -22,7 +23,11 @@ class ViewsUpdateRequestData(UniversalBaseModel):
     List of fields to order by. Fields are similar to filters but without the `filter:` prefix. To reverse the order, add a minus sign before the field name, e.g. `-tasks:created_at`.
     """
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

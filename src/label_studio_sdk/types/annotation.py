@@ -5,6 +5,7 @@ import typing
 import pydantic
 import datetime as dt
 from .annotation_last_action import AnnotationLastAction
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Annotation(UniversalBaseModel):
@@ -96,7 +97,11 @@ class Annotation(UniversalBaseModel):
     User who created the last annotation history item
     """
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

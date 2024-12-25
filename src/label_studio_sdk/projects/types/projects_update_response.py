@@ -3,6 +3,7 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ProjectsUpdateResponse(UniversalBaseModel):
@@ -75,7 +76,11 @@ class ProjectsUpdateResponse(UniversalBaseModel):
     Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
     """
 
-    class Config:
-        frozen = True
-        smart_union = True
-        extra = pydantic.Extra.allow
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
