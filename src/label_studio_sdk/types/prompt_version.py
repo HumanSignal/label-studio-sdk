@@ -6,7 +6,6 @@ from .prompt_version_provider import PromptVersionProvider
 from .prompt_version_created_by import PromptVersionCreatedBy
 import datetime as dt
 from .prompt_version_organization import PromptVersionOrganization
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
@@ -22,11 +21,7 @@ class PromptVersion(UniversalBaseModel):
     updated_at: typing.Optional[dt.datetime] = None
     organization: typing.Optional[PromptVersionOrganization] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

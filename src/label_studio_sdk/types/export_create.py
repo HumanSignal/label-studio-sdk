@@ -10,7 +10,6 @@ from .converted_format import ConvertedFormat
 from .task_filter_options import TaskFilterOptions
 from .annotation_filter_options import AnnotationFilterOptions
 from .serialization_options import SerializationOptions
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ExportCreate(UniversalBaseModel):
@@ -35,11 +34,7 @@ class ExportCreate(UniversalBaseModel):
     annotation_filter_options: typing.Optional[AnnotationFilterOptions] = None
     serialization_options: typing.Optional[SerializationOptions] = None
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

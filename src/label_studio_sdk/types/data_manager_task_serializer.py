@@ -8,7 +8,6 @@ from .annotations_dm_field import AnnotationsDmField
 from .data_manager_task_serializer_drafts_item import DataManagerTaskSerializerDraftsItem
 from .data_manager_task_serializer_annotators_item import DataManagerTaskSerializerAnnotatorsItem
 import datetime as dt
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class DataManagerTaskSerializer(UniversalBaseModel):
@@ -105,11 +104,7 @@ class DataManagerTaskSerializer(UniversalBaseModel):
     Users who wrote comments
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

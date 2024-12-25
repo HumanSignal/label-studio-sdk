@@ -5,8 +5,6 @@ from .actions_create_request_filters_items_item_filter import ActionsCreateReque
 import pydantic
 from .actions_create_request_filters_items_item_operator import ActionsCreateRequestFiltersItemsItemOperator
 from .actions_create_request_filters_items_item_value import ActionsCreateRequestFiltersItemsItemValue
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 
 
 class ActionsCreateRequestFiltersItemsItem(UniversalBaseModel):
@@ -30,11 +28,7 @@ class ActionsCreateRequestFiltersItemsItem(UniversalBaseModel):
     Value to filter by
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

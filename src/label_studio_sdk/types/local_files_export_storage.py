@@ -5,7 +5,6 @@ import typing
 import pydantic
 import datetime as dt
 from .local_files_export_storage_status import LocalFilesExportStorageStatus
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LocalFilesExportStorage(UniversalBaseModel):
@@ -78,11 +77,7 @@ class LocalFilesExportStorage(UniversalBaseModel):
     A unique integer value identifying this project.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

@@ -5,7 +5,6 @@ from .views_update_request_data_filters_conjunction import ViewsUpdateRequestDat
 import pydantic
 import typing
 from .views_update_request_data_filters_items_item import ViewsUpdateRequestDataFiltersItemsItem
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ViewsUpdateRequestDataFilters(UniversalBaseModel):
@@ -23,11 +22,7 @@ class ViewsUpdateRequestDataFilters(UniversalBaseModel):
     List of filter items
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

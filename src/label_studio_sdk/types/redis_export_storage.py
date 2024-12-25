@@ -5,7 +5,6 @@ import typing
 import pydantic
 import datetime as dt
 from .redis_export_storage_status import RedisExportStorageStatus
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class RedisExportStorage(UniversalBaseModel):
@@ -98,11 +97,7 @@ class RedisExportStorage(UniversalBaseModel):
     A unique integer value identifying this project.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

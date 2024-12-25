@@ -7,7 +7,6 @@ import pydantic
 from .s3s_import_storage_status import S3SImportStorageStatus
 import typing_extensions
 from ..core.serialization import FieldMetadata
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class S3SImportStorage(UniversalBaseModel):
@@ -112,11 +111,7 @@ class S3SImportStorage(UniversalBaseModel):
     A unique integer value identifying this project.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

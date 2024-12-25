@@ -6,7 +6,6 @@ import typing
 from .prompt_created_by import PromptCreatedBy
 import datetime as dt
 from .prompt_organization import PromptOrganization
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Prompt(UniversalBaseModel):
@@ -60,11 +59,7 @@ class Prompt(UniversalBaseModel):
     Name of the skill
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

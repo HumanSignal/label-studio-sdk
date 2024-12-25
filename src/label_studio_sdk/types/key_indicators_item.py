@@ -5,7 +5,6 @@ import pydantic
 import typing
 from .key_indicators_item_additional_kpis_item import KeyIndicatorsItemAdditionalKpisItem
 from .key_indicators_item_extra_kpis_item import KeyIndicatorsItemExtraKpisItem
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class KeyIndicatorsItem(UniversalBaseModel):
@@ -31,11 +30,7 @@ class KeyIndicatorsItem(UniversalBaseModel):
     Extra KPIs to be displayed in the hover-tootip for that indicator
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

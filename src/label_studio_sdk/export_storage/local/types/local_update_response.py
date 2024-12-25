@@ -3,7 +3,6 @@
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LocalUpdateResponse(UniversalBaseModel):
@@ -37,11 +36,7 @@ class LocalUpdateResponse(UniversalBaseModel):
     Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

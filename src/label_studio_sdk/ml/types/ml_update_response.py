@@ -4,7 +4,6 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
 from .ml_update_response_auth_method import MlUpdateResponseAuthMethod
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class MlUpdateResponse(UniversalBaseModel):
@@ -58,11 +57,7 @@ class MlUpdateResponse(UniversalBaseModel):
     Response model timeout
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow

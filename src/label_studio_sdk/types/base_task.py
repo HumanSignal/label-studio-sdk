@@ -6,7 +6,6 @@ import pydantic
 import datetime as dt
 from .base_task_updated_by import BaseTaskUpdatedBy
 from .base_task_file_upload import BaseTaskFileUpload
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class BaseTask(UniversalBaseModel):
@@ -96,11 +95,7 @@ class BaseTask(UniversalBaseModel):
     Users who wrote comments
     """
 
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+    class Config:
+        frozen = True
+        smart_union = True
+        extra = pydantic.Extra.allow
