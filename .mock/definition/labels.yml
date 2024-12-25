@@ -26,6 +26,8 @@ service:
       docs: >-
         List all custom labels added to your project separately from the
         labeling configuration.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: List labels
       request:
         name: LabelsListRequest
@@ -65,9 +67,12 @@ service:
       method: POST
       auth: true
       docs: Add labels to your project without updating the labeling configuration.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Create labels
       request:
         body: list<root.LabelCreate>
+        content-type: application/json
       response:
         docs: ''
         type: list<root.LabelCreate>
@@ -104,6 +109,8 @@ service:
       docs: |
 
         Retrieve a specific custom label used for your project by its ID.
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
       display-name: Get label
@@ -139,6 +146,8 @@ service:
       docs: >-
         Remove labels from your project without updating the labeling
         configuration.
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
       display-name: Remove labels
@@ -154,11 +163,14 @@ service:
       docs: >-
         Update labels used for your project without updating the labeling
         configuration.
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
       display-name: Update labels
       request:
         body: root.Label
+        content-type: application/json
       response:
         docs: ''
         type: root.Label

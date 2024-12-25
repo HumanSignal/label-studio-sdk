@@ -2,4 +2,4 @@
 
 import typing
 
-ModelProviderConnectionCreatedBy = typing.Union[int, typing.Dict[str, typing.Any]]
+ModelProviderConnectionCreatedBy = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]

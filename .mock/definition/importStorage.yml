@@ -7,6 +7,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of the import storages of all types with their IDs.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: List all import storages from the project
       examples:
         - {}
@@ -17,6 +19,8 @@ service:
       method: GET
       auth: true
       docs: Retrieve a list of the import storages types.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: List all import storages types
       response:
         docs: ''

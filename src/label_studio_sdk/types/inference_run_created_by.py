@@ -2,4 +2,4 @@
 
 import typing
 
-InferenceRunCreatedBy = typing.Union[int, typing.Dict[str, typing.Any]]
+InferenceRunCreatedBy = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]

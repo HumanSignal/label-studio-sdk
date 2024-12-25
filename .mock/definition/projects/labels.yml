@@ -24,6 +24,8 @@ service:
       method: GET
       auth: true
       docs: List label links for a specific label and project.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: List label links
       request:
         name: LabelsListRequest
@@ -55,9 +57,12 @@ service:
       docs: >-
         Create label links to link new custom labels to your project labeling
         configuration.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Create label links
       request:
         body: root.LabelLink
+        content-type: application/json
       response:
         docs: ''
         type: root.LabelLink
@@ -80,6 +85,8 @@ service:
       method: GET
       auth: true
       docs: 'Get label links for a specific project configuration. '
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
       display-name: Get label link
@@ -109,6 +116,8 @@ service:
 
         the label stops being available for the project it was linked to. You
         can add a new label link at any time. 
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
       display-name: Remove label link
@@ -128,11 +137,14 @@ service:
 
         toName, or name parameters for a tag in the labeling configuration
         change. 
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id: string
       display-name: Update label link
       request:
         body: root.LabelLink
+        content-type: application/json
       response:
         docs: ''
         type: root.LabelLink
@@ -160,6 +172,8 @@ service:
 
         If you want to update the labels in saved annotations, use this
         endpoint.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Bulk update labels
       examples:
         - {}
