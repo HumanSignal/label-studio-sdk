@@ -13,14 +13,24 @@
     },
     "@value": {
       "anyOf": [
-        {"type": "string"},
-        {"type": "boolean"},
-        {"type": "number"}
-      ]},
+        {
+          "type": "string"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
     "@valueList": {
       "anyOf": [
-        {"type": "string"}
-      ]},
+        {
+          "type": "string"
+        }
+      ]
+    },
     "tag_with_value": {
       "type": "object",
       "required": [
@@ -60,18 +70,18 @@
     "tag_with_value_required_name": {
       "type": "object",
       "oneOf": [
-          {
-            "required": [
-                "@name",
-                "@value"
-            ]
-          },
-          {
-            "required": [
-                "@name",
-                "@valueList"
-            ]
-          }
+        {
+          "required": [
+            "@name",
+            "@value"
+          ]
+        },
+        {
+          "required": [
+            "@name",
+            "@valueList"
+          ]
+        }
       ],
       "properties": {
         "@value": {
@@ -83,78 +93,159 @@
       }
     },
     "tags_with_value": {
-      "anyOf": [{
-        "type": "array",
-        "items": {"$ref": "#/definitions/tag_with_value"}
-      }, {"$ref": "#/definitions/tag_with_value"}]
-    },
-    "tags_with_value_or_object": {
-      "anyOf": [{
-        "type": "array",
-        "items": {"$ref": "#/definitions/tag_with_value"}
-      }, {
-        "type": "object"
-      }, {"$ref": "#/definitions/tag_with_value"}]
-    },
-    "tags_with_value_required_name": {
-      "anyOf": [{
-        "type": "array",
-        "items": {"$ref": "#/definitions/tag_with_value_required_name"}
-      }, {"$ref": "#/definitions/tag_with_value_required_name"}]
-    },
-    "tags_with_name_and_toname": {
-      "anyOf": [{"$ref": "#/definitions/tag_with_name_and_toname"},
+      "anyOf": [
         {
           "type": "array",
-          "items": {"$ref": "#/definitions/tag_with_name_and_toname"}
-        }]
+          "items": {
+            "$ref": "#/definitions/tag_with_value"
+          }
+        },
+        {
+          "$ref": "#/definitions/tag_with_value"
+        }
+      ]
+    },
+    "tags_with_value_or_object": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tag_with_value"
+          }
+        },
+        {
+          "type": "object"
+        },
+        {
+          "$ref": "#/definitions/tag_with_value"
+        }
+      ]
+    },
+    "tags_with_value_required_name": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tag_with_value_required_name"
+          }
+        },
+        {
+          "$ref": "#/definitions/tag_with_value_required_name"
+        }
+      ]
+    },
+    "tags_with_name_and_toname": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/tag_with_name_and_toname"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tag_with_name_and_toname"
+          }
+        }
+      ]
     },
     "View": {
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "Labels": {"$ref": "#/definitions/MaybeMultipleLabels"},
-        "Choices": {"$ref": "#/definitions/MaybeMultipleChoices"},
-        "Label": {"$ref": "#/definitions/MaybeMultipleLabel"},
-        "Choice": {"$ref": "#/definitions/MaybeMultipleChoice"},
-        "Image": {"$ref": "#/definitions/tags_with_value_required_name"},
-        "Text": {"$ref": "#/definitions/tags_with_value_required_name"},
-        "HyperText": {"$ref": "#/definitions/tags_with_value_required_name"},
-        "View": {"$ref": "#/definitions/MaybeMultipleView"},
-        "TextArea": {"$ref": "#/definitions/MaybeMultipleTextAreas"},
-        "Number": {"$ref": "#/definitions/tags_with_name_and_toname"}
+        "Labels": {
+          "$ref": "#/definitions/MaybeMultipleLabels"
+        },
+        "Choices": {
+          "$ref": "#/definitions/MaybeMultipleChoices"
+        },
+        "Image": {
+          "$ref": "#/definitions/tags_with_value_required_name"
+        },
+        "Text": {
+          "$ref": "#/definitions/tags_with_value_required_name"
+        },
+        "HyperText": {
+          "$ref": "#/definitions/tags_with_value_required_name"
+        },
+        "View": {
+          "$ref": "#/definitions/MaybeMultipleView"
+        },
+        "TextArea": {
+          "$ref": "#/definitions/MaybeMultipleTextAreas"
+        },
+        "Number": {
+          "$ref": "#/definitions/tags_with_name_and_toname"
+        }
       }
     },
     "MaybeMultipleView": {
-      "anyOf": [{
-        "type": "array",
-        "items": {"$ref": "#/definitions/View"}
-      }, {"$ref": "#/definitions/View"}]
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/View"
+          }
+        },
+        {
+          "$ref": "#/definitions/View"
+        }
+      ]
     },
     "Choice": {
       "$ref": "#/definitions/tag_with_value"
     },
     "MaybeMultipleChoice": {
-      "anyOf": [{
-        "type": "array",
-        "items": {"$ref": "#/definitions/Choice"}
-      }, {"$ref": "#/definitions/Choice"}]
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Choice"
+          }
+        },
+        {
+          "$ref": "#/definitions/Choice"
+        }
+      ]
     },
     "Label": {
       "$ref": "#/definitions/tag_with_value"
     },
     "MaybeMultipleLabel": {
-      "anyOf": [{
-        "type": "array",
-        "items": {"$ref": "#/definitions/Label"}
-      }, {"$ref": "#/definitions/Label"}]
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Label"
+          }
+        },
+        {
+          "$ref": "#/definitions/Label"
+        }
+      ]
     },
     "Choices": {
       "type": "object",
       "anyOf": [
-        {"required": ["@name", "@toName", "Choice"]},
-        {"required": ["@name", "@toName", "@value"]},
-        {"required": ["@name", "@toName", "View"]}
+        {
+          "required": [
+            "@name",
+            "@toName",
+            "Choice"
+          ]
+        },
+        {
+          "required": [
+            "@name",
+            "@toName",
+            "@value"
+          ]
+        },
+        {
+          "required": [
+            "@name",
+            "@toName",
+            "View"
+          ]
+        }
       ],
       "properties": {
         "@name": {
@@ -171,23 +262,52 @@
         },
         "Choice": {
           "type": "array",
-          "items": {"$ref": "#/definitions/Choice"}
+          "items": {
+            "$ref": "#/definitions/Choice"
+          }
         },
-        "View": {"$ref": "#/definitions/MaybeMultipleView"}
+        "View": {
+          "$ref": "#/definitions/MaybeMultipleView"
+        }
       }
     },
     "MaybeMultipleChoices": {
-      "anyOf": [{
-        "type": "array",
-        "items": {"$ref": "#/definitions/Choices"}
-      }, {"$ref": "#/definitions/Choices"}]
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Choices"
+          }
+        },
+        {
+          "$ref": "#/definitions/Choices"
+        }
+      ]
     },
     "Labels": {
       "type": "object",
       "anyOf": [
-        {"required": ["@name", "@toName", "Label"]},
-        {"required": ["@name", "@toName", "@value"]},
-        {"required": ["@name", "@toName", "View"]}
+        {
+          "required": [
+            "@name",
+            "@toName",
+            "Label"
+          ]
+        },
+        {
+          "required": [
+            "@name",
+            "@toName",
+            "@value"
+          ]
+        },
+        {
+          "required": [
+            "@name",
+            "@toName",
+            "View"
+          ]
+        }
       ],
       "properties": {
         "@name": {
@@ -202,20 +322,36 @@
         "$": {
           "$ref": "#/definitions/$"
         },
-        "Label": {"$ref": "#/definitions/MaybeMultipleLabel"},
-        "View": {"$ref": "#/definitions/MaybeMultipleView"}
+        "Label": {
+          "$ref": "#/definitions/MaybeMultipleLabel"
+        },
+        "View": {
+          "$ref": "#/definitions/MaybeMultipleView"
+        }
       }
     },
     "MaybeMultipleLabels": {
-      "anyOf": [{
-        "type": "array",
-        "items": {"$ref": "#/definitions/Labels"}
-      }, {"$ref": "#/definitions/Labels"}]
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Labels"
+          }
+        },
+        {
+          "$ref": "#/definitions/Labels"
+        }
+      ]
     },
     "TextArea": {
       "type": "object",
       "anyOf": [
-        {"required": ["@name", "@toName"]}
+        {
+          "required": [
+            "@name",
+            "@toName"
+          ]
+        }
       ],
       "properties": {
         "@name": {
@@ -230,12 +366,18 @@
       }
     },
     "MaybeMultipleTextAreas": {
-      "anyOf": [{
-        "type": "array",
-        "items": {"$ref": "#/definitions/TextArea"}
-      }, {"$ref": "#/definitions/TextArea"}]
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TextArea"
+          }
+        },
+        {
+          "$ref": "#/definitions/TextArea"
+        }
+      ]
     }
-    
   },
   "type": "object",
   "properties": {
@@ -243,14 +385,30 @@
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "Choices": {"$ref": "#/definitions/MaybeMultipleChoices"},
-        "Labels": {"$ref": "#/definitions/MaybeMultipleLabels"},
-        "View": {"$ref": "#/definitions/MaybeMultipleView"},
-        "Image": {"$ref": "#/definitions/tags_with_value_required_name"},
-        "Text": {"$ref": "#/definitions/tags_with_value_required_name"},
-        "HyperText": {"$ref": "#/definitions/tags_with_value_required_name"},
-        "TextArea": {"$ref": "#/definitions/MaybeMultipleTextAreas"},
-        "Number": {"$ref": "#/definitions/tags_with_name_and_toname"}
+        "Choices": {
+          "$ref": "#/definitions/MaybeMultipleChoices"
+        },
+        "Labels": {
+          "$ref": "#/definitions/MaybeMultipleLabels"
+        },
+        "View": {
+          "$ref": "#/definitions/MaybeMultipleView"
+        },
+        "Image": {
+          "$ref": "#/definitions/tags_with_value_required_name"
+        },
+        "Text": {
+          "$ref": "#/definitions/tags_with_value_required_name"
+        },
+        "HyperText": {
+          "$ref": "#/definitions/tags_with_value_required_name"
+        },
+        "TextArea": {
+          "$ref": "#/definitions/MaybeMultipleTextAreas"
+        },
+        "Number": {
+          "$ref": "#/definitions/tags_with_name_and_toname"
+        }
       }
     }
   }
