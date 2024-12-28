@@ -18562,7 +18562,7 @@ client.prompts.runs.create(
 <dl>
 <dd>
 
-**model_version:** `typing.Optional[str]` 
+**model_version:** `typing.Optional[int]` 
     
 </dd>
 </dl>

@@ -104,7 +104,7 @@ class RunsClient:
         project: int,
         project_subset: InferenceRunProjectSubset,
         organization: typing.Optional[InferenceRunOrganization] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
+        model_version: typing.Optional[int] = OMIT,
         created_by: typing.Optional[InferenceRunCreatedBy] = OMIT,
         status: typing.Optional[InferenceRunStatus] = OMIT,
         job_id: typing.Optional[str] = OMIT,
@@ -131,7 +131,7 @@ class RunsClient:
 
         organization : typing.Optional[InferenceRunOrganization]
 
-        model_version : typing.Optional[str]
+        model_version : typing.Optional[int]
 
         created_by : typing.Optional[InferenceRunCreatedBy]
 
@@ -298,7 +298,7 @@ class AsyncRunsClient:
         project: int,
         project_subset: InferenceRunProjectSubset,
         organization: typing.Optional[InferenceRunOrganization] = OMIT,
-        model_version: typing.Optional[str] = OMIT,
+        model_version: typing.Optional[int] = OMIT,
         created_by: typing.Optional[InferenceRunCreatedBy] = OMIT,
         status: typing.Optional[InferenceRunStatus] = OMIT,
         job_id: typing.Optional[str] = OMIT,
@@ -325,7 +325,7 @@ class AsyncRunsClient:
 
         organization : typing.Optional[InferenceRunOrganization]
 
-        model_version : typing.Optional[str]
+        model_version : typing.Optional[int]
 
         created_by : typing.Optional[InferenceRunCreatedBy]
 

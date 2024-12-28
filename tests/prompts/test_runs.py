@@ -10,7 +10,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
     expected_response: typing.Any = {
         "organization": 1,
         "project": 1,
-        "model_version": "model_version",
+        "model_version": 1,
         "created_by": 1,
         "project_subset": "All",
         "status": "Pending",
@@ -23,7 +23,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
     expected_types: typing.Any = {
         "organization": "integer",
         "project": "integer",
-        "model_version": None,
+        "model_version": "integer",
         "created_by": "integer",
         "project_subset": None,
         "status": None,
@@ -44,7 +44,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_response: typing.Any = {
         "organization": 1,
         "project": 1,
-        "model_version": "model_version",
+        "model_version": 1,
         "created_by": 1,
         "project_subset": "All",
         "status": "Pending",
@@ -57,7 +57,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_types: typing.Any = {
         "organization": "integer",
         "project": "integer",
-        "model_version": None,
+        "model_version": "integer",
         "created_by": "integer",
         "project_subset": None,
         "status": None,

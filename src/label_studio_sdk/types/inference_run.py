@@ -14,7 +14,7 @@ import pydantic
 class InferenceRun(UniversalBaseModel):
     organization: typing.Optional[InferenceRunOrganization] = None
     project: int
-    model_version: typing.Optional[str] = None
+    model_version: typing.Optional[int] = None
     created_by: typing.Optional[InferenceRunCreatedBy] = None
     project_subset: InferenceRunProjectSubset
     status: typing.Optional[InferenceRunStatus] = None

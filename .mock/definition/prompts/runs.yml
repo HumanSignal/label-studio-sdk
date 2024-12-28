@@ -53,7 +53,7 @@ service:
             body:
               organization: 1
               project: 1
-              model_version: model_version
+              model_version: 1
               created_by: 1
               project_subset: All
               status: Pending
@@ -97,7 +97,7 @@ service:
             body:
               organization: 1
               project: 1
-              model_version: model_version
+              model_version: 1
               created_by: 1
               project_subset: All
               status: Pending

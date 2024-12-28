@@ -2521,7 +2521,7 @@ types:
     properties:
       organization: optional<InferenceRunOrganization>
       project: integer
-      model_version: optional<string>
+      model_version: optional<integer>
       created_by: optional<InferenceRunCreatedBy>
       project_subset:
         type: InferenceRunProjectSubset
