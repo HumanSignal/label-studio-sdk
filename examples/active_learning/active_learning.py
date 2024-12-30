@@ -1,11 +1,18 @@
+"""
+**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34). 
+The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
+[`label_studio_sdk._legacy`](../../README.md) in your script.
+"""
+
 import random
 
-from label_studio_sdk import Client
-from label_studio_sdk.project import ProjectSampling
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
+
+from label_studio_sdk import Client
+from label_studio_sdk._legacy.project import ProjectSampling
 
 LABEL_STUDIO_URL = "http://localhost:8080"
 API_KEY = "91b3b61589784ed069b138eae3d5a5fe1e909f57"

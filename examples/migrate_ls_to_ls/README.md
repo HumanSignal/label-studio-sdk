@@ -9,7 +9,10 @@ This migration helps to copy projects from one LS instance to another. To be cop
 * Reviews (you should request our team to enable it on SaaS side for your organization)
 * Drafts (you should request our team to enable it on SaaS side for your organization)
 
-Other entities are not supported. Cloud Storages are not yet supported.
+Not supported:
+* Cloud Storages are not supported.
+* Files and media uploaded using UI imports are not supported and won't be copied. 
+* Other entities are not supported. 
 
 Each new run of this script will generate new projects on the destination instance.
 
@@ -18,6 +21,16 @@ Each new run of this script will generate new projects on the destination instan
 **Attention:** You must use Administrator or better Owner auth token on both LSE instances to run this script. 
 
 **Note:** Create a new workspace and get its ID for projects to be mgiratated. 
+
+**SDK v1.0 or higher**
+
+```
+pip install -U label-studio-sdk
+```
+
+**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
+The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
+[`label_studio_sdk._legacy`](../../README.md) in your script.
 
 # How it works? 
 
@@ -57,7 +70,7 @@ Each new run of this script will generate new projects on the destination instan
     ```
     python3 migrate-ls-to-ls.py --project-ids=123,456 \
         --src-url http://localhost:8000 --src-key <src-token> \
-        --dst-url https://app.heartex.com --dst-key <dst-token>
+        --dst-url https://app.humansignal.com --dst-key <dst-token>
     ```
 
     To migrate all projects:
@@ -65,7 +78,7 @@ Each new run of this script will generate new projects on the destination instan
     ```
     python3 migrate-ls-to-ls.py \
         --src-url http://localhost:8000 --src-key <src-token> \
-        --dst-url https://app.heartex.com --dst-key <dst-token>
+        --dst-url https://app.humansignal.com --dst-key <dst-token>
     ```
 
 5. Migrate all projects to the specific workspace (optional)
@@ -76,7 +89,7 @@ Each new run of this script will generate new projects on the destination instan
     ```
     python3 migrate-ls-to-ls.py --project-ids=123,456 \ 
         --src-url http://localhost:8000 --src-key <src-token> \ 
-        --dst-url https://app.heartex.com --dst-key <dst-token> \
+        --dst-url https://app.humansignal.com --dst-key <dst-token> \
         --dest-workspace <workspace-id>
     ```
 

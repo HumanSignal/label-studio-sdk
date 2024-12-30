@@ -1,0 +1,66 @@
+{
+    "request": {
+        "headers": {
+            "accept": "image/tiff",
+            "content-type": "application/json"
+        },
+        "payload": {
+            "evalscript": "\n    //VERSION=3\n    function setup() {\n        return {\n            input: [\"B04\", \"B03\", \"B02\", \"SCL\"],  // RGB and Scene Classification\n            output: { bands: 3 }\n        };\n    }\n    function evaluatePixel(sample) {\n        if (sample.SCL === 3 || sample.SCL === 8 || sample.SCL === 9 || sample.SCL === 10) {\n            return [0, 0, 0];  // Exclude cloudy, shadow, and cirrus pixels\n        }\n        return [sample.B04, sample.B03, sample.B02];  // RGB\n    }\n    ",
+            "input": {
+                "bounds": {
+                    "bbox": [
+                        391844.387315558,
+                        3984410.788075776,
+                        410099.10461547953,
+                        4006799.0325791687
+                    ],
+                    "properties": {
+                        "crs": "http://www.opengis.net/def/crs/EPSG/0/32612"
+                    }
+                },
+                "data": [
+                    {
+                        "dataFilter": {
+                            "mosaickingOrder": "leastCC",
+                            "timeRange": {
+                                "from": "2024-04-12T22:01:20.730389Z",
+                                "to": "2024-06-11T22:01:20.730398Z"
+                            }
+                        },
+                        "type": "sentinel-2-l2a"
+                    }
+                ]
+            },
+            "output": {
+                "height": 2239,
+                "responses": [
+                    {
+                        "format": {
+                            "type": "image/tiff"
+                        },
+                        "identifier": "default"
+                    }
+                ],
+                "width": 1825
+            }
+        },
+        "timestamp": "2024-06-11T18:01:28.680335",
+        "url": "https://services.sentinel-hub.com/api/v1/process"
+    },
+    "response": {
+        "elapsed": 5.204646,
+        "headers": {
+            "Connection": "keep-alive",
+            "Content-Type": "image/tiff",
+            "Date": "Tue, 11 Jun 2024 22:01:26 GMT",
+            "Transfer-Encoding": "chunked",
+            "access-control-allow-credentials": "true",
+            "access-control-allow-headers": "origin,content-type,accept,accept-crs,authorization,cache-control",
+            "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH",
+            "access-control-allow-origin": "*",
+            "access-control-max-age": "3600",
+            "x-processingunits-spent": "20.783361418546065"
+        },
+        "status_code": 200
+    }
+}

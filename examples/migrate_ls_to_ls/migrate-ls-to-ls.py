@@ -3,6 +3,10 @@ This migration helps to copy projects from one LS instance to another.
 
 Usage:
 > python3 migrate-ls-to-ls.py --src-url src-ls.com --src-key <src-token> --dst-url dst-ls.com --dst-key <dst-token> --project-ids=123,456
+
+**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
+The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
+[`label_studio_sdk._legacy`](../../README.md) in your script.
 """
 
 import json
@@ -11,8 +15,8 @@ import os
 import time
 
 from label_studio_sdk import Client
+from label_studio_sdk._legacy.users import User
 from label_studio_sdk.data_manager import Filters, Operator, Type, Column
-from label_studio_sdk.users import User
 
 logger = logging.getLogger("migration-ls-to-ls")
 logger.setLevel(logging.DEBUG)
@@ -172,7 +176,7 @@ class Migration:
             logger.info(f"Import {filename} finished for project {new_project.id}")
             time.sleep(1)
 
-        project.set_params(label_config=label_config)
+        new_project.set_params(label_config=label_config)
         self.add_default_import_storage(new_project)
         return True
 

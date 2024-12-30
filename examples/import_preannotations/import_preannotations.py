@@ -1,11 +1,18 @@
+"""
+**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
+The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
+[`label_studio_sdk._legacy`](../../README.md) in your script.
+"""
+
 # Import tasks with pre-annotations (predictions) using SDK,
 # then calculate agreement scores (accuracy) per tasks.
 
+import pandas as pd
 from evalme.metrics import (
     get_agreement,
 )  # run first `pip install label-studio-evalme` to use this package
+
 from label_studio_sdk import Client
-import pandas as pd
 
 LABEL_STUDIO_URL = "http://localhost:8080"
 API_KEY = "91b3b61589784ed069b138eae3d5a5fe1e909f57"

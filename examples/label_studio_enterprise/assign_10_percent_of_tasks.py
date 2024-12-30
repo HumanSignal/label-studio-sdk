@@ -1,6 +1,10 @@
 """
 This script is meant to automatically tag tasks within a project using a random distribution and
 then assign those that receive a specific tag to a reviewer for further reviewing.
+
+**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
+The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
+[`label_studio_sdk._legacy`](../../README.md) in your script.
 """
 
 from label_studio_sdk import Client
