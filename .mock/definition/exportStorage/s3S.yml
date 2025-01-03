@@ -22,6 +22,8 @@ service:
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
+      source:
+        openapi: openapi/openapi.yaml
       display-name: List export storages
       request:
         name: S3SListRequest
@@ -61,6 +63,8 @@ service:
         For information about the required fields and prerequisites, see [Amazon
         S3](https://docs.humansignal.com/guide/storage#Set-up-an-S3-connection-with-IAM-role-access)
         in the Label Studio documentation.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Create export storage
       request:
         name: S3SCreateRequest
@@ -96,6 +100,7 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
+        content-type: application/json
       response:
         docs: ''
         type: root.S3SExportStorage
@@ -125,6 +130,8 @@ service:
         Get a specific S3 export storage connection. You will need to provide
         the export storage ID. You can find this using [List export
         storages](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -160,6 +167,8 @@ service:
         Delete a specific S3 export storage connection. You will need to provide
         the export storage ID. You can find this using [List export
         storages](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -179,6 +188,8 @@ service:
         Update a specific S3 export storage connection. You will need to provide
         the export storage ID. You can find this using [List export
         storages](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -218,6 +229,7 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
+        content-type: application/json
       response:
         docs: ''
         type: root.S3SExportStorage
@@ -249,6 +261,8 @@ service:
         Validate a specific S3 export storage connection. This is useful to
         ensure that the storage configuration settings are correct and
         operational before attempting to export data.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Validate export storage
       request:
         name: S3SValidateRequest
@@ -284,6 +298,7 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
+        content-type: application/json
       examples:
         - request: {}
       audiences:

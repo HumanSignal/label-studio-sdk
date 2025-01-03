@@ -2,4 +2,6 @@
 
 import typing
 
-ViewsCreateRequestDataFiltersItemsItemValue = typing.Union[str, int, float, bool, typing.Dict[str, typing.Any]]
+ViewsCreateRequestDataFiltersItemsItemValue = typing.Union[
+    str, int, float, bool, typing.Dict[str, typing.Optional[typing.Any]]
+]

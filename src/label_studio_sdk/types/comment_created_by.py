@@ -2,4 +2,4 @@
 
 import typing
 
-CommentCreatedBy = typing.Union[int, typing.Dict[str, typing.Any]]
+CommentCreatedBy = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]
