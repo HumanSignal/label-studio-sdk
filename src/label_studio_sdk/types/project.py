@@ -83,7 +83,7 @@ class Project(UniversalBaseModel):
     Minimum number of completed tasks after which model training is started
     """
 
-    start_training_on_annotation_update: typing.Optional[str] = pydantic.Field(default=None)
+    start_training_on_annotation_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Start model training after any annotations are submitted or updated
     """
@@ -157,7 +157,7 @@ class Project(UniversalBaseModel):
     Retrieve and display predictions when loading a task
     """
 
-    config_has_control_tags: typing.Optional[str] = pydantic.Field(default=None)
+    config_has_control_tags: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Flag to detect is project ready for labeling
     """
@@ -178,8 +178,8 @@ class Project(UniversalBaseModel):
     Finished tasks
     """
 
-    queue_total: typing.Optional[str] = None
-    queue_done: typing.Optional[str] = None
+    queue_total: typing.Optional[int] = None
+    queue_done: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

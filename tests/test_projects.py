@@ -86,7 +86,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         },
         "created_at": "2023-08-24T14:15:22Z",
         "min_annotations_to_start_training": 0,
-        "start_training_on_annotation_update": "start_training_on_annotation_update",
+        "start_training_on_annotation_update": True,
         "show_collab_predictions": True,
         "num_tasks_with_annotations": 10,
         "task_number": 100,
@@ -104,13 +104,13 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "control_weights": {"key": "value"},
         "parsed_label_config": {"key": "value"},
         "evaluate_predictions_automatically": False,
-        "config_has_control_tags": "config_has_control_tags",
+        "config_has_control_tags": True,
         "skip_queue": "REQUEUE_FOR_ME",
         "reveal_preannotations_interactively": True,
         "pinned_at": "2023-08-24T14:15:22Z",
         "finished_task_number": 10,
-        "queue_total": "queue_total",
-        "queue_done": "queue_done",
+        "queue_total": 10,
+        "queue_done": 100,
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -171,8 +171,8 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "reveal_preannotations_interactively": None,
         "pinned_at": "datetime",
         "finished_task_number": "integer",
-        "queue_total": None,
-        "queue_done": None,
+        "queue_total": "integer",
+        "queue_done": "integer",
     }
     response = client.projects.get(id=1)
     validate_response(response, expected_response, expected_types)

@@ -594,7 +594,7 @@ types:
           Minimum number of completed tasks after which model training is
           started
       start_training_on_annotation_update:
-        type: optional<string>
+        type: optional<boolean>
         docs: Start model training after any annotations are submitted or updated
       show_collab_predictions:
         type: optional<boolean>
@@ -660,7 +660,7 @@ types:
         type: optional<boolean>
         docs: Retrieve and display predictions when loading a task
       config_has_control_tags:
-        type: optional<string>
+        type: optional<boolean>
         docs: Flag to detect is project ready for labeling
       skip_queue: optional<ProjectSkipQueue>
       reveal_preannotations_interactively:
@@ -672,8 +672,8 @@ types:
       finished_task_number:
         type: optional<integer>
         docs: Finished tasks
-      queue_total: optional<string>
-      queue_done: optional<string>
+      queue_total: optional<integer>
+      queue_done: optional<integer>
     source:
       openapi: openapi/openapi.yaml
   ProjectLabelConfig:

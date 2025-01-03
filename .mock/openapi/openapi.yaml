@@ -9026,7 +9026,7 @@ components:
         start_training_on_annotation_update:
           title: Start training on annotation update
           description: Start model training after any annotations are submitted or updated
-          type: string
+          type: boolean
           readOnly: true
         show_collab_predictions:
           title: Show predictions to annotator
@@ -9127,7 +9127,7 @@ components:
         config_has_control_tags:
           title: Config has control tags
           description: Flag to detect is project ready for labeling
-          type: string
+          type: boolean
           readOnly: true
         skip_queue:
           title: Skip queue
@@ -9154,11 +9154,11 @@ components:
           readOnly: true
         queue_total:
           title: Queue total
-          type: string
+          type: integer
           readOnly: true
         queue_done:
           title: Queue done
-          type: string
+          type: integer
           readOnly: true
     ProjectLabelConfig:
       required:
