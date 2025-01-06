@@ -33,6 +33,7 @@ from label_studio_sdk.converter.utils import (
     convert_annotation_to_yolo,
     convert_annotation_to_yolo_obb,
 )
+from label_studio_sdk._extensions.label_studio_tools.core.utils.io import get_local_path
 
 logger = logging.getLogger(__name__)
 
@@ -599,12 +600,11 @@ class Converter(object):
             # download all images of the dataset, including the ones without annotations
             if not os.path.exists(image_path):
                 try:
-                    image_path = download(
-                        image_path,
-                        output_image_dir,
+                    image_path = get_local_path(
+                        url=image_path,
+                        cache_dir=output_image_dir,
                         project_dir=self.project_dir,
-                        return_relative_path=True,
-                        upload_dir=self.upload_dir,
+                        image_dir=self.upload_dir,
                         download_resources=self.download_resources,
                     )
                 except:
