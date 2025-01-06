@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: "Install poetry"
-        run: pipx install poetry
+        run: pipx install "poetry<2.0.0"
 
       - name: "Set up Python"
         id: setup_python
@@ -52,7 +52,7 @@ jobs:
         run: poetry install
 
       - name: Install Fern
-        run: npm install -g fern-api
+        run: npm install -g fern-api@latest
 
       - name: Test
         run: fern test --command "poetry run pytest -rP ."

@@ -218,7 +218,7 @@ def add_parser(subparsers):
         "--image-ext",
         dest="image_ext",
         help="image extension to search: .jpeg or .jpg, .png",
-        default=".jpg",
+        default=".jpg,jpeg,.png",
     )
     yolo.add_argument(
         "--image-dims",
