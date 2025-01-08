@@ -202,7 +202,7 @@ def download_and_cache(
     filepath = os.path.join(cache_dir, url_hash + "__" + url_filename)
 
     if not os.path.exists(filepath):
-        logger.info("Download {url} to {filepath}".format(url=url, filepath=filepath))
+        logger.info("Download {url} to {filepath}. download_resources: {download_resources}".format(url=url, filepath=filepath, download_resources=download_resources))
         if download_resources:
             headers = {
                 # avoid requests.exceptions.HTTPError: 403 Client Error: Forbidden. Please comply with the User-Agent policy:
@@ -227,6 +227,7 @@ def download_and_cache(
                 raise e
             with io.open(filepath, mode="wb") as fout:
                 fout.write(r.content)
+                logger.info(f"File downloaded to {filepath}")
     return filepath
 
 
