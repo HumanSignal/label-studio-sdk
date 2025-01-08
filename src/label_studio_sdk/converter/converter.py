@@ -607,12 +607,13 @@ class Converter(object):
                     image_path = get_local_path(
                         url=image_path,
                         hostname=self.hostname,
-                        cache_dir=output_image_dir,
                         project_dir=self.project_dir,
-                        image_dir=self.upload_dir,
+                        cache_dir=output_image_dir,
                         download_resources=self.download_resources,
                         access_token=self.access_token,
                     )
+                    # make path relative to output_image_dir
+                    image_path = os.path.relpath(image_path, output_dir)
                 except:
                     logger.info(
                         "Unable to download {image_path}. The image of {item} will be skipped".format(
