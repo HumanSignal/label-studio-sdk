@@ -159,6 +159,8 @@ class Converter(object):
         output_tags=None,
         upload_dir=None,
         download_resources=True,
+        access_token=None,
+        hostname=None,
     ):
         """Initialize Label Studio Converter for Exports
 
@@ -172,6 +174,8 @@ class Converter(object):
         self.upload_dir = upload_dir
         self.download_resources = download_resources
         self._schema = None
+        self.access_token = access_token
+        self.hostname = hostname
 
         if isinstance(config, dict):
             self._schema = config
@@ -602,10 +606,12 @@ class Converter(object):
                 try:
                     image_path = get_local_path(
                         url=image_path,
+                        hostname=self.hostname,
                         cache_dir=output_image_dir,
                         project_dir=self.project_dir,
                         image_dir=self.upload_dir,
                         download_resources=self.download_resources,
+                        access_token=self.access_token,
                     )
                 except:
                     logger.info(
