@@ -608,6 +608,7 @@ class Converter(object):
                         url=image_path,
                         hostname=self.hostname,
                         project_dir=self.project_dir,
+                        image_dir=self.upload_dir,
                         cache_dir=output_image_dir,
                         download_resources=self.download_resources,
                         access_token=self.access_token,
@@ -813,14 +814,17 @@ class Converter(object):
             for image_path in reversed(image_paths):
                 if not os.path.exists(image_path):
                     try:
-                        image_path = download(
-                            image_path,
-                            output_image_dir,
+                        image_path = get_local_path(
+                            url=image_path,
+                            hostname=self.hostname,
                             project_dir=self.project_dir,
-                            return_relative_path=True,
-                            upload_dir=self.upload_dir,
+                            image_dir=self.upload_dir,
+                            cache_dir=output_image_dir,
                             download_resources=self.download_resources,
+                            access_token=self.access_token,
                         )
+                        # make path relative to output_image_dir
+                        image_path = os.path.relpath(image_path, output_dir)
                     except:
                         logger.info(
                             "Unable to download {image_path}. The item {item} will be skipped".format(

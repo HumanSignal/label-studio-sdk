@@ -124,9 +124,9 @@ def get_local_path(
     if is_uploaded_file and os.path.exists(image_dir):
         project_id = url.split("/")[-2]  # To retrieve project_id
         filepath = os.path.join(image_dir, project_id, os.path.basename(url))
-        if cache_dir and download_resources:
-            shutil.copy(filepath, cache_dir)
         if os.path.exists(filepath):
+            if cache_dir and download_resources:
+                shutil.copy(filepath, cache_dir)
             logger.debug(f"Uploaded file: Path exists in image_dir: {filepath}")
             return filepath
 
