@@ -251,10 +251,7 @@ class Converter(object):
         elif format in [Format.YOLO, Format.YOLO_OBB, Format.YOLO_OBB_WITH_IMAGES, Format.YOLO_WITH_IMAGES]:
             image_dir = kwargs.get("image_dir")
             label_dir = kwargs.get("label_dir")
-            if format in [Format.YOLO_WITH_IMAGES, Format.YOLO_OBB_WITH_IMAGES]:
-                self.download_resources = True
-            else:
-                self.download_resources = False
+             self.download_resources = format in [Format.YOLO_WITH_IMAGES, Format.YOLO_OBB_WITH_IMAGES]
             self.convert_to_yolo(
                 input_data,
                 output_data,
