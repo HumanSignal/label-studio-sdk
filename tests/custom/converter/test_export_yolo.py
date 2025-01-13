@@ -3,6 +3,7 @@ import os
 import shutil
 import tempfile
 
+from unittest.mock import patch
 import numpy as np
 import pytest
 
@@ -66,7 +67,23 @@ def create_temp_folder():
     shutil.rmtree(temp_dir)
 
 
-def test_convert_to_yolo(create_temp_folder):
+def test_convert_to_yolo_with_images(create_temp_folder):
+    """Check that download_resources is set correctly for YOLO_WITH_IMAGES format"""
+
+    tmp_folder = create_temp_folder
+    output_dir = tmp_folder
+    project_dir = "."
+
+    with patch.object(Converter, 'convert_to_yolo', return_value=None) as mock_method:
+        converter = Converter(LABEL_CONFIG_PATH, project_dir)
+        converter.convert(
+            INPUT_JSON_PATH,
+            output_dir,
+            format="YOLO_WITH_IMAGES",
+            is_dir=False,
+        )
+        assert converter.download_resources is True
+        mock_method.assert_called_once()
     """Check converstion label_studio json exported file to yolo with multiple labelers"""
 
     # Generates a temporary folder and return the absolute path
