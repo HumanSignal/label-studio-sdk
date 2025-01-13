@@ -56,6 +56,9 @@ class Format(Enum):
     YOLO = 11
     YOLO_OBB = 12
     CSV_OLD = 13
+    YOLO_WITH_IMAGES = 14
+    COCO_WITH_IMAGES = 15
+    YOLO_OBB_WITH_IMAGES = 16
 
     def __str__(self):
         return self.name
@@ -107,6 +110,12 @@ class Converter(object):
             "link": "https://labelstud.io/guide/export.html#COCO",
             "tags": ["image segmentation", "object detection"],
         },
+        Format.COCO_WITH_IMAGES: {
+            "title": "COCO with Images",
+            "description": "COCO format with images downloaded.",
+            "link": "https://labelstud.io/guide/export.html#COCO",
+            "tags": ["image segmentation", "object detection"],
+        },
         Format.VOC: {
             "title": "Pascal VOC XML",
             "description": "Popular XML format used for object detection and polygon image segmentation tasks.",
@@ -120,11 +129,23 @@ class Converter(object):
             "link": "https://labelstud.io/guide/export.html#YOLO",
             "tags": ["image segmentation", "object detection"],
         },
+        Format.YOLO_WITH_IMAGES: {
+            "title": "YOLO with Images",
+            "description": "YOLO format with images downloaded.",
+            "link": "https://labelstud.io/guide/export.html#YOLO",
+            "tags": ["image segmentation", "object detection"],
+        },
         Format.YOLO_OBB: {
             "title": "YOLOv8 OBB",
             "description": "Popular TXT format is created for each image file. Each txt file contains annotations for "
             "the corresponding image file. The YOLO OBB format designates bounding boxes by their four corner points "
             "with coordinates normalized between 0 and 1, so it is possible to export rotated objects.",
+            "link": "https://labelstud.io/guide/export.html#YOLO",
+            "tags": ["image segmentation", "object detection"],
+        },
+        Format.YOLO_OBB_WITH_IMAGES: {
+            "title": "YOLOv8 OBB with Images",
+            "description": "YOLOv8 OBB format with images downloaded.",
             "link": "https://labelstud.io/guide/export.html#YOLO",
             "tags": ["image segmentation", "object detection"],
         },
@@ -221,14 +242,18 @@ class Converter(object):
             )
         elif format == Format.CONLL2003:
             self.convert_to_conll2003(input_data, output_data, is_dir=is_dir)
-        elif format == Format.COCO:
+        elif format in [Format.COCO, Format.COCO_WITH_IMAGES]:
             image_dir = kwargs.get("image_dir")
+            if format == Format.COCO_WITH_IMAGES:
+                self.download_resources = True
             self.convert_to_coco(
                 input_data, output_data, output_image_dir=image_dir, is_dir=is_dir
             )
-        elif format == Format.YOLO or format == Format.YOLO_OBB:
+        elif format in [Format.YOLO, Format.YOLO_OBB, Format.YOLO_OBB_WITH_IMAGES, Format.YOLO_WITH_IMAGES]:
             image_dir = kwargs.get("image_dir")
             label_dir = kwargs.get("label_dir")
+            if format in [Format.YOLO_WITH_IMAGES, Format.YOLO_OBB_WITH_IMAGES]:
+                self.download_resources = True
             self.convert_to_yolo(
                 input_data,
                 output_data,
@@ -339,7 +364,9 @@ class Converter(object):
             and "Labels" in output_tag_types
         ):
             all_formats.remove(Format.COCO.name)
+            all_formats.remove(Format.COCO_WITH_IMAGES.name)
             all_formats.remove(Format.YOLO.name)
+            all_formats.remove(Format.YOLO_WITH_IMAGES.name)
         if not (
             "Image" in input_tag_types
             and (
@@ -358,6 +385,7 @@ class Converter(object):
             all_formats.remove(Format.ASR_MANIFEST.name)
         if is_mig or ('Video' in input_tag_types and 'TimelineLabels' in output_tag_types):
             all_formats.remove(Format.YOLO_OBB.name)
+            all_formats.remove(Format.YOLO_OBB_WITH_IMAGES.name)
 
         return all_formats
 
