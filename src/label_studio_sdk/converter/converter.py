@@ -246,6 +246,8 @@ class Converter(object):
             image_dir = kwargs.get("image_dir")
             if format == Format.COCO_WITH_IMAGES:
                 self.download_resources = True
+            else:
+                self.download_resources = False
             self.convert_to_coco(
                 input_data, output_data, output_image_dir=image_dir, is_dir=is_dir
             )
@@ -254,6 +256,8 @@ class Converter(object):
             label_dir = kwargs.get("label_dir")
             if format in [Format.YOLO_WITH_IMAGES, Format.YOLO_OBB_WITH_IMAGES]:
                 self.download_resources = True
+            else:
+                self.download_resources = False
             self.convert_to_yolo(
                 input_data,
                 output_data,
