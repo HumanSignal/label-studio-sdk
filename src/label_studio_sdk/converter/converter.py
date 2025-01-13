@@ -244,10 +244,7 @@ class Converter(object):
             self.convert_to_conll2003(input_data, output_data, is_dir=is_dir)
         elif format in [Format.COCO, Format.COCO_WITH_IMAGES]:
             image_dir = kwargs.get("image_dir")
-            if format == Format.COCO_WITH_IMAGES:
-                self.download_resources = True
-            else:
-                self.download_resources = False
+            self.download_resources = format == Format.COCO_WITH_IMAGES
             self.convert_to_coco(
                 input_data, output_data, output_image_dir=image_dir, is_dir=is_dir
             )
