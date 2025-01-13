@@ -63,7 +63,7 @@ jobs:
           sed -i "s/^version[ ]*=.*/version = \"${version}\"/g" ${{ env.PYTHON_VERSION_FILE }}
 
       - name: "Install poetry"
-        run: pipx install poetry
+        run: pipx install "poetry<2.0.0"
 
       - name: "Set up Python"
         id: setup_python

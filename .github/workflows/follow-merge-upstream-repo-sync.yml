@@ -70,7 +70,7 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: "Install poetry"
-        run: pipx install poetry
+        run: pipx install "poetry<2.0.0"
 
       - name: "Set up Python"
         id: setup_python
