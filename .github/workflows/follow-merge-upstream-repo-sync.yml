@@ -69,17 +69,20 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
 
-      - name: "Install poetry"
-        env:
-          POETRY_VERSION: ${{ vars.POETRY_VERSION }}
-        run: pipx install "poetry==${POETRY_VERSION}"
-
       - name: "Set up Python"
         id: setup_python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 #          cache: 'poetry' # Disable cache since label-studio-client-generator does not have poetry.lock
+
+      - name: "Install poetry"
+        env:
+          POETRY_VERSION: ${{ vars.POETRY_VERSION }}
+          PYTHONPATH: ${{ steps.setup_python.outputs.python-path }}
+        run: |
+          pipx install "poetry==${POETRY_VERSION}"
+          poetry env use "${PYTHONPATH}"
 
       - name: Download Fern
         run: npm install -g fern-api@latest
@@ -96,14 +99,11 @@ jobs:
 
       - name: Check Fern API is valid
         working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
-        env:
-          PYTHONPATH: ${{ steps.setup_python.outputs.python-path }}
         run: fern check
 
       - name: Generate Python SDK
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          PYTHONPATH: ${{ steps.setup_python.outputs.python-path }}
         working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
         run: fern generate --group python-sdk-staging --log-level debug
 
