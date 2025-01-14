@@ -96,14 +96,11 @@ jobs:
 
       - name: Check Fern API is valid
         working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
-        env:
-          PYTHONPATH: ${{ steps.setup_python.outputs.python-path }}
         run: fern check
 
       - name: Generate Python SDK
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          PYTHONPATH: ${{ steps.setup_python.outputs.python-path }}
         working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
         run: fern generate --group python-sdk-staging --log-level debug
 
