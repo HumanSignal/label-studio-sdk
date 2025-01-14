@@ -18,6 +18,8 @@ service:
         You will need to provide the project ID. You can find this in the URL
         when viewing the project in Label Studio, or you can use [List all
         projects](../projects/list). 
+      source:
+        openapi: openapi/openapi.yaml
       display-name: List views
       request:
         name: ViewsListRequest
@@ -63,6 +65,8 @@ service:
         You will need to provide the project ID. You can find this in the URL
         when viewing the project in Label Studio, or you can use [List all
         projects](../projects/list). 
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Create view
       request:
         name: ViewsCreateRequest
@@ -74,6 +78,7 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
+        content-type: application/json
       response:
         docs: ''
         type: root.View
@@ -112,12 +117,15 @@ service:
         You will need to provide the project ID. You can find this in the URL
         when viewing the project in Label Studio, or you can use [List all
         projects](../projects/list).
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Delete all project views
       request:
         name: ViewReset
         body:
           properties:
             project: integer
+        content-type: application/json
       examples:
         - request:
             project: 1
@@ -131,6 +139,8 @@ service:
 
         Get the details about a specific Data Manager view (tab). You will need
         to supply the view ID. You can find this using [List views](list).  
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: string
@@ -169,6 +179,8 @@ service:
       docs: >-
         Delete a specific Data Manager view (tab) by ID. You can find the view
         using [List views](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: string
@@ -188,6 +200,8 @@ service:
         You can update a specific Data Manager view (tab) with additional
         filters and other customizations. You will need to supply the view ID.
         You can find this using [List views](list).  
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: string
@@ -203,6 +217,7 @@ service:
             project:
               type: optional<integer>
               docs: Project ID
+        content-type: application/json
       response:
         docs: ''
         type: root.View
@@ -242,6 +257,7 @@ types:
       "and") will be applied to all items in the filters list. It is not
       possible to combine "or" and "and" within one list of filters. All filters
       will be either combined with "or" or with "and", but not a mix of both.
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ViewsCreateRequestDataFiltersItemsItemFilter:
@@ -337,6 +353,7 @@ types:
       Number of unresolved comments in a
       task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the task
       was updated at (e.g. new annotation was created, review added, etc)</li>
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ViewsCreateRequestDataFiltersItemsItemOperator:
@@ -368,6 +385,7 @@ types:
       to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
       not between min and max values, so the filter `value` should be e.g.
       `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ViewsCreateRequestDataFiltersItemsItemValue:
@@ -386,6 +404,7 @@ types:
         docs: List of strings or integers
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ViewsCreateRequestDataFiltersItemsItem:
     properties:
       filter:
@@ -469,6 +488,7 @@ types:
         docs: Value to filter by
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ViewsCreateRequestDataFilters:
     docs: >-
       Filters to apply on tasks. You can use [the helper class `Filters` from
@@ -490,6 +510,7 @@ types:
         type: list<ViewsCreateRequestDataFiltersItemsItem>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ViewsCreateRequestDataOrderingItem:
     enum:
       - value: tasks:agreement
@@ -536,6 +557,7 @@ types:
         name: TasksUnresolvedCommentCount
       - value: tasks:updated_at
         name: TasksUpdatedAt
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ViewsCreateRequestData:
@@ -557,6 +579,7 @@ types:
           the field name, e.g. `-tasks:created_at`.
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ViewsUpdateRequestDataFiltersConjunction:
     enum:
       - or
@@ -566,6 +589,7 @@ types:
       "and") will be applied to all items in the filters list. It is not
       possible to combine "or" and "and" within one list of filters. All filters
       will be either combined with "or" or with "and", but not a mix of both.
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ViewsUpdateRequestDataFiltersItemsItemFilter:
@@ -661,6 +685,7 @@ types:
       Number of unresolved comments in a
       task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the task
       was updated at (e.g. new annotation was created, review added, etc)</li>
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ViewsUpdateRequestDataFiltersItemsItemOperator:
@@ -692,6 +717,7 @@ types:
       to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
       not between min and max values, so the filter `value` should be e.g.
       `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ViewsUpdateRequestDataFiltersItemsItemValue:
@@ -710,6 +736,7 @@ types:
         docs: List of strings or integers
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ViewsUpdateRequestDataFiltersItemsItem:
     properties:
       filter:
@@ -793,6 +820,7 @@ types:
         docs: Value to filter by
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ViewsUpdateRequestDataFilters:
     docs: >-
       Filters to apply on tasks. You can use [the helper class `Filters` from
@@ -814,6 +842,7 @@ types:
         type: list<ViewsUpdateRequestDataFiltersItemsItem>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ViewsUpdateRequestDataOrderingItem:
     enum:
       - value: tasks:agreement
@@ -860,6 +889,7 @@ types:
         name: TasksUnresolvedCommentCount
       - value: tasks:updated_at
         name: TasksUpdatedAt
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ViewsUpdateRequestData:
@@ -881,3 +911,4 @@ types:
           the field name, e.g. `-tasks:created_at`.
     source:
       openapi: openapi/openapi.yaml
+    inline: true

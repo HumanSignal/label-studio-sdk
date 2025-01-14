@@ -2,4 +2,4 @@
 
 import typing
 
-PromptVersionCreatedBy = typing.Union[int, typing.Dict[str, typing.Any]]
+PromptVersionCreatedBy = typing.Union[int, typing.Dict[str, typing.Optional[typing.Any]]]

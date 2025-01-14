@@ -22,6 +22,8 @@ service:
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
+      source:
+        openapi: openapi/openapi.yaml
       display-name: List import storages
       request:
         name: S3SListRequest
@@ -83,6 +85,8 @@ service:
         <Tip>After you add the storage, you should validate the connection
         before attempting to sync your data. Your data will not be imported
         until you [sync your connection](sync).</Tip>
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Create import storage
       request:
         name: S3SCreateRequest
@@ -139,6 +143,7 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
+        content-type: application/json
       response:
         docs: ''
         type: root.S3SImportStorage
@@ -181,6 +186,8 @@ service:
         Get a specific S3 import storage connection. You will need to provide
         the import storage ID. You can find this using [List import
         storages](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -242,6 +249,8 @@ service:
         If you want to remove the tasks that were synced from the external
         storage, you will need to delete them manually from within the Label
         Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -265,6 +274,8 @@ service:
 
         For more information about working with external storage, see [Sync data
         from external storage](https://labelstud.io/guide/storage).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -325,6 +336,7 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
+        content-type: application/json
       response:
         docs: ''
         type: root.S3SImportStorage
@@ -369,6 +381,8 @@ service:
         Validate a specific S3 import storage connection. This is useful to
         ensure that the storage configuration settings are correct and
         operational before attempting to import data.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Validate import storage
       request:
         name: S3SValidateRequest
@@ -425,6 +439,7 @@ service:
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
+        content-type: application/json
       examples:
         - request: {}
       audiences:
@@ -438,6 +453,8 @@ service:
         Sync tasks from an S3 import storage connection. You will need to
         provide the import storage ID. You can find this using [List import
         storages](list).
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer

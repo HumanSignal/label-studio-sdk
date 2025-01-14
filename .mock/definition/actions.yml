@@ -9,6 +9,8 @@ service:
       docs: >-
         Retrieve all the registered actions with descriptions that data manager
         can use.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Get actions
       examples:
         - {}
@@ -23,6 +25,8 @@ service:
         More complex actions require additional parameters in the request body.
         Call `GET api/actions?project=<id>` to explore them. <br>Example: `GET
         api/actions?id=delete_tasks&project=1`
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Post actions
       request:
         name: ActionsCreateRequest
@@ -65,6 +69,7 @@ service:
                 List of fields to order by. Fields are similar to filters but
                 without the `filter:` prefix. To reverse the order, add a minus
                 sign before the field name, e.g. `-tasks:created_at`.
+        content-type: application/json
       examples:
         - query-parameters:
             id: retrieve_tasks_predictions
@@ -113,6 +118,7 @@ types:
       "and") will be applied to all items in the filters list. It is not
       possible to combine "or" and "and" within one list of filters. All filters
       will be either combined with "or" or with "and", but not a mix of both.
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ActionsCreateRequestFiltersItemsItemFilter:
@@ -208,6 +214,7 @@ types:
       Number of unresolved comments in a
       task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the task
       was updated at (e.g. new annotation was created, review added, etc)</li>
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ActionsCreateRequestFiltersItemsItemOperator:
@@ -239,6 +246,7 @@ types:
       to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
       not between min and max values, so the filter `value` should be e.g.
       `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   ActionsCreateRequestFiltersItemsItemValue:
@@ -257,6 +265,7 @@ types:
         docs: List of strings or integers
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ActionsCreateRequestFiltersItemsItem:
     properties:
       filter:
@@ -340,6 +349,7 @@ types:
         docs: Value to filter by
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ActionsCreateRequestFilters:
     docs: >-
       Filters to apply on tasks. You can use [the helper class `Filters` from
@@ -361,6 +371,7 @@ types:
         type: list<ActionsCreateRequestFiltersItemsItem>
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ActionsCreateRequestSelectedItemsIncluded:
     properties:
       all:
@@ -371,6 +382,7 @@ types:
         docs: List of included task IDs
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ActionsCreateRequestSelectedItemsExcluded:
     properties:
       all:
@@ -381,6 +393,7 @@ types:
         docs: List of excluded task IDs
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ActionsCreateRequestSelectedItems:
     discriminated: false
     docs: >-
@@ -389,10 +402,11 @@ types:
       used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all":
       false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
     union:
-      - ActionsCreateRequestSelectedItemsIncluded
-      - ActionsCreateRequestSelectedItemsExcluded
+      - type: ActionsCreateRequestSelectedItemsIncluded
+      - type: ActionsCreateRequestSelectedItemsExcluded
     source:
       openapi: openapi/openapi.yaml
+    inline: true
   ActionsCreateRequestOrderingItem:
     enum:
       - value: tasks:agreement
@@ -439,5 +453,6 @@ types:
         name: TasksUnresolvedCommentCount
       - value: tasks:updated_at
         name: TasksUpdatedAt
+    inline: true
     source:
       openapi: openapi/openapi.yaml
