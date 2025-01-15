@@ -258,7 +258,7 @@ class Converter(object):
                 output_image_dir=image_dir,
                 output_label_dir=label_dir,
                 is_dir=is_dir,
-                is_obb=(format == Format.YOLO_OBB),
+                is_obb=(format in [Format.YOLO_OBB, Format.YOLO_OBB_WITH_IMAGES]),
             )
         elif format == Format.VOC:
             image_dir = kwargs.get("image_dir")
