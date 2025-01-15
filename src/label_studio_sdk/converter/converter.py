@@ -624,6 +624,7 @@ class Converter(object):
         )
         for item_idx, item in enumerate(item_iterator):
             image_path = item["input"][data_key]
+            task_id = item["id"]
             image_id = len(images)
             width = None
             height = None
@@ -638,6 +639,7 @@ class Converter(object):
                         cache_dir=output_image_dir,
                         download_resources=self.download_resources,
                         access_token=self.access_token,
+                        task_id=task_id,
                     )
                     # make path relative to output_image_dir
                     image_path = os.path.relpath(image_path, output_dir)
@@ -835,6 +837,7 @@ class Converter(object):
             image_paths = [image_paths] if isinstance(image_paths, str) else image_paths
             # download image(s)
             image_path = None
+            task_id = item["id"]
             # TODO: for multi-page annotation, this code won't produce correct relationships between page and annotated shapes
             # fixing the issue in RND-84
             for image_path in reversed(image_paths):
@@ -848,6 +851,7 @@ class Converter(object):
                             cache_dir=output_image_dir,
                             download_resources=self.download_resources,
                             access_token=self.access_token,
+                            task_id=task_id,
                         )
                         # make path relative to output_image_dir
                         image_path = os.path.relpath(image_path, output_dir)
