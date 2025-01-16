@@ -41,7 +41,7 @@ Explore the Label Studio API documentation [here](https://api.labelstud.io/).
 ```sh
 pip install --upgrade label-studio-sdk
 # or
-poetry add label-studio-sdk
+poetry install
 ```
 
 # Usage

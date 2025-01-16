@@ -1,9 +1,9 @@
 [project]
 name = "label-studio-sdk"
+version = "1.0.9"
 
 [tool.poetry]
 name = "label-studio-sdk"
-version = "1.0.9"
 description = ""
 readme = "README.md"
 authors = []
@@ -54,7 +54,7 @@ typing_extensions = ">= 4.0.0"
 ujson = ">=5.8.0"
 xmljson = "0.2.1"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 mypy = "1.0.1"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
