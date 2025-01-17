@@ -11,6 +11,8 @@ service:
       docs: |
 
         Get a list of comments for a specific project.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: List comments
       request:
         name: CommentsListRequest
@@ -49,6 +51,8 @@ service:
       docs: |
 
         Create a new comment.
+      source:
+        openapi: openapi/openapi.yaml
       display-name: Create comment
       request:
         name: CommentsCreateRequest
@@ -58,6 +62,7 @@ service:
             project: optional<integer>
             text: optional<string>
             is_resolved: optional<boolean>
+        content-type: application/json
       response:
         docs: ''
         type: root.Comment
@@ -84,6 +89,8 @@ service:
       docs: |
 
         Get a specific comment.
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -116,6 +123,8 @@ service:
       docs: |
 
         Delete a specific comment.
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -133,6 +142,8 @@ service:
       docs: |
 
         Update a specific comment.
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -146,6 +157,7 @@ service:
             project: optional<integer>
             text: optional<string>
             is_resolved: optional<boolean>
+        content-type: application/json
       response:
         docs: ''
         type: root.Comment

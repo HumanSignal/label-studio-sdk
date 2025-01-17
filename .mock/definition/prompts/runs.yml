@@ -17,6 +17,8 @@ service:
       method: GET
       auth: true
       docs: Get information (status, etadata, etc) about an existing inference run
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -51,7 +53,7 @@ service:
             body:
               organization: 1
               project: 1
-              model_version: model_version
+              model_version: 1
               created_by: 1
               project_subset: All
               status: Pending
@@ -68,6 +70,8 @@ service:
       auth: true
       docs: |
         Run a prompt inference.
+      source:
+        openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
@@ -78,6 +82,7 @@ service:
       display-name: Run prompt inference
       request:
         body: root.InferenceRun
+        content-type: application/json
       response:
         docs: ''
         type: root.InferenceRun
@@ -92,7 +97,7 @@ service:
             body:
               organization: 1
               project: 1
-              model_version: model_version
+              model_version: 1
               created_by: 1
               project_subset: All
               status: Pending
