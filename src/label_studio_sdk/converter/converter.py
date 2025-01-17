@@ -33,6 +33,7 @@ from label_studio_sdk.converter.utils import (
     convert_annotation_to_yolo,
     convert_annotation_to_yolo_obb,
 )
+from label_studio_sdk._extensions.label_studio_tools.core.utils.io import get_local_path
 
 logger = logging.getLogger(__name__)
 
@@ -55,6 +56,9 @@ class Format(Enum):
     YOLO = 11
     YOLO_OBB = 12
     CSV_OLD = 13
+    YOLO_WITH_IMAGES = 14
+    COCO_WITH_IMAGES = 15
+    YOLO_OBB_WITH_IMAGES = 16
 
     def __str__(self):
         return self.name
@@ -106,6 +110,12 @@ class Converter(object):
             "link": "https://labelstud.io/guide/export.html#COCO",
             "tags": ["image segmentation", "object detection"],
         },
+        Format.COCO_WITH_IMAGES: {
+            "title": "COCO with Images",
+            "description": "COCO format with images downloaded.",
+            "link": "https://labelstud.io/guide/export.html#COCO",
+            "tags": ["image segmentation", "object detection"],
+        },
         Format.VOC: {
             "title": "Pascal VOC XML",
             "description": "Popular XML format used for object detection and polygon image segmentation tasks.",
@@ -119,11 +129,23 @@ class Converter(object):
             "link": "https://labelstud.io/guide/export.html#YOLO",
             "tags": ["image segmentation", "object detection"],
         },
+        Format.YOLO_WITH_IMAGES: {
+            "title": "YOLO with Images",
+            "description": "YOLO format with images downloaded.",
+            "link": "https://labelstud.io/guide/export.html#YOLO",
+            "tags": ["image segmentation", "object detection"],
+        },
         Format.YOLO_OBB: {
             "title": "YOLOv8 OBB",
             "description": "Popular TXT format is created for each image file. Each txt file contains annotations for "
             "the corresponding image file. The YOLO OBB format designates bounding boxes by their four corner points "
             "with coordinates normalized between 0 and 1, so it is possible to export rotated objects.",
+            "link": "https://labelstud.io/guide/export.html#YOLO",
+            "tags": ["image segmentation", "object detection"],
+        },
+        Format.YOLO_OBB_WITH_IMAGES: {
+            "title": "YOLOv8 OBB with Images",
+            "description": "YOLOv8 OBB format with images downloaded.",
             "link": "https://labelstud.io/guide/export.html#YOLO",
             "tags": ["image segmentation", "object detection"],
         },
@@ -158,6 +180,8 @@ class Converter(object):
         output_tags=None,
         upload_dir=None,
         download_resources=True,
+        access_token=None,
+        hostname=None,
     ):
         """Initialize Label Studio Converter for Exports
 
@@ -171,6 +195,8 @@ class Converter(object):
         self.upload_dir = upload_dir
         self.download_resources = download_resources
         self._schema = None
+        self.access_token = access_token
+        self.hostname = hostname
 
         if isinstance(config, dict):
             self._schema = config
@@ -216,21 +242,23 @@ class Converter(object):
             )
         elif format == Format.CONLL2003:
             self.convert_to_conll2003(input_data, output_data, is_dir=is_dir)
-        elif format == Format.COCO:
+        elif format in [Format.COCO, Format.COCO_WITH_IMAGES]:
             image_dir = kwargs.get("image_dir")
+            self.download_resources = format == Format.COCO_WITH_IMAGES
             self.convert_to_coco(
                 input_data, output_data, output_image_dir=image_dir, is_dir=is_dir
             )
-        elif format == Format.YOLO or format == Format.YOLO_OBB:
+        elif format in [Format.YOLO, Format.YOLO_OBB, Format.YOLO_OBB_WITH_IMAGES, Format.YOLO_WITH_IMAGES]:
             image_dir = kwargs.get("image_dir")
             label_dir = kwargs.get("label_dir")
+            self.download_resources = format in [Format.YOLO_WITH_IMAGES, Format.YOLO_OBB_WITH_IMAGES]
             self.convert_to_yolo(
                 input_data,
                 output_data,
                 output_image_dir=image_dir,
                 output_label_dir=label_dir,
                 is_dir=is_dir,
-                is_obb=(format == Format.YOLO_OBB),
+                is_obb=(format in [Format.YOLO_OBB, Format.YOLO_OBB_WITH_IMAGES]),
             )
         elif format == Format.VOC:
             image_dir = kwargs.get("image_dir")
@@ -334,7 +362,9 @@ class Converter(object):
             and "Labels" in output_tag_types
         ):
             all_formats.remove(Format.COCO.name)
+            all_formats.remove(Format.COCO_WITH_IMAGES.name)
             all_formats.remove(Format.YOLO.name)
+            all_formats.remove(Format.YOLO_WITH_IMAGES.name)
         if not (
             "Image" in input_tag_types
             and (
@@ -353,6 +383,7 @@ class Converter(object):
             all_formats.remove(Format.ASR_MANIFEST.name)
         if is_mig or ('Video' in input_tag_types and 'TimelineLabels' in output_tag_types):
             all_formats.remove(Format.YOLO_OBB.name)
+            all_formats.remove(Format.YOLO_OBB_WITH_IMAGES.name)
 
         return all_formats
 
@@ -593,20 +624,25 @@ class Converter(object):
         )
         for item_idx, item in enumerate(item_iterator):
             image_path = item["input"][data_key]
+            task_id = item["id"]
             image_id = len(images)
             width = None
             height = None
             # download all images of the dataset, including the ones without annotations
             if not os.path.exists(image_path):
                 try:
-                    image_path = download(
-                        image_path,
-                        output_image_dir,
+                    image_path = get_local_path(
+                        url=image_path,
+                        hostname=self.hostname,
                         project_dir=self.project_dir,
-                        return_relative_path=True,
-                        upload_dir=self.upload_dir,
+                        image_dir=self.upload_dir,
+                        cache_dir=output_image_dir,
                         download_resources=self.download_resources,
+                        access_token=self.access_token,
+                        task_id=task_id,
                     )
+                    # make path relative to output_image_dir
+                    image_path = os.path.relpath(image_path, output_dir)
                 except:
                     logger.info(
                         "Unable to download {image_path}. The image of {item} will be skipped".format(
@@ -801,19 +837,24 @@ class Converter(object):
             image_paths = [image_paths] if isinstance(image_paths, str) else image_paths
             # download image(s)
             image_path = None
+            task_id = item["id"]
             # TODO: for multi-page annotation, this code won't produce correct relationships between page and annotated shapes
             # fixing the issue in RND-84
             for image_path in reversed(image_paths):
                 if not os.path.exists(image_path):
                     try:
-                        image_path = download(
-                            image_path,
-                            output_image_dir,
+                        image_path = get_local_path(
+                            url=image_path,
+                            hostname=self.hostname,
                             project_dir=self.project_dir,
-                            return_relative_path=True,
-                            upload_dir=self.upload_dir,
+                            image_dir=self.upload_dir,
+                            cache_dir=output_image_dir,
                             download_resources=self.download_resources,
+                            access_token=self.access_token,
+                            task_id=task_id,
                         )
+                        # make path relative to output_image_dir
+                        image_path = os.path.relpath(image_path, output_dir)
                     except:
                         logger.info(
                             "Unable to download {image_path}. The item {item} will be skipped".format(
