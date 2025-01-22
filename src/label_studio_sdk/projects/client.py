@@ -251,12 +251,22 @@ class ProjectsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ProjectsCreateResponse,
-                    parse_obj_as(
-                        type_=ProjectsCreateResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
+                response_json = _response.json()
+                return ProjectsCreateResponse(
+                    id=response_json.get("id"),
+                    title=response_json.get("title"),
+                    description=response_json.get("description"),
+                    label_config=response_json.get("label_config"),
+                    expert_instruction=response_json.get("expert_instruction"),
+                    show_instruction=response_json.get("show_instruction"),
+                    show_skip_button=response_json.get("show_skip_button"),
+                    enable_empty_annotation=response_json.get("enable_empty_annotation"),
+                    show_annotation_history=response_json.get("show_annotation_history"),
+                    reveal_preannotations_interactively=response_json.get("reveal_preannotations_interactively"),
+                    show_collab_predictions=response_json.get("show_collab_predictions"),
+                    maximum_annotations=response_json.get("maximum_annotations"),
+                    color=response_json.get("color"),
+                    control_weights=response_json.get("control_weights"),
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -935,12 +945,22 @@ class AsyncProjectsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ProjectsCreateResponse,
-                    parse_obj_as(
-                        type_=ProjectsCreateResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
+                response_json = _response.json()
+                return ProjectsCreateResponse(
+                    id=response_json.get("id"),
+                    title=response_json.get("title"),
+                    description=response_json.get("description"),
+                    label_config=response_json.get("label_config"),
+                    expert_instruction=response_json.get("expert_instruction"),
+                    show_instruction=response_json.get("show_instruction"),
+                    show_skip_button=response_json.get("show_skip_button"),
+                    enable_empty_annotation=response_json.get("enable_empty_annotation"),
+                    show_annotation_history=response_json.get("show_annotation_history"),
+                    reveal_preannotations_interactively=response_json.get("reveal_preannotations_interactively"),
+                    show_collab_predictions=response_json.get("show_collab_predictions"),
+                    maximum_annotations=response_json.get("maximum_annotations"),
+                    color=response_json.get("color"),
+                    control_weights=response_json.get("control_weights"),
                 )
             _response_json = _response.json()
         except JSONDecodeError:

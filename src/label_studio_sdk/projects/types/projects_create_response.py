@@ -11,6 +11,11 @@ class ProjectsCreateResponse(UniversalBaseModel):
     Project
     """
 
+    id: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Project ID
+    """
+
     title: typing.Optional[str] = pydantic.Field(default=None)
     """
     Project title
