@@ -6703,7 +6703,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.model_providers.create(
-    provider="OpenAI",
+    provider="provider",
 )
 
 ```
@@ -6720,7 +6720,7 @@ client.model_providers.create(
 <dl>
 <dd>
 
-**provider:** `ModelProviderConnectionProvider` 
+**provider:** `str` 
     
 </dd>
 </dl>
@@ -7026,7 +7026,7 @@ client = LabelStudio(
 )
 client.model_providers.update(
     pk=1,
-    provider="OpenAI",
+    provider="provider",
 )
 
 ```
@@ -7051,7 +7051,7 @@ client.model_providers.update(
 <dl>
 <dd>
 
-**provider:** `ModelProviderConnectionProvider` 
+**provider:** `str` 
     
 </dd>
 </dl>
@@ -17698,7 +17698,7 @@ client.prompts.versions.create(
 <dl>
 <dd>
 
-**provider:** `typing.Optional[PromptVersionProvider]` 
+**provider:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -18015,7 +18015,7 @@ client.prompts.versions.update(
 <dl>
 <dd>
 
-**provider:** `typing.Optional[PromptVersionProvider]` 
+**provider:** `typing.Optional[str]` 
     
 </dd>
 </dl>

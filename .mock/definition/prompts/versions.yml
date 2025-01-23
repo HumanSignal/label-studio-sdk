@@ -29,7 +29,7 @@ service:
                 parent_model: 1
                 model_provider_connection: 1
                 prompt: prompt
-                provider: OpenAI
+                provider: provider
                 provider_model_id: provider_model_id
                 created_by: 1
                 created_at: '2024-01-15T09:30:00Z'
@@ -66,7 +66,7 @@ service:
               parent_model: 1
               model_provider_connection: 1
               prompt: prompt
-              provider: OpenAI
+              provider: provider
               provider_model_id: provider_model_id
               created_by: 1
               created_at: '2024-01-15T09:30:00Z'
@@ -103,7 +103,7 @@ service:
               parent_model: 1
               model_provider_connection: 1
               prompt: prompt
-              provider: OpenAI
+              provider: provider
               provider_model_id: provider_model_id
               created_by: 1
               created_at: '2024-01-15T09:30:00Z'
@@ -166,7 +166,7 @@ service:
               parent_model: 1
               model_provider_connection: 1
               prompt: prompt
-              provider: OpenAI
+              provider: provider
               provider_model_id: provider_model_id
               created_by: 1
               created_at: '2024-01-15T09:30:00Z'
@@ -270,7 +270,7 @@ service:
                 parent_model: 1
                 model_provider_connection: 1
                 prompt: prompt
-                provider: OpenAI
+                provider: provider
                 provider_model_id: provider_model_id
                 created_by: 1
                 created_at: '2024-01-15T09:30:00Z'
@@ -334,7 +334,7 @@ service:
                 parent_model: 1
                 model_provider_connection: 1
                 prompt: prompt
-                provider: OpenAI
+                provider: provider
                 provider_model_id: provider_model_id
                 created_by: 1
                 created_at: '2024-01-15T09:30:00Z'

@@ -2,7 +2,6 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .prompt_version_provider import PromptVersionProvider
 from .prompt_version_created_by import PromptVersionCreatedBy
 import datetime as dt
 from .prompt_version_organization import PromptVersionOrganization
@@ -15,7 +14,7 @@ class PromptVersion(UniversalBaseModel):
     parent_model: typing.Optional[int] = None
     model_provider_connection: typing.Optional[int] = None
     prompt: typing.Optional[str] = None
-    provider: typing.Optional[PromptVersionProvider] = None
+    provider: typing.Optional[str] = None
     provider_model_id: typing.Optional[str] = None
     created_by: typing.Optional[PromptVersionCreatedBy] = None
     created_at: typing.Optional[dt.datetime] = None

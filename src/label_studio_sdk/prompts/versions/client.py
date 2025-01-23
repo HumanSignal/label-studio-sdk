@@ -8,7 +8,6 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.prompt_version_provider import PromptVersionProvider
 from ...types.prompt_version_created_by import PromptVersionCreatedBy
 import datetime as dt
 from ...types.prompt_version_organization import PromptVersionOrganization
@@ -80,7 +79,7 @@ class VersionsClient:
         parent_model: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         prompt: typing.Optional[str] = OMIT,
-        provider: typing.Optional[PromptVersionProvider] = OMIT,
+        provider: typing.Optional[str] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
         created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
@@ -104,7 +103,7 @@ class VersionsClient:
 
         prompt : typing.Optional[str]
 
-        provider : typing.Optional[PromptVersionProvider]
+        provider : typing.Optional[str]
 
         provider_model_id : typing.Optional[str]
 
@@ -277,7 +276,7 @@ class VersionsClient:
         parent_model: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         prompt: typing.Optional[str] = OMIT,
-        provider: typing.Optional[PromptVersionProvider] = OMIT,
+        provider: typing.Optional[str] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
         created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
@@ -304,7 +303,7 @@ class VersionsClient:
 
         prompt : typing.Optional[str]
 
-        provider : typing.Optional[PromptVersionProvider]
+        provider : typing.Optional[str]
 
         provider_model_id : typing.Optional[str]
 
@@ -663,7 +662,7 @@ class AsyncVersionsClient:
         parent_model: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         prompt: typing.Optional[str] = OMIT,
-        provider: typing.Optional[PromptVersionProvider] = OMIT,
+        provider: typing.Optional[str] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
         created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
@@ -687,7 +686,7 @@ class AsyncVersionsClient:
 
         prompt : typing.Optional[str]
 
-        provider : typing.Optional[PromptVersionProvider]
+        provider : typing.Optional[str]
 
         provider_model_id : typing.Optional[str]
 
@@ -886,7 +885,7 @@ class AsyncVersionsClient:
         parent_model: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         prompt: typing.Optional[str] = OMIT,
-        provider: typing.Optional[PromptVersionProvider] = OMIT,
+        provider: typing.Optional[str] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
         created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
@@ -913,7 +912,7 @@ class AsyncVersionsClient:
 
         prompt : typing.Optional[str]
 
-        provider : typing.Optional[PromptVersionProvider]
+        provider : typing.Optional[str]
 
         provider_model_id : typing.Optional[str]
 

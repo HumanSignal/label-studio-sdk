@@ -2384,13 +2384,6 @@ types:
         docs: Name of the skill
     source:
       openapi: openapi/openapi.yaml
-  PromptVersionProvider:
-    enum:
-      - OpenAI
-      - AzureOpenAI
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
   PromptVersionCreatedBy:
     discriminated: false
     union:
@@ -2416,7 +2409,7 @@ types:
       parent_model: optional<integer>
       model_provider_connection: optional<integer>
       prompt: optional<string>
-      provider: optional<PromptVersionProvider>
+      provider: optional<string>
       provider_model_id: optional<string>
       created_by: optional<PromptVersionCreatedBy>
       created_at: optional<datetime>
@@ -2589,14 +2582,6 @@ types:
         type: optional<map<string, unknown>>
     source:
       openapi: openapi/openapi.yaml
-  ModelProviderConnectionProvider:
-    enum:
-      - OpenAI
-      - AzureOpenAI
-      - Custom
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
   ModelProviderConnectionScope:
     enum:
       - Organization
@@ -2633,8 +2618,7 @@ types:
       openapi: openapi/openapi.yaml
   ModelProviderConnection:
     properties:
-      provider:
-        type: ModelProviderConnectionProvider
+      provider: string
       api_key:
         type: optional<string>
       deployment_name: optional<string>

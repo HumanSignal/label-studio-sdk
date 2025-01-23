@@ -7,7 +7,6 @@ from ..types.model_provider_connection import ModelProviderConnection
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.model_provider_connection_provider import ModelProviderConnectionProvider
 from ..types.model_provider_connection_scope import ModelProviderConnectionScope
 from ..types.model_provider_connection_organization import ModelProviderConnectionOrganization
 from ..types.model_provider_connection_created_by import ModelProviderConnectionCreatedBy
@@ -70,7 +69,7 @@ class ModelProvidersClient:
     def create(
         self,
         *,
-        provider: ModelProviderConnectionProvider,
+        provider: str,
         api_key: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
@@ -92,7 +91,7 @@ class ModelProvidersClient:
 
         Parameters
         ----------
-        provider : ModelProviderConnectionProvider
+        provider : str
 
         api_key : typing.Optional[str]
 
@@ -144,7 +143,7 @@ class ModelProvidersClient:
             api_key="YOUR_API_KEY",
         )
         client.model_providers.create(
-            provider="OpenAI",
+            provider="provider",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -279,7 +278,7 @@ class ModelProvidersClient:
         self,
         pk: int,
         *,
-        provider: ModelProviderConnectionProvider,
+        provider: str,
         api_key: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
@@ -304,7 +303,7 @@ class ModelProvidersClient:
         pk : int
             Model Provider Connection ID
 
-        provider : ModelProviderConnectionProvider
+        provider : str
 
         api_key : typing.Optional[str]
 
@@ -357,7 +356,7 @@ class ModelProvidersClient:
         )
         client.model_providers.update(
             pk=1,
-            provider="OpenAI",
+            provider="provider",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -461,7 +460,7 @@ class AsyncModelProvidersClient:
     async def create(
         self,
         *,
-        provider: ModelProviderConnectionProvider,
+        provider: str,
         api_key: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
@@ -483,7 +482,7 @@ class AsyncModelProvidersClient:
 
         Parameters
         ----------
-        provider : ModelProviderConnectionProvider
+        provider : str
 
         api_key : typing.Optional[str]
 
@@ -540,7 +539,7 @@ class AsyncModelProvidersClient:
 
         async def main() -> None:
             await client.model_providers.create(
-                provider="OpenAI",
+                provider="provider",
             )
 
 
@@ -694,7 +693,7 @@ class AsyncModelProvidersClient:
         self,
         pk: int,
         *,
-        provider: ModelProviderConnectionProvider,
+        provider: str,
         api_key: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
@@ -719,7 +718,7 @@ class AsyncModelProvidersClient:
         pk : int
             Model Provider Connection ID
 
-        provider : ModelProviderConnectionProvider
+        provider : str
 
         api_key : typing.Optional[str]
 
@@ -777,7 +776,7 @@ class AsyncModelProvidersClient:
         async def main() -> None:
             await client.model_providers.update(
                 pk=1,
-                provider="OpenAI",
+                provider="provider",
             )
 
 
