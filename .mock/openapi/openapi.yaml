@@ -2334,6 +2334,11 @@ paths:
                 description: Project
                 type: object
                 properties:
+                  id:
+                    title: id
+                    description: Project ID
+                    type: integer
+                    example: 1
                   title:
                     title: title
                     description: Project title

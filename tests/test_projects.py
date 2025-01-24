@@ -8,6 +8,7 @@ from .utilities import validate_response
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
+        "id": 1,
         "title": "My project",
         "description": "My first project",
         "label_config": "<View>[...]</View>",
@@ -25,6 +26,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         },
     }
     expected_types: typing.Any = {
+        "id": "integer",
         "title": None,
         "description": None,
         "label_config": None,

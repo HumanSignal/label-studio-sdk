@@ -18,6 +18,9 @@ types:
   ProjectsCreateResponse:
     docs: Project
     properties:
+      id:
+        type: optional<integer>
+        docs: Project ID
       title:
         type: optional<string>
         docs: Project title
@@ -371,6 +374,7 @@ service:
         - request: {}
           response:
             body:
+              id: 1
               title: My project
               description: My first project
               label_config: <View>[...]</View>
