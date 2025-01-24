@@ -68,7 +68,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
                 "organization": 1,
                 "input_fields": ["input_fields"],
                 "output_classes": ["output_classes"],
-                "associated_projects": [1],
+                "associated_projects": [{}],
                 "skill_name": "skill_name",
             }
         ],
@@ -135,7 +135,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
                     "organization": "integer",
                     "input_fields": ("list", {0: None}),
                     "output_classes": ("list", {0: None}),
-                    "associated_projects": ("list", {0: "integer"}),
+                    "associated_projects": ("list", {0: {}}),
                     "skill_name": None,
                 }
             },

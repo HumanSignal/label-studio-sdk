@@ -6,6 +6,7 @@ import typing
 from .prompt_created_by import PromptCreatedBy
 import datetime as dt
 from .prompt_organization import PromptOrganization
+from .prompt_associated_projects_item import PromptAssociatedProjectsItem
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -50,7 +51,7 @@ class Prompt(UniversalBaseModel):
     List of output classes
     """
 
-    associated_projects: typing.Optional[typing.List[int]] = pydantic.Field(default=None)
+    associated_projects: typing.Optional[typing.List[PromptAssociatedProjectsItem]] = pydantic.Field(default=None)
     """
     List of associated projects IDs
     """

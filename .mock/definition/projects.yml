@@ -209,6 +209,9 @@ service:
           page_size:
             type: optional<integer>
             docs: Number of results to return per page.
+          workspaces:
+            type: optional<integer>
+            docs: workspaces
       response:
         docs: ''
         type: ProjectsListResponse
@@ -451,7 +454,7 @@ service:
                   output_classes:
                     - output_classes
                   associated_projects:
-                    - 1
+                    - {}
                   skill_name: skill_name
               color: '#FF0000'
               maximum_annotations: 1
