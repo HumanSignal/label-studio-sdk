@@ -3765,6 +3765,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**workspaces:** `typing.Optional[int]` — workspaces
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6134,7 +6142,7 @@ client.prompts.create(
 <dl>
 <dd>
 
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` — List of associated projects IDs
+**associated_projects:** `typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]` — List of associated projects IDs
     
 </dd>
 </dl>
@@ -6427,7 +6435,7 @@ client.prompts.update(
 <dl>
 <dd>
 
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` — List of associated projects IDs
+**associated_projects:** `typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]` — List of associated projects IDs
     
 </dd>
 </dl>

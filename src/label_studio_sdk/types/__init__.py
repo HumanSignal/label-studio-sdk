@@ -65,6 +65,7 @@ from .project_label_config import ProjectLabelConfig
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
 from .prompt import Prompt
+from .prompt_associated_projects_item import PromptAssociatedProjectsItem
 from .prompt_created_by import PromptCreatedBy
 from .prompt_organization import PromptOrganization
 from .prompt_version import PromptVersion
@@ -164,6 +165,7 @@ __all__ = [
     "ProjectSampling",
     "ProjectSkipQueue",
     "Prompt",
+    "PromptAssociatedProjectsItem",
     "PromptCreatedBy",
     "PromptOrganization",
     "PromptVersion",

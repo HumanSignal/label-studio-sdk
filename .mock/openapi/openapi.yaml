@@ -2269,6 +2269,12 @@ paths:
           required: false
           schema:
             type: integer
+        - name: workspaces
+          in: query
+          description: workspaces
+          required: false
+          schema:
+            type: integer
       responses:
         "200":
           description: ""
