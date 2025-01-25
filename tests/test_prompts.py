@@ -17,7 +17,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "organization": 1,
             "input_fields": ["input_fields"],
             "output_classes": ["output_classes"],
-            "associated_projects": [{}],
+            "associated_projects": [1],
             "skill_name": "skill_name",
         }
     ]
@@ -33,7 +33,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "organization": "integer",
                 "input_fields": ("list", {0: None}),
                 "output_classes": ("list", {0: None}),
-                "associated_projects": ("list", {0: {}}),
+                "associated_projects": ("list", {0: "integer"}),
                 "skill_name": None,
             }
         },
@@ -55,7 +55,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "organization": 1,
         "input_fields": ["input_fields"],
         "output_classes": ["output_classes"],
-        "associated_projects": [{"id": 1, "title": "title"}],
+        "associated_projects": [1],
         "skill_name": "skill_name",
     }
     expected_types: typing.Any = {
@@ -67,7 +67,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "organization": "integer",
         "input_fields": ("list", {0: None}),
         "output_classes": ("list", {0: None}),
-        "associated_projects": ("list", {0: {"id": "integer", "title": None}}),
+        "associated_projects": ("list", {0: "integer"}),
         "skill_name": None,
     }
     response = client.prompts.create(title="title", input_fields=["input_fields"], output_classes=["output_classes"])
@@ -89,7 +89,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "organization": 1,
         "input_fields": ["input_fields"],
         "output_classes": ["output_classes"],
-        "associated_projects": [{"id": 1, "title": "title"}],
+        "associated_projects": [1],
         "skill_name": "skill_name",
     }
     expected_types: typing.Any = {
@@ -101,7 +101,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "organization": "integer",
         "input_fields": ("list", {0: None}),
         "output_classes": ("list", {0: None}),
-        "associated_projects": ("list", {0: {"id": "integer", "title": None}}),
+        "associated_projects": ("list", {0: "integer"}),
         "skill_name": None,
     }
     response = client.prompts.get(id=1)
@@ -134,7 +134,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "organization": 1,
         "input_fields": ["input_fields"],
         "output_classes": ["output_classes"],
-        "associated_projects": [{"id": 1, "title": "title"}],
+        "associated_projects": [1],
         "skill_name": "skill_name",
     }
     expected_types: typing.Any = {
@@ -146,7 +146,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "organization": "integer",
         "input_fields": ("list", {0: None}),
         "output_classes": ("list", {0: None}),
-        "associated_projects": ("list", {0: {"id": "integer", "title": None}}),
+        "associated_projects": ("list", {0: "integer"}),
         "skill_name": None,
     }
     response = client.prompts.update(

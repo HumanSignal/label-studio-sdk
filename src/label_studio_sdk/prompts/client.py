@@ -125,7 +125,7 @@ class PromptsClient:
             Organization ID of the prompt
 
         associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
-            List of associated projects IDs
+            List of associated projects IDs or objects
 
         skill_name : typing.Optional[str]
             Name of the skill
@@ -327,7 +327,7 @@ class PromptsClient:
             Organization ID of the prompt
 
         associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
-            List of associated projects IDs
+            List of associated projects IDs or objects
 
         skill_name : typing.Optional[str]
             Name of the skill
@@ -629,7 +629,7 @@ class AsyncPromptsClient:
             Organization ID of the prompt
 
         associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
-            List of associated projects IDs
+            List of associated projects IDs or objects
 
         skill_name : typing.Optional[str]
             Name of the skill
@@ -855,7 +855,7 @@ class AsyncPromptsClient:
             Organization ID of the prompt
 
         associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
-            List of associated projects IDs
+            List of associated projects IDs or objects
 
         skill_name : typing.Optional[str]
             Name of the skill

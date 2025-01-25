@@ -6142,7 +6142,7 @@ client.prompts.create(
 <dl>
 <dd>
 
-**associated_projects:** `typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]` — List of associated projects IDs
+**associated_projects:** `typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]` — List of associated projects IDs or objects
     
 </dd>
 </dl>
@@ -6435,7 +6435,7 @@ client.prompts.update(
 <dl>
 <dd>
 
-**associated_projects:** `typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]` — List of associated projects IDs
+**associated_projects:** `typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]` — List of associated projects IDs or objects
     
 </dd>
 </dl>
