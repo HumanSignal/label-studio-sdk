@@ -396,14 +396,14 @@ service:
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id: string
+        id: integer
       display-name: Sync export storage
       response:
         docs: ''
         type: root.S3ExportStorage
       examples:
         - path-parameters:
-            id: id
+            id: 1
           response:
             body:
               id: 1

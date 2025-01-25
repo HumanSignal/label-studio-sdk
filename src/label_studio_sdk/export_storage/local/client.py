@@ -427,7 +427,7 @@ class LocalClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> LocalFilesExportStorage:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LocalFilesExportStorage:
         """
 
         Sync tasks to an local file export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
@@ -438,7 +438,7 @@ class LocalClient:
 
         Parameters
         ----------
-        id : str
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -456,7 +456,7 @@ class LocalClient:
             api_key="YOUR_API_KEY",
         )
         client.export_storage.local.sync(
-            id="id",
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -939,7 +939,7 @@ class AsyncLocalClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def sync(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LocalFilesExportStorage:
         """
 
@@ -951,7 +951,7 @@ class AsyncLocalClient:
 
         Parameters
         ----------
-        id : str
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -974,7 +974,7 @@ class AsyncLocalClient:
 
         async def main() -> None:
             await client.export_storage.local.sync(
-                id="id",
+                id=1,
             )
 
 
