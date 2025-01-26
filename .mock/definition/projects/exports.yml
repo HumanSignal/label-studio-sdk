@@ -66,7 +66,7 @@ service:
             type: optional<string>
             docs: Selected export format (JSON by default)
           download_all_tasks:
-            type: optional<string>
+            type: optional<boolean>
             docs: >
 
               If true, download all tasks regardless of status. If false,

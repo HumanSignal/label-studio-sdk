@@ -457,7 +457,7 @@ class GcsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
 
         Sync tasks to a GCS export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
@@ -468,7 +468,7 @@ class GcsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -486,7 +486,7 @@ class GcsClient:
             api_key="YOUR_API_KEY",
         )
         client.export_storage.gcs.sync(
-            id="id",
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -998,7 +998,7 @@ class AsyncGcsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
+    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
 
         Sync tasks to a GCS export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
@@ -1009,7 +1009,7 @@ class AsyncGcsClient:
 
         Parameters
         ----------
-        id : str
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1032,7 +1032,7 @@ class AsyncGcsClient:
 
         async def main() -> None:
             await client.export_storage.gcs.sync(
-                id="id",
+                id=1,
             )
 
 

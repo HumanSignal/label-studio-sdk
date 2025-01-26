@@ -33,7 +33,7 @@ class ExportsClient:
         id: int,
         *,
         export_type: typing.Optional[str] = None,
-        download_all_tasks: typing.Optional[str] = None,
+        download_all_tasks: typing.Optional[bool] = None,
         download_resources: typing.Optional[bool] = None,
         ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -66,7 +66,7 @@ class ExportsClient:
         export_type : typing.Optional[str]
             Selected export format (JSON by default)
 
-        download_all_tasks : typing.Optional[str]
+        download_all_tasks : typing.Optional[bool]
 
             If true, download all tasks regardless of status. If false, download only annotated tasks.
 
@@ -572,7 +572,7 @@ class AsyncExportsClient:
         id: int,
         *,
         export_type: typing.Optional[str] = None,
-        download_all_tasks: typing.Optional[str] = None,
+        download_all_tasks: typing.Optional[bool] = None,
         download_resources: typing.Optional[bool] = None,
         ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -605,7 +605,7 @@ class AsyncExportsClient:
         export_type : typing.Optional[str]
             Selected export format (JSON by default)
 
-        download_all_tasks : typing.Optional[str]
+        download_all_tasks : typing.Optional[bool]
 
             If true, download all tasks regardless of status. If false, download only annotated tasks.
 

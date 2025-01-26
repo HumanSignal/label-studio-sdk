@@ -2348,10 +2348,18 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
-  PromptAssociatedProjectsItem:
+  PromptAssociatedProjectsItemId:
     properties:
       id: optional<integer>
       title: optional<string>
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  PromptAssociatedProjectsItem:
+    discriminated: false
+    union:
+      - integer
+      - PromptAssociatedProjectsItemId
     source:
       openapi: openapi/openapi.yaml
     inline: true
@@ -2385,7 +2393,7 @@ types:
         type: list<string>
       associated_projects:
         type: optional<list<PromptAssociatedProjectsItem>>
-        docs: List of associated projects IDs
+        docs: List of associated projects IDs or objects
       skill_name:
         type: optional<string>
         docs: Name of the skill

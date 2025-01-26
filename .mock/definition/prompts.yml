@@ -30,7 +30,7 @@ service:
                 output_classes:
                   - output_classes
                 associated_projects:
-                  - {}
+                  - 1
                 skill_name: skill_name
       audiences:
         - public
@@ -69,8 +69,7 @@ service:
               output_classes:
                 - output_classes
               associated_projects:
-                - id: 1
-                  title: title
+                - 1
               skill_name: skill_name
       audiences:
         - public
@@ -106,8 +105,7 @@ service:
               output_classes:
                 - output_classes
               associated_projects:
-                - id: 1
-                  title: title
+                - 1
               skill_name: skill_name
       audiences:
         - public
@@ -170,8 +168,7 @@ service:
               output_classes:
                 - output_classes
               associated_projects:
-                - id: 1
-                  title: title
+                - 1
               skill_name: skill_name
       audiences:
         - public

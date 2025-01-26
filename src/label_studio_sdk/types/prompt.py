@@ -53,7 +53,7 @@ class Prompt(UniversalBaseModel):
 
     associated_projects: typing.Optional[typing.List[PromptAssociatedProjectsItem]] = pydantic.Field(default=None)
     """
-    List of associated projects IDs
+    List of associated projects IDs or objects
     """
 
     skill_name: typing.Optional[str] = pydantic.Field(default=None)

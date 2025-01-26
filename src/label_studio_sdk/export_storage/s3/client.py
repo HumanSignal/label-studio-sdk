@@ -517,7 +517,7 @@ class S3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> S3ExportStorage:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ExportStorage:
         """
 
         Sync tasks to an S3 export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
@@ -528,7 +528,7 @@ class S3Client:
 
         Parameters
         ----------
-        id : str
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -546,7 +546,7 @@ class S3Client:
             api_key="YOUR_API_KEY",
         )
         client.export_storage.s3.sync(
-            id="id",
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1118,7 +1118,7 @@ class AsyncS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> S3ExportStorage:
+    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ExportStorage:
         """
 
         Sync tasks to an S3 export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
@@ -1129,7 +1129,7 @@ class AsyncS3Client:
 
         Parameters
         ----------
-        id : str
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1152,7 +1152,7 @@ class AsyncS3Client:
 
         async def main() -> None:
             await client.export_storage.s3.sync(
-                id="id",
+                id=1,
             )
 
 
