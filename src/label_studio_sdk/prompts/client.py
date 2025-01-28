@@ -13,6 +13,7 @@ from ..core.api_error import ApiError
 from ..types.prompt_created_by import PromptCreatedBy
 import datetime as dt
 from ..types.prompt_organization import PromptOrganization
+from ..types.prompt_associated_projects_item import PromptAssociatedProjectsItem
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.jsonable_encoder import jsonable_encoder
 from .types.prompts_batch_predictions_request_results_item import PromptsBatchPredictionsRequestResultsItem
@@ -90,7 +91,7 @@ class PromptsClient:
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
         organization: typing.Optional[PromptOrganization] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        associated_projects: typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]] = OMIT,
         skill_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prompt:
@@ -123,8 +124,8 @@ class PromptsClient:
         organization : typing.Optional[PromptOrganization]
             Organization ID of the prompt
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
-            List of associated projects IDs
+        associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
+            List of associated projects IDs or objects
 
         skill_name : typing.Optional[str]
             Name of the skill
@@ -166,7 +167,11 @@ class PromptsClient:
                 ),
                 "input_fields": input_fields,
                 "output_classes": output_classes,
-                "associated_projects": associated_projects,
+                "associated_projects": convert_and_respect_annotation_metadata(
+                    object_=associated_projects,
+                    annotation=typing.Sequence[PromptAssociatedProjectsItem],
+                    direction="write",
+                ),
                 "skill_name": skill_name,
             },
             request_options=request_options,
@@ -285,7 +290,7 @@ class PromptsClient:
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
         organization: typing.Optional[PromptOrganization] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        associated_projects: typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]] = OMIT,
         skill_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prompt:
@@ -321,8 +326,8 @@ class PromptsClient:
         organization : typing.Optional[PromptOrganization]
             Organization ID of the prompt
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
-            List of associated projects IDs
+        associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
+            List of associated projects IDs or objects
 
         skill_name : typing.Optional[str]
             Name of the skill
@@ -365,7 +370,11 @@ class PromptsClient:
                 ),
                 "input_fields": input_fields,
                 "output_classes": output_classes,
-                "associated_projects": associated_projects,
+                "associated_projects": convert_and_respect_annotation_metadata(
+                    object_=associated_projects,
+                    annotation=typing.Sequence[PromptAssociatedProjectsItem],
+                    direction="write",
+                ),
                 "skill_name": skill_name,
             },
             request_options=request_options,
@@ -586,7 +595,7 @@ class AsyncPromptsClient:
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
         organization: typing.Optional[PromptOrganization] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        associated_projects: typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]] = OMIT,
         skill_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prompt:
@@ -619,8 +628,8 @@ class AsyncPromptsClient:
         organization : typing.Optional[PromptOrganization]
             Organization ID of the prompt
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
-            List of associated projects IDs
+        associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
+            List of associated projects IDs or objects
 
         skill_name : typing.Optional[str]
             Name of the skill
@@ -670,7 +679,11 @@ class AsyncPromptsClient:
                 ),
                 "input_fields": input_fields,
                 "output_classes": output_classes,
-                "associated_projects": associated_projects,
+                "associated_projects": convert_and_respect_annotation_metadata(
+                    object_=associated_projects,
+                    annotation=typing.Sequence[PromptAssociatedProjectsItem],
+                    direction="write",
+                ),
                 "skill_name": skill_name,
             },
             request_options=request_options,
@@ -805,7 +818,7 @@ class AsyncPromptsClient:
         created_at: typing.Optional[dt.datetime] = OMIT,
         updated_at: typing.Optional[dt.datetime] = OMIT,
         organization: typing.Optional[PromptOrganization] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        associated_projects: typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]] = OMIT,
         skill_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prompt:
@@ -841,8 +854,8 @@ class AsyncPromptsClient:
         organization : typing.Optional[PromptOrganization]
             Organization ID of the prompt
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
-            List of associated projects IDs
+        associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
+            List of associated projects IDs or objects
 
         skill_name : typing.Optional[str]
             Name of the skill
@@ -893,7 +906,11 @@ class AsyncPromptsClient:
                 ),
                 "input_fields": input_fields,
                 "output_classes": output_classes,
-                "associated_projects": associated_projects,
+                "associated_projects": convert_and_respect_annotation_metadata(
+                    object_=associated_projects,
+                    annotation=typing.Sequence[PromptAssociatedProjectsItem],
+                    direction="write",
+                ),
                 "skill_name": skill_name,
             },
             request_options=request_options,

@@ -254,8 +254,8 @@ async def test_sync(client: LabelStudio, async_client: AsyncLabelStudio) -> None
         "db": "integer",
         "project": "integer",
     }
-    response = client.export_storage.redis.sync(id="id")
+    response = client.export_storage.redis.sync(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.export_storage.redis.sync(id="id")
+    async_response = await async_client.export_storage.redis.sync(id=1)
     validate_response(async_response, expected_response, expected_types)

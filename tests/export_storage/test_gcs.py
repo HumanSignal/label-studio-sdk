@@ -244,8 +244,8 @@ async def test_sync(client: LabelStudio, async_client: AsyncLabelStudio) -> None
         "can_delete_objects": None,
         "project": "integer",
     }
-    response = client.export_storage.gcs.sync(id="id")
+    response = client.export_storage.gcs.sync(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.export_storage.gcs.sync(id="id")
+    async_response = await async_client.export_storage.gcs.sync(id=1)
     validate_response(async_response, expected_response, expected_types)

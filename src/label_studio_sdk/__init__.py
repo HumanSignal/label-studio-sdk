@@ -66,6 +66,8 @@ from .types import (
     ProjectSampling,
     ProjectSkipQueue,
     Prompt,
+    PromptAssociatedProjectsItem,
+    PromptAssociatedProjectsItemId,
     PromptCreatedBy,
     PromptOrganization,
     PromptVersion,
@@ -132,7 +134,7 @@ from .actions import (
     ActionsCreateRequestSelectedItemsExcluded,
     ActionsCreateRequestSelectedItemsIncluded,
 )
-from .annotations import AnnotationsCreateBulkResponseItem
+from .annotations import AnnotationsCreateBulkRequestSelectedItems, AnnotationsCreateBulkResponseItem
 from .client import AsyncLabelStudio, LabelStudio
 from .environment import LabelStudioEnvironment
 from .export_storage import ExportStorageListTypesResponseItem
@@ -190,6 +192,7 @@ __all__ = [
     "Annotation",
     "AnnotationFilterOptions",
     "AnnotationLastAction",
+    "AnnotationsCreateBulkRequestSelectedItems",
     "AnnotationsCreateBulkResponseItem",
     "AnnotationsDmField",
     "AnnotationsDmFieldLastAction",
@@ -271,6 +274,8 @@ __all__ = [
     "ProjectsListResponse",
     "ProjectsUpdateResponse",
     "Prompt",
+    "PromptAssociatedProjectsItem",
+    "PromptAssociatedProjectsItemId",
     "PromptCreatedBy",
     "PromptOrganization",
     "PromptVersion",

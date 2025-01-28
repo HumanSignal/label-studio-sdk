@@ -608,6 +608,14 @@ client.annotations.create_bulk()
 <dl>
 <dd>
 
+**selected_items:** `typing.Optional[AnnotationsCreateBulkRequestSelectedItems]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **lead_time:** `typing.Optional[float]` 
     
 </dd>
@@ -3765,6 +3773,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**workspaces:** `typing.Optional[int]` — workspaces
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -6134,7 +6150,7 @@ client.prompts.create(
 <dl>
 <dd>
 
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` — List of associated projects IDs
+**associated_projects:** `typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]` — List of associated projects IDs or objects
     
 </dd>
 </dl>
@@ -6427,7 +6443,7 @@ client.prompts.update(
 <dl>
 <dd>
 
-**associated_projects:** `typing.Optional[typing.Sequence[int]]` — List of associated projects IDs
+**associated_projects:** `typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]` — List of associated projects IDs or objects
     
 </dd>
 </dl>
@@ -8704,7 +8720,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.azure.sync(
-    id="id",
+    id=1,
 )
 
 ```
@@ -8721,7 +8737,7 @@ client.export_storage.azure.sync(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` 
     
 </dd>
 </dl>
@@ -9398,7 +9414,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.gcs.sync(
-    id="id",
+    id=1,
 )
 
 ```
@@ -9415,7 +9431,7 @@ client.export_storage.gcs.sync(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` 
     
 </dd>
 </dl>
@@ -10044,7 +10060,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.local.sync(
-    id="id",
+    id=1,
 )
 
 ```
@@ -10061,7 +10077,7 @@ client.export_storage.local.sync(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` 
     
 </dd>
 </dl>
@@ -10762,7 +10778,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.redis.sync(
-    id="id",
+    id=1,
 )
 
 ```
@@ -10779,7 +10795,7 @@ client.export_storage.redis.sync(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` 
     
 </dd>
 </dl>
@@ -11552,7 +11568,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.s3.sync(
-    id="id",
+    id=1,
 )
 
 ```
@@ -11569,7 +11585,7 @@ client.export_storage.s3.sync(
 <dl>
 <dd>
 
-**id:** `str` 
+**id:** `int` 
     
 </dd>
 </dl>
