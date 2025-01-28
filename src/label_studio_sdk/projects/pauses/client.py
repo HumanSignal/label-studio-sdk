@@ -19,7 +19,12 @@ class PausesClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_pk: int,
+        user_pk: int,
+        *,
+        include_deleted: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Pause]:
         """
         Return a list of pause objects for the specified project and user.
@@ -31,6 +36,9 @@ class PausesClient:
 
         user_pk : int
             User ID
+
+        include_deleted : typing.Optional[bool]
+            Include deleted pauses
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -55,6 +63,9 @@ class PausesClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses",
             method="GET",
+            params={
+                "include_deleted": include_deleted,
+            },
             request_options=request_options,
         )
         try:
@@ -333,7 +344,12 @@ class AsyncPausesClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_pk: int,
+        user_pk: int,
+        *,
+        include_deleted: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Pause]:
         """
         Return a list of pause objects for the specified project and user.
@@ -345,6 +361,9 @@ class AsyncPausesClient:
 
         user_pk : int
             User ID
+
+        include_deleted : typing.Optional[bool]
+            Include deleted pauses
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -377,6 +396,9 @@ class AsyncPausesClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses",
             method="GET",
+            params={
+                "include_deleted": include_deleted,
+            },
             request_options=request_options,
         )
         try:

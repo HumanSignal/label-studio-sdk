@@ -19,6 +19,12 @@ service:
           type: integer
           docs: User ID
       display-name: Retrieve a list of pauses
+      request:
+        name: PausesListRequest
+        query-parameters:
+          include_deleted:
+            type: optional<boolean>
+            docs: Include deleted pauses
       response:
         docs: Successfully retrieved a list of pauses
         type: list<root.Pause>
