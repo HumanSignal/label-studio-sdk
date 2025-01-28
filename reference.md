@@ -608,6 +608,14 @@ client.annotations.create_bulk()
 <dl>
 <dd>
 
+**selected_items:** `typing.Optional[AnnotationsCreateBulkRequestSelectedItems]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **lead_time:** `typing.Optional[float]` 
     
 </dd>
