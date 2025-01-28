@@ -608,14 +608,6 @@ client.annotations.create_bulk()
 <dl>
 <dd>
 
-**selected_items:** `typing.Optional[AnnotationsCreateBulkRequestSelectedItems]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **lead_time:** `typing.Optional[float]` 
     
 </dd>
@@ -17534,6 +17526,463 @@ client.projects.exports.download(
 <dd>
 
 **export_type:** `typing.Optional[str]` — Selected export format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Projects Members Pauses
+<details><summary><code>client.projects.members.pauses.<a href="src/label_studio_sdk/projects/members/pauses/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Return a list of pause objects for the specified project and user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.members.pauses.list(
+    project_pk=1,
+    user_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_pk:** `int` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_pk:** `int` — User ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.members.pauses.<a href="src/label_studio_sdk/projects/members/pauses/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new pause object for the specified project and user.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.members.pauses.create(
+    project_pk=1,
+    user_pk=1,
+    reason="reason",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_pk:** `int` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_pk:** `int` — User ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reason:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verbose_reason:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.members.pauses.<a href="src/label_studio_sdk/projects/members/pauses/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Return detailed information about a specific pause.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.members.pauses.get(
+    project_pk=1,
+    user_pk=1,
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_pk:** `int` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_pk:** `int` — User ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `int` — Pause ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.members.pauses.<a href="src/label_studio_sdk/projects/members/pauses/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a pause from the database.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.members.pauses.delete(
+    project_pk=1,
+    user_pk=1,
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_pk:** `int` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_pk:** `int` — User ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `int` — Pause ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.members.pauses.<a href="src/label_studio_sdk/projects/members/pauses/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Partially update one or more fields of an existing pause.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.members.pauses.update(
+    project_pk=1,
+    user_pk=1,
+    id=1,
+    reason="reason",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_pk:** `int` — Project ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_pk:** `int` — User ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**id:** `int` — Pause ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reason:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verbose_reason:** `typing.Optional[str]` 
     
 </dd>
 </dl>

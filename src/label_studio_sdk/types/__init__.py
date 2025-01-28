@@ -57,6 +57,7 @@ from .model_provider_connection_created_by import ModelProviderConnectionCreated
 from .model_provider_connection_organization import ModelProviderConnectionOrganization
 from .model_provider_connection_provider import ModelProviderConnectionProvider
 from .model_provider_connection_scope import ModelProviderConnectionScope
+from .pause import Pause
 from .prediction import Prediction
 from .project import Project
 from .project_import import ProjectImport
@@ -158,6 +159,7 @@ __all__ = [
     "ModelProviderConnectionOrganization",
     "ModelProviderConnectionProvider",
     "ModelProviderConnectionScope",
+    "Pause",
     "Prediction",
     "Project",
     "ProjectImport",

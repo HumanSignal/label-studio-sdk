@@ -58,6 +58,7 @@ from .types import (
     ModelProviderConnectionOrganization,
     ModelProviderConnectionProvider,
     ModelProviderConnectionScope,
+    Pause,
     Prediction,
     Project,
     ProjectImport,
@@ -134,7 +135,7 @@ from .actions import (
     ActionsCreateRequestSelectedItemsExcluded,
     ActionsCreateRequestSelectedItemsIncluded,
 )
-from .annotations import AnnotationsCreateBulkRequestSelectedItems, AnnotationsCreateBulkResponseItem
+from .annotations import AnnotationsCreateBulkResponseItem
 from .client import AsyncLabelStudio, LabelStudio
 from .environment import LabelStudioEnvironment
 from .export_storage import ExportStorageListTypesResponseItem
@@ -192,7 +193,6 @@ __all__ = [
     "Annotation",
     "AnnotationFilterOptions",
     "AnnotationLastAction",
-    "AnnotationsCreateBulkRequestSelectedItems",
     "AnnotationsCreateBulkResponseItem",
     "AnnotationsDmField",
     "AnnotationsDmFieldLastAction",
@@ -262,6 +262,7 @@ __all__ = [
     "ModelProviderConnectionOrganization",
     "ModelProviderConnectionProvider",
     "ModelProviderConnectionScope",
+    "Pause",
     "Prediction",
     "Project",
     "ProjectImport",
