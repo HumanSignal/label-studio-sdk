@@ -37,6 +37,16 @@ def get_cache_dir():
     return cache_dir
 
 
+def safe_build_path(base_dir: str, user_path: str) -> str:
+    combined_path = os.path.join(base_dir, user_path)
+    absolute_path = os.path.abspath(combined_path)
+    base_dir_abs = os.path.abspath(base_dir)
+    if not (absolute_path == base_dir_abs or absolute_path.startswith(base_dir_abs + os.sep)):
+        raise ValueError(f"Invalid path: {user_path}")
+
+    return absolute_path
+
+
 def get_local_path(
     url,
     cache_dir=None,
@@ -103,7 +113,7 @@ def get_local_path(
     # instead of downloading them from LS instance
     if is_local_storage_file:
         filepath = url.split("?d=")[1]
-        filepath = os.path.join(LOCAL_FILES_DOCUMENT_ROOT, filepath)
+        filepath = safe_build_path(LOCAL_FILES_DOCUMENT_ROOT, filepath)
         if os.path.exists(filepath):
             logger.debug(
                 f"Local Storage file path exists locally, use it as a local file: {filepath}"
