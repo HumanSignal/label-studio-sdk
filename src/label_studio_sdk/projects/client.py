@@ -3,7 +3,7 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .exports.client import ExportsClient
-from .members.client import MembersClient
+from .pauses.client import PausesClient
 from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
 from ..types.project import Project
@@ -19,7 +19,7 @@ from ..errors.bad_request_error import BadRequestError
 from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
 from .exports.client import AsyncExportsClient
-from .members.client import AsyncMembersClient
+from .pauses.client import AsyncPausesClient
 from ..core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
@@ -30,7 +30,7 @@ class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
-        self.members = MembersClient(client_wrapper=self._client_wrapper)
+        self.pauses = PausesClient(client_wrapper=self._client_wrapper)
 
     def list(
         self,
@@ -705,7 +705,7 @@ class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
-        self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
+        self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)
 
     async def list(
         self,

@@ -3,7 +3,7 @@
 from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
 import typing
-from ...utilities import validate_response
+from ..utilities import validate_response
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
@@ -38,10 +38,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.projects.members.pauses.list(project_pk=1, user_pk=1)
+    response = client.projects.pauses.list(project_pk=1, user_pk=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.members.pauses.list(project_pk=1, user_pk=1)
+    async_response = await async_client.projects.pauses.list(project_pk=1, user_pk=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -70,10 +70,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_at": "datetime",
         "updated_at": "datetime",
     }
-    response = client.projects.members.pauses.create(project_pk=1, user_pk=1, reason="reason")
+    response = client.projects.pauses.create(project_pk=1, user_pk=1, reason="reason")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.members.pauses.create(project_pk=1, user_pk=1, reason="reason")
+    async_response = await async_client.projects.pauses.create(project_pk=1, user_pk=1, reason="reason")
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -102,22 +102,22 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "created_at": "datetime",
         "updated_at": "datetime",
     }
-    response = client.projects.members.pauses.get(project_pk=1, user_pk=1, id=1)
+    response = client.projects.pauses.get(project_pk=1, user_pk=1, id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.members.pauses.get(project_pk=1, user_pk=1, id=1)
+    async_response = await async_client.projects.pauses.get(project_pk=1, user_pk=1, id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.projects.members.pauses.delete(project_pk=1, user_pk=1, id=1)  # type: ignore[func-returns-value]
+        client.projects.pauses.delete(project_pk=1, user_pk=1, id=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.projects.members.pauses.delete(project_pk=1, user_pk=1, id=1)  # type: ignore[func-returns-value]
+        await async_client.projects.pauses.delete(project_pk=1, user_pk=1, id=1)  # type: ignore[func-returns-value]
         is None
     )
 
@@ -147,8 +147,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_at": "datetime",
         "updated_at": "datetime",
     }
-    response = client.projects.members.pauses.update(project_pk=1, user_pk=1, id=1, reason="reason")
+    response = client.projects.pauses.update(project_pk=1, user_pk=1, id=1, reason="reason")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.members.pauses.update(project_pk=1, user_pk=1, id=1, reason="reason")
+    async_response = await async_client.projects.pauses.update(project_pk=1, user_pk=1, id=1, reason="reason")
     validate_response(async_response, expected_response, expected_types)
