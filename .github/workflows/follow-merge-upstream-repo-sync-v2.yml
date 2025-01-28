@@ -82,7 +82,7 @@ jobs:
             const pyProjectPath = "pyproject.toml";
             const repos = ["label-studio-client-generator"];
             const repos_infra = [];
-            const base_branch_name = 'develop';
+            const base_branch_name = context.repo.default_branch;
             
             let shas = {};
 
@@ -109,25 +109,7 @@ jobs:
                 core.notice(`No open upstream PRs found for ${repo}`)
               }
             }
-            
-            // GET BASE VERSIONS
-            const {data: pyprojectBlob} = await github.rest.repos.getContent({
-              owner: owner,
-              repo: repo,
-              ref: base_branch_name,
-              path: pyProjectPath,
-            });
-            const base_pyproject = Buffer.from(pyprojectBlob.content, pyprojectBlob.encoding).toString("utf8");
-            for (const repo of repos) {
-              const match = base_pyproject.match(new RegExp(`${repo}\/archive.*(?<sha>[a-f0-9]{40})`));
-              if (match && match.groups.sha) {
-                core.info(`Base version for ${repo} ${pyprojectBlob.html_url} ${match.groups.sha}`);
-                shas[repo] = shas[repo] || match.groups.sha;
-              } else {
-                core.setFailed(`Could not parse ${repo} version from ${pyprojectBlob.html_url}`);
-              }
-            }
-            
+                        
             for (const [key, value] of Object.entries(shas)) {
               core.setOutput(key, value);
             }
