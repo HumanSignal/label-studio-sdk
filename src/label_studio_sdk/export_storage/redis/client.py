@@ -472,7 +472,7 @@ class RedisClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
         """
 
         Sync tasks to an Redis export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
@@ -483,7 +483,7 @@ class RedisClient:
 
         Parameters
         ----------
-        id : str
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -501,7 +501,7 @@ class RedisClient:
             api_key="YOUR_API_KEY",
         )
         client.export_storage.redis.sync(
-            id="id",
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1028,7 +1028,7 @@ class AsyncRedisClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def sync(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
+    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
         """
 
         Sync tasks to an Redis export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
@@ -1039,7 +1039,7 @@ class AsyncRedisClient:
 
         Parameters
         ----------
-        id : str
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1062,7 +1062,7 @@ class AsyncRedisClient:
 
         async def main() -> None:
             await client.export_storage.redis.sync(
-                id="id",
+                id=1,
             )
 
 

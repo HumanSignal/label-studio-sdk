@@ -447,6 +447,7 @@ service:
         body:
           properties:
             tasks: optional<list<integer>>
+            selectedItems: optional<AnnotationsCreateBulkRequestSelectedItems>
             lead_time: optional<double>
             project: optional<integer>
             result: optional<map<string, unknown>>
@@ -464,6 +465,24 @@ service:
   source:
     openapi: openapi/openapi.yaml
 types:
+  AnnotationsCreateBulkRequestSelectedItems:
+    properties:
+      all:
+        type: optional<boolean>
+        docs: >
+          Indicates whether to apply the operation to all tasks. If true, this
+          overrides any included or excluded lists.
+      included:
+        type: optional<list<integer>>
+        docs: |
+          An explicit list of task IDs to include.
+      excluded:
+        type: optional<list<integer>>
+        docs: |
+          An explicit list of task IDs to exclude.
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   AnnotationsCreateBulkResponseItem:
     properties:
       id: optional<integer>

@@ -55,6 +55,7 @@ from .model_provider_connection import ModelProviderConnection
 from .model_provider_connection_budget_reset_period import ModelProviderConnectionBudgetResetPeriod
 from .model_provider_connection_created_by import ModelProviderConnectionCreatedBy
 from .model_provider_connection_organization import ModelProviderConnectionOrganization
+from .model_provider_connection_provider import ModelProviderConnectionProvider
 from .model_provider_connection_scope import ModelProviderConnectionScope
 from .prediction import Prediction
 from .project import Project
@@ -64,11 +65,14 @@ from .project_label_config import ProjectLabelConfig
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
 from .prompt import Prompt
+from .prompt_associated_projects_item import PromptAssociatedProjectsItem
+from .prompt_associated_projects_item_id import PromptAssociatedProjectsItemId
 from .prompt_created_by import PromptCreatedBy
 from .prompt_organization import PromptOrganization
 from .prompt_version import PromptVersion
 from .prompt_version_created_by import PromptVersionCreatedBy
 from .prompt_version_organization import PromptVersionOrganization
+from .prompt_version_provider import PromptVersionProvider
 from .redis_export_storage import RedisExportStorage
 from .redis_export_storage_status import RedisExportStorageStatus
 from .redis_import_storage import RedisImportStorage
@@ -152,6 +156,7 @@ __all__ = [
     "ModelProviderConnectionBudgetResetPeriod",
     "ModelProviderConnectionCreatedBy",
     "ModelProviderConnectionOrganization",
+    "ModelProviderConnectionProvider",
     "ModelProviderConnectionScope",
     "Prediction",
     "Project",
@@ -161,11 +166,14 @@ __all__ = [
     "ProjectSampling",
     "ProjectSkipQueue",
     "Prompt",
+    "PromptAssociatedProjectsItem",
+    "PromptAssociatedProjectsItemId",
     "PromptCreatedBy",
     "PromptOrganization",
     "PromptVersion",
     "PromptVersionCreatedBy",
     "PromptVersionOrganization",
+    "PromptVersionProvider",
     "RedisExportStorage",
     "RedisExportStorageStatus",
     "RedisImportStorage",

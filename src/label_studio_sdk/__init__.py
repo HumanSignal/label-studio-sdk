@@ -56,6 +56,7 @@ from .types import (
     ModelProviderConnectionBudgetResetPeriod,
     ModelProviderConnectionCreatedBy,
     ModelProviderConnectionOrganization,
+    ModelProviderConnectionProvider,
     ModelProviderConnectionScope,
     Prediction,
     Project,
@@ -65,11 +66,14 @@ from .types import (
     ProjectSampling,
     ProjectSkipQueue,
     Prompt,
+    PromptAssociatedProjectsItem,
+    PromptAssociatedProjectsItemId,
     PromptCreatedBy,
     PromptOrganization,
     PromptVersion,
     PromptVersionCreatedBy,
     PromptVersionOrganization,
+    PromptVersionProvider,
     RedisExportStorage,
     RedisExportStorageStatus,
     RedisImportStorage,
@@ -130,7 +134,7 @@ from .actions import (
     ActionsCreateRequestSelectedItemsExcluded,
     ActionsCreateRequestSelectedItemsIncluded,
 )
-from .annotations import AnnotationsCreateBulkResponseItem
+from .annotations import AnnotationsCreateBulkRequestSelectedItems, AnnotationsCreateBulkResponseItem
 from .client import AsyncLabelStudio, LabelStudio
 from .environment import LabelStudioEnvironment
 from .export_storage import ExportStorageListTypesResponseItem
@@ -188,6 +192,7 @@ __all__ = [
     "Annotation",
     "AnnotationFilterOptions",
     "AnnotationLastAction",
+    "AnnotationsCreateBulkRequestSelectedItems",
     "AnnotationsCreateBulkResponseItem",
     "AnnotationsDmField",
     "AnnotationsDmFieldLastAction",
@@ -255,6 +260,7 @@ __all__ = [
     "ModelProviderConnectionBudgetResetPeriod",
     "ModelProviderConnectionCreatedBy",
     "ModelProviderConnectionOrganization",
+    "ModelProviderConnectionProvider",
     "ModelProviderConnectionScope",
     "Prediction",
     "Project",
@@ -268,11 +274,14 @@ __all__ = [
     "ProjectsListResponse",
     "ProjectsUpdateResponse",
     "Prompt",
+    "PromptAssociatedProjectsItem",
+    "PromptAssociatedProjectsItemId",
     "PromptCreatedBy",
     "PromptOrganization",
     "PromptVersion",
     "PromptVersionCreatedBy",
     "PromptVersionOrganization",
+    "PromptVersionProvider",
     "PromptsBatchFailedPredictionsRequestFailedPredictionsItem",
     "PromptsBatchFailedPredictionsResponse",
     "PromptsBatchPredictionsRequestResultsItem",

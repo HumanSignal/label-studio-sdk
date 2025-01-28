@@ -20,7 +20,7 @@ service:
       examples:
         - response:
             body:
-              - provider: provider
+              - provider: OpenAI
                 api_key: api_key
                 deployment_name: deployment_name
                 endpoint: endpoint
@@ -54,10 +54,10 @@ service:
         type: root.ModelProviderConnection
       examples:
         - request:
-            provider: provider
+            provider: OpenAI
           response:
             body:
-              provider: provider
+              provider: OpenAI
               api_key: api_key
               deployment_name: deployment_name
               endpoint: endpoint
@@ -95,7 +95,7 @@ service:
             pk: 1
           response:
             body:
-              provider: provider
+              provider: OpenAI
               api_key: api_key
               deployment_name: deployment_name
               endpoint: endpoint
@@ -153,10 +153,10 @@ service:
         - path-parameters:
             pk: 1
           request:
-            provider: provider
+            provider: OpenAI
           response:
             body:
-              provider: provider
+              provider: OpenAI
               api_key: api_key
               deployment_name: deployment_name
               endpoint: endpoint

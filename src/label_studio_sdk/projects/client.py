@@ -37,6 +37,7 @@ class ProjectsClient:
         title: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        workspaces: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Project]:
         """
@@ -67,6 +68,9 @@ class ProjectsClient:
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        workspaces : typing.Optional[int]
+            workspaces
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -100,6 +104,7 @@ class ProjectsClient:
                 "title": title,
                 "page": page,
                 "page_size": page_size,
+                "workspaces": workspaces,
             },
             request_options=request_options,
         )
@@ -119,6 +124,7 @@ class ProjectsClient:
                     title=title,
                     page=page + 1,
                     page_size=page_size,
+                    workspaces=workspaces,
                     request_options=request_options,
                 )
                 _items = _parsed_response.results
@@ -705,6 +711,7 @@ class AsyncProjectsClient:
         title: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        workspaces: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Project]:
         """
@@ -735,6 +742,9 @@ class AsyncProjectsClient:
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        workspaces : typing.Optional[int]
+            workspaces
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -776,6 +786,7 @@ class AsyncProjectsClient:
                 "title": title,
                 "page": page,
                 "page_size": page_size,
+                "workspaces": workspaces,
             },
             request_options=request_options,
         )
@@ -795,6 +806,7 @@ class AsyncProjectsClient:
                     title=title,
                     page=page + 1,
                     page_size=page_size,
+                    workspaces=workspaces,
                     request_options=request_options,
                 )
                 _items = _parsed_response.results

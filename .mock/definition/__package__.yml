@@ -2348,6 +2348,21 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
+  PromptAssociatedProjectsItemId:
+    properties:
+      id: optional<integer>
+      title: optional<string>
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  PromptAssociatedProjectsItem:
+    discriminated: false
+    union:
+      - integer
+      - PromptAssociatedProjectsItemId
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   Prompt:
     properties:
       title:
@@ -2377,11 +2392,21 @@ types:
         docs: List of output classes
         type: list<string>
       associated_projects:
-        type: optional<list<integer>>
-        docs: List of associated projects IDs
+        type: optional<list<PromptAssociatedProjectsItem>>
+        docs: List of associated projects IDs or objects
       skill_name:
         type: optional<string>
         docs: Name of the skill
+    source:
+      openapi: openapi/openapi.yaml
+  PromptVersionProvider:
+    enum:
+      - OpenAI
+      - AzureOpenAI
+      - VertexAI
+      - Gemini
+      - Custom
+    inline: true
     source:
       openapi: openapi/openapi.yaml
   PromptVersionCreatedBy:
@@ -2409,7 +2434,7 @@ types:
       parent_model: optional<integer>
       model_provider_connection: optional<integer>
       prompt: optional<string>
-      provider: optional<string>
+      provider: optional<PromptVersionProvider>
       provider_model_id: optional<string>
       created_by: optional<PromptVersionCreatedBy>
       created_at: optional<datetime>
@@ -2582,6 +2607,16 @@ types:
         type: optional<map<string, unknown>>
     source:
       openapi: openapi/openapi.yaml
+  ModelProviderConnectionProvider:
+    enum:
+      - OpenAI
+      - AzureOpenAI
+      - VertexAI
+      - Gemini
+      - Custom
+    inline: true
+    source:
+      openapi: openapi/openapi.yaml
   ModelProviderConnectionScope:
     enum:
       - Organization
@@ -2618,7 +2653,8 @@ types:
       openapi: openapi/openapi.yaml
   ModelProviderConnection:
     properties:
-      provider: string
+      provider:
+        type: ModelProviderConnectionProvider
       api_key:
         type: optional<string>
       deployment_name: optional<string>

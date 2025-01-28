@@ -8,7 +8,9 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from .types.annotations_create_bulk_request_selected_items import AnnotationsCreateBulkRequestSelectedItems
 from .types.annotations_create_bulk_response_item import AnnotationsCreateBulkResponseItem
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -427,6 +429,7 @@ class AnnotationsClient:
         self,
         *,
         tasks: typing.Optional[typing.Sequence[int]] = OMIT,
+        selected_items: typing.Optional[AnnotationsCreateBulkRequestSelectedItems] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
         project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
@@ -438,6 +441,8 @@ class AnnotationsClient:
         Parameters
         ----------
         tasks : typing.Optional[typing.Sequence[int]]
+
+        selected_items : typing.Optional[AnnotationsCreateBulkRequestSelectedItems]
 
         lead_time : typing.Optional[float]
 
@@ -467,6 +472,9 @@ class AnnotationsClient:
             method="POST",
             json={
                 "tasks": tasks,
+                "selectedItems": convert_and_respect_annotation_metadata(
+                    object_=selected_items, annotation=AnnotationsCreateBulkRequestSelectedItems, direction="write"
+                ),
                 "lead_time": lead_time,
                 "project": project,
                 "result": result,
@@ -946,6 +954,7 @@ class AsyncAnnotationsClient:
         self,
         *,
         tasks: typing.Optional[typing.Sequence[int]] = OMIT,
+        selected_items: typing.Optional[AnnotationsCreateBulkRequestSelectedItems] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
         project: typing.Optional[int] = OMIT,
         result: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
@@ -957,6 +966,8 @@ class AsyncAnnotationsClient:
         Parameters
         ----------
         tasks : typing.Optional[typing.Sequence[int]]
+
+        selected_items : typing.Optional[AnnotationsCreateBulkRequestSelectedItems]
 
         lead_time : typing.Optional[float]
 
@@ -994,6 +1005,9 @@ class AsyncAnnotationsClient:
             method="POST",
             json={
                 "tasks": tasks,
+                "selectedItems": convert_and_respect_annotation_metadata(
+                    object_=selected_items, annotation=AnnotationsCreateBulkRequestSelectedItems, direction="write"
+                ),
                 "lead_time": lead_time,
                 "project": project,
                 "result": result,

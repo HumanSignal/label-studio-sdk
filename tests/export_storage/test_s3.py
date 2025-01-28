@@ -284,8 +284,8 @@ async def test_sync(client: LabelStudio, async_client: AsyncLabelStudio) -> None
         "s3_endpoint": None,
         "project": "integer",
     }
-    response = client.export_storage.s3.sync(id="id")
+    response = client.export_storage.s3.sync(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.export_storage.s3.sync(id="id")
+    async_response = await async_client.export_storage.s3.sync(id=1)
     validate_response(async_response, expected_response, expected_types)

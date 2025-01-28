@@ -9,7 +9,7 @@ from .utilities import validate_response
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "provider": "provider",
+            "provider": "OpenAI",
             "api_key": "api_key",
             "deployment_name": "deployment_name",
             "endpoint": "endpoint",
@@ -57,7 +57,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "provider": "provider",
+        "provider": "OpenAI",
         "api_key": "api_key",
         "deployment_name": "deployment_name",
         "endpoint": "endpoint",
@@ -90,16 +90,16 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "budget_total_spent": None,
         "budget_alert_threshold": None,
     }
-    response = client.model_providers.create(provider="provider")
+    response = client.model_providers.create(provider="OpenAI")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.model_providers.create(provider="provider")
+    async_response = await async_client.model_providers.create(provider="OpenAI")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "provider": "provider",
+        "provider": "OpenAI",
         "api_key": "api_key",
         "deployment_name": "deployment_name",
         "endpoint": "endpoint",
@@ -154,7 +154,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "provider": "provider",
+        "provider": "OpenAI",
         "api_key": "api_key",
         "deployment_name": "deployment_name",
         "endpoint": "endpoint",
@@ -187,8 +187,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "budget_total_spent": None,
         "budget_alert_threshold": None,
     }
-    response = client.model_providers.update(pk=1, provider="provider")
+    response = client.model_providers.update(pk=1, provider="OpenAI")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.model_providers.update(pk=1, provider="provider")
+    async_response = await async_client.model_providers.update(pk=1, provider="OpenAI")
     validate_response(async_response, expected_response, expected_types)
