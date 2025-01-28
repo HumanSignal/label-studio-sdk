@@ -178,6 +178,12 @@ jobs:
       - name: Check Fern API is valid
         run: fern check
 
+      - name: Generate Python SDK
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        working-directory: "${{ env.UPSTREAM_REPO_WORKDIR }}"
+        run: fern generate --group python-sdk-staging --log-level debug
+
       - name: Find or Create PR
         uses: ./.github/actions-hub/actions/follow-merge-find-or-create-pull-request
         id: get-pr
