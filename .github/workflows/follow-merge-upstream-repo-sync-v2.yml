@@ -55,10 +55,11 @@ jobs:
           github_token: ${{ secrets.GIT_PAT }}
           branch_name: "${{ inputs.branch_name }}"
 
-      - name: Checkout
+      - name: Checkout label-studio-client-generator
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GIT_PAT }}
+          repository: HumanSignal/label-studio-client-generator
           ref: ${{ steps.get-branch.outputs.branch_name }}
           fetch-depth: 0
 
