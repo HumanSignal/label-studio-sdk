@@ -5,7 +5,7 @@ import typing
 import pandas as pd
 from .client import ExportsClient, AsyncExportsClient
 from io import BytesIO
-from label_studio_sdk.version.client import VersionClient, AsyncVersionClient
+from label_studio_sdk.version.client import VersionsClient, AsyncVersionsClient
 from label_studio_sdk.core.api_error import ApiError
 
 
@@ -45,7 +45,7 @@ def _filestream_to_json(filestream: typing.Iterable[bytes]) -> dict:
 class ExportsClientExt(ExportsClient):
     
     def _get_filestream(self, project_id: int, export_type: str, timeout: int = 60):
-        version = VersionClient(client_wrapper=self._client_wrapper).get()
+        version = VersionsClient(client_wrapper=self._client_wrapper).get()
         
         if version.edition == "Enterprise":
             # Enterprise edition exports are async, so we need to wait for the export job to complete
@@ -83,7 +83,7 @@ class ExportsClientExt(ExportsClient):
 class AsyncExportsClientExt(AsyncExportsClient):
 
     async def _get_filestream(self, project_id: int, export_type: str, timeout: int = 60):
-        version = await AsyncVersionClient(client_wrapper=self._client_wrapper).get()
+        version = await AsyncVersionsClient(client_wrapper=self._client_wrapper).get()
         if version.edition == "Enterprise":
             # Enterprise edition exports are async, so we need to wait for the export job to complete
             export_snapshot = await self.create(project_id)
