@@ -18,7 +18,7 @@ from .tasks.client import TasksClient
 from .import_storage.client import ImportStorageClient
 from .export_storage.client import ExportStorageClient
 from .webhooks.client import WebhooksClient
-from .version.client import VersionClient
+from .versions.client import VersionsClient
 from .prompts.client import PromptsClient
 from .model_providers.client import ModelProvidersClient
 from .comments.client import CommentsClient
@@ -36,7 +36,7 @@ from .tasks.client import AsyncTasksClient
 from .import_storage.client import AsyncImportStorageClient
 from .export_storage.client import AsyncExportStorageClient
 from .webhooks.client import AsyncWebhooksClient
-from .version.client import AsyncVersionClient
+from .versions.client import AsyncVersionsClient
 from .prompts.client import AsyncPromptsClient
 from .model_providers.client import AsyncModelProvidersClient
 from .comments.client import AsyncCommentsClient
@@ -117,7 +117,7 @@ class LabelStudioBase:
         self.import_storage = ImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = ExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
-        self.version = VersionClient(client_wrapper=self._client_wrapper)
+        self.versions = VersionsClient(client_wrapper=self._client_wrapper)
         self.prompts = PromptsClient(client_wrapper=self._client_wrapper)
         self.model_providers = ModelProvidersClient(client_wrapper=self._client_wrapper)
         self.comments = CommentsClient(client_wrapper=self._client_wrapper)
@@ -198,7 +198,7 @@ class AsyncLabelStudioBase:
         self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
-        self.version = AsyncVersionClient(client_wrapper=self._client_wrapper)
+        self.versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
         self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
         self.model_providers = AsyncModelProvidersClient(client_wrapper=self._client_wrapper)
         self.comments = AsyncCommentsClient(client_wrapper=self._client_wrapper)

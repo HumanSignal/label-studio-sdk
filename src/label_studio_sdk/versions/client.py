@@ -3,18 +3,18 @@
 from ..core.client_wrapper import SyncClientWrapper
 import typing
 from ..core.request_options import RequestOptions
-from .types.version_get_response import VersionGetResponse
+from .types.versions_get_response import VersionsGetResponse
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
 
 
-class VersionClient:
+class VersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> VersionGetResponse:
+    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> VersionsGetResponse:
         """
         Get version information about the Label Studio instance.
 
@@ -25,7 +25,7 @@ class VersionClient:
 
         Returns
         -------
-        VersionGetResponse
+        VersionsGetResponse
 
 
         Examples
@@ -35,7 +35,7 @@ class VersionClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.version.get()
+        client.versions.get()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/version",
@@ -45,9 +45,9 @@ class VersionClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    VersionGetResponse,
+                    VersionsGetResponse,
                     parse_obj_as(
-                        type_=VersionGetResponse,  # type: ignore
+                        type_=VersionsGetResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -57,11 +57,11 @@ class VersionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncVersionClient:
+class AsyncVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> VersionGetResponse:
+    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> VersionsGetResponse:
         """
         Get version information about the Label Studio instance.
 
@@ -72,7 +72,7 @@ class AsyncVersionClient:
 
         Returns
         -------
-        VersionGetResponse
+        VersionsGetResponse
 
 
         Examples
@@ -87,7 +87,7 @@ class AsyncVersionClient:
 
 
         async def main() -> None:
-            await client.version.get()
+            await client.versions.get()
 
 
         asyncio.run(main())
@@ -100,9 +100,9 @@ class AsyncVersionClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    VersionGetResponse,
+                    VersionsGetResponse,
                     parse_obj_as(
-                        type_=VersionGetResponse,  # type: ignore
+                        type_=VersionsGetResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

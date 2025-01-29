@@ -1,5 +1,5 @@
 types:
-  VersionGetResponseEdition:
+  VersionsGetResponseEdition:
     enum:
       - Community
       - Enterprise
@@ -7,7 +7,7 @@ types:
     inline: true
     source:
       openapi: openapi/openapi.yaml
-  VersionGetResponse:
+  VersionsGetResponse:
     properties:
       release:
         type: optional<string>
@@ -28,7 +28,7 @@ types:
         type: optional<map<string, unknown>>
         docs: Information about the Label Studio converter component
       edition:
-        type: optional<VersionGetResponseEdition>
+        type: optional<VersionsGetResponseEdition>
         docs: Label Studio edition (Community or Enterprise)
       lsf:
         type: optional<map<string, unknown>>
@@ -52,7 +52,7 @@ service:
       display-name: Get version information
       response:
         docs: ''
-        type: VersionGetResponse
+        type: VersionsGetResponse
       examples:
         - response:
             body:

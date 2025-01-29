@@ -29,8 +29,8 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "lsf": ("dict", {0: (None, None)}),
         "backend": ("dict", {0: (None, None)}),
     }
-    response = client.version.get()
+    response = client.versions.get()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.version.get()
+    async_response = await async_client.versions.get()
     validate_response(async_response, expected_response, expected_types)

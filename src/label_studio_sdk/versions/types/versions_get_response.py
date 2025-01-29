@@ -5,11 +5,11 @@ import typing
 import pydantic
 import typing_extensions
 from ...core.serialization import FieldMetadata
-from .version_get_response_edition import VersionGetResponseEdition
+from .versions_get_response_edition import VersionsGetResponseEdition
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class VersionGetResponse(UniversalBaseModel):
+class VersionsGetResponse(UniversalBaseModel):
     release: typing.Optional[str] = pydantic.Field(default=None)
     """
     Current release version of Label Studio
@@ -48,7 +48,7 @@ class VersionGetResponse(UniversalBaseModel):
     Information about the Label Studio converter component
     """
 
-    edition: typing.Optional[VersionGetResponseEdition] = pydantic.Field(default=None)
+    edition: typing.Optional[VersionsGetResponseEdition] = pydantic.Field(default=None)
     """
     Label Studio edition (Community or Enterprise)
     """

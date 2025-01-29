@@ -5973,8 +5973,8 @@ client.webhooks.update(
 </dl>
 </details>
 
-## Version
-<details><summary><code>client.version.<a href="src/label_studio_sdk/version/client.py">get</a>()</code></summary>
+## Versions
+<details><summary><code>client.versions.<a href="src/label_studio_sdk/versions/client.py">get</a>()</code></summary>
 <dl>
 <dd>
 
@@ -6006,7 +6006,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.version.get()
+client.versions.get()
 
 ```
 </dd>
