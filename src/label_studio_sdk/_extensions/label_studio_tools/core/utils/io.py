@@ -41,7 +41,8 @@ def safe_build_path(base_dir: str, user_path: str) -> str:
     combined_path = os.path.join(base_dir, user_path)
     absolute_path = os.path.abspath(combined_path)
     base_dir_abs = os.path.abspath(base_dir)
-    if not (absolute_path == base_dir_abs or absolute_path.startswith(base_dir_abs + os.sep)):
+
+    if os.path.commonpath([absolute_path, base_dir_abs]) != base_dir_abs:
         raise ValueError(f"Invalid path: {user_path}")
 
     return absolute_path
