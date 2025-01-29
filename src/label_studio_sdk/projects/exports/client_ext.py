@@ -5,7 +5,7 @@ import typing
 import pandas as pd
 from .client import ExportsClient, AsyncExportsClient
 from io import BytesIO
-from label_studio_sdk.version.client import VersionsClient, AsyncVersionsClient
+from label_studio_sdk.versions.client import VersionsClient, AsyncVersionsClient
 from label_studio_sdk.core.api_error import ApiError
 
 
