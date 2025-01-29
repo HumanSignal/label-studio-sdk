@@ -2405,6 +2405,7 @@ types:
       - AzureOpenAI
       - VertexAI
       - Gemini
+      - Anthropic
       - Custom
     inline: true
     source:
@@ -2613,6 +2614,7 @@ types:
       - AzureOpenAI
       - VertexAI
       - Gemini
+      - Anthropic
       - Custom
     inline: true
     source:
