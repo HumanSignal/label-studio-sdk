@@ -1,9 +1,12 @@
 import pytest
+import os
+
 from unittest.mock import patch
 from label_studio_sdk._extensions.label_studio_tools.core.utils.io import (
     get_local_path,
     _DIR_APP_NAME,
 )
+
 
 
 def os_path_exists(url):
@@ -68,3 +71,26 @@ def test_get_local_path(mock_get_data_dir, mock_get_cache_dir, url, expected):
         )
         print("\n ==> get_local_path = ", x)
         assert x == expected
+
+
+@pytest.mark.parametrize(
+    "url, raises_error",
+    [
+        # Valid local file
+        ("/data/local-files?d=my_dir/1.jpg", False),
+        # Attempted directory traversal
+        ("/data/local-files?d=../../etc/passwd", True),
+    ],
+)
+@patch("label_studio_sdk._extensions.label_studio_tools.core.utils.io.get_data_dir", return_value="test-data-dir/")
+@patch("label_studio_sdk._extensions.label_studio_tools.core.utils.io.get_cache_dir", return_value="test-data-dir/.cache/label-studio")
+@patch("label_studio_sdk._extensions.label_studio_tools.core.utils.io.LOCAL_FILES_DOCUMENT_ROOT", "/my_files")
+def test_get_local_path_safe_build(mock_data_dir, mock_cache_dir, url, raises_error):
+    # Mock file-existence checks so the call proceeds to path-building logic
+    with patch("os.path.exists", return_value=True):
+        if raises_error:
+            with pytest.raises(ValueError, match="Invalid path"):
+                result = get_local_path(url, access_token="secret", hostname="http://app.heartex.com")
+        else:
+            local_path = get_local_path(url, access_token="secret", hostname="http://app.heartex.com")
+            assert "my_dir/1.jpg" in local_path

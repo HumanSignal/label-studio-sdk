@@ -21,6 +21,7 @@ from lxml import etree
 from nltk.tokenize.treebank import TreebankWordTokenizer
 
 from label_studio_sdk._extensions.label_studio_tools.core.utils.params import get_env
+from label_studio_sdk._extensions.label_studio_tools.core.utils.io import safe_build_path
 
 logger = logging.getLogger(__name__)
 
@@ -148,7 +149,7 @@ def download(
     if is_uploaded_file:
         upload_dir = _get_upload_dir(project_dir, upload_dir)
         filename = urllib.parse.unquote(url.replace("/data/upload/", ""))
-        filepath = os.path.join(upload_dir, filename)
+        filepath = safe_build_path(upload_dir, filename)
         logger.debug(
             f"Copy {filepath} to {output_dir}".format(
                 filepath=filepath, output_dir=output_dir
@@ -165,7 +166,7 @@ def download(
     if is_local_file:
         filename, dir_path = url.split("/data/", 1)[-1].split("?d=")
         dir_path = str(urllib.parse.unquote(dir_path))
-        filepath = os.path.join(LOCAL_FILES_DOCUMENT_ROOT, dir_path)
+        filepath = safe_build_path(LOCAL_FILES_DOCUMENT_ROOT, dir_path)
         if not os.path.exists(filepath):
             raise FileNotFoundError(filepath)
         if download_resources:
