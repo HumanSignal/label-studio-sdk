@@ -23,9 +23,9 @@ from .types import (
     DataManagerTaskSerializerDraftsItem,
     DataManagerTaskSerializerPredictionsItem,
     Export,
-    ExportConvert,
-    ExportCreate,
-    ExportCreateStatus,
+    ExportFormat,
+    ExportSnapshot,
+    ExportSnapshotStatus,
     ExportStatus,
     FileUpload,
     Filter,
@@ -116,6 +116,7 @@ from . import (
     prompts,
     tasks,
     users,
+    version,
     views,
     webhooks,
     workspaces,
@@ -156,7 +157,7 @@ from .prompts import (
 )
 from .tasks import TasksListRequestFields, TasksListResponse
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
-from .version import __version__
+from .version import VersionGetResponse, VersionGetResponseEdition, __version__
 from .views import (
     ViewsCreateRequestData,
     ViewsCreateRequestDataFilters,
@@ -216,9 +217,9 @@ __all__ = [
     "DataManagerTaskSerializerDraftsItem",
     "DataManagerTaskSerializerPredictionsItem",
     "Export",
-    "ExportConvert",
-    "ExportCreate",
-    "ExportCreateStatus",
+    "ExportFormat",
+    "ExportSnapshot",
+    "ExportSnapshotStatus",
     "ExportStatus",
     "ExportStorageListTypesResponseItem",
     "FileUpload",
@@ -310,6 +311,8 @@ __all__ = [
     "UserSimple",
     "UsersGetTokenResponse",
     "UsersResetTokenResponse",
+    "VersionGetResponse",
+    "VersionGetResponseEdition",
     "View",
     "ViewsCreateRequestData",
     "ViewsCreateRequestDataFilters",
@@ -347,6 +350,7 @@ __all__ = [
     "prompts",
     "tasks",
     "users",
+    "version",
     "views",
     "webhooks",
     "workspaces",
