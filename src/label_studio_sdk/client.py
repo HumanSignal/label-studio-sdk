@@ -24,9 +24,3 @@ class AsyncLabelStudio(AsyncLabelStudioBase):
 
         self.tasks = AsyncTasksClientExt(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClientExt(client_wrapper=self._client_wrapper)
-        
-        try:
-            version = self.version.get()
-            self.edition = version.edition
-        except Exception as e:
-            raise ApiError(status_code=500, body=f"Unable to access Label Studio instance. Please check if the base_url={self._base_url} is correct and the server is running.") from e
