@@ -24,27 +24,28 @@ class ExportTimeoutError(ApiError):
         )
         
         
-def _filestream_to_fileobj(filestream: typing.Iterable[bytes]) -> typing.BinaryIO:
+def _bytestream_to_fileobj(bytestream: typing.Iterable[bytes]) -> typing.BinaryIO:
     buffer = BytesIO()
-    for chunk in filestream:
+    for chunk in bytestream:
         buffer.write(chunk)
     buffer.seek(0)
     return buffer
-        
 
-def _filestream_to_binary(filestream: typing.Iterable[bytes]) -> bytes:
-    fileobj = _filestream_to_fileobj(filestream)
+def _bytestream_to_binary(bytestream: typing.Iterable[bytes]) -> bytes:
+    fileobj = _bytestream_to_fileobj(bytestream)
     return fileobj.getvalue()
 
-
-def _filestream_to_json(filestream: typing.Iterable[bytes]) -> dict:
-    fileobj = _filestream_to_fileobj(filestream)
+def _bytestream_to_json(bytestream: typing.Iterable[bytes]) -> dict:
+    fileobj = _bytestream_to_fileobj(bytestream)
     return json.load(fileobj)
 
+def _bytestream_to_pandas(bytestream: typing.Iterable[bytes]) -> pd.DataFrame:
+    fileobj = _bytestream_to_fileobj(bytestream)
+    return pd.read_csv(fileobj)
 
 class ExportsClientExt(ExportsClient):
     
-    def _get_filestream(self, project_id: int, export_type: str, timeout: int = 60):
+    def _get_bytestream(self, project_id: int, export_type: str, timeout: int = 60):
         version = VersionsClient(client_wrapper=self._client_wrapper).get()
         
         if version.edition == "Enterprise":
@@ -57,32 +58,31 @@ class ExportsClientExt(ExportsClient):
                 if time.time() - start_time > timeout:
                     raise ExportTimeoutError(export_snapshot)
                 time.sleep(1)
-            filestream = self.download(project_id, export_pk=export_snapshot.id, export_type=export_type, request_options={'chunk_size': 1024})
+            bytestream = self.download(project_id, export_pk=export_snapshot.id, export_type=export_type, request_options={'chunk_size': 1024})
         else:
             # Community edition exports are sync, so we can download the file immediately
-            filestream = self.download_sync(project_id, export_type="JSON", download_all_tasks=True, download_resources=True)
-        return filestream
+            bytestream = self.download_sync(project_id, export_type=export_type, download_all_tasks=True, download_resources=True)
+        return bytestream
     
     def as_file(self, project_id: int, export_type: str = "JSON", timeout: int = 60):
-        filestream = self._get_filestream(project_id, export_type, timeout)
-        return _filestream_to_fileobj(filestream)
+        bytestream = self._get_bytestream(project_id, export_type, timeout)
+        return _bytestream_to_fileobj(bytestream)
     
     def as_binary(self, project_id: int, export_type: str = "JSON", timeout: int = 60):
-        filestream = self._get_filestream(project_id, export_type, timeout)
-        return _filestream_to_binary(filestream)
+        bytestream = self._get_bytestream(project_id, export_type, timeout)
+        return _bytestream_to_binary(bytestream)
     
     def as_json(self, project_id: int, timeout: int = 60):
-        filestream = self._get_filestream(project_id, "JSON", timeout)
-        return _filestream_to_json(filestream)
+        bytestream = self._get_bytestream(project_id, "JSON", timeout)
+        return _bytestream_to_json(bytestream)
     
     def as_pandas(self, project_id: int, timeout: int = 60):
-        filestream = self._get_filestream(project_id, "CSV", timeout)
-        return pd.read_csv(filestream)
-    
+        bytestream = self._get_bytestream(project_id, "CSV", timeout)
+        return _bytestream_to_pandas(bytestream)
     
 class AsyncExportsClientExt(AsyncExportsClient):
 
-    async def _get_filestream(self, project_id: int, export_type: str, timeout: int = 60):
+    async def _get_bytestream(self, project_id: int, export_type: str, timeout: int = 60):
         version = await AsyncVersionsClient(client_wrapper=self._client_wrapper).get()
         if version.edition == "Enterprise":
             # Enterprise edition exports are async, so we need to wait for the export job to complete
@@ -94,23 +94,23 @@ class AsyncExportsClientExt(AsyncExportsClient):
                 if time.time() - start_time > timeout:
                     raise ExportTimeoutError(export_snapshot)
                 await asyncio.sleep(1)
-            filestream = await self.download(project_id, export_pk=export_snapshot.id, export_type=export_type, request_options={'chunk_size': 1024})
+            bytestream = await self.download(project_id, export_pk=export_snapshot.id, export_type=export_type, request_options={'chunk_size': 1024})
         else:
-            filestream = await self.download_sync(project_id, export_type=export_type, download_all_tasks=True, download_resources=True)
-        return filestream
+            bytestream = await self.download_sync(project_id, export_type=export_type, download_all_tasks=True, download_resources=True)
+        return bytestream
     
     async def as_file(self, project_id: int, export_type: str = "JSON", timeout: int = 60):
-        filestream = await self._get_filestream(project_id, export_type, timeout)
-        return _filestream_to_fileobj(filestream)
+        bytestream = await self._get_bytestream(project_id, export_type, timeout)
+        return _bytestream_to_fileobj(bytestream)
     
     async def as_binary(self, project_id: int, export_type: str = "JSON", timeout: int = 60):
-        filestream = await self._get_filestream(project_id, export_type, timeout)
-        return _filestream_to_binary(filestream)
+        bytestream = await self._get_bytestream(project_id, export_type, timeout)
+        return _bytestream_to_binary(bytestream)
     
     async def as_json(self, project_id: int, timeout: int = 60):
-        filestream = await self._get_filestream(project_id, "JSON", timeout)
-        return _filestream_to_json(filestream)
+        bytestream = await self._get_bytestream(project_id, "JSON", timeout)
+        return _bytestream_to_json(bytestream)
     
     async def as_pandas(self, project_id: int, timeout: int = 60):
-        filestream = await self._get_filestream(project_id, "CSV", timeout)
-        return pd.read_csv(filestream)
+        bytestream = await self._get_bytestream(project_id, "CSV", timeout)
+        return _bytestream_to_pandas(bytestream)
