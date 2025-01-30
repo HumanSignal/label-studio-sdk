@@ -2,4 +2,6 @@
 
 import typing
 
-ModelProviderConnectionProvider = typing.Union[typing.Literal["OpenAI", "AzureOpenAI", "Custom"], typing.Any]
+ModelProviderConnectionProvider = typing.Union[
+    typing.Literal["OpenAI", "AzureOpenAI", "VertexAI", "Gemini", "Custom"], typing.Any
+]

@@ -2,4 +2,6 @@
 
 import typing
 
-PromptVersionProvider = typing.Union[typing.Literal["OpenAI", "AzureOpenAI"], typing.Any]
+PromptVersionProvider = typing.Union[
+    typing.Literal["OpenAI", "AzureOpenAI", "VertexAI", "Gemini", "Custom"], typing.Any
+]
