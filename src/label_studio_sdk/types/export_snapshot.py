@@ -5,7 +5,7 @@ import typing
 from .user_simple import UserSimple
 import datetime as dt
 import pydantic
-from .export_create_status import ExportCreateStatus
+from .export_snapshot_status import ExportSnapshotStatus
 from .converted_format import ConvertedFormat
 from .task_filter_options import TaskFilterOptions
 from .annotation_filter_options import AnnotationFilterOptions
@@ -13,7 +13,7 @@ from .serialization_options import SerializationOptions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class ExportCreate(UniversalBaseModel):
+class ExportSnapshot(UniversalBaseModel):
     title: typing.Optional[str] = None
     id: typing.Optional[int] = None
     created_by: typing.Optional[UserSimple] = None
@@ -27,7 +27,7 @@ class ExportCreate(UniversalBaseModel):
     Complete or fail time
     """
 
-    status: typing.Optional[ExportCreateStatus] = None
+    status: typing.Optional[ExportSnapshotStatus] = None
     md5: typing.Optional[str] = None
     counters: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
     converted_formats: typing.Optional[typing.List[ConvertedFormat]] = None

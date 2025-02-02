@@ -7,8 +7,29 @@ from ..utilities import validate_response
 
 
 async def test_list_formats(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = ["string"]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: None})
+    expected_response: typing.Any = [
+        {
+            "name": "JSON",
+            "title": "title",
+            "description": "description",
+            "link": "link",
+            "tags": ["tags"],
+            "disabled": True,
+        }
+    ]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {
+            0: {
+                "name": None,
+                "title": None,
+                "description": None,
+                "link": None,
+                "tags": ("list", {0: None}),
+                "disabled": None,
+            }
+        },
+    )
     response = client.projects.exports.list_formats(id=1)
     validate_response(response, expected_response, expected_types)
 
@@ -52,10 +73,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.projects.exports.list(id=1)
+    response = client.projects.exports.list(project_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.exports.list(id=1)
+    async_response = await async_client.projects.exports.list(project_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -118,10 +139,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "interpolate_key_frames": None,
         },
     }
-    response = client.projects.exports.create(id_=1)
+    response = client.projects.exports.create(project_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.exports.create(id_=1)
+    async_response = await async_client.projects.exports.create(project_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -154,44 +175,31 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "counters": ("dict", {0: (None, None)}),
         "converted_formats": ("list", {0: {"id": "integer", "status": None, "export_type": None, "traceback": None}}),
     }
-    response = client.projects.exports.get(id=1, export_pk="export_pk")
+    response = client.projects.exports.get(project_id=1, export_pk="export_pk")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.exports.get(id=1, export_pk="export_pk")
+    async_response = await async_client.projects.exports.get(project_id=1, export_pk="export_pk")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.projects.exports.delete(id=1, export_pk="export_pk")  # type: ignore[func-returns-value]
+        client.projects.exports.delete(project_id=1, export_pk="export_pk")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.projects.exports.delete(id=1, export_pk="export_pk")  # type: ignore[func-returns-value]
+        await async_client.projects.exports.delete(project_id=1, export_pk="export_pk")  # type: ignore[func-returns-value]
         is None
     )
 
 
 async def test_convert(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"export_type": "export_type"}
-    expected_types: typing.Any = {"export_type": None}
-    response = client.projects.exports.convert(id=1, export_pk="export_pk", export_type="export_type")
+    expected_response: typing.Any = {"export_type": "JSON", "converted_format": 1}
+    expected_types: typing.Any = {"export_type": None, "converted_format": "integer"}
+    response = client.projects.exports.convert(project_id=1, export_pk="export_pk")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.exports.convert(id=1, export_pk="export_pk", export_type="export_type")
+    async_response = await async_client.projects.exports.convert(project_id=1, export_pk="export_pk")
     validate_response(async_response, expected_response, expected_types)
-
-
-async def test_download(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.projects.exports.download(id=1, export_pk="export_pk")  # type: ignore[func-returns-value]
-        is None
-    )
-
-    assert (
-        await async_client.projects.exports.download(id=1, export_pk="export_pk")  # type: ignore[func-returns-value]
-        is None
-    )

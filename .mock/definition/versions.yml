@@ -1,0 +1,78 @@
+types:
+  VersionsGetResponseEdition:
+    enum:
+      - Community
+      - Enterprise
+    docs: Label Studio edition (Community or Enterprise)
+    inline: true
+    source:
+      openapi: openapi/openapi.yaml
+  VersionsGetResponse:
+    properties:
+      release:
+        type: optional<string>
+        docs: Current release version of Label Studio
+      label-studio-os-package:
+        type: optional<map<string, unknown>>
+        docs: Information about the Label Studio open source package
+      label-studio-os-backend:
+        type: optional<map<string, unknown>>
+        docs: Information about the Label Studio backend
+      label-studio-frontend:
+        type: optional<map<string, unknown>>
+        docs: Information about the Label Studio frontend
+      dm2:
+        type: optional<map<string, unknown>>
+        docs: Information about the Data Manager 2.0 component
+      label-studio-converter:
+        type: optional<map<string, unknown>>
+        docs: Information about the Label Studio converter component
+      edition:
+        type: optional<VersionsGetResponseEdition>
+        docs: Label Studio edition (Community or Enterprise)
+      lsf:
+        type: optional<map<string, unknown>>
+        docs: Information about the Label Studio Frontend library
+      backend:
+        type: optional<map<string, unknown>>
+        docs: Additional backend information
+    source:
+      openapi: openapi/openapi.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /api/version
+      method: GET
+      auth: true
+      docs: Get version information about the Label Studio instance.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Get version information
+      response:
+        docs: ''
+        type: VersionsGetResponse
+      examples:
+        - response:
+            body:
+              release: release
+              label-studio-os-package:
+                key: value
+              label-studio-os-backend:
+                key: value
+              label-studio-frontend:
+                key: value
+              dm2:
+                key: value
+              label-studio-converter:
+                key: value
+              edition: Community
+              lsf:
+                key: value
+              backend:
+                key: value
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

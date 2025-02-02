@@ -5973,6 +5973,67 @@ client.webhooks.update(
 </dl>
 </details>
 
+## Versions
+<details><summary><code>client.versions.<a href="src/label_studio_sdk/versions/client.py">get</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get version information about the Label Studio instance.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.versions.get()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Prompts
 <details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">list</a>()</code></summary>
 <dl>
@@ -16992,7 +17053,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.exports.list(
-    id=1,
+    project_id=1,
 )
 
 ```
@@ -17009,7 +17070,7 @@ client.projects.exports.list(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
+**project_id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -17067,7 +17128,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.exports.create(
-    id_=1,
+    project_id=1,
 )
 
 ```
@@ -17084,7 +17145,7 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-**id_:** `int` — A unique integer value identifying this project.
+**project_id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -17132,7 +17193,7 @@ client.projects.exports.create(
 <dl>
 <dd>
 
-**status:** `typing.Optional[ExportCreateStatus]` 
+**status:** `typing.Optional[ExportSnapshotStatus]` 
     
 </dd>
 </dl>
@@ -17238,7 +17299,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.exports.get(
-    id=1,
+    project_id=1,
     export_pk="export_pk",
 )
 
@@ -17256,7 +17317,7 @@ client.projects.exports.get(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
+**project_id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -17320,7 +17381,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.exports.delete(
-    id=1,
+    project_id=1,
     export_pk="export_pk",
 )
 
@@ -17338,7 +17399,7 @@ client.projects.exports.delete(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
+**project_id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -17406,100 +17467,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.exports.convert(
-    id=1,
-    export_pk="export_pk",
-    export_type="export_type",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**export_pk:** `str` — Primary key identifying the export file.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**export_type:** `str` — Export file format.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.exports.<a href="src/label_studio_sdk/projects/exports/client.py">download</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-Download an export snapshot as a file in a specified format. To see what formats are supported, you can use [Get export formats](list-formats) or see [Export formats supported by Label Studio](https://labelstud.io/guide/export#Export-formats-supported-by-Label-Studio). 
-
-You will need to provide the project ID and export ID (`export_pk`). The export ID is returned when you create the export or you can use [List all export snapshots](list).
-
-The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list). 
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.exports.download(
-    id=1,
+    project_id=1,
     export_pk="export_pk",
 )
 
@@ -17517,7 +17485,7 @@ client.projects.exports.download(
 <dl>
 <dd>
 
-**id:** `int` — A unique integer value identifying this project.
+**project_id:** `int` — A unique integer value identifying this project.
     
 </dd>
 </dl>
@@ -17533,7 +17501,15 @@ client.projects.exports.download(
 <dl>
 <dd>
 
-**export_type:** `typing.Optional[str]` — Selected export format
+**export_type:** `typing.Optional[ExportFormat]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**download_resources:** `typing.Optional[bool]` — If true, download all resource files such as images, audio, and others relevant to the tasks.
     
 </dd>
 </dl>
