@@ -328,10 +328,41 @@ service:
       path: /api/current-user/product-tour
       method: GET
       auth: true
+      docs: >-
+        Retrieve the state of a product tour for the current user. Creates a new
+        tour if it doesn't exist.
       source:
         openapi: openapi/openapi.yaml
+      display-name: Retrieve product tour state
+      request:
+        name: UsersGetProductTourRequest
+        query-parameters:
+          name:
+            type: string
+            docs: Name of the product tour to retrieve.
+      response:
+        docs: Successfully retrieved product tour
+        type: root.ProductTour
       examples:
-        - {}
+        - query-parameters:
+            name: name
+          response:
+            body:
+              id: 1
+              user: 1
+              name: name
+              state: ready
+              interaction_data:
+                index: 1
+                action: action
+                type: type
+                status: status
+                additional_data:
+                  key: value
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              steps:
+                - key: value
       audiences:
         - internal
     update_product_tour:
@@ -340,8 +371,18 @@ service:
       auth: true
       source:
         openapi: openapi/openapi.yaml
-      examples:
-        - {}
+      display-name: Update product tour state
+      request:
+        body: root.ApiUsersProductTourUpdate
+        query-parameters:
+          name:
+            type: string
+            docs: Name of the product tour to update
+        name: UsersUpdateProductTourRequest
+        content-type: application/json
+      response:
+        docs: Successfully updated product tour
+        type: root.ProductTour
       audiences:
         - internal
   source:

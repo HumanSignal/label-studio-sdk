@@ -741,115 +741,6 @@ types:
       converted_formats: optional<list<ConvertedFormat>>
     source:
       openapi: openapi/openapi.yaml
-  TaskFilterOptions:
-    properties:
-      view:
-        type: optional<integer>
-        docs: Apply filters from the view ID (a tab from the Data Manager)
-      skipped:
-        type: optional<string>
-        docs: >-
-          `only` - include all tasks with skipped annotations<br>`exclude` -
-          exclude all tasks with skipped annotations
-      finished:
-        type: optional<string>
-        docs: >-
-          `only` - include all finished tasks (is_labeled = true)<br>`exclude` -
-          exclude all finished tasks
-      annotated:
-        type: optional<string>
-        docs: >-
-          `only` - include all tasks with at least one not skipped
-          annotation<br>`exclude` - exclude all tasks with at least one not
-          skipped annotation
-      only_with_annotations:
-        type: optional<boolean>
-        default: false
-    source:
-      openapi: openapi/openapi.yaml
-  AnnotationFilterOptions:
-    properties:
-      usual:
-        type: optional<boolean>
-        docs: Include not skipped and not ground truth annotations
-        default: true
-      ground_truth:
-        type: optional<boolean>
-        docs: Include ground truth annotations
-      skipped:
-        type: optional<boolean>
-        docs: Include skipped annotations
-    source:
-      openapi: openapi/openapi.yaml
-  SerializationOption:
-    docs: JSON dict with parameters
-    properties:
-      only_id:
-        type: optional<boolean>
-        docs: Include a full json body or IDs only
-        default: false
-    source:
-      openapi: openapi/openapi.yaml
-  SerializationOptions:
-    properties:
-      drafts: optional<SerializationOption>
-      predictions: optional<SerializationOption>
-      include_annotation_history:
-        type: optional<boolean>
-        docs: Include annotation history
-        default: false
-      annotations__completed_by: optional<SerializationOption>
-      interpolate_key_frames:
-        type: optional<boolean>
-        docs: Interpolate video key frames
-        default: false
-    source:
-      openapi: openapi/openapi.yaml
-  ExportCreateStatus:
-    enum:
-      - created
-      - in_progress
-      - failed
-      - completed
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
-  ExportCreate:
-    properties:
-      title:
-        type: optional<string>
-        validation:
-          maxLength: 2048
-      id: optional<integer>
-      created_by: optional<UserSimple>
-      created_at:
-        type: optional<datetime>
-        docs: Creation time
-      finished_at:
-        type: optional<datetime>
-        docs: Complete or fail time
-      status: optional<ExportCreateStatus>
-      md5:
-        type: optional<string>
-        validation:
-          minLength: 1
-          maxLength: 128
-      counters: optional<map<string, unknown>>
-      converted_formats: optional<list<ConvertedFormat>>
-      task_filter_options: optional<TaskFilterOptions>
-      annotation_filter_options: optional<AnnotationFilterOptions>
-      serialization_options: optional<SerializationOptions>
-    source:
-      openapi: openapi/openapi.yaml
-  ExportConvert:
-    properties:
-      export_type:
-        type: string
-        docs: Export file format.
-        validation:
-          minLength: 1
-    source:
-      openapi: openapi/openapi.yaml
   ProjectImportStatus:
     enum:
       - created
@@ -2330,6 +2221,38 @@ types:
       created_at: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
+  InteractionData:
+    properties:
+      index: optional<integer>
+      action: optional<string>
+      type: optional<string>
+      status: optional<string>
+      additional_data: optional<map<string, unknown>>
+    source:
+      openapi: openapi/openapi.yaml
+  ProductTourState:
+    enum:
+      - ready
+      - completed
+      - skipped
+    inline: true
+    source:
+      openapi: openapi/openapi.yaml
+  ProductTour:
+    properties:
+      id: optional<integer>
+      user: optional<integer>
+      name: optional<string>
+      state: optional<ProductTourState>
+      interaction_data: optional<InteractionData>
+      created_at: optional<datetime>
+      updated_at: optional<datetime>
+      steps:
+        type: optional<list<map<string, unknown>>>
+        docs: Tour steps
+    source:
+      openapi: openapi/openapi.yaml
+  ApiUsersProductTourUpdate: unknown
   PromptCreatedBy:
     discriminated: false
     docs: User ID of the creator of the prompt
@@ -2716,5 +2639,126 @@ types:
         type: datetime
       is_resolved: optional<boolean>
       resolved_at: optional<datetime>
+    source:
+      openapi: openapi/openapi.yaml
+  ExportFormat:
+    enum:
+      - JSON
+      - JSON_MIN
+      - CSV
+      - TSV
+      - CONLL2003
+      - COCO
+      - VOC
+      - BRUSH_TO_NUMPY
+      - BRUSH_TO_PNG
+      - ASR_MANIFEST
+      - YOLO
+      - YOLO_OBB
+      - CSV_OLD
+      - YOLO_WITH_IMAGES
+      - COCO_WITH_IMAGES
+      - YOLO_OBB_WITH_IMAGES
+    docs: Export file format.
+    source:
+      openapi: openapi/openapi.yaml
+  TaskFilterOptions:
+    properties:
+      view:
+        type: optional<integer>
+        docs: Apply filters from the view ID (a tab from the Data Manager)
+      skipped:
+        type: optional<string>
+        docs: >-
+          `only` - include all tasks with skipped annotations<br>`exclude` -
+          exclude all tasks with skipped annotations
+      finished:
+        type: optional<string>
+        docs: >-
+          `only` - include all finished tasks (is_labeled = true)<br>`exclude` -
+          exclude all finished tasks
+      annotated:
+        type: optional<string>
+        docs: >-
+          `only` - include all tasks with at least one not skipped
+          annotation<br>`exclude` - exclude all tasks with at least one not
+          skipped annotation
+      only_with_annotations:
+        type: optional<boolean>
+        default: false
+    source:
+      openapi: openapi/openapi.yaml
+  AnnotationFilterOptions:
+    properties:
+      usual:
+        type: optional<boolean>
+        docs: Include not skipped and not ground truth annotations
+        default: true
+      ground_truth:
+        type: optional<boolean>
+        docs: Include ground truth annotations
+      skipped:
+        type: optional<boolean>
+        docs: Include skipped annotations
+    source:
+      openapi: openapi/openapi.yaml
+  SerializationOption:
+    docs: JSON dict with parameters
+    properties:
+      only_id:
+        type: optional<boolean>
+        docs: Include a full json body or IDs only
+        default: false
+    source:
+      openapi: openapi/openapi.yaml
+  SerializationOptions:
+    properties:
+      drafts: optional<SerializationOption>
+      predictions: optional<SerializationOption>
+      include_annotation_history:
+        type: optional<boolean>
+        docs: Include annotation history
+        default: false
+      annotations__completed_by: optional<SerializationOption>
+      interpolate_key_frames:
+        type: optional<boolean>
+        docs: Interpolate video key frames
+        default: false
+    source:
+      openapi: openapi/openapi.yaml
+  ExportSnapshotStatus:
+    enum:
+      - created
+      - in_progress
+      - failed
+      - completed
+    inline: true
+    source:
+      openapi: openapi/openapi.yaml
+  ExportSnapshot:
+    properties:
+      title:
+        type: optional<string>
+        validation:
+          maxLength: 2048
+      id: optional<integer>
+      created_by: optional<UserSimple>
+      created_at:
+        type: optional<datetime>
+        docs: Creation time
+      finished_at:
+        type: optional<datetime>
+        docs: Complete or fail time
+      status: optional<ExportSnapshotStatus>
+      md5:
+        type: optional<string>
+        validation:
+          minLength: 1
+          maxLength: 128
+      counters: optional<map<string, unknown>>
+      converted_formats: optional<list<ConvertedFormat>>
+      task_filter_options: optional<TaskFilterOptions>
+      annotation_filter_options: optional<AnnotationFilterOptions>
+      serialization_options: optional<SerializationOptions>
     source:
       openapi: openapi/openapi.yaml
