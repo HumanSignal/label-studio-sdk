@@ -1,6 +1,7 @@
 from .base_client import LabelStudioBase, AsyncLabelStudioBase
 from .tasks.client_ext import TasksClientExt, AsyncTasksClientExt
 from .projects.client_ext import ProjectsClientExt, AsyncProjectsClientExt
+from .core.api_error import ApiError
 
 
 class LabelStudio(LabelStudioBase):
