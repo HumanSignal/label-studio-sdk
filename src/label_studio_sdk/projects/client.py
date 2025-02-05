@@ -2,6 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .pauses.client import PausesClient
 from .exports.client import ExportsClient
 from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
@@ -17,6 +18,7 @@ from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from ..errors.bad_request_error import BadRequestError
 from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
+from .pauses.client import AsyncPausesClient
 from .exports.client import AsyncExportsClient
 from ..core.pagination import AsyncPager
 
@@ -27,6 +29,7 @@ OMIT = typing.cast(typing.Any, ...)
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.pauses = PausesClient(client_wrapper=self._client_wrapper)
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
 
     def list(
@@ -701,6 +704,7 @@ class ProjectsClient:
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
 
     async def list(
