@@ -2221,6 +2221,20 @@ types:
       created_at: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
+  Pause:
+    properties:
+      id: optional<integer>
+      project: optional<integer>
+      user: optional<integer>
+      paused_by: optional<integer>
+      reason: string
+      verbose_reason: optional<string>
+      deleted_by: optional<integer>
+      deleted_at: optional<datetime>
+      created_at: optional<datetime>
+      updated_at: optional<datetime>
+    source:
+      openapi: openapi/openapi.yaml
   InteractionData:
     properties:
       index: optional<integer>
@@ -2328,6 +2342,7 @@ types:
       - AzureOpenAI
       - VertexAI
       - Gemini
+      - Anthropic
       - Custom
     inline: true
     source:
@@ -2536,6 +2551,7 @@ types:
       - AzureOpenAI
       - VertexAI
       - Gemini
+      - Anthropic
       - Custom
     inline: true
     source:
