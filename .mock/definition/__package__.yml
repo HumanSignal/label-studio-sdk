@@ -2340,6 +2340,7 @@ types:
     enum:
       - OpenAI
       - AzureOpenAI
+      - AzureAIFoundry
       - VertexAI
       - Gemini
       - Anthropic
@@ -2549,6 +2550,7 @@ types:
     enum:
       - OpenAI
       - AzureOpenAI
+      - AzureAIFoundry
       - VertexAI
       - Gemini
       - Anthropic
