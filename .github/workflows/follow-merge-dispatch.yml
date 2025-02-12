@@ -14,9 +14,6 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
 
-env:
-  DOWNSTREAM_REPOSITORY: "label-studio"
-
 jobs:
   sync:
     name: "Sync"
@@ -56,7 +53,7 @@ jobs:
               body: [
                 'Hi @${{ github.actor }}!',
                 '',
-                `Unfortunately you don't have membership in ${owner} organization, your PR wasn't synced with ${owner}/${{ env.DOWNSTREAM_REPOSITORY }}.`
+                `Unfortunately you don't have membership in ${owner} organization, Follow Merge dispatch is skipped.`
               ].join('\n')
             });
             throw `${{ github.actor }} don't have membership in ${owner} organization`
