@@ -2,16 +2,21 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
+from .pause_paused_by import PausePausedBy
+import pydantic
 import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
-import pydantic
 
 
 class Pause(UniversalBaseModel):
     id: typing.Optional[int] = None
     project: typing.Optional[int] = None
     user: typing.Optional[int] = None
-    paused_by: typing.Optional[int] = None
+    paused_by: typing.Optional[PausePausedBy] = pydantic.Field(default=None)
+    """
+    User who created the pause
+    """
+
     reason: str
     verbose_reason: typing.Optional[str] = None
     deleted_by: typing.Optional[int] = None

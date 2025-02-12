@@ -1,4 +1,4 @@
-name: 'Follow Merge: Sync PR Adala'
+name: 'Follow Merge: Dispatch'
 
 on:
   pull_request_target:
@@ -14,13 +14,10 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}
 
-env:
-  DOWNSTREAM_REPOSITORY: "Adala"
-
 jobs:
   sync:
     name: "Sync"
-    if: startsWith(github.head_ref, 'fb-')
+    if: startsWith(github.head_ref, 'fb-') || (startsWith(github.head_ref, 'revert-') && contains(github.head_ref, '-fb-') )
     runs-on: ubuntu-latest
     steps:
       - uses: hmarr/debug-action@v3.0.0
@@ -56,7 +53,7 @@ jobs:
               body: [
                 'Hi @${{ github.actor }}!',
                 '',
-                `Unfortunately you don't have membership in ${owner} organization, your PR wasn't synced with ${owner}/${{ env.DOWNSTREAM_REPOSITORY }}.`
+                `Unfortunately you don't have membership in ${owner} organization, Follow Merge dispatch is skipped.`
               ].join('\n')
             });
             throw `${{ github.actor }} don't have membership in ${owner} organization`
@@ -68,8 +65,14 @@ jobs:
           repository: HumanSignal/actions-hub
           path: ./.github/actions-hub
 
-      - name: Dispatch Follow Merge Event
+      - name: Dispatch label-studio Follow Merge
         uses: ./.github/actions-hub/actions/follow-merge-dispatch
         with:
           github_token: ${{ secrets.GIT_PAT }}
-          downstream_repository: "${{ env.DOWNSTREAM_REPOSITORY }}"
+          downstream_repository: "label-studio"
+
+      - name: Dispatch Adala Follow Merge
+        uses: ./.github/actions-hub/actions/follow-merge-dispatch
+        with:
+          github_token: ${{ secrets.GIT_PAT }}
+          downstream_repository: "Adala"

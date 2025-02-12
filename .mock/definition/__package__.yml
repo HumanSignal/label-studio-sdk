@@ -2221,12 +2221,23 @@ types:
       created_at: optional<datetime>
     source:
       openapi: openapi/openapi.yaml
+  PausePausedBy:
+    discriminated: false
+    docs: User who created the pause
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   Pause:
     properties:
       id: optional<integer>
       project: optional<integer>
       user: optional<integer>
-      paused_by: optional<integer>
+      paused_by:
+        type: optional<PausePausedBy>
+        docs: User who created the pause
       reason: string
       verbose_reason: optional<string>
       deleted_by: optional<integer>
