@@ -38,8 +38,7 @@ tests/test_webhooks.py
 .github/workflows/codeql.yml
 .github/workflows/docs.yml
 .github/workflows/fm-command.yml
-.github/workflows/follow-merge-sync-pr-adala.yml
-.github/workflows/follow-merge-sync-pr-lso.yml
+.github/workflows/follow-merge-dispatch.yml
 .github/workflows/follow-merge-upstream-repo-sync-v2.yml
 .github/workflows/follow-merge-upstream-repo-sync.yml
 .github/workflows/jira-command.yml
