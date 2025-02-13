@@ -1,9 +1,8 @@
 [project]
 name = "label-studio-sdk"
-version = "1.0.9"
+version = "1.0.11"
 
 [tool.poetry]
-version = "1.0.9"
 name = "label-studio-sdk"
 description = ""
 readme = "README.md"
