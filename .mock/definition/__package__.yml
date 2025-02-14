@@ -19,6 +19,10 @@ errors:
     status-code: 405
     type: unknown
     docs: User cannot soft delete self.
+  UnauthorizedError:
+    status-code: 401
+    type: unknown
+    docs: Invalid refresh token
 types:
   AnnotationLastAction:
     enum:
@@ -2785,5 +2789,38 @@ types:
       task_filter_options: optional<TaskFilterOptions>
       annotation_filter_options: optional<AnnotationFilterOptions>
       serialization_options: optional<SerializationOptions>
+    source:
+      openapi: openapi/openapi.yaml
+  ApiToken:
+    properties:
+      token:
+        type: string
+        docs: JWT token
+      created_at:
+        type: string
+        docs: Token creation timestamp
+      expires_at:
+        type: string
+        docs: Token expiration timestamp
+    source:
+      openapi: openapi/openapi.yaml
+  JwtSettings:
+    properties:
+      api_tokens_enabled:
+        type: boolean
+        docs: Whether JWT API tokens are enabled
+      legacy_api_tokens_enabled:
+        type: boolean
+        docs: Whether legacy API tokens are enabled
+      api_token_ttl_days:
+        type: integer
+        docs: Number of days before API tokens expire
+    source:
+      openapi: openapi/openapi.yaml
+  AccessToken:
+    properties:
+      access:
+        type: string
+        docs: New JWT access token
     source:
       openapi: openapi/openapi.yaml

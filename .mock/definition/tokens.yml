@@ -1,0 +1,102 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    blacklist:
+      path: /api/token/blacklist
+      method: POST
+      auth: true
+      docs: |
+        Blacklist a refresh token to prevent its future use.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Blacklist token
+      request:
+        name: TokensBlacklistRequest
+        body:
+          properties:
+            refresh:
+              type: string
+              docs: JWT refresh token
+        content-type: application/json
+      errors:
+        - root.NotFoundError
+      examples:
+        - request:
+            refresh: refresh
+      audiences:
+        - public
+    get:
+      path: /api/token
+      method: GET
+      auth: true
+      docs: |
+        List all API tokens for the current user.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List API tokens
+      response:
+        docs: List of API tokens retrieved successfully
+        type: list<root.ApiToken>
+      examples:
+        - response:
+            body:
+              - token: token
+                created_at: created_at
+                expires_at: expires_at
+      audiences:
+        - public
+    create:
+      path: /api/token
+      method: POST
+      auth: true
+      docs: |
+        Create a new API token for the current user.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create API token
+      response:
+        docs: Token created successfully
+        type: root.ApiToken
+      examples:
+        - response:
+            body:
+              token: token
+              created_at: created_at
+              expires_at: expires_at
+      audiences:
+        - public
+    refresh:
+      path: /api/token/refresh
+      method: POST
+      auth: true
+      docs: |
+        Get a new access token using a refresh token.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Refresh token
+      request:
+        name: TokensRefreshRequest
+        body:
+          properties:
+            refresh:
+              type: string
+              docs: JWT refresh token
+        content-type: application/json
+      response:
+        docs: New access token created successfully
+        type: root.AccessToken
+      errors:
+        - root.UnauthorizedError
+      examples:
+        - request:
+            refresh: refresh
+          response:
+            body:
+              access: access
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

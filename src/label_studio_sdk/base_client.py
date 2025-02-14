@@ -23,6 +23,8 @@ from .prompts.client import PromptsClient
 from .model_providers.client import ModelProvidersClient
 from .comments.client import CommentsClient
 from .workspaces.client import WorkspacesClient
+from .tokens.client import TokensClient
+from .jwt_settings.client import JwtSettingsClient
 from .core.client_wrapper import AsyncClientWrapper
 from .annotations.client import AsyncAnnotationsClient
 from .users.client import AsyncUsersClient
@@ -41,6 +43,8 @@ from .prompts.client import AsyncPromptsClient
 from .model_providers.client import AsyncModelProvidersClient
 from .comments.client import AsyncCommentsClient
 from .workspaces.client import AsyncWorkspacesClient
+from .tokens.client import AsyncTokensClient
+from .jwt_settings.client import AsyncJwtSettingsClient
 
 
 class LabelStudioBase:
@@ -122,6 +126,8 @@ class LabelStudioBase:
         self.model_providers = ModelProvidersClient(client_wrapper=self._client_wrapper)
         self.comments = CommentsClient(client_wrapper=self._client_wrapper)
         self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
+        self.tokens = TokensClient(client_wrapper=self._client_wrapper)
+        self.jwt_settings = JwtSettingsClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncLabelStudioBase:
@@ -203,6 +209,8 @@ class AsyncLabelStudioBase:
         self.model_providers = AsyncModelProvidersClient(client_wrapper=self._client_wrapper)
         self.comments = AsyncCommentsClient(client_wrapper=self._client_wrapper)
         self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
+        self.tokens = AsyncTokensClient(client_wrapper=self._client_wrapper)
+        self.jwt_settings = AsyncJwtSettingsClient(client_wrapper=self._client_wrapper)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: LabelStudioEnvironment) -> str:
