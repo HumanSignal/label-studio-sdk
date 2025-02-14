@@ -6,7 +6,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class JwtSettings(UniversalBaseModel):
+class JwtSettingsResponse(UniversalBaseModel):
     api_tokens_enabled: bool = pydantic.Field()
     """
     Whether JWT API tokens are enabled

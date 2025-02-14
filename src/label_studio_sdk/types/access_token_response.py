@@ -6,7 +6,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class AccessToken(UniversalBaseModel):
+class AccessTokenResponse(UniversalBaseModel):
     access: str = pydantic.Field()
     """
     New JWT access token

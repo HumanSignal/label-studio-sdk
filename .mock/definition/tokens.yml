@@ -39,7 +39,7 @@ service:
       display-name: List API tokens
       response:
         docs: List of API tokens retrieved successfully
-        type: list<root.ApiToken>
+        type: list<root.ApiTokenResponse>
       examples:
         - response:
             body:
@@ -59,7 +59,7 @@ service:
       display-name: Create API token
       response:
         docs: Token created successfully
-        type: root.ApiToken
+        type: root.ApiTokenResponse
       examples:
         - response:
             body:
@@ -87,7 +87,7 @@ service:
         content-type: application/json
       response:
         docs: New access token created successfully
-        type: root.AccessToken
+        type: root.AccessTokenResponse
       errors:
         - root.UnauthorizedError
       examples:

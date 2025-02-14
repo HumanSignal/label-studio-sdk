@@ -2791,7 +2791,7 @@ types:
       serialization_options: optional<SerializationOptions>
     source:
       openapi: openapi/openapi.yaml
-  ApiToken:
+  ApiTokenResponse:
     properties:
       token:
         type: string
@@ -2804,7 +2804,7 @@ types:
         docs: Token expiration timestamp
     source:
       openapi: openapi/openapi.yaml
-  JwtSettings:
+  JwtSettingsResponse:
     properties:
       api_tokens_enabled:
         type: boolean
@@ -2817,7 +2817,7 @@ types:
         docs: Number of days before API tokens expire
     source:
       openapi: openapi/openapi.yaml
-  AccessToken:
+  AccessTokenResponse:
     properties:
       access:
         type: string

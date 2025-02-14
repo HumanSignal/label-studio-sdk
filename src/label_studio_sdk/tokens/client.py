@@ -7,8 +7,8 @@ from ..errors.not_found_error import NotFoundError
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.api_token import ApiToken
-from ..types.access_token import AccessToken
+from ..types.api_token_response import ApiTokenResponse
+from ..types.access_token_response import AccessTokenResponse
 from ..errors.unauthorized_error import UnauthorizedError
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -77,7 +77,7 @@ class TokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ApiToken]:
+    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ApiTokenResponse]:
         """
         List all API tokens for the current user.
 
@@ -88,7 +88,7 @@ class TokensClient:
 
         Returns
         -------
-        typing.List[ApiToken]
+        typing.List[ApiTokenResponse]
             List of API tokens retrieved successfully
 
         Examples
@@ -108,9 +108,9 @@ class TokensClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[ApiToken],
+                    typing.List[ApiTokenResponse],
                     parse_obj_as(
-                        type_=typing.List[ApiToken],  # type: ignore
+                        type_=typing.List[ApiTokenResponse],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -119,7 +119,7 @@ class TokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> ApiToken:
+    def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> ApiTokenResponse:
         """
         Create a new API token for the current user.
 
@@ -130,7 +130,7 @@ class TokensClient:
 
         Returns
         -------
-        ApiToken
+        ApiTokenResponse
             Token created successfully
 
         Examples
@@ -150,9 +150,9 @@ class TokensClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ApiToken,
+                    ApiTokenResponse,
                     parse_obj_as(
-                        type_=ApiToken,  # type: ignore
+                        type_=ApiTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -161,7 +161,7 @@ class TokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def refresh(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> AccessToken:
+    def refresh(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> AccessTokenResponse:
         """
         Get a new access token using a refresh token.
 
@@ -175,7 +175,7 @@ class TokensClient:
 
         Returns
         -------
-        AccessToken
+        AccessTokenResponse
             New access token created successfully
 
         Examples
@@ -204,9 +204,9 @@ class TokensClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AccessToken,
+                    AccessTokenResponse,
                     parse_obj_as(
-                        type_=AccessToken,  # type: ignore
+                        type_=AccessTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -295,7 +295,7 @@ class AsyncTokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ApiToken]:
+    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ApiTokenResponse]:
         """
         List all API tokens for the current user.
 
@@ -306,7 +306,7 @@ class AsyncTokensClient:
 
         Returns
         -------
-        typing.List[ApiToken]
+        typing.List[ApiTokenResponse]
             List of API tokens retrieved successfully
 
         Examples
@@ -334,9 +334,9 @@ class AsyncTokensClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[ApiToken],
+                    typing.List[ApiTokenResponse],
                     parse_obj_as(
-                        type_=typing.List[ApiToken],  # type: ignore
+                        type_=typing.List[ApiTokenResponse],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -345,7 +345,7 @@ class AsyncTokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> ApiToken:
+    async def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> ApiTokenResponse:
         """
         Create a new API token for the current user.
 
@@ -356,7 +356,7 @@ class AsyncTokensClient:
 
         Returns
         -------
-        ApiToken
+        ApiTokenResponse
             Token created successfully
 
         Examples
@@ -384,9 +384,9 @@ class AsyncTokensClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ApiToken,
+                    ApiTokenResponse,
                     parse_obj_as(
-                        type_=ApiToken,  # type: ignore
+                        type_=ApiTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -395,7 +395,9 @@ class AsyncTokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def refresh(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> AccessToken:
+    async def refresh(
+        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AccessTokenResponse:
         """
         Get a new access token using a refresh token.
 
@@ -409,7 +411,7 @@ class AsyncTokensClient:
 
         Returns
         -------
-        AccessToken
+        AccessTokenResponse
             New access token created successfully
 
         Examples
@@ -446,9 +448,9 @@ class AsyncTokensClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AccessToken,
+                    AccessTokenResponse,
                     parse_obj_as(
-                        type_=AccessToken,  # type: ignore
+                        type_=AccessTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -3,7 +3,7 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.jwt_settings import JwtSettings
+from ..types.jwt_settings_response import JwtSettingsResponse
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -17,7 +17,7 @@ class JwtSettingsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> JwtSettings:
+    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> JwtSettingsResponse:
         """
         Retrieve JWT settings for the currently active organization.
 
@@ -28,7 +28,7 @@ class JwtSettingsClient:
 
         Returns
         -------
-        JwtSettings
+        JwtSettingsResponse
             JWT settings retrieved successfully
 
         Examples
@@ -48,9 +48,9 @@ class JwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    JwtSettings,
+                    JwtSettingsResponse,
                     parse_obj_as(
-                        type_=JwtSettings,  # type: ignore
+                        type_=JwtSettingsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -66,7 +66,7 @@ class JwtSettingsClient:
         legacy_api_tokens_enabled: bool,
         api_token_ttl_days: int,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> JwtSettings:
+    ) -> JwtSettingsResponse:
         """
         Update JWT settings for the currently active organization.
 
@@ -86,7 +86,7 @@ class JwtSettingsClient:
 
         Returns
         -------
-        JwtSettings
+        JwtSettingsResponse
             JWT settings updated successfully
 
         Examples
@@ -116,9 +116,9 @@ class JwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    JwtSettings,
+                    JwtSettingsResponse,
                     parse_obj_as(
-                        type_=JwtSettings,  # type: ignore
+                        type_=JwtSettingsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -132,7 +132,7 @@ class AsyncJwtSettingsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> JwtSettings:
+    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> JwtSettingsResponse:
         """
         Retrieve JWT settings for the currently active organization.
 
@@ -143,7 +143,7 @@ class AsyncJwtSettingsClient:
 
         Returns
         -------
-        JwtSettings
+        JwtSettingsResponse
             JWT settings retrieved successfully
 
         Examples
@@ -171,9 +171,9 @@ class AsyncJwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    JwtSettings,
+                    JwtSettingsResponse,
                     parse_obj_as(
-                        type_=JwtSettings,  # type: ignore
+                        type_=JwtSettingsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -189,7 +189,7 @@ class AsyncJwtSettingsClient:
         legacy_api_tokens_enabled: bool,
         api_token_ttl_days: int,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> JwtSettings:
+    ) -> JwtSettingsResponse:
         """
         Update JWT settings for the currently active organization.
 
@@ -209,7 +209,7 @@ class AsyncJwtSettingsClient:
 
         Returns
         -------
-        JwtSettings
+        JwtSettingsResponse
             JWT settings updated successfully
 
         Examples
@@ -247,9 +247,9 @@ class AsyncJwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    JwtSettings,
+                    JwtSettingsResponse,
                     parse_obj_as(
-                        type_=JwtSettings,  # type: ignore
+                        type_=JwtSettingsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

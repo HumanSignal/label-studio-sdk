@@ -15,7 +15,7 @@ service:
       display-name: Retrieve JWT Settings
       response:
         docs: JWT settings retrieved successfully
-        type: root.JwtSettings
+        type: root.JwtSettingsResponse
       examples:
         - response:
             body:
@@ -34,11 +34,11 @@ service:
         openapi: openapi/openapi.yaml
       display-name: Update JWT Settings
       request:
-        body: root.JwtSettings
+        body: root.JwtSettingsResponse
         content-type: application/json
       response:
         docs: JWT settings updated successfully
-        type: root.JwtSettings
+        type: root.JwtSettingsResponse
       examples:
         - request:
             api_tokens_enabled: true
