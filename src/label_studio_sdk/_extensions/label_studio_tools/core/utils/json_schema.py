@@ -2,6 +2,7 @@ import json
 import types
 import sys
 import functools
+import logging
 from typing import Type, Dict, Any, Tuple, Generator
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -10,6 +11,8 @@ from datamodel_code_generator.model import get_data_model_types
 from datamodel_code_generator.parser.jsonschema import JsonSchemaParser
 from pydantic import BaseModel
 from contextlib import contextmanager
+
+logger = logging.getLogger(__name__)
 
 
 @functools.lru_cache(maxsize=128)
@@ -65,6 +68,7 @@ def json_schema_to_pydantic(json_schema: dict, class_name: str = 'MyModel') -> G
     json_schema_str = json.dumps(json_schema)
     
     # Generate Pydantic model code from the JSON schema string
+    logger.debug(f"Generating Pydantic model code from json schema: {json_schema_str}")
     model_code: str = _generate_model_code(json_schema_str, class_name)
     
     # Create a unique module name using the id of the JSON schema string
@@ -79,6 +83,7 @@ def json_schema_to_pydantic(json_schema: dict, class_name: str = 'MyModel') -> G
         # Add the new module to sys.modules to make it importable
         # This is necessary to avoid Pydantic errors related to undefined models
         sys.modules[module_name] = mod
+        logger.debug(f"Generated Pydantic model: {model_class}")
         yield model_class
     finally:
         if module_name in sys.modules:
