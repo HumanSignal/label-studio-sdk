@@ -577,6 +577,12 @@ types:
           Maximum number of annotations for one task. If the number of
           annotations per task is equal or greater to this value, the task is
           completed (is_labeled=True)
+      annotation_limit_count:
+        type: optional<integer>
+        docs: Maximum number of annotations per annotator pause
+      annotation_limit_percent:
+        type: optional<integer>
+        docs: Maximum percentage of annotations per annotator
       is_published:
         type: optional<boolean>
         docs: Whether or not the project is published to annotators

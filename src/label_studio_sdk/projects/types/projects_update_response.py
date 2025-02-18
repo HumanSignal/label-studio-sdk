@@ -66,6 +66,16 @@ class ProjectsUpdateResponse(UniversalBaseModel):
     Maximum annotations per task
     """
 
+    annotation_limit_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of annotations per annotator
+    """
+
+    annotation_limit_percent: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum percentage of annotations per annotator
+    """
+
     color: typing.Optional[str] = pydantic.Field(default=None)
     """
     Project color in HEX format

@@ -61,6 +61,16 @@ class Project(UniversalBaseModel):
     Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
     """
 
+    annotation_limit_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of annotations per annotator pause
+    """
+
+    annotation_limit_percent: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum percentage of annotations per annotator
+    """
+
     is_published: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Whether or not the project is published to annotators
