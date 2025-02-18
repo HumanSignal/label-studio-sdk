@@ -2578,7 +2578,7 @@ paths:
                   annotation_limit_percent:
                     title: annotation_limit_percent
                     description: Maximum percentage of annotations per annotator
-                    type: integer
+                    type: float
                   color:
                     title: color
                     description: Project color in HEX format
@@ -8532,7 +8532,7 @@ components:
         annotation_limit_percent:
           title: Annotation limit percent
           description: Maximum percentage of annotations per annotator
-          type: integer
+          type: float
         is_published:
           title: Published
           description: Whether or not the project is published to annotators

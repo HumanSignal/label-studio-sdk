@@ -147,7 +147,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "color": None,
         "maximum_annotations": "integer",
         "annotation_limit_count": "integer",
-        "annotation_limit_percent": "integer",
+        "annotation_limit_percent": None,
         "is_published": None,
         "model_version": None,
         "is_draft": None,
@@ -214,7 +214,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "show_collab_predictions": True,
         "maximum_annotations": 1,
         "annotation_limit_count": 1,
-        "annotation_limit_percent": 1,
+        "annotation_limit_percent": 1.1,
         "color": "color",
         "control_weights": {
             "my_bbox": {"type": "RectangleLabels", "labels": {"Car": 1, "Airplaine": 0.5}, "overall": 0.33}
@@ -233,7 +233,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "show_collab_predictions": None,
         "maximum_annotations": "integer",
         "annotation_limit_count": "integer",
-        "annotation_limit_percent": "integer",
+        "annotation_limit_percent": None,
         "color": None,
         "control_weights": ("dict", {0: (None, None)}),
     }

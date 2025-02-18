@@ -581,7 +581,7 @@ types:
         type: optional<integer>
         docs: Maximum number of annotations per annotator pause
       annotation_limit_percent:
-        type: optional<integer>
+        type: optional<float>
         docs: Maximum percentage of annotations per annotator
       is_published:
         type: optional<boolean>

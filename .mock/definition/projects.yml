@@ -115,7 +115,7 @@ types:
         type: optional<integer>
         docs: Maximum number of annotations per annotator
       annotation_limit_percent:
-        type: optional<integer>
+        type: optional<float>
         docs: Maximum percentage of annotations per annotator
       color:
         type: optional<string>
@@ -250,7 +250,7 @@ service:
                   color: color
                   maximum_annotations: 1
                   annotation_limit_count: 1
-                  annotation_limit_percent: 1
+                  annotation_limit_percent: 1.1
                   is_published: true
                   model_version: model_version
                   is_draft: true
@@ -663,7 +663,7 @@ service:
               show_collab_predictions: true
               maximum_annotations: 1
               annotation_limit_count: 1
-              annotation_limit_percent: 1
+              annotation_limit_percent: 1.1
               color: color
               control_weights:
                 my_bbox:

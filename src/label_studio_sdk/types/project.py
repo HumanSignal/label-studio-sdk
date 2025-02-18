@@ -66,7 +66,7 @@ class Project(UniversalBaseModel):
     Maximum number of annotations per annotator pause
     """
 
-    annotation_limit_percent: typing.Optional[int] = pydantic.Field(default=None)
+    annotation_limit_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
     Maximum percentage of annotations per annotator
     """
