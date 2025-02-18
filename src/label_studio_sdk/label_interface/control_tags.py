@@ -95,8 +95,9 @@ class ControlTag(LabelStudioTag):
         
     @property
     def is_output_required(self):
-        """Determines if the control tag must provide an output"""
-        return True
+        # TextArea can be blank unless user specifies "required"="true" in the attribute
+        required_in_attr = str(self.attr.get("required", "false")).lower() == "true"
+        return required_in_attr or False
 
     def to_json_schema(self):
         """
@@ -981,12 +982,6 @@ class TextAreaTag(ControlTag):
     tag: str = "TextArea"
     _value_class: Type[TextAreaValue] = TextAreaValue
     _label_attr_name: str = "text"
-    
-    @property
-    def is_output_required(self):
-        # TextArea can be blank unless user specifies "required"="true" in the attribute
-        required_in_attr = self.attr.get("required", "false").lower() == "true"
-        return required_in_attr or False
 
     def to_json_schema(self):
         """
