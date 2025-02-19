@@ -1,0 +1,55 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /api/jwt/settings
+      method: GET
+      auth: true
+      docs: |
+        Retrieve JWT settings for the currently active organization.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Retrieve JWT Settings
+      response:
+        docs: JWT settings retrieved successfully
+        type: root.JwtSettingsResponse
+      examples:
+        - response:
+            body:
+              api_tokens_enabled: true
+              legacy_api_tokens_enabled: true
+              api_token_ttl_days: 1
+      audiences:
+        - public
+    create:
+      path: /api/jwt/settings
+      method: POST
+      auth: true
+      docs: |
+        Update JWT settings for the currently active organization.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Update JWT Settings
+      request:
+        body: root.JwtSettingsResponse
+        content-type: application/json
+      response:
+        docs: JWT settings updated successfully
+        type: root.JwtSettingsResponse
+      examples:
+        - request:
+            api_tokens_enabled: true
+            legacy_api_tokens_enabled: true
+            api_token_ttl_days: 1
+          response:
+            body:
+              api_tokens_enabled: true
+              legacy_api_tokens_enabled: true
+              api_token_ttl_days: 1
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml
