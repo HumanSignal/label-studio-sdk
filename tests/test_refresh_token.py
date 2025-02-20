@@ -1,13 +1,18 @@
 import datetime
 import json
+import threading
+import time
 from datetime import timezone
+from unittest.mock import patch
 
 import httpx
 import jwt
 import pytest
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.core.api_error import ApiError
 from label_studio_sdk.projects.types.projects_list_response import \
     ProjectsListResponse
+from label_studio_sdk.types.access_token_response import AccessTokenResponse
 
 NOW = int(datetime.datetime.now(timezone.utc).timestamp())
 ONE_HOUR_AGO = NOW - 3600
@@ -123,29 +128,7 @@ def test_legacy_token_detection(respx_mock):
     client.projects.list()
 
     assert projects_route.calls.last.response.status_code == 200
-    # the request should use the Bearer token format
     assert projects_route.calls.last.request.headers["Authorization"] == f"Bearer {legacy_token}"
-
-
-@pytest.mark.respx(base_url=BASE_URL)
-def test_force_legacy_token(respx_mock):
-    """Test that JWT tokens can be forced to use legacy token mechanism."""
-    now = int(datetime.datetime.now(timezone.utc).timestamp())
-    jwt_looking_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
-    projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
-    )
-
-    client = LabelStudio(
-        base_url=BASE_URL,
-        api_key=jwt_looking_token,
-        use_legacy_token=True,
-    )
-    client.projects.list()
-
-    assert projects_route.calls.last.response.status_code == 200
-    # the request should use the Bearer token format
-    assert projects_route.calls.last.request.headers["Authorization"] == f"Bearer {jwt_looking_token}"
 
 
 @pytest.mark.respx(base_url=BASE_URL)
@@ -169,3 +152,126 @@ def test_jwt_token_detection(respx_mock):
     assert refresh_route.called
     assert projects_route.calls.last.response.status_code == 200
     assert projects_route.calls.last.request.headers["Authorization"].startswith("Bearer ")
+
+
+def test_expired_api_key_detection():
+    """Test that an expired API key is detected and raises an appropriate error."""
+    expired_token = jwt.encode({"exp": ONE_HOUR_AGO}, "secret")
+
+    with pytest.raises(ApiError) as exc:
+        LabelStudio(
+            base_url=BASE_URL,
+            api_key=expired_token
+        )
+    assert "API key has expired" in str(exc.value)
+
+
+def test_concurrent_refresh_single_request():
+    """Test that multiple concurrent refresh attempts result in only one API call"""
+    refresh_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
+    expired_access_token = jwt.encode({"exp": ONE_HOUR_AGO}, "secret")
+    valid_access_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
+    mock_response = AccessTokenResponse(access=valid_access_token)
+    
+    refresh_count = 0
+    refresh_called = threading.Event()
+    
+    def mock_refresh(*args, **kwargs):
+        nonlocal refresh_count
+        refresh_count += 1
+        # let requests pile up
+        time.sleep(0.1)
+        refresh_called.set()
+        return mock_response
+
+    with patch('label_studio_sdk.tokens.client.TokensClient.refresh', side_effect=mock_refresh):
+        client = LabelStudio(api_key=refresh_token, base_url=BASE_URL)
+        client._client_wrapper._set_access_token(expired_access_token)
+
+        # Spam refresh on multiple threads
+        threads = []
+        for _ in range(5):
+            t = threading.Thread(target=lambda: client._client_wrapper.api_key)
+            threads.append(t)
+            t.start()
+            
+        for t in threads:
+            t.join()
+        refresh_called.wait(timeout=1.0)
+        
+        assert refresh_count == 1, "Expected exactly one refresh call"
+        assert client._client_wrapper.api_key == mock_response.access
+
+
+def test_concurrent_refresh_error_handling():
+    """Test that if refresh fails, subsequent attempts are allowed"""
+    refresh_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
+    expired_access_token = jwt.encode({"exp": ONE_HOUR_AGO}, "secret")
+    valid_access_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
+    mock_response = AccessTokenResponse(access=valid_access_token)
+
+    fail_first = True
+    refresh_count = 0
+    
+
+    def mock_refresh(*args, **kwargs):
+        nonlocal fail_first, refresh_count
+        refresh_count += 1
+        if fail_first:
+            fail_first = False
+            raise Exception("Simulated API error")
+        return mock_response
+
+    with patch('label_studio_sdk.tokens.client.TokensClient.refresh', side_effect=mock_refresh):
+        client = LabelStudio(api_key=refresh_token, base_url=BASE_URL)
+        client._client_wrapper._set_access_token(expired_access_token)
+
+        # First attempt should fail
+        with pytest.raises(ApiError):
+            _ = client._client_wrapper.api_key
+            
+        # Second attempt should succeed
+        assert client._client_wrapper.api_key == mock_response.access
+        
+        # Verify we attempted refresh twice
+        assert refresh_count == 2, "Expected exactly two refresh attempts"
+
+
+def test_no_unnecessary_refresh():
+    """Test that if token is refreshed while waiting for lock, second refresh is skipped"""
+    refresh_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
+    expired_access_token = jwt.encode({"exp": ONE_HOUR_AGO}, "secret")
+    valid_access_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
+    mock_response = AccessTokenResponse(access=valid_access_token)
+
+    refresh_count = 0
+    refresh_started = threading.Event()
+
+    def mock_refresh(*args, **kwargs):
+        nonlocal refresh_count
+        refresh_count += 1
+        refresh_started.set()
+        time.sleep(0.1)
+        return mock_response
+
+    with patch('label_studio_sdk.tokens.client.TokensClient.refresh', side_effect=mock_refresh):
+        client = LabelStudio(api_key=refresh_token, base_url=BASE_URL)
+        client._client_wrapper._set_access_token(expired_access_token)
+
+        def refresh_thread():
+            _ = client._client_wrapper.api_key
+
+        # trigger two refreshes, only one should result in a refresh call
+        t1 = threading.Thread(target=refresh_thread)
+        t1.start()
+        refresh_started.wait(timeout=1.0)
+        assert refresh_started.is_set(), "First refresh did not start"
+
+        t2 = threading.Thread(target=refresh_thread)
+        t2.start()
+        
+        t1.join(timeout=2.0)
+        t2.join(timeout=2.0)
+
+        assert refresh_count == 1, "Expected exactly one refresh call"
+        assert client._client_wrapper.api_key == mock_response.access

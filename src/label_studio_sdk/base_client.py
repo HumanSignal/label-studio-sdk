@@ -75,7 +75,6 @@ class LabelStudioBase:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
-        use_legacy_token: typing.Optional[bool] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else None
@@ -88,7 +87,6 @@ class LabelStudioBase:
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             api_key=api_key,
-            use_legacy_token=use_legacy_token,
             httpx_client=(
                 httpx_client
                 if httpx_client is not None
@@ -169,7 +167,6 @@ class AsyncLabelStudioBase:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
-        use_legacy_token: typing.Optional[bool] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else None
@@ -182,7 +179,6 @@ class AsyncLabelStudioBase:
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
             api_key=api_key,
-            use_legacy_token=use_legacy_token,
             httpx_client=(
                 httpx_client
                 if httpx_client is not None
