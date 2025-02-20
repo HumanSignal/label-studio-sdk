@@ -63,12 +63,12 @@ class Project(UniversalBaseModel):
 
     annotation_limit_count: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Maximum number of annotations per annotator pause
+    Maximum number of tasks that can be annotated by a single annotator in this project pause
     """
 
     annotation_limit_percent: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Maximum percentage of annotations per annotator
+    Maximum percentage of tasks in this project that can be annotated by a single annotator
     """
 
     is_published: typing.Optional[bool] = pydantic.Field(default=None)

@@ -579,10 +579,14 @@ types:
           completed (is_labeled=True)
       annotation_limit_count:
         type: optional<integer>
-        docs: Maximum number of annotations per annotator pause
+        docs: >-
+          Maximum number of tasks that can be annotated by a single annotator in
+          this project pause
       annotation_limit_percent:
         type: optional<float>
-        docs: Maximum percentage of annotations per annotator
+        docs: >-
+          Maximum percentage of tasks in this project that can be annotated by a
+          single annotator
       is_published:
         type: optional<boolean>
         docs: Whether or not the project is published to annotators

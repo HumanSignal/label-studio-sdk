@@ -8526,12 +8526,12 @@ components:
           type: integer
         annotation_limit_count:
           title: Annotation limit count
-          description: Maximum number of annotations per annotator
+          description: Maximum number of tasks that can be annotated by a single annotator in this project
             pause
           type: integer
         annotation_limit_percent:
           title: Annotation limit percent
-          description: Maximum percentage of annotations per annotator
+          description: Maximum percentage of tasks in this project that can be annotated by a single annotator
           type: float
         is_published:
           title: Published
