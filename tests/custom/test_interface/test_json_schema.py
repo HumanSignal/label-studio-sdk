@@ -29,7 +29,7 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
                     "enum": ["Positive", "Negative", "Neutral"],
                 }
             },
-            "required": ["sentiment"]
+            "required": []
         },
         {"sentiment": "Positive"},
         {"sentiment": "Positive"}
@@ -59,7 +59,7 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
                     "uniqueItems": True,
                 }
             },
-            "required": ["sentiment"]
+            "required": []
         },
         {"sentiment": ["Positive", "Negative"]},
         {"sentiment": ["Positive", "Negative"]}
@@ -110,7 +110,7 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
                     }
                 }
             },
-            "required": ["entities"]
+            "required": []
         },
         {"entities": [{"start": 0, "end": 1, "labels": ["PERSON"], "text": "John"}]},
         {"entities": [{"start": 0, "end": 1, "labels": ["PERSON"], "text": "John"}]}
@@ -144,22 +144,22 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
                 },
                 "reasoning": {
                     "type": "string",
-                    "description": "Text for document"
+                    "description": "List of texts (one or more) for document"
                 }
             },
-            "required": ["reasoning", "sentiment"]
+            "required": []
         },
-        {"sentiment": "Positive", "reasoning": "Let's think step by step"},
-        {"sentiment": "Positive", "reasoning": "Let's think step by step"}
+        {"sentiment": "Positive"},
+        {"sentiment": "Positive", "reasoning": None}
     ),
     # complex interface that includes all control tags
     (
         """
         <View>
           <Text name="txt" value="$text" />
-          <Rating name="rating" toName="txt" maxRating="10" />
+          <Rating name="rating" toName="txt" maxRating="10" required="true"/>
           <DateTime name="date" toName="txt" />
-          <Taxonomy name="taxonomy" toName="txt" >
+          <Taxonomy name="taxonomy" toName="txt" required="true">
           <Choice value="class A">
            <Choice value="class A1"/>
            <Choice value="class A2"/>
@@ -209,10 +209,47 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
                     "enum": ["left", "right"]
                 }
             },
-            "required": ["rating", "date", "taxonomy", "number", "pw"]
+            "required": ["rating", "taxonomy"]
         },
         {"rating": 5, "date": "2024-01-01T00:00:00Z", "taxonomy": [["class B"], ["class A", "class A1"]], "number": 42.0, "pw": "left"},
         {"rating": 5, "date": datetime(2024, 1, 1, 0, 0, 0, tzinfo=timezone.utc), "taxonomy": [["class B"], ["class A", "class A1"]], "number": 42.0, "pw": "left"}
+    ),
+    # textarea required
+    (
+        """
+        <View>
+          <Text name="document" value="$text" />
+          <View>
+            <Header value="Reasoning" />
+            <TextArea name="reasoning" toName="document" required="true" />
+          </View>
+          <View>
+            <Header value="Classification" />
+            <Choices name="sentiment" toName="document">
+              <Choice value="Positive" />
+            <Choice value="Negative" />
+              <Choice value="Neutral" />
+            </Choices>
+          </View>
+        </View>
+        """,
+        {
+            "type": "object",
+            "properties": {
+                "sentiment": {
+                    "type": "string",
+                    "description": "Choices for document",
+                    "enum": ["Positive", "Negative", "Neutral"],
+                },
+                "reasoning": {
+                    "type": "string",
+                    "description": "List of texts (one or more) for document"
+                }
+            },
+            "required": ["reasoning"]
+        },
+        {"sentiment": "Positive", "reasoning": "Let's think step by step"},
+        {"sentiment": "Positive", "reasoning": "Let's think step by step"}
     ),
     # add more tests for other control tags
     # ...
@@ -221,7 +258,8 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
     "multiple_choices",
     "ner",
     "classification_with_textarea",
-    "complex_interface"
+    "complex_interface",
+    "textarea_required",
     # specify ids for each test case
     # ...
 ])
