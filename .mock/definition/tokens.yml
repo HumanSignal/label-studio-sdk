@@ -73,7 +73,7 @@ service:
       method: POST
       auth: true
       docs: |
-        Get a new access token using a refresh token.
+        Get a new access token, using a refresh token.
       source:
         openapi: openapi/openapi.yaml
       display-name: Refresh token

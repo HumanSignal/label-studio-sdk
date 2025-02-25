@@ -8327,7 +8327,7 @@ client.tokens.create()
 <dl>
 <dd>
 
-Get a new access token using a refresh token.
+Get a new access token, using a refresh token.
 </dd>
 </dl>
 </dd>
