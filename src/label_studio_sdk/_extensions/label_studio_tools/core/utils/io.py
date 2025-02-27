@@ -2,7 +2,9 @@ import hashlib
 import io
 import logging
 import os
+import re
 import shutil
+import urllib.parse
 from contextlib import contextmanager
 from tempfile import mkdtemp
 from urllib.parse import urlparse
@@ -99,12 +101,27 @@ def get_local_path(
             "Please provide full URL starting with protocol (http:// or https://)."
         )
 
+    hostname_splits = urllib.parse.urlsplit(hostname)
+    base_url = hostname_splits.scheme + "://" + hostname_splits.netloc
+
+    pattern = re.compile(r"^http[s]?:\/\/([^:\/\s]+(:\d*)?)(.*)?")
+    match = pattern.match(hostname)
+    force_script_name = match.group(3)
+    if force_script_name and force_script_name[-1] == "/":
+        force_script_name = force_script_name[:-1]
+
     # fix file upload url
     if url.startswith("upload") or url.startswith("/upload"):
         url = "/data" + ("" if url.startswith("/") else "/") + url
 
-    is_uploaded_file = url.startswith("/data/upload")
-    is_local_storage_file = url.startswith("/data/") and "?d=" in url
+    if force_script_name != "" and url.startswith(force_script_name + "/upload") or ("/" + url).startswith(
+            force_script_name + "/upload"):
+        if url[0] != "/":
+            url = "/" + url
+        url = force_script_name + "/data" + url[len(force_script_name):]
+
+    is_uploaded_file = url.startswith(force_script_name+"/data/upload")
+    is_local_storage_file = url.startswith(force_script_name+"/data/") and "?d=" in url
     is_cloud_storage_file = (
         url.startswith("s3:") or url.startswith("gs:") or url.startswith("azure-blob:")
     )
@@ -151,7 +168,7 @@ def get_local_path(
             )
         # uploaded and local storage file
         elif is_uploaded_file or is_local_storage_file:
-            url = concat_urls(hostname, url)
+            url = concat_urls(base_url, url)
             logger.info("Resolving url using hostname [" + hostname + "]: " + url)
         # s3, gs, azure-blob file
         elif is_cloud_storage_file:
