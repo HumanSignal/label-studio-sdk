@@ -572,11 +572,9 @@ class LabelsTag(ControlTag):
                 "properties": {
                     "start": {
                         "type": "integer",
-                        "minimum": 0
                     },
                     "end": {
                         "type": "integer",
-                        "minimum": 0
                     },
                     "labels": {
                         "type": "array",
