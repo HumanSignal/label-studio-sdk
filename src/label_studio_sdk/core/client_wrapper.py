@@ -1,10 +1,7 @@
 import typing
-from datetime import datetime, timezone
 
 import httpx
-import jwt
 
-from .api_error import ApiError
 from .http_client import AsyncHttpClient, HttpClient
 
 
@@ -15,25 +12,9 @@ class BaseClientWrapper:
         api_key: str,
         base_url: str,
         timeout: typing.Optional[float] = None,
-        # httpx_client: typing.Optional[typing.Union[httpx.Client, httpx.AsyncClient]] = None,
     ):
         self._base_url = base_url
         self._timeout = timeout
-
-        # Check if the API key is a JWT token, and if it's expired
-        try:
-            decoded = jwt.decode(api_key, options={"verify_signature": False})
-            expiration = decoded.get("exp")
-            if expiration is not None:
-                expiration_time = datetime.fromtimestamp(expiration, timezone.utc)
-                if expiration_time < datetime.now(timezone.utc):
-                    raise ApiError(
-                        status_code=401,
-                        body={"detail": "API key has expired. Please obtain a new refresh token."}
-                    )
-        except jwt.InvalidTokenError:
-            # Not a JWT token, could be legacy token
-            pass
 
         # even in the async case, refreshing access token (when the existing one is expired) should be sync
         from ..tokens.client_ext import TokensClientExt
@@ -59,7 +40,6 @@ class BaseClientWrapper:
         else:
             headers["Authorization"] = f"Bearer {self._tokens_client.api_key}"
         return headers
-
 
 
 class SyncClientWrapper(BaseClientWrapper):

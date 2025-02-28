@@ -15,7 +15,7 @@ class TokensClientExt:
     def __init__(self, base_url: str, api_key: str):
         self._base_url = base_url
         self._api_key = api_key
-        self._use_legacy_token = not self._is_valid_jwt_token(api_key)
+        self._use_legacy_token = not self._is_valid_jwt_token(api_key, raise_if_expired=True)
 
         # cache state for access token when using jwt-based api_key
         self._access_token: typing.Optional[str] = None
@@ -24,16 +24,29 @@ class TokensClientExt:
         self._token_refresh_lock = threading.Lock()
 
 
-    def _is_valid_jwt_token(self, token: str) -> bool:
+    def _is_valid_jwt_token(self, token: str, raise_if_expired: bool = False) -> bool:
         """Check if a token is a valid JWT token by attempting to decode its header and check expiration."""
         try:
             decoded = jwt.decode(token, options={"verify_signature": False})
-            expiration = decoded.get("exp")
-            if expiration is None:
-                return False
-            return datetime.fromtimestamp(expiration, timezone.utc) > datetime.now(timezone.utc)
         except jwt.InvalidTokenError:
+            # presumably a lagacy token
             return False
+        expiration = decoded.get("exp")
+        if expiration is None:
+            raise ApiError(
+                status_code=401,
+                body={"detail": "API key does not have an expiration set, and is not valid. Please obtain a new refresh token."}
+            )
+        expiration_time = datetime.fromtimestamp(expiration, timezone.utc)
+        if expiration_time < datetime.now(timezone.utc):
+            if raise_if_expired:
+                raise ApiError(
+                    status_code=401,
+                    body={"detail": "API key has expired. Please obtain a new refresh token."}
+                )
+            else:
+                return False
+        return True
 
     def _set_access_token(self, token: str) -> None:
         """Set the access token and cache its expiration time."""
