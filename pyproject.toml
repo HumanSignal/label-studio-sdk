@@ -48,12 +48,12 @@ numpy = ">=1.26.4,<2.0.0"
 pandas = ">=0.24.0"
 pydantic = ">= 1.9.2"
 pydantic-core = "^2.18.2"
+pyjwt = "^2.10.1"
 requests = ">=2.22.0"
 requests-mock = "1.12.1"
 typing_extensions = ">= 4.0.0"
 ujson = ">=5.8.0"
 xmljson = "0.2.1"
-pyjwt = "^2.10.1"
 
 [tool.poetry.dev-dependencies]
 mypy = "1.0.1"
@@ -62,7 +62,6 @@ pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
 ruff = "^0.5.6"
-respx = "^0.22.0"
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
