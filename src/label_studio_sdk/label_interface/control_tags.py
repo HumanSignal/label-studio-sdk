@@ -572,6 +572,7 @@ class LabelsTag(ControlTag):
                 "properties": {
                     "start": {
                         "type": "integer",
+                        # TODO: this is incompatible with the OpenAI API using PredictedOutputs
                         "minimum": 0
                     },
                     "end": {

@@ -70,8 +70,8 @@ jobs:
         id: upstream-prs
         with:
           branch_name: "${{ inputs.branch_name }}"
-          poetry_repositories: "label-studio-client-generator"
-          infra_repositories: ""
+          poetry_repositories: ""
+          infra_repositories: "label-studio-client-generator"
           github_token: "${{ secrets.GIT_PAT }}"
 
       - name: Git Configure
