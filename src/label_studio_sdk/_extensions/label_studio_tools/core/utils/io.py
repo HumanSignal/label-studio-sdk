@@ -106,7 +106,7 @@ def get_local_path(
 
     pattern = re.compile(r"^http[s]?:\/\/([^:\/\s]+(:\d*)?)(.*)?")
     match = pattern.match(hostname)
-    force_script_name = match.group(3)
+    force_script_name = match.group(3) if match else ""
     if force_script_name and force_script_name[-1] == "/":
         force_script_name = force_script_name[:-1]
 
