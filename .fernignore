@@ -12,6 +12,8 @@ src/label_studio_sdk/client.py
 src/label_studio_sdk/tasks/client_ext.py
 src/label_studio_sdk/projects/client_ext.py
 src/label_studio_sdk/projects/exports/client_ext.py
+src/label_studio_sdk/tokens/client_ext.py
+src/label_studio_sdk/core/client_wrapper.py
 
 # converter
 src/label_studio_sdk/converter
@@ -31,6 +33,7 @@ tests/custom/legacy
 tests/custom/test_interface
 # TODO: fix webhooks !
 tests/test_webhooks.py
+tests/test_refresh_token.py
 
 # manual workflows
 .github/workflows/build_pypi.yml
