@@ -915,6 +915,72 @@ class LabelInterface:
             logger.debug(f'Sample annotation {annotation_dct} failed validation for label config {self.config}')
             return None
 
+    def generate_complete_sample_task(self, raise_on_failure: bool = False) -> Optional[dict]:
+        """Generate a complete sample task with annotations and predictions.
+
+        This method combines the generation of a sample task, sample prediction, and sample annotation
+        into a single method call, returning a complete task structure.
+
+        Args:
+            raise_on_failure: If True, will raise ValueError when any step
+                              (including annotation/prediction generation) fails
+
+        Raises:
+            ValueError: If raise_on_failure is True and any generation step fails.
+
+        Example:
+            {
+              'data': {'text': 'Sample text for labeling'},
+              'annotations': [
+                {'was_cancelled': False,
+                 'ground_truth': False,
+                 'completed_by': -1,
+                 'result': [
+                   {'id': 'b05da11d-3ffc-4657-8b8d-f5bc37cd59ac',
+                    'from_name': 'sentiment',
+                    'to_name': 'text',
+                    'type': 'choices',
+                    'value': {'choices': ['Negative']}}
+                 ]
+                }
+              ],
+              'predictions': [
+                {'model_version': 'sample model version',
+                 'score': 0.95,
+                 'result': [
+                   {'id': 'e7bd76e6-4e88-4eb3-b433-55e03661bf5d',
+                    'from_name': 'sentiment',
+                    'to_name': 'text',
+                    'type': 'choices',
+                    'value': {'choices': ['Neutral']}}
+                 ]
+                }
+              ]
+            }
+
+        NOTE: `id` field in result is not required when importing predictions; it will be generated automatically.
+        NOTE: for each control tag, depends on tag.to_json_schema() being implemented correctly
+        """
+        sample_task = self.generate_sample_task()
+        if not sample_task:
+            if raise_on_failure:
+                raise ValueError("LabelInterface.generate_sample_task failed to generate a valid sample task")
+            return None
+
+        sample_prediction = self.generate_sample_prediction()
+        if not sample_prediction and raise_on_failure:
+            raise ValueError("LabelInterface.generate_sample_prediction failed to generate a valid prediction")
+
+        sample_annotation = self.generate_sample_annotation()
+        if not sample_annotation and raise_on_failure:
+            raise ValueError("LabelInterface.generate_sample_annotation failed to generate a valid annotation")
+
+        return {
+            "data": sample_task,
+            "annotations": [sample_annotation] if sample_annotation else [],
+            "predictions": [sample_prediction] if sample_prediction else []
+        }
+
     #####
     ##### COMPATIBILITY LAYER
     #####
