@@ -992,11 +992,14 @@ class TextAreaTag(ControlTag):
             dict: A dictionary representing the JSON Schema compatible with OpenAPI 3.
         """
         return {
-            "type": "array",
-            "items": {
-                "type": "string"
-            },
-            "description": f"List of texts (one or more) for {self.to_name[0]}"
+            "oneOf": [
+                {"type": "string"},
+                {
+                    "type": "array",
+                    "items": {"type": "string"}
+                }
+            ],
+            "description": f"Text or list of texts for {self.to_name[0]}"
         }
 
 

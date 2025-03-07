@@ -143,8 +143,14 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
                     "enum": ["Positive", "Negative", "Neutral"],
                 },
                 "reasoning": {
-                    "type": "string",
-                    "description": "List of texts (one or more) for document"
+                    "oneOf": [
+                        {"type": "string"},
+                        {
+                            "type": "array",
+                            "items": {"type": "string"}
+                        }
+                    ],
+                    "description": "Text or list of texts for document"
                 }
             },
             "required": []
@@ -242,8 +248,14 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
                     "enum": ["Positive", "Negative", "Neutral"],
                 },
                 "reasoning": {
-                    "type": "string",
-                    "description": "List of texts (one or more) for document"
+                    "oneOf": [
+                        {"type": "string"},
+                        {
+                            "type": "array",
+                            "items": {"type": "string"}
+                        }
+                    ],
+                    "description": "Text or list of texts for document"
                 }
             },
             "required": ["reasoning"]
