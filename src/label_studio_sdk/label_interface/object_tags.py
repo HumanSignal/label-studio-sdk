@@ -119,7 +119,7 @@ class ObjectTag(LabelStudioTag):
             tag=tag.tag,
             attr=dict(tag.attrib),
             name=tag.attrib.get("name"),
-            value=tag.attrib["value"],
+            value=tag.attrib.get('valueList', tag.attrib.get('value')),
         )
 
     @classmethod
@@ -127,7 +127,7 @@ class ObjectTag(LabelStudioTag):
         """
         Check if tag is input
         """
-        return bool(tag.attrib.get("name") and tag.attrib.get("value"))
+        return bool(tag.attrib.get("name") and (tag.attrib.get("value") or tag.attrib.get("valueList")))
 
     @property
     def value_type(self):
