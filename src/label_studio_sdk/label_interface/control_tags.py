@@ -359,7 +359,7 @@ class ControlTag(LabelStudioTag):
 
             return self.to_name[0]
 
-    def _label_simple(self, to_name: Optional[str] = None, id: Optional[str] = None, *args, **kwargs) -> Region:
+    def _label_simple(self, to_name: Optional[str] = None, id: Optional[str] = None, parent_id: Optional[str] = None, score: Optional[float] = None, *args, **kwargs) -> Region:
         """
         This method creates a new Region object with the specified label applied.
         It first resolves the name of the object tag that the control tag maps to.
@@ -389,8 +389,14 @@ class ControlTag(LabelStudioTag):
         value = cls(**kwargs)
         if not id:
             id = str(uuid4())[:8]
+            
+        additional_kwargs = {}
+        if parent_id:
+            additional_kwargs['parentID'] = parent_id
+        if score:
+            additional_kwargs['score'] = score
         
-        return Region(from_tag=self, to_tag=obj, value=value, id=id)
+        return Region(from_tag=self, to_tag=obj, value=value, id=id, **additional_kwargs)
 
     def _label_with_labels(
         self,
