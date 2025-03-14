@@ -564,7 +564,8 @@ class ChoicesTag(ControlTag):
         }
 
 
-class LabelsValue(SpanSelection):
+# class LabelsValue(SpanSelection):
+class LabelsValue(BaseModel):
     labels: List[str]
 
 
