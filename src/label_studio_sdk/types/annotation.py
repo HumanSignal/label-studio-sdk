@@ -6,6 +6,7 @@ import pydantic
 import datetime as dt
 from .annotation_last_action import AnnotationLastAction
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from .user_simple import UserSimple
 
 
 class Annotation(UniversalBaseModel):
@@ -25,7 +26,7 @@ class Annotation(UniversalBaseModel):
     Time delta from creation time
     """
 
-    completed_by: typing.Optional[int] = None
+    completed_by: typing.Optional[typing.Union[UserSimple, int]] = None
     unique_id: typing.Optional[str] = None
     was_cancelled: typing.Optional[bool] = pydantic.Field(default=None)
     """
