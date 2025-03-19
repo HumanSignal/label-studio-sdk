@@ -90,7 +90,7 @@ def generate_contour_from_polygon(points, original_width, original_height):
     """
     # Convert from percentage to absolute coordinates
     modified_points = [
-        [int(x * original_width / 100), int(y * original_height / 100)]
+        [round(x * original_width / 100), round(y * original_height / 100)]
         for x, y in points
     ]
 
@@ -173,6 +173,8 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
             logger.warning(f"No annotations found for item {item.get('id')}")
             continue
 
+        valid_annotations = False
+
         # Process all annotations
         for output_key, annotations in item['output'].items():
             for annotation in annotations:
@@ -191,6 +193,9 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                 elif 'polygonlabels' in annotation:
                     labels = annotation['polygonlabels']
                     type_key = 'polygonlabels'
+                elif 'rectanglelabels' in annotation:
+                    labels = annotation['rectanglelabels']
+                    type_key = 'rectanglelabels'
                 elif 'labels' in annotation:
                     labels = annotation['labels']
                     type_key = 'labels'
@@ -216,6 +221,12 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                     
                     # Convert annotation based on type
                     if 'rle' in annotation and type_key == 'brushlabels':
+
+                        # check required keys exist
+                        if not all(k in annotation for k in ['rle', 'original_width', 'original_height']):
+                            logger.warning(f"Missing required keys for RLE annotation. Skipping.")
+                            continue
+
                         # Process brush annotation (RLE encoded mask)
                         segmentations, bboxes, areas = generate_contour_from_rle(
                             annotation['rle'], 
@@ -237,8 +248,13 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                             }
                             coco_data['annotations'].append(coco_annotation)
                             annotation_id += 1
+                            valid_annotations = True
                     
                     elif 'points' in annotation and type_key == 'polygonlabels':
+                        # check required keys exist
+                        if not all(k in annotation for k in ['points', 'original_width', 'original_height']):
+                            logger.warning(f"Missing required keys for polygon annotation. Skipping.")
+                            continue
                         # Process polygon annotation
                         segmentation, bbox, area = generate_contour_from_polygon(
                             annotation['points'], 
@@ -258,10 +274,12 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                         }
                         coco_data['annotations'].append(coco_annotation)
                         annotation_id += 1
+                        valid_annotations = True
                     
                     elif annotation_type == 'rectanglelabels' or type_key == 'labels':
-                        # Process rectangle annotation
-                        if not all(k in annotation for k in ['x', 'y', 'width', 'height']):
+                        # check required keys exist
+                        if not all(k in annotation for k in ['x', 'y', 'width', 'height', 'original_width', 'original_height']):
+                            logger.warning(f"Missing required keys for rectangle annotation. Skipping.")
                             continue
 
                         # Convert from percentage to absolute coordinates
@@ -282,9 +300,10 @@ def convert_to_coco(items, output_dir, output_image_dir=None):
                         }
                         coco_data['annotations'].append(coco_annotation)
                         annotation_id += 1
+                        valid_annotations = True
         
         # Add image to the dataset if it has valid dimensions
-        if image_info['width'] is not None and image_info['height'] is not None:
+        if image_info['width'] is not None and image_info['height'] is not None and valid_annotations:
             coco_data['images'].append(image_info)
 
     # Write COCO JSON to file
