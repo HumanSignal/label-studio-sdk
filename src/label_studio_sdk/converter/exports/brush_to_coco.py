@@ -13,7 +13,7 @@ from copy import deepcopy
 from datetime import datetime
 
 from label_studio_sdk.converter.utils import ensure_dir, get_annotator
-from label_studio_sdk.converter.brush import decode_rle, InputStream, bytes2bit
+import label_studio_sdk.converter.brush as brush_module
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +49,7 @@ def generate_contour_from_rle(rle, original_width, original_height):
         
     # Decode RLE
     try:
-        rle_binary = decode_rle(rle)
+        rle_binary = brush_module.decode_rle(rle)
     except Exception as e:
         logger.warning(f"Failed to decode RLE: {e}")
         return [], [], []
@@ -73,10 +73,17 @@ def generate_contour_from_rle(rle, original_width, original_height):
     bbox_list = []
     area_list = []
     for contour in contours:
-        # Flatten list of points
-        contour_flat = contour.flatten().tolist()
-        # Check if the segmentation is valid (should have more than 4 points for a polygon)
-        if len(contour_flat) > 4:
+        # OpenCV contours are in format [[[x1,y1]], [[x2,y2]], ...], 
+        # we need to convert to a flat list [x1,y1,x2,y2,...]
+        contour_points = [point[0] for point in contour]
+        
+        # Flatten to a single list
+        contour_flat = []
+        for point in contour_points:
+            contour_flat.extend(point.tolist())
+        
+        # Check if we have at least 3 points (6 coordinates) for a valid polygon
+        if len(contour_points) >= 3:
             segmentation.append(contour_flat)
 
             x, y, w, h = cv2.boundingRect(contour)

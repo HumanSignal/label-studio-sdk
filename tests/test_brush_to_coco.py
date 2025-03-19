@@ -42,7 +42,7 @@ def test_flatten():
     assert list(flatten(5)) == [5]
 
 @patch('cv2.findContours')
-@patch('label_studio_sdk.converter.brush.decode_rle')
+@patch('label_studio_sdk.converter.exports.brush_to_coco.brush_module.decode_rle')
 def test_generate_contour_from_rle(mock_decode_rle, mock_find_contours):
     """Test contour generation from RLE data"""
     # Define parameters
@@ -62,7 +62,7 @@ def test_generate_contour_from_rle(mock_decode_rle, mock_find_contours):
     mock_decode_rle.return_value = mock_decoded_data
     
     # Mock the CV2 findContours return value
-    contour = np.array([[[0, 0]], [[0, 5]], [[5, 5]], [[5, 0]]])
+    contour = np.array([[[0, 0]], [[0, 10]], [[10, 10]], [[10, 0]]])
     mock_find_contours.return_value = ([contour], None)
     
     # Call the function under test - use bytes instead of string
@@ -75,10 +75,10 @@ def test_generate_contour_from_rle(mock_decode_rle, mock_find_contours):
     
     # Verify the contour was flattened correctly
     # The contour [[0,0], [0,5], [5,5], [5,0]] should be flattened to [0,0,0,5,5,5,5,0]
-    assert segmentation[0] == [0, 0, 0, 5, 5, 5, 5, 0]
+    assert segmentation[0] == [0, 0, 0, 10, 10, 10, 10, 0]
     
     # Verify bbox calculation - should be [x, y, width, height]
-    assert bbox_list[0] == [0, 0, 5, 5]
+    assert bbox_list[0] == [0, 0, 10+1, 10+1]
     
     # Verify area calculation
     mock_find_contours.assert_called_once()
@@ -94,7 +94,7 @@ def test_generate_contour_from_polygon():
     
     # Verify results
     assert segmentation == [[10, 10, 10, 90, 90, 90, 90, 10]]
-    assert bbox == [10, 10, 81, 81]  # OpenCV's cv2.boundingRect returns this
+    assert bbox == [10, 10, 80+1, 80+1]
     assert isinstance(area, int)
     assert area > 0
 
