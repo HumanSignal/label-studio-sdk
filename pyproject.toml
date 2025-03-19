@@ -45,6 +45,7 @@ jsonschema = ">=4.23.0"
 lxml = ">=4.2.5"
 nltk = "^3.9.1"
 numpy = ">=1.26.4,<2.0.0"
+opencv-python = "^4.9.0" #add openCV
 pandas = ">=0.24.0"
 pydantic = ">= 1.9.2"
 pydantic-core = "^2.18.2"
