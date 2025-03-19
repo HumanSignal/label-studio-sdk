@@ -43,11 +43,23 @@ def generate_contour_from_rle(rle, original_width, original_height):
     Returns:
         tuple: (segmentation, bbox_list, area_list) in COCO format
     """
+    # Ensure rle is bytes, not string
+    if isinstance(rle, str):
+        rle = rle.encode('utf-8')
+        
     # Decode RLE
-    rle_binary = decode_rle(rle)
+    try:
+        rle_binary = decode_rle(rle)
+    except Exception as e:
+        logger.warning(f"Failed to decode RLE: {e}")
+        return [], [], []
     
     # Reshape to image dimensions with 4 channels (RGBA)
-    reshaped_image = np.reshape(rle_binary, [original_height, original_width, 4])
+    try:
+        reshaped_image = np.reshape(rle_binary, [original_height, original_width, 4])
+    except Exception as e:
+        logger.warning(f"Failed to reshape RLE data: {e}")
+        return [], [], []
     
     # Use only the alpha channel for contour detection
     alpha_channel = np.array(reshaped_image[:, :, 3]).astype('uint8')
