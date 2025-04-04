@@ -1,0 +1,44 @@
+name: "Check"
+
+on:
+  push:
+    branches:
+      - master
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+    branches:
+      - master
+
+env:
+  ACTIONS_STEP_DEBUG: '${{ secrets.ACTIONS_STEP_DEBUG }}'
+
+jobs:
+  dependencies:
+    name: "Dependencies"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hmarr/debug-action@v3.0.0
+
+      - name: Checkout Actions Hub
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          repository: HumanSignal/actions-hub
+          path: ./.github/actions-hub
+
+      - name: Get Upstream PRs
+        uses: ./.github/actions-hub/actions/follow-merge-upstream-prs
+        id: upstream-prs
+        with:
+          branch_name: "${{ github.event.pull_request.head.ref || github.ref_name }}"
+          poetry_repositories: ""
+          infra_repositories: "label-studio-client-generator"
+          github_token: "${{ secrets.GIT_PAT }}"
+
+      - name: Fail Check
+        if: steps.upstream-prs.outputs.status != 'merged' && steps.upstream-prs.outputs.status != 'stale'
+        run: exit 1
