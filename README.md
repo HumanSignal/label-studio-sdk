@@ -1,3 +1,4 @@
+ci: TEST
 # Label Studio Python Library
 
 <!-- Note about deprecated version <1 -->
