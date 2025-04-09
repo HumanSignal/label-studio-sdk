@@ -25,7 +25,7 @@ on:
 
 jobs:
   run_pytest:
-    name: "pytest ${{ matrix.os }} | ${{ matrix.python-version }}"
+    name: "pytest ${{ matrix.os }} | Python ${{ matrix.python-version }} | NumPy ${{ matrix.numpy-version }}"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -34,6 +34,9 @@ jobs:
           - 3.12
         os:
           - ubuntu-latest
+        numpy-version:
+          - "1.26.4"
+          - "2.2.3"
 
     steps:
       - uses: actions/checkout@v4
@@ -52,6 +55,9 @@ jobs:
 
       - name: "Install dependencies"
         run: poetry install
+
+      - name: "Install specific NumPy version"
+        run: poetry run pip install numpy==${{ matrix.numpy-version }}
 
       - name: Install Fern
         run: npm install -g fern-api@latest
