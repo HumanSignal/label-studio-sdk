@@ -7663,7 +7663,9 @@ components:
           minLength: 1
         completed_by:
           title: Completed by
-          type: integer
+          anyOf:
+            - $ref: "#/components/schemas/UserSimple"
+            - integer
         unique_id:
           title: Unique id
           type: string
