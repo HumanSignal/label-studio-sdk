@@ -53,6 +53,7 @@ tests/test_refresh_token.py
 .github/workflows/slash-command-dispatch.yml
 .github/workflows/tests.yml
 .github/workflows/update-draft-release.yml
+.github/workflows/validator-dependencies.yml
 .github/pr-title-checker-config.json
 .github/release.yml
 .github/autolabeler.yml
