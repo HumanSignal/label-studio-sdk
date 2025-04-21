@@ -43,27 +43,20 @@ jobs:
           repository: HumanSignal/actions-hub
           path: ./.github/actions-hub
 
-      - name: Find or Create branch
-        uses: ./.github/actions-hub/actions/github-find-or-create-branch
-        id: get-branch
+      - name: Team details
+        id: team_details
+        uses: ./.github/actions-hub/actions/team-details
         with:
-          github_token: ${{ secrets.GIT_PAT }}
-          branch_name: "${{ inputs.branch_name }}"
+          jira-server: "${{ vars.JIRA_SERVER }}"
+          jira-username: "${{ secrets.JIRA_USERNAME }}"
+          jira-token: "${{ secrets.JIRA_TOKEN }}"
+          github_token: "${{ secrets.GIT_PAT }}"
+        continue-on-error: true
 
-      - name: Checkout label-studio-client-generator
-        uses: actions/checkout@v4
+      - name: Git Configure
+        uses: ./.github/actions-hub/actions/git-configure
         with:
-          token: ${{ secrets.GIT_PAT }}
-          repository: HumanSignal/label-studio-client-generator
-          ref: ${{ inputs.branch_name }}
-          fetch-depth: 0
-
-      - name: Checkout Actions Hub
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GIT_PAT }}
-          repository: HumanSignal/actions-hub
-          path: ./.github/actions-hub
+          username: "${{ steps.team_details.outputs.github-username }}"
 
       - name: Get Upstream PRs
         uses: ./.github/actions-hub/actions/follow-merge-upstream-prs
@@ -74,10 +67,29 @@ jobs:
           infra_repositories: "label-studio-client-generator"
           github_token: "${{ secrets.GIT_PAT }}"
 
-      - name: Git Configure
-        uses: ./.github/actions-hub/actions/git-configure
+      - name: Find or Create branch
+        uses: ./.github/actions-hub/actions/github-find-or-create-branch
+        id: get-branch
         with:
-          username: ${{ github.event.client_payload.actor || steps.upstream-prs.outputs.author_username }}
+          github_token: ${{ secrets.GIT_PAT }}
+          base_branch_name: "${{ steps.upstream-prs.outputs.base_branch_name }}"
+          branch_name: "${{ steps.upstream-prs.outputs.branch_name }}"
+
+      - name: Checkout label-studio-client-generator
+        if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          repository: HumanSignal/label-studio-client-generator
+          ref: "${{ fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator }}"
+          fetch-depth: 0
+
+      - name: Checkout Actions Hub
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GIT_PAT }}
+          repository: HumanSignal/actions-hub
+          path: ./.github/actions-hub
 
       - name: Setup node
         uses: actions/setup-node@v4
@@ -133,21 +145,6 @@ jobs:
           github_token: ${{ secrets.GIT_PAT }}
           pullrequest_number: "${{ steps.get-pr.outputs.number }}"
           labels: "FM Stale"
-
-      - name: Merge Stale PR (Dry run)
-        if: steps.upstream-prs.outputs.status == 'stale'
-        continue-on-error: true
-        shell: bash
-        env:
-          GIT_PAT: ${{ secrets.GIT_PAT }}
-          BRANCH_NAME: "origin/${{ steps.get-branch.outputs.branch_name }}"
-          BASE_BRANCH_NAME: "origin/${{ steps.upstream-prs.outputs.base_branch_name }}"
-        run: |
-          if git diff --quiet "${BASE_BRANCH_NAME}..${BRANCH_NAME}"; then
-            echo "No changes detected."
-          else
-            echo "Changes detected in PR."
-          fi
 
       - name: Convert to ready for review
         if: steps.upstream-prs.outputs.status == 'merged'
