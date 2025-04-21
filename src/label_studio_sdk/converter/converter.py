@@ -170,10 +170,10 @@ class Converter(object):
             "tags": ["speech recognition"],
         },   
         Format.BRUSH_TO_COCO: {
-        "title": "Brush labels to COCO",
-        "description": "Export your brush labels as COCO format for segmentation tasks. Converts RLE encoded masks to COCO polygons.",
-        "link": "https://labelstud.io/guide/export.html#COCO",
-        "tags": ["image segmentation", "brush annotations"],
+            "title": "Brush labels to COCO",
+            "description": "Export your brush labels as COCO format for segmentation tasks. Converts RLE encoded masks to COCO polygons.",
+            "link": "https://labelstud.io/guide/export.html#COCO",
+            "tags": ["image segmentation", "brush annotations"],
         },
     }
 
