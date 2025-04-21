@@ -40,7 +40,7 @@ jobs:
 
       - name: "Install poetry"
         env:
-          POETRY_VERSION: ${{ vars.POETRY_VERSION }}
+          POETRY_VERSION: ${{ vars.POETRY_VERSION || '2.1.1' }}
         run: pipx install "poetry==${POETRY_VERSION}"
 
       - name: "Set up Python"
