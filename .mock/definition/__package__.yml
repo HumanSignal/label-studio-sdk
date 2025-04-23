@@ -24,6 +24,14 @@ errors:
     type: unknown
     docs: Invalid refresh token
 types:
+  AnnotationCompletedBy:
+    discriminated: false
+    union:
+      - UserSimple
+      - integer
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   AnnotationLastAction:
     enum:
       - prediction
@@ -55,7 +63,7 @@ types:
         default: ''
         validation:
           minLength: 1
-      completed_by: optional<integer>
+      completed_by: optional<AnnotationCompletedBy>
       unique_id:
         type: optional<string>
         validation:

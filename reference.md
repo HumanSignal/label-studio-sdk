@@ -8398,7 +8398,7 @@ client.tokens.refresh(
 <dl>
 <dd>
 
-Retrieve JWT settings for the currently active organization.
+Retrieve JWT settings for the currently-active organization.
 </dd>
 </dl>
 </dd>

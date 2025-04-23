@@ -2,6 +2,7 @@
 
 from .access_token_response import AccessTokenResponse
 from .annotation import Annotation
+from .annotation_completed_by import AnnotationCompletedBy
 from .annotation_filter_options import AnnotationFilterOptions
 from .annotation_last_action import AnnotationLastAction
 from .annotations_dm_field import AnnotationsDmField
@@ -108,6 +109,7 @@ from .workspace import Workspace
 __all__ = [
     "AccessTokenResponse",
     "Annotation",
+    "AnnotationCompletedBy",
     "AnnotationFilterOptions",
     "AnnotationLastAction",
     "AnnotationsDmField",

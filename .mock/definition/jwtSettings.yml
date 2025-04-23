@@ -9,7 +9,7 @@ service:
       method: GET
       auth: true
       docs: |
-        Retrieve JWT settings for the currently active organization.
+        Retrieve JWT settings for the currently-active organization.
       source:
         openapi: openapi/openapi.yaml
       display-name: Retrieve JWT Settings
