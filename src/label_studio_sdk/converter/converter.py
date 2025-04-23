@@ -59,6 +59,7 @@ class Format(Enum):
     YOLO_WITH_IMAGES = 14
     COCO_WITH_IMAGES = 15
     YOLO_OBB_WITH_IMAGES = 16
+    BRUSH_TO_COCO = 17 
 
     def __str__(self):
         return self.name
@@ -167,6 +168,13 @@ class Converter(object):
             "format expected by NVIDIA NeMo models.",
             "link": "https://labelstud.io/guide/export.html#ASR-MANIFEST",
             "tags": ["speech recognition"],
+        },   
+        Format.BRUSH_TO_COCO: {
+
+            "title": "Brush labels to COCO",
+            "description": "Export your brush labels as COCO format for segmentation tasks. Converts RLE encoded masks to COCO polygons.",
+            "link": "https://labelstud.io/guide/export.html#COCO",
+            "tags": ["image segmentation", "brush annotations"],
         },
     }
 
@@ -293,6 +301,19 @@ class Converter(object):
                 upload_dir=self.upload_dir,
                 download_resources=self.download_resources,
             )
+        elif format == Format.BRUSH_TO_COCO:
+            items = (
+                self.iter_from_dir(input_data)
+                if is_dir
+                else self.iter_from_json_file(input_data)
+            )
+            from label_studio_sdk.converter.exports.brush_to_coco import convert_to_coco
+            image_dir = kwargs.get("image_dir")
+            convert_to_coco(
+                items, 
+                output_data, 
+                output_image_dir=image_dir
+            )
 
     def _get_data_keys_and_output_tags(self, output_tags=None):
         data_keys = set()
@@ -376,6 +397,7 @@ class Converter(object):
         ):
             all_formats.remove(Format.BRUSH_TO_NUMPY.name)
             all_formats.remove(Format.BRUSH_TO_PNG.name)
+            all_formats.remove(Format.BRUSH_TO_COCO.name) 
         if not (
             ("Audio" in input_tag_types or "AudioPlus" in input_tag_types)
             and "TextArea" in output_tag_types

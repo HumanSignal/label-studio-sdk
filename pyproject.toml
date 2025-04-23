@@ -46,6 +46,7 @@ jsonschema = ">=4.23.0"
 lxml = ">=4.2.5"
 nltk = "^3.9.1"
 numpy = ">=1.26.4,<3.0.0"
+opencv-python = "^4.9.0" #add openCV
 pandas = ">=0.24.0"
 pydantic = ">= 1.9.2"
 pydantic-core = "^2.18.2"
@@ -79,3 +80,6 @@ line-length = 120
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[project.scripts]
+label-studio-converter = "label_studio_sdk.converter.main:main"
