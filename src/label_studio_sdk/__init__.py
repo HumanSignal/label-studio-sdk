@@ -3,6 +3,7 @@
 from .types import (
     AccessTokenResponse,
     Annotation,
+    AnnotationCompletedBy,
     AnnotationFilterOptions,
     AnnotationLastAction,
     AnnotationsDmField,
@@ -200,6 +201,7 @@ __all__ = [
     "ActionsCreateRequestSelectedItemsExcluded",
     "ActionsCreateRequestSelectedItemsIncluded",
     "Annotation",
+    "AnnotationCompletedBy",
     "AnnotationFilterOptions",
     "AnnotationLastAction",
     "AnnotationsCreateBulkRequestSelectedItems",

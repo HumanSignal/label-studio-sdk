@@ -19,7 +19,7 @@ class JwtSettingsClient:
 
     def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> JwtSettingsResponse:
         """
-        Retrieve JWT settings for the currently active organization.
+        Retrieve JWT settings for the currently-active organization.
 
         Parameters
         ----------
@@ -134,7 +134,7 @@ class AsyncJwtSettingsClient:
 
     async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> JwtSettingsResponse:
         """
-        Retrieve JWT settings for the currently active organization.
+        Retrieve JWT settings for the currently-active organization.
 
         Parameters
         ----------
