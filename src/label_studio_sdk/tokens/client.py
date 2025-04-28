@@ -10,6 +10,8 @@ from ..core.api_error import ApiError
 from ..types.api_token_response import ApiTokenResponse
 from ..types.access_token_response import AccessTokenResponse
 from ..errors.unauthorized_error import UnauthorizedError
+from ..types.rotate_token_response import RotateTokenResponse
+from ..errors.bad_request_error import BadRequestError
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -212,6 +214,70 @@ class TokensClient:
                 )
             if _response.status_code == 401:
                 raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def rotate(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> RotateTokenResponse:
+        """
+        Blacklist existing refresh token, and get a new refresh token.
+
+        Parameters
+        ----------
+        refresh : str
+            JWT refresh token
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RotateTokenResponse
+            Refresh token successfully rotated
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.tokens.rotate(
+            refresh="refresh",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/token/rotate",
+            method="POST",
+            json={
+                "refresh": refresh,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    RotateTokenResponse,
+                    parse_obj_as(
+                        type_=RotateTokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
                         parse_obj_as(
@@ -456,6 +522,80 @@ class AsyncTokensClient:
                 )
             if _response.status_code == 401:
                 raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        parse_obj_as(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def rotate(
+        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> RotateTokenResponse:
+        """
+        Blacklist existing refresh token, and get a new refresh token.
+
+        Parameters
+        ----------
+        refresh : str
+            JWT refresh token
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RotateTokenResponse
+            Refresh token successfully rotated
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.tokens.rotate(
+                refresh="refresh",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/token/rotate",
+            method="POST",
+            json={
+                "refresh": refresh,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    RotateTokenResponse,
+                    parse_obj_as(
+                        type_=RotateTokenResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
                         parse_obj_as(
