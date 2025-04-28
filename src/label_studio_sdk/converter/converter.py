@@ -59,7 +59,8 @@ class Format(Enum):
     YOLO_WITH_IMAGES = 14
     COCO_WITH_IMAGES = 15
     YOLO_OBB_WITH_IMAGES = 16
-    BRUSH_TO_COCO = 17 
+    BRUSH_TO_COCO = 17
+    JSONL = 18
 
     def __str__(self):
         return self.name
@@ -85,6 +86,12 @@ class Converter(object):
             "description": 'List of items where only "from_name", "to_name" values from the raw JSON format are '
             "exported. Use to export only the annotations for a dataset.",
             "link": "https://labelstud.io/guide/export.html#JSON-MIN",
+        },
+        Format.JSONL: {
+            "title": "JSONL",
+            "description": "List of items in raw JSON format stored in one JSONL file. Use to export both the data "
+            "and the annotations for a dataset. It's Label Studio Common Format",
+            "link": "https://labelstud.io/guide/export.html#JSONL",
         },
         Format.CSV: {
             "title": "CSV",
@@ -236,6 +243,8 @@ class Converter(object):
             self.convert_to_json(input_data, output_data, is_dir=is_dir)
         elif format == Format.JSON_MIN:
             self.convert_to_json_min(input_data, output_data, is_dir=is_dir)
+        elif format == Format.JSONL:
+            self.convert_to_jsonl(input_data, output_data, is_dir=is_dir)
         elif format == Format.CSV:
             header = kwargs.get("csv_header", True)
             sep = kwargs.get("csv_separator", ",")
@@ -344,6 +353,7 @@ class Converter(object):
             return [
                 Format.JSON.name,
                 Format.JSON_MIN.name,
+                Format.JSONL.name,
                 Format.CSV.name,
                 Format.TSV.name,
             ]
@@ -584,6 +594,24 @@ class Converter(object):
 
         with io.open(output_file, mode="w", encoding="utf8") as fout:
             json.dump(records, fout, indent=2, ensure_ascii=False)
+
+    def convert_to_jsonl(self, input_data, output_dir, is_dir=True):
+        self._check_format(Format.JSONL)
+        ensure_dir(output_dir)
+        output_file = os.path.join(output_dir, "result.jsonl")
+
+        with io.open(output_file, mode="w", encoding="utf8") as fout:
+            if is_dir:
+                for json_file in glob(os.path.join(input_data, "*.json")):
+                    with io.open(json_file, encoding="utf8") as f:
+                        record = json.load(f)
+                        json.dump(record, fout, ensure_ascii=False)
+                        fout.write("\n")
+            else:
+                item_iterator = self.iter_from_json_file
+                for item in item_iterator(input_data):
+                    json.dump(item, fout, ensure_ascii=False)
+                    fout.write("\n")
 
     def convert_to_csv(self, input_data, output_dir, is_dir=True, **kwargs):
         self._check_format(Format.CSV)
