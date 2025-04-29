@@ -50,3 +50,13 @@ async def test_refresh(client: LabelStudio, async_client: AsyncLabelStudio) -> N
 
     async_response = await async_client.tokens.refresh(refresh="refresh")
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_rotate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"refresh": "refresh"}
+    expected_types: typing.Any = {"refresh": None}
+    response = client.tokens.rotate(refresh="refresh")
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.tokens.rotate(refresh="refresh")
+    validate_response(async_response, expected_response, expected_types)

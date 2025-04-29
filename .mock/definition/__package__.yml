@@ -2844,3 +2844,10 @@ types:
         docs: New JWT access token
     source:
       openapi: openapi/openapi.yaml
+  RotateTokenResponse:
+    properties:
+      refresh:
+        type: string
+        docs: New JWT refresh token
+    source:
+      openapi: openapi/openapi.yaml

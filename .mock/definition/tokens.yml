@@ -98,5 +98,35 @@ service:
               access: access
       audiences:
         - public
+    rotate:
+      path: /api/token/rotate
+      method: POST
+      auth: true
+      docs: |
+        Blacklist existing refresh token, and get a new refresh token.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Rotate token
+      request:
+        name: TokensRotateRequest
+        body:
+          properties:
+            refresh:
+              type: string
+              docs: JWT refresh token
+        content-type: application/json
+      response:
+        docs: Refresh token successfully rotated
+        type: root.RotateTokenResponse
+      errors:
+        - root.BadRequestError
+      examples:
+        - request:
+            refresh: refresh
+          response:
+            body:
+              refresh: refresh
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml
