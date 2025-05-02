@@ -1,0 +1,13 @@
+<View>
+  <Image name="image" value="$image"/>
+  <RectangleLabels name="rectangle_label" toName="image">
+    <Label value="rectangle_label"/>
+  </RectangleLabels>
+  <PolygonLabels name="polygon_label" toName="image">
+    <Label value="polygon_label"/>
+  </PolygonLabels>
+  <KeyPointLabels name="keypoint_label" toName="image">
+    <Label value="keypoint_label1" model_index="0"/>
+    <Label value="keypoint_label2" model_index="1"/>
+  </KeyPointLabels>
+</View>
