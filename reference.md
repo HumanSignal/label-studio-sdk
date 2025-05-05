@@ -31,13 +31,8 @@ You can find the ID in the Label Studio UI listed at the top of the annotation i
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.annotations.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.annotations.get(id=1, )
 
 ```
 </dd>
@@ -106,13 +101,8 @@ You will need to supply the annotation's unique ID. You can find the ID in the L
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.annotations.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.annotations.delete(id=1, )
 
 ```
 </dd>
@@ -181,33 +171,15 @@ For information about the JSON format used in the result, see [Label Studio JSON
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.annotations.update(
-    id=1,
-    result=[
-        {
-            "original_width": 1920,
-            "original_height": 1080,
-            "image_rotation": 0,
-            "from_name": "bboxes",
-            "to_name": "image",
-            "type": "rectanglelabels",
-            "value": {
-                "x": 20,
-                "y": 30,
-                "width": 50,
-                "height": 60,
-                "rotation": 0,
-                "values": {"rectanglelabels": ["Person"]},
-            },
-        }
-    ],
-    was_cancelled=False,
-    ground_truth=True,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.annotations.update(id=1, result=[{'original_width': 1920
+, 'original_height': 1080
+, 'image_rotation': 0
+, 'from_name': 'bboxes'
+, 'to_name': 'image'
+, 'type': 'rectanglelabels'
+, 'value': {'x': 20, 'y': 30, 'width': 50, 'height': 60, 'rotation': 0, 'values': {'rectanglelabels': ['Person']}}
+}], was_cancelled=False, ground_truth=True, )
 
 ```
 </dd>
@@ -338,13 +310,8 @@ You will need to supply the task ID. You can find this in Label Studio by openin
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.annotations.list(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.annotations.list(id=1, )
 
 ```
 </dd>
@@ -426,33 +393,15 @@ request to send an empty annotation with the ID of the user who completed the ta
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.annotations.create(
-    id=1,
-    result=[
-        {
-            "original_width": 1920,
-            "original_height": 1080,
-            "image_rotation": 0,
-            "from_name": "bboxes",
-            "to_name": "image",
-            "type": "rectanglelabels",
-            "value": {
-                "x": 20,
-                "y": 30,
-                "width": 50,
-                "height": 60,
-                "rotation": 0,
-                "values": {"rectanglelabels": ["Person"]},
-            },
-        }
-    ],
-    was_cancelled=False,
-    ground_truth=True,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.annotations.create(id=1, result=[{'original_width': 1920
+, 'original_height': 1080
+, 'image_rotation': 0
+, 'from_name': 'bboxes'
+, 'to_name': 'image'
+, 'type': 'rectanglelabels'
+, 'value': {'x': 20, 'y': 30, 'width': 50, 'height': 60, 'rotation': 0, 'values': {'rectanglelabels': ['Person']}}
+}], was_cancelled=False, ground_truth=True, )
 
 ```
 </dd>
@@ -580,10 +529,7 @@ Create multiple annotations for specific tasks in a bulk operation.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.annotations.create_bulk()
 
 ```
@@ -681,10 +627,7 @@ Reset your access token or API key. When reset, any scripts or automations you h
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.users.reset_token()
 
 ```
@@ -741,10 +684,7 @@ Get a access token to authenticate to the API as the current user. To find this 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.users.get_token()
 
 ```
@@ -801,10 +741,7 @@ Get information about your user account, such as your username, email, and user 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.users.whoami()
 
 ```
@@ -862,10 +799,7 @@ List all users in your Label Studio organization.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.users.list()
 
 ```
@@ -923,10 +857,7 @@ Create a user in Label Studio.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.users.create()
 
 ```
@@ -1057,13 +988,8 @@ You will need to provide their user ID. You can find a list of all user IDs usin
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.users.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.users.get(id=1, )
 
 ```
 </dd>
@@ -1132,13 +1058,8 @@ You will need to provide their user ID. You can find a list of all user IDs usin
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.users.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.users.delete(id=1, )
 
 ```
 </dd>
@@ -1205,13 +1126,8 @@ You will need to provide their user ID. You can find a list of all user IDs usin
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.users.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.users.update(id=1, )
 
 ```
 </dd>
@@ -1348,10 +1264,7 @@ Retrieve all the registered actions with descriptions that data manager can use.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.actions.list()
 
 ```
@@ -1408,35 +1321,11 @@ Perform a Data Manager action with the selected tasks and filters. Note: More co
 
 ```python
 from label_studio_sdk import LabelStudio
-from label_studio_sdk.actions import (
-    ActionsCreateRequestFilters,
-    ActionsCreateRequestFiltersItemsItem,
-    ActionsCreateRequestSelectedItemsExcluded,
-)
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.actions.create(
-    id="retrieve_tasks_predictions",
-    project=1,
-    filters=ActionsCreateRequestFilters(
-        conjunction="or",
-        items=[
-            ActionsCreateRequestFiltersItemsItem(
-                filter="filter:tasks:id",
-                operator="greater",
-                type="Number",
-                value=123,
-            )
-        ],
-    ),
-    selected_items=ActionsCreateRequestSelectedItemsExcluded(
-        all_=True,
-        excluded=[124, 125, 126],
-    ),
-    ordering=["tasks:total_annotations"],
-)
+from label_studio_sdk.actions import ActionsCreateRequestFilters
+from label_studio_sdk.actions import ActionsCreateRequestFiltersItemsItem
+from label_studio_sdk.actions import ActionsCreateRequestSelectedItemsExcluded
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.actions.create(id="retrieve_tasks_predictions", project=1, filters=ActionsCreateRequestFilters(conjunction="or", items=[ActionsCreateRequestFiltersItemsItem(filter="filter:tasks:id", operator="greater", type='Number', value=123, )], ), selected_items=ActionsCreateRequestSelectedItemsExcluded(all_=True, excluded=[124, 125, 126], ), ordering=["tasks:total_annotations"], )
 
 ```
 </dd>
@@ -1544,10 +1433,7 @@ You will need to provide the project ID. You can find this in the URL when viewi
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.views.list()
 
 ```
@@ -1615,10 +1501,7 @@ You will need to provide the project ID. You can find this in the URL when viewi
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.views.create()
 
 ```
@@ -1694,13 +1577,8 @@ You will need to provide the project ID. You can find this in the URL when viewi
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.views.delete_all(
-    project=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.views.delete_all(project=1, )
 
 ```
 </dd>
@@ -1765,13 +1643,8 @@ Get the details about a specific Data Manager view (tab). You will need to suppl
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.views.get(
-    id="id",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.views.get(id='id', )
 
 ```
 </dd>
@@ -1835,13 +1708,8 @@ Delete a specific Data Manager view (tab) by ID. You can find the view using [Li
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.views.delete(
-    id="id",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.views.delete(id='id', )
 
 ```
 </dd>
@@ -1906,13 +1774,8 @@ You can update a specific Data Manager view (tab) with additional filters and ot
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.views.update(
-    id="id",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.views.update(id='id', )
 
 ```
 </dd>
@@ -1993,13 +1856,8 @@ Retrieve details about a specific uploaded file. To get the file upload ID, use 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.files.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.files.get(id=1, )
 
 ```
 </dd>
@@ -2063,13 +1921,8 @@ Delete a specific uploaded file. To get the file upload ID, use [Get files list]
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.files.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.files.delete(id=1, )
 
 ```
 </dd>
@@ -2139,13 +1992,8 @@ curl -H 'Authorization: Token abc123' \ -X POST 'https://localhost:8080/api/impo
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.files.update(
-    id_=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.files.update(id_=1, )
 
 ```
 </dd>
@@ -2228,13 +2076,8 @@ You must provide a project ID. The project ID can be found in the URL when viewi
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.files.list(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.files.list(id=1, )
 
 ```
 </dd>
@@ -2317,13 +2160,8 @@ You must provide a project ID. The project ID can be found in the URL when viewi
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.files.delete_many(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.files.delete_many(id=1, )
 
 ```
 </dd>
@@ -2387,13 +2225,8 @@ Download a specific uploaded file. If you aren't sure of the file name, try [Get
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.files.download(
-    filename="filename",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.files.download(filename='filename', )
 
 ```
 </dd>
@@ -2462,10 +2295,7 @@ You will need to provide the project ID. This can be found in the URL when viewi
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.ml.list()
 
 ```
@@ -2535,10 +2365,7 @@ Add an ML backend to a project. For more information about what you need to conf
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.ml.create()
 
 ```
@@ -2678,13 +2505,8 @@ For more information, see [Machine learning integration](https://labelstud.io/gu
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.ml.get(id=1, )
 
 ```
 </dd>
@@ -2751,13 +2573,8 @@ For more information, see [Machine learning integration](https://labelstud.io/gu
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.ml.delete(id=1, )
 
 ```
 </dd>
@@ -2824,13 +2641,8 @@ For more information, see [Machine learning integration](https://labelstud.io/gu
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.ml.update(id=1, )
 
 ```
 </dd>
@@ -2981,14 +2793,8 @@ You will need the task ID and the ML backend connection ID. The task ID is avail
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.predict_interactive(
-    id=1,
-    task=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.ml.predict_interactive(id=1, task=1, )
 
 ```
 </dd>
@@ -3073,13 +2879,8 @@ You will need to specify an ID for the backend connection. You can find this usi
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.train(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.ml.train(id=1, )
 
 ```
 </dd>
@@ -3152,13 +2953,8 @@ Get available versions of the model. You will need to specify an ID for the back
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.ml.list_model_versions(
-    id="id",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.ml.list_model_versions(id='id', )
 
 ```
 </dd>
@@ -3230,10 +3026,7 @@ To import predictions via the API, see [Create prediction](create).
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.predictions.list()
 
 ```
@@ -3316,32 +3109,15 @@ For more information, see [the JSON format reference in the Label Studio documen
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.predictions.create(
-    result=[
-        {
-            "original_width": 1920,
-            "original_height": 1080,
-            "image_rotation": 0,
-            "from_name": "bboxes",
-            "to_name": "image",
-            "type": "rectanglelabels",
-            "value": {
-                "x": 20,
-                "y": 30,
-                "width": 50,
-                "height": 60,
-                "rotation": 0,
-                "values": {"rectanglelabels": ["Person"]},
-            },
-        }
-    ],
-    score=0.95,
-    model_version="yolo-v8",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.predictions.create(result=[{'original_width': 1920
+, 'original_height': 1080
+, 'image_rotation': 0
+, 'from_name': 'bboxes'
+, 'to_name': 'image'
+, 'type': 'rectanglelabels'
+, 'value': {'x': 20, 'y': 30, 'width': 50, 'height': 60, 'rotation': 0, 'values': {'rectanglelabels': ['Person']}}
+}], score=0.95, model_version='yolo-v8', )
 
 ```
 </dd>
@@ -3432,13 +3208,8 @@ For information about the prediction format, see [the JSON format reference in t
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.predictions.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.predictions.get(id=1, )
 
 ```
 </dd>
@@ -3503,13 +3274,8 @@ Delete a prediction. To find the prediction ID, use [List predictions](list).
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.predictions.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.predictions.delete(id=1, )
 
 ```
 </dd>
@@ -3576,33 +3342,15 @@ For information about the prediction format, see [the JSON format reference in t
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.predictions.update(
-    id=1,
-    result=[
-        {
-            "original_width": 1920,
-            "original_height": 1080,
-            "image_rotation": 0,
-            "from_name": "bboxes",
-            "to_name": "image",
-            "type": "rectanglelabels",
-            "value": {
-                "x": 20,
-                "y": 30,
-                "width": 50,
-                "height": 60,
-                "rotation": 0,
-                "values": {"rectanglelabels": ["Person"]},
-            },
-        }
-    ],
-    score=0.95,
-    model_version="yolo-v8",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.predictions.update(id=1, result=[{'original_width': 1920
+, 'original_height': 1080
+, 'image_rotation': 0
+, 'from_name': 'bboxes'
+, 'to_name': 'image'
+, 'type': 'rectanglelabels'
+, 'value': {'x': 20, 'y': 30, 'width': 50, 'height': 60, 'rotation': 0, 'values': {'rectanglelabels': ['Person']}}
+}], score=0.95, model_version='yolo-v8', )
 
 ```
 </dd>
@@ -3708,10 +3456,7 @@ curl -X GET https://localhost:8080/api/projects/ -H 'Authorization: Token abc123
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 response = client.projects.list()
 for item in response:
     yield item
@@ -3829,10 +3574,7 @@ curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST '
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.projects.create()
 
 ```
@@ -4009,13 +3751,8 @@ Retrieve information about a specific project by project ID. The project ID can 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.get(id=1, )
 
 ```
 </dd>
@@ -4082,13 +3819,8 @@ The project ID can be found in the URL when viewing the project in Label Studio,
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.delete(id=1, )
 
 ```
 </dd>
@@ -4164,13 +3896,8 @@ If you are modifying the labeling config for project that has in-progress work, 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.update(id=1, )
 
 ```
 </dd>
@@ -4402,14 +4129,9 @@ curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.import_tasks(
-    id=1,
-    request=[{"key": "value"}],
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.import_tasks(id=1, request=[{'key': 'value'
+}], )
 
 ```
 </dd>
@@ -4508,14 +4230,8 @@ The project ID can be found in the URL when viewing the project in Label Studio,
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.validate_config(
-    id=1,
-    label_config="label_config",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.validate_config(id=1, label_config='label_config', )
 
 ```
 </dd>
@@ -4595,14 +4311,8 @@ The import ID is returned as part of the response when you call [Import tasks](i
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.tasks.create_many_status(
-    id=1,
-    import_pk="import_pk",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.tasks.create_many_status(id=1, import_pk='import_pk', )
 
 ```
 </dd>
@@ -4677,13 +4387,8 @@ The project ID can be found in the URL when viewing the project in Label Studio,
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.tasks.delete_all_tasks(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.tasks.delete_all_tasks(id=1, )
 
 ```
 </dd>
@@ -4752,10 +4457,7 @@ The project ID can be found in the URL when viewing the project in Label Studio,
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 response = client.tasks.list()
 for item in response:
     yield item
@@ -4901,14 +4603,10 @@ You will also need to provide a project ID. The project ID can be found in the U
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.tasks.create(
-    data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
-    project=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.tasks.create(data={'image': 'https://example.com/image.jpg'
+, 'text': 'Hello, world!'
+}, project=1, )
 
 ```
 </dd>
@@ -4982,13 +4680,8 @@ The task ID is available from the Label Studio URL when viewing the task, or you
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.tasks.get(
-    id="id",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.tasks.get(id='id', )
 
 ```
 </dd>
@@ -5057,13 +4750,8 @@ You will need the task ID. This is available from the Label Studio URL when view
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.tasks.delete(
-    id="id",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.tasks.delete(id='id', )
 
 ```
 </dd>
@@ -5130,15 +4818,10 @@ You will need the task ID. This is available from the Label Studio URL when view
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.tasks.update(
-    id="id",
-    data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
-    project=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.tasks.update(id='id', data={'image': 'https://example.com/image.jpg'
+, 'text': 'Hello, world!'
+}, project=1, )
 
 ```
 </dd>
@@ -5219,10 +4902,7 @@ Retrieve a list of the import storages types.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.list_types()
 
 ```
@@ -5280,10 +4960,7 @@ Retrieve a list of the export storages types.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.list_types()
 
 ```
@@ -5346,10 +5023,7 @@ For more information, see [Set up webhooks in Label Studio](https://labelstud.io
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.webhooks.list()
 
 ```
@@ -5420,13 +5094,8 @@ If you want to create your own custom webhook, refer to [Create custom events fo
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.create(
-    url="url",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.webhooks.create(url='url', )
 
 ```
 </dd>
@@ -5571,10 +5240,7 @@ Get descriptions of all available webhook actions to set up webhooks. For more i
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.webhooks.info()
 
 ```
@@ -5642,13 +5308,8 @@ For more information about webhooks, see [Set up webhooks in Label Studio](https
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.webhooks.get(id=1, )
 
 ```
 </dd>
@@ -5715,13 +5376,8 @@ For more information about webhooks, see [Set up webhooks in Label Studio](https
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.webhooks.delete(id=1, )
 
 ```
 </dd>
@@ -5788,15 +5444,8 @@ For more information about webhooks, see [Set up webhooks in Label Studio](https
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.update(
-    id_=1,
-    url="url",
-    webhook_serializer_for_update_url="url",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.webhooks.update(id_=1, url='url', webhook_serializer_for_update_url='url', )
 
 ```
 </dd>
@@ -5868,12 +5517,7 @@ client.webhooks.update(
 <dl>
 <dd>
 
-**actions:** `typing.Optional[
-    typing.Union[
-        WebhooksUpdateRequestActionsItem,
-        typing.Sequence[WebhooksUpdateRequestActionsItem],
-    ]
-]` 
+**actions:** `typing.Optional[typing.Union[WebhooksUpdateRequestActionsItem, typing.Sequence[WebhooksUpdateRequestActionsItem]]]` 
     
 </dd>
 </dl>
@@ -6002,10 +5646,7 @@ Get version information about the Label Studio instance.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.versions.get()
 
 ```
@@ -6063,10 +5704,7 @@ Get a list of prompts.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.prompts.list()
 
 ```
@@ -6123,15 +5761,8 @@ Create a new prompt.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.create(
-    title="title",
-    input_fields=["input_fields"],
-    output_classes=["output_classes"],
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.create(title='title', input_fields=['input_fields'], output_classes=['output_classes'], )
 
 ```
 </dd>
@@ -6267,13 +5898,8 @@ Get a prompt by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.get(id=1, )
 
 ```
 </dd>
@@ -6337,13 +5963,8 @@ Delete a prompt by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.delete(id=1, )
 
 ```
 </dd>
@@ -6407,16 +6028,8 @@ Update a prompt by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.update(
-    id=1,
-    title="title",
-    input_fields=["input_fields"],
-    output_classes=["output_classes"],
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.update(id=1, title='title', input_fields=['input_fields'], output_classes=['output_classes'], )
 
 ```
 </dd>
@@ -6560,10 +6173,7 @@ Create a new batch prediction.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.prompts.batch_predictions()
 
 ```
@@ -6636,10 +6246,7 @@ Create a new batch of failed predictions.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.prompts.batch_failed_predictions()
 
 ```
@@ -6664,9 +6271,7 @@ client.prompts.batch_failed_predictions()
 <dl>
 <dd>
 
-**failed_predictions:** `typing.Optional[
-    typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
-]` 
+**failed_predictions:** `typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]]` 
     
 </dd>
 </dl>
@@ -6715,10 +6320,7 @@ Get all model provider connections created by the user in the current organizati
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.model_providers.list()
 
 ```
@@ -6775,13 +6377,8 @@ Create a new model provider connection.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.model_providers.create(
-    provider="OpenAI",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.model_providers.create(provider="OpenAI", )
 
 ```
 </dd>
@@ -6957,13 +6554,8 @@ Get a model provider connection by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.model_providers.get(
-    pk=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.model_providers.get(pk=1, )
 
 ```
 </dd>
@@ -7027,13 +6619,8 @@ Delete a model provider connection by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.model_providers.delete(
-    pk=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.model_providers.delete(pk=1, )
 
 ```
 </dd>
@@ -7097,14 +6684,8 @@ Update a model provider connection by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.model_providers.update(
-    pk=1,
-    provider="OpenAI",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.model_providers.update(pk=1, provider="OpenAI", )
 
 ```
 </dd>
@@ -7290,10 +6871,7 @@ Get a list of comments for a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.comments.list()
 
 ```
@@ -7375,10 +6953,7 @@ Create a new comment.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.comments.create()
 
 ```
@@ -7468,13 +7043,8 @@ Get a specific comment.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.comments.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.comments.get(id=1, )
 
 ```
 </dd>
@@ -7539,13 +7109,8 @@ Delete a specific comment.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.comments.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.comments.delete(id=1, )
 
 ```
 </dd>
@@ -7610,13 +7175,8 @@ Update a specific comment.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.comments.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.comments.update(id=1, )
 
 ```
 </dd>
@@ -7718,10 +7278,7 @@ For more information, see [Workspaces in Label Studio](https://docs.humansignal.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.workspaces.list()
 
 ```
@@ -7783,10 +7340,7 @@ For more information, see [Workspaces in Label Studio](https://docs.humansignal.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.workspaces.create()
 
 ```
@@ -7892,13 +7446,8 @@ Get information about a specific workspace. You will need to provide the workspa
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.workspaces.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.workspaces.get(id=1, )
 
 ```
 </dd>
@@ -7963,13 +7512,8 @@ Delete a specific workspace. You will need to provide the workspace ID. You can 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.workspaces.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.workspaces.delete(id=1, )
 
 ```
 </dd>
@@ -8034,13 +7578,8 @@ Update a specific workspace. You will need to provide the workspace ID. You can 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.workspaces.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.workspaces.update(id=1, )
 
 ```
 </dd>
@@ -8153,13 +7692,8 @@ Blacklist a refresh token to prevent its future use.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.tokens.blacklist(
-    refresh="refresh",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.tokens.blacklist(refresh='refresh', )
 
 ```
 </dd>
@@ -8223,10 +7757,7 @@ List all API tokens for the current user.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.tokens.get()
 
 ```
@@ -8283,10 +7814,7 @@ Create a new API token for the current user.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.tokens.create()
 
 ```
@@ -8343,13 +7871,8 @@ Get a new access token, using a refresh token.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.tokens.refresh(
-    refresh="refresh",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.tokens.refresh(refresh='refresh', )
 
 ```
 </dd>
@@ -8413,13 +7936,8 @@ Blacklist existing refresh token, and get a new refresh token.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.tokens.rotate(
-    refresh="refresh",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.tokens.rotate(refresh='refresh', )
 
 ```
 </dd>
@@ -8484,10 +8002,7 @@ Retrieve JWT settings for the currently-active organization.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.jwt_settings.get()
 
 ```
@@ -8544,15 +8059,8 @@ Update JWT settings for the currently active organization.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.jwt_settings.create(
-    api_tokens_enabled=True,
-    legacy_api_tokens_enabled=True,
-    api_token_ttl_days=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.jwt_settings.create(api_tokens_enabled=True, legacy_api_tokens_enabled=True, api_token_ttl_days=1, )
 
 ```
 </dd>
@@ -8638,10 +8146,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.azure.list()
 
 ```
@@ -8711,10 +8216,7 @@ For information about the required fields and prerequisites, see [Microsoft Azur
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.azure.create()
 
 ```
@@ -8836,10 +8338,7 @@ Validate a specific Azure export storage connection. This is useful to ensure th
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.azure.validate()
 
 ```
@@ -8971,13 +8470,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.azure.get(id=1, )
 
 ```
 </dd>
@@ -9044,13 +8538,8 @@ Deleting an export/target storage connection does not affect tasks with synced d
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.azure.delete(id=1, )
 
 ```
 </dd>
@@ -9117,13 +8606,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.azure.update(id=1, )
 
 ```
 </dd>
@@ -9256,13 +8740,8 @@ Sync operations with external containers only go one way. They either create tas
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure.sync(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.azure.sync(id=1, )
 
 ```
 </dd>
@@ -9332,10 +8811,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.gcs.list()
 
 ```
@@ -9405,10 +8881,7 @@ For information about the required fields and prerequisites, see [Google Cloud S
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.gcs.create()
 
 ```
@@ -9530,10 +9003,7 @@ Validate a specific GCS export storage connection. This is useful to ensure that
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.gcs.validate()
 
 ```
@@ -9665,13 +9135,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcs.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.gcs.get(id=1, )
 
 ```
 </dd>
@@ -9738,13 +9203,8 @@ Deleting an export/target storage connection does not affect tasks with synced d
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcs.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.gcs.delete(id=1, )
 
 ```
 </dd>
@@ -9811,13 +9271,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcs.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.gcs.update(id=1, )
 
 ```
 </dd>
@@ -9950,13 +9405,8 @@ Sync operations with external buckets only go one way. They either create tasks 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcs.sync(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.gcs.sync(id=1, )
 
 ```
 </dd>
@@ -10026,10 +9476,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.local.list()
 
 ```
@@ -10099,10 +9546,7 @@ For information about the required fields and prerequisites, see [Local storage]
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.local.create()
 
 ```
@@ -10208,10 +9652,7 @@ Validate a specific local file export storage connection. This is useful to ensu
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.local.validate()
 
 ```
@@ -10327,13 +9768,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.local.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.local.get(id=1, )
 
 ```
 </dd>
@@ -10400,13 +9836,8 @@ Deleting an export/target storage connection does not affect tasks with synced d
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.local.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.local.delete(id=1, )
 
 ```
 </dd>
@@ -10473,13 +9904,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.local.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.local.update(id=1, )
 
 ```
 </dd>
@@ -10596,13 +10022,8 @@ Sync operations with external local file directories only go one way. They eithe
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.local.sync(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.local.sync(id=1, )
 
 ```
 </dd>
@@ -10672,10 +10093,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.redis.list()
 
 ```
@@ -10745,10 +10163,7 @@ For information about the required fields and prerequisites, see [Redis database
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.redis.create()
 
 ```
@@ -10878,10 +10293,7 @@ Validate a specific Redis export storage connection. This is useful to ensure th
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.redis.validate()
 
 ```
@@ -11021,13 +10433,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.redis.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.redis.get(id=1, )
 
 ```
 </dd>
@@ -11094,13 +10501,8 @@ Deleting an export/target storage connection does not affect tasks with synced d
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.redis.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.redis.delete(id=1, )
 
 ```
 </dd>
@@ -11167,13 +10569,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.redis.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.redis.update(id=1, )
 
 ```
 </dd>
@@ -11314,13 +10711,8 @@ Sync operations with external databases only go one way. They either create task
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.redis.sync(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.redis.sync(id=1, )
 
 ```
 </dd>
@@ -11390,10 +10782,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.s3.list()
 
 ```
@@ -11463,10 +10852,7 @@ For information about the required fields and prerequisites, see [Amazon S3](htt
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.s3.create()
 
 ```
@@ -11620,10 +11006,7 @@ Validate a specific S3 export storage connection. This is useful to ensure that 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.s3.validate()
 
 ```
@@ -11787,13 +11170,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.s3.get(id=1, )
 
 ```
 </dd>
@@ -11860,13 +11238,8 @@ Deleting an export/target storage connection does not affect tasks with synced d
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.s3.delete(id=1, )
 
 ```
 </dd>
@@ -11933,13 +11306,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.s3.update(id=1, )
 
 ```
 </dd>
@@ -12104,13 +11472,8 @@ Sync operations with external buckets only go one way. They either create tasks 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3.sync(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.s3.sync(id=1, )
 
 ```
 </dd>
@@ -12180,10 +11543,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.s3s.list()
 
 ```
@@ -12251,10 +11611,7 @@ For information about the required fields and prerequisites, see [Amazon S3](htt
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.s3s.create()
 
 ```
@@ -12392,13 +11749,8 @@ Get a specific S3 export storage connection. You will need to provide the export
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3s.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.s3s.get(id=1, )
 
 ```
 </dd>
@@ -12463,13 +11815,8 @@ Delete a specific S3 export storage connection. You will need to provide the exp
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3s.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.s3s.delete(id=1, )
 
 ```
 </dd>
@@ -12534,13 +11881,8 @@ Update a specific S3 export storage connection. You will need to provide the exp
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.s3s.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.export_storage.s3s.update(id=1, )
 
 ```
 </dd>
@@ -12685,10 +12027,7 @@ Validate a specific S3 export storage connection. This is useful to ensure that 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.export_storage.s3s.validate()
 
 ```
@@ -12831,10 +12170,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.azure.list()
 
 ```
@@ -12906,10 +12242,7 @@ For information about the required fields and prerequisites, see [Microsoft Azur
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.azure.create()
 
 ```
@@ -13055,10 +12388,7 @@ Validate a specific Azure import storage connection. This is useful to ensure th
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.azure.validate()
 
 ```
@@ -13214,13 +12544,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.azure.get(id=1, )
 
 ```
 </dd>
@@ -13289,13 +12614,8 @@ If you want to remove the tasks that were synced from the external storage, you 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.azure.delete(id=1, )
 
 ```
 </dd>
@@ -13362,13 +12682,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.azure.update(id=1, )
 
 ```
 </dd>
@@ -13525,13 +12840,8 @@ Sync operations with external containers only go one way. They either create tas
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure.sync(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.azure.sync(id=1, )
 
 ```
 </dd>
@@ -13601,10 +12911,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.gcs.list()
 
 ```
@@ -13676,10 +12983,7 @@ For information about the required fields and prerequisites, see [Google Cloud S
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.gcs.create()
 
 ```
@@ -13825,10 +13129,7 @@ Validate a specific GCS import storage connection. This is useful to ensure that
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.gcs.validate()
 
 ```
@@ -13984,13 +13285,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcs.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.gcs.get(id=1, )
 
 ```
 </dd>
@@ -14059,13 +13355,8 @@ If you want to remove the tasks that were synced from the external storage, you 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcs.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.gcs.delete(id=1, )
 
 ```
 </dd>
@@ -14132,13 +13423,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcs.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.gcs.update(id=1, )
 
 ```
 </dd>
@@ -14295,13 +13581,8 @@ Sync operations with external buckets only go one way. They either create tasks 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcs.sync(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.gcs.sync(id=1, )
 
 ```
 </dd>
@@ -14371,10 +13652,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.local.list()
 
 ```
@@ -14444,10 +13722,7 @@ For information about the required fields and prerequisites, see [Local storage]
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.local.create()
 
 ```
@@ -14553,10 +13828,7 @@ Validate a specific local file import storage connection. This is useful to ensu
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.local.validate()
 
 ```
@@ -14672,13 +13944,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.local.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.local.get(id=1, )
 
 ```
 </dd>
@@ -14747,13 +14014,8 @@ If you want to remove the tasks that were synced from the external storage, you 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.local.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.local.delete(id=1, )
 
 ```
 </dd>
@@ -14820,13 +14082,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.local.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.local.update(id=1, )
 
 ```
 </dd>
@@ -14943,13 +14200,8 @@ Sync operations with external sources only go one way. They either create tasks 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.local.sync(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.local.sync(id=1, )
 
 ```
 </dd>
@@ -15019,10 +14271,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.redis.list()
 
 ```
@@ -15092,10 +14341,7 @@ For information about the required fields and prerequisites, see [Redis database
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.redis.create()
 
 ```
@@ -15225,10 +14471,7 @@ Validate a specific Redis import storage connection. This is useful to ensure th
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.redis.validate()
 
 ```
@@ -15368,13 +14611,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.redis.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.redis.get(id=1, )
 
 ```
 </dd>
@@ -15443,13 +14681,8 @@ If you want to remove the tasks that were synced from the external storage, you 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.redis.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.redis.delete(id=1, )
 
 ```
 </dd>
@@ -15516,13 +14749,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.redis.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.redis.update(id=1, )
 
 ```
 </dd>
@@ -15663,13 +14891,8 @@ Sync operations with external databases only go one way. They either create task
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.redis.sync(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.redis.sync(id=1, )
 
 ```
 </dd>
@@ -15739,10 +14962,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.s3.list()
 
 ```
@@ -15814,10 +15034,7 @@ For information about the required fields and prerequisites, see [Amazon S3](htt
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.s3.create()
 
 ```
@@ -16003,10 +15220,7 @@ Validate a specific S3 import storage connection. This is useful to ensure that 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.s3.validate()
 
 ```
@@ -16202,13 +15416,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.s3.get(id=1, )
 
 ```
 </dd>
@@ -16277,13 +15486,8 @@ If you want to remove the tasks that were synced from the external storage, you 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.s3.delete(id=1, )
 
 ```
 </dd>
@@ -16350,13 +15554,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.s3.update(id=1, )
 
 ```
 </dd>
@@ -16553,13 +15752,8 @@ Sync operations with external buckets only go one way. They either create tasks 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3.sync(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.s3.sync(id=1, )
 
 ```
 </dd>
@@ -16629,10 +15823,7 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.s3s.list()
 
 ```
@@ -16704,10 +15895,7 @@ For information about the required fields and prerequisites, see [Amazon S3](htt
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.s3s.create()
 
 ```
@@ -16877,13 +16065,8 @@ Get a specific S3 import storage connection. You will need to provide the import
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3s.get(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.s3s.get(id=1, )
 
 ```
 </dd>
@@ -16952,13 +16135,8 @@ If you want to remove the tasks that were synced from the external storage, you 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3s.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.s3s.delete(id=1, )
 
 ```
 </dd>
@@ -17025,13 +16203,8 @@ For more information about working with external storage, see [Sync data from ex
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3s.update(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.s3s.update(id=1, )
 
 ```
 </dd>
@@ -17208,10 +16381,7 @@ Validate a specific S3 import storage connection. This is useful to ensure that 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
 client.import_storage.s3s.validate()
 
 ```
@@ -17381,13 +16551,8 @@ Sync tasks from an S3 import storage connection. You will need to provide the im
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.s3s.sync(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.import_storage.s3s.sync(id=1, )
 
 ```
 </dd>
@@ -17452,14 +16617,8 @@ Return a list of pause objects for the specified project and user.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.pauses.list(
-    project_pk=1,
-    user_pk=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.pauses.list(project_pk=1, user_pk=1, )
 
 ```
 </dd>
@@ -17539,15 +16698,8 @@ Create a new pause object for the specified project and user.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.pauses.create(
-    project_pk=1,
-    user_pk=1,
-    reason="reason",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.pauses.create(project_pk=1, user_pk=1, reason='reason', )
 
 ```
 </dd>
@@ -17635,15 +16787,8 @@ Return detailed information about a specific pause.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.pauses.get(
-    project_pk=1,
-    user_pk=1,
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.pauses.get(project_pk=1, user_pk=1, id=1, )
 
 ```
 </dd>
@@ -17723,15 +16868,8 @@ Remove a pause from the database.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.pauses.delete(
-    project_pk=1,
-    user_pk=1,
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.pauses.delete(project_pk=1, user_pk=1, id=1, )
 
 ```
 </dd>
@@ -17811,16 +16949,8 @@ Partially update one or more fields of an existing pause.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.pauses.update(
-    project_pk=1,
-    user_pk=1,
-    id=1,
-    reason="reason",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.pauses.update(project_pk=1, user_pk=1, id=1, reason='reason', )
 
 ```
 </dd>
@@ -17920,13 +17050,8 @@ You must provide a project ID. The project ID can be found in the URL when viewi
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.exports.list_formats(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.exports.list_formats(id=1, )
 
 ```
 </dd>
@@ -17993,13 +17118,8 @@ Included in the response is information about each snapshot, such as who created
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.exports.list(
-    project_id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.exports.list(project_id=1, )
 
 ```
 </dd>
@@ -18068,13 +17188,8 @@ For more information, see the [Label Studio documentation on exporting annotatio
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.exports.create(
-    project_id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.exports.create(project_id=1, )
 
 ```
 </dd>
@@ -18239,14 +17354,8 @@ You will also need the project ID. This can be found in the URL when viewing the
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.exports.get(
-    project_id=1,
-    export_pk="export_pk",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.exports.get(project_id=1, export_pk='export_pk', )
 
 ```
 </dd>
@@ -18321,14 +17430,8 @@ You will need the export ID. You can find this in the response when you [create 
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.exports.delete(
-    project_id=1,
-    export_pk="export_pk",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.exports.delete(project_id=1, export_pk='export_pk', )
 
 ```
 </dd>
@@ -18407,14 +17510,8 @@ The project ID can be found in the URL when viewing the project in Label Studio,
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.exports.convert(
-    project_id=1,
-    export_pk="export_pk",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.projects.exports.convert(project_id=1, export_pk='export_pk', )
 
 ```
 </dd>
@@ -18503,13 +17600,8 @@ Get a list of prompt versions.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.versions.list(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.versions.list(id=1, )
 
 ```
 </dd>
@@ -18573,13 +17665,8 @@ Create a new version of a prompt.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.versions.create(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.versions.create(id=1, )
 
 ```
 </dd>
@@ -18723,14 +17810,8 @@ Get a prompt version by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.versions.get(
-    id=1,
-    version_id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.versions.get(id=1, version_id=1, )
 
 ```
 </dd>
@@ -18802,14 +17883,8 @@ Delete a prompt version by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.versions.delete(
-    id=1,
-    version_id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.versions.delete(id=1, version_id=1, )
 
 ```
 </dd>
@@ -18881,14 +17956,8 @@ Update a prompt version by ID.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.versions.update(
-    id=1,
-    version_id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.versions.update(id=1, version_id=1, )
 
 ```
 </dd>
@@ -19040,16 +18109,8 @@ Get cost estimate for running a prompt version on a particular project/subset
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.versions.cost_estimate(
-    prompt_id=1,
-    version_id=1,
-    project_id=1,
-    project_subset=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.versions.cost_estimate(prompt_id=1, version_id=1, project_id=1, project_subset=1, )
 
 ```
 </dd>
@@ -19137,15 +18198,8 @@ Get the refined prompt based on the `refinement_job_id`.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.versions.get_refined_prompt(
-    prompt_id=1,
-    version_id=1,
-    refinement_job_id="refinement_job_id",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.versions.get_refined_prompt(prompt_id=1, version_id=1, refinement_job_id='refinement_job_id', )
 
 ```
 </dd>
@@ -19225,14 +18279,8 @@ Refine a prompt version using a teacher model and save the refined prompt as a n
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.versions.refine_prompt(
-    prompt_id=1,
-    version_id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.versions.refine_prompt(prompt_id=1, version_id=1, )
 
 ```
 </dd>
@@ -19337,16 +18385,8 @@ Get information (status, etadata, etc) about an existing inference run
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.runs.list(
-    id=1,
-    version_id=1,
-    project=1,
-    project_subset="All",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.runs.list(id=1, version_id=1, project=1, project_subset="All", )
 
 ```
 </dd>
@@ -19434,16 +18474,8 @@ Run a prompt inference.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.runs.create(
-    id=1,
-    version_id=1,
-    project=1,
-    project_subset="All",
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.runs.create(id=1, version_id=1, project=1, project_subset="All", )
 
 ```
 </dd>
@@ -19604,13 +18636,8 @@ Get key indicators for the Prompt dashboard.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.indicators.list(
-    pk=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.indicators.list(pk=1, )
 
 ```
 </dd>
@@ -19674,14 +18701,8 @@ Get a specific key indicator for the Prompt dashboard.
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.prompts.indicators.get(
-    indicator_key="indicator_key",
-    pk=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.prompts.indicators.get(indicator_key='indicator_key', pk=1, )
 
 ```
 </dd>
@@ -19755,13 +18776,8 @@ List all workspace memberships for a specific workspace. You will need to provid
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.workspaces.members.list(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.workspaces.members.list(id=1, )
 
 ```
 </dd>
@@ -19826,13 +18842,8 @@ Create a new workspace membership. You will need to provide the workspace ID. Yo
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.workspaces.members.create(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.workspaces.members.create(id=1, )
 
 ```
 </dd>
@@ -19905,13 +18916,8 @@ Delete a specific workspace membership. You will need to provide the workspace I
 
 ```python
 from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.workspaces.members.delete(
-    id=1,
-)
+client = LabelStudio(api_key="YOUR_API_KEY", )
+client.workspaces.members.delete(id=1, )
 
 ```
 </dd>

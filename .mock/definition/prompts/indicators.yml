@@ -20,6 +20,7 @@ service:
       response:
         docs: ''
         type: root.KeyIndicators
+        status-code: 200
       examples:
         - path-parameters:
             pk: 1
@@ -54,6 +55,7 @@ service:
       response:
         docs: ''
         type: root.KeyIndicatorValue
+        status-code: 200
       examples:
         - path-parameters:
             indicator_key: indicator_key
