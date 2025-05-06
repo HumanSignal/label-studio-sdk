@@ -1,0 +1,164 @@
+[
+  {
+    "id": 10764,
+    "annotations": [
+      {
+        "id": 11996,
+        "completed_by": {
+          "id": 1,
+          "email": "sergei@heartex.e2e",
+          "first_name": "",
+          "last_name": ""
+        },
+        "result": [
+          {
+            "id": "YuLAREYKpq",
+            "type": "keypointlabels",
+            "value": {
+              "x": 64.44444444444444,
+              "y": 39.290780141843975,
+              "width": 0.2285263987391647,
+              "keypointlabels": [
+                "nose"
+              ]
+            },
+            "origin": "manual",
+            "to_name": "image",
+            "parentID": "hplPm0Szvc",
+            "from_name": "keypoints",
+            "image_rotation": 0,
+            "original_width": 216,
+            "original_height": 174
+          },
+          {
+            "id": "gD9Q-39A_4",
+            "type": "keypointlabels",
+            "value": {
+              "x": 58.38849487785658,
+              "y": 30.78014184397163,
+              "width": 0.2285263987391647,
+              "keypointlabels": [
+                "left_eye"
+              ]
+            },
+            "origin": "manual",
+            "to_name": "image",
+            "parentID": "hplPm0Szvc",
+            "from_name": "keypoints",
+            "image_rotation": 0,
+            "original_width": 216,
+            "original_height": 174
+          },
+          {
+            "id": "qwGtX1L1Nm",
+            "type": "keypointlabels",
+            "value": {
+              "x": 70.50039401103231,
+              "y": 32.19858156028369,
+              "width": 0.2285263987391647,
+              "keypointlabels": [
+                "right_eye"
+              ]
+            },
+            "origin": "manual",
+            "to_name": "image",
+            "parentID": "hplPm0Szvc",
+            "from_name": "keypoints",
+            "image_rotation": 0,
+            "original_width": 216,
+            "original_height": 174
+          },
+          {
+            "id": "hplPm0Szvc",
+            "type": "rectanglelabels",
+            "value": {
+              "x": 38.849487785658,
+              "y": 7.65957446808511,
+              "width": 47.304964539007095,
+              "height": 50.92198581560283,
+              "rotation": 0,
+              "rectanglelabels": [
+                "person"
+              ]
+            },
+            "origin": "manual",
+            "to_name": "image",
+            "from_name": "bbox",
+            "image_rotation": 0,
+            "original_width": 216,
+            "original_height": 174
+          },
+          {
+            "type": "relation",
+            "to_id": "qwGtX1L1Nm",
+            "from_id": "hplPm0Szvc",
+            "direction": "right"
+          },
+          {
+            "type": "relation",
+            "to_id": "hplPm0Szvc",
+            "from_id": "hplPm0Szvc",
+            "direction": "right"
+          },
+          {
+            "type": "relation",
+            "to_id": "hplPm0Szvc",
+            "from_id": "YuLAREYKpq",
+            "direction": "right"
+          },
+          {
+            "type": "relation",
+            "to_id": "hplPm0Szvc",
+            "from_id": "gD9Q-39A_4",
+            "direction": "right"
+          },
+          {
+            "type": "relation",
+            "to_id": "hplPm0Szvc",
+            "from_id": "qwGtX1L1Nm",
+            "direction": "right"
+          }
+        ],
+        "reviews": [],
+        "was_cancelled": false,
+        "ground_truth": false,
+        "created_at": "2025-05-02T13:40:45.998046Z",
+        "updated_at": "2025-05-02T14:46:24.793056Z",
+        "draft_created_at": "2025-05-02T13:38:18.514276Z",
+        "lead_time": 172.763,
+        "prediction": {},
+        "result_count": 5,
+        "unique_id": "c3ef7786-189d-4cab-b937-3509f99c3bac",
+        "import_id": null,
+        "last_action": "updated",
+        "bulk_created": false,
+        "task": 10764,
+        "project": 18,
+        "updated_by": 1,
+        "parent_prediction": null,
+        "parent_annotation": null,
+        "last_created_by": 1
+      }
+    ],
+    "file_upload": "image1.jpg",
+    "drafts": [],
+    "predictions": [],
+    "agreement": 100.0,
+    "data": {
+      "image": "/data/upload/18/image1.jpg"
+    },
+    "meta": {},
+    "created_at": "2025-04-29T12:31:07.919781Z",
+    "updated_at": "2025-05-02T14:46:24.970046Z",
+    "inner_id": 1,
+    "total_annotations": 1,
+    "cancelled_annotations": 0,
+    "total_predictions": 0,
+    "comment_count": 0,
+    "unresolved_comment_count": 0,
+    "last_comment_updated_at": null,
+    "project": 18,
+    "updated_by": 1,
+    "comment_authors": []
+  }
+]

@@ -1,5 +1,17 @@
-from typing import List, Tuple
-from label_studio_sdk.converter.utils import get_polygon_bounding_box
+import os
+import json
+
+
+def keypoints_in_label_config(label_config):
+    """
+    Check if the label config contains keypoints.
+    :param label_config: Label config in JSON format.
+    :return: True if keypoints are present, False otherwise.
+    """
+    for cfg in label_config.values():
+        if cfg.get("type") == "KeyPointLabels":
+            return True
+    return False
 
 
 def update_categories_for_keypoints(categories, category_name_to_id, label_config):
@@ -106,3 +118,29 @@ def process_keypoints_for_coco(keypoint_labels, kp_order, annotation_id, image_i
         'iscrowd': 0
     }
     return annotation
+
+
+def get_yolo_categories_for_keypoints(label_config):
+    # Get all keypoint labels from the label config
+    keypoint_labels = []
+    for cfg in label_config.values():
+        if cfg.get("type") == "KeyPointLabels":
+            keypoint_labels.extend(cfg.get("labels", []))
+    keypoint_labels = list(dict.fromkeys(keypoint_labels))  # Remove duplicates
+
+    # Get all rectangle labels from the label config
+    rectangle_labels = []
+    for cfg in label_config.values():
+        if cfg.get("type") == "RectangleLabels":
+            rectangle_labels.extend(cfg.get("labels", []))
+    rectangle_labels = list(dict.fromkeys(rectangle_labels))  # Remove duplicates
+
+    # Create categories for each rectangle label
+    categories = []
+    category_name_to_id = {}
+
+    for i, label in enumerate(rectangle_labels):
+        categories.append({"id": i, "name": label, "keypoints": keypoint_labels})
+        category_name_to_id[label] = i
+
+    return categories, category_name_to_id

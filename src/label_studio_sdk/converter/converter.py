@@ -18,7 +18,7 @@ import ujson as json
 from PIL import Image
 from label_studio_sdk.converter import brush
 from label_studio_sdk.converter.audio import convert_to_asr_json_manifest
-from label_studio_sdk.converter.keypoints import process_keypoints_for_coco, build_kp_order, update_categories_for_keypoints
+from label_studio_sdk.converter.keypoints import process_keypoints_for_coco, build_kp_order, update_categories_for_keypoints, keypoints_in_label_config, get_yolo_categories_for_keypoints
 from label_studio_sdk.converter.exports import csv2
 from label_studio_sdk.converter.utils import (
     parse_config,
@@ -35,6 +35,7 @@ from label_studio_sdk.converter.utils import (
     convert_annotation_to_yolo_obb,
 )
 from label_studio_sdk._extensions.label_studio_tools.core.utils.io import get_local_path
+from label_studio_sdk.converter.exports.yolo import process_and_save_yolo_annotations
 
 logger = logging.getLogger(__name__)
 
@@ -232,6 +233,8 @@ class Converter(object):
     def convert(self, input_data, output_data, format, is_dir=True, **kwargs):
         if isinstance(format, str):
             format = Format.from_string(format)
+
+        self._current_convertion_format = format
 
         if format == Format.JSON:
             self.convert_to_json(input_data, output_data, is_dir=is_dir)
@@ -526,6 +529,9 @@ class Converter(object):
                     if "original_height" in r:
                         v["original_height"] = r["original_height"]
                     outputs[r["from_name"]].append(v)
+                    if self._current_convertion_format == Format.YOLO:
+                        v['id'] = r.get('id')
+                        v['parentID'] = r.get('parentID')
 
             data = Converter.get_data(task, outputs, annotation)
             if "agreement" in task:
@@ -863,7 +869,12 @@ class Converter(object):
         else:
             output_label_dir = os.path.join(output_dir, "labels")
             os.makedirs(output_label_dir, exist_ok=True)
-        categories, category_name_to_id = self._get_labels()
+        is_keypoints = keypoints_in_label_config(self._schema)
+
+        if is_keypoints:
+            categories, category_name_to_id = get_yolo_categories_for_keypoints(self._schema)
+        else:
+            categories, category_name_to_id = self._get_labels()
         data_key = self._data_keys[0]
         item_iterator = (
             self.iter_from_dir(input_data)
@@ -940,82 +951,7 @@ class Converter(object):
                         pass
                 continue
 
-            annotations = []
-            for label in labels:
-                category_name = None
-                category_names = []  # considering multi-label
-                for key in ["rectanglelabels", "polygonlabels", "labels"]:
-                    if key in label and len(label[key]) > 0:
-                        # change to save multi-label
-                        for category_name in label[key]:
-                            category_names.append(category_name)
-
-                if len(category_names) == 0:
-                    logger.debug(
-                        "Unknown label type or labels are empty: " + str(label)
-                    )
-                    continue
-
-                for category_name in category_names:
-                    if category_name not in category_name_to_id:
-                        category_id = len(categories)
-                        category_name_to_id[category_name] = category_id
-                        categories.append({"id": category_id, "name": category_name})
-                    category_id = category_name_to_id[category_name]
-
-                    if (
-                        "rectanglelabels" in label
-                        or "rectangle" in label
-                        or "labels" in label
-                    ):
-                        # yolo obb
-                        if is_obb:
-                            obb_annotation = convert_annotation_to_yolo_obb(label)
-                            if obb_annotation is None:
-                                continue
-
-                            top_left, top_right, bottom_right, bottom_left = (
-                                obb_annotation
-                            )
-                            x1, y1 = top_left
-                            x2, y2 = top_right
-                            x3, y3 = bottom_right
-                            x4, y4 = bottom_left
-                            annotations.append(
-                                [category_id, x1, y1, x2, y2, x3, y3, x4, y4]
-                            )
-
-                        # simple yolo
-                        else:
-                            annotation = convert_annotation_to_yolo(label)
-                            if annotation is None:
-                                continue
-
-                            (
-                                x,
-                                y,
-                                w,
-                                h,
-                            ) = annotation
-                            annotations.append([category_id, x, y, w, h])
-
-                    elif "polygonlabels" in label or "polygon" in label:
-                        if not ('points' in label):
-                            continue
-                        points_abs = [(x / 100, y / 100) for x, y in label["points"]]
-                        annotations.append(
-                            [category_id]
-                            + [coord for point in points_abs for coord in point]
-                        )
-                    else:
-                        raise ValueError(f"Unknown label type {label}")
-            with open(label_path, "w") as f:
-                for annotation in annotations:
-                    for idx, l in enumerate(annotation):
-                        if idx == len(annotation) - 1:
-                            f.write(f"{l}\n")
-                        else:
-                            f.write(f"{l} ")
+            categories, category_name_to_id = process_and_save_yolo_annotations(labels, label_path, category_name_to_id, categories, is_obb, is_keypoints)
         with open(class_file, "w", encoding="utf8") as f:
             for c in categories:
                 f.write(c["name"] + "\n")
