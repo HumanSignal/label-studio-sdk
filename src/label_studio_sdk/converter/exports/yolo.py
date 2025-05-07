@@ -1,73 +1,72 @@
 import logging
 from label_studio_sdk.converter.utils import convert_annotation_to_yolo, convert_annotation_to_yolo_obb
+from label_studio_sdk.converter.keypoints import build_kp_order
 
 logger = logging.getLogger(__name__)
 
+def process_keypoints_for_yolo(labels, label_path,
+                               category_name_to_id, categories,
+                               is_obb, kp_order):
+    class_map = {c['name']: c['id'] for c in categories}
 
-def process_keypoints_for_yolo(labels, label_path, category_name_to_id, categories, is_obb):
-    class_map = {category['name']: category['id'] for category in categories}
-
-    # Map rectangle IDs to their data
     rectangles = {}
-    for result in labels:
-        if result['type'].lower() == 'rectanglelabels':
-            bbox = result
-            bbox_id = bbox['id']
-            bbox_label = bbox['rectanglelabels'][0]
-            class_idx = class_map.get(bbox_label)
-            if class_idx is None:
-                continue  # Skip unknown classes
+    for item in labels:
+        if item['type'].lower() == 'rectanglelabels':
+            bbox_id = item['id']
+            cls_name = item['rectanglelabels'][0]
+            cls_idx = class_map.get(cls_name)
+            if cls_idx is None:
+                continue
 
-            x = bbox['x'] / 100
-            y = bbox['y'] / 100
-            width = bbox['original_width'] / 100
-            height = bbox['original_height'] / 100
-            # Convert from top-left corner to center coordinates
-            x_center = x + width / 2
-            y_center = y + height / 2
+            x      = item['x'] / 100.0
+            y      = item['y'] / 100.0
+            width  = item['width']  / 100.0
+            height = item['height'] / 100.0
+            x_c    = x + width  / 2.0
+            y_c    = y + height / 2.0
 
             rectangles[bbox_id] = {
-                'class_idx': class_idx,
-                'x_center': x_center,
-                'y_center': y_center,
-                'width': width,
-                'height': height,
-                'keypoints': []
+                'class_idx': cls_idx,
+                'x_center':  x_c,
+                'y_center':  y_c,
+                'width':     width,
+                'height':    height,
+                'kp_dict':   {}
             }
 
-    # Collect keypoints associated with each rectangle
-    for kp_result in labels:
-        if kp_result['type'].lower() == 'keypointlabels':
-            parent_id = kp_result.get('parentID')
-            if parent_id in rectangles:
-                kp_x = kp_result['x'] / 100
-                kp_y = kp_result['y'] / 100
-                visibility = 2  # Assuming keypoints are visible
-                rectangles[parent_id]['keypoints'].extend([kp_x, kp_y, visibility])
+    for item in labels:
+        if item['type'].lower() == 'keypointlabels':
+            parent_id = item.get('parentID')
+            if parent_id not in rectangles:
+                continue
+            label_name = item['keypointlabels'][0]
+            kp_x = item['x'] / 100.0
+            kp_y = item['y'] / 100.0
+            rectangles[parent_id]['kp_dict'][label_name] = (kp_x, kp_y, 2)  # 2 = visible
 
-    # Prepare YOLO formatted lines
     lines = []
     for rect in rectangles.values():
-        obj = [
+        base = [
             rect['class_idx'],
             rect['x_center'],
             rect['y_center'],
             rect['width'],
             rect['height']
-        ] + rect['keypoints']
-        line = ' '.join(map(str, obj))
+        ]
+        keypoints = []
+        for k in kp_order:
+            keypoints.extend(rect['kp_dict'].get(k, (0.0, 0.0, 0)))
+        line = ' '.join(map(str, base + keypoints))
         lines.append(line)
 
-    # Write to YOLO format file
-    with open(label_path, 'w') as f:
-        for line in lines:
-            f.write(line + '\n')
+    with open(label_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(lines))
 
 
-
-def process_and_save_yolo_annotations(labels, label_path, category_name_to_id, categories, is_obb, is_keypoints):
+def process_and_save_yolo_annotations(labels, label_path, category_name_to_id, categories, is_obb, is_keypoints, label_config):
     if is_keypoints:
-        process_keypoints_for_yolo(labels, label_path, category_name_to_id, categories, is_obb)
+        kp_order = build_kp_order(label_config)
+        process_keypoints_for_yolo(labels, label_path, category_name_to_id, categories, is_obb, kp_order)
         return categories, category_name_to_id
 
     annotations = []

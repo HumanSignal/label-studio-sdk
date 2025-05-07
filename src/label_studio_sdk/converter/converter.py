@@ -952,7 +952,7 @@ class Converter(object):
                         pass
                 continue
 
-            categories, category_name_to_id = process_and_save_yolo_annotations(labels, label_path, category_name_to_id, categories, is_obb, is_keypoints)
+            categories, category_name_to_id = process_and_save_yolo_annotations(labels, label_path, category_name_to_id, categories, is_obb, is_keypoints, self._schema)
         with open(class_file, "w", encoding="utf8") as f:
             for c in categories:
                 f.write(c["name"] + "\n")
