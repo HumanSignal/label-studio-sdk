@@ -207,6 +207,7 @@ class Converter(object):
         self._schema = None
         self.access_token = access_token
         self.hostname = hostname
+        self.is_keypoints = None
 
         if isinstance(config, dict):
             self._schema = config
@@ -233,8 +234,6 @@ class Converter(object):
     def convert(self, input_data, output_data, format, is_dir=True, **kwargs):
         if isinstance(format, str):
             format = Format.from_string(format)
-
-        self._current_convertion_format = format
 
         if format == Format.JSON:
             self.convert_to_json(input_data, output_data, is_dir=is_dir)
@@ -529,7 +528,7 @@ class Converter(object):
                     if "original_height" in r:
                         v["original_height"] = r["original_height"]
                     outputs[r["from_name"]].append(v)
-                    if self._current_convertion_format == Format.YOLO:
+                    if self.is_keypoints:
                         v['id'] = r.get('id')
                         v['parentID'] = r.get('parentID')
 
@@ -872,6 +871,8 @@ class Converter(object):
         is_keypoints = keypoints_in_label_config(self._schema)
 
         if is_keypoints:
+            # we use this attribute to add id and parentID to annotation data
+            self.is_keypoints = True
             categories, category_name_to_id = get_yolo_categories_for_keypoints(self._schema)
         else:
             categories, category_name_to_id = self._get_labels()

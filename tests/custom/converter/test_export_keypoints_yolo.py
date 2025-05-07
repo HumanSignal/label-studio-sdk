@@ -144,5 +144,3 @@ def test_keypoints_yolo_values(create_temp_folder):
         assert (
             keypoints_found
         ), f'No keypoints found in the generated YOLO file: {lines}'
-
-    assert False
