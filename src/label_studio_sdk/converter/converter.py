@@ -117,7 +117,7 @@ class Converter(object):
             "title": "COCO with Images",
             "description": "COCO format with images downloaded.",
             "link": "https://labelstud.io/guide/export.html#COCO",
-            "tags": ["image segmentation", "object detection"],
+            "tags": ["image segmentation", "object detection", "keypoints"],
         },
         Format.VOC: {
             "title": "Pascal VOC XML",
@@ -130,13 +130,13 @@ class Converter(object):
             "description": "Popular TXT format is created for each image file. Each txt file contains annotations for "
             "the corresponding image file, that is object class, object coordinates, height & width.",
             "link": "https://labelstud.io/guide/export.html#YOLO",
-            "tags": ["image segmentation", "object detection"],
+            "tags": ["image segmentation", "object detection", "keypoints"],
         },
         Format.YOLO_WITH_IMAGES: {
             "title": "YOLO with Images",
             "description": "YOLO format with images downloaded.",
             "link": "https://labelstud.io/guide/export.html#YOLO",
-            "tags": ["image segmentation", "object detection"],
+            "tags": ["image segmentation", "object detection", "keypoints"],
         },
         Format.YOLO_OBB: {
             "title": "YOLOv8 OBB",
