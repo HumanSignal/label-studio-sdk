@@ -12,7 +12,7 @@ from label_studio_sdk.converter.utils import (
     convert_annotation_to_yolo_obb,
     convert_yolo_obb_to_annotation,
 )
-from .utils import almost_equal_1d, almost_equal_2d
+from .utils import almost_equal_1d, almost_equal_2d, get_os_walk, check_equal_list_of_strings
 
 BASE_DIR = os.path.dirname(__file__)
 TEST_DATA_PATH = os.path.join(BASE_DIR, "data", "test_export_yolo")
@@ -24,34 +24,6 @@ INPUT_JSON_PATH_POLYGONS = os.path.join(BASE_DIR, TEST_DATA_PATH, "data_polygons
 LABEL_CONFIG_PATH_POLYGONS = os.path.join(
     BASE_DIR, TEST_DATA_PATH, "label_config_polygons.xml"
 )
-
-
-def check_equal_list_of_strings(list1, list2):
-    # Check that both lists are not empty
-    if not list1 or not list2:
-        return False
-
-    list1.sort()
-    list2.sort()
-
-    # Check that the lists have the same length
-    if len(list1) != len(list2):
-        return False
-
-    # Check that the elements of the lists are equal
-    for i in range(len(list1)):
-        if list1[i] != list2[i]:
-            return False
-
-    return True
-
-
-def get_os_walk(root_path):
-    list_file_paths = []
-    for root, dirs, files in os.walk(root_path):
-        for f in files:
-            list_file_paths += [os.path.join(root, f)]
-    return list_file_paths
 
 
 @pytest.fixture

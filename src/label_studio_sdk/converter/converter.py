@@ -11,13 +11,14 @@ from datetime import datetime
 from enum import Enum
 from glob import glob
 from shutil import copy2
-from typing import Optional
+from typing import Optional, List, Tuple
 
 import ijson
 import ujson as json
 from PIL import Image
 from label_studio_sdk.converter import brush
 from label_studio_sdk.converter.audio import convert_to_asr_json_manifest
+from label_studio_sdk.converter.keypoints import process_keypoints_for_coco, build_kp_order, update_categories_for_keypoints, keypoints_in_label_config, get_yolo_categories_for_keypoints
 from label_studio_sdk.converter.exports import csv2
 from label_studio_sdk.converter.utils import (
     parse_config,
@@ -34,6 +35,7 @@ from label_studio_sdk.converter.utils import (
     convert_annotation_to_yolo_obb,
 )
 from label_studio_sdk._extensions.label_studio_tools.core.utils.io import get_local_path
+from label_studio_sdk.converter.exports.yolo import process_and_save_yolo_annotations
 
 logger = logging.getLogger(__name__)
 
@@ -109,13 +111,13 @@ class Converter(object):
             "description": "Popular machine learning format used by the COCO dataset for object detection and image "
             "segmentation tasks with polygons and rectangles.",
             "link": "https://labelstud.io/guide/export.html#COCO",
-            "tags": ["image segmentation", "object detection"],
+            "tags": ["image segmentation", "object detection", "keypoints"],
         },
         Format.COCO_WITH_IMAGES: {
             "title": "COCO with Images",
             "description": "COCO format with images downloaded.",
             "link": "https://labelstud.io/guide/export.html#COCO",
-            "tags": ["image segmentation", "object detection"],
+            "tags": ["image segmentation", "object detection", "keypoints"],
         },
         Format.VOC: {
             "title": "Pascal VOC XML",
@@ -128,13 +130,13 @@ class Converter(object):
             "description": "Popular TXT format is created for each image file. Each txt file contains annotations for "
             "the corresponding image file, that is object class, object coordinates, height & width.",
             "link": "https://labelstud.io/guide/export.html#YOLO",
-            "tags": ["image segmentation", "object detection"],
+            "tags": ["image segmentation", "object detection", "keypoints"],
         },
         Format.YOLO_WITH_IMAGES: {
             "title": "YOLO with Images",
             "description": "YOLO format with images downloaded.",
             "link": "https://labelstud.io/guide/export.html#YOLO",
-            "tags": ["image segmentation", "object detection"],
+            "tags": ["image segmentation", "object detection", "keypoints"],
         },
         Format.YOLO_OBB: {
             "title": "YOLOv8 OBB",
@@ -205,6 +207,7 @@ class Converter(object):
         self._schema = None
         self.access_token = access_token
         self.hostname = hostname
+        self.is_keypoints = None
 
         if isinstance(config, dict):
             self._schema = config
@@ -376,10 +379,13 @@ class Converter(object):
             and (
                 "RectangleLabels" in output_tag_types
                 or "PolygonLabels" in output_tag_types
+                or "KeyPointLabels" in output_tag_types
             )
             or "Rectangle" in output_tag_types
             and "Labels" in output_tag_types
             or "PolygonLabels" in output_tag_types
+            and "Labels" in output_tag_types
+            or "KeyPointLabels" in output_tag_types
             and "Labels" in output_tag_types
         ):
             all_formats.remove(Format.COCO.name)
@@ -522,6 +528,9 @@ class Converter(object):
                     if "original_height" in r:
                         v["original_height"] = r["original_height"]
                     outputs[r["from_name"]].append(v)
+                    if self.is_keypoints:
+                        v['id'] = r.get('id')
+                        v['parentID'] = r.get('parentID')
 
             data = Converter.get_data(task, outputs, annotation)
             if "agreement" in task:
@@ -638,6 +647,7 @@ class Converter(object):
             os.makedirs(output_image_dir, exist_ok=True)
         images, categories, annotations = [], [], []
         categories, category_name_to_id = self._get_labels()
+        categories, category_name_to_id = update_categories_for_keypoints(categories, category_name_to_id, self._schema)
         data_key = self._data_keys[0]
         item_iterator = (
             self.iter_from_dir(input_data)
@@ -703,9 +713,10 @@ class Converter(object):
                 logger.debug(f'Empty bboxes for {item["output"]}')
                 continue
 
+            keypoint_labels = []
             for label in labels:
                 category_name = None
-                for key in ["rectanglelabels", "polygonlabels", "labels"]:
+                for key in ["rectanglelabels", "polygonlabels", "keypointlabels", "labels"]:
                     if key in label and len(label[key]) > 0:
                         category_name = label[key][0]
                         break
@@ -775,11 +786,22 @@ class Converter(object):
                             "area": get_polygon_area(x, y),
                         }
                     )
+                elif "keypointlabels" in label:
+                    keypoint_labels.append(label)
                 else:
                     raise ValueError("Unknown label type")
 
                 if os.getenv("LABEL_STUDIO_FORCE_ANNOTATOR_EXPORT"):
                     annotations[-1].update({"annotator": get_annotator(item)})
+            if keypoint_labels:
+                kp_order = build_kp_order(self._schema)
+                annotations.append(process_keypoints_for_coco(
+                    keypoint_labels,
+                    kp_order,
+                    annotation_id=len(annotations),
+                    image_id=image_id,
+                    category_name_to_id=category_name_to_id,
+                ))
 
         with io.open(output_file, mode="w", encoding="utf8") as fout:
             json.dump(
@@ -846,7 +868,14 @@ class Converter(object):
         else:
             output_label_dir = os.path.join(output_dir, "labels")
             os.makedirs(output_label_dir, exist_ok=True)
-        categories, category_name_to_id = self._get_labels()
+        is_keypoints = keypoints_in_label_config(self._schema)
+
+        if is_keypoints:
+            # we use this attribute to add id and parentID to annotation data
+            self.is_keypoints = True
+            categories, category_name_to_id = get_yolo_categories_for_keypoints(self._schema)
+        else:
+            categories, category_name_to_id = self._get_labels()
         data_key = self._data_keys[0]
         item_iterator = (
             self.iter_from_dir(input_data)
@@ -923,82 +952,7 @@ class Converter(object):
                         pass
                 continue
 
-            annotations = []
-            for label in labels:
-                category_name = None
-                category_names = []  # considering multi-label
-                for key in ["rectanglelabels", "polygonlabels", "labels"]:
-                    if key in label and len(label[key]) > 0:
-                        # change to save multi-label
-                        for category_name in label[key]:
-                            category_names.append(category_name)
-
-                if len(category_names) == 0:
-                    logger.debug(
-                        "Unknown label type or labels are empty: " + str(label)
-                    )
-                    continue
-
-                for category_name in category_names:
-                    if category_name not in category_name_to_id:
-                        category_id = len(categories)
-                        category_name_to_id[category_name] = category_id
-                        categories.append({"id": category_id, "name": category_name})
-                    category_id = category_name_to_id[category_name]
-
-                    if (
-                        "rectanglelabels" in label
-                        or "rectangle" in label
-                        or "labels" in label
-                    ):
-                        # yolo obb
-                        if is_obb:
-                            obb_annotation = convert_annotation_to_yolo_obb(label)
-                            if obb_annotation is None:
-                                continue
-
-                            top_left, top_right, bottom_right, bottom_left = (
-                                obb_annotation
-                            )
-                            x1, y1 = top_left
-                            x2, y2 = top_right
-                            x3, y3 = bottom_right
-                            x4, y4 = bottom_left
-                            annotations.append(
-                                [category_id, x1, y1, x2, y2, x3, y3, x4, y4]
-                            )
-
-                        # simple yolo
-                        else:
-                            annotation = convert_annotation_to_yolo(label)
-                            if annotation is None:
-                                continue
-
-                            (
-                                x,
-                                y,
-                                w,
-                                h,
-                            ) = annotation
-                            annotations.append([category_id, x, y, w, h])
-
-                    elif "polygonlabels" in label or "polygon" in label:
-                        if not ('points' in label):
-                            continue
-                        points_abs = [(x / 100, y / 100) for x, y in label["points"]]
-                        annotations.append(
-                            [category_id]
-                            + [coord for point in points_abs for coord in point]
-                        )
-                    else:
-                        raise ValueError(f"Unknown label type {label}")
-            with open(label_path, "w") as f:
-                for annotation in annotations:
-                    for idx, l in enumerate(annotation):
-                        if idx == len(annotation) - 1:
-                            f.write(f"{l}\n")
-                        else:
-                            f.write(f"{l} ")
+            categories, category_name_to_id = process_and_save_yolo_annotations(labels, label_path, category_name_to_id, categories, is_obb, is_keypoints, self._schema)
         with open(class_file, "w", encoding="utf8") as f:
             for c in categories:
                 f.write(c["name"] + "\n")
