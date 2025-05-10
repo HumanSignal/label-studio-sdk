@@ -8,8 +8,10 @@ import re
 import json
 import jsonschema
 
+from functools import cached_property
 from typing import Dict, Optional, List, Tuple, Any, Callable, Union
 from pydantic import BaseModel
+
 
 # from typing import Dict, Optional, List, Tuple, Any
 from collections import defaultdict, OrderedDict
@@ -517,6 +519,19 @@ class LabelInterface:
 
         return lst
     
+    @cached_property
+    def ner_tags(self):
+        return self.find_tags('controls', lambda t: t.tag.lower() in ('labels', 'hypertextlabels'))
+    
+    @cached_property
+    def image_tags(self):
+        return self.find_tags('objects', lambda t: t.tag.lower() == 'image')
+    
+    @cached_property
+    def pdf_tags(self):
+        return self.find_tags('objects', lambda t: t.tag.lower() == 'pdf')
+
+
     def load_task(self, task):
         """Loads a task and substitutes the value in each object tag
         with actual data from the task, returning a copy of the
