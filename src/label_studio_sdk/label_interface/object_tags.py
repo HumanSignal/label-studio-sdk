@@ -199,7 +199,7 @@ class ImageTag(ObjectTag):
     @property
     def is_image_list(self):
         """Check if the tag is an image list, i.e. it has a valueList attribute that accepts list of images"""
-        return self.attr.get("valueList") if self.attr else False
+        return bool(self.attr.get("valueList")) if self.attr else False
 
 
 class TableTag(ObjectTag):
