@@ -517,7 +517,7 @@ class ProjectsClient:
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
-        """
+        r"""
         
         Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
@@ -1232,7 +1232,7 @@ class AsyncProjectsClient:
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
-        """
+        r"""
         
         Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
         The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
