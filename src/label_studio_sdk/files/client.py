@@ -445,7 +445,7 @@ class AsyncFilesClient:
 
         You will need to include the file data in the request body. For example:
         ```bash
-        curl -H 'Authorization: Token abc123' \ -X POST 'https://localhost:8080/api/import/file-upload/245' -F ‘file=@path/to/my_file.csv’
+        curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/import/file-upload/245' -F ‘file=@path/to/my_file.csv’
         ```
 
         Parameters
