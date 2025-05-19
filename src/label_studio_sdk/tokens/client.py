@@ -22,7 +22,12 @@ class TokensClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def blacklist(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def blacklist(
+        self,
+        *,
+        refresh: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Blacklist a refresh token to prevent its future use.
 
@@ -50,13 +55,13 @@ class TokensClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/token/blacklist",
-            method="POST",
+            'api/token/blacklist',
+            method='POST',
             json={
-                "refresh": refresh,
+                'refresh': refresh,
             },
             headers={
-                "content-type": "application/json",
+                'content-type': 'application/json',
             },
             request_options=request_options,
             omit=OMIT,
@@ -76,10 +81,14 @@ class TokensClient:
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(
+                status_code=_response.status_code, body=_response.text
+            )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ApiTokenResponse]:
+    def get(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ApiTokenResponse]:
         """
         List all API tokens for the current user.
 
@@ -103,8 +112,8 @@ class TokensClient:
         client.tokens.get()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/token",
-            method="GET",
+            'api/token',
+            method='GET',
             request_options=request_options,
         )
         try:
@@ -118,10 +127,14 @@ class TokensClient:
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(
+                status_code=_response.status_code, body=_response.text
+            )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> ApiTokenResponse:
+    def create(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ApiTokenResponse:
         """
         Create a new API token for the current user.
 
@@ -145,8 +158,8 @@ class TokensClient:
         client.tokens.create()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/token",
-            method="POST",
+            'api/token',
+            method='POST',
             request_options=request_options,
         )
         try:
@@ -160,10 +173,17 @@ class TokensClient:
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(
+                status_code=_response.status_code, body=_response.text
+            )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def refresh(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> AccessTokenResponse:
+    def refresh(
+        self,
+        *,
+        refresh: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AccessTokenResponse:
         """
         Get a new access token, using a refresh token.
 
@@ -192,13 +212,13 @@ class TokensClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/token/refresh",
-            method="POST",
+            'api/token/refresh',
+            method='POST',
             json={
-                "refresh": refresh,
+                'refresh': refresh,
             },
             headers={
-                "content-type": "application/json",
+                'content-type': 'application/json',
             },
             request_options=request_options,
             omit=OMIT,
@@ -224,10 +244,17 @@ class TokensClient:
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(
+                status_code=_response.status_code, body=_response.text
+            )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def rotate(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> RotateTokenResponse:
+    def rotate(
+        self,
+        *,
+        refresh: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RotateTokenResponse:
         """
         Blacklist existing refresh token, and get a new refresh token.
 
@@ -256,13 +283,13 @@ class TokensClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/token/rotate",
-            method="POST",
+            'api/token/rotate',
+            method='POST',
             json={
-                "refresh": refresh,
+                'refresh': refresh,
             },
             headers={
-                "content-type": "application/json",
+                'content-type': 'application/json',
             },
             request_options=request_options,
             omit=OMIT,
@@ -288,15 +315,23 @@ class TokensClient:
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(
+                status_code=_response.status_code, body=_response.text
+            )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncTokensClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self._raw_client = client_wrapper._raw_httpx_client
 
-    async def blacklist(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def blacklist(
+        self,
+        *,
+        refresh: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Blacklist a refresh token to prevent its future use.
 
@@ -332,13 +367,13 @@ class AsyncTokensClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/token/blacklist",
-            method="POST",
+            'api/token/blacklist',
+            method='POST',
             json={
-                "refresh": refresh,
+                'refresh': refresh,
             },
             headers={
-                "content-type": "application/json",
+                'content-type': 'application/json',
             },
             request_options=request_options,
             omit=OMIT,
@@ -358,10 +393,14 @@ class AsyncTokensClient:
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(
+                status_code=_response.status_code, body=_response.text
+            )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ApiTokenResponse]:
+    async def get(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ApiTokenResponse]:
         """
         List all API tokens for the current user.
 
@@ -393,8 +432,8 @@ class AsyncTokensClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/token",
-            method="GET",
+            'api/token',
+            method='GET',
             request_options=request_options,
         )
         try:
@@ -408,10 +447,14 @@ class AsyncTokensClient:
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(
+                status_code=_response.status_code, body=_response.text
+            )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> ApiTokenResponse:
+    async def create(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ApiTokenResponse:
         """
         Create a new API token for the current user.
 
@@ -443,8 +486,8 @@ class AsyncTokensClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/token",
-            method="POST",
+            'api/token',
+            method='POST',
             request_options=request_options,
         )
         try:
@@ -458,11 +501,16 @@ class AsyncTokensClient:
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(
+                status_code=_response.status_code, body=_response.text
+            )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def refresh(
-        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        refresh: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AccessTokenResponse:
         """
         Get a new access token, using a refresh token.
@@ -499,17 +547,15 @@ class AsyncTokensClient:
 
         asyncio.run(main())
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/token/refresh",
-            method="POST",
+        # Use raw client for refresh to avoid circular dependencies
+        _response = await self._raw_client.post(
+            f'{self._client_wrapper.get_base_url()}/api/token/refresh/',
             json={
-                "refresh": refresh,
+                'refresh': refresh,
             },
             headers={
-                "content-type": "application/json",
+                'content-type': 'application/json',
             },
-            request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -532,11 +578,16 @@ class AsyncTokensClient:
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(
+                status_code=_response.status_code, body=_response.text
+            )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def rotate(
-        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        refresh: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> RotateTokenResponse:
         """
         Blacklist existing refresh token, and get a new refresh token.
@@ -574,13 +625,13 @@ class AsyncTokensClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/token/rotate",
-            method="POST",
+            'api/token/rotate',
+            method='POST',
             json={
-                "refresh": refresh,
+                'refresh': refresh,
             },
             headers={
-                "content-type": "application/json",
+                'content-type': 'application/json',
             },
             request_options=request_options,
             omit=OMIT,
@@ -606,5 +657,7 @@ class AsyncTokensClient:
                 )
             _response_json = _response.json()
         except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(
+                status_code=_response.status_code, body=_response.text
+            )
         raise ApiError(status_code=_response.status_code, body=_response_json)

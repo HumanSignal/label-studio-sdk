@@ -15,30 +15,25 @@ class BaseClientWrapper:
     ):
         self._base_url = base_url
         self._timeout = timeout
-
-        # even in the async case, refreshing access token (when the existing one is expired) should be sync
-        from ..tokens.client_ext import TokensClientExt
-        self._tokens_client = TokensClientExt(base_url=base_url, api_key=api_key)
-
+        self._api_key = api_key
+        self._tokens_client = None  # Will be set by child classes
 
     def get_timeout(self) -> typing.Optional[float]:
         return self._timeout
 
-
     def get_base_url(self) -> str:
         return self._base_url
 
-
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
-            "X-Fern-Language": "Python",
-            "X-Fern-SDK-Name": "label-studio-sdk",
-            "X-Fern-SDK-Version": "1.0.11",
+            'X-Fern-Language': 'Python',
+            'X-Fern-SDK-Name': 'label-studio-sdk',
+            'X-Fern-SDK-Version': '1.0.11',
         }
         if self._tokens_client._use_legacy_token:
-            headers["Authorization"] = f"Token {self._tokens_client.api_key}"
+            headers['Authorization'] = f'Token {self._tokens_client.api_key}'
         else:
-            headers["Authorization"] = f"Bearer {self._tokens_client.api_key}"
+            headers['Authorization'] = f'Bearer {self._tokens_client.api_key}'
         return headers
 
 
@@ -52,6 +47,17 @@ class SyncClientWrapper(BaseClientWrapper):
         httpx_client: httpx.Client,
     ):
         super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
+        # Store raw httpx_client first
+        self._raw_httpx_client = httpx_client
+
+        # Initialize tokens client with raw client
+        from ..tokens.client_ext import TokensClientExt
+
+        self._tokens_client = TokensClientExt(
+            base_url=base_url, api_key=api_key, client_wrapper=self
+        )
+
+        # Then initialize wrapped client
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -62,12 +68,43 @@ class SyncClientWrapper(BaseClientWrapper):
 
 class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
-        self, *, api_key: str, base_url: str, timeout: typing.Optional[float] = None, httpx_client: httpx.AsyncClient
+        self,
+        *,
+        api_key: str,
+        base_url: str,
+        timeout: typing.Optional[float] = None,
+        httpx_client: httpx.AsyncClient,
     ):
         super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
+        # Store raw httpx_client first
+        self._raw_httpx_client = httpx_client
+
+        # Initialize tokens client with raw client
+        from ..tokens.client_ext import TokensClientExt
+
+        self._tokens_client = TokensClientExt(
+            base_url=base_url, api_key=api_key, client_wrapper=self
+        )
+
+        # Then initialize wrapped client
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
-            base_headers=self.get_headers,
+            base_headers=self.get_headers_async,
             base_timeout=self.get_timeout,
             base_url=self.get_base_url,
         )
+
+    async def get_headers_async(self) -> typing.Dict[str, str]:
+        """Async version of get_headers that uses api_key_async."""
+        headers: typing.Dict[str, str] = {
+            'X-Fern-Language': 'Python',
+            'X-Fern-SDK-Name': 'label-studio-sdk',
+            'X-Fern-SDK-Version': '1.0.11',
+        }
+        if self._tokens_client._use_legacy_token:
+            headers['Authorization'] = f'Token {self._tokens_client.api_key}'
+        else:
+            headers[
+                'Authorization'
+            ] = f'Bearer {await self._tokens_client.api_key_async()}'
+        return headers
