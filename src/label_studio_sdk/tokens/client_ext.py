@@ -1,6 +1,7 @@
 import threading
 import typing
 from datetime import datetime, timezone
+import inspect
 
 import httpx
 import jwt
@@ -84,16 +85,17 @@ class TokensClientExt:
         # Create a new client with the same parameters as the existing one
         existing_client = self._client_wrapper.httpx_client.httpx_client
 
-        # Get client parameters safely, handling both sync and async clients
+        # Get all parameters from httpx.Client.__init__
         client_params = {}
-        for param in ['timeout', 'follow_redirects', 'verify', 'cert', 'trust_env',
-                     'base_url', 'headers', 'cookies', 'proxies', 'transport']:
-            try:
-                value = getattr(existing_client, param, None)
-                if value is not None:
-                    client_params[param] = value
-            except AttributeError:
-                continue
+        sig = inspect.signature(httpx.Client.__init__)
+        for param_name in sig.parameters:
+            if param_name != 'self':  # Skip 'self' parameter
+                try:
+                    value = getattr(existing_client, param_name, None)
+                    if value is not None:
+                        client_params[param_name] = value
+                except AttributeError:
+                    continue
 
         with httpx.Client(**client_params) as sync_client:
             response = sync_client.request(
