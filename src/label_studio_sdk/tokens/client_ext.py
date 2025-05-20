@@ -1,6 +1,7 @@
 import threading
 import typing
 from datetime import datetime, timezone
+import inspect
 
 import httpx
 import jwt
@@ -12,9 +13,10 @@ from ..types.access_token_response import AccessTokenResponse
 class TokensClientExt:
     """Client for managing authentication tokens."""
 
-    def __init__(self, base_url: str, api_key: str):
+    def __init__(self, base_url: str, api_key: str, client_wrapper=None):
         self._base_url = base_url
         self._api_key = api_key
+        self._client_wrapper = client_wrapper
         self._use_legacy_token = not self._is_valid_jwt_token(api_key, raise_if_expired=True)
 
         # cache state for access token when using jwt-based api_key
@@ -78,9 +80,24 @@ class TokensClientExt:
 
     def refresh(self) -> AccessTokenResponse:
         """Refresh the access token and return the token response."""
-        # We don't do this often, just use a separate httpx client for simplicity here
+        # We don't do this often, just use a separate sync httpx client for simplicity here
         # (avoids complicated state management and sync vs async handling)
-        with httpx.Client() as sync_client:
+        # Create a new client with the same parameters as the existing one
+        existing_client = self._client_wrapper.httpx_client.httpx_client
+
+        # Get all parameters from httpx.Client.__init__
+        client_params = {}
+        sig = inspect.signature(httpx.Client.__init__)
+        for param_name in sig.parameters:
+            if param_name != 'self':  # Skip 'self' parameter
+                try:
+                    value = getattr(existing_client, param_name, None)
+                    if value is not None:
+                        client_params[param_name] = value
+                except AttributeError:
+                    continue
+
+        with httpx.Client(**client_params) as sync_client:
             response = sync_client.request(
                 method="POST",
                 url=f"{self._base_url}/api/token/refresh/",
