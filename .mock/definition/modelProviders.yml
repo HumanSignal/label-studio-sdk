@@ -17,6 +17,7 @@ service:
       response:
         docs: ''
         type: list<root.ModelProviderConnection>
+        status-code: 200
       examples:
         - response:
             body:
@@ -52,6 +53,7 @@ service:
       response:
         docs: ''
         type: root.ModelProviderConnection
+        status-code: 201
       examples:
         - request:
             provider: OpenAI
@@ -90,6 +92,7 @@ service:
       response:
         docs: ''
         type: root.ModelProviderConnection
+        status-code: 200
       examples:
         - path-parameters:
             pk: 1
@@ -149,6 +152,7 @@ service:
       response:
         docs: ''
         type: root.ModelProviderConnection
+        status-code: 200
       examples:
         - path-parameters:
             pk: 1

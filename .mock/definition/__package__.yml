@@ -50,19 +50,23 @@ types:
       openapi: openapi/openapi.yaml
   Annotation:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       result:
         type: optional<list<map<string, unknown>>>
         docs: List of annotation results for the task
       created_username:
         type: optional<string>
         docs: Username string
+        access: read-only
       created_ago:
         type: optional<string>
         docs: Time delta from creation time
         default: ''
         validation:
           minLength: 1
+        access: read-only
       completed_by: optional<AnnotationCompletedBy>
       unique_id:
         type: optional<string>
@@ -77,9 +81,11 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       updated_at:
         type: optional<datetime>
         docs: Last updated time
+        access: read-only
       draft_created_at:
         type: optional<datetime>
         docs: Draft creation time
@@ -116,7 +122,9 @@ types:
       openapi: openapi/openapi.yaml
   BaseUser:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       first_name:
         type: optional<string>
         validation:
@@ -135,9 +143,15 @@ types:
         validation:
           format: email
           maxLength: 254
-      last_activity: optional<datetime>
-      avatar: optional<string>
-      initials: optional<string>
+      last_activity:
+        type: optional<datetime>
+        access: read-only
+      avatar:
+        type: optional<string>
+        access: read-only
+      initials:
+        type: optional<string>
+        access: read-only
       phone:
         type: optional<string>
         validation:
@@ -151,7 +165,9 @@ types:
       openapi: openapi/openapi.yaml
   Filter:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       index:
         type: optional<integer>
         docs: To keep filter order
@@ -180,7 +196,9 @@ types:
       openapi: openapi/openapi.yaml
   FilterGroup:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       filters: list<Filter>
       conjunction:
         type: string
@@ -192,7 +210,9 @@ types:
       openapi: openapi/openapi.yaml
   View:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       filter_group: optional<FilterGroup>
       data:
         type: optional<map<string, unknown>>
@@ -213,8 +233,12 @@ types:
       openapi: openapi/openapi.yaml
   FileUpload:
     properties:
-      id: optional<integer>
-      file: optional<string>
+      id:
+        type: optional<integer>
+        access: read-only
+      file:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   OrganizationInvite:
@@ -231,8 +255,12 @@ types:
       openapi: openapi/openapi.yaml
   LabelLink:
     properties:
-      id: optional<integer>
-      annotations_count: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
+      annotations_count:
+        type: optional<integer>
+        access: read-only
       from_name:
         type: string
         docs: Tag name
@@ -245,14 +273,20 @@ types:
       openapi: openapi/openapi.yaml
   Label:
     properties:
-      id: optional<integer>
-      links: optional<list<integer>>
+      id:
+        type: optional<integer>
+        access: read-only
+      links:
+        type: optional<list<integer>>
+        access: read-only
       created_at:
         type: optional<datetime>
         docs: Time of label creation
+        access: read-only
       updated_at:
         type: optional<datetime>
         docs: Time of label modification
+        access: read-only
       value:
         type: map<string, unknown>
         docs: Label value
@@ -275,12 +309,16 @@ types:
         type: optional<integer>
         docs: User who approved this label
       organization: integer
-      projects: optional<list<integer>>
+      projects:
+        type: optional<list<integer>>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   LabelCreate:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       created_by: optional<integer>
       organization: optional<integer>
       project: integer
@@ -291,9 +329,11 @@ types:
       created_at:
         type: optional<datetime>
         docs: Time of label creation
+        access: read-only
       updated_at:
         type: optional<datetime>
         docs: Time of label modification
+        access: read-only
       value:
         type: map<string, unknown>
         docs: Label value
@@ -312,7 +352,9 @@ types:
       approved_by:
         type: optional<integer>
         docs: User who approved this label
-      projects: optional<list<integer>>
+      projects:
+        type: optional<list<integer>>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   MlBackendState:
@@ -334,9 +376,13 @@ types:
       openapi: openapi/openapi.yaml
   MlBackend:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       state: optional<MlBackendState>
-      readable_state: optional<string>
+      readable_state:
+        type: optional<string>
+        access: read-only
       is_interactive:
         type: optional<boolean>
         docs: >-
@@ -358,7 +404,9 @@ types:
         type: optional<string>
         docs: HTTP Basic Auth user
       basic_auth_pass: optional<string>
-      basic_auth_pass_is_set: optional<string>
+      basic_auth_pass_is_set:
+        type: optional<string>
+        access: read-only
       description:
         type: optional<string>
         docs: Description for the machine learning backend
@@ -371,8 +419,12 @@ types:
       timeout:
         type: optional<double>
         docs: Response model timeout
-      created_at: optional<datetime>
-      updated_at: optional<datetime>
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      updated_at:
+        type: optional<datetime>
+        access: read-only
       auto_update:
         type: optional<boolean>
         docs: >-
@@ -383,7 +435,9 @@ types:
       openapi: openapi/openapi.yaml
   OrganizationId:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       title:
         type: string
         validation:
@@ -394,12 +448,16 @@ types:
         validation:
           format: email
           maxLength: 254
-      created_at: optional<datetime>
+      created_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   Organization:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       title:
         type: string
         validation:
@@ -409,20 +467,28 @@ types:
         type: optional<string>
         validation:
           maxLength: 256
-      created_at: optional<datetime>
-      updated_at: optional<datetime>
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      updated_at:
+        type: optional<datetime>
+        access: read-only
       contact_info:
         type: optional<string>
         validation:
           format: email
           maxLength: 254
       created_by: optional<integer>
-      users: optional<list<integer>>
+      users:
+        type: optional<list<integer>>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   UserSerializerWithProjects:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       first_name:
         type: optional<string>
         validation:
@@ -441,9 +507,15 @@ types:
         validation:
           format: email
           maxLength: 254
-      last_activity: optional<datetime>
-      avatar: optional<string>
-      initials: optional<string>
+      last_activity:
+        type: optional<datetime>
+        access: read-only
+      avatar:
+        type: optional<string>
+        access: read-only
+      initials:
+        type: optional<string>
+        access: read-only
       phone:
         type: optional<string>
         validation:
@@ -453,13 +525,19 @@ types:
         type: optional<boolean>
         docs: Allow sending newsletters to user
       date_joined: optional<datetime>
-      created_projects: optional<string>
-      contributed_to_projects: optional<string>
+      created_projects:
+        type: optional<string>
+        access: read-only
+      contributed_to_projects:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   OrganizationMemberUser:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       organization:
         type: integer
         docs: Organization ID
@@ -468,7 +546,9 @@ types:
       openapi: openapi/openapi.yaml
   Prediction:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       result:
         docs: List of prediction results for the task
         type: list<map<string, unknown>>
@@ -484,6 +564,7 @@ types:
         default: ''
         validation:
           minLength: 1
+        access: read-only
       score:
         type: optional<double>
         docs: Prediction score
@@ -496,8 +577,12 @@ types:
       mislabeling:
         type: optional<double>
         docs: Related task mislabeling score
-      created_at: optional<datetime>
-      updated_at: optional<datetime>
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      updated_at:
+        type: optional<datetime>
+        access: read-only
       model:
         type: optional<integer>
         docs: An ML Backend instance that created the prediction.
@@ -511,7 +596,9 @@ types:
   UserSimple:
     docs: Project owner
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       first_name:
         type: optional<string>
         validation:
@@ -525,7 +612,9 @@ types:
         validation:
           format: email
           maxLength: 254
-      avatar: optional<string>
+      avatar:
+        type: optional<string>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   ProjectSampling:
@@ -549,7 +638,9 @@ types:
       openapi: openapi/openapi.yaml
   Project:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       title:
         type: optional<string>
         docs: Project name. Must be between 3 and 50 characters long.
@@ -609,7 +700,9 @@ types:
         type: optional<boolean>
         docs: Whether or not the project is in the middle of being created
       created_by: optional<UserSimple>
-      created_at: optional<datetime>
+      created_at:
+        type: optional<datetime>
+        access: read-only
       min_annotations_to_start_training:
         type: optional<integer>
         docs: >-
@@ -618,38 +711,46 @@ types:
       start_training_on_annotation_update:
         type: optional<boolean>
         docs: Start model training after any annotations are submitted or updated
+        access: read-only
       show_collab_predictions:
         type: optional<boolean>
         docs: If set, the annotator can view model predictions
       num_tasks_with_annotations:
         type: optional<integer>
         docs: Tasks with annotations count
+        access: read-only
       task_number:
         type: optional<integer>
         docs: Total task number in project
+        access: read-only
       useful_annotation_number:
         type: optional<integer>
         docs: >-
           Useful annotation number in project not including
           skipped_annotations_number and ground_truth_number. Total annotations
           = annotation_number + skipped_annotations_number + ground_truth_number
+        access: read-only
       ground_truth_number:
         type: optional<integer>
         docs: Honeypot annotation number in project
+        access: read-only
       skipped_annotations_number:
         type: optional<integer>
         docs: Skipped by collaborators annotation number in project
+        access: read-only
       total_annotations_number:
         type: optional<integer>
         docs: >-
           Total annotations number in project including
           skipped_annotations_number and ground_truth_number.
+        access: read-only
       total_predictions_number:
         type: optional<integer>
         docs: >-
           Total predictions number in project including
           skipped_annotations_number, ground_truth_number, and
           useful_annotation_number.
+        access: read-only
       sampling: optional<ProjectSampling>
       show_ground_truth_first: optional<boolean>
       show_overlap_first: optional<boolean>
@@ -678,12 +779,14 @@ types:
       parsed_label_config:
         type: optional<map<string, unknown>>
         docs: JSON-formatted labeling configuration
+        access: read-only
       evaluate_predictions_automatically:
         type: optional<boolean>
         docs: Retrieve and display predictions when loading a task
       config_has_control_tags:
         type: optional<boolean>
         docs: Flag to detect is project ready for labeling
+        access: read-only
       skip_queue: optional<ProjectSkipQueue>
       reveal_preannotations_interactively:
         type: optional<boolean>
@@ -694,8 +797,13 @@ types:
       finished_task_number:
         type: optional<integer>
         docs: Finished tasks
-      queue_total: optional<integer>
-      queue_done: optional<integer>
+        access: read-only
+      queue_total:
+        type: optional<integer>
+        access: read-only
+      queue_done:
+        type: optional<integer>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   ProjectLabelConfig:
@@ -718,7 +826,9 @@ types:
       openapi: openapi/openapi.yaml
   ConvertedFormat:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       status: optional<ConvertedFormatStatus>
       export_type:
         type: string
@@ -745,11 +855,14 @@ types:
         type: optional<string>
         validation:
           maxLength: 2048
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       created_by: optional<UserSimple>
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       finished_at:
         type: optional<datetime>
         docs: Complete or fail time
@@ -774,7 +887,9 @@ types:
       openapi: openapi/openapi.yaml
   ProjectImport:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       preannotated_from_fields: optional<map<string, unknown>>
       commit_to_project: optional<boolean>
       return_task_ids: optional<boolean>
@@ -788,9 +903,11 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       updated_at:
         type: optional<datetime>
         docs: Updated time
+        access: read-only
       finished_at:
         type: optional<datetime>
         docs: Complete or fail time
@@ -818,7 +935,9 @@ types:
       openapi: openapi/openapi.yaml
   ProjectReimport:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       status: optional<ProjectReimportStatus>
       error: optional<string>
       task_count: optional<integer>
@@ -845,10 +964,13 @@ types:
       openapi: openapi/openapi.yaml
   AzureBlobImportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       type:
         type: optional<string>
         default: azure
+        access: read-only
       synchronizable:
         type: optional<boolean>
         default: true
@@ -902,6 +1024,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       presign_ttl:
         type: optional<integer>
         docs: Presigned URLs TTL (in minutes)
@@ -922,10 +1045,13 @@ types:
       openapi: openapi/openapi.yaml
   AzureBlobExportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       type:
         type: optional<string>
         default: azure
+        access: read-only
       synchronizable:
         type: optional<boolean>
         default: true
@@ -976,6 +1102,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled
@@ -996,10 +1123,13 @@ types:
       openapi: openapi/openapi.yaml
   GcsExportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       type:
         type: optional<string>
         default: gcs
+        access: read-only
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1050,6 +1180,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled
@@ -1070,10 +1201,13 @@ types:
       openapi: openapi/openapi.yaml
   LocalFilesExportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       type:
         type: optional<string>
         default: localfiles
+        access: read-only
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1115,6 +1249,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled
@@ -1135,10 +1270,13 @@ types:
       openapi: openapi/openapi.yaml
   RedisExportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       type:
         type: optional<string>
         default: redis
+        access: read-only
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1189,6 +1327,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled
@@ -1212,10 +1351,13 @@ types:
       openapi: openapi/openapi.yaml
   S3ExportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       type:
         type: optional<string>
         default: s3
+        access: read-only
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1248,6 +1390,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled
@@ -1298,10 +1441,13 @@ types:
       openapi: openapi/openapi.yaml
   GcsImportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       type:
         type: optional<string>
         default: gcs
+        access: read-only
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1355,6 +1501,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       presign_ttl:
         type: optional<integer>
         docs: Presigned URLs TTL (in minutes)
@@ -1375,10 +1522,13 @@ types:
       openapi: openapi/openapi.yaml
   LocalFilesImportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       type:
         type: optional<string>
         default: localfiles
+        access: read-only
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1420,6 +1570,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       project:
         type: integer
         docs: A unique integer value identifying this project.
@@ -1437,10 +1588,13 @@ types:
       openapi: openapi/openapi.yaml
   RedisImportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       type:
         type: optional<string>
         default: redis
+        access: read-only
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1491,6 +1645,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       db:
         type: optional<integer>
         docs: Server Database
@@ -1511,10 +1666,13 @@ types:
       openapi: openapi/openapi.yaml
   S3ImportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       type:
         type: optional<string>
         default: s3
+        access: read-only
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1550,6 +1708,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       bucket:
         type: optional<string>
         docs: S3 bucket name
@@ -1615,7 +1774,9 @@ types:
     inline: true
   BaseTask:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       data:
         type: map<string, unknown>
         docs: >-
@@ -1631,9 +1792,11 @@ types:
       created_at:
         type: optional<datetime>
         docs: Time a task was created
+        access: read-only
       updated_at:
         type: optional<datetime>
         docs: Last time a task was updated
+        access: read-only
       is_labeled:
         type: optional<boolean>
         docs: >-
@@ -1697,19 +1860,23 @@ types:
       openapi: openapi/openapi.yaml
   AnnotationsDmField:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       result:
         type: optional<list<map<string, unknown>>>
         docs: List of annotation results for the task
       created_username:
         type: optional<string>
         docs: Username string
+        access: read-only
       created_ago:
         type: optional<string>
         docs: Time delta from creation time
         default: ''
         validation:
           minLength: 1
+        access: read-only
       completed_by:
         type: optional<map<string, unknown>>
         docs: User details who completed this annotation.
@@ -1726,9 +1893,11 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       updated_at:
         type: optional<datetime>
         docs: Last updated time
+        access: read-only
       draft_created_at:
         type: optional<datetime>
         docs: Draft creation time
@@ -1807,34 +1976,54 @@ types:
     inline: true
   DataManagerTaskSerializer:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       predictions:
         type: optional<list<DataManagerTaskSerializerPredictionsItem>>
         docs: Predictions for this task
-      annotations: optional<list<AnnotationsDmField>>
+        access: read-only
+      annotations:
+        type: optional<list<AnnotationsDmField>>
+        access: read-only
       drafts:
         type: optional<list<DataManagerTaskSerializerDraftsItem>>
         docs: Drafts for this task
+        access: read-only
       annotators:
         type: optional<list<DataManagerTaskSerializerAnnotatorsItem>>
         docs: Annotators who annotated this task
+        access: read-only
       inner_id: optional<integer>
       cancelled_annotations: optional<integer>
       total_annotations: optional<integer>
       total_predictions: optional<integer>
       completed_at: optional<datetime>
-      annotations_results: optional<string>
-      predictions_results: optional<string>
+      annotations_results:
+        type: optional<string>
+        access: read-only
+      predictions_results:
+        type: optional<string>
+        access: read-only
       predictions_score: optional<double>
-      file_upload: optional<string>
-      storage_filename: optional<string>
-      annotations_ids: optional<string>
-      predictions_model_versions: optional<string>
+      file_upload:
+        type: optional<string>
+        access: read-only
+      storage_filename:
+        type: optional<string>
+        access: read-only
+      annotations_ids:
+        type: optional<string>
+        access: read-only
+      predictions_model_versions:
+        type: optional<string>
+        access: read-only
       avg_lead_time: optional<double>
       draft_exists: optional<boolean>
       updated_by:
         type: optional<list<map<string, unknown>>>
         docs: User IDs who updated this task
+        access: read-only
       data:
         type: map<string, unknown>
         docs: >-
@@ -1850,9 +2039,11 @@ types:
       created_at:
         type: optional<datetime>
         docs: Time a task was created
+        access: read-only
       updated_at:
         type: optional<datetime>
         docs: Last time a task was updated
+        access: read-only
       is_labeled:
         type: optional<boolean>
         docs: >-
@@ -1897,8 +2088,12 @@ types:
       openapi: openapi/openapi.yaml
   Webhook:
     properties:
-      id: optional<integer>
-      organization: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
+      organization:
+        type: optional<integer>
+        access: read-only
       project: optional<integer>
       url:
         type: string
@@ -1923,9 +2118,11 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       updated_at:
         type: optional<datetime>
         docs: Last update time
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   WebhookSerializerForUpdateActionsItem:
@@ -1947,9 +2144,15 @@ types:
       openapi: openapi/openapi.yaml
   WebhookSerializerForUpdate:
     properties:
-      id: optional<integer>
-      organization: optional<integer>
-      project: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
+      organization:
+        type: optional<integer>
+        access: read-only
+      project:
+        type: optional<integer>
+        access: read-only
       url:
         type: string
         docs: URL of webhook
@@ -1973,9 +2176,11 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       updated_at:
         type: optional<datetime>
         docs: Last update time
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   TaskAnnotatorsItem:
@@ -2081,6 +2286,7 @@ types:
       id:
         type: optional<integer>
         docs: Unique ID of the workspace
+        access: read-only
       title:
         type: optional<string>
         docs: Workspace title
@@ -2099,12 +2305,15 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time of the workspace
+        access: read-only
       updated_at:
         type: optional<datetime>
         docs: Last updated time of the workspace
+        access: read-only
       created_by:
         type: optional<integer>
         docs: User ID of the workspace creator
+        access: read-only
       color:
         type: optional<string>
         docs: Workspace color
@@ -2122,7 +2331,9 @@ types:
       openapi: openapi/openapi.yaml
   S3SImportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       synchronizable:
         type: optional<boolean>
         default: true
@@ -2158,6 +2369,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       bucket:
         type: optional<string>
         docs: S3 bucket name
@@ -2195,7 +2407,9 @@ types:
       openapi: openapi/openapi.yaml
   S3SExportStorage:
     properties:
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       title:
         type: optional<string>
         docs: Cloud storage title
@@ -2207,6 +2421,7 @@ types:
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       bucket:
         type: optional<string>
         docs: S3 bucket name
@@ -2238,9 +2453,15 @@ types:
       organization:
         type: integer
         docs: Organization ID
-      contributed_projects_count: optional<string>
-      annotations_count: optional<string>
-      created_at: optional<datetime>
+      contributed_projects_count:
+        type: optional<string>
+        access: read-only
+      annotations_count:
+        type: optional<string>
+        access: read-only
+      created_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   PausePausedBy:
@@ -2260,6 +2481,7 @@ types:
       paused_by:
         type: optional<PausePausedBy>
         docs: User who created the pause
+        access: read-only
       reason: string
       verbose_reason: optional<string>
       deleted_by: optional<integer>
@@ -2346,12 +2568,15 @@ types:
       created_by:
         type: optional<PromptCreatedBy>
         docs: User ID of the creator of the prompt
+        access: read-only
       created_at:
         type: optional<datetime>
         docs: Date and time the prompt was created
+        access: read-only
       updated_at:
         type: optional<datetime>
         docs: Date and time the prompt was last updated
+        access: read-only
       organization:
         type: optional<PromptOrganization>
         docs: Organization ID of the prompt
@@ -2409,8 +2634,12 @@ types:
       provider: optional<PromptVersionProvider>
       provider_model_id: optional<string>
       created_by: optional<PromptVersionCreatedBy>
-      created_at: optional<datetime>
-      updated_at: optional<datetime>
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      updated_at:
+        type: optional<datetime>
+        access: read-only
       organization: optional<PromptVersionOrganization>
     source:
       openapi: openapi/openapi.yaml
@@ -2461,10 +2690,12 @@ types:
       refinement_job_id:
         type: optional<string>
         docs: Unique identifier for the refinement job
+        access: read-only
       refinement_status:
         type: optional<RefinedPromptResponseRefinementStatus>
         docs: Status of the refinement job
         default: Pending
+        access: read-only
       total_cost:
         type: optional<string>
         docs: Total cost of the refinement job (in USD)
@@ -2517,10 +2748,18 @@ types:
         type: InferenceRunProjectSubset
       status: optional<InferenceRunStatus>
       job_id: optional<string>
-      created_at: optional<datetime>
-      triggered_at: optional<datetime>
-      predictions_updated_at: optional<datetime>
-      completed_at: optional<datetime>
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      triggered_at:
+        type: optional<datetime>
+        access: read-only
+      predictions_updated_at:
+        type: optional<datetime>
+        access: read-only
+      completed_at:
+        type: optional<datetime>
+        access: read-only
     source:
       openapi: openapi/openapi.yaml
   KeyIndicatorsItemAdditionalKpisItem:
@@ -2635,15 +2874,22 @@ types:
       endpoint: optional<string>
       scope: optional<ModelProviderConnectionScope>
       organization: optional<ModelProviderConnectionOrganization>
-      created_by: optional<ModelProviderConnectionCreatedBy>
-      created_at: optional<datetime>
-      updated_at: optional<datetime>
+      created_by:
+        type: optional<ModelProviderConnectionCreatedBy>
+        access: read-only
+      created_at:
+        type: optional<datetime>
+        access: read-only
+      updated_at:
+        type: optional<datetime>
+        access: read-only
       is_internal:
         type: optional<boolean>
         docs: >-
           Whether the model provider connection is internal, not visible to the
           user.
         default: false
+        access: read-only
       budget_limit:
         type: optional<double>
         docs: Budget limit for the model provider connection (null if unlimited)
@@ -2790,11 +3036,14 @@ types:
         type: optional<string>
         validation:
           maxLength: 2048
-      id: optional<integer>
+      id:
+        type: optional<integer>
+        access: read-only
       created_by: optional<UserSimple>
       created_at:
         type: optional<datetime>
         docs: Creation time
+        access: read-only
       finished_at:
         type: optional<datetime>
         docs: Complete or fail time

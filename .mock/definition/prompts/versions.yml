@@ -20,6 +20,7 @@ service:
       response:
         docs: ''
         type: list<root.PromptVersion>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -56,6 +57,7 @@ service:
       response:
         docs: ''
         type: root.PromptVersion
+        status-code: 201
       examples:
         - path-parameters:
             id: 1
@@ -93,6 +95,7 @@ service:
       response:
         docs: ''
         type: root.PromptVersion
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -155,6 +158,7 @@ service:
       response:
         docs: ''
         type: root.PromptVersion
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -207,6 +211,7 @@ service:
       response:
         docs: ''
         type: root.InferenceRunCostEstimate
+        status-code: 200
       examples:
         - path-parameters:
             prompt_id: 1
@@ -251,6 +256,7 @@ service:
       response:
         docs: ''
         type: root.RefinedPromptResponse
+        status-code: 200
       examples:
         - path-parameters:
             prompt_id: 1
@@ -316,6 +322,7 @@ service:
       response:
         docs: ''
         type: root.RefinedPromptResponse
+        status-code: 201
       examples:
         - path-parameters:
             prompt_id: 1
