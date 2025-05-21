@@ -24,7 +24,10 @@ class MlClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[MlBackend]:
         """
 
@@ -574,7 +577,10 @@ class AsyncMlClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[MlBackend]:
         """
 

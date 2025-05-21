@@ -146,12 +146,16 @@ class VersionsClient:
                 "provider": provider,
                 "provider_model_id": provider_model_id,
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptVersionCreatedBy, direction="write"
+                    object_=created_by,
+                    annotation=PromptVersionCreatedBy,
+                    direction="write",
                 ),
                 "created_at": created_at,
                 "updated_at": updated_at,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptVersionOrganization, direction="write"
+                    object_=organization,
+                    annotation=PromptVersionOrganization,
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -172,7 +176,11 @@ class VersionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        version_id: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PromptVersion:
         """
         Get a prompt version by ID.
@@ -224,7 +232,13 @@ class VersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(
+        self,
+        id: int,
+        version_id: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Delete a prompt version by ID.
 
@@ -347,12 +361,16 @@ class VersionsClient:
                 "provider": provider,
                 "provider_model_id": provider_model_id,
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptVersionCreatedBy, direction="write"
+                    object_=created_by,
+                    annotation=PromptVersionCreatedBy,
+                    direction="write",
                 ),
                 "created_at": created_at,
                 "updated_at": updated_at,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptVersionOrganization, direction="write"
+                    object_=organization,
+                    annotation=PromptVersionOrganization,
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -737,12 +755,16 @@ class AsyncVersionsClient:
                 "provider": provider,
                 "provider_model_id": provider_model_id,
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptVersionCreatedBy, direction="write"
+                    object_=created_by,
+                    annotation=PromptVersionCreatedBy,
+                    direction="write",
                 ),
                 "created_at": created_at,
                 "updated_at": updated_at,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptVersionOrganization, direction="write"
+                    object_=organization,
+                    annotation=PromptVersionOrganization,
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -763,7 +785,11 @@ class AsyncVersionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        version_id: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> PromptVersion:
         """
         Get a prompt version by ID.
@@ -824,7 +850,11 @@ class AsyncVersionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        version_id: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Delete a prompt version by ID.
@@ -964,12 +994,16 @@ class AsyncVersionsClient:
                 "provider": provider,
                 "provider_model_id": provider_model_id,
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptVersionCreatedBy, direction="write"
+                    object_=created_by,
+                    annotation=PromptVersionCreatedBy,
+                    direction="write",
                 ),
                 "created_at": created_at,
                 "updated_at": updated_at,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptVersionOrganization, direction="write"
+                    object_=organization,
+                    annotation=PromptVersionOrganization,
+                    direction="write",
                 ),
             },
             request_options=request_options,

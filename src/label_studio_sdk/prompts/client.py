@@ -16,12 +16,16 @@ from ..types.prompt_organization import PromptOrganization
 from ..types.prompt_associated_projects_item import PromptAssociatedProjectsItem
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.prompts_batch_predictions_request_results_item import PromptsBatchPredictionsRequestResultsItem
+from .types.prompts_batch_predictions_request_results_item import (
+    PromptsBatchPredictionsRequestResultsItem,
+)
 from .types.prompts_batch_predictions_response import PromptsBatchPredictionsResponse
 from .types.prompts_batch_failed_predictions_request_failed_predictions_item import (
     PromptsBatchFailedPredictionsRequestFailedPredictionsItem,
 )
-from .types.prompts_batch_failed_predictions_response import PromptsBatchFailedPredictionsResponse
+from .types.prompts_batch_failed_predictions_response import (
+    PromptsBatchFailedPredictionsResponse,
+)
 from ..core.client_wrapper import AsyncClientWrapper
 from .versions.client import AsyncVersionsClient
 from .runs.client import AsyncRunsClient
@@ -163,7 +167,9 @@ class PromptsClient:
                 "created_at": created_at,
                 "updated_at": updated_at,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptOrganization, direction="write"
+                    object_=organization,
+                    annotation=PromptOrganization,
+                    direction="write",
                 ),
                 "input_fields": input_fields,
                 "output_classes": output_classes,
@@ -366,7 +372,9 @@ class PromptsClient:
                 "created_at": created_at,
                 "updated_at": updated_at,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptOrganization, direction="write"
+                    object_=organization,
+                    annotation=PromptOrganization,
+                    direction="write",
                 ),
                 "input_fields": input_fields,
                 "output_classes": output_classes,
@@ -675,7 +683,9 @@ class AsyncPromptsClient:
                 "created_at": created_at,
                 "updated_at": updated_at,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptOrganization, direction="write"
+                    object_=organization,
+                    annotation=PromptOrganization,
+                    direction="write",
                 ),
                 "input_fields": input_fields,
                 "output_classes": output_classes,
@@ -902,7 +912,9 @@ class AsyncPromptsClient:
                 "created_at": created_at,
                 "updated_at": updated_at,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptOrganization, direction="write"
+                    object_=organization,
+                    annotation=PromptOrganization,
+                    direction="write",
                 ),
                 "input_fields": input_fields,
                 "output_classes": output_classes,

@@ -8,8 +8,12 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.annotations_create_bulk_request_selected_items import AnnotationsCreateBulkRequestSelectedItems
-from .types.annotations_create_bulk_response_item import AnnotationsCreateBulkResponseItem
+from .types.annotations_create_bulk_request_selected_items import (
+    AnnotationsCreateBulkRequestSelectedItems,
+)
+from .types.annotations_create_bulk_response_item import (
+    AnnotationsCreateBulkResponseItem,
+)
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -473,7 +477,9 @@ class AnnotationsClient:
             json={
                 "tasks": tasks,
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=AnnotationsCreateBulkRequestSelectedItems, direction="write"
+                    object_=selected_items,
+                    annotation=AnnotationsCreateBulkRequestSelectedItems,
+                    direction="write",
                 ),
                 "lead_time": lead_time,
                 "project": project,
@@ -1006,7 +1012,9 @@ class AsyncAnnotationsClient:
             json={
                 "tasks": tasks,
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=AnnotationsCreateBulkRequestSelectedItems, direction="write"
+                    object_=selected_items,
+                    annotation=AnnotationsCreateBulkRequestSelectedItems,
+                    direction="write",
                 ),
                 "lead_time": lead_time,
                 "project": project,

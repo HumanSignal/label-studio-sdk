@@ -150,12 +150,18 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "skill_name": None,
     }
     response = client.prompts.update(
-        id=1, title="title", input_fields=["input_fields"], output_classes=["output_classes"]
+        id=1,
+        title="title",
+        input_fields=["input_fields"],
+        output_classes=["output_classes"],
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.prompts.update(
-        id=1, title="title", input_fields=["input_fields"], output_classes=["output_classes"]
+        id=1,
+        title="title",
+        input_fields=["input_fields"],
+        output_classes=["output_classes"],
     )
     validate_response(async_response, expected_response, expected_types)
 

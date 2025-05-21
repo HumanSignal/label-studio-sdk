@@ -9,10 +9,16 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.model_provider_connection_provider import ModelProviderConnectionProvider
 from ..types.model_provider_connection_scope import ModelProviderConnectionScope
-from ..types.model_provider_connection_organization import ModelProviderConnectionOrganization
-from ..types.model_provider_connection_created_by import ModelProviderConnectionCreatedBy
+from ..types.model_provider_connection_organization import (
+    ModelProviderConnectionOrganization,
+)
+from ..types.model_provider_connection_created_by import (
+    ModelProviderConnectionCreatedBy,
+)
 import datetime as dt
-from ..types.model_provider_connection_budget_reset_period import ModelProviderConnectionBudgetResetPeriod
+from ..types.model_provider_connection_budget_reset_period import (
+    ModelProviderConnectionBudgetResetPeriod,
+)
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
@@ -157,10 +163,14 @@ class ModelProvidersClient:
                 "endpoint": endpoint,
                 "scope": scope,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=ModelProviderConnectionOrganization, direction="write"
+                    object_=organization,
+                    annotation=ModelProviderConnectionOrganization,
+                    direction="write",
                 ),
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=ModelProviderConnectionCreatedBy, direction="write"
+                    object_=created_by,
+                    annotation=ModelProviderConnectionCreatedBy,
+                    direction="write",
                 ),
                 "created_at": created_at,
                 "updated_at": updated_at,
@@ -370,10 +380,14 @@ class ModelProvidersClient:
                 "endpoint": endpoint,
                 "scope": scope,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=ModelProviderConnectionOrganization, direction="write"
+                    object_=organization,
+                    annotation=ModelProviderConnectionOrganization,
+                    direction="write",
                 ),
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=ModelProviderConnectionCreatedBy, direction="write"
+                    object_=created_by,
+                    annotation=ModelProviderConnectionCreatedBy,
+                    direction="write",
                 ),
                 "created_at": created_at,
                 "updated_at": updated_at,
@@ -556,10 +570,14 @@ class AsyncModelProvidersClient:
                 "endpoint": endpoint,
                 "scope": scope,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=ModelProviderConnectionOrganization, direction="write"
+                    object_=organization,
+                    annotation=ModelProviderConnectionOrganization,
+                    direction="write",
                 ),
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=ModelProviderConnectionCreatedBy, direction="write"
+                    object_=created_by,
+                    annotation=ModelProviderConnectionCreatedBy,
+                    direction="write",
                 ),
                 "created_at": created_at,
                 "updated_at": updated_at,
@@ -793,10 +811,14 @@ class AsyncModelProvidersClient:
                 "endpoint": endpoint,
                 "scope": scope,
                 "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=ModelProviderConnectionOrganization, direction="write"
+                    object_=organization,
+                    annotation=ModelProviderConnectionOrganization,
+                    direction="write",
                 ),
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=ModelProviderConnectionCreatedBy, direction="write"
+                    object_=created_by,
+                    annotation=ModelProviderConnectionCreatedBy,
+                    direction="write",
                 ),
                 "created_at": created_at,
                 "updated_at": updated_at,

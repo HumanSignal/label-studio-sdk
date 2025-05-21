@@ -16,21 +16,24 @@ class VersionsGetResponse(UniversalBaseModel):
     """
 
     label_studio_os_package: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="label-studio-os-package")
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]],
+        FieldMetadata(alias="label-studio-os-package"),
     ] = pydantic.Field(default=None)
     """
     Information about the Label Studio open source package
     """
 
     label_studio_os_backend: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="label-studio-os-backend")
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]],
+        FieldMetadata(alias="label-studio-os-backend"),
     ] = pydantic.Field(default=None)
     """
     Information about the Label Studio backend
     """
 
     label_studio_frontend: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="label-studio-frontend")
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]],
+        FieldMetadata(alias="label-studio-frontend"),
     ] = pydantic.Field(default=None)
     """
     Information about the Label Studio frontend
@@ -42,7 +45,8 @@ class VersionsGetResponse(UniversalBaseModel):
     """
 
     label_studio_converter: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]], FieldMetadata(alias="label-studio-converter")
+        typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]],
+        FieldMetadata(alias="label-studio-converter"),
     ] = pydantic.Field(default=None)
     """
     Information about the Label Studio converter component

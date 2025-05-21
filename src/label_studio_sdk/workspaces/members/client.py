@@ -70,7 +70,11 @@ class MembersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create(
-        self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        user: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> MembersCreateResponse:
         """
 
@@ -130,7 +134,11 @@ class MembersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        user: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
 
@@ -246,7 +254,11 @@ class AsyncMembersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create(
-        self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        user: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> MembersCreateResponse:
         """
 
@@ -314,7 +326,11 @@ class AsyncMembersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, id: int, *, user: typing.Optional[int] = OMIT, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        user: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
 

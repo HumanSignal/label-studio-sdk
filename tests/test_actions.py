@@ -30,7 +30,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                 conjunction="or",
                 items=[
                     ActionsCreateRequestFiltersItemsItem(
-                        filter="filter:tasks:id", operator="greater", type="Number", value=123
+                        filter="filter:tasks:id",
+                        operator="greater",
+                        type="Number",
+                        value=123,
                     )
                 ],
             ),
@@ -48,7 +51,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                 conjunction="or",
                 items=[
                     ActionsCreateRequestFiltersItemsItem(
-                        filter="filter:tasks:id", operator="greater", type="Number", value=123
+                        filter="filter:tasks:id",
+                        operator="greater",
+                        type="Number",
+                        value=123,
                     )
                 ],
             ),

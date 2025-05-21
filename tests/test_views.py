@@ -29,7 +29,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "id": "integer",
                 "filter_group": {
                     "id": "integer",
-                    "filters": ("list", {0: {"column": None, "type": None, "operator": None}}),
+                    "filters": (
+                        "list",
+                        {0: {"column": None, "type": None, "operator": None}},
+                    ),
                     "conjunction": None,
                 },
                 "data": ("dict", {0: (None, None)}),

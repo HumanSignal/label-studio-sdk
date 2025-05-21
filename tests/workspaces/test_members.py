@@ -8,7 +8,10 @@ from ..utilities import validate_response
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [{"user": {"key": "value"}}]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: {"user": ("dict", {0: (None, None)})}})
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {0: {"user": ("dict", {0: (None, None)})}},
+    )
     response = client.workspaces.members.list(id=1)
     validate_response(response, expected_response, expected_types)
 

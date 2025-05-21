@@ -456,7 +456,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_create_bulk(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [{"id": 1}]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: {"id": "integer"}})
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {0: {"id": "integer"}},
+    )
     response = client.annotations.create_bulk()
     validate_response(response, expected_response, expected_types)
 

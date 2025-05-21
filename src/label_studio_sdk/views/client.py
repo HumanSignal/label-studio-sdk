@@ -22,7 +22,10 @@ class ViewsClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[View]:
         """
 
@@ -355,7 +358,10 @@ class AsyncViewsClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[View]:
         """
 

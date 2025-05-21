@@ -63,7 +63,13 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             0: {
                 "title": None,
                 "id": "integer",
-                "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+                "created_by": {
+                    "id": "integer",
+                    "first_name": None,
+                    "last_name": None,
+                    "email": None,
+                    "avatar": None,
+                },
                 "created_at": "datetime",
                 "finished_at": "datetime",
                 "status": None,
@@ -96,7 +102,14 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "status": "created",
         "md5": "md5",
         "counters": {"key": "value"},
-        "converted_formats": [{"id": 1, "status": "created", "export_type": "export_type", "traceback": "traceback"}],
+        "converted_formats": [
+            {
+                "id": 1,
+                "status": "created",
+                "export_type": "export_type",
+                "traceback": "traceback",
+            }
+        ],
         "task_filter_options": {
             "view": 1,
             "skipped": "skipped",
@@ -104,7 +117,11 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "annotated": "annotated",
             "only_with_annotations": True,
         },
-        "annotation_filter_options": {"usual": True, "ground_truth": True, "skipped": True},
+        "annotation_filter_options": {
+            "usual": True,
+            "ground_truth": True,
+            "skipped": True,
+        },
         "serialization_options": {
             "drafts": {"only_id": True},
             "predictions": {"only_id": True},
@@ -116,13 +133,29 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     expected_types: typing.Any = {
         "title": None,
         "id": "integer",
-        "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "created_by": {
+            "id": "integer",
+            "first_name": None,
+            "last_name": None,
+            "email": None,
+            "avatar": None,
+        },
         "created_at": "datetime",
         "finished_at": "datetime",
         "status": None,
         "md5": None,
         "counters": ("dict", {0: (None, None)}),
-        "converted_formats": ("list", {0: {"id": "integer", "status": None, "export_type": None, "traceback": None}}),
+        "converted_formats": (
+            "list",
+            {
+                0: {
+                    "id": "integer",
+                    "status": None,
+                    "export_type": None,
+                    "traceback": None,
+                }
+            },
+        ),
         "task_filter_options": {
             "view": "integer",
             "skipped": None,
@@ -130,7 +163,11 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "annotated": None,
             "only_with_annotations": None,
         },
-        "annotation_filter_options": {"usual": None, "ground_truth": None, "skipped": None},
+        "annotation_filter_options": {
+            "usual": None,
+            "ground_truth": None,
+            "skipped": None,
+        },
         "serialization_options": {
             "drafts": {"only_id": None},
             "predictions": {"only_id": None},
@@ -162,18 +199,41 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "status": "created",
         "md5": "md5",
         "counters": {"key": "value"},
-        "converted_formats": [{"id": 1, "status": "created", "export_type": "export_type", "traceback": "traceback"}],
+        "converted_formats": [
+            {
+                "id": 1,
+                "status": "created",
+                "export_type": "export_type",
+                "traceback": "traceback",
+            }
+        ],
     }
     expected_types: typing.Any = {
         "title": None,
         "id": "integer",
-        "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "created_by": {
+            "id": "integer",
+            "first_name": None,
+            "last_name": None,
+            "email": None,
+            "avatar": None,
+        },
         "created_at": "datetime",
         "finished_at": "datetime",
         "status": None,
         "md5": None,
         "counters": ("dict", {0: (None, None)}),
-        "converted_formats": ("list", {0: {"id": "integer", "status": None, "export_type": None, "traceback": None}}),
+        "converted_formats": (
+            "list",
+            {
+                0: {
+                    "id": "integer",
+                    "status": None,
+                    "export_type": None,
+                    "traceback": None,
+                }
+            },
+        ),
     }
     response = client.projects.exports.get(project_id=1, export_pk="export_pk")
     validate_response(response, expected_response, expected_types)

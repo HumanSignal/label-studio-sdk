@@ -41,7 +41,10 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [{"id": 1, "file": "file"}]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: {"id": "integer", "file": None}})
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {0: {"id": "integer", "file": None}},
+    )
     response = client.files.list(id=1)
     validate_response(response, expected_response, expected_types)
 

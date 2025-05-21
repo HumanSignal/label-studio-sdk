@@ -11,7 +11,9 @@ from ..types.webhook_actions_item import WebhookActionsItem
 import datetime as dt
 from ..core.jsonable_encoder import jsonable_encoder
 from .types.webhooks_update_request_actions_item import WebhooksUpdateRequestActionsItem
-from ..types.webhook_serializer_for_update_actions_item import WebhookSerializerForUpdateActionsItem
+from ..types.webhook_serializer_for_update_actions_item import (
+    WebhookSerializerForUpdateActionsItem,
+)
 from ..types.webhook_serializer_for_update import WebhookSerializerForUpdate
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -24,7 +26,10 @@ class WebhooksClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Webhook]:
         """
 
@@ -337,7 +342,10 @@ class WebhooksClient:
         headers: typing.Optional[str] = None,
         is_active: typing.Optional[bool] = None,
         actions: typing.Optional[
-            typing.Union[WebhooksUpdateRequestActionsItem, typing.Sequence[WebhooksUpdateRequestActionsItem]]
+            typing.Union[
+                WebhooksUpdateRequestActionsItem,
+                typing.Sequence[WebhooksUpdateRequestActionsItem],
+            ]
         ] = None,
         id: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
@@ -478,7 +486,10 @@ class AsyncWebhooksClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Webhook]:
         """
 
@@ -831,7 +842,10 @@ class AsyncWebhooksClient:
         headers: typing.Optional[str] = None,
         is_active: typing.Optional[bool] = None,
         actions: typing.Optional[
-            typing.Union[WebhooksUpdateRequestActionsItem, typing.Sequence[WebhooksUpdateRequestActionsItem]]
+            typing.Union[
+                WebhooksUpdateRequestActionsItem,
+                typing.Sequence[WebhooksUpdateRequestActionsItem],
+            ]
         ] = None,
         id: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,

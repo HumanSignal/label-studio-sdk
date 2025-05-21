@@ -26,7 +26,11 @@ class TasksClient:
         self._client_wrapper = client_wrapper
 
     def create_many_status(
-        self, id: int, import_pk: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        import_pk: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectImport:
         """
 
@@ -494,7 +498,11 @@ class AsyncTasksClient:
         self._client_wrapper = client_wrapper
 
     async def create_many_status(
-        self, id: int, import_pk: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        import_pk: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectImport:
         """
 

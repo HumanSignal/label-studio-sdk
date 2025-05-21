@@ -224,6 +224,7 @@ service:
       response:
         docs: ''
         type: ProjectsListResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -378,6 +379,7 @@ service:
       response:
         docs: ''
         type: ProjectsCreateResponse
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -438,6 +440,7 @@ service:
       response:
         docs: Project information
         type: root.Project
+        status-code: 200
       examples:
         - name: response
           path-parameters:
@@ -645,6 +648,7 @@ service:
       response:
         docs: ''
         type: ProjectsUpdateResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -811,6 +815,7 @@ service:
       response:
         docs: Tasks successfully imported
         type: ProjectsImportTasksResponse
+        status-code: 201
       errors:
         - root.BadRequestError
       examples:
@@ -849,6 +854,7 @@ service:
       response:
         docs: ''
         type: root.ProjectReimport
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -940,6 +946,7 @@ service:
       response:
         docs: ''
         type: root.ProjectLabelConfig
+        status-code: 201
       examples:
         - path-parameters:
             id: 1

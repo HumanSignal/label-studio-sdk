@@ -19,7 +19,10 @@ class S3SClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[S3SExportStorage]:
         """
 
@@ -478,7 +481,10 @@ class AsyncS3SClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[S3SExportStorage]:
         """
 

@@ -3,7 +3,9 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
-from .refined_prompt_response_refinement_status import RefinedPromptResponseRefinementStatus
+from .refined_prompt_response_refinement_status import (
+    RefinedPromptResponseRefinementStatus,
+)
 from .prompt_version import PromptVersion
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 

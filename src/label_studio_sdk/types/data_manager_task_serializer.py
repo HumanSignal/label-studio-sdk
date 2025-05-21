@@ -2,11 +2,17 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .data_manager_task_serializer_predictions_item import DataManagerTaskSerializerPredictionsItem
+from .data_manager_task_serializer_predictions_item import (
+    DataManagerTaskSerializerPredictionsItem,
+)
 import pydantic
 from .annotations_dm_field import AnnotationsDmField
-from .data_manager_task_serializer_drafts_item import DataManagerTaskSerializerDraftsItem
-from .data_manager_task_serializer_annotators_item import DataManagerTaskSerializerAnnotatorsItem
+from .data_manager_task_serializer_drafts_item import (
+    DataManagerTaskSerializerDraftsItem,
+)
+from .data_manager_task_serializer_annotators_item import (
+    DataManagerTaskSerializerAnnotatorsItem,
+)
 import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 

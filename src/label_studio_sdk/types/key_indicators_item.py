@@ -3,7 +3,9 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import pydantic
 import typing
-from .key_indicators_item_additional_kpis_item import KeyIndicatorsItemAdditionalKpisItem
+from .key_indicators_item_additional_kpis_item import (
+    KeyIndicatorsItemAdditionalKpisItem,
+)
 from .key_indicators_item_extra_kpis_item import KeyIndicatorsItemExtraKpisItem
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 

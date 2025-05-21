@@ -163,7 +163,12 @@ class ExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def list(self, project_id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Export]:
+    def list(
+        self,
+        project_id: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[Export]:
         """
 
         Returns a list of export file (snapshots) for a specific project by ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
@@ -304,16 +309,24 @@ class ExportsClient:
                 "md5": md5,
                 "counters": counters,
                 "converted_formats": convert_and_respect_annotation_metadata(
-                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormat], direction="write"
+                    object_=converted_formats,
+                    annotation=typing.Sequence[ConvertedFormat],
+                    direction="write",
                 ),
                 "task_filter_options": convert_and_respect_annotation_metadata(
-                    object_=task_filter_options, annotation=TaskFilterOptions, direction="write"
+                    object_=task_filter_options,
+                    annotation=TaskFilterOptions,
+                    direction="write",
                 ),
                 "annotation_filter_options": convert_and_respect_annotation_metadata(
-                    object_=annotation_filter_options, annotation=AnnotationFilterOptions, direction="write"
+                    object_=annotation_filter_options,
+                    annotation=AnnotationFilterOptions,
+                    direction="write",
                 ),
                 "serialization_options": convert_and_respect_annotation_metadata(
-                    object_=serialization_options, annotation=SerializationOptions, direction="write"
+                    object_=serialization_options,
+                    annotation=SerializationOptions,
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -389,7 +402,11 @@ class ExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, project_id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: int,
+        export_pk: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Export:
         """
 
@@ -447,7 +464,11 @@ class ExportsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self, project_id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: int,
+        export_pk: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
 
@@ -721,7 +742,10 @@ class AsyncExportsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list(
-        self, project_id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Export]:
         """
 
@@ -879,16 +903,24 @@ class AsyncExportsClient:
                 "md5": md5,
                 "counters": counters,
                 "converted_formats": convert_and_respect_annotation_metadata(
-                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormat], direction="write"
+                    object_=converted_formats,
+                    annotation=typing.Sequence[ConvertedFormat],
+                    direction="write",
                 ),
                 "task_filter_options": convert_and_respect_annotation_metadata(
-                    object_=task_filter_options, annotation=TaskFilterOptions, direction="write"
+                    object_=task_filter_options,
+                    annotation=TaskFilterOptions,
+                    direction="write",
                 ),
                 "annotation_filter_options": convert_and_respect_annotation_metadata(
-                    object_=annotation_filter_options, annotation=AnnotationFilterOptions, direction="write"
+                    object_=annotation_filter_options,
+                    annotation=AnnotationFilterOptions,
+                    direction="write",
                 ),
                 "serialization_options": convert_and_respect_annotation_metadata(
-                    object_=serialization_options, annotation=SerializationOptions, direction="write"
+                    object_=serialization_options,
+                    annotation=SerializationOptions,
+                    direction="write",
                 ),
             },
             request_options=request_options,
@@ -964,7 +996,11 @@ class AsyncExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, project_id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: int,
+        export_pk: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Export:
         """
 
@@ -1030,7 +1066,11 @@ class AsyncExportsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, project_id: int, export_pk: str, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        project_id: int,
+        export_pk: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
 

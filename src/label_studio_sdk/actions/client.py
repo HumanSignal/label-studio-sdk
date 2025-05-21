@@ -7,7 +7,9 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .types.actions_create_request_id import ActionsCreateRequestId
 from .types.actions_create_request_filters import ActionsCreateRequestFilters
-from .types.actions_create_request_selected_items import ActionsCreateRequestSelectedItems
+from .types.actions_create_request_selected_items import (
+    ActionsCreateRequestSelectedItems,
+)
 from .types.actions_create_request_ordering_item import ActionsCreateRequestOrderingItem
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
@@ -139,10 +141,14 @@ class ActionsClient:
             },
             json={
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=ActionsCreateRequestFilters, direction="write"
+                    object_=filters,
+                    annotation=ActionsCreateRequestFilters,
+                    direction="write",
                 ),
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=ActionsCreateRequestSelectedItems, direction="write"
+                    object_=selected_items,
+                    annotation=ActionsCreateRequestSelectedItems,
+                    direction="write",
                 ),
                 "ordering": ordering,
             },
@@ -300,10 +306,14 @@ class AsyncActionsClient:
             },
             json={
                 "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=ActionsCreateRequestFilters, direction="write"
+                    object_=filters,
+                    annotation=ActionsCreateRequestFilters,
+                    direction="write",
                 ),
                 "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=ActionsCreateRequestSelectedItems, direction="write"
+                    object_=selected_items,
+                    annotation=ActionsCreateRequestSelectedItems,
+                    direction="write",
                 ),
                 "ordering": ordering,
             },

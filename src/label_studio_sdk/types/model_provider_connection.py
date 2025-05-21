@@ -8,7 +8,9 @@ from .model_provider_connection_organization import ModelProviderConnectionOrgan
 from .model_provider_connection_created_by import ModelProviderConnectionCreatedBy
 import datetime as dt
 import pydantic
-from .model_provider_connection_budget_reset_period import ModelProviderConnectionBudgetResetPeriod
+from .model_provider_connection_budget_reset_period import (
+    ModelProviderConnectionBudgetResetPeriod,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 

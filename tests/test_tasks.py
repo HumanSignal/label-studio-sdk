@@ -116,11 +116,15 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "file_upload": None,
         "comment_authors": ("list", {0: "integer"}),
     }
-    response = client.tasks.create(data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1)
+    response = client.tasks.create(
+        data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
+        project=1,
+    )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.tasks.create(
-        data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1
+        data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
+        project=1,
     )
     validate_response(async_response, expected_response, expected_types)
 
@@ -166,22 +170,22 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
             }
         ],
         "drafts": [
-            {"result": [{"key": "value"}], "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"}
+            {
+                "result": [{"key": "value"}],
+                "created_at": "2024-01-15T09:30:00Z",
+                "updated_at": "2024-01-15T09:30:00Z",
+            }
         ],
         "annotators": [1],
         "inner_id": 2,
         "cancelled_annotations": 0,
         "total_annotations": 0,
         "total_predictions": 0,
-        "completed_at": "2024-01-15T09:30:00Z",
         "annotations_results": "",
         "predictions_results": "",
-        "predictions_score": 1.1,
         "file_upload": "6b25fc23-some_3.mp4",
-        "storage_filename": "storage_filename",
         "annotations_ids": "",
         "predictions_model_versions": "",
-        "avg_lead_time": 1.1,
         "draft_exists": False,
         "updated_by": [{"key": "value"}],
         "data": {"image": "/data/upload/1/6b25fc23-some_3.mp4"},
@@ -192,7 +196,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "overlap": 1,
         "comment_count": 0,
         "unresolved_comment_count": 0,
-        "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "project": 1,
         "comment_authors": [1],
     }
@@ -256,15 +259,11 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "cancelled_annotations": "integer",
         "total_annotations": "integer",
         "total_predictions": "integer",
-        "completed_at": "datetime",
         "annotations_results": None,
         "predictions_results": None,
-        "predictions_score": None,
         "file_upload": None,
-        "storage_filename": None,
         "annotations_ids": None,
         "predictions_model_versions": None,
-        "avg_lead_time": None,
         "draft_exists": None,
         "updated_by": ("list", {0: ("dict", {0: (None, None)})}),
         "data": ("dict", {0: (None, None)}),
@@ -275,7 +274,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "overlap": "integer",
         "comment_count": "integer",
         "unresolved_comment_count": "integer",
-        "last_comment_updated_at": "datetime",
         "project": "integer",
         "comment_authors": ("list", {0: "integer"}),
     }
@@ -341,11 +339,15 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "comment_authors": ("list", {0: "integer"}),
     }
     response = client.tasks.update(
-        id="id", data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1
+        id="id",
+        data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
+        project=1,
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.tasks.update(
-        id="id", data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1
+        id="id",
+        data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
+        project=1,
     )
     validate_response(async_response, expected_response, expected_types)

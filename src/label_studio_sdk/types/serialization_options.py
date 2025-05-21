@@ -18,7 +18,8 @@ class SerializationOptions(UniversalBaseModel):
     """
 
     annotations_completed_by: typing_extensions.Annotated[
-        typing.Optional[SerializationOption], FieldMetadata(alias="annotations__completed_by")
+        typing.Optional[SerializationOption],
+        FieldMetadata(alias="annotations__completed_by"),
     ] = None
     interpolate_key_frames: typing.Optional[bool] = pydantic.Field(default=None)
     """

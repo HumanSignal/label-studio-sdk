@@ -22,7 +22,11 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "maximum_annotations": 1,
         "color": "color",
         "control_weights": {
-            "my_bbox": {"type": "RectangleLabels", "labels": {"Car": 1, "Airplaine": 0.5}, "overall": 0.33}
+            "my_bbox": {
+                "type": "RectangleLabels",
+                "labels": {"Car": 1, "Airplaine": 0.5},
+                "overall": 0.33,
+            }
         },
     }
     expected_types: typing.Any = {
@@ -151,7 +155,13 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "is_published": None,
         "model_version": None,
         "is_draft": None,
-        "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "created_by": {
+            "id": "integer",
+            "first_name": None,
+            "last_name": None,
+            "email": None,
+            "avatar": None,
+        },
         "created_at": "datetime",
         "min_annotations_to_start_training": "integer",
         "start_training_on_annotation_update": None,
@@ -217,7 +227,11 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "annotation_limit_percent": 1.1,
         "color": "color",
         "control_weights": {
-            "my_bbox": {"type": "RectangleLabels", "labels": {"Car": 1, "Airplaine": 0.5}, "overall": 0.33}
+            "my_bbox": {
+                "type": "RectangleLabels",
+                "labels": {"Car": 1, "Airplaine": 0.5},
+                "overall": 0.33,
+            }
         },
     }
     expected_types: typing.Any = {

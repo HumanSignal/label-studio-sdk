@@ -33,7 +33,11 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"token": "token", "created_at": "created_at", "expires_at": "expires_at"}
+    expected_response: typing.Any = {
+        "token": "token",
+        "created_at": "created_at",
+        "expires_at": "expires_at",
+    }
     expected_types: typing.Any = {"token": None, "created_at": None, "expires_at": None}
     response = client.tokens.create()
     validate_response(response, expected_response, expected_types)

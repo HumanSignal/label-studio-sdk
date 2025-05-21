@@ -641,7 +641,11 @@ class ProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def validate_config(
-        self, id: int, *, label_config: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        label_config: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectLabelConfig:
         """
 
@@ -1364,7 +1368,11 @@ class AsyncProjectsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def validate_config(
-        self, id: int, *, label_config: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        *,
+        label_config: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectLabelConfig:
         """
 
