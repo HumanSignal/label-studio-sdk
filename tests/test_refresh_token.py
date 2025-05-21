@@ -15,6 +15,7 @@ from label_studio_sdk.core.api_error import ApiError
 from label_studio_sdk.projects.types.projects_list_response import \
     ProjectsListResponse
 from label_studio_sdk.types.access_token_response import AccessTokenResponse
+from label_studio_sdk.tokens.client_ext import TokensClientExt
 
 NOW = int(datetime.datetime.now(timezone.utc).timestamp())
 ONE_HOUR_AGO = NOW - 3600
@@ -311,3 +312,66 @@ def test_no_unnecessary_refresh():
 
     assert refresh_count == 1, "Expected exactly one refresh call"
     assert client._client_wrapper._tokens_client.api_key == mock_response.access
+
+@pytest.mark.asyncio
+async def test_client_params_preserved_during_refresh():
+    # Initialize test parameters
+    test_params = {
+        'auth': httpx.BasicAuth('user', 'pass'),
+        'params': {'test': 'param'},
+        'headers': {'X-Test': 'header'},  # httpx will convert this to lowercase
+        'cookies': {'test': 'cookie'},
+        'timeout': httpx.Timeout(10.0),
+        'follow_redirects': True,
+        'max_redirects': 5,
+        'event_hooks': {'request': [lambda r: r]},
+        'base_url': 'http://test.com',
+        'trust_env': False,
+        'default_encoding': 'latin1',
+        'verify': False,
+        'http1': True,
+        'http2': False,
+        'limits': httpx.Limits(max_connections=50, max_keepalive_connections=10, keepalive_expiry=10.0)
+    }
+
+    # Create AsyncLabelStudio with test parameters
+    ls = AsyncLabelStudio(
+        base_url="http://localhost:8080",
+        api_key="test_key",
+        httpx_client=httpx.AsyncClient(**test_params)
+    )
+
+    # Get the tokens client
+    tokens_client = ls._client_wrapper._tokens_client
+
+    # Get parameters from the new client that would be created during refresh
+    new_params = tokens_client._get_client_params(tokens_client._client_wrapper.httpx_client.httpx_client)
+
+    # Verify all parameters are preserved
+    for key, value in test_params.items():
+        if key == 'limits':
+            # Limits objects need special comparison
+            assert new_params[key].max_connections == value.max_connections
+            assert new_params[key].max_keepalive_connections == value.max_keepalive_connections
+            assert new_params[key].keepalive_expiry == value.keepalive_expiry
+        elif key == 'params':
+            # QueryParams need to be compared as dict
+            assert dict(new_params[key]) == value
+        elif key == 'headers':
+            # Headers need to be compared as dict, but only our custom headers
+            new_headers = dict(new_params[key])
+            # Remove default httpx headers
+            default_headers = {'accept', 'accept-encoding', 'connection', 'user-agent'}
+            for header in default_headers:
+                new_headers.pop(header, None)
+            # Convert test headers to lowercase for comparison
+            test_headers = {k.lower(): v for k, v in value.items()}
+            assert new_headers == test_headers
+        elif key == 'cookies':
+            # Cookies need to be compared as dict
+            assert dict(new_params[key]) == value
+        elif key == 'event_hooks':
+            # Only compare request hooks since httpx adds default response hooks
+            assert new_params[key]['request'] == value['request']
+        else:
+            assert new_params[key] == value, f"Parameter {key} was not preserved correctly"
