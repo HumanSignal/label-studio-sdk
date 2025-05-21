@@ -3,5 +3,6 @@
 import typing
 
 RedisExportStorageStatus = typing.Union[
-    typing.Literal["initialized", "queued", "in_progress", "failed", "completed"], typing.Any
+    typing.Literal["initialized", "queued", "in_progress", "failed", "completed"],
+    typing.Any,
 ]
