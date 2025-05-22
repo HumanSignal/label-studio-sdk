@@ -34,7 +34,6 @@ tests/custom/test_interface
 # TODO: fix webhooks !
 tests/test_webhooks.py
 tests/test_refresh_token.py
-tests/test_brush_to_coco.py
 
 # manual workflows
 .github/workflows/build_pypi.yml
