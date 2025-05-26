@@ -363,6 +363,22 @@ class Converter(object):
                 input_tag_types.add(input_tag["type"])
 
         all_formats = [f.name for f in Format]
+
+        # Check if KeyPointLabels exists without RectangleLabels
+        has_keypoint_labels = "KeyPointLabels" in output_tag_types
+        has_rectangle_labels = "RectangleLabels" in output_tag_types
+
+        # If config has KeyPointLabels but no RectangleLabels, exclude COCO and YOLO formats
+        if has_keypoint_labels and not has_rectangle_labels:
+            if Format.COCO.name in all_formats:
+                all_formats.remove(Format.COCO.name)
+            if Format.COCO_WITH_IMAGES.name in all_formats:
+                all_formats.remove(Format.COCO_WITH_IMAGES.name)
+            if Format.YOLO.name in all_formats:
+                all_formats.remove(Format.YOLO.name)
+            if Format.YOLO_WITH_IMAGES.name in all_formats:
+                all_formats.remove(Format.YOLO_WITH_IMAGES.name)
+
         if not ("Text" in input_tag_types and "Labels" in output_tag_types):
             all_formats.remove(Format.CONLL2003.name)
         if is_mig or not (
