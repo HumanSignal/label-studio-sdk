@@ -369,6 +369,7 @@ class Converter(object):
         has_rectangle_labels = "RectangleLabels" in output_tag_types
 
         # If config has KeyPointLabels but no RectangleLabels, exclude COCO and YOLO formats
+        # RectangleLabels are required for COCO and YOLO formats for category mapping
         if has_keypoint_labels and not has_rectangle_labels:
             if Format.COCO.name in all_formats:
                 all_formats.remove(Format.COCO.name)
