@@ -89,6 +89,16 @@ def get_bbox_coco(keypoints, kp_order):
 
 
 def process_keypoints_for_coco(keypoint_labels, kp_order, annotation_id, image_id, category_name_to_id):
+    if not kp_order:
+        raise ValueError(
+            "No keypoint order found. Please ensure that KeyPointLabels in your label config "
+            "have 'model_index' attributes defined. For example:\n"
+            "<KeyPointLabels name=\"keypoints\" toName=\"image\">\n"
+            "  <Label value=\"eye\" model_index=\"0\"/>\n"
+            "  <Label value=\"nose\" model_index=\"1\"/>\n"
+            "</KeyPointLabels>"
+        )
+
     keypoints = [0] * (len(kp_order) * 3)
 
     for kp in keypoint_labels:
