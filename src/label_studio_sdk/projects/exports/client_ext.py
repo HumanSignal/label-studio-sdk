@@ -7,6 +7,7 @@ from .client import ExportsClient, AsyncExportsClient
 from io import BytesIO
 from label_studio_sdk.versions.client import VersionsClient, AsyncVersionsClient
 from label_studio_sdk.core.api_error import ApiError
+from typing import Union
 
 
 class ExportTimeoutError(ApiError):
@@ -45,7 +46,7 @@ def _check_status(export_snapshot, converted_format_id, status):
 
 class ExportsClientExt(ExportsClient):
     
-    def _bytestream_to_fileobj(self, bytestream: typing.Iterable[bytes] | bytes) -> typing.BinaryIO:
+    def _bytestream_to_fileobj(self, bytestream: Union[typing.Iterable[bytes], bytes]) -> typing.BinaryIO:
         buffer = BytesIO()
         if isinstance(bytestream, typing.Iterable): 
             for chunk in bytestream:
@@ -122,7 +123,7 @@ class ExportsClientExt(ExportsClient):
     
 class AsyncExportsClientExt(AsyncExportsClient):
     
-    async def _bytestream_to_fileobj(self, bytestream: typing.AsyncGenerator[bytes, None] | bytes):
+    async def _bytestream_to_fileobj(self, bytestream: Union[typing.AsyncGenerator[bytes, None], bytes]):
         """Convert bytestream to file-like object"""
         fileobj = BytesIO()
         if isinstance(bytestream, typing.AsyncGenerator):
