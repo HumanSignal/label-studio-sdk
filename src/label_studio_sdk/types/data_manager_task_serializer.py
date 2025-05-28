@@ -8,6 +8,7 @@ from .annotations_dm_field import AnnotationsDmField
 from .data_manager_task_serializer_drafts_item import DataManagerTaskSerializerDraftsItem
 from .data_manager_task_serializer_annotators_item import DataManagerTaskSerializerAnnotatorsItem
 import datetime as dt
+from .data_manager_task_serializer_comment_authors_item import DataManagerTaskSerializerCommentAuthorsItem
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -100,7 +101,9 @@ class DataManagerTaskSerializer(UniversalBaseModel):
     Project ID for this task
     """
 
-    comment_authors: typing.Optional[typing.List[int]] = pydantic.Field(default=None)
+    comment_authors: typing.Optional[typing.List[DataManagerTaskSerializerCommentAuthorsItem]] = pydantic.Field(
+        default=None
+    )
     """
     Users who wrote comments
     """
