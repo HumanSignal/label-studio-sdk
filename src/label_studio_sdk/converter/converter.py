@@ -539,7 +539,9 @@ class Converter(object):
                     tag_name := self._maybe_matching_tag_from_schema(r["from_name"])
                 ):
                     v = deepcopy(r["value"])
-                    v["type"] = self._schema[tag_name]["type"]
+                    # Get type from annotation directly. Before we were getting it from
+                    # self._schema which had problems with repeater tag / dynamic fields
+                    v["type"] = r["type"]
                     if "original_width" in r:
                         v["original_width"] = r["original_width"]
                     if "original_height" in r:
