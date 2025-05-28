@@ -481,6 +481,9 @@ class Converter(object):
         then the from_name "my_output_tag_0" should match it, and we should return "my_output_tag_{{idx}}".
         """
 
+        best_match = None
+        best_match_len = 0
+
         for tag_name, tag_info in self._schema.items():
             if tag_name == from_name:
                 return tag_name
@@ -492,10 +495,13 @@ class Converter(object):
             for variable, regex in tag_info["regex"].items():
                 tag_name_pattern = tag_name_pattern.replace(variable, regex)
 
-            if re.compile(tag_name_pattern).match(from_name):
-                return tag_name
+            # In some cases there are tags with same prefix - we need to find the best or longest matching pattern
+            if r := re.compile(tag_name_pattern).match(from_name):
+                if match_len := len(tag_name_pattern) > best_match_len:
+                    best_match = tag_name
+                    best_match_len = len(tag_name_pattern)
 
-        return None
+        return best_match if best_match else None
 
     def annotation_result_from_task(self, task):
         has_annotations = "completions" in task or "annotations" in task
@@ -539,9 +545,7 @@ class Converter(object):
                     tag_name := self._maybe_matching_tag_from_schema(r["from_name"])
                 ):
                     v = deepcopy(r["value"])
-                    # Get type from annotation directly. Before we were getting it from
-                    # self._schema which had problems with repeater tag / dynamic fields
-                    v["type"] = r["type"]
+                    v["type"] = self._schema[tag_name]["type"]
                     if "original_width" in r:
                         v["original_width"] = r["original_width"]
                     if "original_height" in r:
