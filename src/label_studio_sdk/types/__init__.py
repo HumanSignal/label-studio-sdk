@@ -22,8 +22,10 @@ from .converted_format import ConvertedFormat
 from .converted_format_status import ConvertedFormatStatus
 from .data_manager_task_serializer import DataManagerTaskSerializer
 from .data_manager_task_serializer_annotators_item import DataManagerTaskSerializerAnnotatorsItem
+from .data_manager_task_serializer_comment_authors_item import DataManagerTaskSerializerCommentAuthorsItem
 from .data_manager_task_serializer_drafts_item import DataManagerTaskSerializerDraftsItem
 from .data_manager_task_serializer_predictions_item import DataManagerTaskSerializerPredictionsItem
+from .data_manager_task_serializer_predictions_item_model_run import DataManagerTaskSerializerPredictionsItemModelRun
 from .export import Export
 from .export_format import ExportFormat
 from .export_snapshot import ExportSnapshot
@@ -130,8 +132,10 @@ __all__ = [
     "ConvertedFormatStatus",
     "DataManagerTaskSerializer",
     "DataManagerTaskSerializerAnnotatorsItem",
+    "DataManagerTaskSerializerCommentAuthorsItem",
     "DataManagerTaskSerializerDraftsItem",
     "DataManagerTaskSerializerPredictionsItem",
+    "DataManagerTaskSerializerPredictionsItemModelRun",
     "Export",
     "ExportFormat",
     "ExportSnapshot",
