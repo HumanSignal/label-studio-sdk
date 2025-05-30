@@ -1,6 +1,7 @@
 import threading
 import typing
 from datetime import datetime, timezone
+import ssl
 
 import httpx
 import jwt
@@ -12,9 +13,10 @@ from ..types.access_token_response import AccessTokenResponse
 class TokensClientExt:
     """Client for managing authentication tokens."""
 
-    def __init__(self, base_url: str, api_key: str):
+    def __init__(self, base_url: str, api_key: str, client_wrapper=None):
         self._base_url = base_url
         self._api_key = api_key
+        self._client_wrapper = client_wrapper
         self._use_legacy_token = not self._is_valid_jwt_token(api_key, raise_if_expired=True)
 
         # cache state for access token when using jwt-based api_key
@@ -76,19 +78,63 @@ class TokensClientExt:
         
         return self._access_token
 
+    def _get_client_params(self, existing_client: httpx.AsyncClient) -> dict:
+        """Extract parameters from an existing client to create a new one.
+
+        Args:
+            existing_client: The existing client to extract parameters from.
+
+        Returns:
+            dict: Parameters for creating a new client.
+        """
+        return {
+            'auth': existing_client.auth,
+            'params': existing_client.params,
+            'headers': existing_client.headers,
+            'cookies': existing_client.cookies,
+            'timeout': existing_client.timeout,
+            'follow_redirects': existing_client.follow_redirects,
+            'max_redirects': existing_client.max_redirects,
+            'event_hooks': existing_client.event_hooks,
+            'base_url': existing_client.base_url,
+            'trust_env': existing_client.trust_env,
+            'default_encoding': existing_client._default_encoding,
+            'verify': existing_client._transport._pool._ssl_context.verify_mode != ssl.CERT_NONE,
+            'http1': existing_client._transport._pool._http1,
+            'http2': existing_client._transport._pool._http2,
+            'limits': httpx.Limits(
+                max_connections=existing_client._transport._pool._max_connections,
+                max_keepalive_connections=existing_client._transport._pool._max_keepalive_connections,
+                keepalive_expiry=existing_client._transport._pool._keepalive_expiry
+            )
+        }
+
     def refresh(self) -> AccessTokenResponse:
         """Refresh the access token and return the token response."""
-        # We don't do this often, just use a separate httpx client for simplicity here
-        # (avoids complicated state management and sync vs async handling)
-        with httpx.Client() as sync_client:
-            response = sync_client.request(
+        existing_client = self._client_wrapper.httpx_client.httpx_client
+
+        # For sync client, use it directly
+        if isinstance(existing_client, httpx.Client):
+            print(f"\nverify:{existing_client._transport._pool._ssl_context.verify_mode != ssl.CERT_NONE}")
+            response = existing_client.request(
                 method="POST",
                 url=f"{self._base_url}/api/token/refresh/",
                 json={"refresh": self._api_key},
                 headers={"Content-Type": "application/json"},
             )
+        else:
+            # If an async client was used, get all parameters from the client to init a new sync client
+            client_params = self._get_client_params(existing_client)
+
+            with httpx.Client(**client_params) as sync_client:
+                response = sync_client.request(
+                    method="POST",
+                    url=f"{self._base_url}/api/token/refresh/",
+                    json={"refresh": self._api_key},
+                    headers={"Content-Type": "application/json"},
+                )
             
-            if response.status_code == 200:
-                return AccessTokenResponse.parse_obj(response.json())
-            else:
-                raise ApiError(status_code=response.status_code, body=response.json())
+        if response.status_code == 200:
+            return AccessTokenResponse.parse_obj(response.json())
+        else:
+            raise ApiError(status_code=response.status_code, body=response.json())

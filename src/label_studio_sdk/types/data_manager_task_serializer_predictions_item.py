@@ -2,6 +2,7 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
+from .data_manager_task_serializer_predictions_item_model_run import DataManagerTaskSerializerPredictionsItemModelRun
 import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
@@ -12,7 +13,7 @@ class DataManagerTaskSerializerPredictionsItem(UniversalBaseModel):
     score: typing.Optional[float] = None
     model_version: typing.Optional[str] = None
     model: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    model_run: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    model_run: typing.Optional[DataManagerTaskSerializerPredictionsItemModelRun] = None
     task: typing.Optional[int] = None
     project: typing.Optional[float] = None
     created_at: typing.Optional[dt.datetime] = None

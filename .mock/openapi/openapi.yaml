@@ -10283,7 +10283,9 @@ components:
                 type: object
                 title: ML Backend instance
               model_run:
-                type: object
+                oneOf:
+                  - type: object
+                  - type: integer
                 title: Model Run instance
               task:
                 type: integer
@@ -10452,7 +10454,9 @@ components:
           type: array
           items:
             description: Users who wrote comments
-            type: integer
+            oneOf:
+              - type: integer
+              - type: object
           uniqueItems: true
     Webhook:
       required:
