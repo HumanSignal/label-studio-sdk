@@ -134,7 +134,7 @@ def has_variable(actual_value):
     :param actual_value: value to check
     :return: True if value has variable
     """
-    expression = "^\$[A-Za-z_]+$"
+    expression = r"^\$[A-Za-z_]+$"
     pattern = re.compile(expression)
     full_match = pattern.fullmatch(actual_value)
     if full_match:
