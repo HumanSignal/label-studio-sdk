@@ -40,7 +40,7 @@ class ExportsClient:
         ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
-        r"""
+        """
 
         <Note>If you have a large project it's recommended to use export snapshots, this easy export endpoint might have timeouts.</Note>
         Export annotated tasks as a file in a specific format.
@@ -589,7 +589,7 @@ class AsyncExportsClient:
         ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
-        r"""
+        """
 
         <Note>If you have a large project it's recommended to use export snapshots, this easy export endpoint might have timeouts.</Note>
         Export annotated tasks as a file in a specific format.
