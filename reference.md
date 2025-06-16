@@ -2122,7 +2122,7 @@ Update a specific uploaded file. To get the file upload ID, use [Get files list]
 
 You will need to include the file data in the request body. For example:
 ```bash
-curl -H 'Authorization: Token abc123' \ -X POST 'https://localhost:8080/api/import/file-upload/245' -F ‘file=@path/to/my_file.csv’
+curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/import/file-upload/245' -F ‘file=@path/to/my_file.csv’
 ```
 </dd>
 </dl>
@@ -4350,7 +4350,7 @@ For example, if the label configuration has a *$text* variable, then each item i
 
 There are three possible ways to import tasks with this endpoint:
 
-#### 1\. **POST with data**
+#### 1. **POST with data**
 Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
 
 Update this example to specify your authorization token and Label Studio instance host, then run the following from
@@ -4361,7 +4361,7 @@ curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
 -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
 ```
 
-#### 2\. **POST with files**
+#### 2. **POST with files**
 Send tasks as files. You can attach multiple files with different names.
 
 - **JSON**: text files in JavaScript object notation format
@@ -4377,7 +4377,7 @@ curl -H 'Authorization: Token abc123' \
 -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
 ```
 
-#### 3\. **POST with URL**
+#### 3. **POST with URL**
 You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
 
 ```bash
