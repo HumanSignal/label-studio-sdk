@@ -582,13 +582,26 @@ class Converter(object):
         self._check_format(Format.JSON)
         ensure_dir(output_dir)
         output_file = os.path.join(output_dir, "result.json")
-        records = []
+
         if is_dir:
-            for json_file in glob(os.path.join(input_data, "*.json")):
-                with io.open(json_file, encoding="utf8") as f:
-                    records.append(json.load(f))
+            # Memory-optimized: stream JSON writing instead of accumulating in memory
             with io.open(output_file, mode="w", encoding="utf8") as fout:
-                json.dump(records, fout, indent=2, ensure_ascii=False)
+                fout.write("[\n")
+                first_record = True
+
+                for json_file in glob(os.path.join(input_data, "*.json")):
+                    with io.open(json_file, encoding="utf8") as f:
+                        record = json.load(f)
+
+                        if not first_record:
+                            fout.write(",\n")
+                        json.dump(record, fout, indent=2, ensure_ascii=False)
+                        first_record = False
+
+                        # Free memory immediately
+                        del record
+
+                fout.write("\n]")
         else:
             copy2(input_data, output_file)
 
@@ -596,26 +609,39 @@ class Converter(object):
         self._check_format(Format.JSON_MIN)
         ensure_dir(output_dir)
         output_file = os.path.join(output_dir, "result.json")
-        records = []
         item_iterator = self.iter_from_dir if is_dir else self.iter_from_json_file
 
-        for item in item_iterator(input_data):
-            record = deepcopy(item["input"])
-            if item.get("id") is not None:
-                record["id"] = item["id"]
-            for name, value in item["output"].items():
-                record[name] = prettify_result(value)
-            record["annotator"] = get_annotator(item, int_id=True)
-            record["annotation_id"] = item["annotation_id"]
-            record["created_at"] = item["created_at"]
-            record["updated_at"] = item["updated_at"]
-            record["lead_time"] = item["lead_time"]
-            if "agreement" in item:
-                record["agreement"] = item["agreement"]
-            records.append(record)
-
         with io.open(output_file, mode="w", encoding="utf8") as fout:
-            json.dump(records, fout, indent=2, ensure_ascii=False)
+            fout.write("[\n")
+            first_record = True
+
+            for item in item_iterator(input_data):
+                # SAFE memory optimization: use json serialization/deserialization
+                # This avoids deepcopy but ensures complete isolation of objects
+                record = json.loads(json.dumps(item["input"]))
+
+                if item.get("id") is not None:
+                    record["id"] = item["id"]
+                for name, value in item["output"].items():
+                    record[name] = prettify_result(value)
+                record["annotator"] = get_annotator(item, int_id=True)
+                record["annotation_id"] = item["annotation_id"]
+                record["created_at"] = item["created_at"]
+                record["updated_at"] = item["updated_at"]
+                record["lead_time"] = item["lead_time"]
+                if "agreement" in item:
+                    record["agreement"] = item["agreement"]
+
+                # Write record to file immediately
+                if not first_record:
+                    fout.write(",\n")
+                json.dump(record, fout, indent=2, ensure_ascii=False)
+                first_record = False
+
+                # Explicitly delete record to free memory
+                del record
+
+            fout.write("\n]")
 
     def convert_to_csv(self, input_data, output_dir, is_dir=True, **kwargs):
         self._check_format(Format.CSV)
