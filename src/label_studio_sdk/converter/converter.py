@@ -891,7 +891,7 @@ class Converter(object):
         else:
             output_label_dir = os.path.join(output_dir, "labels")
             os.makedirs(output_label_dir, exist_ok=True)
-        is_keypoints = keypoints_in_label_config(self._schema)
+        is_keypoints = False #keypoints_in_label_config(self._schema)
 
         if is_keypoints:
             # we use this attribute to add id and parentID to annotation data
