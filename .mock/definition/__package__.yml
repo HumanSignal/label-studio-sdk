@@ -673,8 +673,8 @@ types:
           example, if a bounding box annotation with a control tag named my_bbox
           should be included with 0.33 weight in agreement calculation, and the
           first label Car should be twice as important as Airplane, then you
-          need to specify: \{'my_bbox': \{'type': 'RectangleLabels', 'labels':
-          \{'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+          need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
       parsed_label_config:
         type: optional<map<string, unknown>>
         docs: JSON-formatted labeling configuration

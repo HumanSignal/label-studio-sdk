@@ -69,8 +69,8 @@ types:
           example, if a bounding box annotation with a control tag named my_bbox
           should be included with 0.33 weight in agreement calculation, and the
           first label Car should be twice as important as Airplane, then you
-          need to specify: \{'my_bbox': \{'type': 'RectangleLabels', 'labels':
-          \{'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+          need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
     source:
       openapi: openapi/openapi.yaml
   ProjectsUpdateResponse:
@@ -130,8 +130,8 @@ types:
           example, if a bounding box annotation with a control tag named my_bbox
           should be included with 0.33 weight in agreement calculation, and the
           first label Car should be twice as important as Airplane, then you
-          need to specify: \{'my_bbox': \{'type': 'RectangleLabels', 'labels':
-          \{'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+          need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
     source:
       openapi: openapi/openapi.yaml
   ProjectsImportTasksResponse:
@@ -365,8 +365,8 @@ service:
                 weight. For example, if a bounding box annotation with a control
                 tag named my_bbox should be included with 0.33 weight in
                 agreement calculation, and the first label Car should be twice
-                as important as Airplane, then you need to specify: \{'my_bbox':
-                \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0, 'Airplane':
+                as important as Airplane, then you need to specify: {'my_bbox':
+                {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane':
                 0.5}, 'overall': 0.33}}
             workspace:
               type: optional<integer>
@@ -632,8 +632,8 @@ service:
                 weight. For example, if a bounding box annotation with a control
                 tag named my_bbox should be included with 0.33 weight in
                 agreement calculation, and the first label Car should be twice
-                as important as Airplane, then you need to specify: \{'my_bbox':
-                \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0, 'Airplane':
+                as important as Airplane, then you need to specify: {'my_bbox':
+                {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane':
                 0.5}, 'overall': 0.33}}
             workspace:
               type: optional<integer>

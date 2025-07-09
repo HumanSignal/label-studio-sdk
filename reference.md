@@ -3945,7 +3945,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: \{'my_bbox': \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
 
     
 </dd>
@@ -4291,7 +4291,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: \{'my_bbox': \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
 
     
 </dd>
