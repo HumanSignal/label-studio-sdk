@@ -30,6 +30,7 @@ service:
       response:
         docs: ''
         type: list<root.View>
+        status-code: 200
       examples:
         - response:
             body:
@@ -82,6 +83,7 @@ service:
       response:
         docs: ''
         type: root.View
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -149,6 +151,7 @@ service:
       response:
         docs: ''
         type: root.View
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -221,6 +224,7 @@ service:
       response:
         docs: ''
         type: root.View
+        status-code: 200
       examples:
         - path-parameters:
             id: id

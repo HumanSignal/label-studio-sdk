@@ -36,6 +36,7 @@ service:
       response:
         docs: ''
         type: list<root.LocalFilesImportStorage>
+        status-code: 200
       examples:
         - response:
             body:
@@ -109,6 +110,7 @@ service:
       response:
         docs: ''
         type: LocalCreateResponse
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -191,6 +193,7 @@ service:
       response:
         docs: ''
         type: root.LocalFilesImportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -300,6 +303,7 @@ service:
       response:
         docs: ''
         type: LocalUpdateResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -345,6 +349,7 @@ service:
       response:
         docs: ''
         type: root.LocalFilesImportStorage
+        status-code: 201
       examples:
         - path-parameters:
             id: 1

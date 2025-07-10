@@ -36,6 +36,7 @@ service:
       response:
         docs: ''
         type: list<MembersListResponseItem>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -71,6 +72,7 @@ service:
       response:
         docs: ''
         type: MembersCreateResponse
+        status-code: 201
       examples:
         - path-parameters:
             id: 1

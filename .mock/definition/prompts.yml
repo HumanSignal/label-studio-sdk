@@ -16,6 +16,7 @@ service:
       response:
         docs: ''
         type: list<root.Prompt>
+        status-code: 200
       examples:
         - response:
             body:
@@ -49,6 +50,7 @@ service:
       response:
         docs: ''
         type: root.Prompt
+        status-code: 201
       examples:
         - request:
             title: title
@@ -89,6 +91,7 @@ service:
       response:
         docs: ''
         type: root.Prompt
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -146,6 +149,7 @@ service:
       response:
         docs: ''
         type: root.Prompt
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -197,6 +201,7 @@ service:
       response:
         docs: ''
         type: PromptsBatchPredictionsResponse
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -230,6 +235,7 @@ service:
       response:
         docs: ''
         type: PromptsBatchFailedPredictionsResponse
+        status-code: 201
       examples:
         - request: {}
           response:

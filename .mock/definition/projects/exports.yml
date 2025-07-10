@@ -87,6 +87,7 @@ service:
       response:
         docs: Exported data in binary format
         type: file
+        status-code: 200
       audiences:
         - public
     list_formats:
@@ -114,6 +115,7 @@ service:
       response:
         docs: Export formats
         type: list<ExportsListFormatsResponseItem>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -152,6 +154,7 @@ service:
       response:
         docs: ''
         type: list<root.Export>
+        status-code: 200
       examples:
         - path-parameters:
             project_id: 1
@@ -210,6 +213,7 @@ service:
       response:
         docs: ''
         type: root.ExportSnapshot
+        status-code: 201
       examples:
         - path-parameters:
             project_id: 1
@@ -297,6 +301,7 @@ service:
       response:
         docs: Exported data in binary format
         type: file
+        status-code: 200
       audiences:
         - public
     get:
@@ -329,6 +334,7 @@ service:
       response:
         docs: ''
         type: root.Export
+        status-code: 200
       examples:
         - path-parameters:
             project_id: 1
@@ -431,6 +437,7 @@ service:
       response:
         docs: ''
         type: ExportsConvertResponse
+        status-code: 201
       examples:
         - path-parameters:
             project_id: 1

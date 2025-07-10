@@ -21,6 +21,7 @@ service:
       response:
         docs: ''
         type: root.FileUpload
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -81,6 +82,7 @@ service:
       response:
         docs: ''
         type: root.FileUpload
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -125,6 +127,7 @@ service:
       response:
         docs: ''
         type: list<root.FileUpload>
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

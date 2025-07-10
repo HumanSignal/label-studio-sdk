@@ -28,6 +28,7 @@ service:
       response:
         docs: Successfully retrieved a list of pauses
         type: list<root.Pause>
+        status-code: 200
       examples:
         - path-parameters:
             project_pk: 1
@@ -71,6 +72,7 @@ service:
       response:
         docs: Successfully created a pause
         type: root.Pause
+        status-code: 201
       examples:
         - path-parameters:
             project_pk: 1
@@ -112,6 +114,7 @@ service:
       response:
         docs: Successfully retrieved the pause
         type: root.Pause
+        status-code: 200
       examples:
         - path-parameters:
             project_pk: 1
@@ -184,6 +187,7 @@ service:
       response:
         docs: Successfully updated the pause (partial)
         type: root.Pause
+        status-code: 200
       examples:
         - path-parameters:
             project_pk: 1

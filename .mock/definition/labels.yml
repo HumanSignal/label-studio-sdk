@@ -38,6 +38,7 @@ service:
       response:
         docs: ''
         type: LabelsListResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -76,6 +77,7 @@ service:
       response:
         docs: ''
         type: list<root.LabelCreate>
+        status-code: 201
       examples:
         - request:
             - project: 1
@@ -117,6 +119,7 @@ service:
       response:
         docs: ''
         type: root.Label
+        status-code: 200
       examples:
         - path-parameters:
             id: id
@@ -174,6 +177,7 @@ service:
       response:
         docs: ''
         type: root.Label
+        status-code: 200
       examples:
         - path-parameters:
             id: id
