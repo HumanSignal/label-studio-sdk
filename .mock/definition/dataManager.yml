@@ -24,6 +24,7 @@ service:
       response:
         docs: Columns retrieved successfully
         type: unknown
+        status-code: 200
       errors:
         - root.BadRequestError
         - root.NotFoundError
@@ -94,6 +95,7 @@ service:
       response:
         docs: ''
         type: ApiDmViewsUpdateResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: id

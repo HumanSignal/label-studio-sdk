@@ -36,6 +36,7 @@ service:
       response:
         docs: ''
         type: root.ProjectImport
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -182,6 +183,7 @@ service:
       response:
         docs: List of Tasks
         type: TasksListResponse
+        status-code: 200
       examples:
         - name: response
           response:
@@ -284,6 +286,7 @@ service:
       response:
         docs: Created task
         type: root.BaseTask
+        status-code: 201
       examples:
         - name: response
           request:
@@ -340,6 +343,7 @@ service:
       response:
         docs: Task
         type: root.DataManagerTaskSerializer
+        status-code: 200
       examples:
         - name: response
           path-parameters:
@@ -394,15 +398,11 @@ service:
               cancelled_annotations: 0
               total_annotations: 0
               total_predictions: 0
-              completed_at: '2024-01-15T09:30:00Z'
               annotations_results: ''
               predictions_results: ''
-              predictions_score: 1.1
               file_upload: 6b25fc23-some_3.mp4
-              storage_filename: storage_filename
               annotations_ids: ''
               predictions_model_versions: ''
-              avg_lead_time: 1.1
               draft_exists: false
               updated_by:
                 - key: value
@@ -416,7 +416,6 @@ service:
               overlap: 1
               comment_count: 0
               unresolved_comment_count: 0
-              last_comment_updated_at: '2024-01-15T09:30:00Z'
               project: 1
               comment_authors:
                 - 1
@@ -482,6 +481,7 @@ service:
       response:
         docs: Updated task
         type: root.BaseTask
+        status-code: 200
       examples:
         - name: response
           path-parameters:

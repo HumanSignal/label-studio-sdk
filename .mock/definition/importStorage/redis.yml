@@ -34,6 +34,7 @@ service:
       response:
         docs: ''
         type: list<root.RedisImportStorage>
+        status-code: 200
       examples:
         - response:
             body:
@@ -122,6 +123,7 @@ service:
       response:
         docs: ''
         type: RedisCreateResponse
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -218,6 +220,7 @@ service:
       response:
         docs: ''
         type: root.RedisImportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -342,6 +345,7 @@ service:
       response:
         docs: ''
         type: RedisUpdateResponse
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -390,6 +394,7 @@ service:
       response:
         docs: ''
         type: root.RedisImportStorage
+        status-code: 201
       examples:
         - path-parameters:
             id: 1

@@ -34,6 +34,7 @@ service:
       response:
         docs: ''
         type: list<root.S3SExportStorage>
+        status-code: 200
       examples:
         - response:
             body:
@@ -104,6 +105,7 @@ service:
       response:
         docs: ''
         type: root.S3SExportStorage
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -140,6 +142,7 @@ service:
       response:
         docs: ''
         type: root.S3SExportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -233,6 +236,7 @@ service:
       response:
         docs: ''
         type: root.S3SExportStorage
+        status-code: 200
       examples:
         - path-parameters:
             id: 1

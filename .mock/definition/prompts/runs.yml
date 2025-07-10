@@ -42,6 +42,7 @@ service:
       response:
         docs: Success
         type: root.InferenceRun
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -86,6 +87,7 @@ service:
       response:
         docs: ''
         type: root.InferenceRun
+        status-code: 201
       examples:
         - path-parameters:
             id: 1

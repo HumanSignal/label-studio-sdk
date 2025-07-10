@@ -16,6 +16,7 @@ service:
       response:
         docs: JWT settings retrieved successfully
         type: root.JwtSettingsResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -39,6 +40,7 @@ service:
       response:
         docs: JWT settings updated successfully
         type: root.JwtSettingsResponse
+        status-code: 200
       examples:
         - request:
             api_tokens_enabled: true

@@ -28,6 +28,7 @@ service:
       response:
         docs: Retrieved annotation
         type: root.Annotation
+        status-code: 200
       examples:
         - name: response
           path-parameters:
@@ -161,6 +162,7 @@ service:
       response:
         docs: Updated annotation
         type: root.Annotation
+        status-code: 200
       examples:
         - name: response
           path-parameters:
@@ -245,6 +247,7 @@ service:
       response:
         docs: Annotation
         type: list<root.Annotation>
+        status-code: 200
       examples:
         - name: response
           path-parameters:
@@ -371,6 +374,7 @@ service:
       response:
         docs: Created annotation
         type: root.Annotation
+        status-code: 201
       examples:
         - name: response
           path-parameters:
@@ -455,6 +459,7 @@ service:
       response:
         docs: Annotations created successfully
         type: list<AnnotationsCreateBulkResponseItem>
+        status-code: 201
       examples:
         - request: {}
           response:

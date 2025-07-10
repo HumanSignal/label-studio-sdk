@@ -40,6 +40,7 @@ service:
       response:
         docs: List of API tokens retrieved successfully
         type: list<root.ApiTokenResponse>
+        status-code: 200
       examples:
         - response:
             body:
@@ -60,6 +61,7 @@ service:
       response:
         docs: Token created successfully
         type: root.ApiTokenResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -88,6 +90,7 @@ service:
       response:
         docs: New access token created successfully
         type: root.AccessTokenResponse
+        status-code: 200
       errors:
         - root.UnauthorizedError
       examples:
@@ -118,6 +121,7 @@ service:
       response:
         docs: Refresh token successfully rotated
         type: root.RotateTokenResponse
+        status-code: 200
       errors:
         - root.BadRequestError
       examples:

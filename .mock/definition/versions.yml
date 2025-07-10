@@ -53,6 +53,7 @@ service:
       response:
         docs: ''
         type: VersionsGetResponse
+        status-code: 200
       examples:
         - response:
             body:

@@ -32,6 +32,7 @@ service:
       response:
         docs: User token response
         type: UsersResetTokenResponse
+        status-code: 201
       examples:
         - response:
             body:
@@ -53,6 +54,7 @@ service:
       response:
         docs: User token response
         type: UsersGetTokenResponse
+        status-code: 200
       examples:
         - response:
             body:
@@ -72,6 +74,7 @@ service:
       response:
         docs: ''
         type: root.BaseUser
+        status-code: 200
       examples:
         - response:
             body:
@@ -102,6 +105,7 @@ service:
       response:
         docs: ''
         type: list<root.BaseUser>
+        status-code: 200
       examples:
         - response:
             body:
@@ -164,6 +168,7 @@ service:
       response:
         docs: ''
         type: root.BaseUser
+        status-code: 201
       examples:
         - request: {}
           response:
@@ -202,6 +207,7 @@ service:
       response:
         docs: ''
         type: root.BaseUser
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -304,6 +310,7 @@ service:
       response:
         docs: ''
         type: root.BaseUser
+        status-code: 200
       examples:
         - path-parameters:
             id: 1
@@ -343,6 +350,7 @@ service:
       response:
         docs: Successfully retrieved product tour
         type: root.ProductTour
+        status-code: 200
       examples:
         - query-parameters:
             name: name
@@ -383,6 +391,7 @@ service:
       response:
         docs: Successfully updated product tour
         type: root.ProductTour
+        status-code: 200
       audiences:
         - internal
   source:
