@@ -1473,9 +1473,9 @@ paths:
 
         ```bash
 
-        curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml -H 'Authorization: Token abc123'\
+        curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml -H 'Authorization: Token abc123' --data '{"url": "http://localhost:9090", "project": {project_id}}'
 
-        --data '{"url": "http://localhost:9090", "project": {project_id}}' 
+        ```
       requestBody:
         $ref: "#/components/requestBodies/api_ml_createData"
       responses:
@@ -2404,7 +2404,7 @@ paths:
                       control tag named my_bbox should be included with 0.33 weight
                       in agreement calculation, and the first label Car should be
                       twice as important as Airplane, then you need to specify:
-                      \{'my_bbox': \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0,
+                      {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
                       'Airplane': 0.5}, 'overall': 0.33}}
                     type: object
                     example:
@@ -2595,7 +2595,7 @@ paths:
                       control tag named my_bbox should be included with 0.33 weight
                       in agreement calculation, and the first label Car should be
                       twice as important as Airplane, then you need to specify:
-                      \{'my_bbox': \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0,
+                      {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
                       'Airplane': 0.5}, 'overall': 0.33}}
                     type: object
                     example:
@@ -2723,7 +2723,7 @@ paths:
         There are three possible ways to import tasks with this endpoint:
 
 
-        ### 1\. **POST with data**
+        ### 1. **POST with data**
 
         Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
 
@@ -2734,14 +2734,12 @@ paths:
 
         ```bash
 
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
 
         ```
 
 
-        ### 2\. **POST with files**
+        ### 2. **POST with files**
 
         Send tasks as files. You can attach multiple files with different names.
 
@@ -2762,25 +2760,19 @@ paths:
 
         ```bash
 
-        curl -H 'Authorization: Token abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
+        curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
 
         ```
 
 
-        ### 3\. **POST with URL**
+        ### 3. **POST with URL**
 
         You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
 
 
         ```bash
 
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' \
-
-        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
 
         ```
 
@@ -6710,7 +6702,7 @@ components:
                   control tag named my_bbox should be included with 0.33 weight
                   in agreement calculation, and the first label Car should be
                   twice as important as Airplane, then you need to specify:
-                  \{'my_bbox': \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0,
+                  {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
                   'Airplane': 0.5}, 'overall': 0.33}}
                 type: object
                 example:
@@ -8652,7 +8644,7 @@ components:
             control tag named my_bbox should be included with 0.33 weight
             in agreement calculation, and the first label Car should be
             twice as important as Airplane, then you need to specify:
-            \{'my_bbox': \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0,
+            {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
             'Airplane': 0.5}, 'overall': 0.33}}
           type: object
           nullable: true

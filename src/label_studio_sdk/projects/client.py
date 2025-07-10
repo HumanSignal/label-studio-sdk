@@ -207,7 +207,7 @@ class ProjectsClient:
             Project color in HEX format
 
         control_weights : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: \{'my_bbox': \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
 
 
         workspace : typing.Optional[int]
@@ -441,7 +441,7 @@ class ProjectsClient:
             Project color in HEX format
 
         control_weights : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: \{'my_bbox': \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
 
 
         workspace : typing.Optional[int]
@@ -520,84 +520,80 @@ class ProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
         """
-        
+
         Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
-        
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
         <Note>
-        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*. 
-        
+        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*.
+
         For example, if the label configuration has a *$text* variable, then each item in a data object must include a `text` field.
         </Note>
-        
+
         There are three possible ways to import tasks with this endpoint:
-        
-        #### 1\. **POST with data**
+
+        #### 1. **POST with data**
         Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
-        
+
         Update this example to specify your authorization token and Label Studio instance host, then run the following from
         the command line:
-        
+
         ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
         ```
-        
-        #### 2\. **POST with files**
+
+        #### 2. **POST with files**
         Send tasks as files. You can attach multiple files with different names.
-        
+
         - **JSON**: text files in JavaScript object notation format
         - **CSV**: text files with tables in Comma Separated Values format
         - **TSV**: text files with tables in Tab Separated Value format
         - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
-        
+
         Update this example to specify your authorization token, Label Studio instance host, and file name and path,
         then run the following from the command line:
-        
+
         ```bash
-        curl -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
+        curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
         ```
-        
-        #### 3\. **POST with URL**
+
+        #### 3. **POST with URL**
         You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
-        
+
         ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' \
-        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
         ```
-        
+
         <br>
-        
+
         Parameters
         ----------
         id : int
             A unique integer value identifying this project.
-        
+
         request : typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]
-        
+
         commit_to_project : typing.Optional[bool]
             Set to "true" to immediately commit tasks to the project.
-        
+
         return_task_ids : typing.Optional[bool]
             Set to "true" to return task IDs in the response.
-        
+
         preannotated_from_fields : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             List of fields to preannotate from the task data. For example, if you provide a list of `{"text": "text", "prediction": "label"}` items in the request, the system will create a task with the `text` field and a prediction with the `label` field when `preannoted_from_fields=["prediction"]`.
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         ProjectsImportTasksResponse
             Tasks successfully imported
-        
+
         Examples
         --------
         from label_studio_sdk import LabelStudio
-        
+
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
@@ -892,7 +888,7 @@ class AsyncProjectsClient:
             Project color in HEX format
 
         control_weights : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: \{'my_bbox': \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
 
 
         workspace : typing.Optional[int]
@@ -1150,7 +1146,7 @@ class AsyncProjectsClient:
             Project color in HEX format
 
         control_weights : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: \{'my_bbox': \{'type': 'RectangleLabels', 'labels': \{'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
 
 
         workspace : typing.Optional[int]
@@ -1237,98 +1233,94 @@ class AsyncProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
         """
-        
+
         Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). 
-        
+        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+
         <Note>
-        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*. 
-        
+        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*.
+
         For example, if the label configuration has a *$text* variable, then each item in a data object must include a `text` field.
         </Note>
-        
+
         There are three possible ways to import tasks with this endpoint:
-        
-        #### 1\. **POST with data**
+
+        #### 1. **POST with data**
         Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
-        
+
         Update this example to specify your authorization token and Label Studio instance host, then run the following from
         the command line:
-        
+
         ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
         ```
-        
-        #### 2\. **POST with files**
+
+        #### 2. **POST with files**
         Send tasks as files. You can attach multiple files with different names.
-        
+
         - **JSON**: text files in JavaScript object notation format
         - **CSV**: text files with tables in Comma Separated Values format
         - **TSV**: text files with tables in Tab Separated Value format
         - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
-        
+
         Update this example to specify your authorization token, Label Studio instance host, and file name and path,
         then run the following from the command line:
-        
+
         ```bash
-        curl -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
+        curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
         ```
-        
-        #### 3\. **POST with URL**
+
+        #### 3. **POST with URL**
         You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
-        
+
         ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-        -X POST 'https://localhost:8080/api/projects/1/import' \
-        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
         ```
-        
+
         <br>
-        
+
         Parameters
         ----------
         id : int
             A unique integer value identifying this project.
-        
+
         request : typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]
-        
+
         commit_to_project : typing.Optional[bool]
             Set to "true" to immediately commit tasks to the project.
-        
+
         return_task_ids : typing.Optional[bool]
             Set to "true" to return task IDs in the response.
-        
+
         preannotated_from_fields : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             List of fields to preannotate from the task data. For example, if you provide a list of `{"text": "text", "prediction": "label"}` items in the request, the system will create a task with the `text` field and a prediction with the `label` field when `preannoted_from_fields=["prediction"]`.
-        
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-        
+
         Returns
         -------
         ProjectsImportTasksResponse
             Tasks successfully imported
-        
+
         Examples
         --------
         import asyncio
-        
+
         from label_studio_sdk import AsyncLabelStudio
-        
+
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
         )
-        
-        
+
+
         async def main() -> None:
             await client.projects.import_tasks(
                 id=1,
                 request=[{"key": "value"}],
             )
-        
-        
+
+
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
