@@ -3,6 +3,5 @@
 import typing
 
 ProjectSampling = typing.Union[
-    typing.Literal["Sequential sampling", "Uniform sampling", "Uncertainty sampling"],
-    typing.Any,
+    typing.Literal["Sequential sampling", "Uniform sampling", "Uncertainty sampling"], typing.Any
 ]

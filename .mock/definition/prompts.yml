@@ -187,6 +187,10 @@ service:
       display-name: Create batch predictions
       request:
         name: PromptsBatchPredictionsRequest
+        query-parameters:
+          num_predictions:
+            type: optional<integer>
+            docs: Number of predictions being sent
         body:
           properties:
             modelrun_id:
@@ -216,6 +220,10 @@ service:
       display-name: Create batch of failed predictions
       request:
         name: PromptsBatchFailedPredictionsRequest
+        query-parameters:
+          num_failed_predictions:
+            type: optional<integer>
+            docs: Number of failed predictions being sent
         body:
           properties:
             modelrun_id:

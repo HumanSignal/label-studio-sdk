@@ -3,7 +3,7 @@ name = "label-studio-sdk"
 
 [tool.poetry]
 name = "label-studio-sdk"
-version = "1.0.15"
+version = "1.0.19"
 description = ""
 readme = "README.md"
 authors = []
@@ -35,7 +35,7 @@ Repository = 'https://github.com/HumanSignal/label-studio-sdk'
 
 [tool.poetry.dependencies]
 python = ">=3.9,<4"
-Pillow = ">=10.0.1"
+Pillow = ">=11.3.0"
 appdirs = ">=1.4.3"
 datamodel-code-generator = "0.26.1"
 httpx = ">=0.21.2"
@@ -48,22 +48,23 @@ numpy = ">=1.26.4,<3.0.0"
 opencv-python = "^4.9.0"
 pandas = ">=0.24.0"
 pydantic = ">= 1.9.2"
-pydantic-core = "^2.18.2"
+pydantic-core = ">=2.18.2"
 pyjwt = "^2.10.1"
 requests = ">=2.22.0"
 requests-mock = "1.12.1"
 typing_extensions = ">= 4.0.0"
 ujson = ">=5.8.0"
+urllib3 = ">=2.5.0"
 xmljson = "0.2.1"
 
-[tool.poetry.dev-dependencies]
-mypy = "1.0.1"
+[tool.poetry.group.dev.dependencies]
+mypy = "==1.13.0"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
 respx = "^0.22.0"
-ruff = "^0.5.6"
+ruff = "==0.11.5"
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
@@ -75,6 +76,26 @@ plugins = ["pydantic.mypy"]
 [tool.ruff]
 line-length = 120
 
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
+]
+ignore = [
+    "E402",  # Module level import not at top of file
+    "E501",  # Line too long
+    "E711",  # Comparison to `None` should be `cond is not None`
+    "E712",  # Avoid equality comparisons to `True`; use `if ...:` checks
+    "E721",  # Use `is` and `is not` for type comparisons, or `isinstance()` for insinstance checks
+    "E722",  # Do not use bare `except`
+    "E731",  # Do not assign a `lambda` expression, use a `def`
+    "F821",  # Undefined name
+    "F841"   # Local variable ... is assigned to but never used
+]
+
+[tool.ruff.lint.isort]
+section-order = ["future", "standard-library", "third-party", "first-party"]
 
 [build-system]
 requires = ["poetry-core"]

@@ -3,6 +3,5 @@
 import typing
 
 InferenceRunStatus = typing.Union[
-    typing.Literal["Pending", "InProgress", "Completed", "Failed", "Canceled"],
-    typing.Any,
+    typing.Literal["Pending", "InProgress", "Completed", "Failed", "Canceled"], typing.Any
 ]

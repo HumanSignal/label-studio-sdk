@@ -2122,7 +2122,7 @@ Update a specific uploaded file. To get the file upload ID, use [Get files list]
 
 You will need to include the file data in the request body. For example:
 ```bash
-curl -H 'Authorization: Token abc123' \ -X POST 'https://localhost:8080/api/import/file-upload/245' -F ‘file=@path/to/my_file.csv’
+curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/import/file-upload/245' -F 'file=@path/to/my_file.csv'
 ```
 </dd>
 </dl>
@@ -3945,7 +3945,7 @@ client.projects.create()
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
+**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
     
 </dd>
 </dl>
@@ -4290,7 +4290,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
+**control_weights:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` — Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
     
 </dd>
 </dl>
@@ -4350,18 +4350,17 @@ For example, if the label configuration has a *$text* variable, then each item i
 
 There are three possible ways to import tasks with this endpoint:
 
-#### 1\. **POST with data**
+#### 1. **POST with data**
 Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
 
 Update this example to specify your authorization token and Label Studio instance host, then run the following from
 the command line:
 
 ```bash
-curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
--X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
 ```
 
-#### 2\. **POST with files**
+#### 2. **POST with files**
 Send tasks as files. You can attach multiple files with different names.
 
 - **JSON**: text files in JavaScript object notation format
@@ -4373,17 +4372,14 @@ Update this example to specify your authorization token, Label Studio instance h
 then run the following from the command line:
 
 ```bash
-curl -H 'Authorization: Token abc123' \
--X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
+curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
 ```
 
-#### 3\. **POST with URL**
+#### 3. **POST with URL**
 You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
 
 ```bash
-curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
--X POST 'https://localhost:8080/api/projects/1/import' \
---data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
 ```
 
 <br>
@@ -6580,6 +6576,14 @@ client.prompts.batch_predictions()
 <dl>
 <dd>
 
+**num_predictions:** `typing.Optional[int]` — Number of predictions being sent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **modelrun_id:** `typing.Optional[int]` — Model Run ID to associate the prediction with
     
 </dd>
@@ -6652,6 +6656,14 @@ client.prompts.batch_failed_predictions()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**num_failed_predictions:** `typing.Optional[int]` — Number of failed predictions being sent
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
