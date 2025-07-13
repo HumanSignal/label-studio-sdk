@@ -59,6 +59,7 @@ tests/test_refresh_token.py
 .github/workflows/zendesk_task_comment.yml
 .github/workflows/zendesk_task_solve.yml
 .github/workflows/gitleaks.yml
+.github/workflows/git-command.yml
 .github/pr-title-checker-config.json
 .github/release.yml
 .github/autolabeler.yml

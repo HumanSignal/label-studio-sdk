@@ -63,9 +63,9 @@ service:
 
         ```bash
 
-        curl -H 'Authorization: Token abc123' \ -X POST
+        curl -H 'Authorization: Token abc123' -X POST
         'https://localhost:8080/api/import/file-upload/245' -F
-        ‘file=@path/to/my_file.csv’
+        'file=@path/to/my_file.csv'
 
         ```
       source:
