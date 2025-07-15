@@ -6,6 +6,7 @@ from .datetime_utils import serialize_datetime
 from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
 from .http_client import AsyncHttpClient, HttpClient
 from .jsonable_encoder import jsonable_encoder
+from .pagination import AsyncPager, SyncPager
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
     UniversalBaseModel,
@@ -24,6 +25,7 @@ __all__ = [
     "ApiError",
     "AsyncClientWrapper",
     "AsyncHttpClient",
+    "AsyncPager",
     "BaseClientWrapper",
     "FieldMetadata",
     "File",
@@ -31,6 +33,7 @@ __all__ = [
     "IS_PYDANTIC_V2",
     "RequestOptions",
     "SyncClientWrapper",
+    "SyncPager",
     "UniversalBaseModel",
     "UniversalRootModel",
     "convert_and_respect_annotation_metadata",

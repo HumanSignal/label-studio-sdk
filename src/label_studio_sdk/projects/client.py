@@ -5,16 +5,20 @@ from .file_uploads.client import FileUploadsClient
 from .exports.client import ExportsClient
 import typing
 from ..core.request_options import RequestOptions
-from ..types.project import Project
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.pagination import SyncPager
+from ..types.all_roles_project_list import AllRolesProjectList
+from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..types.project import Project
+from ..core.jsonable_encoder import jsonable_encoder
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from ..errors.bad_request_error import BadRequestError
 from ..core.client_wrapper import AsyncClientWrapper
 from .file_uploads.client import AsyncFileUploadsClient
 from .exports.client import AsyncExportsClient
+from ..core.pagination import AsyncPager
 
 
 class ProjectsClient:
@@ -22,6 +26,85 @@ class ProjectsClient:
         self._client_wrapper = client_wrapper
         self.file_uploads = FileUploadsClient(client_wrapper=self._client_wrapper)
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
+
+    def list(
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[AllRolesProjectList]:
+        """
+        Retrieve a list of projects.
+
+        Parameters
+        ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[AllRolesProjectList]
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.projects.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        page = page if page is not None else 1
+        _response = self._client_wrapper.httpx_client.request(
+            "api/projects/",
+            method="GET",
+            params={
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    PaginatedAllRolesProjectListList,
+                    parse_obj_as(
+                        type_=PaginatedAllRolesProjectListList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    ordering=ordering,
+                    page=page + 1,
+                    page_size=page_size,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.results
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
         """
@@ -375,6 +458,93 @@ class AsyncProjectsClient:
         self._client_wrapper = client_wrapper
         self.file_uploads = AsyncFileUploadsClient(client_wrapper=self._client_wrapper)
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
+
+    async def list(
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[AllRolesProjectList]:
+        """
+        Retrieve a list of projects.
+
+        Parameters
+        ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[AllRolesProjectList]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.projects.list()
+            async for item in response:
+                yield item
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        page = page if page is not None else 1
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/projects/",
+            method="GET",
+            params={
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    PaginatedAllRolesProjectListList,
+                    parse_obj_as(
+                        type_=PaginatedAllRolesProjectListList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _has_next = True
+                _get_next = lambda: self.list(
+                    ordering=ordering,
+                    page=page + 1,
+                    page_size=page_size,
+                    request_options=request_options,
+                )
+                _items = _parsed_response.results
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
         """
