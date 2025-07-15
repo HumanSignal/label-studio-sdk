@@ -2,19 +2,12 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 import typing
-import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class UsersResetTokenResponse(UniversalBaseModel):
-    """
-    User token
-    """
-
-    token: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Token
-    """
+    token: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

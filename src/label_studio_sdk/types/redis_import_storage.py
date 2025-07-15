@@ -4,13 +4,13 @@ from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
 import datetime as dt
-from .redis_import_storage_status import RedisImportStorageStatus
+from .status_d14enum import StatusD14Enum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class RedisImportStorage(UniversalBaseModel):
-    id: typing.Optional[int] = None
-    type: typing.Optional[str] = None
+    id: int
+    type: str
     synchronizable: typing.Optional[bool] = None
     path: typing.Optional[str] = pydantic.Field(default=None)
     """
@@ -57,17 +57,13 @@ class RedisImportStorage(UniversalBaseModel):
     Last sync job ID
     """
 
-    status: typing.Optional[RedisImportStorageStatus] = None
+    status: typing.Optional[StatusD14Enum] = None
     traceback: typing.Optional[str] = pydantic.Field(default=None)
     """
     Traceback report for the last failed sync
     """
 
-    meta: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
-    """
-    Meta and debug information about storage processes
-    """
-
+    meta: typing.Optional[typing.Optional[typing.Any]] = None
     title: typing.Optional[str] = pydantic.Field(default=None)
     """
     Cloud storage title
@@ -78,7 +74,7 @@ class RedisImportStorage(UniversalBaseModel):
     Cloud storage description
     """
 
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    created_at: dt.datetime = pydantic.Field()
     """
     Creation time
     """

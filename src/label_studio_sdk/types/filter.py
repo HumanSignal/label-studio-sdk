@@ -7,7 +7,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Filter(UniversalBaseModel):
-    id: typing.Optional[int] = None
+    id: int
     index: typing.Optional[int] = pydantic.Field(default=None)
     """
     To keep filter order
@@ -28,10 +28,7 @@ class Filter(UniversalBaseModel):
     Filter operator
     """
 
-    value: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
-    """
-    Filter value
-    """
+    value: typing.Optional[typing.Optional[typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

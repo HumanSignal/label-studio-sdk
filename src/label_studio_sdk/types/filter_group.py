@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class FilterGroup(UniversalBaseModel):
-    id: typing.Optional[int] = None
+    id: int
     filters: typing.List[Filter]
     conjunction: str = pydantic.Field()
     """

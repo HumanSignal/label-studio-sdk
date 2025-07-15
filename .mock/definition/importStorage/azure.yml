@@ -8,27 +8,16 @@ service:
       path: /api/storages/azure/
       method: GET
       auth: true
-      docs: >
-
-        You can connect your Microsoft Azure Blob storage container to Label
-        Studio as a source storage or target storage. Use this API request to
-        get a list of all Azure import (source) storage connections for a
-        specific project. 
-
-
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](../projects/list). 
-
-
-        For more information about working with external storage, see [Sync data
-        from external storage](https://labelstud.io/guide/storage).
+      docs: Get list of all Azure import storage connections.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List import storages
+      display-name: Get all import storage
       request:
         name: AzureListRequest
         query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
           project:
             type: optional<integer>
             docs: Project ID
@@ -66,25 +55,7 @@ service:
       path: /api/storages/azure/
       method: POST
       auth: true
-      docs: >
-
-        Create a new source storage connection to Microsoft Azure Blob storage. 
-
-
-        For information about the required fields and prerequisites, see
-        [Microsoft Azure Blob
-        storage](https://labelstud.io/guide/storage#Microsoft-Azure-Blob-storage)
-        in the Label Studio documentation. 
-
-
-        <Info>Ensure you configure CORS before adding cloud storage. This
-        ensures you will be able to see the content of the data rather than just
-        a link.</Info>
-
-
-        <Tip>After you add the storage, you should validate the connection
-        before attempting to sync your data. Your data will not be imported
-        until you [sync your connection](sync).</Tip>
+      docs: Create new Azure import storage
       source:
         openapi: openapi/openapi.yaml
       display-name: Create new storage
@@ -116,6 +87,8 @@ service:
             title:
               type: optional<string>
               docs: Storage title
+              validation:
+                maxLength: 2048
             description:
               type: optional<string>
               docs: Storage description
@@ -137,109 +110,44 @@ service:
         content-type: application/json
       response:
         docs: ''
-        type: AzureCreateResponse
+        type: root.AzureBlobImportStorage
       examples:
         - request: {}
           response:
             body:
-              regex_filter: regex_filter
-              use_blob_urls: true
+              id: 1
+              type: type
+              synchronizable: true
               presign: true
-              presign_ttl: 1
-              title: title
-              description: description
-              project: 1
               container: container
               prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               account_name: account_name
               account_key: account_key
-      audiences:
-        - public
-    validate:
-      path: /api/storages/azure/validate
-      method: POST
-      auth: true
-      docs: >
-
-        Validate a specific Azure import storage connection. This is useful to
-        ensure that the storage configuration settings are correct and
-        operational before attempting to import data.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Validate import storage
-      request:
-        name: AzureValidateRequest
-        body:
-          properties:
-            id:
-              type: optional<integer>
-              docs: Storage ID. If set, storage with specified ID will be updated
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
-              default: false
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for direct download
-              default: true
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            container:
-              type: optional<string>
-              docs: Azure blob container
-            prefix:
-              type: optional<string>
-              docs: Azure blob prefix name
-            account_name:
-              type: optional<string>
-              docs: Azure Blob account name
-            account_key:
-              type: optional<string>
-              docs: Azure Blob account key
-        content-type: application/json
-      examples:
-        - request: {}
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              project: 1
       audiences:
         - public
     get:
       path: /api/storages/azure/{id}
       method: GET
       auth: true
-      docs: >
-
-        Get a specific Azure import storage connection. You will need to provide
-        the import storage ID. You can find this using [List import
-        storages](list). 
-
-
-        For more information about working with external storage, see [Sync data
-        from external storage](https://labelstud.io/guide/storage).
+      docs: Get a specific Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this azure blob import storage.
+        id: integer
       display-name: Get import storage
       response:
         docs: ''
@@ -277,30 +185,11 @@ service:
       path: /api/storages/azure/{id}
       method: DELETE
       auth: true
-      docs: >
-
-        Delete a specific Azure import storage connection. You will need to
-        provide the import storage ID. You can find this using [List import
-        storages](list). 
-
-
-        Deleting a source storage connection does not affect tasks with synced
-        data in Label Studio. The sync process is designed to import new or
-        updated tasks from the connected storage into the project, but it does
-        not track deletions of files from the storage. Therefore, if you remove
-        the external storage connection, the tasks that were created from that
-        storage will remain in the project.
-
-
-        If you want to remove the tasks that were synced from the external
-        storage, you will need to delete them manually from within the Label
-        Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+      docs: Delete a specific Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this azure blob import storage.
+        id: integer
       display-name: Delete import storage
       examples:
         - path-parameters:
@@ -311,21 +200,11 @@ service:
       path: /api/storages/azure/{id}
       method: PATCH
       auth: true
-      docs: >
-
-        Update a specific Azure import storage connection. You will need to
-        provide the import storage ID. You can find this using [List import
-        storages](list). 
-
-
-        For more information about working with external storage, see [Sync data
-        from external storage](https://labelstud.io/guide/storage).
+      docs: Update a specific Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this azure blob import storage.
+        id: integer
       display-name: Update import storage
       request:
         name: AzureUpdateRequest
@@ -355,6 +234,8 @@ service:
             title:
               type: optional<string>
               docs: Storage title
+              validation:
+                maxLength: 2048
             description:
               type: optional<string>
               docs: Storage description
@@ -376,47 +257,42 @@ service:
         content-type: application/json
       response:
         docs: ''
-        type: AzureUpdateResponse
+        type: root.AzureBlobImportStorage
       examples:
         - path-parameters:
             id: 1
           request: {}
           response:
             body:
-              regex_filter: regex_filter
-              use_blob_urls: true
+              id: 1
+              type: type
+              synchronizable: true
               presign: true
-              presign_ttl: 1
-              title: title
-              description: description
-              project: 1
               container: container
               prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               account_name: account_name
               account_key: account_key
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              project: 1
       audiences:
         - public
     sync:
       path: /api/storages/azure/{id}/sync
       method: POST
       auth: true
-      docs: >
-
-        Sync tasks from an Azure import storage connection. You will need to
-        provide the import storage ID. You can find this using [List import
-        storages](list). 
-
-
-        Sync operations with external containers only go one way. They either
-        create tasks from objects in the container (source/import storage) or
-        push annotations to the output container (export/target storage).
-        Changing something on the Microsoft side doesn’t guarantee consistency
-        in results.
-
-
-        <Note>Before proceeding, you should review [How sync operations work -
-        Source storage](https://labelstud.io/guide/storage#Source-storage) to
-        ensure that your data remains secure and private.</Note> 
+      docs: Sync tasks from an Azure import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -456,98 +332,69 @@ service:
               project: 1
       audiences:
         - public
+    validate:
+      path: /api/storages/azure/validate
+      method: POST
+      auth: true
+      docs: Validate a specific Azure import storage connection.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Validate import storage
+      request:
+        name: AzureValidateRequest
+        body:
+          properties:
+            id:
+              type: optional<integer>
+              docs: Storage ID. If set, storage with specified ID will be updated
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for direct download
+              default: true
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
+            title:
+              type: optional<string>
+              docs: Storage title
+              validation:
+                maxLength: 2048
+            description:
+              type: optional<string>
+              docs: Storage description
+            project:
+              type: optional<integer>
+              docs: Project ID
+            container:
+              type: optional<string>
+              docs: Azure blob container
+            prefix:
+              type: optional<string>
+              docs: Azure blob prefix name
+            account_name:
+              type: optional<string>
+              docs: Azure Blob account name
+            account_key:
+              type: optional<string>
+              docs: Azure Blob account key
+        content-type: application/json
+      examples:
+        - request: {}
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml
-types:
-  AzureCreateResponse:
-    properties:
-      regex_filter:
-        type: optional<string>
-        docs: >-
-          Cloud storage regex for filtering objects. You must specify it
-          otherwise no objects will be imported.
-      use_blob_urls:
-        type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          bucket contains images, you can use this option to generate URLs for
-          these images. If set to False, it will read the content of the file
-          and load it into Label Studio.
-        default: false
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for direct download
-        default: true
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in minutes
-        default: 1
-      title:
-        type: optional<string>
-        docs: Storage title
-      description:
-        type: optional<string>
-        docs: Storage description
-      project:
-        type: optional<integer>
-        docs: Project ID
-      container:
-        type: optional<string>
-        docs: Azure blob container
-      prefix:
-        type: optional<string>
-        docs: Azure blob prefix name
-      account_name:
-        type: optional<string>
-        docs: Azure Blob account name
-      account_key:
-        type: optional<string>
-        docs: Azure Blob account key
-    source:
-      openapi: openapi/openapi.yaml
-  AzureUpdateResponse:
-    properties:
-      regex_filter:
-        type: optional<string>
-        docs: >-
-          Cloud storage regex for filtering objects. You must specify it
-          otherwise no objects will be imported.
-      use_blob_urls:
-        type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          bucket contains images, you can use this option to generate URLs for
-          these images. If set to False, it will read the content of the file
-          and load it into Label Studio.
-        default: false
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for direct download
-        default: true
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in minutes
-        default: 1
-      title:
-        type: optional<string>
-        docs: Storage title
-      description:
-        type: optional<string>
-        docs: Storage description
-      project:
-        type: optional<integer>
-        docs: Project ID
-      container:
-        type: optional<string>
-        docs: Azure blob container
-      prefix:
-        type: optional<string>
-        docs: Azure blob prefix name
-      account_name:
-        type: optional<string>
-        docs: Azure Blob account name
-      account_key:
-        type: optional<string>
-        docs: Azure Blob account key
-    source:
-      openapi: openapi/openapi.yaml

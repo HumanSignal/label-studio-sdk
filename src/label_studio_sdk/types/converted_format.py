@@ -2,14 +2,14 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .converted_format_status import ConvertedFormatStatus
+from .status7bf_enum import Status7BfEnum
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ConvertedFormat(UniversalBaseModel):
-    id: typing.Optional[int] = None
-    status: typing.Optional[ConvertedFormatStatus] = None
+    id: int
+    status: typing.Optional[Status7BfEnum] = None
     export_type: str
     traceback: typing.Optional[str] = pydantic.Field(default=None)
     """

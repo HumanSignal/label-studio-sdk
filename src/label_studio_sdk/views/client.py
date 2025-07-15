@@ -25,10 +25,7 @@ class ViewsClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[View]:
         """
-
-        List all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize which tasks and information appears.
-
-        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
+        List all views for a specific project.
 
         Parameters
         ----------
@@ -49,6 +46,7 @@ class ViewsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.views.list()
         """
@@ -82,10 +80,7 @@ class ViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-
-        Create a new Data Manager view for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks and information appears.
-
-        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
+        Create a view for a specific project.
 
         Parameters
         ----------
@@ -109,6 +104,7 @@ class ViewsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.views.create()
         """
@@ -141,59 +137,9 @@ class ViewsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-
-        Delete all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks appear.
-
-        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
-
-        Parameters
-        ----------
-        project : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.views.delete_all(
-            project=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/dm/views/reset/",
-            method="DELETE",
-            json={
-                "project": project,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> View:
         """
-
-        Get the details about a specific Data Manager view (tab). You will need to supply the view ID. You can find this using [List views](list).
+        Get the details about a specific view in the data manager
 
         Parameters
         ----------
@@ -214,6 +160,7 @@ class ViewsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.views.get(
             id="id",
@@ -240,7 +187,7 @@ class ViewsClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific Data Manager view (tab) by ID. You can find the view using [List views](list).
+        Delete a specific view by ID.
 
         Parameters
         ----------
@@ -260,6 +207,7 @@ class ViewsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.views.delete(
             id="id",
@@ -287,8 +235,7 @@ class ViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-
-        You can update a specific Data Manager view (tab) with additional filters and other customizations. You will need to supply the view ID. You can find this using [List views](list).
+        Update view data with additional filters and other information for a specific project.
 
         Parameters
         ----------
@@ -315,6 +262,7 @@ class ViewsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.views.update(
             id="id",
@@ -349,6 +297,103 @@ class ViewsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def update_order(
+        self, *, project: int, ids: typing.Sequence[int], request_options: typing.Optional[RequestOptions] = None
+    ) -> View:
+        """
+        Update the order field of views based on the provided list of view IDs
+
+        Parameters
+        ----------
+        project : int
+
+        ids : typing.Sequence[int]
+            A list of view IDs in the desired order.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        View
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.views.update_order(
+            project=1,
+            ids=[1],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/dm/views/order/",
+            method="POST",
+            json={
+                "project": project,
+                "ids": ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    View,
+                    parse_obj_as(
+                        type_=View,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete all views for a specific project. Request body example: `{"project": 1}`.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.views.delete_all()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/dm/views/reset/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncViewsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -358,10 +403,7 @@ class AsyncViewsClient:
         self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[View]:
         """
-
-        List all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize which tasks and information appears.
-
-        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
+        List all views for a specific project.
 
         Parameters
         ----------
@@ -384,6 +426,7 @@ class AsyncViewsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -423,10 +466,7 @@ class AsyncViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-
-        Create a new Data Manager view for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks and information appears.
-
-        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
+        Create a view for a specific project.
 
         Parameters
         ----------
@@ -452,6 +492,7 @@ class AsyncViewsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -490,67 +531,9 @@ class AsyncViewsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-
-        Delete all views for a specific project. A view is a tab in the Data Manager where you can set filters and customize what tasks appear.
-
-        You will need to provide the project ID. You can find this in the URL when viewing the project in Label Studio, or you can use [List all projects](../projects/list).
-
-        Parameters
-        ----------
-        project : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.views.delete_all(
-                project=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/dm/views/reset/",
-            method="DELETE",
-            json={
-                "project": project,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> View:
         """
-
-        Get the details about a specific Data Manager view (tab). You will need to supply the view ID. You can find this using [List views](list).
+        Get the details about a specific view in the data manager
 
         Parameters
         ----------
@@ -573,6 +556,7 @@ class AsyncViewsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -605,7 +589,7 @@ class AsyncViewsClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific Data Manager view (tab) by ID. You can find the view using [List views](list).
+        Delete a specific view by ID.
 
         Parameters
         ----------
@@ -627,6 +611,7 @@ class AsyncViewsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -660,8 +645,7 @@ class AsyncViewsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> View:
         """
-
-        You can update a specific Data Manager view (tab) with additional filters and other customizations. You will need to supply the view ID. You can find this using [List views](list).
+        Update view data with additional filters and other information for a specific project.
 
         Parameters
         ----------
@@ -690,6 +674,7 @@ class AsyncViewsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -725,6 +710,119 @@ class AsyncViewsClient:
                         object_=_response.json(),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update_order(
+        self, *, project: int, ids: typing.Sequence[int], request_options: typing.Optional[RequestOptions] = None
+    ) -> View:
+        """
+        Update the order field of views based on the provided list of view IDs
+
+        Parameters
+        ----------
+        project : int
+
+        ids : typing.Sequence[int]
+            A list of view IDs in the desired order.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        View
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.views.update_order(
+                project=1,
+                ids=[1],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/dm/views/order/",
+            method="POST",
+            json={
+                "project": project,
+                "ids": ids,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    View,
+                    parse_obj_as(
+                        type_=View,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete all views for a specific project. Request body example: `{"project": 1}`.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.views.delete_all()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/dm/views/reset/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -3,31 +3,29 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
-from .annotation_completed_by import AnnotationCompletedBy
 import datetime as dt
 from .annotation_last_action import AnnotationLastAction
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Annotation(UniversalBaseModel):
-    id: typing.Optional[int] = None
+    id: int
     result: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(default=None)
     """
     List of annotation results for the task
     """
 
-    created_username: typing.Optional[str] = pydantic.Field(default=None)
+    created_username: str = pydantic.Field()
     """
     Username string
     """
 
-    created_ago: typing.Optional[str] = pydantic.Field(default=None)
+    created_ago: str = pydantic.Field()
     """
     Time delta from creation time
     """
 
-    completed_by: typing.Optional[AnnotationCompletedBy] = None
-    unique_id: typing.Optional[str] = None
+    completed_by: typing.Optional[int] = None
     was_cancelled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     User skipped the task
@@ -38,12 +36,12 @@ class Annotation(UniversalBaseModel):
     This annotation is a Ground Truth (ground_truth)
     """
 
-    created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    created_at: dt.datetime = pydantic.Field()
     """
     Creation time
     """
 
-    updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    updated_at: dt.datetime = pydantic.Field()
     """
     Last updated time
     """
@@ -66,6 +64,22 @@ class Annotation(UniversalBaseModel):
     last_action: typing.Optional[AnnotationLastAction] = pydantic.Field(default=None)
     """
     Action which was performed in the last annotation history item
+    
+    * `prediction` - Created from prediction
+    * `propagated_annotation` - Created from another annotation
+    * `imported` - Imported
+    * `submitted` - Submitted
+    * `updated` - Updated
+    * `skipped` - Skipped
+    * `accepted` - Accepted
+    * `rejected` - Rejected
+    * `fixed_and_accepted` - Fixed and accepted
+    * `deleted_review` - Deleted review
+    """
+
+    bulk_created: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Annotation was created in bulk mode
     """
 
     task: typing.Optional[int] = pydantic.Field(default=None)

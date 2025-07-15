@@ -1,0 +1,243 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_projects_members_pauses_list:
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/
+      method: GET
+      auth: true
+      docs: Retrieve a list of all pauses.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        project_pk: integer
+        user_pk: integer
+      display-name: List pauses
+      request:
+        name: ApiProjectsMembersPausesListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.Pause>
+      examples:
+        - path-parameters:
+            project_pk: 1
+            user_pk: 1
+          response:
+            body:
+              - id: 1
+                project: 1
+                user: 1
+                paused_by:
+                  id: 1
+                  first_name: first_name
+                  last_name: last_name
+                  email: email
+                  avatar: avatar
+                reason: MANUAL
+                verbose_reason: verbose_reason
+                deleted_by: 1
+                deleted_at: '2024-01-15T09:30:00Z'
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+    api_projects_members_pauses_create:
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/
+      method: POST
+      auth: true
+      docs: Create a new pause entry.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        project_pk: integer
+        user_pk: integer
+      display-name: Create pause
+      request:
+        body: root.PauseRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.Pause
+      examples:
+        - path-parameters:
+            project_pk: 1
+            user_pk: 1
+          request:
+            reason: MANUAL
+          response:
+            body:
+              id: 1
+              project: 1
+              user: 1
+              paused_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              reason: MANUAL
+              verbose_reason: verbose_reason
+              deleted_by: 1
+              deleted_at: '2024-01-15T09:30:00Z'
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+    api_projects_members_pauses_retrieve:
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
+      method: GET
+      auth: true
+      docs: Retrieve a specific pause by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+        project_pk: integer
+        user_pk: integer
+      display-name: Get pause
+      response:
+        docs: ''
+        type: root.Pause
+      examples:
+        - path-parameters:
+            id: id
+            project_pk: 1
+            user_pk: 1
+          response:
+            body:
+              id: 1
+              project: 1
+              user: 1
+              paused_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              reason: MANUAL
+              verbose_reason: verbose_reason
+              deleted_by: 1
+              deleted_at: '2024-01-15T09:30:00Z'
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+    api_projects_members_pauses_update:
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
+      method: PUT
+      auth: true
+      docs: Overwrite a pause entry by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+        project_pk: integer
+        user_pk: integer
+      display-name: Put pause
+      request:
+        body: root.PauseRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.Pause
+      examples:
+        - path-parameters:
+            id: id
+            project_pk: 1
+            user_pk: 1
+          request:
+            reason: MANUAL
+          response:
+            body:
+              id: 1
+              project: 1
+              user: 1
+              paused_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              reason: MANUAL
+              verbose_reason: verbose_reason
+              deleted_by: 1
+              deleted_at: '2024-01-15T09:30:00Z'
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+    api_projects_members_pauses_destroy:
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
+      method: DELETE
+      auth: true
+      docs: Delete a specific pause by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+        project_pk: integer
+        user_pk: integer
+      display-name: Delete pause
+      examples:
+        - path-parameters:
+            id: id
+            project_pk: 1
+            user_pk: 1
+    api_projects_members_pauses_partial_update:
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
+      method: PATCH
+      auth: true
+      docs: Partially update a pause entry by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+        project_pk: integer
+        user_pk: integer
+      display-name: Update pause
+      request:
+        name: PatchedPauseRequest
+        body:
+          properties:
+            reason:
+              type: optional<root.ReasonEnum>
+              docs: |-
+                Reason for pausing
+
+                * `MANUAL` - Manual
+                * `BEHAVIOR_BASED` - Behavior-based
+                * `ANNOTATOR_EVALUATION` - Annotator evaluation
+                * `ANNOTATION_LIMIT` - Annotation limit
+                * `CUSTOM_SCRIPT` - Custom script
+            verbose_reason:
+              type: optional<string>
+              docs: >-
+                Detailed description of why the project is paused, will be
+                readable by paused annotators
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.Pause
+      examples:
+        - path-parameters:
+            id: id
+            project_pk: 1
+            user_pk: 1
+          request: {}
+          response:
+            body:
+              id: 1
+              project: 1
+              user: 1
+              paused_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              reason: MANUAL
+              verbose_reason: verbose_reason
+              deleted_by: 1
+              deleted_at: '2024-01-15T09:30:00Z'
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+  source:
+    openapi: openapi/openapi.yaml

@@ -1,0 +1,185 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_jwt_settings_retrieve:
+      path: /api/jwt/settings
+      method: GET
+      auth: true
+      docs: Retrieve JWT settings for the currently active organization.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Retrieve JWT Settings
+      response:
+        docs: ''
+        type: root.LsejwtSettings
+      examples:
+        - response:
+            body:
+              api_tokens_enabled: true
+              legacy_api_tokens_enabled: true
+              api_token_ttl_days: 1
+    api_jwt_settings_create:
+      path: /api/jwt/settings
+      method: POST
+      auth: true
+      docs: Update JWT settings for the currently active organization.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Update JWT Settings
+      request:
+        name: LsejwtSettingsRequest
+        body:
+          properties:
+            api_tokens_enabled:
+              type: optional<boolean>
+              docs: Enable JWT API token authentication for this organization
+            legacy_api_tokens_enabled:
+              type: optional<boolean>
+              docs: Enable legacy API token authentication for this organization
+            api_token_ttl_days:
+              type: optional<integer>
+              docs: Number of days before JWT API tokens expire
+              validation:
+                min: -2147483648
+                max: 2147483647
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.LsejwtSettings
+      examples:
+        - request: {}
+          response:
+            body:
+              api_tokens_enabled: true
+              legacy_api_tokens_enabled: true
+              api_token_ttl_days: 1
+    api_token_list:
+      path: /api/token/
+      method: GET
+      auth: true
+      docs: List all API tokens for the current user.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List API tokens
+      request:
+        name: ApiTokenListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.LseapiTokenList>
+      examples:
+        - response:
+            body:
+              - token: token
+                created_at: created_at
+                expires_at: expires_at
+    api_token_create:
+      path: /api/token/
+      method: POST
+      auth: true
+      docs: Create a new API token for the current user.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create API token
+      response:
+        docs: ''
+        type: root.LseapiTokenCreate
+      examples:
+        - response:
+            body:
+              token: token
+              created_at: created_at
+              expires_at: expires_at
+    api_token_blacklist_create:
+      path: /api/token/blacklist/
+      method: POST
+      auth: false
+      docs: >-
+        Adds a JWT refresh token to the blacklist, preventing it from being used
+        to obtain new access tokens.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Blacklist a JWT refresh token
+      request:
+        name: LsapiTokenBlacklistRequest
+        body:
+          properties:
+            refresh:
+              type: string
+              validation:
+                minLength: 1
+        content-type: application/json
+      response:
+        docs: ''
+        type: map<string, unknown>
+      errors:
+        - root.NotFoundError
+      examples:
+        - request:
+            refresh: refresh
+          response:
+            body:
+              key: value
+    api_token_refresh_create:
+      path: /api/token/refresh/
+      method: POST
+      auth: false
+      docs: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      source:
+        openapi: openapi/openapi.yaml
+      request:
+        name: TokenRefreshRequest
+        body:
+          properties:
+            refresh:
+              type: string
+              validation:
+                minLength: 1
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.TokenRefreshResponse
+      examples:
+        - request:
+            refresh: refresh
+          response:
+            body:
+              access: access
+    api_token_rotate_create:
+      path: /api/token/rotate/
+      method: POST
+      auth: true
+      docs: Creates a new JWT refresh token and blacklists the current one.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Rotate JWT refresh token
+      request:
+        name: LsapiTokenRotateRequest
+        body:
+          properties:
+            refresh:
+              type: string
+              validation:
+                minLength: 1
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.TokenRotateResponse
+      errors:
+        - root.BadRequestError
+      examples:
+        - request:
+            refresh: refresh
+          response:
+            body:
+              refresh: refresh
+  source:
+    openapi: openapi/openapi.yaml

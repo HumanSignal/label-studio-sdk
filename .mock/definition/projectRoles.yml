@@ -1,0 +1,124 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_projects_roles_retrieve:
+      path: /api/projects/{id}/roles
+      method: GET
+      auth: true
+      docs: |2-
+
+                List users and their project level roles for a given project.
+                If user is not listed here and is a member of the project then they would behave as assigned role in organization.
+                
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: List project roles
+      response:
+        docs: ''
+        type: root.ProjectRole
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              role: OW
+              user: 1
+              project: 1
+    api_projects_roles_list:
+      path: /api/projects/roles/
+      method: GET
+      auth: true
+      docs: |2-
+
+                List project roles for requested IDs for the current user
+                
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List project roles for current user
+      request:
+        name: ApiProjectsRolesListRequest
+        query-parameters:
+          ids: optional<integer>
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.ProjectRole>
+      examples:
+        - response:
+            body:
+              - id: 1
+                role: OW
+                user: 1
+                project: 1
+    api_projects_roles_create:
+      path: /api/projects/roles/
+      method: POST
+      auth: true
+      docs: |2-
+
+                Create project role for user allowing the user the same access level provided by organization role.
+                
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create project role for user
+      request:
+        name: ProjectRoleRequest
+        body:
+          properties:
+            role:
+              type: root.Role9E7Enum
+              docs: |-
+                User role in project
+
+                * `OW` - Owner
+                * `AD` - Administrator
+                * `MA` - Manager
+                * `RE` - Reviewer
+                * `AN` - Annotator
+                * `DI` - Deactivated
+                * `NO` - Not Activated
+            user: integer
+            project: integer
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.ProjectRole
+      examples:
+        - request:
+            role: OW
+            user: 1
+            project: 1
+          response:
+            body:
+              id: 1
+              role: OW
+              user: 1
+              project: 1
+    api_projects_roles_destroy:
+      path: /api/projects/roles/{id}/
+      method: DELETE
+      auth: true
+      docs: |2-
+
+                Remove project role for user allowing the user the same access level provided by organization role.
+                
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project role.
+      display-name: Remove project role for user
+      examples:
+        - path-parameters:
+            id: 1
+  source:
+    openapi: openapi/openapi.yaml

@@ -8,23 +8,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class View(UniversalBaseModel):
-    id: typing.Optional[int] = None
+    id: int
     filter_group: typing.Optional[FilterGroup] = None
-    data: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    data: typing.Optional[typing.Optional[typing.Any]] = None
+    ordering: typing.Optional[typing.Optional[typing.Any]] = None
+    order: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Custom view data
-    """
-
-    ordering: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
-    """
-    Ordering parameters
+    Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
     """
 
-    selected_items: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
-    """
-    Selected items
-    """
-
+    selected_items: typing.Optional[typing.Optional[typing.Any]] = None
     user: typing.Optional[int] = pydantic.Field(default=None)
     """
     User who made this view

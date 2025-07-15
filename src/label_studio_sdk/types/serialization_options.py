@@ -10,8 +10,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class SerializationOptions(UniversalBaseModel):
-    drafts: typing.Optional[SerializationOption] = None
-    predictions: typing.Optional[SerializationOption] = None
+    drafts: typing.Optional[SerializationOption] = pydantic.Field(default=None)
+    """
+    JSON dict with parameters
+    """
+
+    predictions: typing.Optional[SerializationOption] = pydantic.Field(default=None)
+    """
+    JSON dict with parameters
+    """
+
     include_annotation_history: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Include annotation history
@@ -19,7 +27,11 @@ class SerializationOptions(UniversalBaseModel):
 
     annotations_completed_by: typing_extensions.Annotated[
         typing.Optional[SerializationOption], FieldMetadata(alias="annotations__completed_by")
-    ] = None
+    ] = pydantic.Field(default=None)
+    """
+    JSON dict with parameters
+    """
+
     interpolate_key_frames: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Interpolate video key frames

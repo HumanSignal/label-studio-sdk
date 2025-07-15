@@ -8,14 +8,17 @@ import pydantic
 
 class UserSimple(UniversalBaseModel):
     """
-    Project owner
+    A ModelSerializer that takes additional arguments for
+    "fields", "omit" and "expand" in order to
+    control which fields are displayed, and whether to replace simple
+    values with complex, nested serializations
     """
 
-    id: typing.Optional[int] = None
+    id: int
     first_name: typing.Optional[str] = None
     last_name: typing.Optional[str] = None
     email: typing.Optional[str] = None
-    avatar: typing.Optional[str] = None
+    avatar: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

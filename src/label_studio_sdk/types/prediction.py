@@ -8,7 +8,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Prediction(UniversalBaseModel):
-    id: typing.Optional[int] = None
+    id: int
     result: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
     """
     List of prediction results for the task
@@ -19,7 +19,7 @@ class Prediction(UniversalBaseModel):
     Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
     """
 
-    created_ago: typing.Optional[str] = pydantic.Field(default=None)
+    created_ago: str = pydantic.Field()
     """
     Delta time from creation time
     """
@@ -34,18 +34,14 @@ class Prediction(UniversalBaseModel):
     Cluster for the current prediction
     """
 
-    neighbors: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
-    """
-    Array of task IDs of the closest neighbors
-    """
-
+    neighbors: typing.Optional[typing.Optional[typing.Any]] = None
     mislabeling: typing.Optional[float] = pydantic.Field(default=None)
     """
     Related task mislabeling score
     """
 
-    created_at: typing.Optional[dt.datetime] = None
-    updated_at: typing.Optional[dt.datetime] = None
+    created_at: dt.datetime
+    updated_at: dt.datetime
     model: typing.Optional[int] = pydantic.Field(default=None)
     """
     An ML Backend instance that created the prediction.

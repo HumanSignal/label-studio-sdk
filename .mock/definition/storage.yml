@@ -1,0 +1,32 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_dataset_storages_list:
+      path: /api/dataset-storages/
+      method: GET
+      auth: true
+      docs: Retrieve a list of the dataset storages of all types with their IDs.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List all dataset storages from the project
+      request:
+        name: ApiDatasetStoragesListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      examples:
+        - {}
+    api_dataset_storages_types_retrieve:
+      path: /api/dataset-storages/types/
+      method: GET
+      auth: true
+      docs: Retrieve a list of the dataset storages types.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List all dataset storages types
+      examples:
+        - {}
+  source:
+    openapi: openapi/openapi.yaml

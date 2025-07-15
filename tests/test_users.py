@@ -6,6 +6,110 @@ import typing
 from .utilities import validate_response
 
 
+async def test_get_current_user(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "id": 1,
+        "first_name": "first_name",
+        "last_name": "last_name",
+        "username": "username",
+        "email": "email",
+        "last_activity": "2024-01-15T09:30:00Z",
+        "custom_hotkeys": {"key": "value"},
+        "avatar": "avatar",
+        "initials": "initials",
+        "phone": "phone",
+        "active_organization": 1,
+        "active_organization_meta": "active_organization_meta",
+        "allow_newsletters": True,
+        "date_joined": "2024-01-15T09:30:00Z",
+        "org_membership": [{"role": "role", "active": "active", "organization_id": 1}],
+    }
+    expected_types: typing.Any = {
+        "id": "integer",
+        "first_name": None,
+        "last_name": None,
+        "username": None,
+        "email": None,
+        "last_activity": "datetime",
+        "custom_hotkeys": None,
+        "avatar": None,
+        "initials": None,
+        "phone": None,
+        "active_organization": "integer",
+        "active_organization_meta": None,
+        "allow_newsletters": None,
+        "date_joined": "datetime",
+        "org_membership": ("list", {0: {"role": None, "active": None, "organization_id": "integer"}}),
+    }
+    response = client.users.get_current_user()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.users.get_current_user()
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_update_current_user(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "id": 1,
+        "first_name": "first_name",
+        "last_name": "last_name",
+        "username": "username",
+        "email": "email",
+        "last_activity": "2024-01-15T09:30:00Z",
+        "custom_hotkeys": {"key": "value"},
+        "avatar": "avatar",
+        "initials": "initials",
+        "phone": "phone",
+        "active_organization": 1,
+        "active_organization_meta": "active_organization_meta",
+        "allow_newsletters": True,
+        "date_joined": "2024-01-15T09:30:00Z",
+        "org_membership": [{"role": "role", "active": "active", "organization_id": 1}],
+    }
+    expected_types: typing.Any = {
+        "id": "integer",
+        "first_name": None,
+        "last_name": None,
+        "username": None,
+        "email": None,
+        "last_activity": "datetime",
+        "custom_hotkeys": None,
+        "avatar": None,
+        "initials": None,
+        "phone": None,
+        "active_organization": "integer",
+        "active_organization_meta": None,
+        "allow_newsletters": None,
+        "date_joined": "datetime",
+        "org_membership": ("list", {0: {"role": None, "active": None, "organization_id": "integer"}}),
+    }
+    response = client.users.update_current_user()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.users.update_current_user()
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_get_hotkeys(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"custom_hotkeys": {"key": "value"}}
+    expected_types: typing.Any = {"custom_hotkeys": ("dict", {0: (None, None)})}
+    response = client.users.get_hotkeys()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.users.get_hotkeys()
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_update_hotkeys(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"custom_hotkeys": {"key": "value"}}
+    expected_types: typing.Any = {"custom_hotkeys": ("dict", {0: (None, None)})}
+    response = client.users.update_hotkeys()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.users.update_hotkeys()
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_reset_token(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"token": "token"}
     expected_types: typing.Any = {"token": None}
@@ -34,12 +138,31 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "username": "username",
         "email": "email",
         "last_activity": "2024-01-15T09:30:00Z",
+        "custom_hotkeys": {"key": "value"},
         "avatar": "avatar",
         "initials": "initials",
         "phone": "phone",
         "active_organization": 1,
+        "active_organization_meta": "active_organization_meta",
         "allow_newsletters": True,
         "date_joined": "2024-01-15T09:30:00Z",
+        "org_membership": [{"role": "role", "active": "active", "organization_id": 1}],
+        "lse_fields": {
+            "invite_expired": "invite_expired",
+            "invite_expired_at": "invite_expired_at",
+            "invited_at": "2024-01-15T09:30:00Z",
+            "invite_activated": True,
+            "trial_company": "trial_company",
+            "trial_role": "annotator",
+            "trial_models_in_production": "trial_models_in_production",
+            "trial_experience_labeling": "trial_experience_labeling",
+            "trial_license_enterprise": True,
+            "social_auth_finished": True,
+            "invited_by": 1,
+            "onboarding_state": "not_started",
+            "email_notification_settings": "email_notification_settings",
+        },
+        "pause": "pause",
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -48,12 +171,31 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "username": None,
         "email": None,
         "last_activity": "datetime",
+        "custom_hotkeys": None,
         "avatar": None,
         "initials": None,
         "phone": None,
         "active_organization": "integer",
+        "active_organization_meta": None,
         "allow_newsletters": None,
         "date_joined": "datetime",
+        "org_membership": ("list", {0: {"role": None, "active": None, "organization_id": "integer"}}),
+        "lse_fields": {
+            "invite_expired": None,
+            "invite_expired_at": None,
+            "invited_at": "datetime",
+            "invite_activated": None,
+            "trial_company": None,
+            "trial_role": None,
+            "trial_models_in_production": None,
+            "trial_experience_labeling": None,
+            "trial_license_enterprise": None,
+            "social_auth_finished": None,
+            "invited_by": "integer",
+            "onboarding_state": None,
+            "email_notification_settings": None,
+        },
+        "pause": None,
     }
     response = client.users.whoami()
     validate_response(response, expected_response, expected_types)
@@ -71,12 +213,15 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "username": "username",
             "email": "email",
             "last_activity": "2024-01-15T09:30:00Z",
+            "custom_hotkeys": {"key": "value"},
             "avatar": "avatar",
             "initials": "initials",
             "phone": "phone",
             "active_organization": 1,
+            "active_organization_meta": "active_organization_meta",
             "allow_newsletters": True,
             "date_joined": "2024-01-15T09:30:00Z",
+            "org_membership": [{"role": "role", "active": "active", "organization_id": 1}],
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
@@ -89,12 +234,15 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "username": None,
                 "email": None,
                 "last_activity": "datetime",
+                "custom_hotkeys": None,
                 "avatar": None,
                 "initials": None,
                 "phone": None,
                 "active_organization": "integer",
+                "active_organization_meta": None,
                 "allow_newsletters": None,
                 "date_joined": "datetime",
+                "org_membership": ("list", {0: {"role": None, "active": None, "organization_id": "integer"}}),
             }
         },
     )
@@ -113,12 +261,31 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "username": "username",
         "email": "email",
         "last_activity": "2024-01-15T09:30:00Z",
+        "custom_hotkeys": {"key": "value"},
         "avatar": "avatar",
         "initials": "initials",
         "phone": "phone",
         "active_organization": 1,
+        "active_organization_meta": "active_organization_meta",
         "allow_newsletters": True,
         "date_joined": "2024-01-15T09:30:00Z",
+        "org_membership": [{"role": "role", "active": "active", "organization_id": 1}],
+        "lse_fields": {
+            "invite_expired": "invite_expired",
+            "invite_expired_at": "invite_expired_at",
+            "invited_at": "2024-01-15T09:30:00Z",
+            "invite_activated": True,
+            "trial_company": "trial_company",
+            "trial_role": "annotator",
+            "trial_models_in_production": "trial_models_in_production",
+            "trial_experience_labeling": "trial_experience_labeling",
+            "trial_license_enterprise": True,
+            "social_auth_finished": True,
+            "invited_by": 1,
+            "onboarding_state": "not_started",
+            "email_notification_settings": "email_notification_settings",
+        },
+        "pause": "pause",
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -127,12 +294,31 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "username": None,
         "email": None,
         "last_activity": "datetime",
+        "custom_hotkeys": None,
         "avatar": None,
         "initials": None,
         "phone": None,
         "active_organization": "integer",
+        "active_organization_meta": None,
         "allow_newsletters": None,
         "date_joined": "datetime",
+        "org_membership": ("list", {0: {"role": None, "active": None, "organization_id": "integer"}}),
+        "lse_fields": {
+            "invite_expired": None,
+            "invite_expired_at": None,
+            "invited_at": "datetime",
+            "invite_activated": None,
+            "trial_company": None,
+            "trial_role": None,
+            "trial_models_in_production": None,
+            "trial_experience_labeling": None,
+            "trial_license_enterprise": None,
+            "social_auth_finished": None,
+            "invited_by": "integer",
+            "onboarding_state": None,
+            "email_notification_settings": None,
+        },
+        "pause": None,
     }
     response = client.users.create()
     validate_response(response, expected_response, expected_types)
@@ -149,12 +335,31 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "username": "username",
         "email": "email",
         "last_activity": "2024-01-15T09:30:00Z",
+        "custom_hotkeys": {"key": "value"},
         "avatar": "avatar",
         "initials": "initials",
         "phone": "phone",
         "active_organization": 1,
+        "active_organization_meta": "active_organization_meta",
         "allow_newsletters": True,
         "date_joined": "2024-01-15T09:30:00Z",
+        "org_membership": [{"role": "role", "active": "active", "organization_id": 1}],
+        "lse_fields": {
+            "invite_expired": "invite_expired",
+            "invite_expired_at": "invite_expired_at",
+            "invited_at": "2024-01-15T09:30:00Z",
+            "invite_activated": True,
+            "trial_company": "trial_company",
+            "trial_role": "annotator",
+            "trial_models_in_production": "trial_models_in_production",
+            "trial_experience_labeling": "trial_experience_labeling",
+            "trial_license_enterprise": True,
+            "social_auth_finished": True,
+            "invited_by": 1,
+            "onboarding_state": "not_started",
+            "email_notification_settings": "email_notification_settings",
+        },
+        "pause": "pause",
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -163,12 +368,31 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "username": None,
         "email": None,
         "last_activity": "datetime",
+        "custom_hotkeys": None,
         "avatar": None,
         "initials": None,
         "phone": None,
         "active_organization": "integer",
+        "active_organization_meta": None,
         "allow_newsletters": None,
         "date_joined": "datetime",
+        "org_membership": ("list", {0: {"role": None, "active": None, "organization_id": "integer"}}),
+        "lse_fields": {
+            "invite_expired": None,
+            "invite_expired_at": None,
+            "invited_at": "datetime",
+            "invite_activated": None,
+            "trial_company": None,
+            "trial_role": None,
+            "trial_models_in_production": None,
+            "trial_experience_labeling": None,
+            "trial_license_enterprise": None,
+            "social_auth_finished": None,
+            "invited_by": "integer",
+            "onboarding_state": None,
+            "email_notification_settings": None,
+        },
+        "pause": None,
     }
     response = client.users.get(id=1)
     validate_response(response, expected_response, expected_types)
@@ -198,12 +422,31 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "username": "username",
         "email": "email",
         "last_activity": "2024-01-15T09:30:00Z",
+        "custom_hotkeys": {"key": "value"},
         "avatar": "avatar",
         "initials": "initials",
         "phone": "phone",
         "active_organization": 1,
+        "active_organization_meta": "active_organization_meta",
         "allow_newsletters": True,
         "date_joined": "2024-01-15T09:30:00Z",
+        "org_membership": [{"role": "role", "active": "active", "organization_id": 1}],
+        "lse_fields": {
+            "invite_expired": "invite_expired",
+            "invite_expired_at": "invite_expired_at",
+            "invited_at": "2024-01-15T09:30:00Z",
+            "invite_activated": True,
+            "trial_company": "trial_company",
+            "trial_role": "annotator",
+            "trial_models_in_production": "trial_models_in_production",
+            "trial_experience_labeling": "trial_experience_labeling",
+            "trial_license_enterprise": True,
+            "social_auth_finished": True,
+            "invited_by": 1,
+            "onboarding_state": "not_started",
+            "email_notification_settings": "email_notification_settings",
+        },
+        "pause": "pause",
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -212,12 +455,31 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "username": None,
         "email": None,
         "last_activity": "datetime",
+        "custom_hotkeys": None,
         "avatar": None,
         "initials": None,
         "phone": None,
         "active_organization": "integer",
+        "active_organization_meta": None,
         "allow_newsletters": None,
         "date_joined": "datetime",
+        "org_membership": ("list", {0: {"role": None, "active": None, "organization_id": "integer"}}),
+        "lse_fields": {
+            "invite_expired": None,
+            "invite_expired_at": None,
+            "invited_at": "datetime",
+            "invite_activated": None,
+            "trial_company": None,
+            "trial_role": None,
+            "trial_models_in_production": None,
+            "trial_experience_labeling": None,
+            "trial_license_enterprise": None,
+            "social_auth_finished": None,
+            "invited_by": "integer",
+            "onboarding_state": None,
+            "email_notification_settings": None,
+        },
+        "pause": None,
     }
     response = client.users.update(id=1)
     validate_response(response, expected_response, expected_types)

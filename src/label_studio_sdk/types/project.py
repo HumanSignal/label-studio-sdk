@@ -3,7 +3,6 @@
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
 import pydantic
-from .prompt import Prompt
 from .user_simple import UserSimple
 import datetime as dt
 from .project_sampling import ProjectSampling
@@ -12,7 +11,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Project(UniversalBaseModel):
-    id: typing.Optional[int] = None
+    """
+    Serializer get numbers from project queryset annotation,
+    make sure, that you use correct one(Project.objects.with_counts())
+    """
+
+    id: int
     title: typing.Optional[str] = pydantic.Field(default=None)
     """
     Project name. Must be between 3 and 50 characters long.
@@ -54,21 +58,10 @@ class Project(UniversalBaseModel):
     """
 
     organization: typing.Optional[int] = None
-    prompts: typing.Optional[typing.List[Prompt]] = None
     color: typing.Optional[str] = None
     maximum_annotations: typing.Optional[int] = pydantic.Field(default=None)
     """
     Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
-    """
-
-    annotation_limit_count: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Maximum number of tasks that can be annotated by a single annotator in this project pause
-    """
-
-    annotation_limit_percent: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Maximum percentage of tasks in this project that can be annotated by a single annotator
     """
 
     is_published: typing.Optional[bool] = pydantic.Field(default=None)
@@ -86,14 +79,18 @@ class Project(UniversalBaseModel):
     Whether or not the project is in the middle of being created
     """
 
-    created_by: typing.Optional[UserSimple] = None
-    created_at: typing.Optional[dt.datetime] = None
+    created_by: typing.Optional[UserSimple] = pydantic.Field(default=None)
+    """
+    Project owner
+    """
+
+    created_at: dt.datetime
     min_annotations_to_start_training: typing.Optional[int] = pydantic.Field(default=None)
     """
     Minimum number of completed tasks after which model training is started
     """
 
-    start_training_on_annotation_update: typing.Optional[bool] = pydantic.Field(default=None)
+    start_training_on_annotation_update: str = pydantic.Field()
     """
     Start model training after any annotations are submitted or updated
     """
@@ -103,37 +100,37 @@ class Project(UniversalBaseModel):
     If set, the annotator can view model predictions
     """
 
-    num_tasks_with_annotations: typing.Optional[int] = pydantic.Field(default=None)
+    num_tasks_with_annotations: int = pydantic.Field()
     """
     Tasks with annotations count
     """
 
-    task_number: typing.Optional[int] = pydantic.Field(default=None)
+    task_number: int = pydantic.Field()
     """
     Total task number in project
     """
 
-    useful_annotation_number: typing.Optional[int] = pydantic.Field(default=None)
+    useful_annotation_number: int = pydantic.Field()
     """
     Useful annotation number in project not including skipped_annotations_number and ground_truth_number. Total annotations = annotation_number + skipped_annotations_number + ground_truth_number
     """
 
-    ground_truth_number: typing.Optional[int] = pydantic.Field(default=None)
+    ground_truth_number: int = pydantic.Field()
     """
     Honeypot annotation number in project
     """
 
-    skipped_annotations_number: typing.Optional[int] = pydantic.Field(default=None)
+    skipped_annotations_number: int = pydantic.Field()
     """
     Skipped by collaborators annotation number in project
     """
 
-    total_annotations_number: typing.Optional[int] = pydantic.Field(default=None)
+    total_annotations_number: int = pydantic.Field()
     """
     Total annotations number in project including skipped_annotations_number and ground_truth_number.
     """
 
-    total_predictions_number: typing.Optional[int] = pydantic.Field(default=None)
+    total_predictions_number: int = pydantic.Field()
     """
     Total predictions number in project including skipped_annotations_number, ground_truth_number, and useful_annotation_number.
     """
@@ -152,22 +149,14 @@ class Project(UniversalBaseModel):
     Task data credentials: password
     """
 
-    control_weights: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
-    """
-    Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
-    """
-
-    parsed_label_config: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
-    """
-    JSON-formatted labeling configuration
-    """
-
+    control_weights: typing.Optional[typing.Optional[typing.Any]] = None
+    parsed_label_config: typing.Optional[typing.Any] = None
     evaluate_predictions_automatically: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Retrieve and display predictions when loading a task
     """
 
-    config_has_control_tags: typing.Optional[bool] = pydantic.Field(default=None)
+    config_has_control_tags: str = pydantic.Field()
     """
     Flag to detect is project ready for labeling
     """
@@ -183,13 +172,17 @@ class Project(UniversalBaseModel):
     Pinned date and time
     """
 
-    finished_task_number: typing.Optional[int] = pydantic.Field(default=None)
+    finished_task_number: int = pydantic.Field()
     """
     Finished tasks
     """
 
-    queue_total: typing.Optional[int] = None
-    queue_done: typing.Optional[int] = None
+    queue_total: str
+    queue_done: str
+    config_suitable_for_bulk_annotation: str = pydantic.Field()
+    """
+    Flag to detect is project ready for bulk annotation
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

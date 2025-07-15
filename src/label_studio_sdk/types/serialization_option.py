@@ -7,10 +7,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class SerializationOption(UniversalBaseModel):
-    """
-    JSON dict with parameters
-    """
-
     only_id: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Include a full json body or IDs only

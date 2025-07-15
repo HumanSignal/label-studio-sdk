@@ -1,0 +1,361 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_project_templates_list:
+      path: /api/project-templates/
+      method: GET
+      auth: true
+      docs: Get a list of all project templates for an organization.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Get project templates
+      request:
+        name: ApiProjectTemplatesListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.ProjectTemplate>
+      examples:
+        - response:
+            body:
+              - id: 1
+                name: name
+                description: description
+                tags:
+                  key: value
+                project_settings:
+                  key: value
+                review_settings:
+                  key: value
+                assignment_settings:
+                  key: value
+                require_comment_on_skip: true
+                custom_script: custom_script
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+                created_by: 1
+                organization: 1
+    api_project_templates_create:
+      path: /api/project-templates/
+      method: POST
+      auth: true
+      docs: Create a project template for an organization.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create project template
+      request:
+        body: root.ProjectTemplateRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.ProjectTemplate
+      examples:
+        - request:
+            name: name
+          response:
+            body:
+              id: 1
+              name: name
+              description: description
+              tags:
+                key: value
+              project_settings:
+                key: value
+              review_settings:
+                key: value
+              assignment_settings:
+                key: value
+              require_comment_on_skip: true
+              custom_script: custom_script
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              created_by: 1
+              organization: 1
+    api_project_templates_retrieve:
+      path: /api/project-templates/{id}
+      method: GET
+      auth: true
+      docs: Get a specific project template by ID for an organization.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get a project template
+      response:
+        docs: ''
+        type: root.ProjectTemplate
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              name: name
+              description: description
+              tags:
+                key: value
+              project_settings:
+                key: value
+              review_settings:
+                key: value
+              assignment_settings:
+                key: value
+              require_comment_on_skip: true
+              custom_script: custom_script
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              created_by: 1
+              organization: 1
+    api_project_templates_update:
+      path: /api/project-templates/{id}
+      method: PUT
+      auth: true
+      docs: Overwrite a specific project template by ID for an organization.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Overwrite a project template
+      request:
+        body: root.ProjectTemplateRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.ProjectTemplate
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            name: name
+          response:
+            body:
+              id: 1
+              name: name
+              description: description
+              tags:
+                key: value
+              project_settings:
+                key: value
+              review_settings:
+                key: value
+              assignment_settings:
+                key: value
+              require_comment_on_skip: true
+              custom_script: custom_script
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              created_by: 1
+              organization: 1
+    api_project_templates_destroy:
+      path: /api/project-templates/{id}
+      method: DELETE
+      auth: true
+      docs: Delete a specific project template by ID for an organization.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Delete a project template
+      examples:
+        - path-parameters:
+            id: 1
+    api_project_templates_partial_update:
+      path: /api/project-templates/{id}
+      method: PATCH
+      auth: true
+      docs: >-
+        Update the details of a specific project template by ID for an
+        organization.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Update a project template
+      request:
+        name: PatchedProjectTemplateRequest
+        body:
+          properties:
+            name:
+              type: optional<string>
+              validation:
+                minLength: 1
+                maxLength: 1000
+            description:
+              type: optional<string>
+              validation:
+                minLength: 1
+            tags: optional<unknown>
+            project_settings: optional<unknown>
+            review_settings: optional<unknown>
+            assignment_settings: optional<unknown>
+            require_comment_on_skip:
+              type: optional<boolean>
+              docs: flag to require comment on skip
+            custom_script:
+              type: optional<string>
+              docs: custom script for projects created from this template
+              validation:
+                minLength: 1
+            created_by: optional<integer>
+            organization: optional<integer>
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.ProjectTemplate
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              id: 1
+              name: name
+              description: description
+              tags:
+                key: value
+              project_settings:
+                key: value
+              review_settings:
+                key: value
+              assignment_settings:
+                key: value
+              require_comment_on_skip: true
+              custom_script: custom_script
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              created_by: 1
+              organization: 1
+    api_project_templates_create_project_create:
+      path: /api/project-templates/{id}/create-project
+      method: POST
+      auth: true
+      docs: >-
+        Create a project from a specific project template by ID for an
+        organization.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Create project from template
+      request:
+        name: ApiProjectTemplatesCreateProjectCreateRequest
+        body:
+          properties:
+            title:
+              type: string
+              docs: The title of the project to be created from the template.
+            description:
+              type: optional<string>
+              docs: A description for the project.
+            workspace_id:
+              type: integer
+              docs: >-
+                A unique integer value identifying the workspace in which to
+                create the project.
+        content-type: application/json
+      response:
+        docs: Project created successfully
+        type: root.LseProject
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            title: title
+            workspace_id: 1
+          response:
+            body:
+              id: 1
+              title: title
+              description: description
+              label_config: label_config
+              expert_instruction: expert_instruction
+              show_instruction: true
+              show_skip_button: true
+              enable_empty_annotation: true
+              show_annotation_history: true
+              organization: 1
+              color: color
+              maximum_annotations: 1
+              is_published: true
+              model_version: model_version
+              is_draft: true
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              created_at: '2024-01-15T09:30:00Z'
+              min_annotations_to_start_training: 1
+              start_training_on_annotation_update: start_training_on_annotation_update
+              show_collab_predictions: true
+              num_tasks_with_annotations: 1
+              task_number: 1
+              useful_annotation_number: 1
+              ground_truth_number: 1
+              skipped_annotations_number: 1
+              total_annotations_number: 1
+              total_predictions_number: 1
+              sampling: Sequential sampling
+              show_ground_truth_first: true
+              show_overlap_first: true
+              overlap_cohort_percentage: 1
+              task_data_login: task_data_login
+              task_data_password: task_data_password
+              control_weights:
+                key: value
+              parsed_label_config:
+                key: value
+              evaluate_predictions_automatically: true
+              config_has_control_tags: config_has_control_tags
+              skip_queue: REQUEUE_FOR_ME
+              reveal_preannotations_interactively: true
+              pinned_at: '2024-01-15T09:30:00Z'
+              finished_task_number: 1
+              queue_total: queue_total
+              queue_done: queue_done
+              config_suitable_for_bulk_annotation: config_suitable_for_bulk_annotation
+              workspace: workspace
+              review_settings:
+                id: 1
+                requeue_rejected_tasks_to_annotator: true
+                review_criteria: all
+                anonymize_annotations: true
+                only_finished_tasks: true
+                instruction: instruction
+                show_instruction: true
+                show_data_manager_to_reviewers: true
+                show_agreement_to_reviewers: true
+                require_comment_on_reject: true
+                requeue_rejected_tasks_mode: requeue
+                review_only_manual_assignments: true
+                project: 1
+              assignment_settings:
+                id: 1
+                label_stream_task_distribution: auto_distribution
+                project: 1
+              members: members
+              custom_script: custom_script
+              comment_classification_config: comment_classification_config
+              duplication_done: true
+              require_comment_on_skip: true
+              data_types:
+                key: value
+              reviewer_queue_total: reviewer_queue_total
+              queue_left: queue_left
+              members_count: members_count
+              custom_task_lock_ttl: 1
+              prompts: prompts
+              annotation_limit_count: 1
+              annotation_limit_percent: annotation_limit_percent
+              pause_on_failed_annotator_evaluation: true
+              annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
+              annotator_evaluation_minimum_tasks: 1
+  source:
+    openapi: openapi/openapi.yaml

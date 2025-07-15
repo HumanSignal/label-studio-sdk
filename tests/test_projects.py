@@ -6,48 +6,6 @@ import typing
 from .utilities import validate_response
 
 
-async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {
-        "id": 1,
-        "title": "My project",
-        "description": "My first project",
-        "label_config": "<View>[...]</View>",
-        "expert_instruction": "Label all cats",
-        "show_instruction": True,
-        "show_skip_button": True,
-        "enable_empty_annotation": True,
-        "show_annotation_history": True,
-        "reveal_preannotations_interactively": True,
-        "show_collab_predictions": True,
-        "maximum_annotations": 1,
-        "color": "color",
-        "control_weights": {
-            "my_bbox": {"type": "RectangleLabels", "labels": {"Car": 1, "Airplaine": 0.5}, "overall": 0.33}
-        },
-    }
-    expected_types: typing.Any = {
-        "id": "integer",
-        "title": None,
-        "description": None,
-        "label_config": None,
-        "expert_instruction": None,
-        "show_instruction": None,
-        "show_skip_button": None,
-        "enable_empty_annotation": None,
-        "show_annotation_history": None,
-        "reveal_preannotations_interactively": None,
-        "show_collab_predictions": None,
-        "maximum_annotations": "integer",
-        "color": None,
-        "control_weights": ("dict", {0: (None, None)}),
-    }
-    response = client.projects.create()
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.create()
-    validate_response(async_response, expected_response, expected_types)
-
-
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "id": 1,
@@ -60,24 +18,8 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "enable_empty_annotation": True,
         "show_annotation_history": True,
         "organization": 1,
-        "prompts": [
-            {
-                "title": "title",
-                "description": "description",
-                "created_by": 1,
-                "created_at": "2024-01-15T09:30:00Z",
-                "updated_at": "2024-01-15T09:30:00Z",
-                "organization": 1,
-                "input_fields": ["input_fields"],
-                "output_classes": ["output_classes"],
-                "associated_projects": [1],
-                "skill_name": "skill_name",
-            }
-        ],
         "color": "#FF0000",
         "maximum_annotations": 1,
-        "annotation_limit_count": 10,
-        "annotation_limit_percent": 50,
         "is_published": True,
         "model_version": "1.0.0",
         "is_draft": False,
@@ -90,7 +32,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         },
         "created_at": "2023-08-24T14:15:22Z",
         "min_annotations_to_start_training": 0,
-        "start_training_on_annotation_update": True,
+        "start_training_on_annotation_update": "start_training_on_annotation_update",
         "show_collab_predictions": True,
         "num_tasks_with_annotations": 10,
         "task_number": 100,
@@ -105,16 +47,17 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "overlap_cohort_percentage": 100,
         "task_data_login": "user",
         "task_data_password": "secret",
-        "control_weights": {"key": "value"},
-        "parsed_label_config": {"key": "value"},
+        "control_weights": {},
+        "parsed_label_config": '{"tag": {...}}',
         "evaluate_predictions_automatically": False,
-        "config_has_control_tags": True,
+        "config_has_control_tags": "config_has_control_tags",
         "skip_queue": "REQUEUE_FOR_ME",
         "reveal_preannotations_interactively": True,
         "pinned_at": "2023-08-24T14:15:22Z",
         "finished_task_number": 10,
-        "queue_total": 10,
-        "queue_done": 100,
+        "queue_total": "queue_total",
+        "queue_done": "queue_done",
+        "config_suitable_for_bulk_annotation": "config_suitable_for_bulk_annotation",
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -127,27 +70,8 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "enable_empty_annotation": None,
         "show_annotation_history": None,
         "organization": "integer",
-        "prompts": (
-            "list",
-            {
-                0: {
-                    "title": None,
-                    "description": None,
-                    "created_by": "integer",
-                    "created_at": "datetime",
-                    "updated_at": "datetime",
-                    "organization": "integer",
-                    "input_fields": ("list", {0: None}),
-                    "output_classes": ("list", {0: None}),
-                    "associated_projects": ("list", {0: "integer"}),
-                    "skill_name": None,
-                }
-            },
-        ),
         "color": None,
         "maximum_annotations": "integer",
-        "annotation_limit_count": "integer",
-        "annotation_limit_percent": None,
         "is_published": None,
         "model_version": None,
         "is_draft": None,
@@ -169,16 +93,17 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "overlap_cohort_percentage": "integer",
         "task_data_login": None,
         "task_data_password": None,
-        "control_weights": ("dict", {0: (None, None)}),
-        "parsed_label_config": ("dict", {0: (None, None)}),
+        "control_weights": None,
+        "parsed_label_config": None,
         "evaluate_predictions_automatically": None,
         "config_has_control_tags": None,
         "skip_queue": None,
         "reveal_preannotations_interactively": None,
         "pinned_at": "datetime",
         "finished_task_number": "integer",
-        "queue_total": "integer",
-        "queue_done": "integer",
+        "queue_total": None,
+        "queue_done": None,
+        "config_suitable_for_bulk_annotation": None,
     }
     response = client.projects.get(id=1)
     validate_response(response, expected_response, expected_types)
@@ -198,50 +123,6 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         await async_client.projects.delete(id=1)  # type: ignore[func-returns-value]
         is None
     )
-
-
-async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {
-        "title": "My project",
-        "description": "My first project",
-        "label_config": "<View>[...]</View>",
-        "expert_instruction": "Label all cats",
-        "show_instruction": True,
-        "show_skip_button": True,
-        "enable_empty_annotation": True,
-        "show_annotation_history": True,
-        "reveal_preannotations_interactively": True,
-        "show_collab_predictions": True,
-        "maximum_annotations": 1,
-        "annotation_limit_count": 1,
-        "annotation_limit_percent": 1.1,
-        "color": "color",
-        "control_weights": {
-            "my_bbox": {"type": "RectangleLabels", "labels": {"Car": 1, "Airplaine": 0.5}, "overall": 0.33}
-        },
-    }
-    expected_types: typing.Any = {
-        "title": None,
-        "description": None,
-        "label_config": None,
-        "expert_instruction": None,
-        "show_instruction": None,
-        "show_skip_button": None,
-        "enable_empty_annotation": None,
-        "show_annotation_history": None,
-        "reveal_preannotations_interactively": None,
-        "show_collab_predictions": None,
-        "maximum_annotations": "integer",
-        "annotation_limit_count": "integer",
-        "annotation_limit_percent": None,
-        "color": None,
-        "control_weights": ("dict", {0: (None, None)}),
-    }
-    response = client.projects.update(id=1)
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.update(id=1)
-    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
@@ -265,18 +146,18 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
         "found_formats": ("list", {0: None}),
         "data_columns": ("list", {0: None}),
     }
-    response = client.projects.import_tasks(id=1, request=[{"key": "value"}])
+    response = client.projects.import_tasks(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.import_tasks(id=1, request=[{"key": "value"}])
+    async_response = await async_client.projects.import_tasks(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_validate_config(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"label_config": "label_config"}
-    expected_types: typing.Any = {"label_config": None}
-    response = client.projects.validate_config(id=1, label_config="label_config")
+async def test_delete_all_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"key": "value"}
+    expected_types: typing.Tuple[typing.Any, typing.Any] = ("dict", {0: (None, None)})
+    response = client.projects.delete_all_tasks(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.validate_config(id=1, label_config="label_config")
+    async_response = await async_client.projects.delete_all_tasks(id=1)
     validate_response(async_response, expected_response, expected_types)

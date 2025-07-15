@@ -4,25 +4,23 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    list:
-      path: /api/workspaces
+    api_workspaces_list:
+      path: /api/workspaces/
       method: GET
       auth: true
-      docs: >
-
-        List all workspaces for your organization. 
-
-
-        Workspaces in Label Studio let you organize your projects and users into
-        separate spaces. This is useful for managing different teams,
-        departments, or projects within your organization. 
-
-
-        For more information, see [Workspaces in Label
-        Studio](https://docs.humansignal.com/guide/workspaces).
+      docs: Get all workspaces for specified organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List workspaces
+      display-name: Get all workspaces
+      request:
+        name: ApiWorkspacesListRequest
+        query-parameters:
+          is_personal:
+            type: optional<boolean>
+            docs: Workspace is a personal user workspace.
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
       response:
         docs: ''
         type: list<root.Workspace>
@@ -32,91 +30,66 @@ service:
               - id: 1
                 title: title
                 description: description
-                is_public: true
+                color: color
                 is_personal: true
                 is_archived: true
-                created_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
                 created_by: 1
-                color: color
-      audiences:
-        - public
-    create:
-      path: /api/workspaces
+    api_workspaces_create:
+      path: /api/workspaces/
       method: POST
       auth: true
-      docs: >
-
-        Create a new workspace.
-
-
-        Workspaces in Label Studio let you organize your projects and users into
-        separate spaces. This is useful for managing different teams,
-        departments, or projects within your organization.
-
-
-        For more information, see [Workspaces in Label
-        Studio](https://docs.humansignal.com/guide/workspaces).
+      docs: Create a workspace.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create workspace
       request:
-        name: WorkspacesCreateRequest
+        name: WorkspaceRequest
         body:
           properties:
             title:
-              type: optional<string>
-              docs: Workspace title
+              type: string
+              docs: Workspace name
+              validation:
+                minLength: 1
+                maxLength: 1000
             description:
               type: optional<string>
               docs: Workspace description
-            is_public:
-              type: optional<boolean>
-              docs: Is workspace public
-            is_personal:
-              type: optional<boolean>
-              docs: Is workspace personal
             color:
               type: optional<string>
-              docs: Workspace color in HEX format
-              default: '#FFFFFF'
+              validation:
+                maxLength: 16
+            is_personal:
+              type: optional<boolean>
+              docs: Workspace is a personal user workspace
             is_archived:
               type: optional<boolean>
-              docs: Is workspace archived
+              docs: Workspace is archived
         content-type: application/json
       response:
         docs: ''
         type: root.Workspace
       examples:
-        - request: {}
+        - request:
+            title: title
           response:
             body:
               id: 1
               title: title
               description: description
-              is_public: true
+              color: color
               is_personal: true
               is_archived: true
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
               created_by: 1
-              color: color
-      audiences:
-        - public
-    get:
-      path: /api/workspaces/{id}
+    api_workspaces_retrieve:
+      path: /api/workspaces/{id}/
       method: GET
       auth: true
-      docs: >
-
-        Get information about a specific workspace. You will need to provide the
-        workspace ID. You can find this using [List workspaces](list).
+      docs: Retrieve details for a specific workspace by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Workspace ID
+        id: integer
       display-name: Get workspace
       response:
         docs: ''
@@ -129,73 +102,43 @@ service:
               id: 1
               title: title
               description: description
-              is_public: true
+              color: color
               is_personal: true
               is_archived: true
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
               created_by: 1
-              color: color
-      audiences:
-        - public
-    delete:
-      path: /api/workspaces/{id}
-      method: DELETE
-      auth: true
-      docs: >
-
-        Delete a specific workspace. You will need to provide the workspace ID.
-        You can find this using [List workspaces](list).
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: Workspace ID
-      display-name: Delete workspace
-      examples:
-        - path-parameters:
-            id: 1
-      audiences:
-        - public
-    update:
-      path: /api/workspaces/{id}
+    api_workspaces_partial_update:
+      path: /api/workspaces/{id}/
       method: PATCH
       auth: true
-      docs: >
-
-        Update a specific workspace. You will need to provide the workspace ID.
-        You can find this using [List workspaces](list).
+      docs: Update settings for a specific workspace by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Workspace ID
+        id: integer
       display-name: Update workspace
       request:
-        name: WorkspacesUpdateRequest
+        name: PatchedWorkspaceRequest
         body:
           properties:
             title:
               type: optional<string>
-              docs: Workspace title
+              docs: Workspace name
+              validation:
+                minLength: 1
+                maxLength: 1000
             description:
               type: optional<string>
               docs: Workspace description
-            is_public:
-              type: optional<boolean>
-              docs: Is workspace public
-            is_personal:
-              type: optional<boolean>
-              docs: Is workspace personal
             color:
               type: optional<string>
-              docs: Workspace color in HEX format
-              default: '#FFFFFF'
+              validation:
+                maxLength: 16
+            is_personal:
+              type: optional<boolean>
+              docs: Workspace is a personal user workspace
             is_archived:
               type: optional<boolean>
-              docs: Is workspace archived
+              docs: Workspace is archived
         content-type: application/json
       response:
         docs: ''
@@ -209,14 +152,331 @@ service:
               id: 1
               title: title
               description: description
-              is_public: true
+              color: color
               is_personal: true
               is_archived: true
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
               created_by: 1
+    api_workspaces_memberships_retrieve:
+      path: /api/workspaces/{id}/memberships/
+      method: GET
+      auth: true
+      docs: Get a list of all members in a specific workspace.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: List workspace members
+      response:
+        docs: ''
+        type: root.WorkspaceMemberCreate
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              user: 1
+              workspace: 1
+    api_workspaces_memberships_create:
+      path: /api/workspaces/{id}/memberships/
+      method: POST
+      auth: true
+      docs: Add a new workspace member by user ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Add workspace member
+      request:
+        name: WorkspaceMemberCreateRequest
+        body:
+          properties:
+            user:
+              type: integer
+              docs: User ID
+            workspace:
+              type: optional<integer>
+              docs: Workspace ID
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.WorkspaceMemberCreate
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            user: 1
+          response:
+            body:
+              user: 1
+              workspace: 1
+    api_workspaces_projects_retrieve:
+      path: /api/workspaces/{id}/projects/
+      method: GET
+      auth: true
+      docs: Retrieve a list of all projects in a specific workspace.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: List workspace projects
+      response:
+        docs: ''
+        type: root.Project
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              title: title
+              description: description
+              label_config: label_config
+              expert_instruction: expert_instruction
+              show_instruction: true
+              show_skip_button: true
+              enable_empty_annotation: true
+              show_annotation_history: true
+              organization: 1
               color: color
-      audiences:
-        - public
+              maximum_annotations: 1
+              is_published: true
+              model_version: model_version
+              is_draft: true
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              created_at: '2024-01-15T09:30:00Z'
+              min_annotations_to_start_training: 1
+              start_training_on_annotation_update: start_training_on_annotation_update
+              show_collab_predictions: true
+              num_tasks_with_annotations: 1
+              task_number: 1
+              useful_annotation_number: 1
+              ground_truth_number: 1
+              skipped_annotations_number: 1
+              total_annotations_number: 1
+              total_predictions_number: 1
+              sampling: Sequential sampling
+              show_ground_truth_first: true
+              show_overlap_first: true
+              overlap_cohort_percentage: 1
+              task_data_login: task_data_login
+              task_data_password: task_data_password
+              control_weights:
+                key: value
+              parsed_label_config:
+                key: value
+              evaluate_predictions_automatically: true
+              config_has_control_tags: config_has_control_tags
+              skip_queue: REQUEUE_FOR_ME
+              reveal_preannotations_interactively: true
+              pinned_at: '2024-01-15T09:30:00Z'
+              finished_task_number: 1
+              queue_total: queue_total
+              queue_done: queue_done
+              config_suitable_for_bulk_annotation: config_suitable_for_bulk_annotation
+    api_workspaces_projects_create:
+      path: /api/workspaces/{id}/projects/
+      method: POST
+      auth: true
+      docs: Create a project in a specific workspace.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Create workspace project
+      request:
+        name: ProjectRequest
+        body:
+          properties:
+            title:
+              type: optional<string>
+              docs: Project name. Must be between 3 and 50 characters long.
+              validation:
+                minLength: 3
+                maxLength: 50
+            description:
+              type: optional<string>
+              docs: Project description
+            label_config:
+              type: optional<string>
+              docs: Label config in XML format. See more about it in documentation
+            expert_instruction:
+              type: optional<string>
+              docs: Labeling instructions in HTML format
+            show_instruction:
+              type: optional<boolean>
+              docs: Show instructions to the annotator before they start
+            show_skip_button:
+              type: optional<boolean>
+              docs: >-
+                Show a skip button in interface and allow annotators to skip the
+                task
+            enable_empty_annotation:
+              type: optional<boolean>
+              docs: Allow annotators to submit empty annotations
+            show_annotation_history:
+              type: optional<boolean>
+              docs: Show annotation history to annotator
+            organization: optional<integer>
+            color:
+              type: optional<string>
+              validation:
+                maxLength: 16
+            maximum_annotations:
+              type: optional<integer>
+              docs: >-
+                Maximum number of annotations for one task. If the number of
+                annotations per task is equal or greater to this value, the task
+                is completed (is_labeled=True)
+              validation:
+                min: -2147483648
+                max: 2147483647
+            is_published:
+              type: optional<boolean>
+              docs: Whether or not the project is published to annotators
+            model_version:
+              type: optional<string>
+              docs: Machine learning model version
+            is_draft:
+              type: optional<boolean>
+              docs: Whether or not the project is in the middle of being created
+            created_by:
+              type: optional<root.UserSimpleRequest>
+              docs: Project owner
+            min_annotations_to_start_training:
+              type: optional<integer>
+              docs: >-
+                Minimum number of completed tasks after which model training is
+                started
+              validation:
+                min: -2147483648
+                max: 2147483647
+            show_collab_predictions:
+              type: optional<boolean>
+              docs: If set, the annotator can view model predictions
+            sampling: optional<ProjectRequestSampling>
+            show_ground_truth_first: optional<boolean>
+            show_overlap_first: optional<boolean>
+            overlap_cohort_percentage:
+              type: optional<integer>
+              validation:
+                min: -2147483648
+                max: 2147483647
+            task_data_login:
+              type: optional<string>
+              docs: 'Task data credentials: login'
+              validation:
+                maxLength: 256
+            task_data_password:
+              type: optional<string>
+              docs: 'Task data credentials: password'
+              validation:
+                maxLength: 256
+            control_weights: optional<unknown>
+            evaluate_predictions_automatically:
+              type: optional<boolean>
+              docs: Retrieve and display predictions when loading a task
+            skip_queue: optional<ProjectRequestSkipQueue>
+            reveal_preannotations_interactively:
+              type: optional<boolean>
+              docs: Reveal pre-annotations interactively
+            pinned_at:
+              type: optional<datetime>
+              docs: Pinned date and time
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.Project
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              id: 1
+              title: title
+              description: description
+              label_config: label_config
+              expert_instruction: expert_instruction
+              show_instruction: true
+              show_skip_button: true
+              enable_empty_annotation: true
+              show_annotation_history: true
+              organization: 1
+              color: color
+              maximum_annotations: 1
+              is_published: true
+              model_version: model_version
+              is_draft: true
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              created_at: '2024-01-15T09:30:00Z'
+              min_annotations_to_start_training: 1
+              start_training_on_annotation_update: start_training_on_annotation_update
+              show_collab_predictions: true
+              num_tasks_with_annotations: 1
+              task_number: 1
+              useful_annotation_number: 1
+              ground_truth_number: 1
+              skipped_annotations_number: 1
+              total_annotations_number: 1
+              total_predictions_number: 1
+              sampling: Sequential sampling
+              show_ground_truth_first: true
+              show_overlap_first: true
+              overlap_cohort_percentage: 1
+              task_data_login: task_data_login
+              task_data_password: task_data_password
+              control_weights:
+                key: value
+              parsed_label_config:
+                key: value
+              evaluate_predictions_automatically: true
+              config_has_control_tags: config_has_control_tags
+              skip_queue: REQUEUE_FOR_ME
+              reveal_preannotations_interactively: true
+              pinned_at: '2024-01-15T09:30:00Z'
+              finished_task_number: 1
+              queue_total: queue_total
+              queue_done: queue_done
+              config_suitable_for_bulk_annotation: config_suitable_for_bulk_annotation
+    api_workspaces_projects_destroy:
+      path: /api/workspaces/{id}/projects/
+      method: DELETE
+      auth: true
+      docs: Delete projects from a specific workspace.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Remove workspace projects
+      examples:
+        - path-parameters:
+            id: 1
   source:
     openapi: openapi/openapi.yaml
+types:
+  ProjectRequestSampling:
+    discriminated: false
+    union:
+      - root.SamplingEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  ProjectRequestSkipQueue:
+    discriminated: false
+    union:
+      - root.SkipQueueEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true

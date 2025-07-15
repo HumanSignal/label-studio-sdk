@@ -6,7 +6,6 @@ from .gcs.client import GcsClient
 from .local.client import LocalClient
 from .redis.client import RedisClient
 from .s3.client import S3Client
-from .s3s.client import S3SClient
 import typing
 from ..core.request_options import RequestOptions
 from .types.import_storage_list_types_response_item import ImportStorageListTypesResponseItem
@@ -19,7 +18,6 @@ from .gcs.client import AsyncGcsClient
 from .local.client import AsyncLocalClient
 from .redis.client import AsyncRedisClient
 from .s3.client import AsyncS3Client
-from .s3s.client import AsyncS3SClient
 
 
 class ImportStorageClient:
@@ -30,7 +28,6 @@ class ImportStorageClient:
         self.local = LocalClient(client_wrapper=self._client_wrapper)
         self.redis = RedisClient(client_wrapper=self._client_wrapper)
         self.s3 = S3Client(client_wrapper=self._client_wrapper)
-        self.s3s = S3SClient(client_wrapper=self._client_wrapper)
 
     def list_types(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -46,7 +43,7 @@ class ImportStorageClient:
         Returns
         -------
         typing.List[ImportStorageListTypesResponseItem]
-
+            List of import storage types
 
         Examples
         --------
@@ -54,6 +51,7 @@ class ImportStorageClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.list_types()
         """
@@ -85,7 +83,6 @@ class AsyncImportStorageClient:
         self.local = AsyncLocalClient(client_wrapper=self._client_wrapper)
         self.redis = AsyncRedisClient(client_wrapper=self._client_wrapper)
         self.s3 = AsyncS3Client(client_wrapper=self._client_wrapper)
-        self.s3s = AsyncS3SClient(client_wrapper=self._client_wrapper)
 
     async def list_types(
         self, *, request_options: typing.Optional[RequestOptions] = None
@@ -101,7 +98,7 @@ class AsyncImportStorageClient:
         Returns
         -------
         typing.List[ImportStorageListTypesResponseItem]
-
+            List of import storage types
 
         Examples
         --------
@@ -111,6 +108,7 @@ class AsyncImportStorageClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 

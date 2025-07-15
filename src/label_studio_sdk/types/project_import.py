@@ -2,20 +2,20 @@
 
 from ..core.pydantic_utilities import UniversalBaseModel
 import typing
-from .project_import_status import ProjectImportStatus
+from .status7bf_enum import Status7BfEnum
 import datetime as dt
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ProjectImport(UniversalBaseModel):
-    id: typing.Optional[int] = None
-    preannotated_from_fields: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    id: int
+    project: typing.Optional[int] = None
+    preannotated_from_fields: typing.Optional[typing.Optional[typing.Any]] = None
     commit_to_project: typing.Optional[bool] = None
     return_task_ids: typing.Optional[bool] = None
-    status: typing.Optional[ProjectImportStatus] = None
+    status: typing.Optional[Status7BfEnum] = None
     url: typing.Optional[str] = None
-    traceback: typing.Optional[str] = None
     error: typing.Optional[str] = None
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
@@ -36,13 +36,12 @@ class ProjectImport(UniversalBaseModel):
     annotation_count: typing.Optional[int] = None
     prediction_count: typing.Optional[int] = None
     duration: typing.Optional[int] = None
-    file_upload_ids: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
+    file_upload_ids: typing.Optional[typing.Optional[typing.Any]] = None
     could_be_tasks_list: typing.Optional[bool] = None
-    found_formats: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    data_columns: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    tasks: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    task_ids: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    project: typing.Optional[int] = None
+    found_formats: typing.Optional[typing.Optional[typing.Any]] = None
+    data_columns: typing.Optional[typing.Optional[typing.Any]] = None
+    tasks: typing.Optional[typing.Optional[typing.Any]] = None
+    task_ids: typing.Optional[typing.Optional[typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
