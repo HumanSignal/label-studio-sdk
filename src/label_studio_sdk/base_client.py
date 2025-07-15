@@ -14,6 +14,7 @@ from .projects.client import ProjectsClient
 from .tasks.client import TasksClient
 from .import_storage.client import ImportStorageClient
 from .export_storage.client import ExportStorageClient
+from .versions.client import VersionsClient
 from .webhooks.client import WebhooksClient
 from .core.client_wrapper import AsyncClientWrapper
 from .annotations.client import AsyncAnnotationsClient
@@ -27,6 +28,7 @@ from .projects.client import AsyncProjectsClient
 from .tasks.client import AsyncTasksClient
 from .import_storage.client import AsyncImportStorageClient
 from .export_storage.client import AsyncExportStorageClient
+from .versions.client import AsyncVersionsClient
 from .webhooks.client import AsyncWebhooksClient
 
 
@@ -90,6 +92,7 @@ class LabelStudioBase:
         self.tasks = TasksClient(client_wrapper=self._client_wrapper)
         self.import_storage = ImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = ExportStorageClient(client_wrapper=self._client_wrapper)
+        self.versions = VersionsClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
 
 
@@ -153,4 +156,5 @@ class AsyncLabelStudioBase:
         self.tasks = AsyncTasksClient(client_wrapper=self._client_wrapper)
         self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)
+        self.versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)

@@ -18,6 +18,7 @@ from .converted_format import ConvertedFormat
 from .converted_format_request import ConvertedFormatRequest
 from .custom_scripts_editable_by_enum import CustomScriptsEditableByEnum
 from .default_role_enum import DefaultRoleEnum
+from .edition_enum import EditionEnum
 from .export import Export
 from .file_upload import FileUpload
 from .filter import Filter
@@ -89,6 +90,7 @@ from .status_d14enum import StatusD14Enum
 from .trial_role_enum import TrialRoleEnum
 from .user_simple import UserSimple
 from .user_simple_request import UserSimpleRequest
+from .version_response import VersionResponse
 from .view import View
 from .webhook import Webhook
 from .webhook_serializer_for_update import WebhookSerializerForUpdate
@@ -112,6 +114,7 @@ __all__ = [
     "ConvertedFormatRequest",
     "CustomScriptsEditableByEnum",
     "DefaultRoleEnum",
+    "EditionEnum",
     "Export",
     "FileUpload",
     "Filter",
@@ -183,6 +186,7 @@ __all__ = [
     "TrialRoleEnum",
     "UserSimple",
     "UserSimpleRequest",
+    "VersionResponse",
     "View",
     "Webhook",
     "WebhookSerializerForUpdate",
