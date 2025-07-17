@@ -4,7 +4,7 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.export import Export
@@ -65,7 +65,7 @@ class ExportsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[str],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[str],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -121,7 +121,7 @@ class ExportsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Export],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Export],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -231,7 +231,7 @@ class ExportsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseExportCreate,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseExportCreate,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -283,7 +283,7 @@ class ExportsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Export,
-                    parse_obj_as(
+                    construct_type(
                         type_=Export,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -524,7 +524,7 @@ class AsyncExportsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[str],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[str],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -588,7 +588,7 @@ class AsyncExportsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Export],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Export],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -706,7 +706,7 @@ class AsyncExportsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseExportCreate,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseExportCreate,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -766,7 +766,7 @@ class AsyncExportsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Export,
-                    parse_obj_as(
+                    construct_type(
                         type_=Export,  # type: ignore
                         object_=_response.json(),
                     ),

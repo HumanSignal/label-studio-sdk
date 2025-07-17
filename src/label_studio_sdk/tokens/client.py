@@ -4,7 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.lseapi_token_list import LseapiTokenList
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.lseapi_token_create import LseapiTokenCreate
@@ -63,7 +63,7 @@ class TokensClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[LseapiTokenList],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[LseapiTokenList],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -106,7 +106,7 @@ class TokensClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseapiTokenCreate,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseapiTokenCreate,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -162,7 +162,7 @@ class TokensClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Dict[str, typing.Optional[typing.Any]],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -171,7 +171,7 @@ class TokensClient:
                 raise NotFoundError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -226,7 +226,7 @@ class TokensClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     TokenRefreshResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=TokenRefreshResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -280,7 +280,7 @@ class TokensClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     TokenRotateResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=TokenRotateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -289,7 +289,7 @@ class TokensClient:
                 raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -354,7 +354,7 @@ class AsyncTokensClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[LseapiTokenList],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[LseapiTokenList],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -405,7 +405,7 @@ class AsyncTokensClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseapiTokenCreate,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseapiTokenCreate,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -469,7 +469,7 @@ class AsyncTokensClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Dict[str, typing.Optional[typing.Any]],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -478,7 +478,7 @@ class AsyncTokensClient:
                 raise NotFoundError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -543,7 +543,7 @@ class AsyncTokensClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     TokenRefreshResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=TokenRefreshResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -607,7 +607,7 @@ class AsyncTokensClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     TokenRotateResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=TokenRotateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -616,7 +616,7 @@ class AsyncTokensClient:
                 raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),

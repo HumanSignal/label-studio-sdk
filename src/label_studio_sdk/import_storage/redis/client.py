@@ -4,7 +4,7 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.redis_import_storage import RedisImportStorage
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.jsonable_encoder import jsonable_encoder
@@ -67,7 +67,7 @@ class RedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[RedisImportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[RedisImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -165,7 +165,7 @@ class RedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -212,7 +212,7 @@ class RedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -355,7 +355,7 @@ class RedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -403,7 +403,7 @@ class RedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -571,7 +571,7 @@ class AsyncRedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[RedisImportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[RedisImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -677,7 +677,7 @@ class AsyncRedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -732,7 +732,7 @@ class AsyncRedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -891,7 +891,7 @@ class AsyncRedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -947,7 +947,7 @@ class AsyncRedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),

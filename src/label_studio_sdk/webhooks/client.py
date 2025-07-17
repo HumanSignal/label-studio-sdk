@@ -4,7 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.webhook import Webhook
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.actions_enum import ActionsEnum
@@ -61,7 +61,7 @@ class WebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Webhook],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Webhook],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -148,7 +148,7 @@ class WebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -193,7 +193,7 @@ class WebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -315,7 +315,7 @@ class WebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     WebhookSerializerForUpdate,
-                    parse_obj_as(
+                    construct_type(
                         type_=WebhookSerializerForUpdate,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -369,7 +369,7 @@ class WebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Dict[str, typing.Optional[typing.Any]],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -433,7 +433,7 @@ class AsyncWebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Webhook],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Webhook],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -528,7 +528,7 @@ class AsyncWebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -581,7 +581,7 @@ class AsyncWebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -719,7 +719,7 @@ class AsyncWebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     WebhookSerializerForUpdate,
-                    parse_obj_as(
+                    construct_type(
                         type_=WebhookSerializerForUpdate,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -781,7 +781,7 @@ class AsyncWebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Dict[str, typing.Optional[typing.Any]],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),

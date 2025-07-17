@@ -4,7 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.ml_backend import MlBackend
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .types.ml_create_request_auth_method import MlCreateRequestAuthMethod
@@ -67,7 +67,7 @@ class MlClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[MlBackend],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[MlBackend],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -176,7 +176,7 @@ class MlClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     MlBackend,
-                    parse_obj_as(
+                    construct_type(
                         type_=MlBackend,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -228,7 +228,7 @@ class MlClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     MlBackend,
-                    parse_obj_as(
+                    construct_type(
                         type_=MlBackend,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -386,7 +386,7 @@ class MlClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     MlBackend,
-                    parse_obj_as(
+                    construct_type(
                         type_=MlBackend,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -523,7 +523,7 @@ class MlClient:
                 raise InternalServerError(
                     typing.cast(
                         str,
-                        parse_obj_as(
+                        construct_type(
                             type_=str,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -573,7 +573,7 @@ class MlClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Dict[str, typing.Optional[typing.Any]],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -642,7 +642,7 @@ class AsyncMlClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[MlBackend],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[MlBackend],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -759,7 +759,7 @@ class AsyncMlClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     MlBackend,
-                    parse_obj_as(
+                    construct_type(
                         type_=MlBackend,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -819,7 +819,7 @@ class AsyncMlClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     MlBackend,
-                    parse_obj_as(
+                    construct_type(
                         type_=MlBackend,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -993,7 +993,7 @@ class AsyncMlClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     MlBackend,
-                    parse_obj_as(
+                    construct_type(
                         type_=MlBackend,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1146,7 +1146,7 @@ class AsyncMlClient:
                 raise InternalServerError(
                     typing.cast(
                         str,
-                        parse_obj_as(
+                        construct_type(
                             type_=str,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -1204,7 +1204,7 @@ class AsyncMlClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Dict[str, typing.Optional[typing.Any]],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),

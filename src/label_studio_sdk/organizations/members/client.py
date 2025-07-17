@@ -5,7 +5,7 @@ import typing
 from ...core.request_options import RequestOptions
 from ...types.organization_member import OrganizationMember
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...errors.not_found_error import NotFoundError
@@ -60,7 +60,7 @@ class MembersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     OrganizationMember,
-                    parse_obj_as(
+                    construct_type(
                         type_=OrganizationMember,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -113,7 +113,7 @@ class MembersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Dict[str, typing.Optional[typing.Any]],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -122,7 +122,7 @@ class MembersClient:
                 raise NotFoundError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -132,7 +132,7 @@ class MembersClient:
                 raise MethodNotAllowedError(
                     typing.cast(
                         typing.Dict[str, typing.Optional[typing.Any]],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -199,7 +199,7 @@ class AsyncMembersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     OrganizationMember,
-                    parse_obj_as(
+                    construct_type(
                         type_=OrganizationMember,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -260,7 +260,7 @@ class AsyncMembersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Dict[str, typing.Optional[typing.Any]],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -269,7 +269,7 @@ class AsyncMembersClient:
                 raise NotFoundError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -279,7 +279,7 @@ class AsyncMembersClient:
                 raise MethodNotAllowedError(
                     typing.cast(
                         typing.Dict[str, typing.Optional[typing.Any]],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                             object_=_response.json(),
                         ),

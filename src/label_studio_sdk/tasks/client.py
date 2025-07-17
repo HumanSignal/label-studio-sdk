@@ -5,7 +5,7 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.project_import import ProjectImport
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.pagination import SyncPager
@@ -70,7 +70,7 @@ class TasksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ProjectImport,
-                    parse_obj_as(
+                    construct_type(
                         type_=ProjectImport,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -138,7 +138,7 @@ class TasksClient:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     PaginatedTaskListResponseList,
-                    parse_obj_as(
+                    construct_type(
                         type_=PaginatedTaskListResponseList,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -155,7 +155,7 @@ class TasksClient:
                 raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -165,7 +165,7 @@ class TasksClient:
                 raise UnauthorizedError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -175,7 +175,7 @@ class TasksClient:
                 raise ForbiddenError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -304,7 +304,7 @@ class TasksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseTask,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseTask,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -370,7 +370,7 @@ class AsyncTasksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ProjectImport,
-                    parse_obj_as(
+                    construct_type(
                         type_=ProjectImport,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -446,7 +446,7 @@ class AsyncTasksClient:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     PaginatedTaskListResponseList,
-                    parse_obj_as(
+                    construct_type(
                         type_=PaginatedTaskListResponseList,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -463,7 +463,7 @@ class AsyncTasksClient:
                 raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -473,7 +473,7 @@ class AsyncTasksClient:
                 raise UnauthorizedError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -483,7 +483,7 @@ class AsyncTasksClient:
                 raise ForbiddenError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -620,7 +620,7 @@ class AsyncTasksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseTask,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseTask,  # type: ignore
                         object_=_response.json(),
                     ),

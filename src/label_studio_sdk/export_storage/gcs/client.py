@@ -4,7 +4,7 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.gcs_export_storage import GcsExportStorage
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.jsonable_encoder import jsonable_encoder
@@ -67,7 +67,7 @@ class GcsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[GcsExportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[GcsExportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -160,7 +160,7 @@ class GcsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     GcsExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=GcsExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -207,7 +207,7 @@ class GcsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     GcsExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=GcsExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -345,7 +345,7 @@ class GcsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     GcsExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=GcsExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -392,7 +392,7 @@ class GcsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     GcsExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=GcsExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -555,7 +555,7 @@ class AsyncGcsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[GcsExportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[GcsExportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -656,7 +656,7 @@ class AsyncGcsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     GcsExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=GcsExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -711,7 +711,7 @@ class AsyncGcsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     GcsExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=GcsExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -865,7 +865,7 @@ class AsyncGcsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     GcsExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=GcsExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -920,7 +920,7 @@ class AsyncGcsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     GcsExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=GcsExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),

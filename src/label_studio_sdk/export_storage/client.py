@@ -9,7 +9,7 @@ from .s3.client import S3Client
 import typing
 from ..core.request_options import RequestOptions
 from .types.export_storage_list_types_response_item import ExportStorageListTypesResponseItem
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -64,7 +64,7 @@ class ExportStorageClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[ExportStorageListTypesResponseItem],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[ExportStorageListTypesResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -127,7 +127,7 @@ class AsyncExportStorageClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[ExportStorageListTypesResponseItem],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[ExportStorageListTypesResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),

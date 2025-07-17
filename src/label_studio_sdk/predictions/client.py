@@ -4,7 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.prediction import Prediction
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.jsonable_encoder import jsonable_encoder
@@ -67,7 +67,7 @@ class PredictionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Prediction],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Prediction],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -161,7 +161,7 @@ class PredictionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Prediction,
-                    parse_obj_as(
+                    construct_type(
                         type_=Prediction,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -209,7 +209,7 @@ class PredictionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Prediction,
-                    parse_obj_as(
+                    construct_type(
                         type_=Prediction,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -349,7 +349,7 @@ class PredictionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Prediction,
-                    parse_obj_as(
+                    construct_type(
                         type_=Prediction,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -421,7 +421,7 @@ class AsyncPredictionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Prediction],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Prediction],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -523,7 +523,7 @@ class AsyncPredictionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Prediction,
-                    parse_obj_as(
+                    construct_type(
                         type_=Prediction,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -579,7 +579,7 @@ class AsyncPredictionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Prediction,
-                    parse_obj_as(
+                    construct_type(
                         type_=Prediction,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -735,7 +735,7 @@ class AsyncPredictionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Prediction,
-                    parse_obj_as(
+                    construct_type(
                         type_=Prediction,  # type: ignore
                         object_=_response.json(),
                     ),

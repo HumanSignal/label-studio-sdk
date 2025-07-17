@@ -8,7 +8,7 @@ from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
 from ..types.all_roles_project_list import AllRolesProjectList
 from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.user_simple_request import UserSimpleRequest
@@ -96,7 +96,7 @@ class ProjectsClient:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     PaginatedAllRolesProjectListList,
-                    parse_obj_as(
+                    construct_type(
                         type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -300,7 +300,7 @@ class ProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseProjectCreate,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseProjectCreate,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -347,7 +347,7 @@ class ProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Project,
-                    parse_obj_as(
+                    construct_type(
                         type_=Project,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -586,7 +586,7 @@ class ProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ProjectsImportTasksResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=ProjectsImportTasksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -595,7 +595,7 @@ class ProjectsClient:
                 raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -646,7 +646,7 @@ class ProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Dict[str, typing.Optional[typing.Any]],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -731,7 +731,7 @@ class AsyncProjectsClient:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     PaginatedAllRolesProjectListList,
-                    parse_obj_as(
+                    construct_type(
                         type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -943,7 +943,7 @@ class AsyncProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseProjectCreate,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseProjectCreate,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -998,7 +998,7 @@ class AsyncProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Project,
-                    parse_obj_as(
+                    construct_type(
                         type_=Project,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1253,7 +1253,7 @@ class AsyncProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ProjectsImportTasksResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=ProjectsImportTasksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1262,7 +1262,7 @@ class AsyncProjectsClient:
                 raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -1321,7 +1321,7 @@ class AsyncProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.Dict[str, typing.Optional[typing.Any]],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),

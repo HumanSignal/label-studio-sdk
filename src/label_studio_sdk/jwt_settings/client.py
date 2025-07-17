@@ -4,7 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.lsejwt_settings import LsejwtSettings
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -50,7 +50,7 @@ class JwtSettingsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LsejwtSettings,
-                    parse_obj_as(
+                    construct_type(
                         type_=LsejwtSettings,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -118,7 +118,7 @@ class JwtSettingsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LsejwtSettings,
-                    parse_obj_as(
+                    construct_type(
                         type_=LsejwtSettings,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -174,7 +174,7 @@ class AsyncJwtSettingsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LsejwtSettings,
-                    parse_obj_as(
+                    construct_type(
                         type_=LsejwtSettings,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -250,7 +250,7 @@ class AsyncJwtSettingsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LsejwtSettings,
-                    parse_obj_as(
+                    construct_type(
                         type_=LsejwtSettings,  # type: ignore
                         object_=_response.json(),
                     ),

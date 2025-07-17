@@ -4,7 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.view import View
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .types.views_create_request_data import ViewsCreateRequestData
@@ -62,7 +62,7 @@ class ViewsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[View],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[View],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -127,7 +127,7 @@ class ViewsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     View,
-                    parse_obj_as(
+                    construct_type(
                         type_=View,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -175,7 +175,7 @@ class ViewsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     View,
-                    parse_obj_as(
+                    construct_type(
                         type_=View,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -287,7 +287,7 @@ class ViewsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     View,
-                    parse_obj_as(
+                    construct_type(
                         type_=View,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -348,7 +348,7 @@ class ViewsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     View,
-                    parse_obj_as(
+                    construct_type(
                         type_=View,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -448,7 +448,7 @@ class AsyncViewsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[View],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[View],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -521,7 +521,7 @@ class AsyncViewsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     View,
-                    parse_obj_as(
+                    construct_type(
                         type_=View,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -577,7 +577,7 @@ class AsyncViewsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     View,
-                    parse_obj_as(
+                    construct_type(
                         type_=View,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -705,7 +705,7 @@ class AsyncViewsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     View,
-                    parse_obj_as(
+                    construct_type(
                         type_=View,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -774,7 +774,7 @@ class AsyncViewsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     View,
-                    parse_obj_as(
+                    construct_type(
                         type_=View,  # type: ignore
                         object_=_response.json(),
                     ),

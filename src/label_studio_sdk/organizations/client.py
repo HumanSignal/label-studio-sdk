@@ -5,7 +5,7 @@ from .members.client import MembersClient
 import typing
 from ..core.request_options import RequestOptions
 from ..types.organization_invite import OrganizationInvite
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.organization_id import OrganizationId
@@ -53,7 +53,7 @@ class OrganizationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     OrganizationInvite,
-                    parse_obj_as(
+                    construct_type(
                         type_=OrganizationInvite,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -106,7 +106,7 @@ class OrganizationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[OrganizationId],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[OrganizationId],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -153,7 +153,7 @@ class OrganizationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseOrganization,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseOrganization,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -210,7 +210,7 @@ class AsyncOrganizationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     OrganizationInvite,
-                    parse_obj_as(
+                    construct_type(
                         type_=OrganizationInvite,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -271,7 +271,7 @@ class AsyncOrganizationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[OrganizationId],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[OrganizationId],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -326,7 +326,7 @@ class AsyncOrganizationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseOrganization,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseOrganization,  # type: ignore
                         object_=_response.json(),
                     ),

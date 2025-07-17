@@ -5,7 +5,7 @@ import typing
 from .types.prompts_compatible_projects_request_project_type import PromptsCompatibleProjectsRequestProjectType
 from ..core.request_options import RequestOptions
 from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -74,7 +74,7 @@ class PromptsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     PaginatedAllRolesProjectListList,
-                    parse_obj_as(
+                    construct_type(
                         type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -156,7 +156,7 @@ class AsyncPromptsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     PaginatedAllRolesProjectListList,
-                    parse_obj_as(
+                    construct_type(
                         type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),

@@ -5,7 +5,7 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.annotation import Annotation
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 import datetime as dt
@@ -59,7 +59,7 @@ class AnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -217,7 +217,7 @@ class AnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -365,7 +365,7 @@ class AnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[AnnotationsCreateManyResponseItem],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[AnnotationsCreateManyResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -421,7 +421,7 @@ class AnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Annotation],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Annotation],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -555,7 +555,7 @@ class AnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -615,7 +615,7 @@ class AsyncAnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -789,7 +789,7 @@ class AsyncAnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -945,7 +945,7 @@ class AsyncAnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[AnnotationsCreateManyResponseItem],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[AnnotationsCreateManyResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1009,7 +1009,7 @@ class AsyncAnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Annotation],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Annotation],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1151,7 +1151,7 @@ class AsyncAnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
                         object_=_response.json(),
                     ),

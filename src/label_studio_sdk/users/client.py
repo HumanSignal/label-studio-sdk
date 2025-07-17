@@ -4,7 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.lse_user_api import LseUserApi
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 import datetime as dt
@@ -56,7 +56,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUserApi,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUserApi,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -158,7 +158,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUserApi,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUserApi,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -201,7 +201,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Hotkeys,
-                    parse_obj_as(
+                    construct_type(
                         type_=Hotkeys,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -258,7 +258,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Hotkeys,
-                    parse_obj_as(
+                    construct_type(
                         type_=Hotkeys,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -301,7 +301,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     UsersResetTokenResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=UsersResetTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -344,7 +344,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     UsersGetTokenResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=UsersGetTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -387,7 +387,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUser,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -438,7 +438,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[LseUserApi],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[LseUserApi],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -536,7 +536,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUser,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -584,7 +584,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUser,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -733,7 +733,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUser,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -789,7 +789,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUserApi,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUserApi,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -899,7 +899,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUserApi,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUserApi,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -950,7 +950,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Hotkeys,
-                    parse_obj_as(
+                    construct_type(
                         type_=Hotkeys,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1015,7 +1015,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Hotkeys,
-                    parse_obj_as(
+                    construct_type(
                         type_=Hotkeys,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1066,7 +1066,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     UsersResetTokenResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=UsersResetTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1117,7 +1117,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     UsersGetTokenResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=UsersGetTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1168,7 +1168,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUser,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1227,7 +1227,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[LseUserApi],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[LseUserApi],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1333,7 +1333,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUser,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1389,7 +1389,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUser,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1554,7 +1554,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LseUser,
-                    parse_obj_as(
+                    construct_type(
                         type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),

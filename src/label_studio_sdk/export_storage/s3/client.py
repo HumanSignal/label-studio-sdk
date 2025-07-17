@@ -4,7 +4,7 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.s3export_storage import S3ExportStorage
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.jsonable_encoder import jsonable_encoder
@@ -67,7 +67,7 @@ class S3Client:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[S3ExportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[S3ExportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -180,7 +180,7 @@ class S3Client:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     S3ExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=S3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -227,7 +227,7 @@ class S3Client:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     S3ExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=S3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -385,7 +385,7 @@ class S3Client:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     S3ExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=S3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -432,7 +432,7 @@ class S3Client:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     S3ExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=S3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -615,7 +615,7 @@ class AsyncS3Client:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[S3ExportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[S3ExportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -736,7 +736,7 @@ class AsyncS3Client:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     S3ExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=S3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -791,7 +791,7 @@ class AsyncS3Client:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     S3ExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=S3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -965,7 +965,7 @@ class AsyncS3Client:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     S3ExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=S3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1020,7 +1020,7 @@ class AsyncS3Client:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     S3ExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=S3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
