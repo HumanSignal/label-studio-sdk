@@ -4,59 +4,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_jwt_settings_retrieve:
-      path: /api/jwt/settings
-      method: GET
-      auth: true
-      docs: Retrieve JWT settings for the currently active organization.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Retrieve JWT Settings
-      response:
-        docs: ''
-        type: root.LsejwtSettings
-      examples:
-        - response:
-            body:
-              api_tokens_enabled: true
-              legacy_api_tokens_enabled: true
-              api_token_ttl_days: 1
-    api_jwt_settings_create:
-      path: /api/jwt/settings
-      method: POST
-      auth: true
-      docs: Update JWT settings for the currently active organization.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Update JWT Settings
-      request:
-        name: LsejwtSettingsRequest
-        body:
-          properties:
-            api_tokens_enabled:
-              type: optional<boolean>
-              docs: Enable JWT API token authentication for this organization
-            legacy_api_tokens_enabled:
-              type: optional<boolean>
-              docs: Enable legacy API token authentication for this organization
-            api_token_ttl_days:
-              type: optional<integer>
-              docs: Number of days before JWT API tokens expire
-              validation:
-                min: -2147483648
-                max: 2147483647
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.LsejwtSettings
-      examples:
-        - request: {}
-          response:
-            body:
-              api_tokens_enabled: true
-              legacy_api_tokens_enabled: true
-              api_token_ttl_days: 1
-    api_token_list:
+    list:
       path: /api/token/
       method: GET
       auth: true
@@ -65,7 +13,7 @@ service:
         openapi: openapi/openapi.yaml
       display-name: List API tokens
       request:
-        name: ApiTokenListRequest
+        name: TokensListRequest
         query-parameters:
           ordering:
             type: optional<string>
@@ -79,7 +27,9 @@ service:
               - token: token
                 created_at: created_at
                 expires_at: expires_at
-    api_token_create:
+      audiences:
+        - public
+    create:
       path: /api/token/
       method: POST
       auth: true
@@ -96,7 +46,9 @@ service:
               token: token
               created_at: created_at
               expires_at: expires_at
-    api_token_blacklist_create:
+      audiences:
+        - public
+    blacklist:
       path: /api/token/blacklist/
       method: POST
       auth: false
@@ -126,15 +78,16 @@ service:
           response:
             body:
               key: value
-    api_token_refresh_create:
+      audiences:
+        - public
+    refresh:
       path: /api/token/refresh/
       method: POST
       auth: false
-      docs: |-
-        Takes a refresh type JSON web token and returns an access type JSON web
-        token if the refresh token is valid.
+      docs: Get a new access token, using a refresh token.
       source:
         openapi: openapi/openapi.yaml
+      display-name: Refresh JWT token
       request:
         name: TokenRefreshRequest
         body:
@@ -153,7 +106,9 @@ service:
           response:
             body:
               access: access
-    api_token_rotate_create:
+      audiences:
+        - public
+    rotate:
       path: /api/token/rotate/
       method: POST
       auth: true
@@ -181,5 +136,7 @@ service:
           response:
             body:
               refresh: refresh
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml

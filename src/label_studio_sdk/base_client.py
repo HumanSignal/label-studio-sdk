@@ -8,12 +8,14 @@ from .users.client import UsersClient
 from .actions.client import ActionsClient
 from .views.client import ViewsClient
 from .organizations.client import OrganizationsClient
+from .jwt_settings.client import JwtSettingsClient
 from .ml.client import MlClient
 from .predictions.client import PredictionsClient
 from .projects.client import ProjectsClient
 from .tasks.client import TasksClient
 from .import_storage.client import ImportStorageClient
 from .export_storage.client import ExportStorageClient
+from .tokens.client import TokensClient
 from .versions.client import VersionsClient
 from .webhooks.client import WebhooksClient
 from .core.client_wrapper import AsyncClientWrapper
@@ -22,12 +24,14 @@ from .users.client import AsyncUsersClient
 from .actions.client import AsyncActionsClient
 from .views.client import AsyncViewsClient
 from .organizations.client import AsyncOrganizationsClient
+from .jwt_settings.client import AsyncJwtSettingsClient
 from .ml.client import AsyncMlClient
 from .predictions.client import AsyncPredictionsClient
 from .projects.client import AsyncProjectsClient
 from .tasks.client import AsyncTasksClient
 from .import_storage.client import AsyncImportStorageClient
 from .export_storage.client import AsyncExportStorageClient
+from .tokens.client import AsyncTokensClient
 from .versions.client import AsyncVersionsClient
 from .webhooks.client import AsyncWebhooksClient
 
@@ -86,12 +90,14 @@ class LabelStudioBase:
         self.actions = ActionsClient(client_wrapper=self._client_wrapper)
         self.views = ViewsClient(client_wrapper=self._client_wrapper)
         self.organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
+        self.jwt_settings = JwtSettingsClient(client_wrapper=self._client_wrapper)
         self.ml = MlClient(client_wrapper=self._client_wrapper)
         self.predictions = PredictionsClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = TasksClient(client_wrapper=self._client_wrapper)
         self.import_storage = ImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = ExportStorageClient(client_wrapper=self._client_wrapper)
+        self.tokens = TokensClient(client_wrapper=self._client_wrapper)
         self.versions = VersionsClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
 
@@ -150,11 +156,13 @@ class AsyncLabelStudioBase:
         self.actions = AsyncActionsClient(client_wrapper=self._client_wrapper)
         self.views = AsyncViewsClient(client_wrapper=self._client_wrapper)
         self.organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
+        self.jwt_settings = AsyncJwtSettingsClient(client_wrapper=self._client_wrapper)
         self.ml = AsyncMlClient(client_wrapper=self._client_wrapper)
         self.predictions = AsyncPredictionsClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = AsyncTasksClient(client_wrapper=self._client_wrapper)
         self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)
+        self.tokens = AsyncTokensClient(client_wrapper=self._client_wrapper)
         self.versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
