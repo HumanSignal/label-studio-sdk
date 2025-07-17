@@ -227,7 +227,7 @@ service:
             body:
               assignments:
                 - key: value
-    api_tasks_list:
+    list:
       path: /api/tasks/
       method: GET
       auth: true
@@ -242,11 +242,14 @@ service:
 
         - **Annotator**: Task details filtered to show only user's own
         annotations and assignments
+      pagination:
+        offset: $request.page
+        results: $response.results
       source:
         openapi: openapi/openapi.yaml
       display-name: List tasks with role-based serialization
       request:
-        name: ApiTasksListRequest
+        name: TasksListRequest
         query-parameters:
           page:
             type: optional<integer>
@@ -289,33 +292,18 @@ service:
                   unresolved_comment_count: results
                   reviews_rejected: 1
                   draft_exists: true
-    api_tasks_create:
+      audiences:
+        - public
+    create:
       path: /api/tasks/
       method: POST
       auth: true
-      docs: >-
-        Retrieve a paginated list of tasks. The response format varies based on
-        the user's role in the organization:
-
-        - **Admin/Owner**: Full task details with all annotations, reviews, and
-        metadata
-
-        - **Reviewer**: Task details optimized for review workflow
-
-        - **Annotator**: Task details filtered to show only user's own
-        annotations and assignments
+      docs: Create a new task
       source:
         openapi: openapi/openapi.yaml
-      display-name: List tasks with role-based serialization
+      display-name: Create a new task
       request:
         name: LseTaskRequest
-        query-parameters:
-          page:
-            type: optional<integer>
-            docs: A page number within the paginated result set.
-          page_size:
-            type: optional<integer>
-            docs: Number of results to return per page.
         body:
           properties:
             data: unknown
@@ -386,11 +374,9 @@ service:
         content-type: application/json
       response:
         docs: ''
-        type: root.PaginatedTaskListResponseList
-      errors:
-        - root.BadRequestError
-        - root.UnauthorizedError
-        - root.ForbiddenError
+        type: root.LseTask
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml
 types:

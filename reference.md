@@ -4460,6 +4460,274 @@ client.tasks.create_many_status(
 </dl>
 </details>
 
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a paginated list of tasks. The response format varies based on the user's role in the organization:
+- **Admin/Owner**: Full task details with all annotations, reviews, and metadata
+- **Reviewer**: Task details optimized for review workflow
+- **Annotator**: Task details filtered to show only user's own annotations and assignments
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.tasks.list()
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — A page number within the paginated result set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new task
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.tasks.create(
+    data={"key": "value"},
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**data:** `typing.Optional[typing.Any]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_labeled:** `typing.Optional[bool]` — True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**overlap:** `typing.Optional[int]` — Number of distinct annotators that processed the current task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**inner_id:** `typing.Optional[int]` — Internal task ID in the project, starts with 1
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**total_annotations:** `typing.Optional[int]` — Number of total annotations for the current task except cancelled annotations
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cancelled_annotations:** `typing.Optional[int]` — Number of total cancelled annotations for the current task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**total_predictions:** `typing.Optional[int]` — Number of total predictions for the current task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment_count:** `typing.Optional[int]` — Number of comments in the task including all annotations
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**unresolved_comment_count:** `typing.Optional[int]` — Number of unresolved comments in the task including all annotations
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_comment_updated_at:** `typing.Optional[dt.datetime]` — When the last comment was updated
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID for this task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**updated_by:** `typing.Optional[int]` — Last annotator or reviewer who updated this task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_upload:** `typing.Optional[int]` — Uploaded file used as data source for this task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment_authors:** `typing.Optional[typing.Sequence[int]]` — Users who wrote comments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ImportStorage
 <details><summary><code>client.import_storage.<a href="src/label_studio_sdk/import_storage/client.py">list_types</a>()</code></summary>
 <dl>
