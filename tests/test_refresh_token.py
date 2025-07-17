@@ -14,7 +14,7 @@ from label_studio_sdk.client import AsyncLabelStudio
 from label_studio_sdk.core.api_error import ApiError
 from label_studio_sdk.projects.types.projects_list_response import \
     ProjectsListResponse
-from label_studio_sdk.types.access_token_response import AccessTokenResponse
+from label_studio_sdk.types.token_refresh_response import TokenRefreshResponse
 from label_studio_sdk.tokens.client_ext import TokensClientExt
 
 NOW = int(datetime.datetime.now(timezone.utc).timestamp())
@@ -203,7 +203,7 @@ def test_concurrent_refresh_single_request():
     refresh_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
     expired_access_token = jwt.encode({"exp": ONE_HOUR_AGO}, "secret")
     valid_access_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
-    mock_response = AccessTokenResponse(access=valid_access_token)
+    mock_response = TokenRefreshResponse(access=valid_access_token)
     
     refresh_count = 0
     refresh_called = threading.Event()
@@ -240,7 +240,7 @@ async def test_async_concurrent_refresh_single_request():
     refresh_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
     expired_access_token = jwt.encode({"exp": ONE_HOUR_AGO}, "secret")
     valid_access_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
-    mock_response = AccessTokenResponse(access=valid_access_token)
+    mock_response = TokenRefreshResponse(access=valid_access_token)
 
     refresh_count = 0
     refresh_called = asyncio.Event()
@@ -279,7 +279,7 @@ def test_no_unnecessary_refresh():
     refresh_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
     expired_access_token = jwt.encode({"exp": ONE_HOUR_AGO}, "secret")
     valid_access_token = jwt.encode({"exp": IN_ONE_HOUR}, "secret")
-    mock_response = AccessTokenResponse(access=valid_access_token)
+    mock_response = TokenRefreshResponse(access=valid_access_token)
 
     refresh_count = 0
     refresh_started = threading.Event()
