@@ -686,7 +686,7 @@ service:
         - path-parameters:
             prompt_id: 1
             version_id: 1
-    api_prompts_compatible_projects_list:
+    compatible-projects:
       path: /api/prompts/compatible-projects
       method: GET
       auth: true
@@ -695,7 +695,7 @@ service:
         openapi: openapi/openapi.yaml
       display-name: List projects compatible with prompt
       request:
-        name: ApiPromptsCompatibleProjectsListRequest
+        name: PromptsCompatibleProjectsRequest
         query-parameters:
           ordering:
             type: optional<string>
@@ -707,7 +707,7 @@ service:
             type: optional<integer>
             docs: Number of results to return per page.
           project_type:
-            type: optional<ApiPromptsCompatibleProjectsListRequestProjectType>
+            type: optional<PromptsCompatibleProjectsRequestProjectType>
             default: TextClassification
             docs: Skill to filter by
       response:
@@ -720,85 +720,87 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - useful_annotation_number: useful_annotation_number
-                  is_published: true
-                  config_suitable_for_bulk_annotation: config_suitable_for_bulk_annotation
+                - members: members
+                  evaluate_predictions_automatically: true
+                  pinned_at: '2024-01-15T09:30:00Z'
+                  custom_task_lock_ttl: 1
+                  skipped_annotations_number: skipped_annotations_number
+                  control_weights:
+                    key: value
+                  assignment_settings:
+                    id: 1
                   skip_queue: REQUEUE_FOR_ME
-                  min_annotations_to_start_training: 1
-                  start_training_on_annotation_update: start_training_on_annotation_update
-                  comment_classification_config: comment_classification_config
-                  queue_total: queue_total
-                  created_at: '2024-01-15T09:30:00Z'
-                  data_types:
-                    key: value
-                  pause_on_failed_annotator_evaluation: true
-                  color: color
-                  members_count: members_count
-                  parsed_label_config:
-                    key: value
+                  is_draft: true
+                  config_suitable_for_bulk_annotation: config_suitable_for_bulk_annotation
+                  require_comment_on_skip: true
+                  custom_script: custom_script
                   finished_task_number: 1
+                  queue_total: queue_total
+                  total_predictions_number: 1
+                  maximum_annotations: 1
+                  color: color
                   review_settings:
                     id: 1
                     requeue_rejected_tasks_to_annotator: true
-                  reviewer_queue_total: reviewer_queue_total
-                  review_total_tasks: review_total_tasks
-                  model_version: model_version
-                  annotation_limit_percent: annotation_limit_percent
-                  show_instruction: true
-                  overlap_cohort_percentage: 1
-                  reveal_preannotations_interactively: true
-                  queue_done: queue_done
-                  custom_script: custom_script
-                  num_tasks_with_annotations: num_tasks_with_annotations
-                  workspace: workspace
-                  assignment_settings:
-                    id: 1
+                  show_overlap_first: true
+                  queue_left: queue_left
+                  rejected: rejected
+                  total_annotations_number: total_annotations_number
+                  show_collab_predictions: true
+                  sampling: Sequential sampling
                   config_has_control_tags: config_has_control_tags
+                  prompts: prompts
+                  annotation_limit_count: 1
+                  annotation_limit_percent: annotation_limit_percent
+                  task_number: 1
+                  members_count: members_count
+                  show_skip_button: true
+                  allow_stream: allow_stream
+                  comment_classification_config: comment_classification_config
+                  review_total_tasks: review_total_tasks
+                  overlap_cohort_percentage: 1
+                  title: title
+                  start_training_on_annotation_update: start_training_on_annotation_update
+                  duplication_done: true
+                  reveal_preannotations_interactively: true
+                  annotator_evaluation_minimum_tasks: 1
                   description: description
-                  organization: 1
-                  expert_instruction: expert_instruction
+                  ready: ready
+                  created_at: '2024-01-15T09:30:00Z'
+                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
+                  queue_done: queue_done
+                  num_tasks_with_annotations: num_tasks_with_annotations
+                  ground_truth_number: 1
                   created_by:
                     id: 1
                     avatar: avatar
-                  show_ground_truth_first: true
-                  require_comment_on_skip: true
-                  ready: ready
-                  evaluate_predictions_automatically: true
+                  organization: 1
+                  reviewer_queue_total: reviewer_queue_total
+                  workspace: workspace
+                  expert_instruction: expert_instruction
                   label_config: label_config
-                  show_collab_predictions: true
-                  task_number: 1
-                  show_skip_button: true
-                  total_predictions_number: 1
-                  show_annotation_history: true
-                  show_overlap_first: true
-                  control_weights:
-                    key: value
-                  annotator_evaluation_minimum_tasks: 1
-                  maximum_annotations: 1
-                  members: members
-                  duplication_done: true
-                  annotation_limit_count: 1
-                  is_draft: true
-                  skipped_annotations_number: skipped_annotations_number
-                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
-                  sampling: Sequential sampling
+                  min_annotations_to_start_training: 1
+                  show_ground_truth_first: true
+                  useful_annotation_number: useful_annotation_number
+                  pause_on_failed_annotator_evaluation: true
                   blueprints:
                     - id: 1
                       share_id: share_id
                       short_url: short_url
                       created_at: '2024-01-15T09:30:00Z'
-                  rejected: rejected
-                  queue_left: queue_left
                   id: 1
-                  title: title
-                  custom_task_lock_ttl: 1
-                  ground_truth_number: 1
-                  allow_stream: allow_stream
-                  prompts: prompts
-                  pinned_at: '2024-01-15T09:30:00Z'
-                  total_annotations_number: total_annotations_number
+                  data_types:
+                    key: value
+                  is_published: true
                   enable_empty_annotation: true
+                  show_instruction: true
+                  parsed_label_config:
+                    key: value
                   reviewed_number: reviewed_number
+                  model_version: model_version
+                  show_annotation_history: true
+      audiences:
+        - public
     api_prompts_inference_runs_list:
       path: /api/prompts/inference-runs
       method: GET
@@ -880,7 +882,7 @@ service:
   source:
     openapi: openapi/openapi.yaml
 types:
-  ApiPromptsCompatibleProjectsListRequestProjectType:
+  PromptsCompatibleProjectsRequestProjectType:
     enum:
       - NamedEntityRecognition
       - TextClassification

@@ -13,6 +13,7 @@ from .ml.client import MlClient
 from .predictions.client import PredictionsClient
 from .projects.client import ProjectsClient
 from .tasks.client import TasksClient
+from .prompts.client import PromptsClient
 from .import_storage.client import ImportStorageClient
 from .export_storage.client import ExportStorageClient
 from .tokens.client import TokensClient
@@ -29,6 +30,7 @@ from .ml.client import AsyncMlClient
 from .predictions.client import AsyncPredictionsClient
 from .projects.client import AsyncProjectsClient
 from .tasks.client import AsyncTasksClient
+from .prompts.client import AsyncPromptsClient
 from .import_storage.client import AsyncImportStorageClient
 from .export_storage.client import AsyncExportStorageClient
 from .tokens.client import AsyncTokensClient
@@ -95,6 +97,7 @@ class LabelStudioBase:
         self.predictions = PredictionsClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = TasksClient(client_wrapper=self._client_wrapper)
+        self.prompts = PromptsClient(client_wrapper=self._client_wrapper)
         self.import_storage = ImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = ExportStorageClient(client_wrapper=self._client_wrapper)
         self.tokens = TokensClient(client_wrapper=self._client_wrapper)
@@ -161,6 +164,7 @@ class AsyncLabelStudioBase:
         self.predictions = AsyncPredictionsClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = AsyncTasksClient(client_wrapper=self._client_wrapper)
+        self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
         self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)
         self.tokens = AsyncTokensClient(client_wrapper=self._client_wrapper)

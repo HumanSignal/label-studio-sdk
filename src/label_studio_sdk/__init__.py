@@ -42,6 +42,9 @@ from .types import (
     LseFieldsTrialRole,
     LseOrganization,
     LseOrganizationCustomScriptsEditableBy,
+    LseProjectCreate,
+    LseProjectCreateSampling,
+    LseProjectCreateSkipQueue,
     LseTask,
     LseTaskDraftsItem,
     LseTaskFilterOptions,
@@ -133,6 +136,7 @@ from . import (
     organizations,
     predictions,
     projects,
+    prompts,
     tasks,
     tokens,
     users,
@@ -159,7 +163,8 @@ from .client import AsyncLabelStudio, LabelStudio
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
 from .ml import MlCreateRequestAuthMethod, MlUpdateRequestAuthMethod
-from .projects import ProjectsImportTasksResponse
+from .projects import LseProjectCreateRequestSampling, LseProjectCreateRequestSkipQueue, ProjectsImportTasksResponse
+from .prompts import PromptsCompatibleProjectsRequestProjectType
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
 from .version import __version__
 from .views import (
@@ -244,6 +249,11 @@ __all__ = [
     "LseFieldsTrialRole",
     "LseOrganization",
     "LseOrganizationCustomScriptsEditableBy",
+    "LseProjectCreate",
+    "LseProjectCreateRequestSampling",
+    "LseProjectCreateRequestSkipQueue",
+    "LseProjectCreateSampling",
+    "LseProjectCreateSkipQueue",
     "LseTask",
     "LseTaskDraftsItem",
     "LseTaskFilterOptions",
@@ -288,6 +298,7 @@ __all__ = [
     "ProjectSampling",
     "ProjectSkipQueue",
     "ProjectsImportTasksResponse",
+    "PromptsCompatibleProjectsRequestProjectType",
     "RedisExportStorage",
     "RedisImportStorage",
     "RequeueRejectedTasksModeEnum",
@@ -350,6 +361,7 @@ __all__ = [
     "organizations",
     "predictions",
     "projects",
+    "prompts",
     "tasks",
     "tokens",
     "users",

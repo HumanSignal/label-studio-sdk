@@ -4167,6 +4167,299 @@ for page in response.iter_pages():
 </dl>
 </details>
 
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a project for a specific organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.projects.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Project name. Must be between 3 and 50 characters long.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Project description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label_config:** `typing.Optional[str]` — Label config in XML format. See more about it in documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expert_instruction:** `typing.Optional[str]` — Labeling instructions in HTML format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_instruction:** `typing.Optional[bool]` — Show instructions to the annotator before they start
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_skip_button:** `typing.Optional[bool]` — Show a skip button in interface and allow annotators to skip the task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_empty_annotation:** `typing.Optional[bool]` — Allow annotators to submit empty annotations
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_annotation_history:** `typing.Optional[bool]` — Show annotation history to annotator
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**color:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maximum_annotations:** `typing.Optional[int]` — Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_published:** `typing.Optional[bool]` — Whether or not the project is published to annotators
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_version:** `typing.Optional[str]` — Machine learning model version
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_draft:** `typing.Optional[bool]` — Whether or not the project is in the middle of being created
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[UserSimpleRequest]` — Project owner
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**min_annotations_to_start_training:** `typing.Optional[int]` — Minimum number of completed tasks after which model training is started
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling:** `typing.Optional[LseProjectCreateRequestSampling]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_ground_truth_first:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_overlap_first:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**overlap_cohort_percentage:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_data_login:** `typing.Optional[str]` — Task data credentials: login
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_data_password:** `typing.Optional[str]` — Task data credentials: password
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**control_weights:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**evaluate_predictions_automatically:** `typing.Optional[bool]` — Retrieve and display predictions when loading a task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**skip_queue:** `typing.Optional[LseProjectCreateRequestSkipQueue]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reveal_preannotations_interactively:** `typing.Optional[bool]` — Reveal pre-annotations interactively
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
@@ -4856,6 +5149,100 @@ client.tasks.create(
 <dd>
 
 **comment_authors:** `typing.Optional[typing.Sequence[int]]` — Users who wrote comments
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Prompts
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">compatible_projects</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of compatible project for prompt.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.prompts.compatible_projects()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — A page number within the paginated result set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_type:** `typing.Optional[PromptsCompatibleProjectsRequestProjectType]` — Skill to filter by
     
 </dd>
 </dl>

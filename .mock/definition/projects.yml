@@ -37,88 +37,88 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - useful_annotation_number: useful_annotation_number
-                  is_published: true
-                  config_suitable_for_bulk_annotation: config_suitable_for_bulk_annotation
+                - members: members
+                  evaluate_predictions_automatically: true
+                  pinned_at: '2024-01-15T09:30:00Z'
+                  custom_task_lock_ttl: 1
+                  skipped_annotations_number: skipped_annotations_number
+                  control_weights:
+                    key: value
+                  assignment_settings:
+                    id: 1
                   skip_queue: REQUEUE_FOR_ME
-                  min_annotations_to_start_training: 1
-                  start_training_on_annotation_update: start_training_on_annotation_update
-                  comment_classification_config: comment_classification_config
-                  queue_total: queue_total
-                  created_at: '2024-01-15T09:30:00Z'
-                  data_types:
-                    key: value
-                  pause_on_failed_annotator_evaluation: true
-                  color: color
-                  members_count: members_count
-                  parsed_label_config:
-                    key: value
+                  is_draft: true
+                  config_suitable_for_bulk_annotation: config_suitable_for_bulk_annotation
+                  require_comment_on_skip: true
+                  custom_script: custom_script
                   finished_task_number: 1
+                  queue_total: queue_total
+                  total_predictions_number: 1
+                  maximum_annotations: 1
+                  color: color
                   review_settings:
                     id: 1
                     requeue_rejected_tasks_to_annotator: true
-                  reviewer_queue_total: reviewer_queue_total
-                  review_total_tasks: review_total_tasks
-                  model_version: model_version
-                  annotation_limit_percent: annotation_limit_percent
-                  show_instruction: true
-                  overlap_cohort_percentage: 1
-                  reveal_preannotations_interactively: true
-                  queue_done: queue_done
-                  custom_script: custom_script
-                  num_tasks_with_annotations: num_tasks_with_annotations
-                  workspace: workspace
-                  assignment_settings:
-                    id: 1
+                  show_overlap_first: true
+                  queue_left: queue_left
+                  rejected: rejected
+                  total_annotations_number: total_annotations_number
+                  show_collab_predictions: true
+                  sampling: Sequential sampling
                   config_has_control_tags: config_has_control_tags
+                  prompts: prompts
+                  annotation_limit_count: 1
+                  annotation_limit_percent: annotation_limit_percent
+                  task_number: 1
+                  members_count: members_count
+                  show_skip_button: true
+                  allow_stream: allow_stream
+                  comment_classification_config: comment_classification_config
+                  review_total_tasks: review_total_tasks
+                  overlap_cohort_percentage: 1
+                  title: title
+                  start_training_on_annotation_update: start_training_on_annotation_update
+                  duplication_done: true
+                  reveal_preannotations_interactively: true
+                  annotator_evaluation_minimum_tasks: 1
                   description: description
-                  organization: 1
-                  expert_instruction: expert_instruction
+                  ready: ready
+                  created_at: '2024-01-15T09:30:00Z'
+                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
+                  queue_done: queue_done
+                  num_tasks_with_annotations: num_tasks_with_annotations
+                  ground_truth_number: 1
                   created_by:
                     id: 1
                     avatar: avatar
-                  show_ground_truth_first: true
-                  require_comment_on_skip: true
-                  ready: ready
-                  evaluate_predictions_automatically: true
+                  organization: 1
+                  reviewer_queue_total: reviewer_queue_total
+                  workspace: workspace
+                  expert_instruction: expert_instruction
                   label_config: label_config
-                  show_collab_predictions: true
-                  task_number: 1
-                  show_skip_button: true
-                  total_predictions_number: 1
-                  show_annotation_history: true
-                  show_overlap_first: true
-                  control_weights:
-                    key: value
-                  annotator_evaluation_minimum_tasks: 1
-                  maximum_annotations: 1
-                  members: members
-                  duplication_done: true
-                  annotation_limit_count: 1
-                  is_draft: true
-                  skipped_annotations_number: skipped_annotations_number
-                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
-                  sampling: Sequential sampling
+                  min_annotations_to_start_training: 1
+                  show_ground_truth_first: true
+                  useful_annotation_number: useful_annotation_number
+                  pause_on_failed_annotator_evaluation: true
                   blueprints:
                     - id: 1
                       share_id: share_id
                       short_url: short_url
                       created_at: '2024-01-15T09:30:00Z'
-                  rejected: rejected
-                  queue_left: queue_left
                   id: 1
-                  title: title
-                  custom_task_lock_ttl: 1
-                  ground_truth_number: 1
-                  allow_stream: allow_stream
-                  prompts: prompts
-                  pinned_at: '2024-01-15T09:30:00Z'
-                  total_annotations_number: total_annotations_number
+                  data_types:
+                    key: value
+                  is_published: true
                   enable_empty_annotation: true
+                  show_instruction: true
+                  parsed_label_config:
+                    key: value
                   reviewed_number: reviewed_number
+                  model_version: model_version
+                  show_annotation_history: true
       audiences:
         - public
-    api_projects_create:
+    create:
       path: /api/projects/
       method: POST
       auth: true
@@ -127,7 +127,105 @@ service:
         openapi: openapi/openapi.yaml
       display-name: Create a project
       request:
-        body: root.LseProjectCreateRequest
+        name: LseProjectCreateRequest
+        body:
+          properties:
+            title:
+              type: optional<string>
+              docs: Project name. Must be between 3 and 50 characters long.
+              validation:
+                minLength: 3
+                maxLength: 50
+            description:
+              type: optional<string>
+              docs: Project description
+            label_config:
+              type: optional<string>
+              docs: Label config in XML format. See more about it in documentation
+            expert_instruction:
+              type: optional<string>
+              docs: Labeling instructions in HTML format
+            show_instruction:
+              type: optional<boolean>
+              docs: Show instructions to the annotator before they start
+            show_skip_button:
+              type: optional<boolean>
+              docs: >-
+                Show a skip button in interface and allow annotators to skip the
+                task
+            enable_empty_annotation:
+              type: optional<boolean>
+              docs: Allow annotators to submit empty annotations
+            show_annotation_history:
+              type: optional<boolean>
+              docs: Show annotation history to annotator
+            organization: optional<integer>
+            color:
+              type: optional<string>
+              validation:
+                maxLength: 16
+            maximum_annotations:
+              type: optional<integer>
+              docs: >-
+                Maximum number of annotations for one task. If the number of
+                annotations per task is equal or greater to this value, the task
+                is completed (is_labeled=True)
+              validation:
+                min: -2147483648
+                max: 2147483647
+            is_published:
+              type: optional<boolean>
+              docs: Whether or not the project is published to annotators
+            model_version:
+              type: optional<string>
+              docs: Machine learning model version
+            is_draft:
+              type: optional<boolean>
+              docs: Whether or not the project is in the middle of being created
+            created_by:
+              type: optional<root.UserSimpleRequest>
+              docs: Project owner
+            min_annotations_to_start_training:
+              type: optional<integer>
+              docs: >-
+                Minimum number of completed tasks after which model training is
+                started
+              validation:
+                min: -2147483648
+                max: 2147483647
+            show_collab_predictions:
+              type: optional<boolean>
+              docs: If set, the annotator can view model predictions
+            sampling: optional<LseProjectCreateRequestSampling>
+            show_ground_truth_first: optional<boolean>
+            show_overlap_first: optional<boolean>
+            overlap_cohort_percentage:
+              type: optional<integer>
+              validation:
+                min: -2147483648
+                max: 2147483647
+            task_data_login:
+              type: optional<string>
+              docs: 'Task data credentials: login'
+              validation:
+                maxLength: 256
+            task_data_password:
+              type: optional<string>
+              docs: 'Task data credentials: password'
+              validation:
+                maxLength: 256
+            control_weights: optional<unknown>
+            evaluate_predictions_automatically:
+              type: optional<boolean>
+              docs: Retrieve and display predictions when loading a task
+            skip_queue: optional<LseProjectCreateRequestSkipQueue>
+            reveal_preannotations_interactively:
+              type: optional<boolean>
+              docs: Reveal pre-annotations interactively
+            pinned_at:
+              type: optional<datetime>
+              docs: Pinned date and time
+            workspace: optional<integer>
         content-type: application/json
       response:
         docs: ''
@@ -188,6 +286,8 @@ service:
               queue_done: queue_done
               config_suitable_for_bulk_annotation: config_suitable_for_bulk_annotation
               workspace: 1
+      audiences:
+        - public
     get:
       path: /api/projects/{id}/
       method: GET
@@ -1142,79 +1242,25 @@ service:
               key: value
       audiences:
         - internal
-    api_prompts_compatible_projects_create:
-      path: /api/prompts/compatible-projects
-      method: POST
-      auth: true
-      docs: Create a project for a specific organization.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Create a project
-      request:
-        body: root.LseProjectCreateRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.LseProjectCreate
-      examples:
-        - request: {}
-          response:
-            body:
-              id: 1
-              title: title
-              description: description
-              label_config: label_config
-              expert_instruction: expert_instruction
-              show_instruction: true
-              show_skip_button: true
-              enable_empty_annotation: true
-              show_annotation_history: true
-              organization: 1
-              color: color
-              maximum_annotations: 1
-              is_published: true
-              model_version: model_version
-              is_draft: true
-              created_by:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                email: email
-                avatar: avatar
-              created_at: '2024-01-15T09:30:00Z'
-              min_annotations_to_start_training: 1
-              start_training_on_annotation_update: start_training_on_annotation_update
-              show_collab_predictions: true
-              num_tasks_with_annotations: 1
-              task_number: 1
-              useful_annotation_number: 1
-              ground_truth_number: 1
-              skipped_annotations_number: 1
-              total_annotations_number: 1
-              total_predictions_number: 1
-              sampling: Sequential sampling
-              show_ground_truth_first: true
-              show_overlap_first: true
-              overlap_cohort_percentage: 1
-              task_data_login: task_data_login
-              task_data_password: task_data_password
-              control_weights:
-                key: value
-              parsed_label_config:
-                key: value
-              evaluate_predictions_automatically: true
-              config_has_control_tags: config_has_control_tags
-              skip_queue: REQUEUE_FOR_ME
-              reveal_preannotations_interactively: true
-              pinned_at: '2024-01-15T09:30:00Z'
-              finished_task_number: 1
-              queue_total: queue_total
-              queue_done: queue_done
-              config_suitable_for_bulk_annotation: config_suitable_for_bulk_annotation
-              workspace: 1
   source:
     openapi: openapi/openapi.yaml
 types:
+  LseProjectCreateRequestSampling:
+    discriminated: false
+    union:
+      - root.SamplingEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  LseProjectCreateRequestSkipQueue:
+    discriminated: false
+    union:
+      - root.SkipQueueEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   PatchedLseProjectRequestSampling:
     discriminated: false
     union:
