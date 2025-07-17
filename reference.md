@@ -4688,6 +4688,7 @@ client = LabelStudio(
 )
 client.projects.import_tasks(
     id=1,
+    request=[],
 )
 
 ```
@@ -4705,6 +4706,14 @@ client.projects.import_tasks(
 <dd>
 
 **id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `typing.Sequence[ImportApiRequest]` 
     
 </dd>
 </dl>

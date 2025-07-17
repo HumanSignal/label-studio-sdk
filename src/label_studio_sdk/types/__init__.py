@@ -7,6 +7,8 @@ from .all_roles_project_list_skip_queue import AllRolesProjectListSkipQueue
 from .annotated_enum import AnnotatedEnum
 from .annotation import Annotation
 from .annotation_last_action import AnnotationLastAction
+from .annotation_request import AnnotationRequest
+from .annotation_request_last_action import AnnotationRequestLastAction
 from .assignment_settings import AssignmentSettings
 from .assignment_settings_label_stream_task_distribution import AssignmentSettingsLabelStreamTaskDistribution
 from .auth_method_enum import AuthMethodEnum
@@ -27,6 +29,7 @@ from .finished_enum import FinishedEnum
 from .gcs_export_storage import GcsExportStorage
 from .gcs_import_storage import GcsImportStorage
 from .hotkeys import Hotkeys
+from .import_api_request import ImportApiRequest
 from .label_stream_task_distribution_enum import LabelStreamTaskDistributionEnum
 from .last_action_enum import LastActionEnum
 from .local_files_export_storage import LocalFilesExportStorage
@@ -79,6 +82,7 @@ from .organization_membership import OrganizationMembership
 from .paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from .paginated_task_list_response_list import PaginatedTaskListResponseList
 from .prediction import Prediction
+from .prediction_request import PredictionRequest
 from .project import Project
 from .project_import import ProjectImport
 from .project_sampling import ProjectSampling
@@ -127,6 +131,8 @@ __all__ = [
     "AnnotatedEnum",
     "Annotation",
     "AnnotationLastAction",
+    "AnnotationRequest",
+    "AnnotationRequestLastAction",
     "AssignmentSettings",
     "AssignmentSettingsLabelStreamTaskDistribution",
     "AuthMethodEnum",
@@ -147,6 +153,7 @@ __all__ = [
     "GcsExportStorage",
     "GcsImportStorage",
     "Hotkeys",
+    "ImportApiRequest",
     "LabelStreamTaskDistributionEnum",
     "LastActionEnum",
     "LocalFilesExportStorage",
@@ -199,6 +206,7 @@ __all__ = [
     "PaginatedAllRolesProjectListList",
     "PaginatedTaskListResponseList",
     "Prediction",
+    "PredictionRequest",
     "Project",
     "ProjectImport",
     "ProjectSampling",

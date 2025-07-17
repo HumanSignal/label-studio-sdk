@@ -196,36 +196,7 @@ types:
       Serializer get numbers from project queryset annotation,
       make sure, that you use correct one(Project.objects.with_counts())
     properties:
-      members: string
-      evaluate_predictions_automatically:
-        type: optional<boolean>
-        docs: Retrieve and display predictions when loading a task
-      pinned_at:
-        type: optional<datetime>
-        docs: Pinned date and time
-      custom_task_lock_ttl:
-        type: optional<integer>
-        docs: TTL in seconds for task reservations, on new and existing tasks
-        validation:
-          min: 1
-          max: 86400
-      skipped_annotations_number: string
-      control_weights: optional<unknown>
-      assignment_settings: AssignmentSettings
-      skip_queue: optional<AllRolesProjectListSkipQueue>
-      is_draft:
-        type: optional<boolean>
-        docs: Whether or not the project is in the middle of being created
-      config_suitable_for_bulk_annotation:
-        type: string
-        docs: Flag to detect is project ready for bulk annotation
-      require_comment_on_skip:
-        type: optional<boolean>
-        default: false
-      custom_script: optional<string>
-      finished_task_number: integer
-      queue_total: string
-      total_predictions_number: integer
+      organization: optional<integer>
       maximum_annotations:
         type: optional<integer>
         docs: >-
@@ -235,93 +206,103 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      color:
-        type: optional<string>
-        validation:
-          maxLength: 16
-      review_settings: ReviewSettings
-      show_overlap_first: optional<boolean>
-      queue_left: string
-      rejected: string
-      total_annotations_number: string
       show_collab_predictions:
         type: optional<boolean>
         docs: If set, the annotator can view model predictions
-      sampling: optional<AllRolesProjectListSampling>
-      config_has_control_tags:
+      blueprints: list<BlueprintList>
+      config_suitable_for_bulk_annotation:
         type: string
-        docs: Flag to detect is project ready for labeling
-      prompts: string
-      annotation_limit_count:
-        type: optional<integer>
-        validation:
-          min: 1
-      annotation_limit_percent:
+        docs: Flag to detect is project ready for bulk annotation
+      finished_task_number: integer
+      created_at: datetime
+      duplication_done:
+        type: optional<boolean>
+        default: false
+      pinned_at:
+        type: optional<datetime>
+        docs: Pinned date and time
+      parsed_label_config: unknown
+      pause_on_failed_annotator_evaluation:
+        type: optional<boolean>
+        default: false
+      show_instruction:
+        type: optional<boolean>
+        docs: Show instructions to the annotator before they start
+      created_by:
+        type: optional<UserSimple>
+        docs: Project owner
+      description:
         type: optional<string>
-        validation:
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+        docs: Project description
       task_number:
         type: integer
         docs: Total task number in project
-      members_count: string
-      show_skip_button:
+      is_published:
         type: optional<boolean>
-        docs: Show a skip button in interface and allow annotators to skip the task
-      allow_stream: string
-      comment_classification_config: optional<string>
-      review_total_tasks: string
-      overlap_cohort_percentage:
-        type: optional<integer>
-        validation:
-          min: -2147483648
-          max: 2147483647
+        docs: Whether or not the project is published to annotators
       title:
         type: optional<string>
         docs: Project name. Must be between 3 and 50 characters long.
         validation:
           minLength: 3
           maxLength: 50
-      start_training_on_annotation_update:
-        type: string
-        docs: Start model training after any annotations are submitted or updated
-      duplication_done:
+      total_annotations_number: string
+      show_ground_truth_first: optional<boolean>
+      skip_queue: optional<AllRolesProjectListSkipQueue>
+      workspace: string
+      control_weights: optional<unknown>
+      assignment_settings: AssignmentSettings
+      custom_script: optional<string>
+      require_comment_on_skip:
         type: optional<boolean>
         default: false
       reveal_preannotations_interactively:
         type: optional<boolean>
         docs: Reveal pre-annotations interactively
-      annotator_evaluation_minimum_tasks:
-        type: optional<integer>
-        default: 10
-        validation:
-          min: 0
-      description:
+      rejected: string
+      annotation_limit_percent:
         type: optional<string>
-        docs: Project description
-      ready: string
-      created_at: datetime
+        validation:
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+      label_config:
+        type: optional<string>
+        docs: Label config in XML format. See more about it in documentation
+      show_overlap_first: optional<boolean>
+      reviewer_queue_total: string
+      queue_left: string
+      custom_task_lock_ttl:
+        type: optional<integer>
+        docs: TTL in seconds for task reservations, on new and existing tasks
+        validation:
+          min: 1
+          max: 86400
+      members: string
+      total_predictions_number: integer
+      comment_classification_config: optional<string>
       annotator_evaluation_minimum_score:
         type: optional<string>
         default: '95.00'
         validation:
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-      queue_done: string
-      num_tasks_with_annotations: string
-      ground_truth_number:
-        type: integer
-        docs: Honeypot annotation number in project
-      created_by:
-        type: optional<UserSimple>
-        docs: Project owner
-      organization: optional<integer>
-      reviewer_queue_total: string
-      workspace: string
+      review_settings: ReviewSettings
       expert_instruction:
         type: optional<string>
         docs: Labeling instructions in HTML format
-      label_config:
-        type: optional<string>
-        docs: Label config in XML format. See more about it in documentation
+      useful_annotation_number: string
+      config_has_control_tags:
+        type: string
+        docs: Flag to detect is project ready for labeling
+      queue_done: string
+      annotation_limit_count:
+        type: optional<integer>
+        validation:
+          min: 1
+      annotator_evaluation_minimum_tasks:
+        type: optional<integer>
+        default: 10
+        validation:
+          min: 0
+      ready: string
       min_annotations_to_start_training:
         type: optional<integer>
         docs: >-
@@ -330,31 +311,50 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      show_ground_truth_first: optional<boolean>
-      useful_annotation_number: string
-      pause_on_failed_annotator_evaluation:
+      overlap_cohort_percentage:
+        type: optional<integer>
+        validation:
+          min: -2147483648
+          max: 2147483647
+      members_count: string
+      color:
+        type: optional<string>
+        validation:
+          maxLength: 16
+      prompts: string
+      start_training_on_annotation_update:
+        type: string
+        docs: Start model training after any annotations are submitted or updated
+      sampling: optional<AllRolesProjectListSampling>
+      show_skip_button:
         type: optional<boolean>
-        default: false
-      blueprints: list<BlueprintList>
-      id: integer
-      data_types: unknown
-      is_published:
-        type: optional<boolean>
-        docs: Whether or not the project is published to annotators
-      enable_empty_annotation:
-        type: optional<boolean>
-        docs: Allow annotators to submit empty annotations
-      show_instruction:
-        type: optional<boolean>
-        docs: Show instructions to the annotator before they start
-      parsed_label_config: unknown
-      reviewed_number: string
+        docs: Show a skip button in interface and allow annotators to skip the task
+      review_total_tasks: string
       model_version:
         type: optional<string>
         docs: Machine learning model version
       show_annotation_history:
         type: optional<boolean>
         docs: Show annotation history to annotator
+      enable_empty_annotation:
+        type: optional<boolean>
+        docs: Allow annotators to submit empty annotations
+      skipped_annotations_number: string
+      queue_total: string
+      num_tasks_with_annotations: string
+      allow_stream: string
+      is_draft:
+        type: optional<boolean>
+        docs: Whether or not the project is in the middle of being created
+      ground_truth_number:
+        type: integer
+        docs: Honeypot annotation number in project
+      data_types: unknown
+      evaluate_predictions_automatically:
+        type: optional<boolean>
+        docs: Retrieve and display predictions when loading a task
+      reviewed_number: string
+      id: integer
     source:
       openapi: openapi/openapi.yaml
   AnnotatedEnum:
@@ -540,6 +540,92 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
+    source:
+      openapi: openapi/openapi.yaml
+  AnnotationRequestLastAction:
+    discriminated: false
+    docs: |-
+      Action which was performed in the last annotation history item
+
+      * `prediction` - Created from prediction
+      * `propagated_annotation` - Created from another annotation
+      * `imported` - Imported
+      * `submitted` - Submitted
+      * `updated` - Updated
+      * `skipped` - Skipped
+      * `accepted` - Accepted
+      * `rejected` - Rejected
+      * `fixed_and_accepted` - Fixed and accepted
+      * `deleted_review` - Deleted review
+    union:
+      - LastActionEnum
+      - NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  AnnotationRequest:
+    properties:
+      result:
+        type: optional<list<map<string, unknown>>>
+        docs: List of annotation results for the task
+      completed_by: optional<integer>
+      unique_id:
+        type: optional<string>
+        validation:
+          minLength: 1
+      was_cancelled:
+        type: optional<boolean>
+        docs: User skipped the task
+      ground_truth:
+        type: optional<boolean>
+        docs: This annotation is a Ground Truth (ground_truth)
+      draft_created_at:
+        type: optional<datetime>
+        docs: Draft creation time
+      lead_time:
+        type: optional<double>
+        docs: How much time it took to annotate the task
+      import_id:
+        type: optional<long>
+        docs: >-
+          Original annotation ID that was at the import step or NULL if this
+          annotation wasn't imported
+      last_action:
+        type: optional<AnnotationRequestLastAction>
+        docs: |-
+          Action which was performed in the last annotation history item
+
+          * `prediction` - Created from prediction
+          * `propagated_annotation` - Created from another annotation
+          * `imported` - Imported
+          * `submitted` - Submitted
+          * `updated` - Updated
+          * `skipped` - Skipped
+          * `accepted` - Accepted
+          * `rejected` - Rejected
+          * `fixed_and_accepted` - Fixed and accepted
+          * `deleted_review` - Deleted review
+      bulk_created:
+        type: optional<boolean>
+        docs: Annotation was created in bulk mode
+      task:
+        type: optional<integer>
+        docs: Corresponding task for this annotation
+      project:
+        type: optional<integer>
+        docs: Project ID for this annotation
+      updated_by:
+        type: optional<integer>
+        docs: Last user who updated this annotation
+      parent_prediction:
+        type: optional<integer>
+        docs: Points to the prediction from which this annotation was created
+      parent_annotation:
+        type: optional<integer>
+        docs: Points to the parent annotation from which this annotation was created
+      last_created_by:
+        type: optional<integer>
+        docs: User who created the last annotation history item
     source:
       openapi: openapi/openapi.yaml
   AnnotationReview:
@@ -2019,6 +2105,68 @@ types:
   Hotkeys:
     properties:
       custom_hotkeys: map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  ImportApiRequest:
+    docs: Tasks serializer for Import API (TaskBulkCreateAPI)
+    properties:
+      annotations: optional<list<AnnotationRequest>>
+      predictions: optional<list<PredictionRequest>>
+      data: unknown
+      meta: optional<unknown>
+      overlap:
+        type: optional<integer>
+        docs: Number of distinct annotators that processed the current task
+        validation:
+          min: -2147483648
+          max: 2147483647
+      inner_id:
+        type: optional<long>
+        docs: Internal task ID in the project, starts with 1
+      total_annotations:
+        type: optional<integer>
+        docs: >-
+          Number of total annotations for the current task except cancelled
+          annotations
+        validation:
+          min: -2147483648
+          max: 2147483647
+      cancelled_annotations:
+        type: optional<integer>
+        docs: Number of total cancelled annotations for the current task
+        validation:
+          min: -2147483648
+          max: 2147483647
+      total_predictions:
+        type: optional<integer>
+        docs: Number of total predictions for the current task
+        validation:
+          min: -2147483648
+          max: 2147483647
+      comment_count:
+        type: optional<integer>
+        docs: Number of comments in the task including all annotations
+        validation:
+          min: -2147483648
+          max: 2147483647
+      unresolved_comment_count:
+        type: optional<integer>
+        docs: Number of unresolved comments in the task including all annotations
+        validation:
+          min: -2147483648
+          max: 2147483647
+      last_comment_updated_at:
+        type: optional<datetime>
+        docs: When the last comment was updated
+      updated_by:
+        type: optional<integer>
+        docs: Last annotator or reviewer who updated this task
+      file_upload:
+        type: optional<integer>
+        docs: Uploaded file used as data source for this task
+      comment_authors:
+        type: optional<list<integer>>
+        docs: Users who wrote comments
     source:
       openapi: openapi/openapi.yaml
   LseapiTokenCreate:
@@ -4864,6 +5012,40 @@ types:
         docs: Related task mislabeling score
       created_at: datetime
       updated_at: datetime
+      model:
+        type: optional<integer>
+        docs: An ML Backend instance that created the prediction.
+      model_run:
+        type: optional<integer>
+        docs: A run of a ModelVersion that created the prediction.
+      task: integer
+      project: optional<integer>
+    source:
+      openapi: openapi/openapi.yaml
+  PredictionRequest:
+    properties:
+      result:
+        docs: List of prediction results for the task
+        type: list<map<string, unknown>>
+      model_version:
+        type: optional<string>
+        docs: >-
+          Model version - tag for predictions that can be used to filter tasks
+          in Data Manager, as well as select specific model version for showing
+          preannotations in the labeling interface
+      score:
+        type: optional<double>
+        docs: Prediction score
+      cluster:
+        type: optional<integer>
+        docs: Cluster for the current prediction
+        validation:
+          min: -2147483648
+          max: 2147483647
+      neighbors: optional<unknown>
+      mislabeling:
+        type: optional<double>
+        docs: Related task mislabeling score
       model:
         type: optional<integer>
         docs: An ML Backend instance that created the prediction.

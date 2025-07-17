@@ -254,10 +254,10 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
         "found_formats": ("list", {0: None}),
         "data_columns": ("list", {0: None}),
     }
-    response = client.projects.import_tasks(id=1)
+    response = client.projects.import_tasks(id=1, request=[])
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.import_tasks(id=1)
+    async_response = await async_client.projects.import_tasks(id=1, request=[])
     validate_response(async_response, expected_response, expected_types)
 
 

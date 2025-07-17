@@ -19,6 +19,7 @@ from ..types.lse_project_create import LseProjectCreate
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.project import Project
 from ..core.jsonable_encoder import jsonable_encoder
+from ..types.import_api_request import ImportApiRequest
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from ..errors.bad_request_error import BadRequestError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -479,6 +480,7 @@ class ProjectsClient:
         self,
         id: int,
         *,
+        request: typing.Sequence[ImportApiRequest],
         commit_to_project: typing.Optional[bool] = None,
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         return_task_ids: typing.Optional[bool] = None,
@@ -543,6 +545,8 @@ class ProjectsClient:
         id : int
             A unique integer value identifying this project.
         
+        request : typing.Sequence[ImportApiRequest]
+        
         commit_to_project : typing.Optional[bool]
             Set to "true" to immediately commit tasks to the project.
         
@@ -570,6 +574,7 @@ class ProjectsClient:
         )
         client.projects.import_tasks(
             id=1,
+            request=[],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -580,7 +585,11 @@ class ProjectsClient:
                 "preannotated_from_fields": preannotated_from_fields,
                 "return_task_ids": return_task_ids,
             },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[ImportApiRequest], direction="write"
+            ),
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -1138,6 +1147,7 @@ class AsyncProjectsClient:
         self,
         id: int,
         *,
+        request: typing.Sequence[ImportApiRequest],
         commit_to_project: typing.Optional[bool] = None,
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         return_task_ids: typing.Optional[bool] = None,
@@ -1202,6 +1212,8 @@ class AsyncProjectsClient:
         id : int
             A unique integer value identifying this project.
         
+        request : typing.Sequence[ImportApiRequest]
+        
         commit_to_project : typing.Optional[bool]
             Set to "true" to immediately commit tasks to the project.
         
@@ -1234,6 +1246,7 @@ class AsyncProjectsClient:
         async def main() -> None:
             await client.projects.import_tasks(
                 id=1,
+                request=[],
             )
         
         
@@ -1247,7 +1260,11 @@ class AsyncProjectsClient:
                 "preannotated_from_fields": preannotated_from_fields,
                 "return_task_ids": return_task_ids,
             },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[ImportApiRequest], direction="write"
+            ),
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
