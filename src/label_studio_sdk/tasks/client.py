@@ -81,6 +81,56 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def delete_all_tasks(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+        """
+        Delete all tasks from a specific project.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, typing.Optional[typing.Any]]
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.tasks.delete_all_tasks(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/tasks/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Dict[str, typing.Optional[typing.Any]],
+                    construct_type(
+                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def list(
         self,
         *,
@@ -434,6 +484,64 @@ class AsyncTasksClient:
                     ProjectImport,
                     construct_type(
                         type_=ProjectImport,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete_all_tasks(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+        """
+        Delete all tasks from a specific project.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, typing.Optional[typing.Any]]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.tasks.delete_all_tasks(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/tasks/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Dict[str, typing.Optional[typing.Any]],
+                    construct_type(
+                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

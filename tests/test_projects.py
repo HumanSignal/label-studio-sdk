@@ -259,13 +259,3 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
 
     async_response = await async_client.projects.import_tasks(id=1, request=[])
     validate_response(async_response, expected_response, expected_types)
-
-
-async def test_delete_all_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"key": "value"}
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("dict", {0: (None, None)})
-    response = client.projects.delete_all_tasks(id=1)
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.delete_all_tasks(id=1)
-    validate_response(async_response, expected_response, expected_types)
