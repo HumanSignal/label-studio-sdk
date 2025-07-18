@@ -20,6 +20,7 @@ from .azure_blob_export_storage import AzureBlobExportStorage
 from .azure_blob_import_storage import AzureBlobImportStorage
 from .blank_enum import BlankEnum
 from .blueprint_list import BlueprintList
+from .budget_reset_period_enum import BudgetResetPeriodEnum
 from .converted_format import ConvertedFormat
 from .converted_format_request import ConvertedFormatRequest
 from .custom_scripts_editable_by_enum import CustomScriptsEditableByEnum
@@ -80,6 +81,9 @@ from .lseapi_token_list import LseapiTokenList
 from .lsejwt_settings import LsejwtSettings
 from .ml_backend import MlBackend
 from .mode_enum import ModeEnum
+from .model_provider_connection import ModelProviderConnection
+from .model_provider_connection_budget_reset_period import ModelProviderConnectionBudgetResetPeriod
+from .model_provider_connection_request import ModelProviderConnectionRequest
 from .null_enum import NullEnum
 from .onboarding_state_enum import OnboardingStateEnum
 from .organization_billing import OrganizationBilling
@@ -97,6 +101,7 @@ from .project import Project
 from .project_import import ProjectImport
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
+from .provider_enum import ProviderEnum
 from .reason_enum import ReasonEnum
 from .redis_export_storage import RedisExportStorage
 from .redis_import_storage import RedisImportStorage
@@ -113,6 +118,7 @@ from .role_based_task import RoleBasedTask
 from .s3export_storage import S3ExportStorage
 from .s3import_storage import S3ImportStorage
 from .sampling_enum import SamplingEnum
+from .scope_enum import ScopeEnum
 from .serialization_option import SerializationOption
 from .serialization_option_request import SerializationOptionRequest
 from .serialization_options import SerializationOptions
@@ -151,6 +157,7 @@ __all__ = [
     "AzureBlobImportStorage",
     "BlankEnum",
     "BlueprintList",
+    "BudgetResetPeriodEnum",
     "ConvertedFormat",
     "ConvertedFormatRequest",
     "CustomScriptsEditableByEnum",
@@ -211,6 +218,9 @@ __all__ = [
     "LsejwtSettings",
     "MlBackend",
     "ModeEnum",
+    "ModelProviderConnection",
+    "ModelProviderConnectionBudgetResetPeriod",
+    "ModelProviderConnectionRequest",
     "NullEnum",
     "OnboardingStateEnum",
     "OrganizationBilling",
@@ -228,6 +238,7 @@ __all__ = [
     "ProjectImport",
     "ProjectSampling",
     "ProjectSkipQueue",
+    "ProviderEnum",
     "ReasonEnum",
     "RedisExportStorage",
     "RedisImportStorage",
@@ -244,6 +255,7 @@ __all__ = [
     "S3ExportStorage",
     "S3ImportStorage",
     "SamplingEnum",
+    "ScopeEnum",
     "SerializationOption",
     "SerializationOptionRequest",
     "SerializationOptions",

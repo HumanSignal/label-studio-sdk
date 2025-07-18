@@ -10,6 +10,7 @@ from .views.client import ViewsClient
 from .organizations.client import OrganizationsClient
 from .jwt_settings.client import JwtSettingsClient
 from .ml.client import MlClient
+from .model_providers.client import ModelProvidersClient
 from .predictions.client import PredictionsClient
 from .projects.client import ProjectsClient
 from .tasks.client import TasksClient
@@ -27,6 +28,7 @@ from .views.client import AsyncViewsClient
 from .organizations.client import AsyncOrganizationsClient
 from .jwt_settings.client import AsyncJwtSettingsClient
 from .ml.client import AsyncMlClient
+from .model_providers.client import AsyncModelProvidersClient
 from .predictions.client import AsyncPredictionsClient
 from .projects.client import AsyncProjectsClient
 from .tasks.client import AsyncTasksClient
@@ -94,6 +96,7 @@ class LabelStudioBase:
         self.organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
         self.jwt_settings = JwtSettingsClient(client_wrapper=self._client_wrapper)
         self.ml = MlClient(client_wrapper=self._client_wrapper)
+        self.model_providers = ModelProvidersClient(client_wrapper=self._client_wrapper)
         self.predictions = PredictionsClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = TasksClient(client_wrapper=self._client_wrapper)
@@ -161,6 +164,7 @@ class AsyncLabelStudioBase:
         self.organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
         self.jwt_settings = AsyncJwtSettingsClient(client_wrapper=self._client_wrapper)
         self.ml = AsyncMlClient(client_wrapper=self._client_wrapper)
+        self.model_providers = AsyncModelProvidersClient(client_wrapper=self._client_wrapper)
         self.predictions = AsyncPredictionsClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = AsyncTasksClient(client_wrapper=self._client_wrapper)

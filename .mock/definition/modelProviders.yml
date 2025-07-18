@@ -1,0 +1,275 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/model-provider-connections/
+      method: GET
+      auth: true
+      docs: List all model provider connections.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List model provider connections
+      request:
+        name: ModelProvidersListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.ModelProviderConnection>
+      examples:
+        - response:
+            body:
+              - id: 1
+                created_by:
+                  id: 1
+                  first_name: first_name
+                  last_name: last_name
+                  email: email
+                  avatar: avatar
+                model_params: model_params
+                provider: OpenAI
+                deployment_name: deployment_name
+                endpoint: endpoint
+                google_project_id: google_project_id
+                google_location: google_location
+                cached_available_models: cached_available_models
+                scope: Organization
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+                is_internal: true
+                budget_limit: 1.1
+                budget_last_reset_date: '2024-01-15T09:30:00Z'
+                budget_reset_period: Monthly
+                budget_total_spent: 1.1
+                budget_alert_threshold: 1.1
+                organization: 1
+      audiences:
+        - public
+    create:
+      path: /api/model-provider-connections/
+      method: POST
+      auth: true
+      docs: Create a new model provider connection.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create model provider connection
+      request:
+        body: root.ModelProviderConnectionRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.ModelProviderConnection
+      examples:
+        - request: {}
+          response:
+            body:
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              model_params: model_params
+              provider: OpenAI
+              deployment_name: deployment_name
+              endpoint: endpoint
+              google_project_id: google_project_id
+              google_location: google_location
+              cached_available_models: cached_available_models
+              scope: Organization
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              is_internal: true
+              budget_limit: 1.1
+              budget_last_reset_date: '2024-01-15T09:30:00Z'
+              budget_reset_period: Monthly
+              budget_total_spent: 1.1
+              budget_alert_threshold: 1.1
+              organization: 1
+      audiences:
+        - public
+    get:
+      path: /api/model-provider-connections/{id}/
+      method: GET
+      auth: true
+      docs: Retrieve a specific model provider connection.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+      display-name: Get model provider connection
+      response:
+        docs: ''
+        type: root.ModelProviderConnection
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              model_params: model_params
+              provider: OpenAI
+              deployment_name: deployment_name
+              endpoint: endpoint
+              google_project_id: google_project_id
+              google_location: google_location
+              cached_available_models: cached_available_models
+              scope: Organization
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              is_internal: true
+              budget_limit: 1.1
+              budget_last_reset_date: '2024-01-15T09:30:00Z'
+              budget_reset_period: Monthly
+              budget_total_spent: 1.1
+              budget_alert_threshold: 1.1
+              organization: 1
+      audiences:
+        - public
+    delete:
+      path: /api/model-provider-connections/{id}/
+      method: DELETE
+      auth: true
+      docs: Delete a model provider connection by ID
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+      display-name: Delete model provider connection
+      examples:
+        - path-parameters:
+            id: id
+      audiences:
+        - public
+    update:
+      path: /api/model-provider-connections/{id}/
+      method: PATCH
+      auth: true
+      docs: Update a specific model provider connection by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+      display-name: Update model provider connection
+      request:
+        name: PatchedModelProviderConnectionRequest
+        body:
+          properties:
+            provider: optional<root.ProviderEnum>
+            api_key:
+              type: optional<string>
+              docs: Model provider API key
+            auth_token:
+              type: optional<string>
+              docs: Model provider Auth token
+            deployment_name:
+              type: optional<string>
+              docs: Azure OpenAI deployment name
+              validation:
+                maxLength: 512
+            endpoint:
+              type: optional<string>
+              docs: Azure OpenAI endpoint
+              validation:
+                maxLength: 512
+            google_application_credentials:
+              type: optional<string>
+              docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
+            google_project_id:
+              type: optional<string>
+              docs: Google project ID
+              validation:
+                maxLength: 255
+            google_location:
+              type: optional<string>
+              docs: Google project location
+              validation:
+                maxLength: 255
+            cached_available_models:
+              type: optional<string>
+              docs: List of available models from the provider
+              validation:
+                maxLength: 4096
+            scope: optional<root.ScopeEnum>
+            is_internal:
+              type: optional<boolean>
+              docs: >-
+                Whether the model provider connection is internal, not visible
+                to the user
+            budget_alert_threshold:
+              type: optional<double>
+              docs: Budget alert threshold for the given provider connection
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.ModelProviderConnection
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+          response:
+            body:
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              model_params: model_params
+              provider: OpenAI
+              deployment_name: deployment_name
+              endpoint: endpoint
+              google_project_id: google_project_id
+              google_location: google_location
+              cached_available_models: cached_available_models
+              scope: Organization
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              is_internal: true
+              budget_limit: 1.1
+              budget_last_reset_date: '2024-01-15T09:30:00Z'
+              budget_reset_period: Monthly
+              budget_total_spent: 1.1
+              budget_alert_threshold: 1.1
+              organization: 1
+      audiences:
+        - public
+    list_model_provider_choices:
+      path: /api/model-provider-connections/provider-choices
+      method: GET
+      auth: true
+      docs: List all possible model provider choices
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List model provider choices
+      response:
+        docs: List of model provider choices
+        type: ModelProvidersListModelProviderChoicesResponse
+      examples:
+        - response:
+            body:
+              provider_choices:
+                - provider_choices
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml
+types:
+  ModelProvidersListModelProviderChoicesResponse:
+    properties:
+      provider_choices: optional<list<string>>
+    source:
+      openapi: openapi/openapi.yaml
