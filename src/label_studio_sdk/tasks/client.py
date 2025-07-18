@@ -513,7 +513,32 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def update(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+    def update(
+        self,
+        id: str,
+        *,
+        inner_id: typing.Optional[int] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        completed_at: typing.Optional[dt.datetime] = OMIT,
+        predictions_score: typing.Optional[float] = OMIT,
+        avg_lead_time: typing.Optional[float] = OMIT,
+        draft_exists: typing.Optional[bool] = OMIT,
+        reviewed: typing.Optional[bool] = OMIT,
+        reviews_accepted: typing.Optional[int] = OMIT,
+        reviews_rejected: typing.Optional[int] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        data: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
+        unresolved_comment_count: typing.Optional[int] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RoleBasedTask:
         """
         Update the attributes of an existing labeling task.
 
@@ -521,6 +546,52 @@ class TasksClient:
         ----------
         id : str
             Task ID
+
+        inner_id : typing.Optional[int]
+
+        cancelled_annotations : typing.Optional[int]
+
+        total_annotations : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        completed_at : typing.Optional[dt.datetime]
+
+        predictions_score : typing.Optional[float]
+
+        avg_lead_time : typing.Optional[float]
+
+        draft_exists : typing.Optional[bool]
+
+        reviewed : typing.Optional[bool]
+
+        reviews_accepted : typing.Optional[int]
+
+        reviews_rejected : typing.Optional[int]
+
+        ground_truth : typing.Optional[bool]
+
+        data : typing.Optional[typing.Optional[typing.Any]]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        is_labeled : typing.Optional[bool]
+            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+
+        overlap : typing.Optional[int]
+            Number of distinct annotators that processed the current task
+
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
+
+        unresolved_comment_count : typing.Optional[int]
+            Number of unresolved comments in the task including all annotations
+
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
+
+        project : typing.Optional[int]
+            Project ID for this task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -545,7 +616,33 @@ class TasksClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/tasks/{jsonable_encoder(id)}/",
             method="PATCH",
+            json={
+                "inner_id": inner_id,
+                "cancelled_annotations": cancelled_annotations,
+                "total_annotations": total_annotations,
+                "total_predictions": total_predictions,
+                "completed_at": completed_at,
+                "predictions_score": predictions_score,
+                "avg_lead_time": avg_lead_time,
+                "draft_exists": draft_exists,
+                "reviewed": reviewed,
+                "reviews_accepted": reviews_accepted,
+                "reviews_rejected": reviews_rejected,
+                "ground_truth": ground_truth,
+                "data": data,
+                "meta": meta,
+                "is_labeled": is_labeled,
+                "overlap": overlap,
+                "comment_count": comment_count,
+                "unresolved_comment_count": unresolved_comment_count,
+                "last_comment_updated_at": last_comment_updated_at,
+                "project": project,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -1099,7 +1196,32 @@ class AsyncTasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def update(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+    async def update(
+        self,
+        id: str,
+        *,
+        inner_id: typing.Optional[int] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        completed_at: typing.Optional[dt.datetime] = OMIT,
+        predictions_score: typing.Optional[float] = OMIT,
+        avg_lead_time: typing.Optional[float] = OMIT,
+        draft_exists: typing.Optional[bool] = OMIT,
+        reviewed: typing.Optional[bool] = OMIT,
+        reviews_accepted: typing.Optional[int] = OMIT,
+        reviews_rejected: typing.Optional[int] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        data: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
+        unresolved_comment_count: typing.Optional[int] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> RoleBasedTask:
         """
         Update the attributes of an existing labeling task.
 
@@ -1107,6 +1229,52 @@ class AsyncTasksClient:
         ----------
         id : str
             Task ID
+
+        inner_id : typing.Optional[int]
+
+        cancelled_annotations : typing.Optional[int]
+
+        total_annotations : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        completed_at : typing.Optional[dt.datetime]
+
+        predictions_score : typing.Optional[float]
+
+        avg_lead_time : typing.Optional[float]
+
+        draft_exists : typing.Optional[bool]
+
+        reviewed : typing.Optional[bool]
+
+        reviews_accepted : typing.Optional[int]
+
+        reviews_rejected : typing.Optional[int]
+
+        ground_truth : typing.Optional[bool]
+
+        data : typing.Optional[typing.Optional[typing.Any]]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        is_labeled : typing.Optional[bool]
+            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+
+        overlap : typing.Optional[int]
+            Number of distinct annotators that processed the current task
+
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
+
+        unresolved_comment_count : typing.Optional[int]
+            Number of unresolved comments in the task including all annotations
+
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
+
+        project : typing.Optional[int]
+            Project ID for this task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1139,7 +1307,33 @@ class AsyncTasksClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/tasks/{jsonable_encoder(id)}/",
             method="PATCH",
+            json={
+                "inner_id": inner_id,
+                "cancelled_annotations": cancelled_annotations,
+                "total_annotations": total_annotations,
+                "total_predictions": total_predictions,
+                "completed_at": completed_at,
+                "predictions_score": predictions_score,
+                "avg_lead_time": avg_lead_time,
+                "draft_exists": draft_exists,
+                "reviewed": reviewed,
+                "reviews_accepted": reviews_accepted,
+                "reviews_rejected": reviews_rejected,
+                "ground_truth": ground_truth,
+                "data": data,
+                "meta": meta,
+                "is_labeled": is_labeled,
+                "overlap": overlap,
+                "comment_count": comment_count,
+                "unresolved_comment_count": unresolved_comment_count,
+                "last_comment_updated_at": last_comment_updated_at,
+                "project": project,
+            },
+            headers={
+                "content-type": "application/json",
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:

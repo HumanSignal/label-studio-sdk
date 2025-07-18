@@ -647,12 +647,63 @@ service:
           type: string
           docs: Task ID
       display-name: Update task
+      request:
+        name: PatchedLseTaskRequest
+        body:
+          properties:
+            inner_id: optional<integer>
+            cancelled_annotations: optional<integer>
+            total_annotations: optional<integer>
+            total_predictions: optional<integer>
+            completed_at: optional<datetime>
+            predictions_score: optional<double>
+            avg_lead_time: optional<double>
+            draft_exists: optional<boolean>
+            reviewed: optional<boolean>
+            reviews_accepted: optional<integer>
+            reviews_rejected: optional<integer>
+            ground_truth: optional<boolean>
+            data: optional<unknown>
+            meta: optional<unknown>
+            is_labeled:
+              type: optional<boolean>
+              docs: >-
+                True if the number of annotations for this task is greater than
+                or equal to the number of maximum_completions for the project
+            overlap:
+              type: optional<integer>
+              docs: Number of distinct annotators that processed the current task
+              validation:
+                min: -2147483648
+                max: 2147483647
+            comment_count:
+              type: optional<integer>
+              docs: Number of comments in the task including all annotations
+              validation:
+                min: -2147483648
+                max: 2147483647
+            unresolved_comment_count:
+              type: optional<integer>
+              docs: >-
+                Number of unresolved comments in the task including all
+                annotations
+              validation:
+                min: -2147483648
+                max: 2147483647
+            last_comment_updated_at:
+              type: optional<datetime>
+              docs: When the last comment was updated
+            project:
+              type: optional<integer>
+              docs: Project ID for this task
+        content-type: application/json
       response:
         docs: ''
         type: root.RoleBasedTask
       examples:
         - path-parameters:
             id: id
+          request: {}
           response:
             body:
               id: 1
