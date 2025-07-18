@@ -362,129 +362,16 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {
-        "id": 1,
-        "agreement": "agreement",
-        "predictions": [
-            {
-                "result": [{"key": "value"}],
-                "score": 1.1,
-                "model_version": "model_version",
-                "model": {"key": "value"},
-                "model_run": {"key": "value"},
-                "task": 1,
-                "project": 1,
-                "created_at": "2024-01-15T09:30:00Z",
-                "updated_at": "2024-01-15T09:30:00Z",
-            }
-        ],
-        "annotations": "annotations",
-        "drafts": [
-            {"result": [{"key": "value"}], "created_at": "2024-01-15T09:30:00Z", "updated_at": "2024-01-15T09:30:00Z"}
-        ],
-        "annotators": [1],
-        "inner_id": 1,
-        "cancelled_annotations": 1,
-        "total_annotations": 1,
-        "total_predictions": 1,
-        "completed_at": "2024-01-15T09:30:00Z",
-        "annotations_results": "annotations_results",
-        "predictions_results": "predictions_results",
-        "predictions_score": 1.1,
-        "file_upload": "file_upload",
-        "storage_filename": "storage_filename",
-        "annotations_ids": "annotations_ids",
-        "predictions_model_versions": "predictions_model_versions",
-        "avg_lead_time": 1.1,
-        "draft_exists": True,
-        "updated_by": [{"key": "value"}],
-        "reviewers": "reviewers",
-        "comments": "comments",
-        "comment_authors": "comment_authors",
-        "reviewed": True,
-        "reviews_accepted": 1,
-        "reviews_rejected": 1,
-        "ground_truth": True,
-        "data": {"key": "value"},
-        "meta": {"key": "value"},
-        "created_at": "2024-01-15T09:30:00Z",
-        "updated_at": "2024-01-15T09:30:00Z",
-        "is_labeled": True,
-        "overlap": 1,
-        "comment_count": 1,
-        "unresolved_comment_count": 1,
-        "last_comment_updated_at": "2024-01-15T09:30:00Z",
-        "project": 1,
-    }
-    expected_types: typing.Any = {
-        "id": "integer",
-        "agreement": None,
-        "predictions": (
-            "list",
-            {
-                0: {
-                    "result": ("list", {0: ("dict", {0: (None, None)})}),
-                    "score": None,
-                    "model_version": None,
-                    "model": ("dict", {0: (None, None)}),
-                    "model_run": ("dict", {0: (None, None)}),
-                    "task": "integer",
-                    "project": "integer",
-                    "created_at": "datetime",
-                    "updated_at": "datetime",
-                }
-            },
-        ),
-        "annotations": None,
-        "drafts": (
-            "list",
-            {
-                0: {
-                    "result": ("list", {0: ("dict", {0: (None, None)})}),
-                    "created_at": "datetime",
-                    "updated_at": "datetime",
-                }
-            },
-        ),
-        "annotators": ("list", {0: "integer"}),
-        "inner_id": "integer",
-        "cancelled_annotations": "integer",
-        "total_annotations": "integer",
-        "total_predictions": "integer",
-        "completed_at": "datetime",
-        "annotations_results": None,
-        "predictions_results": None,
-        "predictions_score": None,
-        "file_upload": None,
-        "storage_filename": None,
-        "annotations_ids": None,
-        "predictions_model_versions": None,
-        "avg_lead_time": None,
-        "draft_exists": None,
-        "updated_by": ("list", {0: ("dict", {0: (None, None)})}),
-        "reviewers": None,
-        "comments": None,
-        "comment_authors": None,
-        "reviewed": None,
-        "reviews_accepted": "integer",
-        "reviews_rejected": "integer",
-        "ground_truth": None,
-        "data": None,
-        "meta": None,
-        "created_at": "datetime",
-        "updated_at": "datetime",
-        "is_labeled": None,
-        "overlap": "integer",
-        "comment_count": "integer",
-        "unresolved_comment_count": "integer",
-        "last_comment_updated_at": "datetime",
-        "project": "integer",
-    }
-    response = client.tasks.delete(id="id")
-    validate_response(response, expected_response, expected_types)
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.tasks.delete(id="id")  # type: ignore[func-returns-value]
+        is None
+    )
 
-    async_response = await async_client.tasks.delete(id="id")
-    validate_response(async_response, expected_response, expected_types)
+    assert (
+        await async_client.tasks.delete(id="id")  # type: ignore[func-returns-value]
+        is None
+    )
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:

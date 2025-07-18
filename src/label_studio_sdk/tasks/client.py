@@ -465,7 +465,7 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a task in Label Studio. This action cannot be undone!
 
@@ -479,8 +479,7 @@ class TasksClient:
 
         Returns
         -------
-        RoleBasedTask
-
+        None
 
         Examples
         --------
@@ -501,13 +500,7 @@ class TasksClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    RoleBasedTask,
-                    construct_type(
-                        type_=RoleBasedTask,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -1140,7 +1133,7 @@ class AsyncTasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a task in Label Studio. This action cannot be undone!
 
@@ -1154,8 +1147,7 @@ class AsyncTasksClient:
 
         Returns
         -------
-        RoleBasedTask
-
+        None
 
         Examples
         --------
@@ -1184,13 +1176,7 @@ class AsyncTasksClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    RoleBasedTask,
-                    construct_type(
-                        type_=RoleBasedTask,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
