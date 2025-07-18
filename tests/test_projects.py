@@ -41,12 +41,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "color": None,
         "control_weights": ("dict", {0: (None, None)}),
     }
-    response = client.projects.create(include="task_number,total_annotations_number,num_tasks_with_annotations")
+    response = client.projects.create()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.create(
-        include="task_number,total_annotations_number,num_tasks_with_annotations"
-    )
+    async_response = await async_client.projects.create()
     validate_response(async_response, expected_response, expected_types)
 
 

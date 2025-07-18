@@ -160,7 +160,6 @@ from .ml import (
     MlUpdateResponseAuthMethod,
 )
 from .projects import (
-    ProjectsCreateRequestFilter,
     ProjectsCreateResponse,
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
@@ -298,7 +297,6 @@ __all__ = [
     "ProjectLabelConfig",
     "ProjectSampling",
     "ProjectSkipQueue",
-    "ProjectsCreateRequestFilter",
     "ProjectsCreateResponse",
     "ProjectsImportTasksResponse",
     "ProjectsListRequestFilter",

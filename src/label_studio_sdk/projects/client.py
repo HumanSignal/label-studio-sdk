@@ -12,7 +12,6 @@ from .types.projects_list_response import ProjectsListResponse
 from ..core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.projects_create_request_filter import ProjectsCreateRequestFilter
 from .types.projects_create_response import ProjectsCreateResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from .types.projects_update_response import ProjectsUpdateResponse
@@ -156,15 +155,7 @@ class ProjectsClient:
     def create(
         self,
         *,
-        ordering: typing.Optional[str] = None,
-        ids: typing.Optional[str] = None,
-        title: typing.Optional[str] = None,
-        page: typing.Optional[int] = None,
-        page_size: typing.Optional[int] = None,
-        workspaces: typing.Optional[int] = None,
-        include: typing.Optional[str] = None,
-        filter: typing.Optional[ProjectsCreateRequestFilter] = None,
-        projects_create_request_title: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         label_config: typing.Optional[str] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
@@ -194,31 +185,7 @@ class ProjectsClient:
 
         Parameters
         ----------
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        ids : typing.Optional[str]
-            ids
-
         title : typing.Optional[str]
-            title
-
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        page_size : typing.Optional[int]
-            Number of results to return per page.
-
-        workspaces : typing.Optional[int]
-            workspaces
-
-        include : typing.Optional[str]
-            Comma-separated list of count fields to include in the response to optimize performance.  Available fields: task_number, finished_task_number, total_predictions_number,  total_annotations_number, num_tasks_with_annotations, useful_annotation_number,  ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
-
-        filter : typing.Optional[ProjectsCreateRequestFilter]
-            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects,  'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
-
-        projects_create_request_title : typing.Optional[str]
             Project title
 
         description : typing.Optional[str]
@@ -279,25 +246,13 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.create(
-            include="task_number,total_annotations_number,num_tasks_with_annotations",
-        )
+        client.projects.create()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/projects/",
             method="POST",
-            params={
-                "ordering": ordering,
-                "ids": ids,
-                "title": title,
-                "page": page,
-                "page_size": page_size,
-                "workspaces": workspaces,
-                "include": include,
-                "filter": filter,
-            },
             json={
-                "title": projects_create_request_title,
+                "title": title,
                 "description": description,
                 "label_config": label_config,
                 "expert_instruction": expert_instruction,
@@ -895,15 +850,7 @@ class AsyncProjectsClient:
     async def create(
         self,
         *,
-        ordering: typing.Optional[str] = None,
-        ids: typing.Optional[str] = None,
-        title: typing.Optional[str] = None,
-        page: typing.Optional[int] = None,
-        page_size: typing.Optional[int] = None,
-        workspaces: typing.Optional[int] = None,
-        include: typing.Optional[str] = None,
-        filter: typing.Optional[ProjectsCreateRequestFilter] = None,
-        projects_create_request_title: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         label_config: typing.Optional[str] = OMIT,
         expert_instruction: typing.Optional[str] = OMIT,
@@ -933,31 +880,7 @@ class AsyncProjectsClient:
 
         Parameters
         ----------
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        ids : typing.Optional[str]
-            ids
-
         title : typing.Optional[str]
-            title
-
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        page_size : typing.Optional[int]
-            Number of results to return per page.
-
-        workspaces : typing.Optional[int]
-            workspaces
-
-        include : typing.Optional[str]
-            Comma-separated list of count fields to include in the response to optimize performance.  Available fields: task_number, finished_task_number, total_predictions_number,  total_annotations_number, num_tasks_with_annotations, useful_annotation_number,  ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
-
-        filter : typing.Optional[ProjectsCreateRequestFilter]
-            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects,  'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
-
-        projects_create_request_title : typing.Optional[str]
             Project title
 
         description : typing.Optional[str]
@@ -1023,9 +946,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.create(
-                include="task_number,total_annotations_number,num_tasks_with_annotations",
-            )
+            await client.projects.create()
 
 
         asyncio.run(main())
@@ -1033,18 +954,8 @@ class AsyncProjectsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/projects/",
             method="POST",
-            params={
-                "ordering": ordering,
-                "ids": ids,
-                "title": title,
-                "page": page,
-                "page_size": page_size,
-                "workspaces": workspaces,
-                "include": include,
-                "filter": filter,
-            },
             json={
-                "title": projects_create_request_title,
+                "title": title,
                 "description": description,
                 "label_config": label_config,
                 "expert_instruction": expert_instruction,
