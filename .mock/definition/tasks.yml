@@ -244,7 +244,7 @@ service:
         annotations and assignments
       pagination:
         offset: $request.page
-        results: $response.results
+        results: $response.tasks
       source:
         openapi: openapi/openapi.yaml
       display-name: List tasks with role-based serialization
@@ -259,7 +259,7 @@ service:
             docs: Number of results to return per page.
       response:
         docs: ''
-        type: root.PaginatedTaskListResponseList
+        type: root.PaginatedRoleBasedTaskList
       errors:
         - root.BadRequestError
         - root.UnauthorizedError
@@ -267,31 +267,54 @@ service:
       examples:
         - response:
             body:
-              count: 123
-              next: http://api.example.org/accounts/?page=4
-              previous: http://api.example.org/accounts/?page=2
-              results:
-                - user_role: LseTaskSerializerForAnnotators
-                  id: 1
-                  data:
-                    key: value
-                  created_at: '2024-01-15T09:30:00Z'
-                  annotations: results
-                  drafts:
-                    - {}
-                  total_annotations: 1
-                  cancelled_annotations: 1
-                  annotations_results: results
+              tasks:
+                - id: 1
+                  agreement: agreement
                   predictions:
                     - {}
+                  annotations: annotations
+                  drafts:
+                    - {}
+                  annotators:
+                    - 1
+                  inner_id: 1
+                  cancelled_annotations: 1
+                  total_annotations: 1
                   total_predictions: 1
+                  completed_at: '2024-01-15T09:30:00Z'
+                  annotations_results: annotations_results
+                  predictions_results: predictions_results
                   predictions_score: 1.1
-                  predictions_results: results
-                  comments: results
-                  comment_count: results
-                  unresolved_comment_count: results
-                  reviews_rejected: 1
+                  file_upload: file_upload
+                  storage_filename: storage_filename
+                  annotations_ids: annotations_ids
+                  predictions_model_versions: predictions_model_versions
+                  avg_lead_time: 1.1
                   draft_exists: true
+                  updated_by:
+                    - key: value
+                  reviewers: reviewers
+                  comments: comments
+                  comment_authors: comment_authors
+                  reviewed: true
+                  reviews_accepted: 1
+                  reviews_rejected: 1
+                  ground_truth: true
+                  data:
+                    key: value
+                  meta:
+                    key: value
+                  created_at: '2024-01-15T09:30:00Z'
+                  updated_at: '2024-01-15T09:30:00Z'
+                  is_labeled: true
+                  overlap: 1
+                  comment_count: 1
+                  unresolved_comment_count: 1
+                  last_comment_updated_at: '2024-01-15T09:30:00Z'
+                  project: 1
+              total: 123
+              total_annotations: 456
+              total_predictions: 78
       audiences:
         - public
     create:

@@ -9,8 +9,8 @@ from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.pagination import SyncPager
-from ..types.task_list_response import TaskListResponse
-from ..types.paginated_task_list_response_list import PaginatedTaskListResponseList
+from ..types.role_based_task import RoleBasedTask
+from ..types.paginated_role_based_task_list import PaginatedRoleBasedTaskList
 from ..errors.bad_request_error import BadRequestError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..errors.forbidden_error import ForbiddenError
@@ -86,7 +86,7 @@ class TasksClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[TaskListResponse]:
+    ) -> SyncPager[RoleBasedTask]:
         """
         Retrieve a paginated list of tasks. The response format varies based on the user's role in the organization:
         - **Admin/Owner**: Full task details with all annotations, reviews, and metadata
@@ -106,7 +106,7 @@ class TasksClient:
 
         Returns
         -------
-        SyncPager[TaskListResponse]
+        SyncPager[RoleBasedTask]
 
 
         Examples
@@ -137,9 +137,9 @@ class TasksClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    PaginatedTaskListResponseList,
+                    PaginatedRoleBasedTaskList,
                     construct_type(
-                        type_=PaginatedTaskListResponseList,  # type: ignore
+                        type_=PaginatedRoleBasedTaskList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -149,7 +149,7 @@ class TasksClient:
                     page_size=page_size,
                     request_options=request_options,
                 )
-                _items = _parsed_response.results
+                _items = _parsed_response.tasks
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             if _response.status_code == 400:
                 raise BadRequestError(
@@ -386,7 +386,7 @@ class AsyncTasksClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[TaskListResponse]:
+    ) -> AsyncPager[RoleBasedTask]:
         """
         Retrieve a paginated list of tasks. The response format varies based on the user's role in the organization:
         - **Admin/Owner**: Full task details with all annotations, reviews, and metadata
@@ -406,7 +406,7 @@ class AsyncTasksClient:
 
         Returns
         -------
-        AsyncPager[TaskListResponse]
+        AsyncPager[RoleBasedTask]
 
 
         Examples
@@ -445,9 +445,9 @@ class AsyncTasksClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    PaginatedTaskListResponseList,
+                    PaginatedRoleBasedTaskList,
                     construct_type(
-                        type_=PaginatedTaskListResponseList,  # type: ignore
+                        type_=PaginatedRoleBasedTaskList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -457,7 +457,7 @@ class AsyncTasksClient:
                     page_size=page_size,
                     request_options=request_options,
                 )
-                _items = _parsed_response.results
+                _items = _parsed_response.tasks
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             if _response.status_code == 400:
                 raise BadRequestError(

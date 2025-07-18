@@ -80,7 +80,7 @@ from .organization_invite import OrganizationInvite
 from .organization_member import OrganizationMember
 from .organization_membership import OrganizationMembership
 from .paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
-from .paginated_task_list_response_list import PaginatedTaskListResponseList
+from .paginated_role_based_task_list import PaginatedRoleBasedTaskList
 from .prediction import Prediction
 from .prediction_request import PredictionRequest
 from .project import Project
@@ -95,6 +95,7 @@ from .review_settings import ReviewSettings
 from .review_settings_requeue_rejected_tasks_mode import ReviewSettingsRequeueRejectedTasksMode
 from .review_settings_review_criteria import ReviewSettingsReviewCriteria
 from .reviewed_enum import ReviewedEnum
+from .role_based_task import RoleBasedTask
 from .s3export_storage import S3ExportStorage
 from .s3import_storage import S3ImportStorage
 from .sampling_enum import SamplingEnum
@@ -107,12 +108,6 @@ from .skipped_enum import SkippedEnum
 from .state_enum import StateEnum
 from .status7bf_enum import Status7BfEnum
 from .status_d14enum import StatusD14Enum
-from .task_list_response import (
-    TaskListResponse,
-    TaskListResponse_LseTask,
-    TaskListResponse_LseTaskSerializerForAnnotators,
-    TaskListResponse_LseTaskSerializerForReviewers,
-)
 from .token_refresh_response import TokenRefreshResponse
 from .token_rotate_response import TokenRotateResponse
 from .trial_role_enum import TrialRoleEnum
@@ -204,7 +199,7 @@ __all__ = [
     "OrganizationMember",
     "OrganizationMembership",
     "PaginatedAllRolesProjectListList",
-    "PaginatedTaskListResponseList",
+    "PaginatedRoleBasedTaskList",
     "Prediction",
     "PredictionRequest",
     "Project",
@@ -219,6 +214,7 @@ __all__ = [
     "ReviewSettingsRequeueRejectedTasksMode",
     "ReviewSettingsReviewCriteria",
     "ReviewedEnum",
+    "RoleBasedTask",
     "S3ExportStorage",
     "S3ImportStorage",
     "SamplingEnum",
@@ -231,10 +227,6 @@ __all__ = [
     "StateEnum",
     "Status7BfEnum",
     "StatusD14Enum",
-    "TaskListResponse",
-    "TaskListResponse_LseTask",
-    "TaskListResponse_LseTaskSerializerForAnnotators",
-    "TaskListResponse_LseTaskSerializerForReviewers",
     "TokenRefreshResponse",
     "TokenRotateResponse",
     "TrialRoleEnum",
