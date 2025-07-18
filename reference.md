@@ -4602,6 +4602,508 @@ client.projects.delete(
 </dl>
 </details>
 
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the details of a specific project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.projects.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Project name. Must be between 3 and 50 characters long.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Project description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label_config:** `typing.Optional[str]` — Label config in XML format. See more about it in documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expert_instruction:** `typing.Optional[str]` — Labeling instructions in HTML format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_instruction:** `typing.Optional[bool]` — Show instructions to the annotator before they start
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_skip_button:** `typing.Optional[bool]` — Show a skip button in interface and allow annotators to skip the task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enable_empty_annotation:** `typing.Optional[bool]` — Allow annotators to submit empty annotations
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_annotation_history:** `typing.Optional[bool]` — Show annotation history to annotator
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**organization:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**color:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maximum_annotations:** `typing.Optional[int]` — Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_published:** `typing.Optional[bool]` — Whether or not the project is published to annotators
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_version:** `typing.Optional[str]` — Machine learning model version
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**is_draft:** `typing.Optional[bool]` — Whether or not the project is in the middle of being created
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[UserSimpleRequest]` — Project owner
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**min_annotations_to_start_training:** `typing.Optional[int]` — Minimum number of completed tasks after which model training is started
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_collab_predictions:** `typing.Optional[bool]` — If set, the annotator can view model predictions
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sampling:** `typing.Optional[PatchedLseProjectRequestSampling]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_ground_truth_first:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**show_overlap_first:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**overlap_cohort_percentage:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_data_login:** `typing.Optional[str]` — Task data credentials: login
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_data_password:** `typing.Optional[str]` — Task data credentials: password
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**control_weights:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**evaluate_predictions_automatically:** `typing.Optional[bool]` — Retrieve and display predictions when loading a task
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**skip_queue:** `typing.Optional[PatchedLseProjectRequestSkipQueue]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reveal_preannotations_interactively:** `typing.Optional[bool]` — Reveal pre-annotations interactively
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**review_settings:** `typing.Optional[ReviewSettingsRequest]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignment_settings:** `typing.Optional[AssignmentSettingsRequest]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**custom_script:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment_classification_config:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**duplication_done:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**require_comment_on_skip:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**custom_task_lock_ttl:** `typing.Optional[int]` — TTL in seconds for task reservations, on new and existing tasks
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation_limit_count:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation_limit_percent:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pause_on_failed_annotator_evaluation:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotator_evaluation_minimum_score:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotator_evaluation_minimum_tasks:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">duplicate</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Make a copy of project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.projects.duplicate(
+    id=1,
+    mode="settings",
+    workspace=1,
+    title="title",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mode:** `ModeEnum` 
+
+Data that you want to duplicate: settings only, with tasks, with annotations
+
+* `settings` - Only settings
+* `settings,data` - Settings and tasks
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace:** `int` — Workspace, where to place duplicated project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `str` — Title of duplicated project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Description of duplicated project
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">import_tasks</a>(...)</code></summary>
 <dl>
 <dd>
@@ -14844,6 +15346,491 @@ client.projects.exports.download(
 <dd>
 
 **export_type:** `typing.Optional[str]` — Selected export format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Projects Pauses
+<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a list of all pauses.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.projects.pauses.list(
+    project_pk=1,
+    user_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new pause entry.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.projects.pauses.create(
+    project_pk=1,
+    user_pk=1,
+    reason="MANUAL",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reason:** `ReasonEnum` 
+
+Reason for pausing
+
+* `MANUAL` - Manual
+* `BEHAVIOR_BASED` - Behavior-based
+* `ANNOTATOR_EVALUATION` - Annotator evaluation
+* `ANNOTATION_LIMIT` - Annotation limit
+* `CUSTOM_SCRIPT` - Custom script
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verbose_reason:** `typing.Optional[str]` — Detailed description of why the project is paused, will be readable by paused annotators
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific pause by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.projects.pauses.get(
+    id="id",
+    project_pk=1,
+    user_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific pause by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.projects.pauses.delete(
+    id="id",
+    project_pk=1,
+    user_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.pauses.<a href="src/label_studio_sdk/projects/pauses/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Partially update a pause entry by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.projects.pauses.update(
+    id="id",
+    project_pk=1,
+    user_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reason:** `typing.Optional[ReasonEnum]` 
+
+Reason for pausing
+
+* `MANUAL` - Manual
+* `BEHAVIOR_BASED` - Behavior-based
+* `ANNOTATOR_EVALUATION` - Annotator evaluation
+* `ANNOTATION_LIMIT` - Annotation limit
+* `CUSTOM_SCRIPT` - Custom script
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verbose_reason:** `typing.Optional[str]` — Detailed description of why the project is paused, will be readable by paused annotators
     
 </dd>
 </dl>

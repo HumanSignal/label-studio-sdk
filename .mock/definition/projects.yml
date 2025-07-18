@@ -37,85 +37,85 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - sampling: Sequential sampling
-                  annotation_limit_percent: annotation_limit_percent
-                  overlap_cohort_percentage: 1
-                  reviewed_number: reviewed_number
-                  config_suitable_for_bulk_annotation: true
-                  parsed_label_config:
-                    key: value
-                  comment_classification_config: comment_classification_config
-                  reviewer_queue_total: reviewer_queue_total
-                  is_published: true
-                  label_config: label_config
-                  model_version: model_version
-                  ground_truth_number: 1
+                - queue_total: queue_total
+                  maximum_annotations: 1
+                  min_annotations_to_start_training: 1
+                  assignment_settings:
+                    id: 1
+                  queue_left: queue_left
+                  num_tasks_with_annotations: num_tasks_with_annotations
+                  show_skip_button: true
+                  queue_done: queue_done
+                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
                   skipped_annotations_number: skipped_annotations_number
-                  useful_annotation_number: useful_annotation_number
-                  custom_script: custom_script
-                  show_annotation_history: true
+                  show_collab_predictions: true
+                  created_at: '2024-01-15T09:30:00Z'
+                  show_ground_truth_first: true
+                  pinned_at: '2024-01-15T09:30:00Z'
+                  task_number: 1
                   review_settings:
                     id: 1
                     requeue_rejected_tasks_to_annotator: true
-                  title: title
-                  show_skip_button: true
-                  description: description
-                  duplication_done: true
-                  review_total_tasks: review_total_tasks
-                  expert_instruction: expert_instruction
-                  maximum_annotations: 1
-                  total_predictions_number: 1
-                  skip_queue: REQUEUE_FOR_ME
-                  workspace: workspace
-                  evaluate_predictions_automatically: true
-                  queue_left: queue_left
-                  pause_on_failed_annotator_evaluation: true
-                  start_training_on_annotation_update: true
-                  allow_stream: allow_stream
-                  show_collab_predictions: true
-                  num_tasks_with_annotations: num_tasks_with_annotations
-                  rejected: rejected
-                  task_number: 1
-                  queue_total: queue_total
-                  organization: 1
-                  data_types:
-                    key: value
-                  reveal_preannotations_interactively: true
-                  annotator_evaluation_minimum_tasks: 1
-                  config_has_control_tags: true
-                  queue_done: queue_done
-                  show_instruction: true
-                  enable_empty_annotation: true
-                  custom_task_lock_ttl: 1
-                  min_annotations_to_start_training: 1
-                  members_count: members_count
-                  created_by:
-                    id: 1
-                    avatar: avatar
-                  show_overlap_first: true
-                  ready: ready
-                  require_comment_on_skip: true
-                  prompts: prompts
-                  created_at: '2024-01-15T09:30:00Z'
-                  total_annotations_number: total_annotations_number
-                  color: color
-                  control_weights:
-                    key: value
-                  annotation_limit_count: 1
-                  show_ground_truth_first: true
-                  is_draft: true
-                  finished_task_number: 1
-                  pinned_at: '2024-01-15T09:30:00Z'
-                  assignment_settings:
-                    id: 1
+                  overlap_cohort_percentage: 1
+                  useful_annotation_number: useful_annotation_number
                   members: members
-                  id: 1
+                  enable_empty_annotation: true
                   blueprints:
                     - id: 1
                       share_id: share_id
                       short_url: short_url
                       created_at: '2024-01-15T09:30:00Z'
-                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
+                  start_training_on_annotation_update: true
+                  title: title
+                  annotation_limit_percent: annotation_limit_percent
+                  sampling: Sequential sampling
+                  comment_classification_config: comment_classification_config
+                  show_instruction: true
+                  expert_instruction: expert_instruction
+                  show_annotation_history: true
+                  skip_queue: REQUEUE_FOR_ME
+                  description: description
+                  model_version: model_version
+                  ground_truth_number: 1
+                  organization: 1
+                  reviewer_queue_total: reviewer_queue_total
+                  show_overlap_first: true
+                  custom_script: custom_script
+                  is_published: true
+                  label_config: label_config
+                  parsed_label_config:
+                    key: value
+                  id: 1
+                  reveal_preannotations_interactively: true
+                  members_count: members_count
+                  custom_task_lock_ttl: 1
+                  data_types:
+                    key: value
+                  rejected: rejected
+                  prompts: prompts
+                  color: color
+                  control_weights:
+                    key: value
+                  created_by:
+                    id: 1
+                    avatar: avatar
+                  duplication_done: true
+                  annotator_evaluation_minimum_tasks: 1
+                  total_predictions_number: 1
+                  allow_stream: allow_stream
+                  require_comment_on_skip: true
+                  finished_task_number: 1
+                  ready: ready
+                  reviewed_number: reviewed_number
+                  workspace: workspace
+                  review_total_tasks: review_total_tasks
+                  config_has_control_tags: true
+                  total_annotations_number: total_annotations_number
+                  config_suitable_for_bulk_annotation: true
+                  is_draft: true
+                  pause_on_failed_annotator_evaluation: true
+                  annotation_limit_count: 1
+                  evaluate_predictions_automatically: true
       audiences:
         - public
     create:
@@ -373,7 +373,7 @@ service:
             id: 1
       audiences:
         - public
-    api_projects_partial_update:
+    update:
       path: /api/projects/{id}/
       method: PATCH
       auth: true
@@ -609,7 +609,9 @@ service:
               pause_on_failed_annotator_evaluation: true
               annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
               annotator_evaluation_minimum_tasks: 1
-    api_projects_duplicate_create:
+      audiences:
+        - public
+    duplicate:
       path: /api/projects/{id}/duplicate/
       method: POST
       auth: true
@@ -648,8 +650,8 @@ service:
               default: ''
         content-type: application/json
       response:
-        docs: ''
-        type: root.ProjectDuplicate
+        docs: Project duplicated
+        type: unknown
       examples:
         - path-parameters:
             id: 1
@@ -659,10 +661,9 @@ service:
             title: title
           response:
             body:
-              mode: settings
-              workspace: 1
-              title: title
-              description: description
+              key: value
+      audiences:
+        - public
     export:
       path: /api/projects/{id}/export
       method: GET

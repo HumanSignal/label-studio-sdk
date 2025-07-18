@@ -11,6 +11,10 @@ from .annotation_request import AnnotationRequest
 from .annotation_request_last_action import AnnotationRequestLastAction
 from .assignment_settings import AssignmentSettings
 from .assignment_settings_label_stream_task_distribution import AssignmentSettingsLabelStreamTaskDistribution
+from .assignment_settings_request import AssignmentSettingsRequest
+from .assignment_settings_request_label_stream_task_distribution import (
+    AssignmentSettingsRequestLabelStreamTaskDistribution,
+)
 from .auth_method_enum import AuthMethodEnum
 from .azure_blob_export_storage import AzureBlobExportStorage
 from .azure_blob_import_storage import AzureBlobImportStorage
@@ -47,6 +51,9 @@ from .lse_organization_custom_scripts_editable_by import LseOrganizationCustomSc
 from .lse_project_create import LseProjectCreate
 from .lse_project_create_sampling import LseProjectCreateSampling
 from .lse_project_create_skip_queue import LseProjectCreateSkipQueue
+from .lse_project_update import LseProjectUpdate
+from .lse_project_update_sampling import LseProjectUpdateSampling
+from .lse_project_update_skip_queue import LseProjectUpdateSkipQueue
 from .lse_task import LseTask
 from .lse_task_drafts_item import LseTaskDraftsItem
 from .lse_task_filter_options import LseTaskFilterOptions
@@ -72,6 +79,7 @@ from .lseapi_token_create import LseapiTokenCreate
 from .lseapi_token_list import LseapiTokenList
 from .lsejwt_settings import LsejwtSettings
 from .ml_backend import MlBackend
+from .mode_enum import ModeEnum
 from .null_enum import NullEnum
 from .onboarding_state_enum import OnboardingStateEnum
 from .organization_billing import OrganizationBilling
@@ -81,17 +89,23 @@ from .organization_member import OrganizationMember
 from .organization_membership import OrganizationMembership
 from .paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from .paginated_role_based_task_list import PaginatedRoleBasedTaskList
+from .pause import Pause
+from .pause_request import PauseRequest
 from .prediction import Prediction
 from .prediction_request import PredictionRequest
 from .project import Project
 from .project_import import ProjectImport
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
+from .reason_enum import ReasonEnum
 from .redis_export_storage import RedisExportStorage
 from .redis_import_storage import RedisImportStorage
 from .requeue_rejected_tasks_mode_enum import RequeueRejectedTasksModeEnum
 from .review_criteria_enum import ReviewCriteriaEnum
 from .review_settings import ReviewSettings
+from .review_settings_request import ReviewSettingsRequest
+from .review_settings_request_requeue_rejected_tasks_mode import ReviewSettingsRequestRequeueRejectedTasksMode
+from .review_settings_request_review_criteria import ReviewSettingsRequestReviewCriteria
 from .review_settings_requeue_rejected_tasks_mode import ReviewSettingsRequeueRejectedTasksMode
 from .review_settings_review_criteria import ReviewSettingsReviewCriteria
 from .reviewed_enum import ReviewedEnum
@@ -130,6 +144,8 @@ __all__ = [
     "AnnotationRequestLastAction",
     "AssignmentSettings",
     "AssignmentSettingsLabelStreamTaskDistribution",
+    "AssignmentSettingsRequest",
+    "AssignmentSettingsRequestLabelStreamTaskDistribution",
     "AuthMethodEnum",
     "AzureBlobExportStorage",
     "AzureBlobImportStorage",
@@ -166,6 +182,9 @@ __all__ = [
     "LseProjectCreate",
     "LseProjectCreateSampling",
     "LseProjectCreateSkipQueue",
+    "LseProjectUpdate",
+    "LseProjectUpdateSampling",
+    "LseProjectUpdateSkipQueue",
     "LseTask",
     "LseTaskDraftsItem",
     "LseTaskFilterOptions",
@@ -191,6 +210,7 @@ __all__ = [
     "LseapiTokenList",
     "LsejwtSettings",
     "MlBackend",
+    "ModeEnum",
     "NullEnum",
     "OnboardingStateEnum",
     "OrganizationBilling",
@@ -200,17 +220,23 @@ __all__ = [
     "OrganizationMembership",
     "PaginatedAllRolesProjectListList",
     "PaginatedRoleBasedTaskList",
+    "Pause",
+    "PauseRequest",
     "Prediction",
     "PredictionRequest",
     "Project",
     "ProjectImport",
     "ProjectSampling",
     "ProjectSkipQueue",
+    "ReasonEnum",
     "RedisExportStorage",
     "RedisImportStorage",
     "RequeueRejectedTasksModeEnum",
     "ReviewCriteriaEnum",
     "ReviewSettings",
+    "ReviewSettingsRequest",
+    "ReviewSettingsRequestRequeueRejectedTasksMode",
+    "ReviewSettingsRequestReviewCriteria",
     "ReviewSettingsRequeueRejectedTasksMode",
     "ReviewSettingsReviewCriteria",
     "ReviewedEnum",

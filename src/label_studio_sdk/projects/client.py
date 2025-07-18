@@ -4,6 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .file_uploads.client import FileUploadsClient
 from .exports.client import ExportsClient
+from .pauses.client import PausesClient
 from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
 from ..types.all_roles_project_list import AllRolesProjectList
@@ -19,12 +20,19 @@ from ..types.lse_project_create import LseProjectCreate
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.project import Project
 from ..core.jsonable_encoder import jsonable_encoder
+from .types.patched_lse_project_request_sampling import PatchedLseProjectRequestSampling
+from .types.patched_lse_project_request_skip_queue import PatchedLseProjectRequestSkipQueue
+from ..types.review_settings_request import ReviewSettingsRequest
+from ..types.assignment_settings_request import AssignmentSettingsRequest
+from ..types.lse_project_update import LseProjectUpdate
+from ..types.mode_enum import ModeEnum
 from ..types.import_api_request import ImportApiRequest
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from ..errors.bad_request_error import BadRequestError
 from ..core.client_wrapper import AsyncClientWrapper
 from .file_uploads.client import AsyncFileUploadsClient
 from .exports.client import AsyncExportsClient
+from .pauses.client import AsyncPausesClient
 from ..core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
@@ -36,6 +44,7 @@ class ProjectsClient:
         self._client_wrapper = client_wrapper
         self.file_uploads = FileUploadsClient(client_wrapper=self._client_wrapper)
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
+        self.pauses = PausesClient(client_wrapper=self._client_wrapper)
 
     def list(
         self,
@@ -398,6 +407,339 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def update(
+        self,
+        id: int,
+        *,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        label_config: typing.Optional[str] = OMIT,
+        expert_instruction: typing.Optional[str] = OMIT,
+        show_instruction: typing.Optional[bool] = OMIT,
+        show_skip_button: typing.Optional[bool] = OMIT,
+        enable_empty_annotation: typing.Optional[bool] = OMIT,
+        show_annotation_history: typing.Optional[bool] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        is_published: typing.Optional[bool] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        is_draft: typing.Optional[bool] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        min_annotations_to_start_training: typing.Optional[int] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        sampling: typing.Optional[PatchedLseProjectRequestSampling] = OMIT,
+        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        show_overlap_first: typing.Optional[bool] = OMIT,
+        overlap_cohort_percentage: typing.Optional[int] = OMIT,
+        task_data_login: typing.Optional[str] = OMIT,
+        task_data_password: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
+        skip_queue: typing.Optional[PatchedLseProjectRequestSkipQueue] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        pinned_at: typing.Optional[dt.datetime] = OMIT,
+        review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
+        assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
+        custom_script: typing.Optional[str] = OMIT,
+        comment_classification_config: typing.Optional[str] = OMIT,
+        duplication_done: typing.Optional[bool] = OMIT,
+        require_comment_on_skip: typing.Optional[bool] = OMIT,
+        custom_task_lock_ttl: typing.Optional[int] = OMIT,
+        annotation_limit_count: typing.Optional[int] = OMIT,
+        annotation_limit_percent: typing.Optional[str] = OMIT,
+        pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
+        annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
+        annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseProjectUpdate:
+        """
+        Update the details of a specific project.
+
+        Parameters
+        ----------
+        id : int
+
+        title : typing.Optional[str]
+            Project name. Must be between 3 and 50 characters long.
+
+        description : typing.Optional[str]
+            Project description
+
+        label_config : typing.Optional[str]
+            Label config in XML format. See more about it in documentation
+
+        expert_instruction : typing.Optional[str]
+            Labeling instructions in HTML format
+
+        show_instruction : typing.Optional[bool]
+            Show instructions to the annotator before they start
+
+        show_skip_button : typing.Optional[bool]
+            Show a skip button in interface and allow annotators to skip the task
+
+        enable_empty_annotation : typing.Optional[bool]
+            Allow annotators to submit empty annotations
+
+        show_annotation_history : typing.Optional[bool]
+            Show annotation history to annotator
+
+        organization : typing.Optional[int]
+
+        color : typing.Optional[str]
+
+        maximum_annotations : typing.Optional[int]
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+
+        is_published : typing.Optional[bool]
+            Whether or not the project is published to annotators
+
+        model_version : typing.Optional[str]
+            Machine learning model version
+
+        is_draft : typing.Optional[bool]
+            Whether or not the project is in the middle of being created
+
+        created_by : typing.Optional[UserSimpleRequest]
+            Project owner
+
+        min_annotations_to_start_training : typing.Optional[int]
+            Minimum number of completed tasks after which model training is started
+
+        show_collab_predictions : typing.Optional[bool]
+            If set, the annotator can view model predictions
+
+        sampling : typing.Optional[PatchedLseProjectRequestSampling]
+
+        show_ground_truth_first : typing.Optional[bool]
+
+        show_overlap_first : typing.Optional[bool]
+
+        overlap_cohort_percentage : typing.Optional[int]
+
+        task_data_login : typing.Optional[str]
+            Task data credentials: login
+
+        task_data_password : typing.Optional[str]
+            Task data credentials: password
+
+        control_weights : typing.Optional[typing.Optional[typing.Any]]
+
+        evaluate_predictions_automatically : typing.Optional[bool]
+            Retrieve and display predictions when loading a task
+
+        skip_queue : typing.Optional[PatchedLseProjectRequestSkipQueue]
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal pre-annotations interactively
+
+        pinned_at : typing.Optional[dt.datetime]
+            Pinned date and time
+
+        review_settings : typing.Optional[ReviewSettingsRequest]
+
+        assignment_settings : typing.Optional[AssignmentSettingsRequest]
+
+        custom_script : typing.Optional[str]
+
+        comment_classification_config : typing.Optional[str]
+
+        duplication_done : typing.Optional[bool]
+
+        require_comment_on_skip : typing.Optional[bool]
+
+        custom_task_lock_ttl : typing.Optional[int]
+            TTL in seconds for task reservations, on new and existing tasks
+
+        annotation_limit_count : typing.Optional[int]
+
+        annotation_limit_percent : typing.Optional[str]
+
+        pause_on_failed_annotator_evaluation : typing.Optional[bool]
+
+        annotator_evaluation_minimum_score : typing.Optional[str]
+
+        annotator_evaluation_minimum_tasks : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseProjectUpdate
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.projects.update(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/",
+            method="PATCH",
+            json={
+                "title": title,
+                "description": description,
+                "label_config": label_config,
+                "expert_instruction": expert_instruction,
+                "show_instruction": show_instruction,
+                "show_skip_button": show_skip_button,
+                "enable_empty_annotation": enable_empty_annotation,
+                "show_annotation_history": show_annotation_history,
+                "organization": organization,
+                "color": color,
+                "maximum_annotations": maximum_annotations,
+                "is_published": is_published,
+                "model_version": model_version,
+                "is_draft": is_draft,
+                "created_by": convert_and_respect_annotation_metadata(
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
+                ),
+                "min_annotations_to_start_training": min_annotations_to_start_training,
+                "show_collab_predictions": show_collab_predictions,
+                "sampling": convert_and_respect_annotation_metadata(
+                    object_=sampling, annotation=PatchedLseProjectRequestSampling, direction="write"
+                ),
+                "show_ground_truth_first": show_ground_truth_first,
+                "show_overlap_first": show_overlap_first,
+                "overlap_cohort_percentage": overlap_cohort_percentage,
+                "task_data_login": task_data_login,
+                "task_data_password": task_data_password,
+                "control_weights": control_weights,
+                "evaluate_predictions_automatically": evaluate_predictions_automatically,
+                "skip_queue": convert_and_respect_annotation_metadata(
+                    object_=skip_queue, annotation=PatchedLseProjectRequestSkipQueue, direction="write"
+                ),
+                "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "pinned_at": pinned_at,
+                "review_settings": convert_and_respect_annotation_metadata(
+                    object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
+                ),
+                "assignment_settings": convert_and_respect_annotation_metadata(
+                    object_=assignment_settings, annotation=AssignmentSettingsRequest, direction="write"
+                ),
+                "custom_script": custom_script,
+                "comment_classification_config": comment_classification_config,
+                "duplication_done": duplication_done,
+                "require_comment_on_skip": require_comment_on_skip,
+                "custom_task_lock_ttl": custom_task_lock_ttl,
+                "annotation_limit_count": annotation_limit_count,
+                "annotation_limit_percent": annotation_limit_percent,
+                "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,
+                "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
+                "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LseProjectUpdate,
+                    construct_type(
+                        type_=LseProjectUpdate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def duplicate(
+        self,
+        id: int,
+        *,
+        mode: ModeEnum,
+        workspace: int,
+        title: str,
+        description: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Make a copy of project.
+
+        Parameters
+        ----------
+        id : int
+
+        mode : ModeEnum
+            Data that you want to duplicate: settings only, with tasks, with annotations
+
+            * `settings` - Only settings
+            * `settings,data` - Settings and tasks
+
+        workspace : int
+            Workspace, where to place duplicated project
+
+        title : str
+            Title of duplicated project
+
+        description : typing.Optional[str]
+            Description of duplicated project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Project duplicated
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.projects.duplicate(
+            id=1,
+            mode="settings",
+            workspace=1,
+            title="title",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/duplicate/",
+            method="POST",
+            json={
+                "mode": mode,
+                "workspace": workspace,
+                "title": title,
+                "description": description,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def export(
         self,
         id: int,
@@ -621,6 +963,7 @@ class AsyncProjectsClient:
         self._client_wrapper = client_wrapper
         self.file_uploads = AsyncFileUploadsClient(client_wrapper=self._client_wrapper)
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
+        self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)
 
     async def list(
         self,
@@ -1010,6 +1353,355 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update(
+        self,
+        id: int,
+        *,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        label_config: typing.Optional[str] = OMIT,
+        expert_instruction: typing.Optional[str] = OMIT,
+        show_instruction: typing.Optional[bool] = OMIT,
+        show_skip_button: typing.Optional[bool] = OMIT,
+        enable_empty_annotation: typing.Optional[bool] = OMIT,
+        show_annotation_history: typing.Optional[bool] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        is_published: typing.Optional[bool] = OMIT,
+        model_version: typing.Optional[str] = OMIT,
+        is_draft: typing.Optional[bool] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        min_annotations_to_start_training: typing.Optional[int] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        sampling: typing.Optional[PatchedLseProjectRequestSampling] = OMIT,
+        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        show_overlap_first: typing.Optional[bool] = OMIT,
+        overlap_cohort_percentage: typing.Optional[int] = OMIT,
+        task_data_login: typing.Optional[str] = OMIT,
+        task_data_password: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
+        skip_queue: typing.Optional[PatchedLseProjectRequestSkipQueue] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        pinned_at: typing.Optional[dt.datetime] = OMIT,
+        review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
+        assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
+        custom_script: typing.Optional[str] = OMIT,
+        comment_classification_config: typing.Optional[str] = OMIT,
+        duplication_done: typing.Optional[bool] = OMIT,
+        require_comment_on_skip: typing.Optional[bool] = OMIT,
+        custom_task_lock_ttl: typing.Optional[int] = OMIT,
+        annotation_limit_count: typing.Optional[int] = OMIT,
+        annotation_limit_percent: typing.Optional[str] = OMIT,
+        pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
+        annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
+        annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseProjectUpdate:
+        """
+        Update the details of a specific project.
+
+        Parameters
+        ----------
+        id : int
+
+        title : typing.Optional[str]
+            Project name. Must be between 3 and 50 characters long.
+
+        description : typing.Optional[str]
+            Project description
+
+        label_config : typing.Optional[str]
+            Label config in XML format. See more about it in documentation
+
+        expert_instruction : typing.Optional[str]
+            Labeling instructions in HTML format
+
+        show_instruction : typing.Optional[bool]
+            Show instructions to the annotator before they start
+
+        show_skip_button : typing.Optional[bool]
+            Show a skip button in interface and allow annotators to skip the task
+
+        enable_empty_annotation : typing.Optional[bool]
+            Allow annotators to submit empty annotations
+
+        show_annotation_history : typing.Optional[bool]
+            Show annotation history to annotator
+
+        organization : typing.Optional[int]
+
+        color : typing.Optional[str]
+
+        maximum_annotations : typing.Optional[int]
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+
+        is_published : typing.Optional[bool]
+            Whether or not the project is published to annotators
+
+        model_version : typing.Optional[str]
+            Machine learning model version
+
+        is_draft : typing.Optional[bool]
+            Whether or not the project is in the middle of being created
+
+        created_by : typing.Optional[UserSimpleRequest]
+            Project owner
+
+        min_annotations_to_start_training : typing.Optional[int]
+            Minimum number of completed tasks after which model training is started
+
+        show_collab_predictions : typing.Optional[bool]
+            If set, the annotator can view model predictions
+
+        sampling : typing.Optional[PatchedLseProjectRequestSampling]
+
+        show_ground_truth_first : typing.Optional[bool]
+
+        show_overlap_first : typing.Optional[bool]
+
+        overlap_cohort_percentage : typing.Optional[int]
+
+        task_data_login : typing.Optional[str]
+            Task data credentials: login
+
+        task_data_password : typing.Optional[str]
+            Task data credentials: password
+
+        control_weights : typing.Optional[typing.Optional[typing.Any]]
+
+        evaluate_predictions_automatically : typing.Optional[bool]
+            Retrieve and display predictions when loading a task
+
+        skip_queue : typing.Optional[PatchedLseProjectRequestSkipQueue]
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal pre-annotations interactively
+
+        pinned_at : typing.Optional[dt.datetime]
+            Pinned date and time
+
+        review_settings : typing.Optional[ReviewSettingsRequest]
+
+        assignment_settings : typing.Optional[AssignmentSettingsRequest]
+
+        custom_script : typing.Optional[str]
+
+        comment_classification_config : typing.Optional[str]
+
+        duplication_done : typing.Optional[bool]
+
+        require_comment_on_skip : typing.Optional[bool]
+
+        custom_task_lock_ttl : typing.Optional[int]
+            TTL in seconds for task reservations, on new and existing tasks
+
+        annotation_limit_count : typing.Optional[int]
+
+        annotation_limit_percent : typing.Optional[str]
+
+        pause_on_failed_annotator_evaluation : typing.Optional[bool]
+
+        annotator_evaluation_minimum_score : typing.Optional[str]
+
+        annotator_evaluation_minimum_tasks : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseProjectUpdate
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.projects.update(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/",
+            method="PATCH",
+            json={
+                "title": title,
+                "description": description,
+                "label_config": label_config,
+                "expert_instruction": expert_instruction,
+                "show_instruction": show_instruction,
+                "show_skip_button": show_skip_button,
+                "enable_empty_annotation": enable_empty_annotation,
+                "show_annotation_history": show_annotation_history,
+                "organization": organization,
+                "color": color,
+                "maximum_annotations": maximum_annotations,
+                "is_published": is_published,
+                "model_version": model_version,
+                "is_draft": is_draft,
+                "created_by": convert_and_respect_annotation_metadata(
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
+                ),
+                "min_annotations_to_start_training": min_annotations_to_start_training,
+                "show_collab_predictions": show_collab_predictions,
+                "sampling": convert_and_respect_annotation_metadata(
+                    object_=sampling, annotation=PatchedLseProjectRequestSampling, direction="write"
+                ),
+                "show_ground_truth_first": show_ground_truth_first,
+                "show_overlap_first": show_overlap_first,
+                "overlap_cohort_percentage": overlap_cohort_percentage,
+                "task_data_login": task_data_login,
+                "task_data_password": task_data_password,
+                "control_weights": control_weights,
+                "evaluate_predictions_automatically": evaluate_predictions_automatically,
+                "skip_queue": convert_and_respect_annotation_metadata(
+                    object_=skip_queue, annotation=PatchedLseProjectRequestSkipQueue, direction="write"
+                ),
+                "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "pinned_at": pinned_at,
+                "review_settings": convert_and_respect_annotation_metadata(
+                    object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
+                ),
+                "assignment_settings": convert_and_respect_annotation_metadata(
+                    object_=assignment_settings, annotation=AssignmentSettingsRequest, direction="write"
+                ),
+                "custom_script": custom_script,
+                "comment_classification_config": comment_classification_config,
+                "duplication_done": duplication_done,
+                "require_comment_on_skip": require_comment_on_skip,
+                "custom_task_lock_ttl": custom_task_lock_ttl,
+                "annotation_limit_count": annotation_limit_count,
+                "annotation_limit_percent": annotation_limit_percent,
+                "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,
+                "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
+                "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LseProjectUpdate,
+                    construct_type(
+                        type_=LseProjectUpdate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def duplicate(
+        self,
+        id: int,
+        *,
+        mode: ModeEnum,
+        workspace: int,
+        title: str,
+        description: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Make a copy of project.
+
+        Parameters
+        ----------
+        id : int
+
+        mode : ModeEnum
+            Data that you want to duplicate: settings only, with tasks, with annotations
+
+            * `settings` - Only settings
+            * `settings,data` - Settings and tasks
+
+        workspace : int
+            Workspace, where to place duplicated project
+
+        title : str
+            Title of duplicated project
+
+        description : typing.Optional[str]
+            Description of duplicated project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Project duplicated
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.projects.duplicate(
+                id=1,
+                mode="settings",
+                workspace=1,
+                title="title",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/duplicate/",
+            method="POST",
+            json={
+                "mode": mode,
+                "workspace": workspace,
+                "title": title,
+                "description": description,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
