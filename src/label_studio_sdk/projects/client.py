@@ -4,6 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .pauses.client import PausesClient
 from .exports.client import ExportsClient
+from .types.projects_list_request_filter import ProjectsListRequestFilter
 from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
 from ..types.project import Project
@@ -41,6 +42,8 @@ class ProjectsClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         workspaces: typing.Optional[int] = None,
+        include: typing.Optional[str] = None,
+        filter: typing.Optional[ProjectsListRequestFilter] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Project]:
         """
@@ -75,6 +78,12 @@ class ProjectsClient:
         workspaces : typing.Optional[int]
             workspaces
 
+        include : typing.Optional[str]
+            Comma-separated list of count fields to include in the response to optimize performance.  Available fields: task_number, finished_task_number, total_predictions_number,  total_annotations_number, num_tasks_with_annotations, useful_annotation_number,  ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        filter : typing.Optional[ProjectsListRequestFilter]
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects,  'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -90,7 +99,9 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        response = client.projects.list()
+        response = client.projects.list(
+            include="task_number,total_annotations_number,num_tasks_with_annotations",
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -108,6 +119,8 @@ class ProjectsClient:
                 "page": page,
                 "page_size": page_size,
                 "workspaces": workspaces,
+                "include": include,
+                "filter": filter,
             },
             request_options=request_options,
         )
@@ -128,6 +141,8 @@ class ProjectsClient:
                     page=page + 1,
                     page_size=page_size,
                     workspaces=workspaces,
+                    include=include,
+                    filter=filter,
                     request_options=request_options,
                 )
                 _items = _parsed_response.results
@@ -714,6 +729,8 @@ class AsyncProjectsClient:
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         workspaces: typing.Optional[int] = None,
+        include: typing.Optional[str] = None,
+        filter: typing.Optional[ProjectsListRequestFilter] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Project]:
         """
@@ -748,6 +765,12 @@ class AsyncProjectsClient:
         workspaces : typing.Optional[int]
             workspaces
 
+        include : typing.Optional[str]
+            Comma-separated list of count fields to include in the response to optimize performance.  Available fields: task_number, finished_task_number, total_predictions_number,  total_annotations_number, num_tasks_with_annotations, useful_annotation_number,  ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        filter : typing.Optional[ProjectsListRequestFilter]
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects,  'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -768,7 +791,9 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            response = await client.projects.list()
+            response = await client.projects.list(
+                include="task_number,total_annotations_number,num_tasks_with_annotations",
+            )
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -789,6 +814,8 @@ class AsyncProjectsClient:
                 "page": page,
                 "page_size": page_size,
                 "workspaces": workspaces,
+                "include": include,
+                "filter": filter,
             },
             request_options=request_options,
         )
@@ -809,6 +836,8 @@ class AsyncProjectsClient:
                     page=page + 1,
                     page_size=page_size,
                     workspaces=workspaces,
+                    include=include,
+                    filter=filter,
                     request_options=request_options,
                 )
                 _items = _parsed_response.results

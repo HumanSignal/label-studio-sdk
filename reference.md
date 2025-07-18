@@ -3712,7 +3712,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-response = client.projects.list()
+response = client.projects.list(
+    include="task_number,total_annotations_number,num_tasks_with_annotations",
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -3774,6 +3776,22 @@ for page in response.iter_pages():
 <dd>
 
 **workspaces:** `typing.Optional[int]` — workspaces
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include:** `typing.Optional[str]` — Comma-separated list of count fields to include in the response to optimize performance.  Available fields: task_number, finished_task_number, total_predictions_number,  total_annotations_number, num_tasks_with_annotations, useful_annotation_number,  ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[ProjectsListRequestFilter]` — Filter projects by pinned status. Use 'pinned_only' to return only pinned projects,  'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
     
 </dd>
 </dl>
