@@ -8,16 +8,7 @@ service:
       path: /api/dm/views/
       method: GET
       auth: true
-      docs: >
-
-        List all views for a specific project. A view is a tab in the Data
-        Manager where you can set filters and customize which tasks and
-        information appears. 
-
-
-        You will need to provide the project ID. You can find this in the URL
-        when viewing the project in Label Studio, or you can use [List all
-        projects](../projects/list). 
+      docs: List all views for a specific project.
       source:
         openapi: openapi/openapi.yaml
       display-name: List views
@@ -37,7 +28,8 @@ service:
                 filter_group:
                   id: 1
                   filters:
-                    - column: column
+                    - id: 1
+                      column: column
                       type: type
                       operator: operator
                   conjunction: conjunction
@@ -45,6 +37,7 @@ service:
                   key: value
                 ordering:
                   key: value
+                order: 1
                 selected_items:
                   key: value
                 user: 1
@@ -55,16 +48,7 @@ service:
       path: /api/dm/views/
       method: POST
       auth: true
-      docs: >
-
-        Create a new Data Manager view for a specific project. A view is a tab
-        in the Data Manager where you can set filters and customize what tasks
-        and information appears. 
-
-
-        You will need to provide the project ID. You can find this in the URL
-        when viewing the project in Label Studio, or you can use [List all
-        projects](../projects/list). 
+      docs: Create a view for a specific project.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create view
@@ -90,7 +74,8 @@ service:
               filter_group:
                 id: 1
                 filters:
-                  - column: column
+                  - id: 1
+                    column: column
                     type: type
                     operator: operator
                 conjunction: conjunction
@@ -98,47 +83,18 @@ service:
                 key: value
               ordering:
                 key: value
+              order: 1
               selected_items:
                 key: value
               user: 1
               project: 1
       audiences:
         - public
-    delete_all:
-      path: /api/dm/views/reset/
-      method: DELETE
-      auth: true
-      docs: >
-
-        Delete all views for a specific project. A view is a tab in the Data
-        Manager where you can set filters and customize what tasks appear. 
-
-
-        You will need to provide the project ID. You can find this in the URL
-        when viewing the project in Label Studio, or you can use [List all
-        projects](../projects/list).
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Delete all project views
-      request:
-        name: ViewReset
-        body:
-          properties:
-            project: integer
-        content-type: application/json
-      examples:
-        - request:
-            project: 1
-      audiences:
-        - public
     get:
       path: /api/dm/views/{id}/
       method: GET
       auth: true
-      docs: >
-
-        Get the details about a specific Data Manager view (tab). You will need
-        to supply the view ID. You can find this using [List views](list).  
+      docs: Get the details about a specific view in the data manager
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -158,7 +114,8 @@ service:
               filter_group:
                 id: 1
                 filters:
-                  - column: column
+                  - id: 1
+                    column: column
                     type: type
                     operator: operator
                 conjunction: conjunction
@@ -166,6 +123,7 @@ service:
                 key: value
               ordering:
                 key: value
+              order: 1
               selected_items:
                 key: value
               user: 1
@@ -176,9 +134,7 @@ service:
       path: /api/dm/views/{id}/
       method: DELETE
       auth: true
-      docs: >-
-        Delete a specific Data Manager view (tab) by ID. You can find the view
-        using [List views](list).
+      docs: Delete a specific view by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -195,11 +151,9 @@ service:
       path: /api/dm/views/{id}/
       method: PATCH
       auth: true
-      docs: >
-
-        You can update a specific Data Manager view (tab) with additional
-        filters and other customizations. You will need to supply the view ID.
-        You can find this using [List views](list).  
+      docs: >-
+        Update view data with additional filters and other information for a
+        specific project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -231,7 +185,8 @@ service:
               filter_group:
                 id: 1
                 filters:
-                  - column: column
+                  - id: 1
+                    column: column
                     type: type
                     operator: operator
                 conjunction: conjunction
@@ -239,10 +194,72 @@ service:
                 key: value
               ordering:
                 key: value
+              order: 1
               selected_items:
                 key: value
               user: 1
               project: 1
+      audiences:
+        - public
+    update_order:
+      path: /api/dm/views/order/
+      method: POST
+      auth: true
+      docs: Update the order field of views based on the provided list of view IDs
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Update order of views
+      request:
+        name: ViewOrderRequest
+        body:
+          properties:
+            project: integer
+            ids:
+              docs: A list of view IDs in the desired order.
+              type: list<integer>
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.View
+      examples:
+        - request:
+            project: 1
+            ids:
+              - 1
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - id: 1
+                    column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                key: value
+              ordering:
+                key: value
+              order: 1
+              selected_items:
+                key: value
+              user: 1
+              project: 1
+      audiences:
+        - public
+    delete_all:
+      path: /api/dm/views/reset/
+      method: DELETE
+      auth: true
+      docs: >-
+        Delete all views for a specific project. Request body example:
+        `{"project": 1}`.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Delete all project views
+      examples:
+        - {}
       audiences:
         - public
   source:

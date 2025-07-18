@@ -1,0 +1,59 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_invite_retrieve:
+      path: /api/invite
+      method: GET
+      auth: true
+      docs: Get invite link for organization
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Invite people
+      examples:
+        - {}
+    api_invite_revoke_create:
+      path: /api/invite/revoke
+      method: POST
+      auth: true
+      docs: Revoke invite
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Revoke invite
+      request:
+        name: RevokeInviteRequest
+        body:
+          properties:
+            email:
+              type: string
+              validation:
+                minLength: 1
+        content-type: application/json
+      examples:
+        - request:
+            email: email
+    api_invite_send_email_create:
+      path: /api/invite/send-email
+      method: POST
+      auth: true
+      docs: Send email with invite to organization
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Send email with invite
+      request:
+        name: SendInviteRequest
+        body:
+          properties:
+            emails: list<string>
+            role:
+              type: string
+              validation:
+                minLength: 1
+        content-type: application/json
+      examples:
+        - request:
+            emails:
+              - emails
+            role: role
+  source:
+    openapi: openapi/openapi.yaml

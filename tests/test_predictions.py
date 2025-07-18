@@ -10,27 +10,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
     expected_response: typing.Any = [
         {
             "id": 1,
-            "result": [
-                {
-                    "original_width": 1920,
-                    "original_height": 1080,
-                    "image_rotation": 0,
-                    "from_name": "bboxes",
-                    "to_name": "image",
-                    "type": "rectanglelabels",
-                    "value": {
-                        "x": 20,
-                        "y": 30,
-                        "width": 50,
-                        "height": 60,
-                        "rotation": 0,
-                        "values": {"rectanglelabels": ["Person"]},
-                    },
-                }
-            ],
-            "model_version": "yolo-v8",
+            "result": [{"key": "value"}],
+            "model_version": "model_version",
             "created_ago": "created_ago",
-            "score": 0.95,
+            "score": 1.1,
             "cluster": 1,
             "neighbors": {"key": "value"},
             "mislabeling": 1.1,
@@ -47,28 +30,12 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         {
             0: {
                 "id": "integer",
-                "result": (
-                    "list",
-                    {
-                        0: (
-                            "dict",
-                            {
-                                0: (None, None),
-                                1: (None, None),
-                                2: (None, None),
-                                3: (None, None),
-                                4: (None, None),
-                                5: (None, None),
-                                6: (None, None),
-                            },
-                        )
-                    },
-                ),
+                "result": ("list", {0: ("dict", {0: (None, None)})}),
                 "model_version": None,
                 "created_ago": None,
                 "score": None,
                 "cluster": "integer",
-                "neighbors": ("dict", {0: (None, None)}),
+                "neighbors": None,
                 "mislabeling": None,
                 "created_at": "datetime",
                 "updated_at": "datetime",
@@ -143,7 +110,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_ago": None,
         "score": None,
         "cluster": "integer",
-        "neighbors": ("dict", {0: (None, None)}),
+        "neighbors": None,
         "mislabeling": None,
         "created_at": "datetime",
         "updated_at": "datetime",
@@ -258,7 +225,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "created_ago": None,
         "score": None,
         "cluster": "integer",
-        "neighbors": ("dict", {0: (None, None)}),
+        "neighbors": None,
         "mislabeling": None,
         "created_at": "datetime",
         "updated_at": "datetime",
@@ -344,7 +311,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_ago": None,
         "score": None,
         "cluster": "integer",
-        "neighbors": ("dict", {0: (None, None)}),
+        "neighbors": None,
         "mislabeling": None,
         "created_at": "datetime",
         "updated_at": "datetime",

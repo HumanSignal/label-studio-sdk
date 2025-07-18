@@ -3,12 +3,15 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
-from .types.users_reset_token_response import UsersResetTokenResponse
-from ..core.pydantic_utilities import parse_obj_as
+from ..types.lse_user_api import LseUserApi
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+import datetime as dt
+from ..types.hotkeys import Hotkeys
+from .types.users_reset_token_response import UsersResetTokenResponse
 from .types.users_get_token_response import UsersGetTokenResponse
-from ..types.base_user import BaseUser
+from ..types.lse_user import LseUser
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -20,9 +23,254 @@ class UsersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def get_current_user(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUserApi:
+        """
+        Get info about the currently authenticated user.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseUserApi
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.get_current_user()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/current-user",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LseUserApi,
+                    construct_type(
+                        type_=LseUserApi,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update_current_user(
+        self,
+        *,
+        first_name: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
+        custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        active_organization: typing.Optional[int] = OMIT,
+        allow_newsletters: typing.Optional[bool] = OMIT,
+        date_joined: typing.Optional[dt.datetime] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        onboarding_state: typing.Optional[str] = OMIT,
+        is_email_verified: typing.Optional[bool] = OMIT,
+        email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseUserApi:
+        """
+        Update details for the currently authenticated user.
+
+        Parameters
+        ----------
+        first_name : typing.Optional[str]
+
+        last_name : typing.Optional[str]
+
+        username : typing.Optional[str]
+
+        custom_hotkeys : typing.Optional[typing.Optional[typing.Any]]
+
+        phone : typing.Optional[str]
+
+        active_organization : typing.Optional[int]
+
+        allow_newsletters : typing.Optional[bool]
+            Allow sending newsletters to user
+
+        date_joined : typing.Optional[dt.datetime]
+
+        password : typing.Optional[str]
+
+        onboarding_state : typing.Optional[str]
+
+        is_email_verified : typing.Optional[bool]
+
+        email_notification_settings : typing.Optional[typing.Optional[typing.Any]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseUserApi
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.update_current_user()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/current-user",
+            method="PATCH",
+            json={
+                "first_name": first_name,
+                "last_name": last_name,
+                "username": username,
+                "custom_hotkeys": custom_hotkeys,
+                "phone": phone,
+                "active_organization": active_organization,
+                "allow_newsletters": allow_newsletters,
+                "date_joined": date_joined,
+                "password": password,
+                "onboarding_state": onboarding_state,
+                "is_email_verified": is_email_verified,
+                "email_notification_settings": email_notification_settings,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LseUserApi,
+                    construct_type(
+                        type_=LseUserApi,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get_hotkeys(self, *, request_options: typing.Optional[RequestOptions] = None) -> Hotkeys:
+        """
+        Retrieve the custom hotkeys configuration for the current user.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Hotkeys
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.get_hotkeys()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/current-user/hotkeys/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Hotkeys,
+                    construct_type(
+                        type_=Hotkeys,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update_hotkeys(
+        self,
+        *,
+        custom_hotkeys: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Hotkeys:
+        """
+        Update the custom hotkeys configuration for the current user.
+
+        Parameters
+        ----------
+        custom_hotkeys : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Hotkeys
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.users.update_hotkeys()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/current-user/hotkeys/",
+            method="PATCH",
+            json={
+                "custom_hotkeys": custom_hotkeys,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Hotkeys,
+                    construct_type(
+                        type_=Hotkeys,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersResetTokenResponse:
         """
-        Reset your access token or API key. When reset, any scripts or automations you have in place will need to be updated with the new key.
+        Reset the user token for the current user.
 
         Parameters
         ----------
@@ -40,6 +288,7 @@ class UsersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.users.reset_token()
         """
@@ -52,7 +301,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     UsersResetTokenResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=UsersResetTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -64,7 +313,7 @@ class UsersClient:
 
     def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersGetTokenResponse:
         """
-        Get a access token to authenticate to the API as the current user. To find this in the Label Studio interface, click **Account & Settings** in the upper right. For more information, see [Access Token](https://labelstud.io/guide/user_account#Access-token).
+        Get a user token to authenticate to the API as the current user.
 
         Parameters
         ----------
@@ -82,6 +331,7 @@ class UsersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.users.get_token()
         """
@@ -94,7 +344,7 @@ class UsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     UsersGetTokenResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=UsersGetTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -104,9 +354,9 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
+    def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUser:
         """
-        Get information about your user account, such as your username, email, and user ID.
+        Retrieve details of the account that you are using to access the API.
 
         Parameters
         ----------
@@ -115,7 +365,7 @@ class UsersClient:
 
         Returns
         -------
-        BaseUser
+        LseUser
 
 
         Examples
@@ -124,6 +374,7 @@ class UsersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.users.whoami()
         """
@@ -135,9 +386,9 @@ class UsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseUser,
-                    parse_obj_as(
-                        type_=BaseUser,  # type: ignore
+                    LseUser,
+                    construct_type(
+                        type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -146,19 +397,23 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[BaseUser]:
+    def list(
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[LseUserApi]:
         """
-
-        List all users in your Label Studio organization.
+        List the users that exist on the Label Studio server.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[BaseUser]
+        typing.List[LseUserApi]
 
 
         Examples
@@ -167,20 +422,24 @@ class UsersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.users.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/users/",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[BaseUser],
-                    parse_obj_as(
-                        type_=typing.List[BaseUser],  # type: ignore
+                    typing.List[LseUserApi],
+                    construct_type(
+                        type_=typing.List[LseUserApi],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -202,9 +461,8 @@ class UsersClient:
         phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BaseUser:
+    ) -> LseUser:
         """
-
         Create a user in Label Studio.
 
         Parameters
@@ -241,7 +499,7 @@ class UsersClient:
 
         Returns
         -------
-        BaseUser
+        LseUser
 
 
         Examples
@@ -250,6 +508,7 @@ class UsersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.users.create()
         """
@@ -276,9 +535,9 @@ class UsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseUser,
-                    parse_obj_as(
-                        type_=BaseUser,  # type: ignore
+                    LseUser,
+                    construct_type(
+                        type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -287,11 +546,9 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseUser:
         """
-
-        Get info about a specific Label Studio user.
-        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
+        Get info about a specific Label Studio user, based on the user ID.
 
         Parameters
         ----------
@@ -303,7 +560,7 @@ class UsersClient:
 
         Returns
         -------
-        BaseUser
+        LseUser
 
 
         Examples
@@ -312,6 +569,7 @@ class UsersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.users.get(
             id=1,
@@ -325,9 +583,9 @@ class UsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseUser,
-                    parse_obj_as(
-                        type_=BaseUser,  # type: ignore
+                    LseUser,
+                    construct_type(
+                        type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -338,10 +596,7 @@ class UsersClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific Label Studio user.
-
-        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
+        Delete a specific Label Studio user. Only available in community edition.
 
         <Warning>Use caution when deleting a user, as this can cause issues such as breaking the "Annotated by" filter or leaving orphaned records.</Warning>
 
@@ -363,6 +618,7 @@ class UsersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.users.delete(
             id=1,
@@ -395,12 +651,11 @@ class UsersClient:
         phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BaseUser:
+    ) -> LseUser:
         """
 
-        Update details for a specific Label Studio user, such as their name or contact information.
+                Update details for a specific user, such as their name or contact information, in Label Studio.
 
-        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
 
         Parameters
         ----------
@@ -439,7 +694,7 @@ class UsersClient:
 
         Returns
         -------
-        BaseUser
+        LseUser
 
 
         Examples
@@ -448,6 +703,7 @@ class UsersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.users.update(
             id=1,
@@ -476,9 +732,9 @@ class UsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseUser,
-                    parse_obj_as(
-                        type_=BaseUser,  # type: ignore
+                    LseUser,
+                    construct_type(
+                        type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -492,9 +748,286 @@ class AsyncUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    async def get_current_user(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUserApi:
+        """
+        Get info about the currently authenticated user.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseUserApi
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.get_current_user()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/current-user",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LseUserApi,
+                    construct_type(
+                        type_=LseUserApi,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update_current_user(
+        self,
+        *,
+        first_name: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
+        custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        active_organization: typing.Optional[int] = OMIT,
+        allow_newsletters: typing.Optional[bool] = OMIT,
+        date_joined: typing.Optional[dt.datetime] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        onboarding_state: typing.Optional[str] = OMIT,
+        is_email_verified: typing.Optional[bool] = OMIT,
+        email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseUserApi:
+        """
+        Update details for the currently authenticated user.
+
+        Parameters
+        ----------
+        first_name : typing.Optional[str]
+
+        last_name : typing.Optional[str]
+
+        username : typing.Optional[str]
+
+        custom_hotkeys : typing.Optional[typing.Optional[typing.Any]]
+
+        phone : typing.Optional[str]
+
+        active_organization : typing.Optional[int]
+
+        allow_newsletters : typing.Optional[bool]
+            Allow sending newsletters to user
+
+        date_joined : typing.Optional[dt.datetime]
+
+        password : typing.Optional[str]
+
+        onboarding_state : typing.Optional[str]
+
+        is_email_verified : typing.Optional[bool]
+
+        email_notification_settings : typing.Optional[typing.Optional[typing.Any]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseUserApi
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.update_current_user()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/current-user",
+            method="PATCH",
+            json={
+                "first_name": first_name,
+                "last_name": last_name,
+                "username": username,
+                "custom_hotkeys": custom_hotkeys,
+                "phone": phone,
+                "active_organization": active_organization,
+                "allow_newsletters": allow_newsletters,
+                "date_joined": date_joined,
+                "password": password,
+                "onboarding_state": onboarding_state,
+                "is_email_verified": is_email_verified,
+                "email_notification_settings": email_notification_settings,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    LseUserApi,
+                    construct_type(
+                        type_=LseUserApi,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_hotkeys(self, *, request_options: typing.Optional[RequestOptions] = None) -> Hotkeys:
+        """
+        Retrieve the custom hotkeys configuration for the current user.
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Hotkeys
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.get_hotkeys()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/current-user/hotkeys/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Hotkeys,
+                    construct_type(
+                        type_=Hotkeys,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update_hotkeys(
+        self,
+        *,
+        custom_hotkeys: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Hotkeys:
+        """
+        Update the custom hotkeys configuration for the current user.
+
+        Parameters
+        ----------
+        custom_hotkeys : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Hotkeys
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.users.update_hotkeys()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/current-user/hotkeys/",
+            method="PATCH",
+            json={
+                "custom_hotkeys": custom_hotkeys,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Hotkeys,
+                    construct_type(
+                        type_=Hotkeys,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersResetTokenResponse:
         """
-        Reset your access token or API key. When reset, any scripts or automations you have in place will need to be updated with the new key.
+        Reset the user token for the current user.
 
         Parameters
         ----------
@@ -514,6 +1047,7 @@ class AsyncUsersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -532,7 +1066,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     UsersResetTokenResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=UsersResetTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -544,7 +1078,7 @@ class AsyncUsersClient:
 
     async def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersGetTokenResponse:
         """
-        Get a access token to authenticate to the API as the current user. To find this in the Label Studio interface, click **Account & Settings** in the upper right. For more information, see [Access Token](https://labelstud.io/guide/user_account#Access-token).
+        Get a user token to authenticate to the API as the current user.
 
         Parameters
         ----------
@@ -564,6 +1098,7 @@ class AsyncUsersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -582,7 +1117,7 @@ class AsyncUsersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     UsersGetTokenResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=UsersGetTokenResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -592,9 +1127,9 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
+    async def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUser:
         """
-        Get information about your user account, such as your username, email, and user ID.
+        Retrieve details of the account that you are using to access the API.
 
         Parameters
         ----------
@@ -603,7 +1138,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        BaseUser
+        LseUser
 
 
         Examples
@@ -614,6 +1149,7 @@ class AsyncUsersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -631,9 +1167,9 @@ class AsyncUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseUser,
-                    parse_obj_as(
-                        type_=BaseUser,  # type: ignore
+                    LseUser,
+                    construct_type(
+                        type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -642,19 +1178,23 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[BaseUser]:
+    async def list(
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[LseUserApi]:
         """
-
-        List all users in your Label Studio organization.
+        List the users that exist on the Label Studio server.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[BaseUser]
+        typing.List[LseUserApi]
 
 
         Examples
@@ -665,6 +1205,7 @@ class AsyncUsersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -677,14 +1218,17 @@ class AsyncUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/users/",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[BaseUser],
-                    parse_obj_as(
-                        type_=typing.List[BaseUser],  # type: ignore
+                    typing.List[LseUserApi],
+                    construct_type(
+                        type_=typing.List[LseUserApi],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -706,9 +1250,8 @@ class AsyncUsersClient:
         phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BaseUser:
+    ) -> LseUser:
         """
-
         Create a user in Label Studio.
 
         Parameters
@@ -745,7 +1288,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        BaseUser
+        LseUser
 
 
         Examples
@@ -756,6 +1299,7 @@ class AsyncUsersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -788,9 +1332,9 @@ class AsyncUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseUser,
-                    parse_obj_as(
-                        type_=BaseUser,  # type: ignore
+                    LseUser,
+                    construct_type(
+                        type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -799,11 +1343,9 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BaseUser:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseUser:
         """
-
-        Get info about a specific Label Studio user.
-        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
+        Get info about a specific Label Studio user, based on the user ID.
 
         Parameters
         ----------
@@ -815,7 +1357,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        BaseUser
+        LseUser
 
 
         Examples
@@ -826,6 +1368,7 @@ class AsyncUsersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -845,9 +1388,9 @@ class AsyncUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseUser,
-                    parse_obj_as(
-                        type_=BaseUser,  # type: ignore
+                    LseUser,
+                    construct_type(
+                        type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -858,10 +1401,7 @@ class AsyncUsersClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific Label Studio user.
-
-        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
+        Delete a specific Label Studio user. Only available in community edition.
 
         <Warning>Use caution when deleting a user, as this can cause issues such as breaking the "Annotated by" filter or leaving orphaned records.</Warning>
 
@@ -885,6 +1425,7 @@ class AsyncUsersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -923,12 +1464,11 @@ class AsyncUsersClient:
         phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BaseUser:
+    ) -> LseUser:
         """
 
-        Update details for a specific Label Studio user, such as their name or contact information.
+                Update details for a specific user, such as their name or contact information, in Label Studio.
 
-        You will need to provide their user ID. You can find a list of all user IDs using [List users](list).
 
         Parameters
         ----------
@@ -967,7 +1507,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        BaseUser
+        LseUser
 
 
         Examples
@@ -978,6 +1518,7 @@ class AsyncUsersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1012,9 +1553,9 @@ class AsyncUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseUser,
-                    parse_obj_as(
-                        type_=BaseUser,  # type: ignore
+                    LseUser,
+                    construct_type(
+                        type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

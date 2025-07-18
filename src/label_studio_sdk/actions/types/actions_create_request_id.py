@@ -4,16 +4,16 @@ import typing
 
 ActionsCreateRequestId = typing.Union[
     typing.Literal[
-        "retrieve_tasks_predictions",
+        "delete_annotators",
+        "delete_ground_truths",
+        "delete_reviewers",
+        "delete_tasks",
+        "delete_tasks_annotations",
+        "delete_tasks_predictions",
+        "delete_tasks_reviews",
         "predictions_to_annotations",
         "remove_duplicates",
-        "delete_tasks",
-        "delete_ground_truths",
-        "delete_tasks_annotations",
-        "delete_tasks_reviews",
-        "delete_tasks_predictions",
-        "delete_reviewers",
-        "delete_annotators",
+        "retrieve_tasks_predictions",
     ],
     typing.Any,
 ]

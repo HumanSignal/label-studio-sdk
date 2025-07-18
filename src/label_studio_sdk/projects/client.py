@@ -2,24 +2,37 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .pauses.client import PausesClient
+from .file_uploads.client import FileUploadsClient
 from .exports.client import ExportsClient
+from .pauses.client import PausesClient
 from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
-from ..types.project import Project
-from .types.projects_list_response import ProjectsListResponse
-from ..core.pydantic_utilities import parse_obj_as
+from ..types.all_roles_project_list import AllRolesProjectList
+from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.projects_create_response import ProjectsCreateResponse
+from ..types.user_simple_request import UserSimpleRequest
+from .types.lse_project_create_request_sampling import LseProjectCreateRequestSampling
+from .types.lse_project_create_request_skip_queue import LseProjectCreateRequestSkipQueue
+import datetime as dt
+from ..types.lse_project_create import LseProjectCreate
+from ..core.serialization import convert_and_respect_annotation_metadata
+from ..types.project import Project
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.projects_update_response import ProjectsUpdateResponse
+from .types.patched_lse_project_request_sampling import PatchedLseProjectRequestSampling
+from .types.patched_lse_project_request_skip_queue import PatchedLseProjectRequestSkipQueue
+from ..types.review_settings_request import ReviewSettingsRequest
+from ..types.assignment_settings_request import AssignmentSettingsRequest
+from ..types.lse_project_update import LseProjectUpdate
+from ..types.mode_enum import ModeEnum
+from ..types.import_api_request import ImportApiRequest
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from ..errors.bad_request_error import BadRequestError
-from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
-from .pauses.client import AsyncPausesClient
+from .file_uploads.client import AsyncFileUploadsClient
 from .exports.client import AsyncExportsClient
+from .pauses.client import AsyncPausesClient
 from ..core.pagination import AsyncPager
 
 # this is used as the default value for optional parameters
@@ -29,42 +42,25 @@ OMIT = typing.cast(typing.Any, ...)
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.pauses = PausesClient(client_wrapper=self._client_wrapper)
+        self.file_uploads = FileUploadsClient(client_wrapper=self._client_wrapper)
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
+        self.pauses = PausesClient(client_wrapper=self._client_wrapper)
 
     def list(
         self,
         *,
         ordering: typing.Optional[str] = None,
-        ids: typing.Optional[str] = None,
-        title: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
-        workspaces: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Project]:
+    ) -> SyncPager[AllRolesProjectList]:
         """
-
-        Return a list of the projects within your organization.
-
-        To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using this API call.
-
-        To retrieve a list of your Label Studio projects, update the following command to match your own environment.
-        Replace the domain name, port, and authorization token, then run the following from the command line:
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/ -H 'Authorization: Token abc123'
-        ```
+        Retrieve a list of projects.
 
         Parameters
         ----------
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        ids : typing.Optional[str]
-            ids
-
-        title : typing.Optional[str]
-            title
 
         page : typing.Optional[int]
             A page number within the paginated result set.
@@ -72,15 +68,12 @@ class ProjectsClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        workspaces : typing.Optional[int]
-            workspaces
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncPager[Project]
+        SyncPager[AllRolesProjectList]
 
 
         Examples
@@ -89,6 +82,7 @@ class ProjectsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         response = client.projects.list()
         for item in response:
@@ -103,31 +97,25 @@ class ProjectsClient:
             method="GET",
             params={
                 "ordering": ordering,
-                "ids": ids,
-                "title": title,
                 "page": page,
                 "page_size": page_size,
-                "workspaces": workspaces,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    ProjectsListResponse,
-                    parse_obj_as(
-                        type_=ProjectsListResponse,  # type: ignore
+                    PaginatedAllRolesProjectListList,
+                    construct_type(
+                        type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
                     ordering=ordering,
-                    ids=ids,
-                    title=title,
                     page=page + 1,
                     page_size=page_size,
-                    workspaces=workspaces,
                     request_options=request_options,
                 )
                 _items = _parsed_response.results
@@ -148,80 +136,118 @@ class ProjectsClient:
         show_skip_button: typing.Optional[bool] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
-        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        show_collab_predictions: typing.Optional[bool] = OMIT,
-        maximum_annotations: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        workspace: typing.Optional[int] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        is_published: typing.Optional[bool] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        is_draft: typing.Optional[bool] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        min_annotations_to_start_training: typing.Optional[int] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        sampling: typing.Optional[LseProjectCreateRequestSampling] = OMIT,
+        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        show_overlap_first: typing.Optional[bool] = OMIT,
+        overlap_cohort_percentage: typing.Optional[int] = OMIT,
+        task_data_login: typing.Optional[str] = OMIT,
+        task_data_password: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
+        skip_queue: typing.Optional[LseProjectCreateRequestSkipQueue] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        pinned_at: typing.Optional[dt.datetime] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsCreateResponse:
+    ) -> LseProjectCreate:
         """
-
-        Create a project and set up the labeling interface. For more information about setting up projects, see the following:
-        * [Create and configure projects](https://labelstud.io/guide/setup_project)
-        * [Configure labeling interface](https://labelstud.io/guide/setup)
-        * [Project settings](https://labelstud.io/guide/project_settings)
-
-        ```bash
-        curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"label_config": "<View>[...]</View>"}'
-        ```
+        Create a project for a specific organization.
 
         Parameters
         ----------
         title : typing.Optional[str]
-            Project title
+            Project name. Must be between 3 and 50 characters long.
 
         description : typing.Optional[str]
             Project description
 
         label_config : typing.Optional[str]
-            Label config in XML format
+            Label config in XML format. See more about it in documentation
 
         expert_instruction : typing.Optional[str]
-            Labeling instructions to show to the user
+            Labeling instructions in HTML format
 
         show_instruction : typing.Optional[bool]
-            Show labeling instructions
+            Show instructions to the annotator before they start
 
         show_skip_button : typing.Optional[bool]
-            Show skip button
+            Show a skip button in interface and allow annotators to skip the task
 
         enable_empty_annotation : typing.Optional[bool]
-            Allow empty annotations
+            Allow annotators to submit empty annotations
 
         show_annotation_history : typing.Optional[bool]
-            Show annotation history
+            Show annotation history to annotator
 
-        reveal_preannotations_interactively : typing.Optional[bool]
-            Reveal preannotations interactively. If set to True, predictions will be shown to the user only after selecting the area of interest
-
-        show_collab_predictions : typing.Optional[bool]
-            Show predictions to annotators
-
-        maximum_annotations : typing.Optional[int]
-            Maximum annotations per task
+        organization : typing.Optional[int]
 
         color : typing.Optional[str]
-            Project color in HEX format
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+        maximum_annotations : typing.Optional[int]
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
 
-
-        workspace : typing.Optional[int]
-            Workspace ID
+        is_published : typing.Optional[bool]
+            Whether or not the project is published to annotators
 
         model_version : typing.Optional[str]
-            Model version
+            Machine learning model version
+
+        is_draft : typing.Optional[bool]
+            Whether or not the project is in the middle of being created
+
+        created_by : typing.Optional[UserSimpleRequest]
+            Project owner
+
+        min_annotations_to_start_training : typing.Optional[int]
+            Minimum number of completed tasks after which model training is started
+
+        show_collab_predictions : typing.Optional[bool]
+            If set, the annotator can view model predictions
+
+        sampling : typing.Optional[LseProjectCreateRequestSampling]
+
+        show_ground_truth_first : typing.Optional[bool]
+
+        show_overlap_first : typing.Optional[bool]
+
+        overlap_cohort_percentage : typing.Optional[int]
+
+        task_data_login : typing.Optional[str]
+            Task data credentials: login
+
+        task_data_password : typing.Optional[str]
+            Task data credentials: password
+
+        control_weights : typing.Optional[typing.Optional[typing.Any]]
+
+        evaluate_predictions_automatically : typing.Optional[bool]
+            Retrieve and display predictions when loading a task
+
+        skip_queue : typing.Optional[LseProjectCreateRequestSkipQueue]
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal pre-annotations interactively
+
+        pinned_at : typing.Optional[dt.datetime]
+            Pinned date and time
+
+        workspace : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ProjectsCreateResponse
+        LseProjectCreate
 
 
         Examples
@@ -230,6 +256,7 @@ class ProjectsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.create()
         """
@@ -245,13 +272,33 @@ class ProjectsClient:
                 "show_skip_button": show_skip_button,
                 "enable_empty_annotation": enable_empty_annotation,
                 "show_annotation_history": show_annotation_history,
-                "reveal_preannotations_interactively": reveal_preannotations_interactively,
-                "show_collab_predictions": show_collab_predictions,
-                "maximum_annotations": maximum_annotations,
+                "organization": organization,
                 "color": color,
-                "control_weights": control_weights,
-                "workspace": workspace,
+                "maximum_annotations": maximum_annotations,
+                "is_published": is_published,
                 "model_version": model_version,
+                "is_draft": is_draft,
+                "created_by": convert_and_respect_annotation_metadata(
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
+                ),
+                "min_annotations_to_start_training": min_annotations_to_start_training,
+                "show_collab_predictions": show_collab_predictions,
+                "sampling": convert_and_respect_annotation_metadata(
+                    object_=sampling, annotation=LseProjectCreateRequestSampling, direction="write"
+                ),
+                "show_ground_truth_first": show_ground_truth_first,
+                "show_overlap_first": show_overlap_first,
+                "overlap_cohort_percentage": overlap_cohort_percentage,
+                "task_data_login": task_data_login,
+                "task_data_password": task_data_password,
+                "control_weights": control_weights,
+                "evaluate_predictions_automatically": evaluate_predictions_automatically,
+                "skip_queue": convert_and_respect_annotation_metadata(
+                    object_=skip_queue, annotation=LseProjectCreateRequestSkipQueue, direction="write"
+                ),
+                "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "pinned_at": pinned_at,
+                "workspace": workspace,
             },
             headers={
                 "content-type": "application/json",
@@ -262,9 +309,9 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectsCreateResponse,
-                    parse_obj_as(
-                        type_=ProjectsCreateResponse,  # type: ignore
+                    LseProjectCreate,
+                    construct_type(
+                        type_=LseProjectCreate,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -275,12 +322,11 @@ class ProjectsClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
         """
-        Retrieve information about a specific project by project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
+        Retrieve information about a project by project ID.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -296,6 +342,7 @@ class ProjectsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.get(
             id=1,
@@ -310,7 +357,7 @@ class ProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Project,
-                    parse_obj_as(
+                    construct_type(
                         type_=Project,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -322,15 +369,11 @@ class ProjectsClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a project by specified project ID. Deleting a project permanently removes all tasks, annotations, and project data from Label Studio.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
+        Delete a project by specified project ID.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -345,6 +388,7 @@ class ProjectsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.delete(
             id=1,
@@ -375,87 +419,154 @@ class ProjectsClient:
         show_skip_button: typing.Optional[bool] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
-        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        show_collab_predictions: typing.Optional[bool] = OMIT,
-        maximum_annotations: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        workspace: typing.Optional[int] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        is_published: typing.Optional[bool] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        is_draft: typing.Optional[bool] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        min_annotations_to_start_training: typing.Optional[int] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        sampling: typing.Optional[PatchedLseProjectRequestSampling] = OMIT,
+        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        show_overlap_first: typing.Optional[bool] = OMIT,
+        overlap_cohort_percentage: typing.Optional[int] = OMIT,
+        task_data_login: typing.Optional[str] = OMIT,
+        task_data_password: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
+        skip_queue: typing.Optional[PatchedLseProjectRequestSkipQueue] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        pinned_at: typing.Optional[dt.datetime] = OMIT,
+        review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
+        assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
+        custom_script: typing.Optional[str] = OMIT,
+        comment_classification_config: typing.Optional[str] = OMIT,
+        duplication_done: typing.Optional[bool] = OMIT,
+        require_comment_on_skip: typing.Optional[bool] = OMIT,
+        custom_task_lock_ttl: typing.Optional[int] = OMIT,
+        annotation_limit_count: typing.Optional[int] = OMIT,
+        annotation_limit_percent: typing.Optional[str] = OMIT,
+        pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
+        annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
+        annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsUpdateResponse:
+    ) -> LseProjectUpdate:
         """
-
-        Update the project settings for a specific project. For more information, see the following:
-        * [Create and configure projects](https://labelstud.io/guide/setup_project)
-        * [Configure labeling interface](https://labelstud.io/guide/setup)
-        * [Project settings](https://labelstud.io/guide/project_settings)
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
-
-        <Warning>
-        If you are modifying the labeling config for project that has in-progress work, note the following:
-        * You cannot remove labels or change the type of labeling being performed unless you delete any existing annotations that are using those labels.
-        * If you make changes to the labeling configuration, any tabs that you might have created in the Data Manager are removed.
-        </Warning>
+        Update the details of a specific project.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this project.
 
         title : typing.Optional[str]
-            Project title
+            Project name. Must be between 3 and 50 characters long.
 
         description : typing.Optional[str]
             Project description
 
         label_config : typing.Optional[str]
-            Label config in XML format
+            Label config in XML format. See more about it in documentation
 
         expert_instruction : typing.Optional[str]
-            Labeling instructions to show to the user
+            Labeling instructions in HTML format
 
         show_instruction : typing.Optional[bool]
-            Show labeling instructions
+            Show instructions to the annotator before they start
 
         show_skip_button : typing.Optional[bool]
-            Show skip button
+            Show a skip button in interface and allow annotators to skip the task
 
         enable_empty_annotation : typing.Optional[bool]
-            Allow empty annotations
+            Allow annotators to submit empty annotations
 
         show_annotation_history : typing.Optional[bool]
-            Show annotation history
+            Show annotation history to annotator
 
-        reveal_preannotations_interactively : typing.Optional[bool]
-            Reveal preannotations interactively. If set to True, predictions will be shown to the user only after selecting the area of interest
-
-        show_collab_predictions : typing.Optional[bool]
-            Show predictions to annotators
-
-        maximum_annotations : typing.Optional[int]
-            Maximum annotations per task
+        organization : typing.Optional[int]
 
         color : typing.Optional[str]
-            Project color in HEX format
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+        maximum_annotations : typing.Optional[int]
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
 
-
-        workspace : typing.Optional[int]
-            Workspace ID
+        is_published : typing.Optional[bool]
+            Whether or not the project is published to annotators
 
         model_version : typing.Optional[str]
-            Model version
+            Machine learning model version
+
+        is_draft : typing.Optional[bool]
+            Whether or not the project is in the middle of being created
+
+        created_by : typing.Optional[UserSimpleRequest]
+            Project owner
+
+        min_annotations_to_start_training : typing.Optional[int]
+            Minimum number of completed tasks after which model training is started
+
+        show_collab_predictions : typing.Optional[bool]
+            If set, the annotator can view model predictions
+
+        sampling : typing.Optional[PatchedLseProjectRequestSampling]
+
+        show_ground_truth_first : typing.Optional[bool]
+
+        show_overlap_first : typing.Optional[bool]
+
+        overlap_cohort_percentage : typing.Optional[int]
+
+        task_data_login : typing.Optional[str]
+            Task data credentials: login
+
+        task_data_password : typing.Optional[str]
+            Task data credentials: password
+
+        control_weights : typing.Optional[typing.Optional[typing.Any]]
+
+        evaluate_predictions_automatically : typing.Optional[bool]
+            Retrieve and display predictions when loading a task
+
+        skip_queue : typing.Optional[PatchedLseProjectRequestSkipQueue]
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal pre-annotations interactively
+
+        pinned_at : typing.Optional[dt.datetime]
+            Pinned date and time
+
+        review_settings : typing.Optional[ReviewSettingsRequest]
+
+        assignment_settings : typing.Optional[AssignmentSettingsRequest]
+
+        custom_script : typing.Optional[str]
+
+        comment_classification_config : typing.Optional[str]
+
+        duplication_done : typing.Optional[bool]
+
+        require_comment_on_skip : typing.Optional[bool]
+
+        custom_task_lock_ttl : typing.Optional[int]
+            TTL in seconds for task reservations, on new and existing tasks
+
+        annotation_limit_count : typing.Optional[int]
+
+        annotation_limit_percent : typing.Optional[str]
+
+        pause_on_failed_annotator_evaluation : typing.Optional[bool]
+
+        annotator_evaluation_minimum_score : typing.Optional[str]
+
+        annotator_evaluation_minimum_tasks : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ProjectsUpdateResponse
+        LseProjectUpdate
 
 
         Examples
@@ -464,6 +575,7 @@ class ProjectsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.update(
             id=1,
@@ -481,13 +593,48 @@ class ProjectsClient:
                 "show_skip_button": show_skip_button,
                 "enable_empty_annotation": enable_empty_annotation,
                 "show_annotation_history": show_annotation_history,
-                "reveal_preannotations_interactively": reveal_preannotations_interactively,
-                "show_collab_predictions": show_collab_predictions,
-                "maximum_annotations": maximum_annotations,
+                "organization": organization,
                 "color": color,
-                "control_weights": control_weights,
-                "workspace": workspace,
+                "maximum_annotations": maximum_annotations,
+                "is_published": is_published,
                 "model_version": model_version,
+                "is_draft": is_draft,
+                "created_by": convert_and_respect_annotation_metadata(
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
+                ),
+                "min_annotations_to_start_training": min_annotations_to_start_training,
+                "show_collab_predictions": show_collab_predictions,
+                "sampling": convert_and_respect_annotation_metadata(
+                    object_=sampling, annotation=PatchedLseProjectRequestSampling, direction="write"
+                ),
+                "show_ground_truth_first": show_ground_truth_first,
+                "show_overlap_first": show_overlap_first,
+                "overlap_cohort_percentage": overlap_cohort_percentage,
+                "task_data_login": task_data_login,
+                "task_data_password": task_data_password,
+                "control_weights": control_weights,
+                "evaluate_predictions_automatically": evaluate_predictions_automatically,
+                "skip_queue": convert_and_respect_annotation_metadata(
+                    object_=skip_queue, annotation=PatchedLseProjectRequestSkipQueue, direction="write"
+                ),
+                "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "pinned_at": pinned_at,
+                "review_settings": convert_and_respect_annotation_metadata(
+                    object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
+                ),
+                "assignment_settings": convert_and_respect_annotation_metadata(
+                    object_=assignment_settings, annotation=AssignmentSettingsRequest, direction="write"
+                ),
+                "custom_script": custom_script,
+                "comment_classification_config": comment_classification_config,
+                "duplication_done": duplication_done,
+                "require_comment_on_skip": require_comment_on_skip,
+                "custom_task_lock_ttl": custom_task_lock_ttl,
+                "annotation_limit_count": annotation_limit_count,
+                "annotation_limit_percent": annotation_limit_percent,
+                "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,
+                "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
+                "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
             },
             headers={
                 "content-type": "application/json",
@@ -498,9 +645,93 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectsUpdateResponse,
-                    parse_obj_as(
-                        type_=ProjectsUpdateResponse,  # type: ignore
+                    LseProjectUpdate,
+                    construct_type(
+                        type_=LseProjectUpdate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def duplicate(
+        self,
+        id: int,
+        *,
+        mode: ModeEnum,
+        workspace: int,
+        title: str,
+        description: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Make a copy of project.
+
+        Parameters
+        ----------
+        id : int
+
+        mode : ModeEnum
+            Data that you want to duplicate: settings only, with tasks, with annotations
+
+            * `settings` - Only settings
+            * `settings,data` - Settings and tasks
+
+        workspace : int
+            Workspace, where to place duplicated project
+
+        title : str
+            Title of duplicated project
+
+        description : typing.Optional[str]
+            Description of duplicated project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Project duplicated
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.projects.duplicate(
+            id=1,
+            mode="settings",
+            workspace=1,
+            title="title",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/duplicate/",
+            method="POST",
+            json={
+                "mode": mode,
+                "workspace": workspace,
+                "title": title,
+                "description": description,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -513,93 +744,101 @@ class ProjectsClient:
         self,
         id: int,
         *,
-        request: typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]],
+        request: typing.Sequence[ImportApiRequest],
         commit_to_project: typing.Optional[bool] = None,
-        return_task_ids: typing.Optional[bool] = None,
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        return_task_ids: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
         """
-
-        Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        <Note>
-        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*.
-
-        For example, if the label configuration has a *$text* variable, then each item in a data object must include a `text` field.
-        </Note>
-
-        There are three possible ways to import tasks with this endpoint:
-
-        #### 1. **POST with data**
-        Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
-
-        Update this example to specify your authorization token and Label Studio instance host, then run the following from
-        the command line:
-
-        ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
-        ```
-
-        #### 2. **POST with files**
-        Send tasks as files. You can attach multiple files with different names.
-
-        - **JSON**: text files in JavaScript object notation format
-        - **CSV**: text files with tables in Comma Separated Values format
-        - **TSV**: text files with tables in Tab Separated Value format
-        - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
-
-        Update this example to specify your authorization token, Label Studio instance host, and file name and path,
-        then run the following from the command line:
-
-        ```bash
-        curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
-        ```
-
-        #### 3. **POST with URL**
-        You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
-
-        ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
-        ```
-
-        <br>
-
+        
+                    Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
+                    One POST request is limited at 250K tasks and 200 MB.
+        
+                    **Note:** Imported data is verified against a project *label_config* and must
+                    include all variables that were used in the *label_config*. For example,
+                    if the label configuration has a *$text* variable, then each item in a data object
+                    must include a "text" field.
+                    <br>
+        
+                    ## POST requests
+                    <hr style="opacity:0.3">
+        
+                    There are three possible ways to import tasks with this endpoint:
+        
+                    ### 1. **POST with data**
+                    Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
+                    Update this example to specify your authorization token and Label Studio instance host, then run the following from
+                    the command line.
+        
+                    ```bash
+                    curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+                    -X POST 'http://localhost:8000/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+                    ```
+        
+                    ### 2. **POST with files**
+                    Send tasks as files. You can attach multiple files with different names.
+        
+                    - **JSON**: text files in JavaScript object notation format
+                    - **CSV**: text files with tables in Comma Separated Values format
+                    - **TSV**: text files with tables in Tab Separated Value format
+                    - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
+        
+                    Update this example to specify your authorization token, Label Studio instance host, and file name and path,
+                    then run the following from the command line:
+        
+                    ```bash
+                    curl -H 'Authorization: Token abc123' \
+                    -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'
+                    ```
+        
+                    ### 3. **POST with URL**
+                    You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
+        
+                    ```bash
+                    curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+                    -X POST 'http://localhost:8000/api/projects/1/import' \
+                    --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+                    ```
+        
+                    <br>
+                
+        
         Parameters
         ----------
         id : int
             A unique integer value identifying this project.
-
-        request : typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]
-
+        
+        request : typing.Sequence[ImportApiRequest]
+        
         commit_to_project : typing.Optional[bool]
             Set to "true" to immediately commit tasks to the project.
-
-        return_task_ids : typing.Optional[bool]
-            Set to "true" to return task IDs in the response.
-
+        
         preannotated_from_fields : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             List of fields to preannotate from the task data. For example, if you provide a list of `{"text": "text", "prediction": "label"}` items in the request, the system will create a task with the `text` field and a prediction with the `label` field when `preannoted_from_fields=["prediction"]`.
-
+        
+        return_task_ids : typing.Optional[bool]
+            Set to "true" to return task IDs in the response.
+        
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-
+        
         Returns
         -------
         ProjectsImportTasksResponse
             Tasks successfully imported
-
+        
         Examples
         --------
         from label_studio_sdk import LabelStudio
-
+        
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.import_tasks(
             id=1,
-            request=[{"key": "value"}],
+            request=[],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -607,10 +846,12 @@ class ProjectsClient:
             method="POST",
             params={
                 "commit_to_project": commit_to_project,
-                "return_task_ids": return_task_ids,
                 "preannotated_from_fields": preannotated_from_fields,
+                "return_task_ids": return_task_ids,
             },
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[ImportApiRequest], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -618,7 +859,7 @@ class ProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ProjectsImportTasksResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=ProjectsImportTasksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -627,7 +868,7 @@ class ProjectsClient:
                 raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
@@ -638,106 +879,29 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate_config(
-        self, id: int, *, label_config: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectLabelConfig:
-        """
-
-        Determine whether the label configuration for a specific project is valid. For more information about setting up labeling configs, see [Configure labeling interface](https://labelstud.io/guide/setup) and our [Tags reference](https://labelstud.io/tags/).
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-
-        label_config : str
-            Label config in XML format. See more about it in documentation
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ProjectLabelConfig
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.validate_config(
-            id=1,
-            label_config="label_config",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/validate/",
-            method="POST",
-            json={
-                "label_config": label_config,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ProjectLabelConfig,
-                    parse_obj_as(
-                        type_=ProjectLabelConfig,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
 
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)
+        self.file_uploads = AsyncFileUploadsClient(client_wrapper=self._client_wrapper)
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
+        self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)
 
     async def list(
         self,
         *,
         ordering: typing.Optional[str] = None,
-        ids: typing.Optional[str] = None,
-        title: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
-        workspaces: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Project]:
+    ) -> AsyncPager[AllRolesProjectList]:
         """
-
-        Return a list of the projects within your organization.
-
-        To perform most tasks with the Label Studio API, you must specify the project ID, sometimes referred to as the `pk`. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using this API call.
-
-        To retrieve a list of your Label Studio projects, update the following command to match your own environment.
-        Replace the domain name, port, and authorization token, then run the following from the command line:
-        ```bash
-        curl -X GET https://localhost:8080/api/projects/ -H 'Authorization: Token abc123'
-        ```
+        Retrieve a list of projects.
 
         Parameters
         ----------
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
-
-        ids : typing.Optional[str]
-            ids
-
-        title : typing.Optional[str]
-            title
 
         page : typing.Optional[int]
             A page number within the paginated result set.
@@ -745,15 +909,12 @@ class AsyncProjectsClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        workspaces : typing.Optional[int]
-            workspaces
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[Project]
+        AsyncPager[AllRolesProjectList]
 
 
         Examples
@@ -764,6 +925,7 @@ class AsyncProjectsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -784,31 +946,25 @@ class AsyncProjectsClient:
             method="GET",
             params={
                 "ordering": ordering,
-                "ids": ids,
-                "title": title,
                 "page": page,
                 "page_size": page_size,
-                "workspaces": workspaces,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    ProjectsListResponse,
-                    parse_obj_as(
-                        type_=ProjectsListResponse,  # type: ignore
+                    PaginatedAllRolesProjectListList,
+                    construct_type(
+                        type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
                     ordering=ordering,
-                    ids=ids,
-                    title=title,
                     page=page + 1,
                     page_size=page_size,
-                    workspaces=workspaces,
                     request_options=request_options,
                 )
                 _items = _parsed_response.results
@@ -829,80 +985,118 @@ class AsyncProjectsClient:
         show_skip_button: typing.Optional[bool] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
-        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        show_collab_predictions: typing.Optional[bool] = OMIT,
-        maximum_annotations: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        workspace: typing.Optional[int] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        is_published: typing.Optional[bool] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        is_draft: typing.Optional[bool] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        min_annotations_to_start_training: typing.Optional[int] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        sampling: typing.Optional[LseProjectCreateRequestSampling] = OMIT,
+        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        show_overlap_first: typing.Optional[bool] = OMIT,
+        overlap_cohort_percentage: typing.Optional[int] = OMIT,
+        task_data_login: typing.Optional[str] = OMIT,
+        task_data_password: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
+        skip_queue: typing.Optional[LseProjectCreateRequestSkipQueue] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        pinned_at: typing.Optional[dt.datetime] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsCreateResponse:
+    ) -> LseProjectCreate:
         """
-
-        Create a project and set up the labeling interface. For more information about setting up projects, see the following:
-        * [Create and configure projects](https://labelstud.io/guide/setup_project)
-        * [Configure labeling interface](https://labelstud.io/guide/setup)
-        * [Project settings](https://labelstud.io/guide/project_settings)
-
-        ```bash
-        curl -H Content-Type:application/json -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects'     --data '{"label_config": "<View>[...]</View>"}'
-        ```
+        Create a project for a specific organization.
 
         Parameters
         ----------
         title : typing.Optional[str]
-            Project title
+            Project name. Must be between 3 and 50 characters long.
 
         description : typing.Optional[str]
             Project description
 
         label_config : typing.Optional[str]
-            Label config in XML format
+            Label config in XML format. See more about it in documentation
 
         expert_instruction : typing.Optional[str]
-            Labeling instructions to show to the user
+            Labeling instructions in HTML format
 
         show_instruction : typing.Optional[bool]
-            Show labeling instructions
+            Show instructions to the annotator before they start
 
         show_skip_button : typing.Optional[bool]
-            Show skip button
+            Show a skip button in interface and allow annotators to skip the task
 
         enable_empty_annotation : typing.Optional[bool]
-            Allow empty annotations
+            Allow annotators to submit empty annotations
 
         show_annotation_history : typing.Optional[bool]
-            Show annotation history
+            Show annotation history to annotator
 
-        reveal_preannotations_interactively : typing.Optional[bool]
-            Reveal preannotations interactively. If set to True, predictions will be shown to the user only after selecting the area of interest
-
-        show_collab_predictions : typing.Optional[bool]
-            Show predictions to annotators
-
-        maximum_annotations : typing.Optional[int]
-            Maximum annotations per task
+        organization : typing.Optional[int]
 
         color : typing.Optional[str]
-            Project color in HEX format
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+        maximum_annotations : typing.Optional[int]
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
 
-
-        workspace : typing.Optional[int]
-            Workspace ID
+        is_published : typing.Optional[bool]
+            Whether or not the project is published to annotators
 
         model_version : typing.Optional[str]
-            Model version
+            Machine learning model version
+
+        is_draft : typing.Optional[bool]
+            Whether or not the project is in the middle of being created
+
+        created_by : typing.Optional[UserSimpleRequest]
+            Project owner
+
+        min_annotations_to_start_training : typing.Optional[int]
+            Minimum number of completed tasks after which model training is started
+
+        show_collab_predictions : typing.Optional[bool]
+            If set, the annotator can view model predictions
+
+        sampling : typing.Optional[LseProjectCreateRequestSampling]
+
+        show_ground_truth_first : typing.Optional[bool]
+
+        show_overlap_first : typing.Optional[bool]
+
+        overlap_cohort_percentage : typing.Optional[int]
+
+        task_data_login : typing.Optional[str]
+            Task data credentials: login
+
+        task_data_password : typing.Optional[str]
+            Task data credentials: password
+
+        control_weights : typing.Optional[typing.Optional[typing.Any]]
+
+        evaluate_predictions_automatically : typing.Optional[bool]
+            Retrieve and display predictions when loading a task
+
+        skip_queue : typing.Optional[LseProjectCreateRequestSkipQueue]
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal pre-annotations interactively
+
+        pinned_at : typing.Optional[dt.datetime]
+            Pinned date and time
+
+        workspace : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ProjectsCreateResponse
+        LseProjectCreate
 
 
         Examples
@@ -913,6 +1107,7 @@ class AsyncProjectsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -934,13 +1129,33 @@ class AsyncProjectsClient:
                 "show_skip_button": show_skip_button,
                 "enable_empty_annotation": enable_empty_annotation,
                 "show_annotation_history": show_annotation_history,
-                "reveal_preannotations_interactively": reveal_preannotations_interactively,
-                "show_collab_predictions": show_collab_predictions,
-                "maximum_annotations": maximum_annotations,
+                "organization": organization,
                 "color": color,
-                "control_weights": control_weights,
-                "workspace": workspace,
+                "maximum_annotations": maximum_annotations,
+                "is_published": is_published,
                 "model_version": model_version,
+                "is_draft": is_draft,
+                "created_by": convert_and_respect_annotation_metadata(
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
+                ),
+                "min_annotations_to_start_training": min_annotations_to_start_training,
+                "show_collab_predictions": show_collab_predictions,
+                "sampling": convert_and_respect_annotation_metadata(
+                    object_=sampling, annotation=LseProjectCreateRequestSampling, direction="write"
+                ),
+                "show_ground_truth_first": show_ground_truth_first,
+                "show_overlap_first": show_overlap_first,
+                "overlap_cohort_percentage": overlap_cohort_percentage,
+                "task_data_login": task_data_login,
+                "task_data_password": task_data_password,
+                "control_weights": control_weights,
+                "evaluate_predictions_automatically": evaluate_predictions_automatically,
+                "skip_queue": convert_and_respect_annotation_metadata(
+                    object_=skip_queue, annotation=LseProjectCreateRequestSkipQueue, direction="write"
+                ),
+                "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "pinned_at": pinned_at,
+                "workspace": workspace,
             },
             headers={
                 "content-type": "application/json",
@@ -951,9 +1166,9 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectsCreateResponse,
-                    parse_obj_as(
-                        type_=ProjectsCreateResponse,  # type: ignore
+                    LseProjectCreate,
+                    construct_type(
+                        type_=LseProjectCreate,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -964,12 +1179,11 @@ class AsyncProjectsClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
         """
-        Retrieve information about a specific project by project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
+        Retrieve information about a project by project ID.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -987,6 +1201,7 @@ class AsyncProjectsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1007,7 +1222,7 @@ class AsyncProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Project,
-                    parse_obj_as(
+                    construct_type(
                         type_=Project,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1019,15 +1234,11 @@ class AsyncProjectsClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a project by specified project ID. Deleting a project permanently removes all tasks, annotations, and project data from Label Studio.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
+        Delete a project by specified project ID.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this project.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1044,6 +1255,7 @@ class AsyncProjectsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1080,87 +1292,154 @@ class AsyncProjectsClient:
         show_skip_button: typing.Optional[bool] = OMIT,
         enable_empty_annotation: typing.Optional[bool] = OMIT,
         show_annotation_history: typing.Optional[bool] = OMIT,
-        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
-        show_collab_predictions: typing.Optional[bool] = OMIT,
-        maximum_annotations: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         color: typing.Optional[str] = OMIT,
-        control_weights: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        workspace: typing.Optional[int] = OMIT,
+        maximum_annotations: typing.Optional[int] = OMIT,
+        is_published: typing.Optional[bool] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        is_draft: typing.Optional[bool] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        min_annotations_to_start_training: typing.Optional[int] = OMIT,
+        show_collab_predictions: typing.Optional[bool] = OMIT,
+        sampling: typing.Optional[PatchedLseProjectRequestSampling] = OMIT,
+        show_ground_truth_first: typing.Optional[bool] = OMIT,
+        show_overlap_first: typing.Optional[bool] = OMIT,
+        overlap_cohort_percentage: typing.Optional[int] = OMIT,
+        task_data_login: typing.Optional[str] = OMIT,
+        task_data_password: typing.Optional[str] = OMIT,
+        control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
+        skip_queue: typing.Optional[PatchedLseProjectRequestSkipQueue] = OMIT,
+        reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
+        pinned_at: typing.Optional[dt.datetime] = OMIT,
+        review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
+        assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
+        custom_script: typing.Optional[str] = OMIT,
+        comment_classification_config: typing.Optional[str] = OMIT,
+        duplication_done: typing.Optional[bool] = OMIT,
+        require_comment_on_skip: typing.Optional[bool] = OMIT,
+        custom_task_lock_ttl: typing.Optional[int] = OMIT,
+        annotation_limit_count: typing.Optional[int] = OMIT,
+        annotation_limit_percent: typing.Optional[str] = OMIT,
+        pause_on_failed_annotator_evaluation: typing.Optional[bool] = OMIT,
+        annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
+        annotator_evaluation_minimum_tasks: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ProjectsUpdateResponse:
+    ) -> LseProjectUpdate:
         """
-
-        Update the project settings for a specific project. For more information, see the following:
-        * [Create and configure projects](https://labelstud.io/guide/setup_project)
-        * [Configure labeling interface](https://labelstud.io/guide/setup)
-        * [Project settings](https://labelstud.io/guide/project_settings)
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
-
-        <Warning>
-        If you are modifying the labeling config for project that has in-progress work, note the following:
-        * You cannot remove labels or change the type of labeling being performed unless you delete any existing annotations that are using those labels.
-        * If you make changes to the labeling configuration, any tabs that you might have created in the Data Manager are removed.
-        </Warning>
+        Update the details of a specific project.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this project.
 
         title : typing.Optional[str]
-            Project title
+            Project name. Must be between 3 and 50 characters long.
 
         description : typing.Optional[str]
             Project description
 
         label_config : typing.Optional[str]
-            Label config in XML format
+            Label config in XML format. See more about it in documentation
 
         expert_instruction : typing.Optional[str]
-            Labeling instructions to show to the user
+            Labeling instructions in HTML format
 
         show_instruction : typing.Optional[bool]
-            Show labeling instructions
+            Show instructions to the annotator before they start
 
         show_skip_button : typing.Optional[bool]
-            Show skip button
+            Show a skip button in interface and allow annotators to skip the task
 
         enable_empty_annotation : typing.Optional[bool]
-            Allow empty annotations
+            Allow annotators to submit empty annotations
 
         show_annotation_history : typing.Optional[bool]
-            Show annotation history
+            Show annotation history to annotator
 
-        reveal_preannotations_interactively : typing.Optional[bool]
-            Reveal preannotations interactively. If set to True, predictions will be shown to the user only after selecting the area of interest
-
-        show_collab_predictions : typing.Optional[bool]
-            Show predictions to annotators
-
-        maximum_annotations : typing.Optional[int]
-            Maximum annotations per task
+        organization : typing.Optional[int]
 
         color : typing.Optional[str]
-            Project color in HEX format
 
-        control_weights : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have its own key in control weight dict with weight for each label and overall weight. For example, if a bounding box annotation with a control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice as important as Airplane, then you need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+        maximum_annotations : typing.Optional[int]
+            Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
 
-
-        workspace : typing.Optional[int]
-            Workspace ID
+        is_published : typing.Optional[bool]
+            Whether or not the project is published to annotators
 
         model_version : typing.Optional[str]
-            Model version
+            Machine learning model version
+
+        is_draft : typing.Optional[bool]
+            Whether or not the project is in the middle of being created
+
+        created_by : typing.Optional[UserSimpleRequest]
+            Project owner
+
+        min_annotations_to_start_training : typing.Optional[int]
+            Minimum number of completed tasks after which model training is started
+
+        show_collab_predictions : typing.Optional[bool]
+            If set, the annotator can view model predictions
+
+        sampling : typing.Optional[PatchedLseProjectRequestSampling]
+
+        show_ground_truth_first : typing.Optional[bool]
+
+        show_overlap_first : typing.Optional[bool]
+
+        overlap_cohort_percentage : typing.Optional[int]
+
+        task_data_login : typing.Optional[str]
+            Task data credentials: login
+
+        task_data_password : typing.Optional[str]
+            Task data credentials: password
+
+        control_weights : typing.Optional[typing.Optional[typing.Any]]
+
+        evaluate_predictions_automatically : typing.Optional[bool]
+            Retrieve and display predictions when loading a task
+
+        skip_queue : typing.Optional[PatchedLseProjectRequestSkipQueue]
+
+        reveal_preannotations_interactively : typing.Optional[bool]
+            Reveal pre-annotations interactively
+
+        pinned_at : typing.Optional[dt.datetime]
+            Pinned date and time
+
+        review_settings : typing.Optional[ReviewSettingsRequest]
+
+        assignment_settings : typing.Optional[AssignmentSettingsRequest]
+
+        custom_script : typing.Optional[str]
+
+        comment_classification_config : typing.Optional[str]
+
+        duplication_done : typing.Optional[bool]
+
+        require_comment_on_skip : typing.Optional[bool]
+
+        custom_task_lock_ttl : typing.Optional[int]
+            TTL in seconds for task reservations, on new and existing tasks
+
+        annotation_limit_count : typing.Optional[int]
+
+        annotation_limit_percent : typing.Optional[str]
+
+        pause_on_failed_annotator_evaluation : typing.Optional[bool]
+
+        annotator_evaluation_minimum_score : typing.Optional[str]
+
+        annotator_evaluation_minimum_tasks : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ProjectsUpdateResponse
+        LseProjectUpdate
 
 
         Examples
@@ -1171,6 +1450,7 @@ class AsyncProjectsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1194,13 +1474,48 @@ class AsyncProjectsClient:
                 "show_skip_button": show_skip_button,
                 "enable_empty_annotation": enable_empty_annotation,
                 "show_annotation_history": show_annotation_history,
-                "reveal_preannotations_interactively": reveal_preannotations_interactively,
-                "show_collab_predictions": show_collab_predictions,
-                "maximum_annotations": maximum_annotations,
+                "organization": organization,
                 "color": color,
-                "control_weights": control_weights,
-                "workspace": workspace,
+                "maximum_annotations": maximum_annotations,
+                "is_published": is_published,
                 "model_version": model_version,
+                "is_draft": is_draft,
+                "created_by": convert_and_respect_annotation_metadata(
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
+                ),
+                "min_annotations_to_start_training": min_annotations_to_start_training,
+                "show_collab_predictions": show_collab_predictions,
+                "sampling": convert_and_respect_annotation_metadata(
+                    object_=sampling, annotation=PatchedLseProjectRequestSampling, direction="write"
+                ),
+                "show_ground_truth_first": show_ground_truth_first,
+                "show_overlap_first": show_overlap_first,
+                "overlap_cohort_percentage": overlap_cohort_percentage,
+                "task_data_login": task_data_login,
+                "task_data_password": task_data_password,
+                "control_weights": control_weights,
+                "evaluate_predictions_automatically": evaluate_predictions_automatically,
+                "skip_queue": convert_and_respect_annotation_metadata(
+                    object_=skip_queue, annotation=PatchedLseProjectRequestSkipQueue, direction="write"
+                ),
+                "reveal_preannotations_interactively": reveal_preannotations_interactively,
+                "pinned_at": pinned_at,
+                "review_settings": convert_and_respect_annotation_metadata(
+                    object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
+                ),
+                "assignment_settings": convert_and_respect_annotation_metadata(
+                    object_=assignment_settings, annotation=AssignmentSettingsRequest, direction="write"
+                ),
+                "custom_script": custom_script,
+                "comment_classification_config": comment_classification_config,
+                "duplication_done": duplication_done,
+                "require_comment_on_skip": require_comment_on_skip,
+                "custom_task_lock_ttl": custom_task_lock_ttl,
+                "annotation_limit_count": annotation_limit_count,
+                "annotation_limit_percent": annotation_limit_percent,
+                "pause_on_failed_annotator_evaluation": pause_on_failed_annotator_evaluation,
+                "annotator_evaluation_minimum_score": annotator_evaluation_minimum_score,
+                "annotator_evaluation_minimum_tasks": annotator_evaluation_minimum_tasks,
             },
             headers={
                 "content-type": "application/json",
@@ -1211,9 +1526,101 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectsUpdateResponse,
-                    parse_obj_as(
-                        type_=ProjectsUpdateResponse,  # type: ignore
+                    LseProjectUpdate,
+                    construct_type(
+                        type_=LseProjectUpdate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def duplicate(
+        self,
+        id: int,
+        *,
+        mode: ModeEnum,
+        workspace: int,
+        title: str,
+        description: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Optional[typing.Any]:
+        """
+        Make a copy of project.
+
+        Parameters
+        ----------
+        id : int
+
+        mode : ModeEnum
+            Data that you want to duplicate: settings only, with tasks, with annotations
+
+            * `settings` - Only settings
+            * `settings,data` - Settings and tasks
+
+        workspace : int
+            Workspace, where to place duplicated project
+
+        title : str
+            Title of duplicated project
+
+        description : typing.Optional[str]
+            Description of duplicated project
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[typing.Any]
+            Project duplicated
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.projects.duplicate(
+                id=1,
+                mode="settings",
+                workspace=1,
+                title="title",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/duplicate/",
+            method="POST",
+            json={
+                "mode": mode,
+                "workspace": workspace,
+                "title": title,
+                "description": description,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.Optional[typing.Any],
+                    construct_type(
+                        type_=typing.Optional[typing.Any],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1226,101 +1633,109 @@ class AsyncProjectsClient:
         self,
         id: int,
         *,
-        request: typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]],
+        request: typing.Sequence[ImportApiRequest],
         commit_to_project: typing.Optional[bool] = None,
-        return_task_ids: typing.Optional[bool] = None,
         preannotated_from_fields: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        return_task_ids: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectsImportTasksResponse:
         """
-
-        Use this API endpoint to import labeling tasks in bulk. Note that each POST request is limited at 250K tasks and 200 MB.
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        <Note>
-        Imported data is verified against a project *label_config* and must include all variables that were used in the *label_config*.
-
-        For example, if the label configuration has a *$text* variable, then each item in a data object must include a `text` field.
-        </Note>
-
-        There are three possible ways to import tasks with this endpoint:
-
-        #### 1. **POST with data**
-        Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
-
-        Update this example to specify your authorization token and Label Studio instance host, then run the following from
-        the command line:
-
-        ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
-        ```
-
-        #### 2. **POST with files**
-        Send tasks as files. You can attach multiple files with different names.
-
-        - **JSON**: text files in JavaScript object notation format
-        - **CSV**: text files with tables in Comma Separated Values format
-        - **TSV**: text files with tables in Tab Separated Value format
-        - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
-
-        Update this example to specify your authorization token, Label Studio instance host, and file name and path,
-        then run the following from the command line:
-
-        ```bash
-        curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
-        ```
-
-        #### 3. **POST with URL**
-        You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
-
-        ```bash
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
-        ```
-
-        <br>
-
+        
+                    Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
+                    One POST request is limited at 250K tasks and 200 MB.
+        
+                    **Note:** Imported data is verified against a project *label_config* and must
+                    include all variables that were used in the *label_config*. For example,
+                    if the label configuration has a *$text* variable, then each item in a data object
+                    must include a "text" field.
+                    <br>
+        
+                    ## POST requests
+                    <hr style="opacity:0.3">
+        
+                    There are three possible ways to import tasks with this endpoint:
+        
+                    ### 1. **POST with data**
+                    Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
+                    Update this example to specify your authorization token and Label Studio instance host, then run the following from
+                    the command line.
+        
+                    ```bash
+                    curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+                    -X POST 'http://localhost:8000/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+                    ```
+        
+                    ### 2. **POST with files**
+                    Send tasks as files. You can attach multiple files with different names.
+        
+                    - **JSON**: text files in JavaScript object notation format
+                    - **CSV**: text files with tables in Comma Separated Values format
+                    - **TSV**: text files with tables in Tab Separated Value format
+                    - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
+        
+                    Update this example to specify your authorization token, Label Studio instance host, and file name and path,
+                    then run the following from the command line:
+        
+                    ```bash
+                    curl -H 'Authorization: Token abc123' \
+                    -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'
+                    ```
+        
+                    ### 3. **POST with URL**
+                    You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
+        
+                    ```bash
+                    curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+                    -X POST 'http://localhost:8000/api/projects/1/import' \
+                    --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+                    ```
+        
+                    <br>
+                
+        
         Parameters
         ----------
         id : int
             A unique integer value identifying this project.
-
-        request : typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]
-
+        
+        request : typing.Sequence[ImportApiRequest]
+        
         commit_to_project : typing.Optional[bool]
             Set to "true" to immediately commit tasks to the project.
-
-        return_task_ids : typing.Optional[bool]
-            Set to "true" to return task IDs in the response.
-
+        
         preannotated_from_fields : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             List of fields to preannotate from the task data. For example, if you provide a list of `{"text": "text", "prediction": "label"}` items in the request, the system will create a task with the `text` field and a prediction with the `label` field when `preannoted_from_fields=["prediction"]`.
-
+        
+        return_task_ids : typing.Optional[bool]
+            Set to "true" to return task IDs in the response.
+        
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
-
+        
         Returns
         -------
         ProjectsImportTasksResponse
             Tasks successfully imported
-
+        
         Examples
         --------
         import asyncio
-
+        
         from label_studio_sdk import AsyncLabelStudio
-
+        
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
-
-
+        
+        
         async def main() -> None:
             await client.projects.import_tasks(
                 id=1,
-                request=[{"key": "value"}],
+                request=[],
             )
-
-
+        
+        
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1328,10 +1743,12 @@ class AsyncProjectsClient:
             method="POST",
             params={
                 "commit_to_project": commit_to_project,
-                "return_task_ids": return_task_ids,
                 "preannotated_from_fields": preannotated_from_fields,
+                "return_task_ids": return_task_ids,
             },
-            json=request,
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[ImportApiRequest], direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -1339,7 +1756,7 @@ class AsyncProjectsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ProjectsImportTasksResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=ProjectsImportTasksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1348,79 +1765,11 @@ class AsyncProjectsClient:
                 raise BadRequestError(
                     typing.cast(
                         typing.Optional[typing.Any],
-                        parse_obj_as(
+                        construct_type(
                             type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def validate_config(
-        self, id: int, *, label_config: str, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectLabelConfig:
-        """
-
-        Determine whether the label configuration for a specific project is valid. For more information about setting up labeling configs, see [Configure labeling interface](https://labelstud.io/guide/setup) and our [Tags reference](https://labelstud.io/tags/).
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](list).
-
-        Parameters
-        ----------
-        id : int
-            A unique integer value identifying this project.
-
-        label_config : str
-            Label config in XML format. See more about it in documentation
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ProjectLabelConfig
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.projects.validate_config(
-                id=1,
-                label_config="label_config",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/validate/",
-            method="POST",
-            json={
-                "label_config": label_config,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ProjectLabelConfig,
-                    parse_obj_as(
-                        type_=ProjectLabelConfig,  # type: ignore
-                        object_=_response.json(),
-                    ),
                 )
             _response_json = _response.json()
         except JSONDecodeError:

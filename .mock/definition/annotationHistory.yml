@@ -1,0 +1,121 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_annotation_history_list:
+      path: /api/annotation-history/
+      method: GET
+      auth: true
+      docs: >-
+        List annotation history items for an annotation. Annotation history logs
+        all actions performed with annotations, such as: imports, submits,
+        updates, reviews, and more. Users can view annotation history items in
+        the Annotation History panel during labeling.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List all annotation history items for annotation
+      request:
+        name: ApiAnnotationHistoryListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.AnnotationHistory>
+      examples:
+        - response:
+            body:
+              - id: 1
+                comment: comment
+                organization_id: 1
+                project_id: 1
+                annotation_id: 1
+                draft_id: 1
+                review_id: 1
+                task_id: 1
+                result:
+                  key: value
+                lead_time: 1.1
+                action: prediction
+                started_at: '2024-01-15T09:30:00Z'
+                created_at: '2024-01-15T09:30:00Z'
+                created_by: 1
+                comment_id: 1
+    api_annotation_history_destroy:
+      path: /api/annotation-history/
+      method: DELETE
+      auth: true
+      docs: >-
+        Delete all annotation history items for a specific annotation, task or
+        project. This method is available only for users with administrator
+        roles.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Delete annotation history items
+      response:
+        docs: Returns a dict containing the count of removed items.
+        type: ApiAnnotationHistoryDestroyResponse
+      examples:
+        - response:
+            body:
+              removed: 1
+    api_projects_annotation_history_list:
+      path: /api/projects/{id}/annotation-history/
+      method: GET
+      auth: true
+      docs: List all annotation history items for the project with pagination.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: List annotation history items for project
+      request:
+        name: ApiProjectsAnnotationHistoryListRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
+      response:
+        docs: ''
+        type: root.PaginatedAnnotationHistoryList
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              count: 123
+              next: http://api.example.org/accounts/?page=4
+              previous: http://api.example.org/accounts/?page=2
+              results:
+                - id: 1
+                  comment: comment
+                  organization_id: 1
+                  project_id: 1
+                  annotation_id: 1
+                  draft_id: 1
+                  review_id: 1
+                  task_id: 1
+                  result:
+                    key: value
+                  lead_time: 1.1
+                  action: prediction
+                  started_at: '2024-01-15T09:30:00Z'
+                  created_at: '2024-01-15T09:30:00Z'
+                  created_by: 1
+                  comment_id: 1
+  source:
+    openapi: openapi/openapi.yaml
+types:
+  ApiAnnotationHistoryDestroyResponse:
+    properties:
+      removed:
+        type: optional<integer>
+        docs: Number of removed items
+    source:
+      openapi: openapi/openapi.yaml

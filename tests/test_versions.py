@@ -20,14 +20,14 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     }
     expected_types: typing.Any = {
         "release": None,
-        "label-studio-os-package": ("dict", {0: (None, None)}),
-        "label-studio-os-backend": ("dict", {0: (None, None)}),
-        "label-studio-frontend": ("dict", {0: (None, None)}),
-        "dm2": ("dict", {0: (None, None)}),
-        "label-studio-converter": ("dict", {0: (None, None)}),
+        "label-studio-os-package": None,
+        "label-studio-os-backend": None,
+        "label-studio-frontend": None,
+        "dm2": None,
+        "label-studio-converter": None,
         "edition": None,
-        "lsf": ("dict", {0: (None, None)}),
-        "backend": ("dict", {0: (None, None)}),
+        "lsf": None,
+        "backend": None,
     }
     response = client.versions.get()
     validate_response(response, expected_response, expected_types)

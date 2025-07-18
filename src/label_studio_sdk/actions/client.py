@@ -39,6 +39,7 @@ class ActionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.actions.list()
         """
@@ -107,9 +108,10 @@ class ActionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.actions.create(
-            id="retrieve_tasks_predictions",
+            id="delete_annotators",
             project=1,
             filters=ActionsCreateRequestFilters(
                 conjunction="or",
@@ -186,6 +188,7 @@ class AsyncActionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -262,12 +265,13 @@ class AsyncActionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.actions.create(
-                id="retrieve_tasks_predictions",
+                id="delete_annotators",
                 project=1,
                 filters=ActionsCreateRequestFilters(
                     conjunction="or",

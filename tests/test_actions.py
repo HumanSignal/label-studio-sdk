@@ -24,7 +24,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.actions.create(
-            id="retrieve_tasks_predictions",
+            id="delete_annotators",
             project=1,
             filters=ActionsCreateRequestFilters(
                 conjunction="or",
@@ -42,7 +42,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
     assert (
         await async_client.actions.create(
-            id="retrieve_tasks_predictions",
+            id="delete_annotators",
             project=1,
             filters=ActionsCreateRequestFilters(
                 conjunction="or",

@@ -30,15 +30,15 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "created_username": "created_username",
         "created_ago": "created_ago",
         "completed_by": 1,
-        "unique_id": "unique_id",
         "was_cancelled": False,
         "ground_truth": False,
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
         "draft_created_at": "2024-01-15T09:30:00Z",
         "lead_time": 10,
-        "import_id": 1,
+        "import_id": 1000000,
         "last_action": "prediction",
+        "bulk_created": True,
         "task": 1,
         "project": 1,
         "updated_by": 1,
@@ -68,15 +68,15 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "created_username": None,
         "created_ago": None,
         "completed_by": "integer",
-        "unique_id": None,
         "was_cancelled": None,
         "ground_truth": None,
         "created_at": "datetime",
         "updated_at": "datetime",
         "draft_created_at": "datetime",
         "lead_time": None,
-        "import_id": "integer",
+        "import_id": None,
         "last_action": None,
+        "bulk_created": None,
         "task": "integer",
         "project": "integer",
         "updated_by": "integer",
@@ -128,15 +128,15 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_username": "created_username",
         "created_ago": "created_ago",
         "completed_by": 1,
-        "unique_id": "unique_id",
         "was_cancelled": False,
         "ground_truth": False,
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
         "draft_created_at": "2024-01-15T09:30:00Z",
         "lead_time": 10,
-        "import_id": 1,
+        "import_id": 1000000,
         "last_action": "prediction",
+        "bulk_created": True,
         "task": 1,
         "project": 1,
         "updated_by": 1,
@@ -166,15 +166,15 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_username": None,
         "created_ago": None,
         "completed_by": "integer",
-        "unique_id": None,
         "was_cancelled": None,
         "ground_truth": None,
         "created_at": "datetime",
         "updated_at": "datetime",
         "draft_created_at": "datetime",
         "lead_time": None,
-        "import_id": "integer",
+        "import_id": None,
         "last_action": None,
+        "bulk_created": None,
         "task": "integer",
         "project": "integer",
         "updated_by": "integer",
@@ -233,40 +233,33 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
+async def test_create_many(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = [{"id": 1}]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: {"id": "integer"}})
+    response = client.annotations.create_many()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.annotations.create_many()
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
             "id": 1,
-            "result": [
-                {
-                    "original_width": 1920,
-                    "original_height": 1080,
-                    "image_rotation": 0,
-                    "from_name": "bboxes",
-                    "to_name": "image",
-                    "type": "rectanglelabels",
-                    "value": {
-                        "x": 20,
-                        "y": 30,
-                        "width": 50,
-                        "height": 60,
-                        "rotation": 0,
-                        "values": {"rectanglelabels": ["Person"]},
-                    },
-                }
-            ],
+            "result": [{"key": "value"}],
             "created_username": "created_username",
             "created_ago": "created_ago",
             "completed_by": 1,
-            "unique_id": "unique_id",
-            "was_cancelled": False,
-            "ground_truth": False,
+            "was_cancelled": True,
+            "ground_truth": True,
             "created_at": "2024-01-15T09:30:00Z",
             "updated_at": "2024-01-15T09:30:00Z",
             "draft_created_at": "2024-01-15T09:30:00Z",
-            "lead_time": 10,
-            "import_id": 1,
+            "lead_time": 1.1,
+            "import_id": 1000000,
             "last_action": "prediction",
+            "bulk_created": True,
             "task": 1,
             "project": 1,
             "updated_by": 1,
@@ -280,35 +273,19 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         {
             0: {
                 "id": "integer",
-                "result": (
-                    "list",
-                    {
-                        0: (
-                            "dict",
-                            {
-                                0: (None, None),
-                                1: (None, None),
-                                2: (None, None),
-                                3: (None, None),
-                                4: (None, None),
-                                5: (None, None),
-                                6: (None, None),
-                            },
-                        )
-                    },
-                ),
+                "result": ("list", {0: ("dict", {0: (None, None)})}),
                 "created_username": None,
                 "created_ago": None,
                 "completed_by": "integer",
-                "unique_id": None,
                 "was_cancelled": None,
                 "ground_truth": None,
                 "created_at": "datetime",
                 "updated_at": "datetime",
                 "draft_created_at": "datetime",
                 "lead_time": None,
-                "import_id": "integer",
+                "import_id": None,
                 "last_action": None,
+                "bulk_created": None,
                 "task": "integer",
                 "project": "integer",
                 "updated_by": "integer",
@@ -349,15 +326,15 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_username": "created_username",
         "created_ago": "created_ago",
         "completed_by": 1,
-        "unique_id": "unique_id",
         "was_cancelled": False,
         "ground_truth": False,
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
         "draft_created_at": "2024-01-15T09:30:00Z",
         "lead_time": 10,
-        "import_id": 1,
+        "import_id": 1000000,
         "last_action": "prediction",
+        "bulk_created": True,
         "task": 1,
         "project": 1,
         "updated_by": 1,
@@ -387,15 +364,15 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "created_username": None,
         "created_ago": None,
         "completed_by": "integer",
-        "unique_id": None,
         "was_cancelled": None,
         "ground_truth": None,
         "created_at": "datetime",
         "updated_at": "datetime",
         "draft_created_at": "datetime",
         "lead_time": None,
-        "import_id": "integer",
+        "import_id": None,
         "last_action": None,
+        "bulk_created": None,
         "task": "integer",
         "project": "integer",
         "updated_by": "integer",
@@ -451,14 +428,4 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         was_cancelled=False,
         ground_truth=True,
     )
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_create_bulk(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = [{"id": 1}]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: {"id": "integer"}})
-    response = client.annotations.create_bulk()
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.annotations.create_bulk()
     validate_response(async_response, expected_response, expected_types)

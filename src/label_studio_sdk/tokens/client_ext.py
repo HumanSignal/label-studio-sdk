@@ -7,7 +7,7 @@ import httpx
 import jwt
 
 from ..core.api_error import ApiError
-from ..types.access_token_response import AccessTokenResponse
+from ..types.token_refresh_response import TokenRefreshResponse
 
 
 class TokensClientExt:
@@ -109,7 +109,7 @@ class TokensClientExt:
             )
         }
 
-    def refresh(self) -> AccessTokenResponse:
+    def refresh(self) -> TokenRefreshResponse:
         """Refresh the access token and return the token response."""
         existing_client = self._client_wrapper.httpx_client.httpx_client
 
@@ -135,6 +135,6 @@ class TokensClientExt:
                 )
             
         if response.status_code == 200:
-            return AccessTokenResponse.parse_obj(response.json())
+            return TokenRefreshResponse.parse_obj(response.json())
         else:
             raise ApiError(status_code=response.status_code, body=response.json())
