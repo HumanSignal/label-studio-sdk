@@ -251,12 +251,68 @@ service:
       request:
         name: TasksListRequest
         query-parameters:
+          fields:
+            type: optional<TasksListRequestFields>
+            docs: >-
+              Set to "all" if you want to include annotations and predictions in
+              the response. Defaults to task_only
+          include:
+            type: optional<string>
+            docs: Specify which fields to include in the response
+          only_annotated:
+            type: optional<boolean>
+            docs: Filter to show only tasks that have annotations
           page:
             type: optional<integer>
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
             docs: Number of results to return per page.
+          project:
+            type: optional<integer>
+            docs: Project ID
+          query:
+            type: optional<string>
+            docs: >-
+              Additional query to filter tasks. It must be JSON encoded string
+              of dict containing one of the following parameters: {"filters":
+              ..., "selectedItems": ..., "ordering": ...}. Check Data Manager >
+              Create View > see data field for more details about filters,
+              selectedItems and ordering.
+
+
+              filters: dict with "conjunction" string ("or" or "and") and list
+              of filters in "items" array. Each filter is a dictionary with
+              keys: "filter", "operator", "type", "value". Read more about
+              available filters
+
+              Example: {"conjunction": "or", "items": [{"filter":
+              "filter:tasks:completed_at", "operator": "greater", "type":
+              "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}
+
+              selectedItems: dictionary with keys: "all", "included",
+              "excluded". If "all" is false, "included" must be used. If "all"
+              is true, "excluded" must be used.
+
+              Examples: {"all": false, "included": [1, 2, 3]} or {"all": true,
+              "excluded": [4, 5]}
+
+              ordering: list of fields to order by. Currently, ordering is
+              supported by only one parameter.
+
+              Example: ["completed_at"]
+          resolve_uri:
+            type: optional<boolean>
+            docs: Resolve task data URIs using Cloud Storage
+          review:
+            type: optional<boolean>
+            docs: Get tasks for review
+          selectedItems:
+            type: optional<string>
+            docs: JSON string of selected task IDs for review workflow
+          view:
+            type: optional<integer>
+            docs: View ID
       response:
         docs: ''
         type: root.PaginatedRoleBasedTaskList
@@ -406,5 +462,11 @@ types:
   ApiProjectsTasksAssigneesCreateResponse:
     properties:
       assignments: optional<list<map<string, unknown>>>
+    source:
+      openapi: openapi/openapi.yaml
+  TasksListRequestFields:
+    enum:
+      - all
+      - task_only
     source:
       openapi: openapi/openapi.yaml

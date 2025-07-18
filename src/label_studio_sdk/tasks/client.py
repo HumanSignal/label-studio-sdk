@@ -8,6 +8,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from .types.tasks_list_request_fields import TasksListRequestFields
 from ..core.pagination import SyncPager
 from ..types.role_based_task import RoleBasedTask
 from ..types.paginated_role_based_task_list import PaginatedRoleBasedTaskList
@@ -83,8 +84,17 @@ class TasksClient:
     def list(
         self,
         *,
+        fields: typing.Optional[TasksListRequestFields] = None,
+        include: typing.Optional[str] = None,
+        only_annotated: typing.Optional[bool] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        project: typing.Optional[int] = None,
+        query: typing.Optional[str] = None,
+        resolve_uri: typing.Optional[bool] = None,
+        review: typing.Optional[bool] = None,
+        selected_items: typing.Optional[str] = None,
+        view: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[RoleBasedTask]:
         """
@@ -95,11 +105,45 @@ class TasksClient:
 
         Parameters
         ----------
+        fields : typing.Optional[TasksListRequestFields]
+            Set to "all" if you want to include annotations and predictions in the response. Defaults to task_only
+
+        include : typing.Optional[str]
+            Specify which fields to include in the response
+
+        only_annotated : typing.Optional[bool]
+            Filter to show only tasks that have annotations
+
         page : typing.Optional[int]
             A page number within the paginated result set.
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        project : typing.Optional[int]
+            Project ID
+
+        query : typing.Optional[str]
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: {"filters": ..., "selectedItems": ..., "ordering": ...}. Check Data Manager > Create View > see data field for more details about filters, selectedItems and ordering.
+
+            filters: dict with "conjunction" string ("or" or "and") and list of filters in "items" array. Each filter is a dictionary with keys: "filter", "operator", "type", "value". Read more about available filters
+            Example: {"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}
+            selectedItems: dictionary with keys: "all", "included", "excluded". If "all" is false, "included" must be used. If "all" is true, "excluded" must be used.
+            Examples: {"all": false, "included": [1, 2, 3]} or {"all": true, "excluded": [4, 5]}
+            ordering: list of fields to order by. Currently, ordering is supported by only one parameter.
+            Example: ["completed_at"]
+
+        resolve_uri : typing.Optional[bool]
+            Resolve task data URIs using Cloud Storage
+
+        review : typing.Optional[bool]
+            Get tasks for review
+
+        selected_items : typing.Optional[str]
+            JSON string of selected task IDs for review workflow
+
+        view : typing.Optional[int]
+            View ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -129,8 +173,17 @@ class TasksClient:
             "api/tasks/",
             method="GET",
             params={
+                "fields": fields,
+                "include": include,
+                "only_annotated": only_annotated,
                 "page": page,
                 "page_size": page_size,
+                "project": project,
+                "query": query,
+                "resolve_uri": resolve_uri,
+                "review": review,
+                "selectedItems": selected_items,
+                "view": view,
             },
             request_options=request_options,
         )
@@ -145,8 +198,17 @@ class TasksClient:
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
+                    fields=fields,
+                    include=include,
+                    only_annotated=only_annotated,
                     page=page + 1,
                     page_size=page_size,
+                    project=project,
+                    query=query,
+                    resolve_uri=resolve_uri,
+                    review=review,
+                    selected_items=selected_items,
+                    view=view,
                     request_options=request_options,
                 )
                 _items = _parsed_response.tasks
@@ -383,8 +445,17 @@ class AsyncTasksClient:
     async def list(
         self,
         *,
+        fields: typing.Optional[TasksListRequestFields] = None,
+        include: typing.Optional[str] = None,
+        only_annotated: typing.Optional[bool] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        project: typing.Optional[int] = None,
+        query: typing.Optional[str] = None,
+        resolve_uri: typing.Optional[bool] = None,
+        review: typing.Optional[bool] = None,
+        selected_items: typing.Optional[str] = None,
+        view: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[RoleBasedTask]:
         """
@@ -395,11 +466,45 @@ class AsyncTasksClient:
 
         Parameters
         ----------
+        fields : typing.Optional[TasksListRequestFields]
+            Set to "all" if you want to include annotations and predictions in the response. Defaults to task_only
+
+        include : typing.Optional[str]
+            Specify which fields to include in the response
+
+        only_annotated : typing.Optional[bool]
+            Filter to show only tasks that have annotations
+
         page : typing.Optional[int]
             A page number within the paginated result set.
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        project : typing.Optional[int]
+            Project ID
+
+        query : typing.Optional[str]
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: {"filters": ..., "selectedItems": ..., "ordering": ...}. Check Data Manager > Create View > see data field for more details about filters, selectedItems and ordering.
+
+            filters: dict with "conjunction" string ("or" or "and") and list of filters in "items" array. Each filter is a dictionary with keys: "filter", "operator", "type", "value". Read more about available filters
+            Example: {"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}
+            selectedItems: dictionary with keys: "all", "included", "excluded". If "all" is false, "included" must be used. If "all" is true, "excluded" must be used.
+            Examples: {"all": false, "included": [1, 2, 3]} or {"all": true, "excluded": [4, 5]}
+            ordering: list of fields to order by. Currently, ordering is supported by only one parameter.
+            Example: ["completed_at"]
+
+        resolve_uri : typing.Optional[bool]
+            Resolve task data URIs using Cloud Storage
+
+        review : typing.Optional[bool]
+            Get tasks for review
+
+        selected_items : typing.Optional[str]
+            JSON string of selected task IDs for review workflow
+
+        view : typing.Optional[int]
+            View ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -437,8 +542,17 @@ class AsyncTasksClient:
             "api/tasks/",
             method="GET",
             params={
+                "fields": fields,
+                "include": include,
+                "only_annotated": only_annotated,
                 "page": page,
                 "page_size": page_size,
+                "project": project,
+                "query": query,
+                "resolve_uri": resolve_uri,
+                "review": review,
+                "selectedItems": selected_items,
+                "view": view,
             },
             request_options=request_options,
         )
@@ -453,8 +567,17 @@ class AsyncTasksClient:
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
+                    fields=fields,
+                    include=include,
+                    only_annotated=only_annotated,
                     page=page + 1,
                     page_size=page_size,
+                    project=project,
+                    query=query,
+                    resolve_uri=resolve_uri,
+                    review=review,
+                    selected_items=selected_items,
+                    view=view,
                     request_options=request_options,
                 )
                 _items = _parsed_response.tasks

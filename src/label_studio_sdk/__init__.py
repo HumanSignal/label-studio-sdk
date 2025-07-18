@@ -166,6 +166,7 @@ from .import_storage import ImportStorageListTypesResponseItem
 from .ml import MlCreateRequestAuthMethod, MlUpdateRequestAuthMethod
 from .projects import LseProjectCreateRequestSampling, LseProjectCreateRequestSkipQueue, ProjectsImportTasksResponse
 from .prompts import PromptsCompatibleProjectsRequestProjectType
+from .tasks import TasksListRequestFields
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
 from .version import __version__
 from .views import (
@@ -325,6 +326,7 @@ __all__ = [
     "StateEnum",
     "Status7BfEnum",
     "StatusD14Enum",
+    "TasksListRequestFields",
     "TokenRefreshResponse",
     "TokenRotateResponse",
     "TrialRoleEnum",
