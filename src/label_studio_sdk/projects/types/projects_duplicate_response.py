@@ -6,10 +6,10 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class AnnotationsCreateManyResponseItem(UncheckedBaseModel):
+class ProjectsDuplicateResponse(UncheckedBaseModel):
     id: int = pydantic.Field()
     """
-    Annotation ID
+    The ID of the duplicated project.
     """
 
     if IS_PYDANTIC_V2:

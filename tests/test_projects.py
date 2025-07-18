@@ -394,8 +394,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_duplicate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"key": "value"}
-    expected_types: typing.Any = None
+    expected_response: typing.Any = {"id": 1}
+    expected_types: typing.Any = {"id": "integer"}
     response = client.projects.duplicate(id=1, mode="settings", workspace=1, title="title")
     validate_response(response, expected_response, expected_types)
 

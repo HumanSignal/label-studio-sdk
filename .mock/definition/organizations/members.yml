@@ -50,19 +50,14 @@ service:
             A unique integer value identifying the user to be deleted from the
             organization.
       display-name: Soft delete an organization member
-      response:
-        docs: ''
-        type: map<string, unknown>
       errors:
+        - root.ForbiddenError
         - root.NotFoundError
         - root.MethodNotAllowedError
       examples:
         - path-parameters:
             id: 1
             user_pk: 1
-          response:
-            body:
-              key: value
       audiences:
         - public
   source:

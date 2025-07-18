@@ -277,7 +277,7 @@ service:
               docs: User who created the last annotation history item
         content-type: application/json
       response:
-        docs: ''
+        docs: Bulk annotations created successfully
         type: list<AnnotationsCreateManyResponseItem>
       examples:
         - request: {}
@@ -488,7 +488,7 @@ types:
   AnnotationsCreateManyResponseItem:
     properties:
       id:
-        type: optional<integer>
+        type: integer
         docs: Annotation ID
     source:
       openapi: openapi/openapi.yaml

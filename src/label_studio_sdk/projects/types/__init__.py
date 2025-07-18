@@ -4,12 +4,16 @@ from .lse_project_create_request_sampling import LseProjectCreateRequestSampling
 from .lse_project_create_request_skip_queue import LseProjectCreateRequestSkipQueue
 from .patched_lse_project_request_sampling import PatchedLseProjectRequestSampling
 from .patched_lse_project_request_skip_queue import PatchedLseProjectRequestSkipQueue
+from .projects_duplicate_response import ProjectsDuplicateResponse
 from .projects_import_tasks_response import ProjectsImportTasksResponse
+from .projects_list_request_filter import ProjectsListRequestFilter
 
 __all__ = [
     "LseProjectCreateRequestSampling",
     "LseProjectCreateRequestSkipQueue",
     "PatchedLseProjectRequestSampling",
     "PatchedLseProjectRequestSkipQueue",
+    "ProjectsDuplicateResponse",
     "ProjectsImportTasksResponse",
+    "ProjectsListRequestFilter",
 ]

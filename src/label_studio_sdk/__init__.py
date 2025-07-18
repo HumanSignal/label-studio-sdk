@@ -175,13 +175,15 @@ from .annotations import AnnotationBulkRequestLastAction, AnnotationsCreateManyR
 from .client import AsyncLabelStudio, LabelStudio
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
-from .ml import MlCreateRequestAuthMethod, MlUpdateRequestAuthMethod
+from .ml import MlCreateRequestAuthMethod, MlListModelVersionsResponse, MlUpdateRequestAuthMethod
 from .projects import (
     LseProjectCreateRequestSampling,
     LseProjectCreateRequestSkipQueue,
     PatchedLseProjectRequestSampling,
     PatchedLseProjectRequestSkipQueue,
+    ProjectsDuplicateResponse,
     ProjectsImportTasksResponse,
+    ProjectsListRequestFilter,
 )
 from .prompts import PromptsCompatibleProjectsRequestProjectType
 from .tasks import TasksListRequestFields
@@ -204,6 +206,24 @@ from .views import (
     ViewsUpdateRequestDataFiltersItemsItemOperator,
     ViewsUpdateRequestDataFiltersItemsItemValue,
     ViewsUpdateRequestDataOrderingItem,
+)
+from .webhooks import (
+    WebhooksInfoResponse,
+    WebhooksInfoResponseAnnotationCreated,
+    WebhooksInfoResponseAnnotationUpdated,
+    WebhooksInfoResponseAnnotationsCreated,
+    WebhooksInfoResponseAnnotationsDeleted,
+    WebhooksInfoResponseLabelLinkCreated,
+    WebhooksInfoResponseLabelLinkDeleted,
+    WebhooksInfoResponseLabelLinkUpdated,
+    WebhooksInfoResponseProjectCreated,
+    WebhooksInfoResponseProjectDeleted,
+    WebhooksInfoResponseProjectUpdated,
+    WebhooksInfoResponseReviewCreated,
+    WebhooksInfoResponseReviewUpdated,
+    WebhooksInfoResponseReviewsDeleted,
+    WebhooksInfoResponseTasksCreated,
+    WebhooksInfoResponseTasksDeleted,
 )
 
 __all__ = [
@@ -309,6 +329,7 @@ __all__ = [
     "MethodNotAllowedError",
     "MlBackend",
     "MlCreateRequestAuthMethod",
+    "MlListModelVersionsResponse",
     "MlUpdateRequestAuthMethod",
     "ModeEnum",
     "NotFoundError",
@@ -331,7 +352,9 @@ __all__ = [
     "ProjectImport",
     "ProjectSampling",
     "ProjectSkipQueue",
+    "ProjectsDuplicateResponse",
     "ProjectsImportTasksResponse",
+    "ProjectsListRequestFilter",
     "PromptsCompatibleProjectsRequestProjectType",
     "ReasonEnum",
     "RedisExportStorage",
@@ -387,6 +410,22 @@ __all__ = [
     "ViewsUpdateRequestDataOrderingItem",
     "Webhook",
     "WebhookSerializerForUpdate",
+    "WebhooksInfoResponse",
+    "WebhooksInfoResponseAnnotationCreated",
+    "WebhooksInfoResponseAnnotationUpdated",
+    "WebhooksInfoResponseAnnotationsCreated",
+    "WebhooksInfoResponseAnnotationsDeleted",
+    "WebhooksInfoResponseLabelLinkCreated",
+    "WebhooksInfoResponseLabelLinkDeleted",
+    "WebhooksInfoResponseLabelLinkUpdated",
+    "WebhooksInfoResponseProjectCreated",
+    "WebhooksInfoResponseProjectDeleted",
+    "WebhooksInfoResponseProjectUpdated",
+    "WebhooksInfoResponseReviewCreated",
+    "WebhooksInfoResponseReviewUpdated",
+    "WebhooksInfoResponseReviewsDeleted",
+    "WebhooksInfoResponseTasksCreated",
+    "WebhooksInfoResponseTasksDeleted",
     "__version__",
     "actions",
     "annotations",

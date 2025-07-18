@@ -4131,6 +4131,30 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**filter:** `typing.Optional[ProjectsListRequestFilter]` — Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `typing.Optional[str]` — ids
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include:** `typing.Optional[str]` — Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
@@ -4148,6 +4172,22 @@ for page in response.iter_pages():
 <dd>
 
 **page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspaces:** `typing.Optional[int]` — workspaces
     
 </dd>
 </dl>

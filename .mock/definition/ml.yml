@@ -424,14 +424,16 @@ service:
         id: integer
       display-name: Get model versions
       response:
-        docs: ''
-        type: map<string, unknown>
+        docs: List of available versions.
+        type: MlListModelVersionsResponse
       examples:
         - path-parameters:
             id: 1
           response:
             body:
-              key: value
+              versions:
+                - versions
+              message: message
       audiences:
         - public
   source:
@@ -451,5 +453,11 @@ types:
       - BASIC_AUTH
     docs: Auth method
     inline: true
+    source:
+      openapi: openapi/openapi.yaml
+  MlListModelVersionsResponse:
+    properties:
+      versions: optional<list<string>>
+      message: optional<string>
     source:
       openapi: openapi/openapi.yaml

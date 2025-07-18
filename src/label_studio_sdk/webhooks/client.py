@@ -10,6 +10,7 @@ from ..core.api_error import ApiError
 from ..types.actions_enum import ActionsEnum
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.webhook_serializer_for_update import WebhookSerializerForUpdate
+from .types.webhooks_info_response import WebhooksInfoResponse
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -330,7 +331,7 @@ class WebhooksClient:
         *,
         organization_only: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    ) -> WebhooksInfoResponse:
         """
         Get descriptions of all available webhook actions to set up webhooks.
 
@@ -344,8 +345,8 @@ class WebhooksClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
-
+        WebhooksInfoResponse
+            Object with webhook action descriptions.
 
         Examples
         --------
@@ -368,9 +369,9 @@ class WebhooksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
+                    WebhooksInfoResponse,
                     construct_type(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                        type_=WebhooksInfoResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -734,7 +735,7 @@ class AsyncWebhooksClient:
         *,
         organization_only: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    ) -> WebhooksInfoResponse:
         """
         Get descriptions of all available webhook actions to set up webhooks.
 
@@ -748,8 +749,8 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
-
+        WebhooksInfoResponse
+            Object with webhook action descriptions.
 
         Examples
         --------
@@ -780,9 +781,9 @@ class AsyncWebhooksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
+                    WebhooksInfoResponse,
                     construct_type(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                        type_=WebhooksInfoResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

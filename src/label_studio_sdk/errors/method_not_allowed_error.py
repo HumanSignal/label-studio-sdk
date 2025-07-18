@@ -5,5 +5,5 @@ import typing
 
 
 class MethodNotAllowedError(ApiError):
-    def __init__(self, body: typing.Dict[str, typing.Optional[typing.Any]]):
+    def __init__(self, body: typing.Optional[typing.Any]):
         super().__init__(status_code=405, body=body)

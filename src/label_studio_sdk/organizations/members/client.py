@@ -8,6 +8,7 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+from ...errors.forbidden_error import ForbiddenError
 from ...errors.not_found_error import NotFoundError
 from ...errors.method_not_allowed_error import MethodNotAllowedError
 from ...core.client_wrapper import AsyncClientWrapper
@@ -70,9 +71,7 @@ class MembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    def delete(self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Soft delete a member from the organization.
 
@@ -88,8 +87,7 @@ class MembersClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
-
+        None
 
         Examples
         --------
@@ -111,12 +109,16 @@ class MembersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
-                    construct_type(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
-                        object_=_response.json(),
-                    ),
+                return
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             if _response.status_code == 404:
                 raise NotFoundError(
@@ -131,9 +133,9 @@ class MembersClient:
             if _response.status_code == 405:
                 raise MethodNotAllowedError(
                     typing.cast(
-                        typing.Dict[str, typing.Optional[typing.Any]],
+                        typing.Optional[typing.Any],
                         construct_type(
-                            type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -209,9 +211,7 @@ class AsyncMembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    async def delete(self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Soft delete a member from the organization.
 
@@ -227,8 +227,7 @@ class AsyncMembersClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
-
+        None
 
         Examples
         --------
@@ -258,12 +257,16 @@ class AsyncMembersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
-                    construct_type(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
-                        object_=_response.json(),
-                    ),
+                return
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             if _response.status_code == 404:
                 raise NotFoundError(
@@ -278,9 +281,9 @@ class AsyncMembersClient:
             if _response.status_code == 405:
                 raise MethodNotAllowedError(
                     typing.cast(
-                        typing.Dict[str, typing.Optional[typing.Any]],
+                        typing.Optional[typing.Any],
                         construct_type(
-                            type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )

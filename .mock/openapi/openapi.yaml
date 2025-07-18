@@ -549,7 +549,6 @@ paths:
           content:
             application/json:
               schema:
-                description: Bulk annotations created successfully
                 type: array
                 items:
                   type: object
@@ -557,7 +556,9 @@ paths:
                     id:
                       type: integer
                       description: Annotation ID
-          description: ''
+                  required:
+                  - id
+          description: Bulk annotations created successfully
       x-fern-sdk-group-name: annotations
       x-fern-sdk-method-name: create_many
       x-fern-audiences:
@@ -4522,9 +4523,14 @@ paths:
             application/json:
               schema:
                 type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+                properties:
+                  versions:
+                    type: array
+                    items:
+                      type: string
+                  message:
+                    type: string
+          description: List of available versions.
       x-fern-sdk-group-name: ml
       x-fern-sdk-method-name: list_model_versions
       x-fern-audiences:
@@ -4785,29 +4791,11 @@ paths:
                 $ref: '#/components/schemas/LseOrganization'
           description: ''
         '400':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: Bad Request
         '403':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: Permission Denied
         '404':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: Not Found
   /api/organizations/{id}/memberships:
     get:
       operationId: api_organizations_memberships_list
@@ -5009,29 +4997,13 @@ paths:
       - Token: []
       responses:
         '204':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: Member deleted successfully.
         '405':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: User cannot soft delete self.
         '404':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: Member not found
+        '403':
+          description: You can delete members only for your current active organization
       x-fern-sdk-group-name:
       - organizations
       - members
@@ -5733,12 +5705,36 @@ paths:
       description: Retrieve a list of projects.
       summary: List projects
       parameters:
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
+      - in: query
+        name: filter
         schema:
           type: string
+          enum:
+          - all
+          - exclude_pinned
+          - pinned_only
+        description: Filter projects by pinned status. Use 'pinned_only' to return
+          only pinned projects, 'exclude_pinned' to return only non-pinned projects,
+          or 'all' to return all projects.
+      - in: query
+        name: ids
+        schema:
+          type: string
+        description: ids
+      - in: query
+        name: include
+        schema:
+          type: string
+        description: 'Comma-separated list of count fields to include in the response
+          to optimize performance. Available fields: task_number, finished_task_number,
+          total_predictions_number, total_annotations_number, num_tasks_with_annotations,
+          useful_annotation_number, ground_truth_number, skipped_annotations_number.
+          If not specified, all count fields are included.'
+      - in: query
+        name: ordering
+        schema:
+          type: string
+        description: Which field to use when ordering the results.
       - name: page
         required: false
         in: query
@@ -5751,6 +5747,16 @@ paths:
         description: Number of results to return per page.
         schema:
           type: integer
+      - in: query
+        name: title
+        schema:
+          type: string
+        description: title
+      - in: query
+        name: workspaces
+        schema:
+          type: integer
+        description: workspaces
       tags:
       - Projects
       security:
@@ -6208,9 +6214,13 @@ paths:
           content:
             application/json:
               schema:
-                id:
-                  type: integer
-                  description: The ID of the duplicated project.
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: The ID of the duplicated project.
+                required:
+                - id
           description: Project duplicated
       x-fern-sdk-group-name: projects
       x-fern-sdk-method-name: duplicate
@@ -8087,13 +8097,9 @@ paths:
       - {}
       responses:
         '204':
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+          description: Validation success
+        '400':
+          description: Validation failed
       x-fern-audiences:
       - internal
   /api/prompts/:
@@ -12934,23 +12940,11 @@ paths:
                 $ref: '#/components/schemas/PaginatedRoleBasedTaskList'
           description: ''
         '400':
-          content:
-            application/json:
-              schema:
-                description: Bad request - invalid parameters
-          description: ''
+          description: Bad request - invalid parameters
         '401':
-          content:
-            application/json:
-              schema:
-                description: Unauthorized - authentication required
-          description: ''
+          description: Unauthorized - authentication required
         '403':
-          content:
-            application/json:
-              schema:
-                description: Forbidden - insufficient permissions
-          description: ''
+          description: Forbidden - insufficient permissions
       x-fern-sdk-group-name: tasks
       x-fern-sdk-method-name: list
       x-fern-audiences:
@@ -13839,9 +13833,248 @@ paths:
             application/json:
               schema:
                 type: object
-                additionalProperties: {}
-                description: Unspecified response body
-          description: ''
+                properties:
+                  PROJECT_CREATED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  PROJECT_UPDATED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  PROJECT_DELETED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  TASKS_CREATED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  TASKS_DELETED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  ANNOTATION_CREATED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  ANNOTATIONS_CREATED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  ANNOTATION_UPDATED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  ANNOTATIONS_DELETED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  LABEL_LINK_CREATED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  LABEL_LINK_UPDATED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  LABEL_LINK_DELETED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  REVIEW_CREATED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  REVIEW_UPDATED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+                  REVIEWS_DELETED:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      key:
+                        type: string
+                      organization-only:
+                        type: boolean
+                    required:
+                    - name
+                    - description
+                    - key
+                    - organization-only
+          description: Object with webhook action descriptions.
       x-fern-sdk-group-name: webhooks
       x-fern-sdk-method-name: info
       x-fern-audiences:
@@ -14262,82 +14495,9 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
-        require_comment_on_skip:
-          type: boolean
-          default: false
-        comment_classification_config:
-          type: string
-        label_config:
-          type: string
-          nullable: true
-          description: Label config in XML format. See more about it in documentation
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        annotation_limit_percent:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          nullable: true
         reviewed_number:
           type: string
           readOnly: true
-        pause_on_failed_annotator_evaluation:
-          type: boolean
-          nullable: true
-          default: false
-        title:
-          type: string
-          nullable: true
-          description: Project name. Must be between 3 and 50 characters long.
-          maxLength: 50
-          minLength: 3
-        model_version:
-          type: string
-          nullable: true
-          description: Machine learning model version
-        finished_task_number:
-          type: integer
-          readOnly: true
-        created_by:
-          allOf:
-          - $ref: '#/components/schemas/UserSimple'
-          description: Project owner
-        prompts:
-          type: string
-          readOnly: true
-        overlap_cohort_percentage:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        min_annotations_to_start_training:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          description: Minimum number of completed tasks after which model training
-            is started
-        description:
-          type: string
-          nullable: true
-          description: Project description
-        total_predictions_number:
-          type: integer
-          readOnly: true
-        color:
-          type: string
-          nullable: true
-          maxLength: 16
-        task_number:
-          type: integer
-          readOnly: true
-          description: Total task number in project
-        config_has_control_tags:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for labeling
-        show_ground_truth_first:
-          type: boolean
         control_weights:
           nullable: true
           description: 'Dict of weights for each control tag in metric calculation.
@@ -14348,165 +14508,62 @@ components:
             be twice more important than Airplaine, then you have to need the specify:
             {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0,
             ''Airplaine'': 0.5}, ''overall'': 0.33}'
-        members_count:
-          type: string
-          readOnly: true
-        expert_instruction:
-          type: string
-          nullable: true
-          description: Labeling instructions in HTML format
-        is_draft:
-          type: boolean
-          description: Whether or not the project is in the middle of being created
-        ground_truth_number:
-          type: integer
-          readOnly: true
-          description: Honeypot annotation number in project
-        skip_queue:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SkipQueueEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        review_settings:
-          $ref: '#/components/schemas/ReviewSettings'
         annotator_evaluation_minimum_score:
           type: string
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
           default: '95.00'
-        total_annotations_number:
-          type: string
-          readOnly: true
-        custom_task_lock_ttl:
-          type: integer
-          maximum: 86400
-          minimum: 1
-          nullable: true
-          description: TTL in seconds for task reservations, on new and existing tasks
-        pinned_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Pinned date and time
-        workspace_title:
-          type: string
-          readOnly: true
-        ready:
-          type: string
-          readOnly: true
-        reveal_preannotations_interactively:
+        config_has_control_tags:
           type: boolean
-          description: Reveal pre-annotations interactively
-        sampling:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SamplingEnum'
-          - $ref: '#/components/schemas/NullEnum'
+          readOnly: true
+          description: Flag to detect is project ready for labeling
         evaluate_predictions_automatically:
           type: boolean
           description: Retrieve and display predictions when loading a task
-        queue_done:
+        is_draft:
+          type: boolean
+          description: Whether or not the project is in the middle of being created
+        show_ground_truth_first:
+          type: boolean
+        members_count:
           type: string
           readOnly: true
-        show_overlap_first:
-          type: boolean
-        custom_script:
-          type: string
+        finished_task_number:
+          type: integer
+          readOnly: true
         organization:
           type: integer
           nullable: true
+        start_training_on_annotation_update:
+          type: boolean
+          readOnly: true
+          description: Start model training after any annotations are submitted or
+            updated
         data_types:
           readOnly: true
           nullable: true
-        reviewer_queue_total:
+        custom_script:
           type: string
-          readOnly: true
-        id:
-          type: integer
-          readOnly: true
-        show_collab_predictions:
-          type: boolean
-          title: Show predictions to annotator
-          description: If set, the annotator can view model predictions
-        skipped_annotations_number:
+        created_at:
           type: string
+          format: date-time
           readOnly: true
-        blueprints:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueprintList'
-          readOnly: true
-        parsed_label_config:
-          readOnly: true
-          description: JSON-formatted labeling configuration
-        members:
-          type: string
-          readOnly: true
-        duplication_done:
-          type: boolean
-          default: false
-        queue_left:
-          type: string
-          readOnly: true
-        is_published:
-          type: boolean
-          title: Published
-          description: Whether or not the project is published to annotators
-        queue_total:
-          type: string
-          readOnly: true
-        enable_empty_annotation:
-          type: boolean
-          description: Allow annotators to submit empty annotations
-        show_instruction:
-          type: boolean
-          description: Show instructions to the annotator before they start
-        rejected:
-          type: string
-          readOnly: true
-        review_total_tasks:
+        prompts:
           type: string
           readOnly: true
         annotation_limit_count:
           type: integer
           minimum: 1
           nullable: true
-        num_tasks_with_annotations:
-          type: string
-          readOnly: true
-        config_suitable_for_bulk_annotation:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for bulk annotation
-        assignment_settings:
-          $ref: '#/components/schemas/AssignmentSettings'
-        useful_annotation_number:
-          type: string
+        blueprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintList'
           readOnly: true
         show_annotation_history:
           type: boolean
           description: Show annotation history to annotator
-        workspace:
-          type: string
-          readOnly: true
-        annotator_evaluation_minimum_tasks:
-          type: integer
-          minimum: 0
-          nullable: true
-          default: 10
-        show_skip_button:
-          type: boolean
-          description: Show a skip button in interface and allow annotators to skip
-            the task
-        start_training_on_annotation_update:
-          type: boolean
-          readOnly: true
-          description: Start model training after any annotations are submitted or
-            updated
-        allow_stream:
-          type: string
-          readOnly: true
         maximum_annotations:
           type: integer
           maximum: 2147483647
@@ -14515,6 +14572,182 @@ components:
           description: Maximum number of annotations for one task. If the number of
             annotations per task is equal or greater to this value, the task is completed
             (is_labeled=True)
+        show_overlap_first:
+          type: boolean
+        reveal_preannotations_interactively:
+          type: boolean
+          description: Reveal pre-annotations interactively
+        color:
+          type: string
+          nullable: true
+          maxLength: 16
+        show_instruction:
+          type: boolean
+          description: Show instructions to the annotator before they start
+        overlap_cohort_percentage:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        show_skip_button:
+          type: boolean
+          description: Show a skip button in interface and allow annotators to skip
+            the task
+        enable_empty_annotation:
+          type: boolean
+          description: Allow annotators to submit empty annotations
+        parsed_label_config:
+          readOnly: true
+          description: JSON-formatted labeling configuration
+        skip_queue:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SkipQueueEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        review_settings:
+          $ref: '#/components/schemas/ReviewSettings'
+        show_collab_predictions:
+          type: boolean
+          title: Show predictions to annotator
+          description: If set, the annotator can view model predictions
+        total_annotations_number:
+          type: string
+          readOnly: true
+        comment_classification_config:
+          type: string
+        id:
+          type: integer
+          readOnly: true
+        pause_on_failed_annotator_evaluation:
+          type: boolean
+          nullable: true
+          default: false
+        annotator_evaluation_minimum_tasks:
+          type: integer
+          minimum: 0
+          nullable: true
+          default: 10
+        model_version:
+          type: string
+          nullable: true
+          description: Machine learning model version
+        ground_truth_number:
+          type: integer
+          readOnly: true
+          description: Honeypot annotation number in project
+        config_suitable_for_bulk_annotation:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for bulk annotation
+        expert_instruction:
+          type: string
+          nullable: true
+          description: Labeling instructions in HTML format
+        label_config:
+          type: string
+          nullable: true
+          description: Label config in XML format. See more about it in documentation
+        sampling:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SamplingEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        queue_done:
+          type: string
+          readOnly: true
+        ready:
+          type: string
+          readOnly: true
+        num_tasks_with_annotations:
+          type: string
+          readOnly: true
+        workspace:
+          type: string
+          readOnly: true
+        reviewer_queue_total:
+          type: string
+          readOnly: true
+        annotation_limit_percent:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+        workspace_title:
+          type: string
+          readOnly: true
+        custom_task_lock_ttl:
+          type: integer
+          maximum: 86400
+          minimum: 1
+          nullable: true
+          description: TTL in seconds for task reservations, on new and existing tasks
+        skipped_annotations_number:
+          type: string
+          readOnly: true
+        total_predictions_number:
+          type: integer
+          readOnly: true
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/UserSimple'
+          description: Project owner
+        assignment_settings:
+          $ref: '#/components/schemas/AssignmentSettings'
+        useful_annotation_number:
+          type: string
+          readOnly: true
+        queue_left:
+          type: string
+          readOnly: true
+        pinned_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Pinned date and time
+        require_comment_on_skip:
+          type: boolean
+          default: false
+        queue_total:
+          type: string
+          readOnly: true
+        allow_stream:
+          type: string
+          readOnly: true
+        min_annotations_to_start_training:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Minimum number of completed tasks after which model training
+            is started
+        is_published:
+          type: boolean
+          title: Published
+          description: Whether or not the project is published to annotators
+        title:
+          type: string
+          nullable: true
+          description: Project name. Must be between 3 and 50 characters long.
+          maxLength: 50
+          minLength: 3
+        duplication_done:
+          type: boolean
+          default: false
+        members:
+          type: string
+          readOnly: true
+        rejected:
+          type: string
+          readOnly: true
+        review_total_tasks:
+          type: string
+          readOnly: true
+        description:
+          type: string
+          nullable: true
+          description: Project description
+        task_number:
+          type: integer
+          readOnly: true
+          description: Total task number in project
       required:
       - allow_stream
       - assignment_settings

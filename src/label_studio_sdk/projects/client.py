@@ -5,6 +5,7 @@ from ..core.client_wrapper import SyncClientWrapper
 from .file_uploads.client import FileUploadsClient
 from .exports.client import ExportsClient
 from .pauses.client import PausesClient
+from .types.projects_list_request_filter import ProjectsListRequestFilter
 from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
 from ..types.all_roles_project_list import AllRolesProjectList
@@ -26,6 +27,7 @@ from ..types.review_settings_request import ReviewSettingsRequest
 from ..types.assignment_settings_request import AssignmentSettingsRequest
 from ..types.lse_project_update import LseProjectUpdate
 from ..types.mode_enum import ModeEnum
+from .types.projects_duplicate_response import ProjectsDuplicateResponse
 from ..types.import_api_request import ImportApiRequest
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from ..errors.bad_request_error import BadRequestError
@@ -49,9 +51,14 @@ class ProjectsClient:
     def list(
         self,
         *,
+        filter: typing.Optional[ProjectsListRequestFilter] = None,
+        ids: typing.Optional[str] = None,
+        include: typing.Optional[str] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        title: typing.Optional[str] = None,
+        workspaces: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[AllRolesProjectList]:
         """
@@ -59,6 +66,15 @@ class ProjectsClient:
 
         Parameters
         ----------
+        filter : typing.Optional[ProjectsListRequestFilter]
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+
+        ids : typing.Optional[str]
+            ids
+
+        include : typing.Optional[str]
+            Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
@@ -67,6 +83,12 @@ class ProjectsClient:
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        title : typing.Optional[str]
+            title
+
+        workspaces : typing.Optional[int]
+            workspaces
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -96,9 +118,14 @@ class ProjectsClient:
             "api/projects/",
             method="GET",
             params={
+                "filter": filter,
+                "ids": ids,
+                "include": include,
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "title": title,
+                "workspaces": workspaces,
             },
             request_options=request_options,
         )
@@ -113,9 +140,14 @@ class ProjectsClient:
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
+                    filter=filter,
+                    ids=ids,
+                    include=include,
                     ordering=ordering,
                     page=page + 1,
                     page_size=page_size,
+                    title=title,
+                    workspaces=workspaces,
                     request_options=request_options,
                 )
                 _items = _parsed_response.results
@@ -665,7 +697,7 @@ class ProjectsClient:
         title: str,
         description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> ProjectsDuplicateResponse:
         """
         Make a copy of project.
 
@@ -693,7 +725,7 @@ class ProjectsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        ProjectsDuplicateResponse
             Project duplicated
 
         Examples
@@ -729,9 +761,9 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    ProjectsDuplicateResponse,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=ProjectsDuplicateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -890,9 +922,14 @@ class AsyncProjectsClient:
     async def list(
         self,
         *,
+        filter: typing.Optional[ProjectsListRequestFilter] = None,
+        ids: typing.Optional[str] = None,
+        include: typing.Optional[str] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        title: typing.Optional[str] = None,
+        workspaces: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[AllRolesProjectList]:
         """
@@ -900,6 +937,15 @@ class AsyncProjectsClient:
 
         Parameters
         ----------
+        filter : typing.Optional[ProjectsListRequestFilter]
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+
+        ids : typing.Optional[str]
+            ids
+
+        include : typing.Optional[str]
+            Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
@@ -908,6 +954,12 @@ class AsyncProjectsClient:
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        title : typing.Optional[str]
+            title
+
+        workspaces : typing.Optional[int]
+            workspaces
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -945,9 +997,14 @@ class AsyncProjectsClient:
             "api/projects/",
             method="GET",
             params={
+                "filter": filter,
+                "ids": ids,
+                "include": include,
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "title": title,
+                "workspaces": workspaces,
             },
             request_options=request_options,
         )
@@ -962,9 +1019,14 @@ class AsyncProjectsClient:
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
+                    filter=filter,
+                    ids=ids,
+                    include=include,
                     ordering=ordering,
                     page=page + 1,
                     page_size=page_size,
+                    title=title,
+                    workspaces=workspaces,
                     request_options=request_options,
                 )
                 _items = _parsed_response.results
@@ -1546,7 +1608,7 @@ class AsyncProjectsClient:
         title: str,
         description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Optional[typing.Any]:
+    ) -> ProjectsDuplicateResponse:
         """
         Make a copy of project.
 
@@ -1574,7 +1636,7 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        typing.Optional[typing.Any]
+        ProjectsDuplicateResponse
             Project duplicated
 
         Examples
@@ -1618,9 +1680,9 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Optional[typing.Any],
+                    ProjectsDuplicateResponse,
                     construct_type(
-                        type_=typing.Optional[typing.Any],  # type: ignore
+                        type_=ProjectsDuplicateResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

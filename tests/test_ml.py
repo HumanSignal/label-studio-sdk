@@ -245,8 +245,8 @@ async def test_train(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 
 async def test_list_model_versions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"key": "value"}
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("dict", {0: (None, None)})
+    expected_response: typing.Any = {"versions": ["versions"], "message": "message"}
+    expected_types: typing.Any = {"versions": ("list", {0: None}), "message": None}
     response = client.ml.list_model_versions(id=1)
     validate_response(response, expected_response, expected_types)
 

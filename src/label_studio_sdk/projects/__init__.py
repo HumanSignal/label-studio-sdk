@@ -5,7 +5,9 @@ from .types import (
     LseProjectCreateRequestSkipQueue,
     PatchedLseProjectRequestSampling,
     PatchedLseProjectRequestSkipQueue,
+    ProjectsDuplicateResponse,
     ProjectsImportTasksResponse,
+    ProjectsListRequestFilter,
 )
 from . import exports, file_uploads, pauses
 
@@ -14,7 +16,9 @@ __all__ = [
     "LseProjectCreateRequestSkipQueue",
     "PatchedLseProjectRequestSampling",
     "PatchedLseProjectRequestSkipQueue",
+    "ProjectsDuplicateResponse",
     "ProjectsImportTasksResponse",
+    "ProjectsListRequestFilter",
     "exports",
     "file_uploads",
     "pauses",

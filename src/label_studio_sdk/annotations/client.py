@@ -319,7 +319,7 @@ class AnnotationsClient:
         Returns
         -------
         typing.List[AnnotationsCreateManyResponseItem]
-
+            Bulk annotations created successfully
 
         Examples
         --------
@@ -891,7 +891,7 @@ class AsyncAnnotationsClient:
         Returns
         -------
         typing.List[AnnotationsCreateManyResponseItem]
-
+            Bulk annotations created successfully
 
         Examples
         --------

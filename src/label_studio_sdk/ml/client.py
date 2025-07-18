@@ -11,6 +11,7 @@ from .types.ml_create_request_auth_method import MlCreateRequestAuthMethod
 from ..core.jsonable_encoder import jsonable_encoder
 from .types.ml_update_request_auth_method import MlUpdateRequestAuthMethod
 from ..errors.internal_server_error import InternalServerError
+from .types.ml_list_model_versions_response import MlListModelVersionsResponse
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -536,7 +537,7 @@ class MlClient:
 
     def list_model_versions(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    ) -> MlListModelVersionsResponse:
         """
         Get available versions of the model.
 
@@ -549,8 +550,8 @@ class MlClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
-
+        MlListModelVersionsResponse
+            List of available versions.
 
         Examples
         --------
@@ -572,9 +573,9 @@ class MlClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
+                    MlListModelVersionsResponse,
                     construct_type(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                        type_=MlListModelVersionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1159,7 +1160,7 @@ class AsyncMlClient:
 
     async def list_model_versions(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    ) -> MlListModelVersionsResponse:
         """
         Get available versions of the model.
 
@@ -1172,8 +1173,8 @@ class AsyncMlClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
-
+        MlListModelVersionsResponse
+            List of available versions.
 
         Examples
         --------
@@ -1203,9 +1204,9 @@ class AsyncMlClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
+                    MlListModelVersionsResponse,
                     construct_type(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
+                        type_=MlListModelVersionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
