@@ -4,9 +4,9 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+from ...core.unchecked_base_model import construct_type
 from ...types.export import Export
 from ...types.user_simple_request import UserSimpleRequest
 import datetime as dt
@@ -26,6 +26,84 @@ OMIT = typing.cast(typing.Any, ...)
 class ExportsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def download_sync(
+        self,
+        id: int,
+        *,
+        download_all_tasks: typing.Optional[str] = None,
+        download_resources: typing.Optional[bool] = None,
+        export_type: typing.Optional[str] = None,
+        ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+
+                <i>Note: if you have a large project it's recommended to use
+                export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
+                Export annotated tasks as a file in a specific format.
+                For example, to export JSON annotations for a project to a file called `annotations.json`,
+                run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export specific tasks with IDs of 123 and 345, run the following from the command line:
+                ```bash
+                curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        download_all_tasks : typing.Optional[str]
+            If true, download all tasks regardless of status. If false, download only annotated tasks.
+
+        download_resources : typing.Optional[bool]
+            If true, download all resource files such as images, audio, and others relevant to the tasks.
+
+        export_type : typing.Optional[str]
+            Selected export format (JSON by default)
+
+        ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Specify a list of task IDs to retrieve only the details for those tasks.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            Exported data
+        """
+        with self._client_wrapper.httpx_client.stream(
+            f"api/projects/{jsonable_encoder(id)}/export",
+            method="GET",
+            params={
+                "download_all_tasks": download_all_tasks,
+                "download_resources": download_resources,
+                "export_type": export_type,
+                "ids": ids,
+            },
+            request_options=request_options,
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                _response.read()
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list_formats(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[str]:
         """
@@ -475,6 +553,84 @@ class ExportsClient:
 class AsyncExportsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def download_sync(
+        self,
+        id: int,
+        *,
+        download_all_tasks: typing.Optional[str] = None,
+        download_resources: typing.Optional[bool] = None,
+        export_type: typing.Optional[str] = None,
+        ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+
+                <i>Note: if you have a large project it's recommended to use
+                export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
+                Export annotated tasks as a file in a specific format.
+                For example, to export JSON annotations for a project to a file called `annotations.json`,
+                run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export specific tasks with IDs of 123 and 345, run the following from the command line:
+                ```bash
+                curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        download_all_tasks : typing.Optional[str]
+            If true, download all tasks regardless of status. If false, download only annotated tasks.
+
+        download_resources : typing.Optional[bool]
+            If true, download all resource files such as images, audio, and others relevant to the tasks.
+
+        export_type : typing.Optional[str]
+            Selected export format (JSON by default)
+
+        ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Specify a list of task IDs to retrieve only the details for those tasks.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            Exported data
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            f"api/projects/{jsonable_encoder(id)}/export",
+            method="GET",
+            params={
+                "download_all_tasks": download_all_tasks,
+                "download_resources": download_resources,
+                "export_type": export_type,
+                "ids": ids,
+            },
+            request_options=request_options,
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                await _response.aread()
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list_formats(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None

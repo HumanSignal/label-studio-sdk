@@ -37,85 +37,86 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - queue_total: queue_total
-                  maximum_annotations: 1
-                  min_annotations_to_start_training: 1
+                - total_annotations_number: total_annotations_number
                   assignment_settings:
                     id: 1
-                  queue_left: queue_left
-                  num_tasks_with_annotations: num_tasks_with_annotations
-                  show_skip_button: true
-                  queue_done: queue_done
+                  annotation_limit_percent: annotation_limit_percent
                   annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
-                  skipped_annotations_number: skipped_annotations_number
-                  show_collab_predictions: true
-                  created_at: '2024-01-15T09:30:00Z'
-                  show_ground_truth_first: true
-                  pinned_at: '2024-01-15T09:30:00Z'
-                  task_number: 1
-                  review_settings:
-                    id: 1
-                    requeue_rejected_tasks_to_annotator: true
-                  overlap_cohort_percentage: 1
-                  useful_annotation_number: useful_annotation_number
+                  title: title
+                  rejected: rejected
+                  queue_total: queue_total
                   members: members
                   enable_empty_annotation: true
+                  config_has_control_tags: true
+                  review_total_tasks: review_total_tasks
+                  expert_instruction: expert_instruction
+                  task_number: 1
+                  reviewer_queue_total: reviewer_queue_total
+                  created_by:
+                    id: 1
+                    avatar: avatar
+                  allow_stream: allow_stream
+                  skip_queue: REQUEUE_FOR_ME
+                  members_count: members_count
+                  prompts: prompts
+                  control_weights:
+                    key: value
+                  show_ground_truth_first: true
+                  parsed_label_config:
+                    key: value
+                  workspace_title: workspace_title
+                  total_predictions_number: 1
+                  evaluate_predictions_automatically: true
+                  min_annotations_to_start_training: 1
+                  custom_script: custom_script
+                  config_suitable_for_bulk_annotation: true
+                  custom_task_lock_ttl: 1
+                  duplication_done: true
+                  require_comment_on_skip: true
+                  is_published: true
+                  sampling: Sequential sampling
+                  reveal_preannotations_interactively: true
+                  model_version: model_version
+                  comment_classification_config: comment_classification_config
+                  organization: 1
+                  is_draft: true
+                  reviewed_number: reviewed_number
+                  finished_task_number: 1
+                  pause_on_failed_annotator_evaluation: true
+                  show_collab_predictions: true
+                  skipped_annotations_number: skipped_annotations_number
+                  workspace: workspace
                   blueprints:
                     - id: 1
                       share_id: share_id
                       short_url: short_url
                       created_at: '2024-01-15T09:30:00Z'
-                  start_training_on_annotation_update: true
-                  title: title
-                  annotation_limit_percent: annotation_limit_percent
-                  sampling: Sequential sampling
-                  comment_classification_config: comment_classification_config
-                  show_instruction: true
-                  expert_instruction: expert_instruction
-                  show_annotation_history: true
-                  skip_queue: REQUEUE_FOR_ME
-                  description: description
-                  model_version: model_version
-                  ground_truth_number: 1
-                  organization: 1
-                  reviewer_queue_total: reviewer_queue_total
                   show_overlap_first: true
-                  custom_script: custom_script
-                  is_published: true
                   label_config: label_config
-                  parsed_label_config:
-                    key: value
+                  overlap_cohort_percentage: 1
+                  useful_annotation_number: useful_annotation_number
+                  maximum_annotations: 1
+                  description: description
+                  review_settings:
+                    id: 1
+                    requeue_rejected_tasks_to_annotator: true
+                  color: color
+                  created_at: '2024-01-15T09:30:00Z'
+                  show_skip_button: true
+                  pinned_at: '2024-01-15T09:30:00Z'
+                  show_annotation_history: true
+                  queue_done: queue_done
+                  num_tasks_with_annotations: num_tasks_with_annotations
+                  queue_left: queue_left
+                  ground_truth_number: 1
+                  show_instruction: true
+                  annotator_evaluation_minimum_tasks: 1
+                  annotation_limit_count: 1
+                  start_training_on_annotation_update: true
                   id: 1
-                  reveal_preannotations_interactively: true
-                  members_count: members_count
-                  custom_task_lock_ttl: 1
+                  ready: ready
                   data_types:
                     key: value
-                  rejected: rejected
-                  prompts: prompts
-                  color: color
-                  control_weights:
-                    key: value
-                  created_by:
-                    id: 1
-                    avatar: avatar
-                  duplication_done: true
-                  annotator_evaluation_minimum_tasks: 1
-                  total_predictions_number: 1
-                  allow_stream: allow_stream
-                  require_comment_on_skip: true
-                  finished_task_number: 1
-                  ready: ready
-                  reviewed_number: reviewed_number
-                  workspace: workspace
-                  review_total_tasks: review_total_tasks
-                  config_has_control_tags: true
-                  total_annotations_number: total_annotations_number
-                  config_suitable_for_bulk_annotation: true
-                  is_draft: true
-                  pause_on_failed_annotator_evaluation: true
-                  annotation_limit_count: 1
-                  evaluate_predictions_automatically: true
       audiences:
         - public
     create:
@@ -662,64 +663,6 @@ service:
           response:
             body:
               key: value
-      audiences:
-        - public
-    export:
-      path: /api/projects/{id}/export
-      method: GET
-      auth: true
-      docs: |2-
-
-                <i>Note: if you have a large project it's recommended to use
-                export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
-                Export annotated tasks as a file in a specific format.
-                For example, to export JSON annotations for a project to a file called `annotations.json`,
-                run the following from the command line:
-                ```bash
-                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
-                ```
-                To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
-                ```bash
-                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
-                ```
-                To export specific tasks with IDs of 123 and 345, run the following from the command line:
-                ```bash
-                curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
-                ```
-                
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-      display-name: Easy export of tasks and annotations
-      request:
-        name: ProjectsExportRequest
-        query-parameters:
-          download_all_tasks:
-            type: optional<string>
-            docs: >-
-              If true, download all tasks regardless of status. If false,
-              download only annotated tasks.
-          download_resources:
-            type: optional<boolean>
-            docs: >-
-              If true, download all resource files such as images, audio, and
-              others relevant to the tasks.
-          export_type:
-            type: optional<string>
-            docs: Selected export format (JSON by default)
-          ids:
-            type: optional<string>
-            allow-multiple: true
-            docs: >-
-              Specify a list of task IDs to retrieve only the details for those
-              tasks.
-      response:
-        docs: Exported data
-        type: file
-      availability: deprecated
       audiences:
         - public
     import_tasks:

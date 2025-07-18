@@ -357,5 +357,6 @@ service:
               pause_on_failed_annotator_evaluation: true
               annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
               annotator_evaluation_minimum_tasks: 1
+              workspace_title: workspace_title
   source:
     openapi: openapi/openapi.yaml

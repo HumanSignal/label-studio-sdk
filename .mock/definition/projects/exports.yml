@@ -2,6 +2,64 @@ service:
   auth: false
   base-path: ''
   endpoints:
+    download_sync:
+      path: /api/projects/{id}/export
+      method: GET
+      auth: true
+      docs: |2-
+
+                <i>Note: if you have a large project it's recommended to use
+                export snapshots, this easy export endpoint might have timeouts.</i><br/><br>
+                Export annotated tasks as a file in a specific format.
+                For example, to export JSON annotations for a project to a file called `annotations.json`,
+                run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
+                ```bash
+                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                To export specific tasks with IDs of 123 and 345, run the following from the command line:
+                ```bash
+                curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
+                ```
+                
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+      display-name: Easy export of tasks and annotations
+      request:
+        name: ExportsDownloadSyncRequest
+        query-parameters:
+          download_all_tasks:
+            type: optional<string>
+            docs: >-
+              If true, download all tasks regardless of status. If false,
+              download only annotated tasks.
+          download_resources:
+            type: optional<boolean>
+            docs: >-
+              If true, download all resource files such as images, audio, and
+              others relevant to the tasks.
+          export_type:
+            type: optional<string>
+            docs: Selected export format (JSON by default)
+          ids:
+            type: optional<string>
+            allow-multiple: true
+            docs: >-
+              Specify a list of task IDs to retrieve only the details for those
+              tasks.
+      response:
+        docs: Exported data
+        type: file
+      availability: deprecated
+      audiences:
+        - public
     list_formats:
       path: /api/projects/{id}/export/formats
       method: GET
