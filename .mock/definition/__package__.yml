@@ -196,115 +196,38 @@ types:
       Serializer get numbers from project queryset annotation,
       make sure, that you use correct one(Project.objects.with_counts())
     properties:
-      total_annotations_number: string
-      assignment_settings: AssignmentSettings
       annotation_limit_percent:
         type: optional<string>
         validation:
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-      annotator_evaluation_minimum_score:
-        type: optional<string>
-        default: '95.00'
-        validation:
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-      title:
-        type: optional<string>
-        docs: Project name. Must be between 3 and 50 characters long.
-        validation:
-          minLength: 3
-          maxLength: 50
-      rejected: string
-      queue_total: string
-      members: string
-      enable_empty_annotation:
-        type: optional<boolean>
-        docs: Allow annotators to submit empty annotations
-      config_has_control_tags:
-        type: boolean
-        docs: Flag to detect is project ready for labeling
-      review_total_tasks: string
-      expert_instruction:
-        type: optional<string>
-        docs: Labeling instructions in HTML format
-      task_number:
-        type: integer
-        docs: Total task number in project
-      reviewer_queue_total: string
-      created_by:
-        type: optional<UserSimple>
-        docs: Project owner
-      allow_stream: string
-      skip_queue: optional<AllRolesProjectListSkipQueue>
-      members_count: string
-      prompts: string
-      control_weights: optional<unknown>
-      show_ground_truth_first: optional<boolean>
-      parsed_label_config: unknown
-      workspace_title: string
-      total_predictions_number: integer
-      evaluate_predictions_automatically:
-        type: optional<boolean>
-        docs: Retrieve and display predictions when loading a task
-      min_annotations_to_start_training:
+      overlap_cohort_percentage:
         type: optional<integer>
-        docs: >-
-          Minimum number of completed tasks after which model training is
-          started
         validation:
           min: -2147483648
           max: 2147483647
-      custom_script: optional<string>
-      config_suitable_for_bulk_annotation:
-        type: boolean
-        docs: Flag to detect is project ready for bulk annotation
       custom_task_lock_ttl:
         type: optional<integer>
         docs: TTL in seconds for task reservations, on new and existing tasks
         validation:
           min: 1
           max: 86400
-      duplication_done:
-        type: optional<boolean>
-        default: false
-      require_comment_on_skip:
-        type: optional<boolean>
-        default: false
+      title:
+        type: optional<string>
+        docs: Project name. Must be between 3 and 50 characters long.
+        validation:
+          minLength: 3
+          maxLength: 50
       is_published:
         type: optional<boolean>
         docs: Whether or not the project is published to annotators
-      sampling: optional<AllRolesProjectListSampling>
-      reveal_preannotations_interactively:
-        type: optional<boolean>
-        docs: Reveal pre-annotations interactively
-      model_version:
-        type: optional<string>
-        docs: Machine learning model version
-      comment_classification_config: optional<string>
-      organization: optional<integer>
-      is_draft:
-        type: optional<boolean>
-        docs: Whether or not the project is in the middle of being created
-      reviewed_number: string
-      finished_task_number: integer
-      pause_on_failed_annotator_evaluation:
-        type: optional<boolean>
-        default: false
-      show_collab_predictions:
-        type: optional<boolean>
-        docs: If set, the annotator can view model predictions
-      skipped_annotations_number: string
-      workspace: string
-      blueprints: list<BlueprintList>
+      id: integer
       show_overlap_first: optional<boolean>
-      label_config:
-        type: optional<string>
-        docs: Label config in XML format. See more about it in documentation
-      overlap_cohort_percentage:
-        type: optional<integer>
-        validation:
-          min: -2147483648
-          max: 2147483647
-      useful_annotation_number: string
+      show_annotation_history:
+        type: optional<boolean>
+        docs: Show annotation history to annotator
+      custom_script: optional<string>
+      blueprints: list<BlueprintList>
+      organization: optional<integer>
       maximum_annotations:
         type: optional<integer>
         docs: >-
@@ -314,48 +237,125 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      description:
+      useful_annotation_number: string
+      model_version:
         type: optional<string>
-        docs: Project description
-      review_settings: ReviewSettings
-      color:
-        type: optional<string>
+        docs: Machine learning model version
+      total_predictions_number: integer
+      workspace: string
+      comment_classification_config: optional<string>
+      reveal_preannotations_interactively:
+        type: optional<boolean>
+        docs: Reveal pre-annotations interactively
+      created_by:
+        type: optional<UserSimple>
+        docs: Project owner
+      min_annotations_to_start_training:
+        type: optional<integer>
+        docs: >-
+          Minimum number of completed tasks after which model training is
+          started
         validation:
-          maxLength: 16
-      created_at: datetime
-      show_skip_button:
+          min: -2147483648
+          max: 2147483647
+      is_draft:
         type: optional<boolean>
-        docs: Show a skip button in interface and allow annotators to skip the task
-      pinned_at:
-        type: optional<datetime>
-        docs: Pinned date and time
-      show_annotation_history:
+        docs: Whether or not the project is in the middle of being created
+      task_number:
+        type: integer
+        docs: Total task number in project
+      evaluate_predictions_automatically:
         type: optional<boolean>
-        docs: Show annotation history to annotator
+        docs: Retrieve and display predictions when loading a task
+      data_types: unknown
+      reviewed_number: string
       queue_done: string
       num_tasks_with_annotations: string
-      queue_left: string
-      ground_truth_number:
-        type: integer
-        docs: Honeypot annotation number in project
-      show_instruction:
-        type: optional<boolean>
-        docs: Show instructions to the annotator before they start
+      parsed_label_config: unknown
+      label_config:
+        type: optional<string>
+        docs: Label config in XML format. See more about it in documentation
+      total_annotations_number: string
+      queue_total: string
+      assignment_settings: AssignmentSettings
+      annotator_evaluation_minimum_score:
+        type: optional<string>
+        default: '95.00'
+        validation:
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
       annotator_evaluation_minimum_tasks:
         type: optional<integer>
         default: 10
         validation:
           min: 0
+      review_total_tasks: string
+      config_suitable_for_bulk_annotation:
+        type: boolean
+        docs: Flag to detect is project ready for bulk annotation
+      show_instruction:
+        type: optional<boolean>
+        docs: Show instructions to the annotator before they start
+      allow_stream: string
+      control_weights: optional<unknown>
+      rejected: string
+      skip_queue: optional<AllRolesProjectListSkipQueue>
+      start_training_on_annotation_update:
+        type: boolean
+        docs: Start model training after any annotations are submitted or updated
+      ready: string
+      prompts: string
+      show_skip_button:
+        type: optional<boolean>
+        docs: Show a skip button in interface and allow annotators to skip the task
+      finished_task_number: integer
+      members: string
+      pinned_at:
+        type: optional<datetime>
+        docs: Pinned date and time
+      sampling: optional<AllRolesProjectListSampling>
+      review_settings: ReviewSettings
+      created_at: datetime
+      duplication_done:
+        type: optional<boolean>
+        default: false
+      require_comment_on_skip:
+        type: optional<boolean>
+        default: false
+      queue_left: string
+      description:
+        type: optional<string>
+        docs: Project description
+      enable_empty_annotation:
+        type: optional<boolean>
+        docs: Allow annotators to submit empty annotations
+      color:
+        type: optional<string>
+        validation:
+          maxLength: 16
+      skipped_annotations_number: string
+      members_count: string
       annotation_limit_count:
         type: optional<integer>
         validation:
           min: 1
-      start_training_on_annotation_update:
+      ground_truth_number:
+        type: integer
+        docs: Honeypot annotation number in project
+      reviewer_queue_total: string
+      config_has_control_tags:
         type: boolean
-        docs: Start model training after any annotations are submitted or updated
-      id: integer
-      ready: string
-      data_types: unknown
+        docs: Flag to detect is project ready for labeling
+      show_ground_truth_first: optional<boolean>
+      pause_on_failed_annotator_evaluation:
+        type: optional<boolean>
+        default: false
+      workspace_title: string
+      expert_instruction:
+        type: optional<string>
+        docs: Labeling instructions in HTML format
+      show_collab_predictions:
+        type: optional<boolean>
+        docs: If set, the annotator can view model predictions
     source:
       openapi: openapi/openapi.yaml
   AnnotatedEnum:

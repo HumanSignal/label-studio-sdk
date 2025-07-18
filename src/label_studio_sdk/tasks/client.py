@@ -417,6 +417,150 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+        """
+        Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
+
+        Parameters
+        ----------
+        id : str
+            Task ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RoleBasedTask
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.tasks.get(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/tasks/{jsonable_encoder(id)}/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    RoleBasedTask,
+                    construct_type(
+                        type_=RoleBasedTask,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+        """
+        Delete a task in Label Studio. This action cannot be undone!
+
+        Parameters
+        ----------
+        id : str
+            Task ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RoleBasedTask
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.tasks.delete(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/tasks/{jsonable_encoder(id)}/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    RoleBasedTask,
+                    construct_type(
+                        type_=RoleBasedTask,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+        """
+        Update the attributes of an existing labeling task.
+
+        Parameters
+        ----------
+        id : str
+            Task ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RoleBasedTask
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.tasks.update(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/tasks/{jsonable_encoder(id)}/",
+            method="PATCH",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    RoleBasedTask,
+                    construct_type(
+                        type_=RoleBasedTask,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncTasksClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -835,6 +979,174 @@ class AsyncTasksClient:
                     LseTask,
                     construct_type(
                         type_=LseTask,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+        """
+        Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
+
+        Parameters
+        ----------
+        id : str
+            Task ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RoleBasedTask
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.tasks.get(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/tasks/{jsonable_encoder(id)}/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    RoleBasedTask,
+                    construct_type(
+                        type_=RoleBasedTask,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+        """
+        Delete a task in Label Studio. This action cannot be undone!
+
+        Parameters
+        ----------
+        id : str
+            Task ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RoleBasedTask
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.tasks.delete(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/tasks/{jsonable_encoder(id)}/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    RoleBasedTask,
+                    construct_type(
+                        type_=RoleBasedTask,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+        """
+        Update the attributes of an existing labeling task.
+
+        Parameters
+        ----------
+        id : str
+            Task ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        RoleBasedTask
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.tasks.update(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/tasks/{jsonable_encoder(id)}/",
+            method="PATCH",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    RoleBasedTask,
+                    construct_type(
+                        type_=RoleBasedTask,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
