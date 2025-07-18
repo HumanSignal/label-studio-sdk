@@ -90,7 +90,7 @@ class Project(UncheckedBaseModel):
     Minimum number of completed tasks after which model training is started
     """
 
-    start_training_on_annotation_update: str = pydantic.Field()
+    start_training_on_annotation_update: bool = pydantic.Field()
     """
     Start model training after any annotations are submitted or updated
     """
@@ -156,7 +156,7 @@ class Project(UncheckedBaseModel):
     Retrieve and display predictions when loading a task
     """
 
-    config_has_control_tags: str = pydantic.Field()
+    config_has_control_tags: bool = pydantic.Field()
     """
     Flag to detect is project ready for labeling
     """
@@ -177,9 +177,9 @@ class Project(UncheckedBaseModel):
     Finished tasks
     """
 
-    queue_total: str
-    queue_done: str
-    config_suitable_for_bulk_annotation: str = pydantic.Field()
+    queue_total: int
+    queue_done: int
+    config_suitable_for_bulk_annotation: bool = pydantic.Field()
     """
     Flag to detect is project ready for bulk annotation
     """

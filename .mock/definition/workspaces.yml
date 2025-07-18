@@ -250,7 +250,7 @@ service:
                 avatar: avatar
               created_at: '2024-01-15T09:30:00Z'
               min_annotations_to_start_training: 1
-              start_training_on_annotation_update: start_training_on_annotation_update
+              start_training_on_annotation_update: true
               show_collab_predictions: true
               num_tasks_with_annotations: 1
               task_number: 1
@@ -270,14 +270,14 @@ service:
               parsed_label_config:
                 key: value
               evaluate_predictions_automatically: true
-              config_has_control_tags: config_has_control_tags
+              config_has_control_tags: true
               skip_queue: REQUEUE_FOR_ME
               reveal_preannotations_interactively: true
               pinned_at: '2024-01-15T09:30:00Z'
               finished_task_number: 1
-              queue_total: queue_total
-              queue_done: queue_done
-              config_suitable_for_bulk_annotation: config_suitable_for_bulk_annotation
+              queue_total: 1
+              queue_done: 1
+              config_suitable_for_bulk_annotation: true
     api_workspaces_projects_create:
       path: /api/workspaces/{id}/projects/
       method: POST
@@ -420,7 +420,7 @@ service:
                 avatar: avatar
               created_at: '2024-01-15T09:30:00Z'
               min_annotations_to_start_training: 1
-              start_training_on_annotation_update: start_training_on_annotation_update
+              start_training_on_annotation_update: true
               show_collab_predictions: true
               num_tasks_with_annotations: 1
               task_number: 1
@@ -440,14 +440,14 @@ service:
               parsed_label_config:
                 key: value
               evaluate_predictions_automatically: true
-              config_has_control_tags: config_has_control_tags
+              config_has_control_tags: true
               skip_queue: REQUEUE_FOR_ME
               reveal_preannotations_interactively: true
               pinned_at: '2024-01-15T09:30:00Z'
               finished_task_number: 1
-              queue_total: queue_total
-              queue_done: queue_done
-              config_suitable_for_bulk_annotation: config_suitable_for_bulk_annotation
+              queue_total: 1
+              queue_done: 1
+              config_suitable_for_bulk_annotation: true
     api_workspaces_projects_destroy:
       path: /api/workspaces/{id}/projects/
       method: DELETE
