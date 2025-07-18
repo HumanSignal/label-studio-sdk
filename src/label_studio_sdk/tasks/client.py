@@ -81,9 +81,7 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_all_tasks(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete all tasks from a specific project.
 
@@ -97,8 +95,7 @@ class TasksClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
-
+        None
 
         Examples
         --------
@@ -119,13 +116,7 @@ class TasksClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
-                    construct_type(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -492,9 +483,7 @@ class AsyncTasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_all_tasks(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Dict[str, typing.Optional[typing.Any]]:
+    async def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete all tasks from a specific project.
 
@@ -508,8 +497,7 @@ class AsyncTasksClient:
 
         Returns
         -------
-        typing.Dict[str, typing.Optional[typing.Any]]
-
+        None
 
         Examples
         --------
@@ -538,13 +526,7 @@ class AsyncTasksClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.Dict[str, typing.Optional[typing.Any]],
-                    construct_type(
-                        type_=typing.Dict[str, typing.Optional[typing.Any]],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
