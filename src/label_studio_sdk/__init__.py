@@ -159,7 +159,14 @@ from .ml import (
     MlUpdateResponse,
     MlUpdateResponseAuthMethod,
 )
-from .projects import ProjectsCreateResponse, ProjectsImportTasksResponse, ProjectsListResponse, ProjectsUpdateResponse
+from .projects import (
+    ProjectsCreateRequestFilter,
+    ProjectsCreateResponse,
+    ProjectsImportTasksResponse,
+    ProjectsListRequestFilter,
+    ProjectsListResponse,
+    ProjectsUpdateResponse,
+)
 from .prompts import (
     PromptsBatchFailedPredictionsRequestFailedPredictionsItem,
     PromptsBatchFailedPredictionsResponse,
@@ -291,8 +298,10 @@ __all__ = [
     "ProjectLabelConfig",
     "ProjectSampling",
     "ProjectSkipQueue",
+    "ProjectsCreateRequestFilter",
     "ProjectsCreateResponse",
     "ProjectsImportTasksResponse",
+    "ProjectsListRequestFilter",
     "ProjectsListResponse",
     "ProjectsUpdateResponse",
     "Prompt",
