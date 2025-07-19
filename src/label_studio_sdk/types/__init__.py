@@ -21,6 +21,9 @@ from .azure_blob_import_storage import AzureBlobImportStorage
 from .blank_enum import BlankEnum
 from .blueprint_list import BlueprintList
 from .budget_reset_period_enum import BudgetResetPeriodEnum
+from .comment import Comment
+from .comment_request import CommentRequest
+from .comment_serializer_with_expanded_user import CommentSerializerWithExpandedUser
 from .converted_format import ConvertedFormat
 from .converted_format_request import ConvertedFormatRequest
 from .custom_scripts_editable_by_enum import CustomScriptsEditableByEnum
@@ -79,6 +82,7 @@ from .lse_user_api import LseUserApi
 from .lseapi_token_create import LseapiTokenCreate
 from .lseapi_token_list import LseapiTokenList
 from .lsejwt_settings import LsejwtSettings
+from .maybe_expanded_comment import MaybeExpandedComment
 from .ml_backend import MlBackend
 from .mode_enum import ModeEnum
 from .model_provider_connection import ModelProviderConnection
@@ -158,6 +162,9 @@ __all__ = [
     "BlankEnum",
     "BlueprintList",
     "BudgetResetPeriodEnum",
+    "Comment",
+    "CommentRequest",
+    "CommentSerializerWithExpandedUser",
     "ConvertedFormat",
     "ConvertedFormatRequest",
     "CustomScriptsEditableByEnum",
@@ -216,6 +223,7 @@ __all__ = [
     "LseapiTokenCreate",
     "LseapiTokenList",
     "LsejwtSettings",
+    "MaybeExpandedComment",
     "MlBackend",
     "ModeEnum",
     "ModelProviderConnection",

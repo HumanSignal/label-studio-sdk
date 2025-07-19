@@ -4,6 +4,7 @@ import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
 from .annotations.client import AnnotationsClient
+from .comments.client import CommentsClient
 from .users.client import UsersClient
 from .actions.client import ActionsClient
 from .views.client import ViewsClient
@@ -22,6 +23,7 @@ from .versions.client import VersionsClient
 from .webhooks.client import WebhooksClient
 from .core.client_wrapper import AsyncClientWrapper
 from .annotations.client import AsyncAnnotationsClient
+from .comments.client import AsyncCommentsClient
 from .users.client import AsyncUsersClient
 from .actions.client import AsyncActionsClient
 from .views.client import AsyncViewsClient
@@ -90,6 +92,7 @@ class LabelStudioBase:
             timeout=_defaulted_timeout,
         )
         self.annotations = AnnotationsClient(client_wrapper=self._client_wrapper)
+        self.comments = CommentsClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
         self.actions = ActionsClient(client_wrapper=self._client_wrapper)
         self.views = ViewsClient(client_wrapper=self._client_wrapper)
@@ -158,6 +161,7 @@ class AsyncLabelStudioBase:
             timeout=_defaulted_timeout,
         )
         self.annotations = AsyncAnnotationsClient(client_wrapper=self._client_wrapper)
+        self.comments = AsyncCommentsClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
         self.actions = AsyncActionsClient(client_wrapper=self._client_wrapper)
         self.views = AsyncViewsClient(client_wrapper=self._client_wrapper)

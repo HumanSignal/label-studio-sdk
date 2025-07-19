@@ -4,7 +4,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_comments_list:
+    list:
       path: /api/comments/
       method: GET
       auth: true
@@ -13,11 +13,14 @@ service:
         openapi: openapi/openapi.yaml
       display-name: List comments
       request:
-        name: ApiCommentsListRequest
+        name: CommentsListRequest
         query-parameters:
           annotators:
             type: optional<string>
             docs: Comma-separated list of annotator user IDs
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
@@ -25,8 +28,8 @@ service:
             type: optional<string>
             docs: Comma-separated list of project IDs
       response:
-        docs: ''
-        type: list<root.Comment>
+        docs: List of comments
+        type: list<root.MaybeExpandedComment>
       examples:
         - response:
             body:
@@ -45,7 +48,9 @@ service:
                 draft: 1
                 annotation: 1
                 created_by: 1
-    api_comments_create:
+      audiences:
+        - public
+    create:
       path: /api/comments/
       method: POST
       auth: true
@@ -55,10 +60,15 @@ service:
       display-name: Create comment
       request:
         body: root.CommentRequest
+        query-parameters:
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
+        name: CommentsCreateRequest
         content-type: application/json
       response:
         docs: ''
-        type: root.Comment
+        type: root.MaybeExpandedComment
       examples:
         - request: {}
           response:
@@ -78,7 +88,9 @@ service:
               draft: 1
               annotation: 1
               created_by: 1
-    api_comments_retrieve:
+      audiences:
+        - public
+    get:
       path: /api/comments/{id}/
       method: GET
       auth: true
@@ -88,9 +100,15 @@ service:
       path-parameters:
         id: string
       display-name: Get comment
+      request:
+        name: CommentsGetRequest
+        query-parameters:
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
       response:
         docs: ''
-        type: root.Comment
+        type: root.MaybeExpandedComment
       examples:
         - path-parameters:
             id: id
@@ -111,6 +129,8 @@ service:
               draft: 1
               annotation: 1
               created_by: 1
+      audiences:
+        - public
     api_comments_update:
       path: /api/comments/{id}/
       method: PUT
@@ -123,6 +143,11 @@ service:
       display-name: Put comment
       request:
         body: root.CommentRequest
+        query-parameters:
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
+        name: ApiCommentsUpdateRequest
         content-type: application/json
       response:
         docs: ''
@@ -148,7 +173,9 @@ service:
               draft: 1
               annotation: 1
               created_by: 1
-    api_comments_destroy:
+      audiences:
+        - internal
+    delete:
       path: /api/comments/{id}/
       method: DELETE
       auth: true
@@ -158,10 +185,18 @@ service:
       path-parameters:
         id: string
       display-name: Delete comment
+      request:
+        name: CommentsDeleteRequest
+        query-parameters:
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
       examples:
         - path-parameters:
             id: id
-    api_comments_partial_update:
+      audiences:
+        - public
+    update:
       path: /api/comments/{id}/
       method: PATCH
       auth: true
@@ -173,6 +208,10 @@ service:
       display-name: Update comment
       request:
         name: PatchedCommentRequest
+        query-parameters:
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
         body:
           properties:
             region_ref: optional<unknown>
@@ -188,7 +227,7 @@ service:
         content-type: application/json
       response:
         docs: ''
-        type: root.Comment
+        type: root.MaybeExpandedComment
       examples:
         - path-parameters:
             id: id
@@ -210,7 +249,9 @@ service:
               draft: 1
               annotation: 1
               created_by: 1
-    api_comments_export_retrieve:
+      audiences:
+        - public
+    export:
       path: /api/comments/export/
       method: GET
       auth: true
@@ -219,11 +260,14 @@ service:
         openapi: openapi/openapi.yaml
       display-name: Export comments to CSV
       request:
-        name: ApiCommentsExportRetrieveRequest
+        name: CommentsExportRequest
         query-parameters:
           annotators:
             type: optional<string>
             docs: Comma-separated list of annotator user IDs
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
           projects:
             type: optional<string>
             docs: Comma-separated list of project IDs
@@ -232,7 +276,10 @@ service:
             docs: >-
               Timezone in which to export the data. Format IANA timezone name,
               e.g. "America/New_York"
-      examples:
-        - {}
+      response:
+        docs: CSV file with comments
+        type: file
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml
