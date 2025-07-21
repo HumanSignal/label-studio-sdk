@@ -3,13 +3,13 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
-from .all_roles_project_list_skip_queue import AllRolesProjectListSkipQueue
-from .review_settings import ReviewSettings
 from .user_simple import UserSimple
-from .assignment_settings import AssignmentSettings
-from .blueprint_list import BlueprintList
-import datetime as dt
 from .all_roles_project_list_sampling import AllRolesProjectListSampling
+from .blueprint_list import BlueprintList
+from .assignment_settings import AssignmentSettings
+from .review_settings import ReviewSettings
+import datetime as dt
+from .all_roles_project_list_skip_queue import AllRolesProjectListSkipQueue
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -19,23 +19,92 @@ class AllRolesProjectList(UncheckedBaseModel):
     make sure, that you use correct one(Project.objects.with_counts())
     """
 
-    maximum_annotations: typing.Optional[int] = pydantic.Field(default=None)
+    is_draft: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+    Whether or not the project is in the middle of being created
     """
 
-    skip_queue: typing.Optional[AllRolesProjectListSkipQueue] = None
-    review_settings: ReviewSettings
+    finished_task_number: int
+    created_by: typing.Optional[UserSimple] = pydantic.Field(default=None)
+    """
+    Project owner
+    """
+
+    show_collab_predictions: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If set, the annotator can view model predictions
+    """
+
+    workspace: str
+    min_annotations_to_start_training: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Minimum number of completed tasks after which model training is started
+    """
+
+    reviewed_number: str
+    queue_total: str
+    allow_stream: str
+    color: typing.Optional[str] = None
+    members_count: str
+    annotator_evaluation_minimum_tasks: typing.Optional[int] = None
+    prompts: str
+    sampling: typing.Optional[AllRolesProjectListSampling] = None
+    total_predictions_number: int
+    useful_annotation_number: str
+    overlap_cohort_percentage: typing.Optional[int] = None
+    queue_done: str
+    config_suitable_for_bulk_annotation: bool = pydantic.Field()
+    """
+    Flag to detect is project ready for bulk annotation
+    """
+
+    data_types: typing.Optional[typing.Any] = None
+    blueprints: typing.List[BlueprintList]
+    review_total_tasks: str
+    expert_instruction: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Labeling instructions in HTML format
+    """
+
+    annotator_evaluation_minimum_score: typing.Optional[str] = None
+    members: str
+    workspace_title: str
+    num_tasks_with_annotations: str
+    annotation_limit_count: typing.Optional[int] = None
+    task_number: int = pydantic.Field()
+    """
+    Total task number in project
+    """
+
+    evaluate_predictions_automatically: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Retrieve and display predictions when loading a task
+    """
+
     label_config: typing.Optional[str] = pydantic.Field(default=None)
     """
     Label config in XML format. See more about it in documentation
     """
 
-    id: int
-    prompts: str
-    min_annotations_to_start_training: typing.Optional[int] = pydantic.Field(default=None)
+    queue_left: str
+    ready: str
+    assignment_settings: AssignmentSettings
+    ground_truth_number: int = pydantic.Field()
     """
-    Minimum number of completed tasks after which model training is started
+    Honeypot annotation number in project
+    """
+
+    annotation_limit_percent: typing.Optional[str] = None
+    maximum_annotations: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+    """
+
+    skipped_annotations_number: str
+    reviewer_queue_total: str
+    custom_task_lock_ttl: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    TTL in seconds for task reservations, on new and existing tasks
     """
 
     model_version: typing.Optional[str] = pydantic.Field(default=None)
@@ -43,21 +112,14 @@ class AllRolesProjectList(UncheckedBaseModel):
     Machine learning model version
     """
 
-    overlap_cohort_percentage: typing.Optional[int] = None
-    show_collab_predictions: typing.Optional[bool] = pydantic.Field(default=None)
+    show_skip_button: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    If set, the annotator can view model predictions
-    """
-
-    start_training_on_annotation_update: bool = pydantic.Field()
-    """
-    Start model training after any annotations are submitted or updated
+    Show a skip button in interface and allow annotators to skip the task
     """
 
-    pause_on_failed_annotator_evaluation: typing.Optional[bool] = None
-    created_by: typing.Optional[UserSimple] = pydantic.Field(default=None)
+    is_published: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Project owner
+    Whether or not the project is published to annotators
     """
 
     reveal_preannotations_interactively: typing.Optional[bool] = pydantic.Field(default=None)
@@ -65,124 +127,62 @@ class AllRolesProjectList(UncheckedBaseModel):
     Reveal pre-annotations interactively
     """
 
-    assignment_settings: AssignmentSettings
-    annotation_limit_count: typing.Optional[int] = None
-    annotator_evaluation_minimum_score: typing.Optional[str] = None
-    config_has_control_tags: bool = pydantic.Field()
-    """
-    Flag to detect is project ready for labeling
-    """
-
-    show_skip_button: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show a skip button in interface and allow annotators to skip the task
-    """
-
-    blueprints: typing.List[BlueprintList]
-    skipped_annotations_number: str
-    created_at: dt.datetime
-    require_comment_on_skip: typing.Optional[bool] = None
-    show_overlap_first: typing.Optional[bool] = None
-    total_annotations_number: str
-    pinned_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Pinned date and time
-    """
-
-    sampling: typing.Optional[AllRolesProjectListSampling] = None
-    custom_script: typing.Optional[str] = None
-    duplication_done: typing.Optional[bool] = None
-    comment_classification_config: typing.Optional[str] = None
-    queue_left: str
-    show_annotation_history: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show annotation history to annotator
-    """
-
-    queue_total: str
-    annotator_evaluation_minimum_tasks: typing.Optional[int] = None
-    workspace: str
-    show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show instructions to the annotator before they start
-    """
-
-    organization: typing.Optional[int] = None
-    color: typing.Optional[str] = None
-    is_published: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether or not the project is published to annotators
-    """
-
-    is_draft: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether or not the project is in the middle of being created
-    """
-
-    ground_truth_number: int = pydantic.Field()
-    """
-    Honeypot annotation number in project
-    """
-
-    expert_instruction: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Labeling instructions in HTML format
-    """
-
-    parsed_label_config: typing.Optional[typing.Any] = None
-    evaluate_predictions_automatically: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Retrieve and display predictions when loading a task
-    """
-
-    review_total_tasks: str
-    annotation_limit_percent: typing.Optional[str] = None
-    workspace_title: str
-    reviewed_number: str
     title: typing.Optional[str] = pydantic.Field(default=None)
     """
     Project name. Must be between 3 and 50 characters long.
     """
 
-    queue_done: str
-    reviewer_queue_total: str
-    control_weights: typing.Optional[typing.Optional[typing.Any]] = None
-    task_number: int = pydantic.Field()
+    review_settings: ReviewSettings
+    start_training_on_annotation_update: bool = pydantic.Field()
     """
-    Total task number in project
+    Start model training after any annotations are submitted or updated
     """
 
-    useful_annotation_number: str
-    members_count: str
-    custom_task_lock_ttl: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    TTL in seconds for task reservations, on new and existing tasks
-    """
-
-    enable_empty_annotation: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Allow annotators to submit empty annotations
-    """
-
-    config_suitable_for_bulk_annotation: bool = pydantic.Field()
-    """
-    Flag to detect is project ready for bulk annotation
-    """
-
-    members: str
-    allow_stream: str
-    data_types: typing.Optional[typing.Any] = None
-    finished_task_number: int
-    show_ground_truth_first: typing.Optional[bool] = None
+    require_comment_on_skip: typing.Optional[bool] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Project description
     """
 
-    num_tasks_with_annotations: str
-    ready: str
-    total_predictions_number: int
+    show_annotation_history: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Show annotation history to annotator
+    """
+
+    show_ground_truth_first: typing.Optional[bool] = None
+    parsed_label_config: typing.Optional[typing.Any] = None
+    show_overlap_first: typing.Optional[bool] = None
+    created_at: dt.datetime
+    total_annotations_number: str
+    skip_queue: typing.Optional[AllRolesProjectListSkipQueue] = None
+    control_weights: typing.Optional[typing.Optional[typing.Any]] = None
+    pinned_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Pinned date and time
+    """
+
+    comment_classification_config: typing.Optional[str] = None
+    show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Show instructions to the annotator before they start
+    """
+
+    config_has_control_tags: bool = pydantic.Field()
+    """
+    Flag to detect is project ready for labeling
+    """
+
+    id: int
+    duplication_done: typing.Optional[bool] = None
     rejected: str
+    custom_script: typing.Optional[str] = None
+    enable_empty_annotation: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Allow annotators to submit empty annotations
+    """
+
+    pause_on_failed_annotator_evaluation: typing.Optional[bool] = None
+    organization: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -28,7 +28,6 @@ class ModelRun(UncheckedBaseModel):
     completed_at: typing.Optional[dt.datetime] = None
     organization: typing.Optional[int] = None
     project: int
-    model_version: int
     created_by: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:

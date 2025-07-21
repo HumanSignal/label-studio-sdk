@@ -22294,7 +22294,6 @@ client.prompts.runs.create(
     prompt_id=1,
     version_id=1,
     project=1,
-    model_version=1,
 )
 
 ```
@@ -22328,14 +22327,6 @@ client.prompts.runs.create(
 <dd>
 
 **project:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**model_version:** `int` 
     
 </dd>
 </dl>

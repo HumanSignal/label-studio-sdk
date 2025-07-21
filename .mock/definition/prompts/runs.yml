@@ -64,7 +64,6 @@ service:
                 completed_at: '2024-01-15T09:30:00Z'
                 organization: 1
                 project: 1
-                model_version: 1
                 created_by: 1
       audiences:
         - public
@@ -107,7 +106,6 @@ service:
             predictions_updated_at: optional<datetime>
             organization: optional<integer>
             project: integer
-            model_version: integer
         content-type: application/json
       response:
         docs: ''
@@ -118,7 +116,6 @@ service:
             version_id: 1
           request:
             project: 1
-            model_version: 1
           response:
             body:
               id: 1
@@ -135,7 +132,6 @@ service:
               completed_at: '2024-01-15T09:30:00Z'
               organization: 1
               project: 1
-              model_version: 1
               created_by: 1
       audiences:
         - public

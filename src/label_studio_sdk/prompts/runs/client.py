@@ -105,7 +105,6 @@ class RunsClient:
         version_id: int,
         *,
         project: int,
-        model_version: int,
         project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
         job_id: typing.Optional[str] = OMIT,
         total_predictions: typing.Optional[int] = OMIT,
@@ -125,8 +124,6 @@ class RunsClient:
         version_id : int
 
         project : int
-
-        model_version : int
 
         project_subset : typing.Optional[ProjectSubsetEnum]
 
@@ -163,7 +160,6 @@ class RunsClient:
             prompt_id=1,
             version_id=1,
             project=1,
-            model_version=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -178,7 +174,6 @@ class RunsClient:
                 "predictions_updated_at": predictions_updated_at,
                 "organization": organization,
                 "project": project,
-                "model_version": model_version,
             },
             headers={
                 "content-type": "application/json",
@@ -297,7 +292,6 @@ class AsyncRunsClient:
         version_id: int,
         *,
         project: int,
-        model_version: int,
         project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
         job_id: typing.Optional[str] = OMIT,
         total_predictions: typing.Optional[int] = OMIT,
@@ -317,8 +311,6 @@ class AsyncRunsClient:
         version_id : int
 
         project : int
-
-        model_version : int
 
         project_subset : typing.Optional[ProjectSubsetEnum]
 
@@ -360,7 +352,6 @@ class AsyncRunsClient:
                 prompt_id=1,
                 version_id=1,
                 project=1,
-                model_version=1,
             )
 
 
@@ -378,7 +369,6 @@ class AsyncRunsClient:
                 "predictions_updated_at": predictions_updated_at,
                 "organization": organization,
                 "project": project,
-                "model_version": model_version,
             },
             headers={
                 "content-type": "application/json",

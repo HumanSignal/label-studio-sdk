@@ -23,7 +23,6 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "completed_at": "2024-01-15T09:30:00Z",
             "organization": 1,
             "project": 1,
-            "model_version": 1,
             "created_by": 1,
         }
     ]
@@ -45,7 +44,6 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "completed_at": "datetime",
                 "organization": "integer",
                 "project": "integer",
-                "model_version": "integer",
                 "created_by": "integer",
             }
         },
@@ -73,7 +71,6 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "completed_at": "2024-01-15T09:30:00Z",
         "organization": 1,
         "project": 1,
-        "model_version": 1,
         "created_by": 1,
     }
     expected_types: typing.Any = {
@@ -91,11 +88,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "completed_at": "datetime",
         "organization": "integer",
         "project": "integer",
-        "model_version": "integer",
         "created_by": "integer",
     }
-    response = client.prompts.runs.create(prompt_id=1, version_id=1, project=1, model_version=1)
+    response = client.prompts.runs.create(prompt_id=1, version_id=1, project=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.runs.create(prompt_id=1, version_id=1, project=1, model_version=1)
+    async_response = await async_client.prompts.runs.create(prompt_id=1, version_id=1, project=1)
     validate_response(async_response, expected_response, expected_types)
