@@ -3653,8 +3653,7 @@ paths:
                 $ref: '#/components/schemas/FileUpload'
           description: ''
       x-fern-sdk-group-name:
-      - projects
-      - file_uploads
+      - files
       x-fern-sdk-method-name: get
       x-fern-audiences:
       - public
@@ -3691,8 +3690,7 @@ paths:
                 $ref: '#/components/schemas/FileUpload'
           description: ''
       x-fern-sdk-group-name:
-      - projects
-      - file_uploads
+      - files
       x-fern-sdk-method-name: update
       x-fern-audiences:
       - public
@@ -3714,8 +3712,7 @@ paths:
         '204':
           description: No response body
       x-fern-sdk-group-name:
-      - projects
-      - file_uploads
+      - files
       x-fern-sdk-method-name: delete
       x-fern-audiences:
       - public
@@ -6500,7 +6497,6 @@ paths:
       - Export
       security:
       - Token: []
-      deprecated: true
       responses:
         '200':
           content:
@@ -6824,8 +6820,7 @@ paths:
                   $ref: '#/components/schemas/FileUpload'
           description: ''
       x-fern-sdk-group-name:
-      - projects
-      - file_uploads
+      - files
       x-fern-sdk-method-name: list
       x-fern-audiences:
       - public
@@ -6848,8 +6843,7 @@ paths:
         '204':
           description: No response body
       x-fern-sdk-group-name:
-      - projects
-      - file_uploads
+      - files
       x-fern-sdk-method-name: delete_many
       x-fern-audiences:
       - public
@@ -7827,8 +7821,8 @@ paths:
   /api/projects/{id}/validate/:
     post:
       operationId: api_projects_validate_label_config
-      description: "\n        Determine whether the label configuration for a specific\
-        \ project is valid.\n        "
+      description: Determine whether the label configuration for a specific project
+        is valid.
       summary: Validate project label config
       parameters:
       - in: path
@@ -7860,6 +7854,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProjectLabelConfig'
           description: ''
+      x-fern-sdk-group-name: projects
+      x-fern-sdk-method-name: validate_label_config
+      x-fern-audiences:
+      - public
   /api/projects/{project_pk}/members/{user_pk}/pauses/:
     get:
       operationId: api_projects_members_pauses_list
@@ -11237,7 +11235,7 @@ paths:
       operationId: api_storages_export_s3s_list
       description: Get a list of all S3 export storage connections that were set up
         with IAM role access.
-      summary: Get all export storage with IAM roles
+      summary: Get all export storage
       parameters:
       - name: ordering
         required: false
@@ -11258,11 +11256,17 @@ paths:
                 items:
                   $ref: '#/components/schemas/LseS3ExportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - export_storage
+      - s3s
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+      - public
     post:
       operationId: api_storages_export_s3s_create
       description: Create an S3 export storage connection with IAM role access to
         store annotations.
-      summary: Create export storage with IAM roles
+      summary: Create export storage
       tags:
       - 'Storage: S3 Roles'
       requestBody:
@@ -11286,12 +11290,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseS3ExportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - export_storage
+      - s3s
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+      - public
   /api/storages/export/s3s/{id}:
     get:
       operationId: api_storages_export_s3s_retrieve
       description: Get a specific S3 export storage connection that was set up with
         IAM role access.
-      summary: Get IAM role export storage
+      summary: Get export storage
       parameters:
       - in: path
         name: id
@@ -11309,11 +11319,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseS3ExportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - export_storage
+      - s3s
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+      - public
     patch:
       operationId: api_storages_export_s3s_partial_update
       description: Update a specific S3 export storage connection that was set up
         with IAM role access.
-      summary: Update IAM role export storage
+      summary: Update export storage
       parameters:
       - in: path
         name: id
@@ -11342,11 +11358,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseS3ExportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - export_storage
+      - s3s
+      x-fern-sdk-method-name: update
+      x-fern-audiences:
+      - public
     delete:
       operationId: api_storages_export_s3s_destroy
       description: Delete a specific S3 export storage connection that was set up
         with IAM role access.
-      summary: Delete IAM role export storage
+      summary: Delete export storage
       parameters:
       - in: path
         name: id
@@ -11360,11 +11382,17 @@ paths:
       responses:
         '204':
           description: No response body
+      x-fern-sdk-group-name:
+      - export_storage
+      - s3s
+      x-fern-sdk-method-name: delete
+      x-fern-audiences:
+      - public
   /api/storages/export/s3s/{id}/sync:
     post:
       operationId: api_storages_export_s3s_sync_create
       description: Sync tasks from an S3 export storage.
-      summary: Sync IAM role export storage
+      summary: Sync export storage
       parameters:
       - in: path
         name: id
@@ -11394,12 +11422,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseS3ExportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - export_storage
+      - s3s
+      x-fern-sdk-method-name: sync
+      x-fern-audiences:
+      - public
   /api/storages/export/s3s/validate:
     post:
       operationId: api_storages_export_s3s_validate_create
       description: Validate a specific S3 export storage connection that was set up
         with IAM role access.
-      summary: Validate IAM role export storage
+      summary: Validate export storage
       tags:
       - 'Storage: S3 Roles'
       requestBody:
@@ -11423,6 +11457,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseS3ExportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - export_storage
+      - s3s
+      x-fern-sdk-method-name: validate
+      x-fern-audiences:
+      - public
   /api/storages/export/types:
     get:
       operationId: api_storages_export_types_retrieve
@@ -12940,7 +12980,7 @@ paths:
       operationId: api_storages_s3s_list
       description: Get list of all S3 import storage connections set up with IAM role
         access.
-      summary: Get IAM role import storage
+      summary: Get all import storage
       parameters:
       - name: ordering
         required: false
@@ -12961,10 +13001,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/LseS3ImportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - import_storage
+      - s3s
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+      - public
     post:
       operationId: api_storages_s3s_create
       description: Create S3 import storage with IAM role access.
-      summary: Create import storage with IAM roles
+      summary: Create import storage
       tags:
       - 'Storage: S3 Roles'
       requestBody:
@@ -12988,12 +13034,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseS3ImportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - import_storage
+      - s3s
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+      - public
   /api/storages/s3s/{id}:
     get:
       operationId: api_storages_s3s_retrieve
       description: Get a specific S3 import storage connection that was set up with
         IAM role access.
-      summary: Get IAM role import storage
+      summary: Get import storage
       parameters:
       - in: path
         name: id
@@ -13011,11 +13063,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseS3ImportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - import_storage
+      - s3s
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+      - public
     patch:
       operationId: api_storages_s3s_partial_update
       description: Update a specific S3 import storage connection that was set up
         with IAM role access.
-      summary: Update IAM role import storage
+      summary: Update import storage
       parameters:
       - in: path
         name: id
@@ -13044,11 +13102,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseS3ImportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - import_storage
+      - s3s
+      x-fern-sdk-method-name: update
+      x-fern-audiences:
+      - public
     delete:
       operationId: api_storages_s3s_destroy
       description: Delete a specific S3 import storage connection that was set up
         with IAM role access.
-      summary: Delete IAM role import storage
+      summary: Delete import storage
       parameters:
       - in: path
         name: id
@@ -13062,12 +13126,18 @@ paths:
       responses:
         '204':
           description: No response body
+      x-fern-sdk-group-name:
+      - import_storage
+      - s3s
+      x-fern-sdk-method-name: delete
+      x-fern-audiences:
+      - public
   /api/storages/s3s/{id}/sync:
     post:
       operationId: api_storages_s3s_sync_create
       description: Sync tasks from an S3 import storage connection that was set up
         with IAM role access.
-      summary: Sync IAM role import storage
+      summary: Sync import storage
       parameters:
       - in: path
         name: id
@@ -13097,12 +13167,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseS3ImportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - import_storage
+      - s3s
+      x-fern-sdk-method-name: sync
+      x-fern-audiences:
+      - public
   /api/storages/s3s/validate:
     post:
       operationId: api_storages_s3s_validate_create
       description: Validate a specific S3 import storage connection that was set up
         with IAM role access.
-      summary: Validate IAM role import storage
+      summary: Validate import storage
       tags:
       - 'Storage: S3 Roles'
       requestBody:
@@ -13126,6 +13202,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseS3ImportStorage'
           description: ''
+      x-fern-sdk-group-name:
+      - import_storage
+      - s3s
+      x-fern-sdk-method-name: validate
+      x-fern-audiences:
+      - public
   /api/storages/types:
     get:
       operationId: api_storages_types_retrieve
@@ -14719,8 +14801,7 @@ paths:
         '200':
           description: File downloaded successfully
       x-fern-sdk-group-name:
-      - projects
-      - file_uploads
+      - files
       x-fern-sdk-method-name: download
       x-fern-audiences:
       - public
@@ -14879,42 +14960,32 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
-        start_training_on_annotation_update:
-          type: boolean
-          readOnly: true
-          description: Start model training after any annotations are submitted or
-            updated
-        task_number:
-          type: integer
-          readOnly: true
-          description: Total task number in project
-        data_types:
-          readOnly: true
-          nullable: true
-        reviewer_queue_total:
+        custom_script:
+          type: string
+        comment_classification_config:
+          type: string
+        rejected:
           type: string
           readOnly: true
-        custom_task_lock_ttl:
+        queue_left:
+          type: string
+          readOnly: true
+        finished_task_number:
           type: integer
-          maximum: 86400
-          minimum: 1
+          readOnly: true
+        model_version:
+          type: string
           nullable: true
-          description: TTL in seconds for task reservations, on new and existing tasks
+          description: Machine learning model version
+        annotation_limit_percent:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+        allow_stream:
+          type: string
+          readOnly: true
         review_total_tasks:
-          type: string
-          readOnly: true
-        enable_empty_annotation:
-          type: boolean
-          description: Allow annotators to submit empty annotations
-        show_skip_button:
-          type: boolean
-          description: Show a skip button in interface and allow annotators to skip
-            the task
-        description:
-          type: string
-          nullable: true
-          description: Project description
-        total_annotations_number:
           type: string
           readOnly: true
         pinned_at:
@@ -14922,95 +14993,9 @@ components:
           format: date-time
           nullable: true
           description: Pinned date and time
-        finished_task_number:
-          type: integer
-          readOnly: true
-        reveal_preannotations_interactively:
-          type: boolean
-          description: Reveal pre-annotations interactively
         require_comment_on_skip:
           type: boolean
           default: false
-        annotator_evaluation_minimum_tasks:
-          type: integer
-          minimum: 0
-          nullable: true
-          default: 10
-        total_predictions_number:
-          type: integer
-          readOnly: true
-        evaluate_predictions_automatically:
-          type: boolean
-          description: Retrieve and display predictions when loading a task
-        blueprints:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueprintList'
-          readOnly: true
-        show_overlap_first:
-          type: boolean
-        organization:
-          type: integer
-          nullable: true
-        is_published:
-          type: boolean
-          title: Published
-          description: Whether or not the project is published to annotators
-        label_config:
-          type: string
-          nullable: true
-          description: Label config in XML format. See more about it in documentation
-        color:
-          type: string
-          nullable: true
-          maxLength: 16
-        prompts:
-          type: string
-          readOnly: true
-        workspace_title:
-          type: string
-          readOnly: true
-        id:
-          type: integer
-          readOnly: true
-        show_annotation_history:
-          type: boolean
-          description: Show annotation history to annotator
-        overlap_cohort_percentage:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        created_by:
-          allOf:
-          - $ref: '#/components/schemas/UserSimple'
-          description: Project owner
-        sampling:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SamplingEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        queue_done:
-          type: string
-          readOnly: true
-        annotation_limit_count:
-          type: integer
-          minimum: 1
-          nullable: true
-        duplication_done:
-          type: boolean
-          default: false
-        custom_script:
-          type: string
-        allow_stream:
-          type: string
-          readOnly: true
-        num_tasks_with_annotations:
-          type: string
-          readOnly: true
-        show_collab_predictions:
-          type: boolean
-          title: Show predictions to annotator
-          description: If set, the annotator can view model predictions
         control_weights:
           nullable: true
           description: 'Dict of weights for each control tag in metric calculation.
@@ -15021,9 +15006,121 @@ components:
             be twice more important than Airplaine, then you have to need the specify:
             {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0,
             ''Airplaine'': 0.5}, ''overall'': 0.33}'
+        pause_on_failed_annotator_evaluation:
+          type: boolean
+          nullable: true
+          default: false
         show_instruction:
           type: boolean
           description: Show instructions to the annotator before they start
+        show_overlap_first:
+          type: boolean
+        sampling:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SamplingEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        show_annotation_history:
+          type: boolean
+          description: Show annotation history to annotator
+        evaluate_predictions_automatically:
+          type: boolean
+          description: Retrieve and display predictions when loading a task
+        overlap_cohort_percentage:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        members:
+          type: string
+          readOnly: true
+        enable_empty_annotation:
+          type: boolean
+          description: Allow annotators to submit empty annotations
+        queue_done:
+          type: string
+          readOnly: true
+        skipped_annotations_number:
+          type: string
+          readOnly: true
+        parsed_label_config:
+          readOnly: true
+          description: JSON-formatted labeling configuration
+        workspace:
+          type: string
+          readOnly: true
+        prompts:
+          type: string
+          readOnly: true
+        label_config:
+          type: string
+          nullable: true
+          description: Label config in XML format. See more about it in documentation
+        annotator_evaluation_minimum_score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+          default: '95.00'
+        show_ground_truth_first:
+          type: boolean
+        reviewed_number:
+          type: string
+          readOnly: true
+        task_number:
+          type: integer
+          readOnly: true
+          description: Total task number in project
+        skip_queue:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SkipQueueEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        annotation_limit_count:
+          type: integer
+          minimum: 1
+          nullable: true
+        reviewer_queue_total:
+          type: string
+          readOnly: true
+        total_annotations_number:
+          type: string
+          readOnly: true
+        is_published:
+          type: boolean
+          title: Published
+          description: Whether or not the project is published to annotators
+        start_training_on_annotation_update:
+          type: boolean
+          readOnly: true
+          description: Start model training after any annotations are submitted or
+            updated
+        min_annotations_to_start_training:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Minimum number of completed tasks after which model training
+            is started
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        blueprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintList'
+          readOnly: true
+        show_skip_button:
+          type: boolean
+          description: Show a skip button in interface and allow annotators to skip
+            the task
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/UserSimple'
+          description: Project owner
+        description:
+          type: string
+          nullable: true
+          description: Project description
         maximum_annotations:
           type: integer
           maximum: 2147483647
@@ -15032,104 +15129,88 @@ components:
           description: Maximum number of annotations for one task. If the number of
             annotations per task is equal or greater to this value, the task is completed
             (is_labeled=True)
-        config_suitable_for_bulk_annotation:
-          type: boolean
+        queue_total:
+          type: string
           readOnly: true
-          description: Flag to detect is project ready for bulk annotation
+        custom_task_lock_ttl:
+          type: integer
+          maximum: 86400
+          minimum: 1
+          nullable: true
+          description: TTL in seconds for task reservations, on new and existing tasks
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettings'
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        parsed_label_config:
-          readOnly: true
-          description: JSON-formatted labeling configuration
-        comment_classification_config:
-          type: string
-        model_version:
+        color:
           type: string
           nullable: true
-          description: Machine learning model version
-        queue_total:
+          maxLength: 16
+        num_tasks_with_annotations:
           type: string
           readOnly: true
         members_count:
           type: string
           readOnly: true
-        ground_truth_number:
-          type: integer
-          readOnly: true
-          description: Honeypot annotation number in project
-        workspace:
-          type: string
-          readOnly: true
-        members:
-          type: string
-          readOnly: true
-        show_ground_truth_first:
-          type: boolean
-        ready:
-          type: string
-          readOnly: true
         useful_annotation_number:
           type: string
           readOnly: true
-        reviewed_number:
-          type: string
-          readOnly: true
-        skip_queue:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SkipQueueEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        rejected:
-          type: string
-          readOnly: true
-        config_has_control_tags:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for labeling
-        review_settings:
-          $ref: '#/components/schemas/ReviewSettings'
-        annotation_limit_percent:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          nullable: true
-        pause_on_failed_annotator_evaluation:
-          type: boolean
-          nullable: true
-          default: false
-        min_annotations_to_start_training:
+        id:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          description: Minimum number of completed tasks after which model training
-            is started
+          readOnly: true
+        expert_instruction:
+          type: string
+          nullable: true
+          description: Labeling instructions in HTML format
+        duplication_done:
+          type: boolean
+          default: false
         title:
           type: string
           nullable: true
           description: Project name. Must be between 3 and 50 characters long.
           maxLength: 50
           minLength: 3
+        total_predictions_number:
+          type: integer
+          readOnly: true
+        data_types:
+          readOnly: true
+          nullable: true
+        config_has_control_tags:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for labeling
         is_draft:
           type: boolean
           description: Whether or not the project is in the middle of being created
-        annotator_evaluation_minimum_score:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          nullable: true
-          default: '95.00'
-        expert_instruction:
-          type: string
-          nullable: true
-          description: Labeling instructions in HTML format
-        queue_left:
+        config_suitable_for_bulk_annotation:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for bulk annotation
+        show_collab_predictions:
+          type: boolean
+          title: Show predictions to annotator
+          description: If set, the annotator can view model predictions
+        workspace_title:
           type: string
           readOnly: true
-        skipped_annotations_number:
+        ground_truth_number:
+          type: integer
+          readOnly: true
+          description: Honeypot annotation number in project
+        review_settings:
+          $ref: '#/components/schemas/ReviewSettings'
+        annotator_evaluation_minimum_tasks:
+          type: integer
+          minimum: 0
+          nullable: true
+          default: 10
+        reveal_preannotations_interactively:
+          type: boolean
+          description: Reveal pre-annotations interactively
+        organization:
+          type: integer
+          nullable: true
+        ready:
           type: string
           readOnly: true
       required:

@@ -8,6 +8,7 @@ from .comments.client import CommentsClient
 from .users.client import UsersClient
 from .actions.client import ActionsClient
 from .views.client import ViewsClient
+from .files.client import FilesClient
 from .organizations.client import OrganizationsClient
 from .jwt_settings.client import JwtSettingsClient
 from .ml.client import MlClient
@@ -28,6 +29,7 @@ from .comments.client import AsyncCommentsClient
 from .users.client import AsyncUsersClient
 from .actions.client import AsyncActionsClient
 from .views.client import AsyncViewsClient
+from .files.client import AsyncFilesClient
 from .organizations.client import AsyncOrganizationsClient
 from .jwt_settings.client import AsyncJwtSettingsClient
 from .ml.client import AsyncMlClient
@@ -98,6 +100,7 @@ class LabelStudioBase:
         self.users = UsersClient(client_wrapper=self._client_wrapper)
         self.actions = ActionsClient(client_wrapper=self._client_wrapper)
         self.views = ViewsClient(client_wrapper=self._client_wrapper)
+        self.files = FilesClient(client_wrapper=self._client_wrapper)
         self.organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
         self.jwt_settings = JwtSettingsClient(client_wrapper=self._client_wrapper)
         self.ml = MlClient(client_wrapper=self._client_wrapper)
@@ -168,6 +171,7 @@ class AsyncLabelStudioBase:
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
         self.actions = AsyncActionsClient(client_wrapper=self._client_wrapper)
         self.views = AsyncViewsClient(client_wrapper=self._client_wrapper)
+        self.files = AsyncFilesClient(client_wrapper=self._client_wrapper)
         self.organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
         self.jwt_settings = AsyncJwtSettingsClient(client_wrapper=self._client_wrapper)
         self.ml = AsyncMlClient(client_wrapper=self._client_wrapper)

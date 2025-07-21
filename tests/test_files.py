@@ -3,28 +3,28 @@
 from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
 import typing
-from ..utilities import validate_response
+from .utilities import validate_response
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"id": 1, "file": "file"}
     expected_types: typing.Any = {"id": "integer", "file": None}
-    response = client.projects.file_uploads.get(id=1)
+    response = client.files.get(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.file_uploads.get(id=1)
+    async_response = await async_client.files.get(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.projects.file_uploads.delete(id=1)  # type: ignore[func-returns-value]
+        client.files.delete(id=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.projects.file_uploads.delete(id=1)  # type: ignore[func-returns-value]
+        await async_client.files.delete(id=1)  # type: ignore[func-returns-value]
         is None
     )
 
@@ -32,22 +32,22 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [{"id": 1, "file": "file"}]
     expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: {"id": "integer", "file": None}})
-    response = client.projects.file_uploads.list(id=1)
+    response = client.files.list(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.file_uploads.list(id=1)
+    async_response = await async_client.files.list(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete_many(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.projects.file_uploads.delete_many(id=1)  # type: ignore[func-returns-value]
+        client.files.delete_many(id=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.projects.file_uploads.delete_many(id=1)  # type: ignore[func-returns-value]
+        await async_client.files.delete_many(id=1)  # type: ignore[func-returns-value]
         is None
     )
 
@@ -55,11 +55,11 @@ async def test_delete_many(client: LabelStudio, async_client: AsyncLabelStudio) 
 async def test_download(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.projects.file_uploads.download(filename="filename")  # type: ignore[func-returns-value]
+        client.files.download(filename="filename")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.projects.file_uploads.download(filename="filename")  # type: ignore[func-returns-value]
+        await async_client.files.download(filename="filename")  # type: ignore[func-returns-value]
         is None
     )

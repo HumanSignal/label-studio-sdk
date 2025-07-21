@@ -429,3 +429,13 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
 
     async_response = await async_client.projects.import_tasks(id=1, request=[])
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_validate_label_config(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"label_config": "label_config"}
+    expected_types: typing.Any = {"label_config": None}
+    response = client.projects.validate_label_config(id=1, label_config="label_config")
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.validate_label_config(id=1, label_config="label_config")
+    validate_response(async_response, expected_response, expected_types)

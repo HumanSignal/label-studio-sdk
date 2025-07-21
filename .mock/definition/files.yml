@@ -1,5 +1,5 @@
 imports:
-  root: ../__package__.yml
+  root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -84,7 +84,7 @@ service:
         id: integer
       display-name: Get files list
       request:
-        name: FileUploadsListRequest
+        name: FilesListRequest
         query-parameters:
           all:
             type: optional<boolean>

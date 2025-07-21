@@ -57,7 +57,6 @@ service:
       response:
         docs: Exported data
         type: file
-      availability: deprecated
       audiences:
         - public
     list_formats:

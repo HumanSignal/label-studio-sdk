@@ -2,7 +2,6 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from .file_uploads.client import FileUploadsClient
 from .exports.client import ExportsClient
 from .pauses.client import PausesClient
 from .types.projects_list_request_filter import ProjectsListRequestFilter
@@ -31,8 +30,8 @@ from .types.projects_duplicate_response import ProjectsDuplicateResponse
 from ..types.import_api_request import ImportApiRequest
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from ..errors.bad_request_error import BadRequestError
+from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
-from .file_uploads.client import AsyncFileUploadsClient
 from .exports.client import AsyncExportsClient
 from .pauses.client import AsyncPausesClient
 from ..core.pagination import AsyncPager
@@ -44,7 +43,6 @@ OMIT = typing.cast(typing.Any, ...)
 class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.file_uploads = FileUploadsClient(client_wrapper=self._client_wrapper)
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
         self.pauses = PausesClient(client_wrapper=self._client_wrapper)
 
@@ -911,11 +909,68 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def validate_label_config(
+        self, id: int, *, label_config: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> ProjectLabelConfig:
+        """
+        Determine whether the label configuration for a specific project is valid.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        label_config : str
+            Label config in XML format. See more about it in documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectLabelConfig
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.projects.validate_label_config(
+            id=1,
+            label_config="label_config",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/validate/",
+            method="POST",
+            json={
+                "label_config": label_config,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ProjectLabelConfig,
+                    construct_type(
+                        type_=ProjectLabelConfig,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-        self.file_uploads = AsyncFileUploadsClient(client_wrapper=self._client_wrapper)
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
         self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)
 
@@ -1832,6 +1887,72 @@ class AsyncProjectsClient:
                             object_=_response.json(),
                         ),
                     )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def validate_label_config(
+        self, id: int, *, label_config: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> ProjectLabelConfig:
+        """
+        Determine whether the label configuration for a specific project is valid.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        label_config : str
+            Label config in XML format. See more about it in documentation
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectLabelConfig
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.projects.validate_label_config(
+                id=1,
+                label_config="label_config",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/validate/",
+            method="POST",
+            json={
+                "label_config": label_config,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ProjectLabelConfig,
+                    construct_type(
+                        type_=ProjectLabelConfig,  # type: ignore
+                        object_=_response.json(),
+                    ),
                 )
             _response_json = _response.json()
         except JSONDecodeError:

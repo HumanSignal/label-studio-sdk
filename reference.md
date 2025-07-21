@@ -2987,6 +2987,471 @@ client.views.delete_all()
 </dl>
 </details>
 
+## Files
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve details about a specific uploaded file.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.files.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific uploaded file.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.files.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a specific uploaded file.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.files.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file:** `from __future__ import annotations
+
+typing.Optional[core.File]` — See core.File for more documentation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+        Retrieve the list of uploaded files used to create labeling tasks for a specific project.
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.files.list(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**all_:** `typing.Optional[bool]` — Set to "true" if you want to retrieve all file uploads
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Specify the list of file upload IDs to retrieve, e.g. ids=[1,2,3]
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">delete_many</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+        Delete uploaded files for a specific project.
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.files.delete_many(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.files.<a href="src/label_studio_sdk/files/client.py">download</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Download a specific uploaded file.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.files.download(
+    filename="filename",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**filename:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Organizations
 <details><summary><code>client.organizations.<a href="src/label_studio_sdk/organizations/client.py">reset_token</a>()</code></summary>
 <dl>
@@ -7100,6 +7565,86 @@ client.projects.import_tasks(
 <dd>
 
 **return_task_ids:** `typing.Optional[bool]` — Set to "true" to return task IDs in the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">validate_label_config</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Determine whether the label configuration for a specific project is valid.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.projects.validate_label_config(
+    id=1,
+    label_config="label_config",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label_config:** `str` — Label config in XML format. See more about it in documentation
     
 </dd>
 </dl>
@@ -12926,6 +13471,1258 @@ client.export_storage.s3.validate()
 </dl>
 </details>
 
+## ExportStorage S3S
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a list of all S3 export storage connections that were set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.export_storage.s3s.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create an S3 export storage connection with IAM role access to store annotations.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.export_storage.s3s.create(
+    role_arn="role_arn",
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**role_arn:** `str` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusD14Enum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS ExternalId
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**legacy_auth:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific S3 export storage connection that was set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.export_storage.s3s.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific S3 export storage connection that was set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.export_storage.s3s.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a specific S3 export storage connection that was set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.export_storage.s3s.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusD14Enum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS ExternalId
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role_arn:** `typing.Optional[str]` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**legacy_auth:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">sync</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sync tasks from an S3 export storage.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.export_storage.s3s.sync(
+    id=1,
+    role_arn="role_arn",
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role_arn:** `str` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusD14Enum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS ExternalId
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**legacy_auth:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.export_storage.s3s.<a href="src/label_studio_sdk/export_storage/s3s/client.py">validate</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific S3 export storage connection that was set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.export_storage.s3s.validate(
+    role_arn="role_arn",
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**role_arn:** `str` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusD14Enum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS ExternalId
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**legacy_auth:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ImportStorage Azure
 <details><summary><code>client.import_storage.azure.<a href="src/label_studio_sdk/import_storage/azure/client.py">list</a>(...)</code></summary>
 <dl>
@@ -16658,6 +18455,1322 @@ client.import_storage.s3.validate()
 </dl>
 </details>
 
+## ImportStorage S3S
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get list of all S3 import storage connections set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.import_storage.s3s.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create S3 import storage with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.import_storage.s3s.create(
+    role_arn="role_arn",
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**role_arn:** `str` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusD14Enum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS ExternalId
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**legacy_auth:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get a specific S3 import storage connection that was set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.import_storage.s3s.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a specific S3 import storage connection that was set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.import_storage.s3s.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a specific S3 import storage connection that was set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.import_storage.s3s.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusD14Enum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS ExternalId
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role_arn:** `typing.Optional[str]` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**legacy_auth:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">sync</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sync tasks from an S3 import storage connection that was set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.import_storage.s3s.sync(
+    id=1,
+    role_arn="role_arn",
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role_arn:** `str` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusD14Enum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS ExternalId
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**legacy_auth:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.import_storage.s3s.<a href="src/label_studio_sdk/import_storage/s3s/client.py">validate</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Validate a specific S3 import storage connection that was set up with IAM role access.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.import_storage.s3s.validate(
+    role_arn="role_arn",
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**role_arn:** `str` — AWS RoleArn
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `int` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**synchronizable:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_sync_job:** `typing.Optional[str]` — Last sync job ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[StatusD14Enum]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Cloud storage title
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Cloud storage description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bucket:** `typing.Optional[str]` — S3 bucket name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prefix:** `typing.Optional[str]` — S3 bucket prefix
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_access_key_id:** `typing.Optional[str]` — AWS_ACCESS_KEY_ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_secret_access_key:** `typing.Optional[str]` — AWS_SECRET_ACCESS_KEY
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_session_token:** `typing.Optional[str]` — AWS_SESSION_TOKEN
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aws_sse_kms_key_id:** `typing.Optional[str]` — AWS SSE KMS Key ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**region_name:** `typing.Optional[str]` — AWS Region
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**s3endpoint:** `typing.Optional[str]` — S3 Endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**external_id:** `typing.Optional[str]` — AWS ExternalId
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**legacy_auth:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Organizations Members
 <details><summary><code>client.organizations.members.<a href="src/label_studio_sdk/organizations/members/client.py">get</a>(...)</code></summary>
 <dl>
@@ -16800,471 +19913,6 @@ client.organizations.members.delete(
 <dd>
 
 **user_pk:** `int` — A unique integer value identifying the user to be deleted from the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Projects FileUploads
-<details><summary><code>client.projects.file_uploads.<a href="src/label_studio_sdk/projects/file_uploads/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Retrieve details about a specific uploaded file.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.projects.file_uploads.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.file_uploads.<a href="src/label_studio_sdk/projects/file_uploads/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a specific uploaded file.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.projects.file_uploads.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.file_uploads.<a href="src/label_studio_sdk/projects/file_uploads/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a specific uploaded file.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.projects.file_uploads.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.file_uploads.<a href="src/label_studio_sdk/projects/file_uploads/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-        Retrieve the list of uploaded files used to create labeling tasks for a specific project.
-        
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.projects.file_uploads.list(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**all_:** `typing.Optional[bool]` — Set to "true" if you want to retrieve all file uploads
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ids:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Specify the list of file upload IDs to retrieve, e.g. ids=[1,2,3]
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.file_uploads.<a href="src/label_studio_sdk/projects/file_uploads/client.py">delete_many</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-
-        Delete uploaded files for a specific project.
-        
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.projects.file_uploads.delete_many(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.file_uploads.<a href="src/label_studio_sdk/projects/file_uploads/client.py">download</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Download a specific uploaded file.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
-)
-client.projects.file_uploads.download(
-    filename="filename",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**filename:** `str` 
     
 </dd>
 </dl>

@@ -9,7 +9,7 @@ from .types import (
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
 )
-from . import exports, file_uploads, pauses
+from . import exports, pauses
 
 __all__ = [
     "LseProjectCreateRequestSampling",
@@ -20,6 +20,5 @@ __all__ = [
     "ProjectsImportTasksResponse",
     "ProjectsListRequestFilter",
     "exports",
-    "file_uploads",
     "pauses",
 ]

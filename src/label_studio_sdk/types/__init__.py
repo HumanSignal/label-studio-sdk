@@ -62,6 +62,10 @@ from .lse_project_create_skip_queue import LseProjectCreateSkipQueue
 from .lse_project_update import LseProjectUpdate
 from .lse_project_update_sampling import LseProjectUpdateSampling
 from .lse_project_update_skip_queue import LseProjectUpdateSkipQueue
+from .lse_s3export_storage import LseS3ExportStorage
+from .lse_s3export_storage_request import LseS3ExportStorageRequest
+from .lse_s3import_storage import LseS3ImportStorage
+from .lse_s3import_storage_request import LseS3ImportStorageRequest
 from .lse_task import LseTask
 from .lse_task_drafts_item import LseTaskDraftsItem
 from .lse_task_filter_options import LseTaskFilterOptions
@@ -112,6 +116,8 @@ from .prediction import Prediction
 from .prediction_request import PredictionRequest
 from .project import Project
 from .project_import import ProjectImport
+from .project_label_config import ProjectLabelConfig
+from .project_label_config_request import ProjectLabelConfigRequest
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
 from .project_subset_enum import ProjectSubsetEnum
@@ -220,6 +226,10 @@ __all__ = [
     "LseProjectUpdate",
     "LseProjectUpdateSampling",
     "LseProjectUpdateSkipQueue",
+    "LseS3ExportStorage",
+    "LseS3ExportStorageRequest",
+    "LseS3ImportStorage",
+    "LseS3ImportStorageRequest",
     "LseTask",
     "LseTaskDraftsItem",
     "LseTaskFilterOptions",
@@ -270,6 +280,8 @@ __all__ = [
     "PredictionRequest",
     "Project",
     "ProjectImport",
+    "ProjectLabelConfig",
+    "ProjectLabelConfigRequest",
     "ProjectSampling",
     "ProjectSkipQueue",
     "ProjectSubsetEnum",
