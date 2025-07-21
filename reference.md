@@ -378,6 +378,14 @@ client.annotations.create_bulk()
 <dl>
 <dd>
 
+**selected_items:** `typing.Optional[SelectedItemsRequest]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **was_cancelled:** `typing.Optional[bool]` — User skipped the task
     
 </dd>
@@ -418,7 +426,7 @@ client.annotations.create_bulk()
 <dl>
 <dd>
 
-**last_action:** `typing.Optional[AnnotationBulkRequestLastAction]` 
+**last_action:** `typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction]` 
 
 Action which was performed in the last annotation history item
 

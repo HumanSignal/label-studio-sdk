@@ -4,4 +4,4 @@ import typing
 from ...types.last_action_enum import LastActionEnum
 from ...types.null_enum import NullEnum
 
-AnnotationBulkRequestLastAction = typing.Union[LastActionEnum, NullEnum]
+AnnotationBulkSerializerWithSelectedItemsRequestLastAction = typing.Union[LastActionEnum, NullEnum]

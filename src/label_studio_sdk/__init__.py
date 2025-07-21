@@ -139,6 +139,7 @@ from .types import (
     S3ImportStorage,
     SamplingEnum,
     ScopeEnum,
+    SelectedItemsRequest,
     SerializationOption,
     SerializationOptionRequest,
     SerializationOptions,
@@ -208,7 +209,7 @@ from .actions import (
     ActionsCreateRequestSelectedItemsExcluded,
     ActionsCreateRequestSelectedItemsIncluded,
 )
-from .annotations import AnnotationBulkRequestLastAction, AnnotationsCreateBulkResponseItem
+from .annotations import AnnotationBulkSerializerWithSelectedItemsRequestLastAction, AnnotationsCreateBulkResponseItem
 from .client import AsyncLabelStudio, LabelStudio
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
@@ -282,7 +283,7 @@ __all__ = [
     "AllRolesProjectListSkipQueue",
     "AnnotatedEnum",
     "Annotation",
-    "AnnotationBulkRequestLastAction",
+    "AnnotationBulkSerializerWithSelectedItemsRequestLastAction",
     "AnnotationLastAction",
     "AnnotationRequest",
     "AnnotationRequestLastAction",
@@ -438,6 +439,7 @@ __all__ = [
     "S3ImportStorage",
     "SamplingEnum",
     "ScopeEnum",
+    "SelectedItemsRequest",
     "SerializationOption",
     "SerializationOptionRequest",
     "SerializationOptions",

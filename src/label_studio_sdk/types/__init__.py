@@ -140,6 +140,7 @@ from .s3export_storage import S3ExportStorage
 from .s3import_storage import S3ImportStorage
 from .sampling_enum import SamplingEnum
 from .scope_enum import ScopeEnum
+from .selected_items_request import SelectedItemsRequest
 from .serialization_option import SerializationOption
 from .serialization_option_request import SerializationOptionRequest
 from .serialization_options import SerializationOptions
@@ -304,6 +305,7 @@ __all__ = [
     "S3ImportStorage",
     "SamplingEnum",
     "ScopeEnum",
+    "SelectedItemsRequest",
     "SerializationOption",
     "SerializationOptionRequest",
     "SerializationOptions",

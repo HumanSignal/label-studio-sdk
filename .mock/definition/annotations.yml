@@ -208,7 +208,7 @@ service:
         openapi: openapi/openapi.yaml
       display-name: Bulk create annotations
       request:
-        name: AnnotationBulkRequest
+        name: AnnotationBulkSerializerWithSelectedItemsRequest
         body:
           properties:
             result:
@@ -220,6 +220,7 @@ service:
               validation:
                 minLength: 1
             tasks: optional<list<integer>>
+            selected_items: optional<root.SelectedItemsRequest>
             was_cancelled:
               type: optional<boolean>
               docs: User skipped the task
@@ -238,7 +239,8 @@ service:
                 Original annotation ID that was at the import step or NULL if
                 this annotation wasn't imported
             last_action:
-              type: optional<AnnotationBulkRequestLastAction>
+              type: >-
+                optional<AnnotationBulkSerializerWithSelectedItemsRequestLastAction>
               docs: |-
                 Action which was performed in the last annotation history item
 
@@ -464,7 +466,7 @@ service:
   source:
     openapi: openapi/openapi.yaml
 types:
-  AnnotationBulkRequestLastAction:
+  AnnotationBulkSerializerWithSelectedItemsRequestLastAction:
     discriminated: false
     docs: |-
       Action which was performed in the last annotation history item

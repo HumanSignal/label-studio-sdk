@@ -8,8 +8,11 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..types.selected_items_request import SelectedItemsRequest
 import datetime as dt
-from .types.annotation_bulk_request_last_action import AnnotationBulkRequestLastAction
+from .types.annotation_bulk_serializer_with_selected_items_request_last_action import (
+    AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
+)
 from .types.annotations_create_bulk_response_item import AnnotationsCreateBulkResponseItem
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
@@ -234,12 +237,13 @@ class AnnotationsClient:
         completed_by: typing.Optional[int] = OMIT,
         unique_id: typing.Optional[str] = OMIT,
         tasks: typing.Optional[typing.Sequence[int]] = OMIT,
+        selected_items: typing.Optional[SelectedItemsRequest] = OMIT,
         was_cancelled: typing.Optional[bool] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
         draft_created_at: typing.Optional[dt.datetime] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
         import_id: typing.Optional[int] = OMIT,
-        last_action: typing.Optional[AnnotationBulkRequestLastAction] = OMIT,
+        last_action: typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction] = OMIT,
         bulk_created: typing.Optional[bool] = OMIT,
         task: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
@@ -263,6 +267,8 @@ class AnnotationsClient:
 
         tasks : typing.Optional[typing.Sequence[int]]
 
+        selected_items : typing.Optional[SelectedItemsRequest]
+
         was_cancelled : typing.Optional[bool]
             User skipped the task
 
@@ -278,7 +284,7 @@ class AnnotationsClient:
         import_id : typing.Optional[int]
             Original annotation ID that was at the import step or NULL if this annotation wasn't imported
 
-        last_action : typing.Optional[AnnotationBulkRequestLastAction]
+        last_action : typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction]
             Action which was performed in the last annotation history item
 
             * `prediction` - Created from prediction
@@ -339,13 +345,18 @@ class AnnotationsClient:
                 "completed_by": completed_by,
                 "unique_id": unique_id,
                 "tasks": tasks,
+                "selected_items": convert_and_respect_annotation_metadata(
+                    object_=selected_items, annotation=SelectedItemsRequest, direction="write"
+                ),
                 "was_cancelled": was_cancelled,
                 "ground_truth": ground_truth,
                 "draft_created_at": draft_created_at,
                 "lead_time": lead_time,
                 "import_id": import_id,
                 "last_action": convert_and_respect_annotation_metadata(
-                    object_=last_action, annotation=AnnotationBulkRequestLastAction, direction="write"
+                    object_=last_action,
+                    annotation=AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
+                    direction="write",
                 ),
                 "bulk_created": bulk_created,
                 "task": task,
@@ -806,12 +817,13 @@ class AsyncAnnotationsClient:
         completed_by: typing.Optional[int] = OMIT,
         unique_id: typing.Optional[str] = OMIT,
         tasks: typing.Optional[typing.Sequence[int]] = OMIT,
+        selected_items: typing.Optional[SelectedItemsRequest] = OMIT,
         was_cancelled: typing.Optional[bool] = OMIT,
         ground_truth: typing.Optional[bool] = OMIT,
         draft_created_at: typing.Optional[dt.datetime] = OMIT,
         lead_time: typing.Optional[float] = OMIT,
         import_id: typing.Optional[int] = OMIT,
-        last_action: typing.Optional[AnnotationBulkRequestLastAction] = OMIT,
+        last_action: typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction] = OMIT,
         bulk_created: typing.Optional[bool] = OMIT,
         task: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
@@ -835,6 +847,8 @@ class AsyncAnnotationsClient:
 
         tasks : typing.Optional[typing.Sequence[int]]
 
+        selected_items : typing.Optional[SelectedItemsRequest]
+
         was_cancelled : typing.Optional[bool]
             User skipped the task
 
@@ -850,7 +864,7 @@ class AsyncAnnotationsClient:
         import_id : typing.Optional[int]
             Original annotation ID that was at the import step or NULL if this annotation wasn't imported
 
-        last_action : typing.Optional[AnnotationBulkRequestLastAction]
+        last_action : typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction]
             Action which was performed in the last annotation history item
 
             * `prediction` - Created from prediction
@@ -919,13 +933,18 @@ class AsyncAnnotationsClient:
                 "completed_by": completed_by,
                 "unique_id": unique_id,
                 "tasks": tasks,
+                "selected_items": convert_and_respect_annotation_metadata(
+                    object_=selected_items, annotation=SelectedItemsRequest, direction="write"
+                ),
                 "was_cancelled": was_cancelled,
                 "ground_truth": ground_truth,
                 "draft_created_at": draft_created_at,
                 "lead_time": lead_time,
                 "import_id": import_id,
                 "last_action": convert_and_respect_annotation_metadata(
-                    object_=last_action, annotation=AnnotationBulkRequestLastAction, direction="write"
+                    object_=last_action,
+                    annotation=AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
+                    direction="write",
                 ),
                 "bulk_created": bulk_created,
                 "task": task,
