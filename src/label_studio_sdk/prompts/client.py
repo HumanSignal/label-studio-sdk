@@ -38,8 +38,9 @@ class PromptsClient:
     def batch_failed_predictions(
         self,
         *,
-        job_id: str,
         failed_predictions: typing.Sequence[typing.Optional[typing.Any]],
+        modelrun_id: int,
+        job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchFailedPredictions:
         """
@@ -47,9 +48,11 @@ class PromptsClient:
 
         Parameters
         ----------
-        job_id : str
-
         failed_predictions : typing.Sequence[typing.Optional[typing.Any]]
+
+        modelrun_id : int
+
+        job_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -68,8 +71,8 @@ class PromptsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.batch_failed_predictions(
-            job_id="job_id",
             failed_predictions=[],
+            modelrun_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -78,6 +81,7 @@ class PromptsClient:
             json={
                 "job_id": job_id,
                 "failed_predictions": failed_predictions,
+                "modelrun_id": modelrun_id,
             },
             headers={
                 "content-type": "application/json",
@@ -102,8 +106,9 @@ class PromptsClient:
     def batch_predictions(
         self,
         *,
-        job_id: str,
         results: typing.Sequence[typing.Optional[typing.Any]],
+        modelrun_id: int,
+        job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchPredictions:
         """
@@ -111,9 +116,11 @@ class PromptsClient:
 
         Parameters
         ----------
-        job_id : str
-
         results : typing.Sequence[typing.Optional[typing.Any]]
+
+        modelrun_id : int
+
+        job_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -132,8 +139,8 @@ class PromptsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.batch_predictions(
-            job_id="job_id",
             results=[],
+            modelrun_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -142,6 +149,7 @@ class PromptsClient:
             json={
                 "job_id": job_id,
                 "results": results,
+                "modelrun_id": modelrun_id,
             },
             headers={
                 "content-type": "application/json",
@@ -565,8 +573,9 @@ class AsyncPromptsClient:
     async def batch_failed_predictions(
         self,
         *,
-        job_id: str,
         failed_predictions: typing.Sequence[typing.Optional[typing.Any]],
+        modelrun_id: int,
+        job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchFailedPredictions:
         """
@@ -574,9 +583,11 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
-        job_id : str
-
         failed_predictions : typing.Sequence[typing.Optional[typing.Any]]
+
+        modelrun_id : int
+
+        job_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -600,8 +611,8 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.batch_failed_predictions(
-                job_id="job_id",
                 failed_predictions=[],
+                modelrun_id=1,
             )
 
 
@@ -613,6 +624,7 @@ class AsyncPromptsClient:
             json={
                 "job_id": job_id,
                 "failed_predictions": failed_predictions,
+                "modelrun_id": modelrun_id,
             },
             headers={
                 "content-type": "application/json",
@@ -637,8 +649,9 @@ class AsyncPromptsClient:
     async def batch_predictions(
         self,
         *,
-        job_id: str,
         results: typing.Sequence[typing.Optional[typing.Any]],
+        modelrun_id: int,
+        job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchPredictions:
         """
@@ -646,9 +659,11 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
-        job_id : str
-
         results : typing.Sequence[typing.Optional[typing.Any]]
+
+        modelrun_id : int
+
+        job_id : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -672,8 +687,8 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.batch_predictions(
-                job_id="job_id",
                 results=[],
+                modelrun_id=1,
             )
 
 
@@ -685,6 +700,7 @@ class AsyncPromptsClient:
             json={
                 "job_id": job_id,
                 "results": results,
+                "modelrun_id": modelrun_id,
             },
             headers={
                 "content-type": "application/json",

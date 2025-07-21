@@ -5236,8 +5236,8 @@ client = LabelStudio(
     base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.batch_failed_predictions(
-    job_id="job_id",
     failed_predictions=[],
+    modelrun_id=1,
 )
 
 ```
@@ -5254,7 +5254,7 @@ client.prompts.batch_failed_predictions(
 <dl>
 <dd>
 
-**job_id:** `str` 
+**failed_predictions:** `typing.Sequence[typing.Optional[typing.Any]]` 
     
 </dd>
 </dl>
@@ -5262,7 +5262,15 @@ client.prompts.batch_failed_predictions(
 <dl>
 <dd>
 
-**failed_predictions:** `typing.Sequence[typing.Optional[typing.Any]]` 
+**modelrun_id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**job_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -5316,8 +5324,8 @@ client = LabelStudio(
     base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.batch_predictions(
-    job_id="job_id",
     results=[],
+    modelrun_id=1,
 )
 
 ```
@@ -5334,7 +5342,7 @@ client.prompts.batch_predictions(
 <dl>
 <dd>
 
-**job_id:** `str` 
+**results:** `typing.Sequence[typing.Optional[typing.Any]]` 
     
 </dd>
 </dl>
@@ -5342,7 +5350,15 @@ client.prompts.batch_predictions(
 <dl>
 <dd>
 
-**results:** `typing.Sequence[typing.Optional[typing.Any]]` 
+**modelrun_id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**job_id:** `typing.Optional[str]` 
     
 </dd>
 </dl>
