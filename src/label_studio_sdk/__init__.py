@@ -154,6 +154,9 @@ from .types import (
     View,
     Webhook,
     WebhookSerializerForUpdate,
+    Workspace,
+    WorkspaceMemberCreate,
+    WorkspaceMemberList,
 )
 from .errors import (
     BadRequestError,
@@ -182,6 +185,7 @@ from . import (
     versions,
     views,
     webhooks,
+    workspaces,
 )
 from ._legacy import Client
 from .actions import (
@@ -478,6 +482,9 @@ __all__ = [
     "WebhooksInfoResponseReviewsDeleted",
     "WebhooksInfoResponseTasksCreated",
     "WebhooksInfoResponseTasksDeleted",
+    "Workspace",
+    "WorkspaceMemberCreate",
+    "WorkspaceMemberList",
     "__version__",
     "actions",
     "annotations",
@@ -497,4 +504,5 @@ __all__ = [
     "versions",
     "views",
     "webhooks",
+    "workspaces",
 ]

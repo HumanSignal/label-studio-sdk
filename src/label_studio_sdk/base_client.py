@@ -21,6 +21,7 @@ from .export_storage.client import ExportStorageClient
 from .tokens.client import TokensClient
 from .versions.client import VersionsClient
 from .webhooks.client import WebhooksClient
+from .workspaces.client import WorkspacesClient
 from .core.client_wrapper import AsyncClientWrapper
 from .annotations.client import AsyncAnnotationsClient
 from .comments.client import AsyncCommentsClient
@@ -40,6 +41,7 @@ from .export_storage.client import AsyncExportStorageClient
 from .tokens.client import AsyncTokensClient
 from .versions.client import AsyncVersionsClient
 from .webhooks.client import AsyncWebhooksClient
+from .workspaces.client import AsyncWorkspacesClient
 
 
 class LabelStudioBase:
@@ -109,6 +111,7 @@ class LabelStudioBase:
         self.tokens = TokensClient(client_wrapper=self._client_wrapper)
         self.versions = VersionsClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
+        self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncLabelStudioBase:
@@ -178,3 +181,4 @@ class AsyncLabelStudioBase:
         self.tokens = AsyncTokensClient(client_wrapper=self._client_wrapper)
         self.versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
+        self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)

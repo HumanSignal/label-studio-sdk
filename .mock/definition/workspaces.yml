@@ -4,16 +4,21 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_workspaces_list:
+    list:
       path: /api/workspaces/
       method: GET
       auth: true
-      docs: Get all workspaces for specified organization.
+      docs: >-
+        List all workspaces for your organization. Workspaces in Label Studio
+        let you organize your projects and users into separate spaces. This is
+        useful for managing different teams, departments, or projects within
+        your organization. For more information, see the [Workspaces
+        documentation](https://docs.humansignal.com/workspaces).
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get all workspaces
+      display-name: List workspaces
       request:
-        name: ApiWorkspacesListRequest
+        name: WorkspacesListRequest
         query-parameters:
           is_personal:
             type: optional<boolean>
@@ -34,11 +39,18 @@ service:
                 is_personal: true
                 is_archived: true
                 created_by: 1
-    api_workspaces_create:
+      audiences:
+        - public
+    create:
       path: /api/workspaces/
       method: POST
       auth: true
-      docs: Create a workspace.
+      docs: >-
+        Create a new workspace. Workspaces in Label Studio let you organize your
+        projects and users into separate spaces. This is useful for managing
+        different teams, departments, or projects within your organization. For
+        more information, see the [Workspaces
+        documentation](https://docs.humansignal.com/workspaces).
       source:
         openapi: openapi/openapi.yaml
       display-name: Create workspace
@@ -81,7 +93,9 @@ service:
               is_personal: true
               is_archived: true
               created_by: 1
-    api_workspaces_retrieve:
+      audiences:
+        - public
+    get:
       path: /api/workspaces/{id}/
       method: GET
       auth: true
@@ -106,7 +120,24 @@ service:
               is_personal: true
               is_archived: true
               created_by: 1
-    api_workspaces_partial_update:
+      audiences:
+        - public
+    delete:
+      path: /api/workspaces/{id}/
+      method: DELETE
+      auth: true
+      docs: Delete a specific workspace by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Delete workspace
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - public
+    update:
       path: /api/workspaces/{id}/
       method: PATCH
       auth: true
@@ -156,59 +187,8 @@ service:
               is_personal: true
               is_archived: true
               created_by: 1
-    api_workspaces_memberships_retrieve:
-      path: /api/workspaces/{id}/memberships/
-      method: GET
-      auth: true
-      docs: Get a list of all members in a specific workspace.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: List workspace members
-      response:
-        docs: ''
-        type: root.WorkspaceMemberCreate
-      examples:
-        - path-parameters:
-            id: 1
-          response:
-            body:
-              user: 1
-              workspace: 1
-    api_workspaces_memberships_create:
-      path: /api/workspaces/{id}/memberships/
-      method: POST
-      auth: true
-      docs: Add a new workspace member by user ID.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: Add workspace member
-      request:
-        name: WorkspaceMemberCreateRequest
-        body:
-          properties:
-            user:
-              type: integer
-              docs: User ID
-            workspace:
-              type: optional<integer>
-              docs: Workspace ID
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.WorkspaceMemberCreate
-      examples:
-        - path-parameters:
-            id: 1
-          request:
-            user: 1
-          response:
-            body:
-              user: 1
-              workspace: 1
+      audiences:
+        - public
     api_workspaces_projects_retrieve:
       path: /api/workspaces/{id}/projects/
       method: GET

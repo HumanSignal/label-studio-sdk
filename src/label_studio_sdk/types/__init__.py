@@ -155,6 +155,9 @@ from .version_response import VersionResponse
 from .view import View
 from .webhook import Webhook
 from .webhook_serializer_for_update import WebhookSerializerForUpdate
+from .workspace import Workspace
+from .workspace_member_create import WorkspaceMemberCreate
+from .workspace_member_list import WorkspaceMemberList
 
 __all__ = [
     "ActionsEnum",
@@ -310,4 +313,7 @@ __all__ = [
     "View",
     "Webhook",
     "WebhookSerializerForUpdate",
+    "Workspace",
+    "WorkspaceMemberCreate",
+    "WorkspaceMemberList",
 ]
