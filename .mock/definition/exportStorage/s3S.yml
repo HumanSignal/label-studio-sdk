@@ -316,18 +316,12 @@ service:
       path-parameters:
         id: integer
       display-name: Sync export storage
-      request:
-        body: root.LseS3ExportStorageRequest
-        content-type: application/json
       response:
         docs: ''
         type: root.LseS3ExportStorage
       examples:
         - path-parameters:
             id: 1
-          request:
-            role_arn: role_arn
-            project: 1
           response:
             body:
               id: 1
