@@ -22,22 +22,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "draft": 1,
             "annotation": 1,
             "created_by": 1,
-        },
-        {
-            "id": 1,
-            "region_ref": {"key": "value"},
-            "classifications": {"key": "value"},
-            "text": "text",
-            "created_at": "2024-01-15T09:30:00Z",
-            "updated_at": "2024-01-15T09:30:00Z",
-            "is_resolved": True,
-            "resolved_at": "2024-01-15T09:30:00Z",
-            "project": 1,
-            "task": 1,
-            "draft": 1,
-            "annotation": 1,
-            "created_by": 1,
-        },
+        }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
@@ -56,28 +41,13 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "draft": "integer",
                 "annotation": "integer",
                 "created_by": "integer",
-            },
-            1: {
-                "id": "integer",
-                "region_ref": None,
-                "classifications": None,
-                "text": None,
-                "created_at": "datetime",
-                "updated_at": "datetime",
-                "is_resolved": None,
-                "resolved_at": "datetime",
-                "project": "integer",
-                "task": "integer",
-                "draft": "integer",
-                "annotation": "integer",
-                "created_by": "integer",
-            },
+            }
         },
     )
-    response = client.comments.list(classifications="classifications", region_ref="region_ref")
+    response = client.comments.list()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.comments.list(classifications="classifications", region_ref="region_ref")
+    async_response = await async_client.comments.list()
     validate_response(async_response, expected_response, expected_types)
 
 

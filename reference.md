@@ -798,10 +798,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.comments.list(
-    classifications="classifications",
-    region_ref="region_ref",
-)
+client.comments.list()
 
 ```
 </dd>
@@ -813,22 +810,6 @@ client.comments.list(
 
 <dl>
 <dd>
-
-<dl>
-<dd>
-
-**classifications:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**region_ref:** `str` 
-    
-</dd>
-</dl>
 
 <dl>
 <dd>

@@ -21,8 +21,6 @@ class CommentsClient:
     def list(
         self,
         *,
-        classifications: str,
-        region_ref: str,
         annotation: typing.Optional[int] = None,
         annotators: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         draft: typing.Optional[int] = None,
@@ -36,10 +34,6 @@ class CommentsClient:
 
         Parameters
         ----------
-        classifications : str
-
-        region_ref : str
-
         annotation : typing.Optional[int]
 
         annotators : typing.Optional[typing.Union[int, typing.Sequence[int]]]
@@ -69,10 +63,7 @@ class CommentsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.comments.list(
-            classifications="classifications",
-            region_ref="region_ref",
-        )
+        client.comments.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/comments/",
@@ -80,12 +71,10 @@ class CommentsClient:
             params={
                 "annotation": annotation,
                 "annotators": annotators,
-                "classifications": classifications,
                 "draft": draft,
                 "expand_created_by": expand_created_by,
                 "ordering": ordering,
                 "projects": projects,
-                "region_ref": region_ref,
             },
             request_options=request_options,
         )
@@ -453,8 +442,6 @@ class AsyncCommentsClient:
     async def list(
         self,
         *,
-        classifications: str,
-        region_ref: str,
         annotation: typing.Optional[int] = None,
         annotators: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         draft: typing.Optional[int] = None,
@@ -468,10 +455,6 @@ class AsyncCommentsClient:
 
         Parameters
         ----------
-        classifications : str
-
-        region_ref : str
-
         annotation : typing.Optional[int]
 
         annotators : typing.Optional[typing.Union[int, typing.Sequence[int]]]
@@ -506,10 +489,7 @@ class AsyncCommentsClient:
 
 
         async def main() -> None:
-            await client.comments.list(
-                classifications="classifications",
-                region_ref="region_ref",
-            )
+            await client.comments.list()
 
 
         asyncio.run(main())
@@ -520,12 +500,10 @@ class AsyncCommentsClient:
             params={
                 "annotation": annotation,
                 "annotators": annotators,
-                "classifications": classifications,
                 "draft": draft,
                 "expand_created_by": expand_created_by,
                 "ordering": ordering,
                 "projects": projects,
-                "region_ref": region_ref,
             },
             request_options=request_options,
         )

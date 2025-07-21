@@ -19,7 +19,6 @@ service:
           annotators:
             type: optional<integer>
             allow-multiple: true
-          classifications: string
           draft: optional<integer>
           expand_created_by: optional<boolean>
           ordering:
@@ -28,10 +27,27 @@ service:
           projects:
             type: optional<integer>
             allow-multiple: true
-          region_ref: string
       response:
         docs: List of comments
         type: list<root.MaybeExpandedComment>
+      examples:
+        - response:
+            body:
+              - id: 1
+                region_ref:
+                  key: value
+                classifications:
+                  key: value
+                text: text
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+                is_resolved: true
+                resolved_at: '2024-01-15T09:30:00Z'
+                project: 1
+                task: 1
+                draft: 1
+                annotation: 1
+                created_by: 1
       audiences:
         - public
     create:
