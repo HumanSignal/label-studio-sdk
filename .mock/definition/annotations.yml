@@ -199,7 +199,7 @@ service:
             id: 1
       audiences:
         - internal
-    create_many:
+    create_bulk:
       path: /api/annotations/bulk/
       method: POST
       auth: true
@@ -278,7 +278,7 @@ service:
         content-type: application/json
       response:
         docs: Bulk annotations created successfully
-        type: list<AnnotationsCreateManyResponseItem>
+        type: list<AnnotationsCreateBulkResponseItem>
       examples:
         - request: {}
           response:
@@ -485,7 +485,7 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
-  AnnotationsCreateManyResponseItem:
+  AnnotationsCreateBulkResponseItem:
     properties:
       id:
         type: integer

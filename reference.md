@@ -297,7 +297,7 @@ client.annotations.update(
 </dl>
 </details>
 
-<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">create_many</a>(...)</code></summary>
+<details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">create_bulk</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -330,7 +330,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.annotations.create_many()
+client.annotations.create_bulk()
 
 ```
 </dd>

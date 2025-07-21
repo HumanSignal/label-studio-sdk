@@ -6,7 +6,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 
 
-class AnnotationsCreateManyResponseItem(UncheckedBaseModel):
+class AnnotationsCreateBulkResponseItem(UncheckedBaseModel):
     id: int = pydantic.Field()
     """
     Annotation ID

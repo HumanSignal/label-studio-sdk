@@ -208,7 +208,7 @@ from .actions import (
     ActionsCreateRequestSelectedItemsExcluded,
     ActionsCreateRequestSelectedItemsIncluded,
 )
-from .annotations import AnnotationBulkRequestLastAction, AnnotationsCreateManyResponseItem
+from .annotations import AnnotationBulkRequestLastAction, AnnotationsCreateBulkResponseItem
 from .client import AsyncLabelStudio, LabelStudio
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
@@ -286,7 +286,7 @@ __all__ = [
     "AnnotationLastAction",
     "AnnotationRequest",
     "AnnotationRequestLastAction",
-    "AnnotationsCreateManyResponseItem",
+    "AnnotationsCreateBulkResponseItem",
     "AssignmentSettings",
     "AssignmentSettingsLabelStreamTaskDistribution",
     "AssignmentSettingsRequest",

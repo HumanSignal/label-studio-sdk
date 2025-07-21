@@ -10,7 +10,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 import datetime as dt
 from .types.annotation_bulk_request_last_action import AnnotationBulkRequestLastAction
-from .types.annotations_create_many_response_item import AnnotationsCreateManyResponseItem
+from .types.annotations_create_bulk_response_item import AnnotationsCreateBulkResponseItem
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 
@@ -227,7 +227,7 @@ class AnnotationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create_many(
+    def create_bulk(
         self,
         *,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
@@ -248,7 +248,7 @@ class AnnotationsClient:
         parent_annotation: typing.Optional[int] = OMIT,
         last_created_by: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[AnnotationsCreateManyResponseItem]:
+    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
         """
         Create multiple annotations at once
 
@@ -318,7 +318,7 @@ class AnnotationsClient:
 
         Returns
         -------
-        typing.List[AnnotationsCreateManyResponseItem]
+        typing.List[AnnotationsCreateBulkResponseItem]
             Bulk annotations created successfully
 
         Examples
@@ -329,7 +329,7 @@ class AnnotationsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.annotations.create_many()
+        client.annotations.create_bulk()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/annotations/bulk/",
@@ -364,9 +364,9 @@ class AnnotationsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[AnnotationsCreateManyResponseItem],
+                    typing.List[AnnotationsCreateBulkResponseItem],
                     construct_type(
-                        type_=typing.List[AnnotationsCreateManyResponseItem],  # type: ignore
+                        type_=typing.List[AnnotationsCreateBulkResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -799,7 +799,7 @@ class AsyncAnnotationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create_many(
+    async def create_bulk(
         self,
         *,
         result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
@@ -820,7 +820,7 @@ class AsyncAnnotationsClient:
         parent_annotation: typing.Optional[int] = OMIT,
         last_created_by: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[AnnotationsCreateManyResponseItem]:
+    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
         """
         Create multiple annotations at once
 
@@ -890,7 +890,7 @@ class AsyncAnnotationsClient:
 
         Returns
         -------
-        typing.List[AnnotationsCreateManyResponseItem]
+        typing.List[AnnotationsCreateBulkResponseItem]
             Bulk annotations created successfully
 
         Examples
@@ -906,7 +906,7 @@ class AsyncAnnotationsClient:
 
 
         async def main() -> None:
-            await client.annotations.create_many()
+            await client.annotations.create_bulk()
 
 
         asyncio.run(main())
@@ -944,9 +944,9 @@ class AsyncAnnotationsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[AnnotationsCreateManyResponseItem],
+                    typing.List[AnnotationsCreateBulkResponseItem],
                     construct_type(
-                        type_=typing.List[AnnotationsCreateManyResponseItem],  # type: ignore
+                        type_=typing.List[AnnotationsCreateBulkResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
