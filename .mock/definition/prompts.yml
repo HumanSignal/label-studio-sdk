@@ -4,7 +4,73 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_prompts_list:
+    create_batch_failed_predictions:
+      path: /api/model-run/batch-failed-predictions
+      method: POST
+      auth: true
+      docs: Create a new batch of failed predictions.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create batch of failed predictions
+      request:
+        name: BatchFailedPredictionsRequest
+        body:
+          properties:
+            job_id:
+              type: string
+              validation:
+                minLength: 1
+                maxLength: 255
+            failed_predictions: list<unknown>
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.BatchFailedPredictions
+      examples:
+        - request:
+            job_id: job_id
+            failed_predictions: []
+          response:
+            body:
+              job_id: job_id
+              failed_predictions:
+                - key: value
+      audiences:
+        - public
+    create_batch_predictions:
+      path: /api/model-run/batch-predictions
+      method: POST
+      auth: true
+      docs: Create a new batch prediction.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create batch predictions
+      request:
+        name: BatchPredictionsRequest
+        body:
+          properties:
+            job_id:
+              type: string
+              validation:
+                minLength: 1
+                maxLength: 255
+            results: list<unknown>
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.BatchPredictions
+      examples:
+        - request:
+            job_id: job_id
+            results: []
+          response:
+            body:
+              job_id: job_id
+              results:
+                - key: value
+      audiences:
+        - public
+    list:
       path: /api/prompts/
       method: GET
       auth: true
@@ -13,7 +79,7 @@ service:
         openapi: openapi/openapi.yaml
       display-name: List prompts
       request:
-        name: ApiPromptsListRequest
+        name: PromptsListRequest
         query-parameters:
           ordering:
             type: optional<string>
@@ -43,11 +109,13 @@ service:
                 output_classes:
                   key: value
                 organization: 1
-    api_prompts_create:
+      audiences:
+        - public
+    create:
       path: /api/prompts/
       method: POST
       auth: true
-      docs: Create a new promt.
+      docs: Create a new prompt.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create prompt
@@ -81,7 +149,9 @@ service:
               organization: 1
               associated_projects:
                 - 1
-    api_prompts_retrieve:
+      audiences:
+        - public
+    get:
       path: /api/prompts/{id}/
       method: GET
       auth: true
@@ -119,6 +189,8 @@ service:
               output_classes:
                 key: value
               organization: 1
+      audiences:
+        - public
     api_prompts_update:
       path: /api/prompts/{id}/
       method: PUT
@@ -161,7 +233,9 @@ service:
               organization: 1
               associated_projects:
                 - 1
-    api_prompts_destroy:
+      audiences:
+        - internal
+    delete:
       path: /api/prompts/{id}/
       method: DELETE
       auth: true
@@ -174,7 +248,9 @@ service:
       examples:
         - path-parameters:
             id: id
-    api_prompts_partial_update:
+      audiences:
+        - public
+    update:
       path: /api/prompts/{id}/
       method: PATCH
       auth: true
@@ -234,158 +310,19 @@ service:
               organization: 1
               associated_projects:
                 - 1
-    api_prompts_get_default_version_name_retrieve:
-      path: /api/prompts/{id}/get-default-version-name
-      method: GET
-      auth: true
-      docs: Get default prompt version name
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: Get default prompt version name
-      examples:
-        - path-parameters:
-            id: 1
-    api_prompts_versions_list:
-      path: /api/prompts/{prompt_id}/versions
-      method: GET
-      auth: true
-      docs: List all third-party versions of a prompt.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        prompt_id: integer
-      display-name: List third-party prompt versions
-      request:
-        name: ApiPromptsVersionsListRequest
-        query-parameters:
-          ordering:
-            type: optional<string>
-            docs: Which field to use when ordering the results.
-          prompt_id:
-            type: integer
-            docs: >-
-              A unique integer value identifying the model ID to list versions
-              for.
-      response:
-        docs: ''
-        type: list<root.ThirdPartyModelVersion>
-      examples:
-        - path-parameters:
-            prompt_id: 1
-          query-parameters:
-            prompt_id: 1
-          response:
-            body:
-              - id: 1
-                created_by:
-                  id: 1
-                  first_name: first_name
-                  last_name: last_name
-                  email: email
-                  avatar: avatar
-                score: score
-                title: title
-                prompt: prompt
-                provider: OpenAI
-                provider_model_id: provider_model_id
-                created_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                parent_model: 1
-                model_provider_connection: 1
-                organization: 1
-    api_prompts_versions_create:
-      path: /api/prompts/{prompt_id}/versions
-      method: POST
-      auth: true
-      docs: Create a new third-party version of a prompt.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        prompt_id: integer
-      display-name: Create third-party prompt version
-      request:
-        body: root.ThirdPartyModelVersionRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.ThirdPartyModelVersion
-      examples:
-        - path-parameters:
-            prompt_id: 1
-          request:
-            title: title
-            prompt: prompt
-            provider_model_id: provider_model_id
-            parent_model: 1
-          response:
-            body:
-              id: 1
-              created_by:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                email: email
-                avatar: avatar
-              score: score
-              title: title
-              prompt: prompt
-              provider: OpenAI
-              provider_model_id: provider_model_id
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              parent_model: 1
-              model_provider_connection: 1
-              organization: 1
-    api_prompts_versions_retrieve:
-      path: /api/prompts/{prompt_id}/versions/{id}
-      method: GET
-      auth: true
-      docs: Retrieve a specific third-party prompt of a model.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-        prompt_id: integer
-      display-name: Get third-party prompt version
-      response:
-        docs: ''
-        type: root.ThirdPartyModelVersion
-      examples:
-        - path-parameters:
-            id: 1
-            prompt_id: 1
-          response:
-            body:
-              id: 1
-              created_by:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                email: email
-                avatar: avatar
-              score: score
-              title: title
-              prompt: prompt
-              provider: OpenAI
-              provider_model_id: provider_model_id
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              parent_model: 1
-              model_provider_connection: 1
-              organization: 1
+      audiences:
+        - public
     api_prompts_versions_update:
       path: /api/prompts/{prompt_id}/versions/{id}
       method: PUT
       auth: true
-      docs: Overwrite a specific third-party prompt version by ID.
+      docs: Overwrite a specific prompt version by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
         prompt_id: integer
-      display-name: Put third-party prompt version
+      display-name: Put prompt version
       request:
         body: root.ThirdPartyModelVersionRequest
         content-type: application/json
@@ -420,224 +357,8 @@ service:
               parent_model: 1
               model_provider_connection: 1
               organization: 1
-    api_prompts_versions_destroy:
-      path: /api/prompts/{prompt_id}/versions/{id}
-      method: DELETE
-      auth: true
-      docs: Delete a third-party prompt version by ID
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-        prompt_id: integer
-      display-name: Delete third-party prompt version
-      examples:
-        - path-parameters:
-            id: 1
-            prompt_id: 1
-    api_prompts_versions_partial_update:
-      path: /api/prompts/{prompt_id}/versions/{id}
-      method: PATCH
-      auth: true
-      docs: Update a specific third-party prompt version by ID.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-        prompt_id: integer
-      display-name: Update third-party prompt version
-      request:
-        name: PatchedThirdPartyModelVersionRequest
-        body:
-          properties:
-            title:
-              type: optional<string>
-              docs: Model name
-              validation:
-                minLength: 1
-                maxLength: 500
-            prompt:
-              type: optional<string>
-              docs: Prompt to execute
-              validation:
-                minLength: 1
-            provider:
-              type: optional<root.ProviderEnum>
-              docs: |-
-                The model provider to use e.g. OpenAI
-
-                * `OpenAI` - OpenAI
-                * `AzureOpenAI` - AzureOpenAI
-                * `AzureAIFoundry` - AzureAIFoundry
-                * `VertexAI` - VertexAI
-                * `Gemini` - Gemini
-                * `Anthropic` - Anthropic
-                * `Custom` - Custom
-            provider_model_id:
-              type: optional<string>
-              docs: The model ID to use within the given provider, e.g. gpt-3.5
-              validation:
-                minLength: 1
-                maxLength: 255
-            parent_model: optional<integer>
-            model_provider_connection: optional<integer>
-            organization: optional<integer>
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.ThirdPartyModelVersion
-      examples:
-        - path-parameters:
-            id: 1
-            prompt_id: 1
-          request: {}
-          response:
-            body:
-              id: 1
-              created_by:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                email: email
-                avatar: avatar
-              score: score
-              title: title
-              prompt: prompt
-              provider: OpenAI
-              provider_model_id: provider_model_id
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              parent_model: 1
-              model_provider_connection: 1
-              organization: 1
-    api_prompts_versions_cost_estimate_retrieve:
-      path: /api/prompts/{prompt_id}/versions/{version_id}/cost-estimate
-      method: GET
-      auth: true
-      docs: >-
-        Get an estimate of the cost for making an inference run on the selected
-        Prompt Version and Project/ProjectSubset
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        prompt_id: integer
-        version_id: integer
-      display-name: Get an estimate of the cost for making an inference run
-      response:
-        docs: ''
-        type: root.ModelRun
-      examples:
-        - path-parameters:
-            prompt_id: 1
-            version_id: 1
-          response:
-            body:
-              id: 1
-              parent_model: 1
-              project_subset: All
-              status: Pending
-              job_id: job_id
-              total_predictions: 1
-              total_correct_predictions: 1
-              total_tasks: 1
-              created_at: '2024-01-15T09:30:00Z'
-              triggered_at: '2024-01-15T09:30:00Z'
-              predictions_updated_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              organization: 1
-              project: 1
-              model_version: 1
-              created_by: 1
-    api_prompts_versions_inference_runs_list:
-      path: /api/prompts/{prompt_id}/versions/{version_id}/inference-runs
-      method: GET
-      auth: true
-      docs: >-
-        Get list of inference runs for the organization, query parameters
-        project, model_version, project_subset can be added to the api to
-        further narrow down results
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        prompt_id: integer
-        version_id: integer
-      display-name: Get list of inference runs
-      request:
-        name: ApiPromptsVersionsInferenceRunsListRequest
-        query-parameters:
-          ordering:
-            type: optional<string>
-            docs: Which field to use when ordering the results.
-      response:
-        docs: ''
-        type: list<root.ModelRun>
-      examples:
-        - path-parameters:
-            prompt_id: 1
-            version_id: 1
-          response:
-            body:
-              - id: 1
-                parent_model: 1
-                project_subset: All
-                status: Pending
-                job_id: job_id
-                total_predictions: 1
-                total_correct_predictions: 1
-                total_tasks: 1
-                created_at: '2024-01-15T09:30:00Z'
-                triggered_at: '2024-01-15T09:30:00Z'
-                predictions_updated_at: '2024-01-15T09:30:00Z'
-                completed_at: '2024-01-15T09:30:00Z'
-                organization: 1
-                project: 1
-                model_version: 1
-                created_by: 1
-    api_prompts_versions_inference_runs_create:
-      path: /api/prompts/{prompt_id}/versions/{version_id}/inference-runs
-      method: POST
-      auth: true
-      docs: >-
-        Create a new model run for given project_id, model_version_id and
-        project_subset if it does not exist. If it exists, delete the record and
-        create new
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        prompt_id: integer
-        version_id: integer
-      display-name: Create inference run object
-      request:
-        body: root.ModelRunRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.ModelRun
-      examples:
-        - path-parameters:
-            prompt_id: 1
-            version_id: 1
-          request:
-            project: 1
-            model_version: 1
-          response:
-            body:
-              id: 1
-              parent_model: 1
-              project_subset: All
-              status: Pending
-              job_id: job_id
-              total_predictions: 1
-              total_correct_predictions: 1
-              total_tasks: 1
-              created_at: '2024-01-15T09:30:00Z'
-              triggered_at: '2024-01-15T09:30:00Z'
-              predictions_updated_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              organization: 1
-              project: 1
-              model_version: 1
-              created_by: 1
+      audiences:
+        - internal
     api_prompts_versions_inference_runs_cancel_create:
       path: >-
         /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{inference_run_id}/cancel
@@ -656,37 +377,7 @@ service:
             inference_run_id: 1
             prompt_id: 1
             version_id: 1
-    api_prompts_versions_refine_retrieve:
-      path: /api/prompts/{prompt_id}/versions/{version_id}/refine
-      method: GET
-      auth: true
-      docs: Get the status of a prompt refinement job.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        prompt_id: integer
-        version_id: integer
-      display-name: Get prompt refinement status
-      examples:
-        - path-parameters:
-            prompt_id: 1
-            version_id: 1
-    api_prompts_versions_refine_create:
-      path: /api/prompts/{prompt_id}/versions/{version_id}/refine
-      method: POST
-      auth: true
-      docs: Refine a prompt without using ground truth tasks
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        prompt_id: integer
-        version_id: integer
-      display-name: Refine a prompt without using ground truth tasks
-      examples:
-        - path-parameters:
-            prompt_id: 1
-            version_id: 1
-    compatible-projects:
+    compatible_projects:
       path: /api/prompts/compatible-projects
       method: GET
       auth: true
@@ -720,166 +411,88 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - is_published: true
-                  config_has_control_tags: true
-                  custom_task_lock_ttl: 1
-                  useful_annotation_number: useful_annotation_number
-                  color: color
-                  expert_instruction: expert_instruction
-                  model_version: model_version
-                  show_collab_predictions: true
-                  total_predictions_number: 1
-                  require_comment_on_skip: true
-                  queue_left: queue_left
-                  annotation_limit_percent: annotation_limit_percent
-                  show_ground_truth_first: true
-                  members: members
-                  allow_stream: allow_stream
+                - annotation_limit_percent: annotation_limit_percent
+                  evaluate_predictions_automatically: true
+                  skip_queue: REQUEUE_FOR_ME
+                  duplication_done: true
                   sampling: Sequential sampling
-                  custom_script: custom_script
+                  id: 1
+                  reviewed_number: reviewed_number
+                  comment_classification_config: comment_classification_config
+                  model_version: model_version
+                  queue_done: queue_done
+                  title: title
+                  task_number: 1
+                  annotator_evaluation_minimum_tasks: 1
+                  maximum_annotations: 1
+                  num_tasks_with_annotations: num_tasks_with_annotations
+                  total_predictions_number: 1
+                  parsed_label_config:
+                    key: value
+                  reveal_preannotations_interactively: true
+                  review_total_tasks: review_total_tasks
+                  workspace_title: workspace_title
+                  expert_instruction: expert_instruction
+                  created_by:
+                    id: 1
+                    avatar: avatar
+                  control_weights:
+                    key: value
+                  config_has_control_tags: true
+                  require_comment_on_skip: true
+                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
+                  total_annotations_number: total_annotations_number
+                  skipped_annotations_number: skipped_annotations_number
+                  useful_annotation_number: useful_annotation_number
+                  min_annotations_to_start_training: 1
+                  data_types:
+                    key: value
+                  overlap_cohort_percentage: 1
+                  is_published: true
+                  start_training_on_annotation_update: true
+                  prompts: prompts
+                  ground_truth_number: 1
+                  show_ground_truth_first: true
+                  created_at: '2024-01-15T09:30:00Z'
+                  queue_total: queue_total
+                  queue_left: queue_left
+                  rejected: rejected
+                  show_overlap_first: true
+                  members: members
+                  members_count: members_count
+                  workspace: workspace
+                  is_draft: true
+                  reviewer_queue_total: reviewer_queue_total
+                  pause_on_failed_annotator_evaluation: true
                   blueprints:
                     - id: 1
                       share_id: share_id
                       short_url: short_url
                       created_at: '2024-01-15T09:30:00Z'
-                  ground_truth_number: 1
-                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
-                  enable_empty_annotation: true
-                  config_suitable_for_bulk_annotation: true
-                  assignment_settings:
-                    id: 1
+                  color: color
                   show_instruction: true
-                  parsed_label_config:
-                    key: value
-                  ready: ready
-                  skipped_annotations_number: skipped_annotations_number
-                  maximum_annotations: 1
-                  queue_total: queue_total
-                  id: 1
-                  duplication_done: true
-                  review_total_tasks: review_total_tasks
-                  pinned_at: '2024-01-15T09:30:00Z'
-                  prompts: prompts
-                  annotation_limit_count: 1
-                  is_draft: true
-                  start_training_on_annotation_update: true
-                  num_tasks_with_annotations: num_tasks_with_annotations
-                  created_by:
-                    id: 1
-                    avatar: avatar
-                  title: title
-                  show_overlap_first: true
-                  queue_done: queue_done
-                  data_types:
-                    key: value
-                  task_number: 1
-                  description: description
-                  reveal_preannotations_interactively: true
-                  reviewed_number: reviewed_number
-                  label_config: label_config
-                  control_weights:
-                    key: value
                   review_settings:
                     id: 1
                     requeue_rejected_tasks_to_annotator: true
-                  comment_classification_config: comment_classification_config
-                  created_at: '2024-01-15T09:30:00Z'
-                  evaluate_predictions_automatically: true
-                  members_count: members_count
-                  rejected: rejected
-                  min_annotations_to_start_training: 1
-                  pause_on_failed_annotator_evaluation: true
-                  overlap_cohort_percentage: 1
+                  annotation_limit_count: 1
+                  ready: ready
+                  show_collab_predictions: true
                   organization: 1
-                  skip_queue: REQUEUE_FOR_ME
-                  total_annotations_number: total_annotations_number
-                  show_skip_button: true
-                  finished_task_number: 1
-                  annotator_evaluation_minimum_tasks: 1
-                  workspace: workspace
-                  reviewer_queue_total: reviewer_queue_total
+                  pinned_at: '2024-01-15T09:30:00Z'
+                  allow_stream: allow_stream
+                  description: description
+                  enable_empty_annotation: true
+                  assignment_settings:
+                    id: 1
+                  custom_script: custom_script
                   show_annotation_history: true
-                  workspace_title: workspace_title
+                  custom_task_lock_ttl: 1
+                  finished_task_number: 1
+                  config_suitable_for_bulk_annotation: true
+                  show_skip_button: true
+                  label_config: label_config
       audiences:
         - public
-    api_prompts_inference_runs_list:
-      path: /api/prompts/inference-runs
-      method: GET
-      auth: true
-      docs: >-
-        Get list of inference runs for the organization, query parameters
-        project, model_version, project_subset can be added to the api to
-        further narrow down results
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Get list of inference runs
-      request:
-        name: ApiPromptsInferenceRunsListRequest
-        query-parameters:
-          ordering:
-            type: optional<string>
-            docs: Which field to use when ordering the results.
-      response:
-        docs: ''
-        type: list<root.ModelRun>
-      examples:
-        - response:
-            body:
-              - id: 1
-                parent_model: 1
-                project_subset: All
-                status: Pending
-                job_id: job_id
-                total_predictions: 1
-                total_correct_predictions: 1
-                total_tasks: 1
-                created_at: '2024-01-15T09:30:00Z'
-                triggered_at: '2024-01-15T09:30:00Z'
-                predictions_updated_at: '2024-01-15T09:30:00Z'
-                completed_at: '2024-01-15T09:30:00Z'
-                organization: 1
-                project: 1
-                model_version: 1
-                created_by: 1
-    api_prompts_inference_runs_create:
-      path: /api/prompts/inference-runs
-      method: POST
-      auth: true
-      docs: >-
-        Create a new model run for given project_id, model_version_id and
-        project_subset if it does not exist. If it exists, delete the record and
-        create new
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Create inference run object
-      request:
-        body: root.ModelRunRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.ModelRun
-      examples:
-        - request:
-            project: 1
-            model_version: 1
-          response:
-            body:
-              id: 1
-              parent_model: 1
-              project_subset: All
-              status: Pending
-              job_id: job_id
-              total_predictions: 1
-              total_correct_predictions: 1
-              total_tasks: 1
-              created_at: '2024-01-15T09:30:00Z'
-              triggered_at: '2024-01-15T09:30:00Z'
-              predictions_updated_at: '2024-01-15T09:30:00Z'
-              completed_at: '2024-01-15T09:30:00Z'
-              organization: 1
-              project: 1
-              model_version: 1
-              created_by: 1
   source:
     openapi: openapi/openapi.yaml
 types:

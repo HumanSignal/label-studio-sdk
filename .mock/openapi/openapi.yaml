@@ -3719,6 +3719,59 @@ paths:
       x-fern-sdk-method-name: delete
       x-fern-audiences:
       - public
+  /api/inference-runs/{id}/indicators/:
+    get:
+      operationId: api_inference_runs_indicators_retrieve
+      description: Get key indicators for the Prompt dashboard.
+      summary: Get key indicators
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - Prompts
+      security:
+      - Token: []
+      responses:
+        '200':
+          description: No response body
+      x-fern-sdk-group-name:
+      - prompts
+      - indicators
+      x-fern-sdk-method-name: get_key_indicators
+      x-fern-audiences:
+      - public
+  /api/inference-runs/{id}/indicators/{indicator_key}:
+    get:
+      operationId: api_inference_runs_indicators_retrieve_2
+      description: Get a specific key indicator for the Prompt dashboard.
+      summary: Get key indicator
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: indicator_key
+        schema:
+          type: string
+        required: true
+      tags:
+      - Prompts
+      security:
+      - Token: []
+      responses:
+        '200':
+          description: No response body
+      x-fern-sdk-group-name:
+      - prompts
+      - indicators
+      x-fern-sdk-method-name: get_key_indicator
+      x-fern-audiences:
+      - public
   /api/invite:
     get:
       operationId: api_invite_retrieve
@@ -4801,6 +4854,70 @@ paths:
           description: List of model provider choices
       x-fern-sdk-group-name: model_providers
       x-fern-sdk-method-name: list_model_provider_choices
+      x-fern-audiences:
+      - public
+  /api/model-run/batch-failed-predictions:
+    post:
+      operationId: api_model_run_batch_failed_predictions_create
+      description: Create a new batch of failed predictions.
+      summary: Create batch of failed predictions
+      tags:
+      - Prompts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchFailedPredictionsRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BatchFailedPredictionsRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BatchFailedPredictionsRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchFailedPredictions'
+          description: ''
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: create_batch_failed_predictions
+      x-fern-audiences:
+      - public
+  /api/model-run/batch-predictions:
+    post:
+      operationId: api_model_run_batch_predictions_create
+      description: Create a new batch prediction.
+      summary: Create batch predictions
+      tags:
+      - Prompts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchPredictionsRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/BatchPredictionsRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/BatchPredictionsRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchPredictions'
+          description: ''
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: create_batch_predictions
       x-fern-audiences:
       - public
   /api/organizations/:
@@ -8229,9 +8346,13 @@ paths:
                 items:
                   $ref: '#/components/schemas/ModelInterfaceSerializerGET'
           description: ''
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+      - public
     post:
       operationId: api_prompts_create
-      description: Create a new promt.
+      description: Create a new prompt.
       summary: Create prompt
       tags:
       - Prompts
@@ -8256,6 +8377,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ModelInterface'
           description: ''
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+      - public
   /api/prompts/{id}/:
     get:
       operationId: api_prompts_retrieve
@@ -8278,6 +8403,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ModelInterfaceSerializerGET'
           description: ''
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+      - public
     put:
       operationId: api_prompts_update
       description: Overwrite a specific prompt by ID.
@@ -8311,6 +8440,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ModelInterface'
           description: ''
+      x-fern-audiences:
+      - internal
     patch:
       operationId: api_prompts_partial_update
       description: Update a specific prompt by ID.
@@ -8343,6 +8474,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ModelInterface'
           description: ''
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: update
+      x-fern-audiences:
+      - public
     delete:
       operationId: api_prompts_destroy
       description: Delete a prompt by ID
@@ -8360,6 +8495,10 @@ paths:
       responses:
         '204':
           description: No response body
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: delete
+      x-fern-audiences:
+      - public
   /api/prompts/{id}/get-default-version-name:
     get:
       operationId: api_prompts_get_default_version_name_retrieve
@@ -8378,11 +8517,17 @@ paths:
       responses:
         '200':
           description: No response body
+      x-fern-sdk-group-name:
+      - prompts
+      - versions
+      x-fern-sdk-method-name: get_default_version_name
+      x-fern-audiences:
+      - public
   /api/prompts/{prompt_id}/versions:
     get:
       operationId: api_prompts_versions_list
-      description: List all third-party versions of a prompt.
-      summary: List third-party prompt versions
+      description: List all versions of a prompt.
+      summary: List prompt versions
       parameters:
       - name: ordering
         required: false
@@ -8415,10 +8560,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/ThirdPartyModelVersion'
           description: ''
+      x-fern-sdk-group-name:
+      - prompts
+      - versions
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+      - public
     post:
       operationId: api_prompts_versions_create
-      description: Create a new third-party version of a prompt.
-      summary: Create third-party prompt version
+      description: Create a new version of a prompt.
+      summary: Create prompt version
       parameters:
       - in: path
         name: prompt_id
@@ -8448,11 +8599,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ThirdPartyModelVersion'
           description: ''
+      x-fern-sdk-group-name:
+      - prompts
+      - versions
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+      - public
   /api/prompts/{prompt_id}/versions/{id}:
     get:
       operationId: api_prompts_versions_retrieve
-      description: Retrieve a specific third-party prompt of a model.
-      summary: Get third-party prompt version
+      description: Retrieve a specific prompt of a model.
+      summary: Get prompt version
       parameters:
       - in: path
         name: id
@@ -8475,10 +8632,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ThirdPartyModelVersion'
           description: ''
+      x-fern-sdk-group-name:
+      - prompts
+      - versions
+      x-fern-sdk-method-name: get
+      x-fern-audiences:
+      - public
     put:
       operationId: api_prompts_versions_update
-      description: Overwrite a specific third-party prompt version by ID.
-      summary: Put third-party prompt version
+      description: Overwrite a specific prompt version by ID.
+      summary: Put prompt version
       parameters:
       - in: path
         name: id
@@ -8513,10 +8676,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ThirdPartyModelVersion'
           description: ''
+      x-fern-audiences:
+      - internal
     patch:
       operationId: api_prompts_versions_partial_update
-      description: Update a specific third-party prompt version by ID.
-      summary: Update third-party prompt version
+      description: Update a specific prompt version by ID.
+      summary: Update prompt version
       parameters:
       - in: path
         name: id
@@ -8550,10 +8715,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/ThirdPartyModelVersion'
           description: ''
+      x-fern-sdk-group-name:
+      - prompts
+      - versions
+      x-fern-sdk-method-name: update
+      x-fern-audiences:
+      - public
     delete:
       operationId: api_prompts_versions_destroy
-      description: Delete a third-party prompt version by ID
-      summary: Delete third-party prompt version
+      description: Delete a prompt version by ID
+      summary: Delete prompt version
       parameters:
       - in: path
         name: id
@@ -8572,12 +8743,18 @@ paths:
       responses:
         '204':
           description: No response body
+      x-fern-sdk-group-name:
+      - prompts
+      - versions
+      x-fern-sdk-method-name: delete
+      x-fern-audiences:
+      - public
   /api/prompts/{prompt_id}/versions/{version_id}/cost-estimate:
     get:
       operationId: api_prompts_versions_cost_estimate_retrieve
       description: Get an estimate of the cost for making an inference run on the
         selected Prompt Version and Project/ProjectSubset
-      summary: Get an estimate of the cost for making an inference run
+      summary: Get cost estimate for running a prompt version on a particular project/subset
       parameters:
       - in: path
         name: prompt_id
@@ -8598,15 +8775,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ModelRun'
-          description: ''
+                $ref: '#/components/schemas/InferenceRunCostEstimate'
+          description: Cost estimate response
+      x-fern-sdk-group-name:
+      - prompts
+      - versions
+      x-fern-sdk-method-name: get_cost_estimate
+      x-fern-audiences:
+      - public
   /api/prompts/{prompt_id}/versions/{version_id}/inference-runs:
     get:
       operationId: api_prompts_versions_inference_runs_list
-      description: Get list of inference runs for the organization, query parameters
-        project, model_version, project_subset can be added to the api to further
-        narrow down results
-      summary: Get list of inference runs
+      description: Get information (status, metadata, etc) about an existing inference
+        run
+      summary: Get inference run info
       parameters:
       - name: ordering
         required: false
@@ -8614,6 +8796,23 @@ paths:
         description: Which field to use when ordering the results.
         schema:
           type: string
+      - in: query
+        name: project
+        schema:
+          type: integer
+        description: The ID of the project this Inference Run makes predictions on
+        required: true
+      - in: query
+        name: project_subset
+        schema:
+          type: string
+          enum:
+          - All
+          - HasGT
+          - Sample
+        description: Defines which tasks are operated on (e.g. HasGT will only operate
+          on tasks with a ground truth annotation, but All will operate on all records)
+        required: true
       - in: path
         name: prompt_id
         schema:
@@ -8637,12 +8836,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/ModelRun'
           description: ''
+      x-fern-sdk-group-name:
+      - prompts
+      - runs
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+      - public
     post:
       operationId: api_prompts_versions_inference_runs_create
-      description: Create a new model run for given project_id, model_version_id and
-        project_subset if it does not exist. If it exists, delete the record and create
-        new
-      summary: Create inference run object
+      description: Run a prompt inference.
+      summary: Run prompt inference
       parameters:
       - in: path
         name: prompt_id
@@ -8677,6 +8880,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ModelRun'
           description: ''
+      x-fern-sdk-group-name:
+      - prompts
+      - runs
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+      - public
   /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{inference_run_id}/cancel:
     post:
       operationId: api_prompts_versions_inference_runs_cancel_create
@@ -8708,14 +8917,20 @@ paths:
   /api/prompts/{prompt_id}/versions/{version_id}/refine:
     get:
       operationId: api_prompts_versions_refine_retrieve
-      description: Get the status of a prompt refinement job.
-      summary: Get prompt refinement status
+      description: Get the refined prompt based on the `refinement_job_id`.
+      summary: Get refined prompt
       parameters:
       - in: path
         name: prompt_id
         schema:
           type: integer
         required: true
+      - in: query
+        name: refinement_job_id
+        schema:
+          type: string
+        description: Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine`
+          endpoint
       - in: path
         name: version_id
         schema:
@@ -8727,12 +8942,34 @@ paths:
       - Token: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefinedPromptResponse'
+          description: Refined prompt response
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefinedPromptResponse'
+          description: Refinement job status
+      x-fern-sdk-group-name:
+      - prompts
+      - versions
+      x-fern-sdk-method-name: get_refinement_status
+      x-fern-audiences:
+      - public
     post:
       operationId: api_prompts_versions_refine_create
-      description: Refine a prompt without using ground truth tasks
-      summary: Refine a prompt without using ground truth tasks
+      description: Refine a prompt version using a teacher model and save the refined
+        prompt as a new version.
+      summary: Refine a prompt version
       parameters:
+      - in: query
+        name: async
+        schema:
+          type: boolean
+        description: Whether to run the refinement asynchronously
       - in: path
         name: prompt_id
         schema:
@@ -8745,11 +8982,33 @@ paths:
         required: true
       tags:
       - Prompts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefinePromptRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RefinePromptRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RefinePromptRequestRequest'
+        required: true
       security:
       - Token: []
       responses:
-        '200':
-          description: No response body
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefinedPromptResponse'
+          description: Refined prompt response
+      x-fern-sdk-group-name:
+      - prompts
+      - versions
+      x-fern-sdk-method-name: refine
+      x-fern-audiences:
+      - public
   /api/prompts/compatible-projects:
     get:
       operationId: api_prompts_compatible_projects_list
@@ -8795,65 +9054,9 @@ paths:
                 $ref: '#/components/schemas/PaginatedAllRolesProjectListList'
           description: ''
       x-fern-sdk-group-name: prompts
-      x-fern-sdk-method-name: compatible-projects
+      x-fern-sdk-method-name: compatible_projects
       x-fern-audiences:
       - public
-  /api/prompts/inference-runs:
-    get:
-      operationId: api_prompts_inference_runs_list
-      description: Get list of inference runs for the organization, query parameters
-        project, model_version, project_subset can be added to the api to further
-        narrow down results
-      summary: Get list of inference runs
-      parameters:
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-      tags:
-      - Prompts
-      security:
-      - Token: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ModelRun'
-          description: ''
-    post:
-      operationId: api_prompts_inference_runs_create
-      description: Create a new model run for given project_id, model_version_id and
-        project_subset if it does not exist. If it exists, delete the record and create
-        new
-      summary: Create inference run object
-      tags:
-      - Prompts
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ModelRunRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/ModelRunRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/ModelRunRequest'
-        required: true
-      security:
-      - Token: []
-      responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ModelRun'
-          description: ''
   /api/saml/settings:
     get:
       operationId: api_saml_settings_retrieve
@@ -12959,7 +13162,7 @@ paths:
         - **Admin/Owner**: Full task details with all annotations, reviews, and metadata
         - **Reviewer**: Task details optimized for review workflow
         - **Annotator**: Task details filtered to show only user's own annotations and assignments
-      summary: List tasks with role-based serialization
+      summary: List tasks
       parameters:
       - in: query
         name: fields
@@ -14597,104 +14800,57 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
-        is_published:
-          type: boolean
-          title: Published
-          description: Whether or not the project is published to annotators
-        config_has_control_tags:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for labeling
-        custom_task_lock_ttl:
-          type: integer
-          maximum: 86400
-          minimum: 1
-          nullable: true
-          description: TTL in seconds for task reservations, on new and existing tasks
-        useful_annotation_number:
-          type: string
-          readOnly: true
-        color:
-          type: string
-          nullable: true
-          maxLength: 16
-        expert_instruction:
-          type: string
-          nullable: true
-          description: Labeling instructions in HTML format
-        model_version:
-          type: string
-          nullable: true
-          description: Machine learning model version
-        show_collab_predictions:
-          type: boolean
-          title: Show predictions to annotator
-          description: If set, the annotator can view model predictions
-        total_predictions_number:
-          type: integer
-          readOnly: true
-        require_comment_on_skip:
-          type: boolean
-          default: false
-        queue_left:
-          type: string
-          readOnly: true
         annotation_limit_percent:
           type: string
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
-        show_ground_truth_first:
+        evaluate_predictions_automatically:
           type: boolean
-        members:
-          type: string
-          readOnly: true
-        allow_stream:
-          type: string
-          readOnly: true
+          description: Retrieve and display predictions when loading a task
+        skip_queue:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SkipQueueEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        duplication_done:
+          type: boolean
+          default: false
         sampling:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/SamplingEnum'
           - $ref: '#/components/schemas/NullEnum'
-        custom_script:
-          type: string
-        blueprints:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueprintList'
-          readOnly: true
-        ground_truth_number:
+        id:
           type: integer
           readOnly: true
-          description: Honeypot annotation number in project
-        annotator_evaluation_minimum_score:
+        reviewed_number:
           type: string
-          format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          readOnly: true
+        comment_classification_config:
+          type: string
+        model_version:
+          type: string
           nullable: true
-          default: '95.00'
-        enable_empty_annotation:
-          type: boolean
-          description: Allow annotators to submit empty annotations
-        config_suitable_for_bulk_annotation:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for bulk annotation
-        assignment_settings:
-          $ref: '#/components/schemas/AssignmentSettings'
-        show_instruction:
-          type: boolean
-          description: Show instructions to the annotator before they start
-        parsed_label_config:
-          readOnly: true
-          description: JSON-formatted labeling configuration
-        ready:
+          description: Machine learning model version
+        queue_done:
           type: string
           readOnly: true
-        skipped_annotations_number:
+        title:
           type: string
+          nullable: true
+          description: Project name. Must be between 3 and 50 characters long.
+          maxLength: 50
+          minLength: 3
+        task_number:
+          type: integer
           readOnly: true
+          description: Total task number in project
+        annotator_evaluation_minimum_tasks:
+          type: integer
+          minimum: 0
+          nullable: true
+          default: 10
         maximum_annotations:
           type: integer
           maximum: 2147483647
@@ -14703,77 +14859,32 @@ components:
           description: Maximum number of annotations for one task. If the number of
             annotations per task is equal or greater to this value, the task is completed
             (is_labeled=True)
-        queue_total:
-          type: string
-          readOnly: true
-        id:
-          type: integer
-          readOnly: true
-        duplication_done:
-          type: boolean
-          default: false
-        review_total_tasks:
-          type: string
-          readOnly: true
-        pinned_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Pinned date and time
-        prompts:
-          type: string
-          readOnly: true
-        annotation_limit_count:
-          type: integer
-          minimum: 1
-          nullable: true
-        is_draft:
-          type: boolean
-          description: Whether or not the project is in the middle of being created
-        start_training_on_annotation_update:
-          type: boolean
-          readOnly: true
-          description: Start model training after any annotations are submitted or
-            updated
         num_tasks_with_annotations:
           type: string
           readOnly: true
+        total_predictions_number:
+          type: integer
+          readOnly: true
+        parsed_label_config:
+          readOnly: true
+          description: JSON-formatted labeling configuration
+        reveal_preannotations_interactively:
+          type: boolean
+          description: Reveal pre-annotations interactively
+        review_total_tasks:
+          type: string
+          readOnly: true
+        workspace_title:
+          type: string
+          readOnly: true
+        expert_instruction:
+          type: string
+          nullable: true
+          description: Labeling instructions in HTML format
         created_by:
           allOf:
           - $ref: '#/components/schemas/UserSimple'
           description: Project owner
-        title:
-          type: string
-          nullable: true
-          description: Project name. Must be between 3 and 50 characters long.
-          maxLength: 50
-          minLength: 3
-        show_overlap_first:
-          type: boolean
-        queue_done:
-          type: string
-          readOnly: true
-        data_types:
-          readOnly: true
-          nullable: true
-        task_number:
-          type: integer
-          readOnly: true
-          description: Total task number in project
-        description:
-          type: string
-          nullable: true
-          description: Project description
-        reveal_preannotations_interactively:
-          type: boolean
-          description: Reveal pre-annotations interactively
-        reviewed_number:
-          type: string
-          readOnly: true
-        label_config:
-          type: string
-          nullable: true
-          description: Label config in XML format. See more about it in documentation
         control_weights:
           nullable: true
           description: 'Dict of weights for each control tag in metric calculation.
@@ -14784,21 +14895,26 @@ components:
             be twice more important than Airplaine, then you have to need the specify:
             {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0,
             ''Airplaine'': 0.5}, ''overall'': 0.33}'
-        review_settings:
-          $ref: '#/components/schemas/ReviewSettings'
-        comment_classification_config:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        evaluate_predictions_automatically:
+        config_has_control_tags:
           type: boolean
-          description: Retrieve and display predictions when loading a task
-        members_count:
+          readOnly: true
+          description: Flag to detect is project ready for labeling
+        require_comment_on_skip:
+          type: boolean
+          default: false
+        annotator_evaluation_minimum_score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+          default: '95.00'
+        total_annotations_number:
           type: string
           readOnly: true
-        rejected:
+        skipped_annotations_number:
+          type: string
+          readOnly: true
+        useful_annotation_number:
           type: string
           readOnly: true
         min_annotations_to_start_training:
@@ -14807,49 +14923,136 @@ components:
           minimum: -2147483648
           description: Minimum number of completed tasks after which model training
             is started
-        pause_on_failed_annotator_evaluation:
-          type: boolean
+        data_types:
+          readOnly: true
           nullable: true
-          default: false
         overlap_cohort_percentage:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
+        is_published:
+          type: boolean
+          title: Published
+          description: Whether or not the project is published to annotators
+        start_training_on_annotation_update:
+          type: boolean
+          readOnly: true
+          description: Start model training after any annotations are submitted or
+            updated
+        prompts:
+          type: string
+          readOnly: true
+        ground_truth_number:
+          type: integer
+          readOnly: true
+          description: Honeypot annotation number in project
+        show_ground_truth_first:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        queue_total:
+          type: string
+          readOnly: true
+        queue_left:
+          type: string
+          readOnly: true
+        rejected:
+          type: string
+          readOnly: true
+        show_overlap_first:
+          type: boolean
+        members:
+          type: string
+          readOnly: true
+        members_count:
+          type: string
+          readOnly: true
+        workspace:
+          type: string
+          readOnly: true
+        is_draft:
+          type: boolean
+          description: Whether or not the project is in the middle of being created
+        reviewer_queue_total:
+          type: string
+          readOnly: true
+        pause_on_failed_annotator_evaluation:
+          type: boolean
+          nullable: true
+          default: false
+        blueprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintList'
+          readOnly: true
+        color:
+          type: string
+          nullable: true
+          maxLength: 16
+        show_instruction:
+          type: boolean
+          description: Show instructions to the annotator before they start
+        review_settings:
+          $ref: '#/components/schemas/ReviewSettings'
+        annotation_limit_count:
+          type: integer
+          minimum: 1
+          nullable: true
+        ready:
+          type: string
+          readOnly: true
+        show_collab_predictions:
+          type: boolean
+          title: Show predictions to annotator
+          description: If set, the annotator can view model predictions
         organization:
           type: integer
           nullable: true
-        skip_queue:
+        pinned_at:
+          type: string
+          format: date-time
           nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SkipQueueEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        total_annotations_number:
+          description: Pinned date and time
+        allow_stream:
           type: string
           readOnly: true
+        description:
+          type: string
+          nullable: true
+          description: Project description
+        enable_empty_annotation:
+          type: boolean
+          description: Allow annotators to submit empty annotations
+        assignment_settings:
+          $ref: '#/components/schemas/AssignmentSettings'
+        custom_script:
+          type: string
+        show_annotation_history:
+          type: boolean
+          description: Show annotation history to annotator
+        custom_task_lock_ttl:
+          type: integer
+          maximum: 86400
+          minimum: 1
+          nullable: true
+          description: TTL in seconds for task reservations, on new and existing tasks
+        finished_task_number:
+          type: integer
+          readOnly: true
+        config_suitable_for_bulk_annotation:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for bulk annotation
         show_skip_button:
           type: boolean
           description: Show a skip button in interface and allow annotators to skip
             the task
-        finished_task_number:
-          type: integer
-          readOnly: true
-        annotator_evaluation_minimum_tasks:
-          type: integer
-          minimum: 0
+        label_config:
+          type: string
           nullable: true
-          default: 10
-        workspace:
-          type: string
-          readOnly: true
-        reviewer_queue_total:
-          type: string
-          readOnly: true
-        show_annotation_history:
-          type: boolean
-          description: Show annotation history to annotator
-        workspace_title:
-          type: string
-          readOnly: true
+          description: Label config in XML format. See more about it in documentation
       required:
       - allow_stream
       - assignment_settings
@@ -15792,6 +15995,56 @@ components:
           description: A unique integer value identifying this dataset.
       required:
       - dataset
+    BatchFailedPredictions:
+      type: object
+      properties:
+        job_id:
+          type: string
+          maxLength: 255
+        failed_predictions:
+          type: array
+          items: {}
+      required:
+      - failed_predictions
+      - job_id
+    BatchFailedPredictionsRequest:
+      type: object
+      properties:
+        job_id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        failed_predictions:
+          type: array
+          items: {}
+      required:
+      - failed_predictions
+      - job_id
+    BatchPredictions:
+      type: object
+      properties:
+        job_id:
+          type: string
+          maxLength: 255
+        results:
+          type: array
+          items: {}
+      required:
+      - job_id
+      - results
+    BatchPredictionsRequest:
+      type: object
+      properties:
+        job_id:
+          type: string
+          minLength: 1
+          maxLength: 255
+        results:
+          type: array
+          items: {}
+      required:
+      - job_id
+      - results
     BlankEnum:
       enum:
       - ''
@@ -17357,6 +17610,40 @@ components:
           description: Users who wrote comments
       required:
       - data
+    InferenceRunCostEstimate:
+      type: object
+      properties:
+        prompt_cost_usd:
+          type: string
+          nullable: true
+          description: Cost of the prompt (in USD)
+        completion_cost_usd:
+          type: string
+          nullable: true
+          description: Cost of the completion (in USD)
+        total_cost_usd:
+          type: string
+          nullable: true
+          description: Total cost of the inference (in USD)
+        is_error:
+          type: boolean
+          nullable: true
+          description: Whether an error occurred or not
+        error_type:
+          type: string
+          nullable: true
+          description: Type of error (e.g. "Timeout", "Rate Limit", etc)
+        error_message:
+          type: string
+          nullable: true
+          description: Error message details
+      required:
+      - completion_cost_usd
+      - error_message
+      - error_type
+      - is_error
+      - prompt_cost_usd
+      - total_cost_usd
     LSAPITokenBlacklistRequest:
       type: object
       properties:
@@ -24004,6 +24291,62 @@ components:
       - id
       - project
       - type
+    RefinePromptRequestRequest:
+      type: object
+      properties:
+        teacher_model_provider_connection_id:
+          type: integer
+          description: Model Provider Connection ID to use to refine the prompt
+        teacher_model_name:
+          type: string
+          minLength: 1
+          description: Name of the model to use to refine the prompt
+        project_id:
+          type: integer
+          description: Project ID to target the refined prompt for
+      required:
+      - project_id
+      - teacher_model_name
+      - teacher_model_provider_connection_id
+    RefinedPromptResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          nullable: true
+          description: Title of the refined prompt
+        reasoning:
+          type: string
+          nullable: true
+          description: Reasoning behind the refinement
+        prompt:
+          type: string
+          description: The refined prompt text
+        refinement_job_id:
+          type: string
+          nullable: true
+          description: Unique identifier for the refinement job
+        refinement_status:
+          type: string
+          nullable: true
+          description: Status of the refinement job
+        total_cost:
+          type: string
+          nullable: true
+          description: Total cost of the refinement job (in USD)
+        previous_version:
+          allOf:
+          - $ref: '#/components/schemas/ThirdPartyModelVersion'
+          nullable: true
+          description: Previous version of the prompt
+      required:
+      - previous_version
+      - prompt
+      - reasoning
+      - refinement_job_id
+      - refinement_status
+      - title
+      - total_cost
     RequeueRejectedTasksModeEnum:
       enum:
       - requeue

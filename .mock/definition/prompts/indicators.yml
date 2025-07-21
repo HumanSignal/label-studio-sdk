@@ -1,0 +1,38 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get_key_indicators:
+      path: /api/inference-runs/{id}/indicators/
+      method: GET
+      auth: true
+      docs: Get key indicators for the Prompt dashboard.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get key indicators
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - public
+    get_key_indicator:
+      path: /api/inference-runs/{id}/indicators/{indicator_key}
+      method: GET
+      auth: true
+      docs: Get a specific key indicator for the Prompt dashboard.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+        indicator_key: string
+      display-name: Get key indicator
+      examples:
+        - path-parameters:
+            id: 1
+            indicator_key: indicator_key
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

@@ -15,9 +15,12 @@ from .assignment_settings_request import AssignmentSettingsRequest
 from .assignment_settings_request_label_stream_task_distribution import (
     AssignmentSettingsRequestLabelStreamTaskDistribution,
 )
+from .associated_project import AssociatedProject
 from .auth_method_enum import AuthMethodEnum
 from .azure_blob_export_storage import AzureBlobExportStorage
 from .azure_blob_import_storage import AzureBlobImportStorage
+from .batch_failed_predictions import BatchFailedPredictions
+from .batch_predictions import BatchPredictions
 from .blank_enum import BlankEnum
 from .blueprint_list import BlueprintList
 from .budget_reset_period_enum import BudgetResetPeriodEnum
@@ -38,6 +41,7 @@ from .gcs_export_storage import GcsExportStorage
 from .gcs_import_storage import GcsImportStorage
 from .hotkeys import Hotkeys
 from .import_api_request import ImportApiRequest
+from .inference_run_cost_estimate import InferenceRunCostEstimate
 from .label_stream_task_distribution_enum import LabelStreamTaskDistributionEnum
 from .last_action_enum import LastActionEnum
 from .local_files_export_storage import LocalFilesExportStorage
@@ -85,9 +89,14 @@ from .lsejwt_settings import LsejwtSettings
 from .maybe_expanded_comment import MaybeExpandedComment
 from .ml_backend import MlBackend
 from .mode_enum import ModeEnum
+from .model_interface import ModelInterface
+from .model_interface_request import ModelInterfaceRequest
+from .model_interface_serializer_get import ModelInterfaceSerializerGet
 from .model_provider_connection import ModelProviderConnection
 from .model_provider_connection_budget_reset_period import ModelProviderConnectionBudgetResetPeriod
 from .model_provider_connection_request import ModelProviderConnectionRequest
+from .model_run import ModelRun
+from .model_run_status_enum import ModelRunStatusEnum
 from .null_enum import NullEnum
 from .onboarding_state_enum import OnboardingStateEnum
 from .organization_billing import OrganizationBilling
@@ -105,10 +114,12 @@ from .project import Project
 from .project_import import ProjectImport
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
+from .project_subset_enum import ProjectSubsetEnum
 from .provider_enum import ProviderEnum
 from .reason_enum import ReasonEnum
 from .redis_export_storage import RedisExportStorage
 from .redis_import_storage import RedisImportStorage
+from .refined_prompt_response import RefinedPromptResponse
 from .requeue_rejected_tasks_mode_enum import RequeueRejectedTasksModeEnum
 from .review_criteria_enum import ReviewCriteriaEnum
 from .review_settings import ReviewSettings
@@ -127,11 +138,14 @@ from .serialization_option import SerializationOption
 from .serialization_option_request import SerializationOptionRequest
 from .serialization_options import SerializationOptions
 from .serialization_options_request import SerializationOptionsRequest
+from .skill_name_enum import SkillNameEnum
 from .skip_queue_enum import SkipQueueEnum
 from .skipped_enum import SkippedEnum
 from .state_enum import StateEnum
 from .status7bf_enum import Status7BfEnum
 from .status_d14enum import StatusD14Enum
+from .third_party_model_version import ThirdPartyModelVersion
+from .third_party_model_version_request import ThirdPartyModelVersionRequest
 from .token_refresh_response import TokenRefreshResponse
 from .token_rotate_response import TokenRotateResponse
 from .trial_role_enum import TrialRoleEnum
@@ -156,9 +170,12 @@ __all__ = [
     "AssignmentSettingsLabelStreamTaskDistribution",
     "AssignmentSettingsRequest",
     "AssignmentSettingsRequestLabelStreamTaskDistribution",
+    "AssociatedProject",
     "AuthMethodEnum",
     "AzureBlobExportStorage",
     "AzureBlobImportStorage",
+    "BatchFailedPredictions",
+    "BatchPredictions",
     "BlankEnum",
     "BlueprintList",
     "BudgetResetPeriodEnum",
@@ -179,6 +196,7 @@ __all__ = [
     "GcsImportStorage",
     "Hotkeys",
     "ImportApiRequest",
+    "InferenceRunCostEstimate",
     "LabelStreamTaskDistributionEnum",
     "LastActionEnum",
     "LocalFilesExportStorage",
@@ -226,9 +244,14 @@ __all__ = [
     "MaybeExpandedComment",
     "MlBackend",
     "ModeEnum",
+    "ModelInterface",
+    "ModelInterfaceRequest",
+    "ModelInterfaceSerializerGet",
     "ModelProviderConnection",
     "ModelProviderConnectionBudgetResetPeriod",
     "ModelProviderConnectionRequest",
+    "ModelRun",
+    "ModelRunStatusEnum",
     "NullEnum",
     "OnboardingStateEnum",
     "OrganizationBilling",
@@ -246,10 +269,12 @@ __all__ = [
     "ProjectImport",
     "ProjectSampling",
     "ProjectSkipQueue",
+    "ProjectSubsetEnum",
     "ProviderEnum",
     "ReasonEnum",
     "RedisExportStorage",
     "RedisImportStorage",
+    "RefinedPromptResponse",
     "RequeueRejectedTasksModeEnum",
     "ReviewCriteriaEnum",
     "ReviewSettings",
@@ -268,11 +293,14 @@ __all__ = [
     "SerializationOptionRequest",
     "SerializationOptions",
     "SerializationOptionsRequest",
+    "SkillNameEnum",
     "SkipQueueEnum",
     "SkippedEnum",
     "StateEnum",
     "Status7BfEnum",
     "StatusD14Enum",
+    "ThirdPartyModelVersion",
+    "ThirdPartyModelVersionRequest",
     "TokenRefreshResponse",
     "TokenRotateResponse",
     "TrialRoleEnum",

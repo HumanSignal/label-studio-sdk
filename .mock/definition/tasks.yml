@@ -264,7 +264,7 @@ service:
         results: $response.tasks
       source:
         openapi: openapi/openapi.yaml
-      display-name: List tasks with role-based serialization
+      display-name: List tasks
       request:
         name: TasksListRequest
         query-parameters:

@@ -6,6 +6,206 @@ import typing
 from .utilities import validate_response
 
 
+async def test_create_batch_failed_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"job_id": "job_id", "failed_predictions": [{"key": "value"}]}
+    expected_types: typing.Any = {"job_id": None, "failed_predictions": ("list", {0: None})}
+    response = client.prompts.create_batch_failed_predictions(job_id="job_id", failed_predictions=[])
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.create_batch_failed_predictions(job_id="job_id", failed_predictions=[])
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_create_batch_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"job_id": "job_id", "results": [{"key": "value"}]}
+    expected_types: typing.Any = {"job_id": None, "results": ("list", {0: None})}
+    response = client.prompts.create_batch_predictions(job_id="job_id", results=[])
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.create_batch_predictions(job_id="job_id", results=[])
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = [
+        {
+            "id": 1,
+            "created_by": {
+                "id": 1,
+                "first_name": "first_name",
+                "last_name": "last_name",
+                "email": "email",
+                "avatar": "avatar",
+            },
+            "skill_name": "TextClassification",
+            "associated_projects": [{"id": 1}],
+            "title": "title",
+            "description": "description",
+            "created_at": "2024-01-15T09:30:00Z",
+            "updated_at": "2024-01-15T09:30:00Z",
+            "input_fields": {"key": "value"},
+            "output_classes": {"key": "value"},
+            "organization": 1,
+        }
+    ]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {
+            0: {
+                "id": "integer",
+                "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+                "skill_name": None,
+                "associated_projects": ("list", {0: {"id": "integer"}}),
+                "title": None,
+                "description": None,
+                "created_at": "datetime",
+                "updated_at": "datetime",
+                "input_fields": None,
+                "output_classes": None,
+                "organization": "integer",
+            }
+        },
+    )
+    response = client.prompts.list()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.list()
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "id": 1,
+        "created_by": {
+            "id": 1,
+            "first_name": "first_name",
+            "last_name": "last_name",
+            "email": "email",
+            "avatar": "avatar",
+        },
+        "skill_name": "TextClassification",
+        "title": "title",
+        "description": "description",
+        "created_at": "2024-01-15T09:30:00Z",
+        "updated_at": "2024-01-15T09:30:00Z",
+        "input_fields": {"key": "value"},
+        "output_classes": {"key": "value"},
+        "organization": 1,
+        "associated_projects": [1],
+    }
+    expected_types: typing.Any = {
+        "id": "integer",
+        "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "skill_name": None,
+        "title": None,
+        "description": None,
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "input_fields": None,
+        "output_classes": None,
+        "organization": "integer",
+        "associated_projects": ("list", {0: "integer"}),
+    }
+    response = client.prompts.create(title="title")
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.create(title="title")
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "id": 1,
+        "created_by": {
+            "id": 1,
+            "first_name": "first_name",
+            "last_name": "last_name",
+            "email": "email",
+            "avatar": "avatar",
+        },
+        "skill_name": "TextClassification",
+        "associated_projects": [{"id": 1, "title": "title"}],
+        "title": "title",
+        "description": "description",
+        "created_at": "2024-01-15T09:30:00Z",
+        "updated_at": "2024-01-15T09:30:00Z",
+        "input_fields": {"key": "value"},
+        "output_classes": {"key": "value"},
+        "organization": 1,
+    }
+    expected_types: typing.Any = {
+        "id": "integer",
+        "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "skill_name": None,
+        "associated_projects": ("list", {0: {"id": "integer", "title": None}}),
+        "title": None,
+        "description": None,
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "input_fields": None,
+        "output_classes": None,
+        "organization": "integer",
+    }
+    response = client.prompts.get(id="id")
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.get(id="id")
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.prompts.delete(id="id")  # type: ignore[func-returns-value]
+        is None
+    )
+
+    assert (
+        await async_client.prompts.delete(id="id")  # type: ignore[func-returns-value]
+        is None
+    )
+
+
+async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "id": 1,
+        "created_by": {
+            "id": 1,
+            "first_name": "first_name",
+            "last_name": "last_name",
+            "email": "email",
+            "avatar": "avatar",
+        },
+        "skill_name": "TextClassification",
+        "title": "title",
+        "description": "description",
+        "created_at": "2024-01-15T09:30:00Z",
+        "updated_at": "2024-01-15T09:30:00Z",
+        "input_fields": {"key": "value"},
+        "output_classes": {"key": "value"},
+        "organization": 1,
+        "associated_projects": [1],
+    }
+    expected_types: typing.Any = {
+        "id": "integer",
+        "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "skill_name": None,
+        "title": None,
+        "description": None,
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "input_fields": None,
+        "output_classes": None,
+        "organization": "integer",
+        "associated_projects": ("list", {0: "integer"}),
+    }
+    response = client.prompts.update(id="id")
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.prompts.update(id="id")
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "count": 123,
@@ -13,76 +213,76 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
         "previous": "http://api.example.org/accounts/?page=2",
         "results": [
             {
-                "is_published": True,
-                "config_has_control_tags": True,
-                "custom_task_lock_ttl": 1,
-                "useful_annotation_number": "useful_annotation_number",
-                "color": "color",
-                "expert_instruction": "expert_instruction",
-                "model_version": "model_version",
-                "show_collab_predictions": True,
-                "total_predictions_number": 1,
-                "require_comment_on_skip": True,
-                "queue_left": "queue_left",
                 "annotation_limit_percent": "annotation_limit_percent",
-                "show_ground_truth_first": True,
-                "members": "members",
-                "allow_stream": "allow_stream",
+                "evaluate_predictions_automatically": True,
+                "skip_queue": "REQUEUE_FOR_ME",
+                "duplication_done": True,
                 "sampling": "Sequential sampling",
-                "custom_script": "custom_script",
+                "id": 1,
+                "reviewed_number": "reviewed_number",
+                "comment_classification_config": "comment_classification_config",
+                "model_version": "model_version",
+                "queue_done": "queue_done",
+                "title": "title",
+                "task_number": 1,
+                "annotator_evaluation_minimum_tasks": 1,
+                "maximum_annotations": 1,
+                "num_tasks_with_annotations": "num_tasks_with_annotations",
+                "total_predictions_number": 1,
+                "parsed_label_config": {"key": "value"},
+                "reveal_preannotations_interactively": True,
+                "review_total_tasks": "review_total_tasks",
+                "workspace_title": "workspace_title",
+                "expert_instruction": "expert_instruction",
+                "created_by": {"id": 1, "avatar": "avatar"},
+                "control_weights": {"key": "value"},
+                "config_has_control_tags": True,
+                "require_comment_on_skip": True,
+                "annotator_evaluation_minimum_score": "annotator_evaluation_minimum_score",
+                "total_annotations_number": "total_annotations_number",
+                "skipped_annotations_number": "skipped_annotations_number",
+                "useful_annotation_number": "useful_annotation_number",
+                "min_annotations_to_start_training": 1,
+                "data_types": {"key": "value"},
+                "overlap_cohort_percentage": 1,
+                "is_published": True,
+                "start_training_on_annotation_update": True,
+                "prompts": "prompts",
+                "ground_truth_number": 1,
+                "show_ground_truth_first": True,
+                "created_at": "2024-01-15T09:30:00Z",
+                "queue_total": "queue_total",
+                "queue_left": "queue_left",
+                "rejected": "rejected",
+                "show_overlap_first": True,
+                "members": "members",
+                "members_count": "members_count",
+                "workspace": "workspace",
+                "is_draft": True,
+                "reviewer_queue_total": "reviewer_queue_total",
+                "pause_on_failed_annotator_evaluation": True,
                 "blueprints": [
                     {"id": 1, "share_id": "share_id", "short_url": "short_url", "created_at": "2024-01-15T09:30:00Z"}
                 ],
-                "ground_truth_number": 1,
-                "annotator_evaluation_minimum_score": "annotator_evaluation_minimum_score",
-                "enable_empty_annotation": True,
-                "config_suitable_for_bulk_annotation": True,
-                "assignment_settings": {"id": 1},
+                "color": "color",
                 "show_instruction": True,
-                "parsed_label_config": {"key": "value"},
-                "ready": "ready",
-                "skipped_annotations_number": "skipped_annotations_number",
-                "maximum_annotations": 1,
-                "queue_total": "queue_total",
-                "id": 1,
-                "duplication_done": True,
-                "review_total_tasks": "review_total_tasks",
-                "pinned_at": "2024-01-15T09:30:00Z",
-                "prompts": "prompts",
-                "annotation_limit_count": 1,
-                "is_draft": True,
-                "start_training_on_annotation_update": True,
-                "num_tasks_with_annotations": "num_tasks_with_annotations",
-                "created_by": {"id": 1, "avatar": "avatar"},
-                "title": "title",
-                "show_overlap_first": True,
-                "queue_done": "queue_done",
-                "data_types": {"key": "value"},
-                "task_number": 1,
-                "description": "description",
-                "reveal_preannotations_interactively": True,
-                "reviewed_number": "reviewed_number",
-                "label_config": "label_config",
-                "control_weights": {"key": "value"},
                 "review_settings": {"id": 1, "requeue_rejected_tasks_to_annotator": True},
-                "comment_classification_config": "comment_classification_config",
-                "created_at": "2024-01-15T09:30:00Z",
-                "evaluate_predictions_automatically": True,
-                "members_count": "members_count",
-                "rejected": "rejected",
-                "min_annotations_to_start_training": 1,
-                "pause_on_failed_annotator_evaluation": True,
-                "overlap_cohort_percentage": 1,
+                "annotation_limit_count": 1,
+                "ready": "ready",
+                "show_collab_predictions": True,
                 "organization": 1,
-                "skip_queue": "REQUEUE_FOR_ME",
-                "total_annotations_number": "total_annotations_number",
-                "show_skip_button": True,
-                "finished_task_number": 1,
-                "annotator_evaluation_minimum_tasks": 1,
-                "workspace": "workspace",
-                "reviewer_queue_total": "reviewer_queue_total",
+                "pinned_at": "2024-01-15T09:30:00Z",
+                "allow_stream": "allow_stream",
+                "description": "description",
+                "enable_empty_annotation": True,
+                "assignment_settings": {"id": 1},
+                "custom_script": "custom_script",
                 "show_annotation_history": True,
-                "workspace_title": "workspace_title",
+                "custom_task_lock_ttl": 1,
+                "finished_task_number": 1,
+                "config_suitable_for_bulk_annotation": True,
+                "show_skip_button": True,
+                "label_config": "label_config",
             }
         ],
     }
@@ -94,77 +294,77 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
             "list",
             {
                 0: {
-                    "is_published": None,
-                    "config_has_control_tags": None,
-                    "custom_task_lock_ttl": "integer",
-                    "useful_annotation_number": None,
-                    "color": None,
-                    "expert_instruction": None,
-                    "model_version": None,
-                    "show_collab_predictions": None,
-                    "total_predictions_number": "integer",
-                    "require_comment_on_skip": None,
-                    "queue_left": None,
                     "annotation_limit_percent": None,
-                    "show_ground_truth_first": None,
-                    "members": None,
-                    "allow_stream": None,
+                    "evaluate_predictions_automatically": None,
+                    "skip_queue": None,
+                    "duplication_done": None,
                     "sampling": None,
-                    "custom_script": None,
+                    "id": "integer",
+                    "reviewed_number": None,
+                    "comment_classification_config": None,
+                    "model_version": None,
+                    "queue_done": None,
+                    "title": None,
+                    "task_number": "integer",
+                    "annotator_evaluation_minimum_tasks": "integer",
+                    "maximum_annotations": "integer",
+                    "num_tasks_with_annotations": None,
+                    "total_predictions_number": "integer",
+                    "parsed_label_config": None,
+                    "reveal_preannotations_interactively": None,
+                    "review_total_tasks": None,
+                    "workspace_title": None,
+                    "expert_instruction": None,
+                    "created_by": {"id": "integer", "avatar": None},
+                    "control_weights": None,
+                    "config_has_control_tags": None,
+                    "require_comment_on_skip": None,
+                    "annotator_evaluation_minimum_score": None,
+                    "total_annotations_number": None,
+                    "skipped_annotations_number": None,
+                    "useful_annotation_number": None,
+                    "min_annotations_to_start_training": "integer",
+                    "data_types": None,
+                    "overlap_cohort_percentage": "integer",
+                    "is_published": None,
+                    "start_training_on_annotation_update": None,
+                    "prompts": None,
+                    "ground_truth_number": "integer",
+                    "show_ground_truth_first": None,
+                    "created_at": "datetime",
+                    "queue_total": None,
+                    "queue_left": None,
+                    "rejected": None,
+                    "show_overlap_first": None,
+                    "members": None,
+                    "members_count": None,
+                    "workspace": None,
+                    "is_draft": None,
+                    "reviewer_queue_total": None,
+                    "pause_on_failed_annotator_evaluation": None,
                     "blueprints": (
                         "list",
                         {0: {"id": "integer", "share_id": None, "short_url": None, "created_at": "datetime"}},
                     ),
-                    "ground_truth_number": "integer",
-                    "annotator_evaluation_minimum_score": None,
-                    "enable_empty_annotation": None,
-                    "config_suitable_for_bulk_annotation": None,
-                    "assignment_settings": {"id": "integer"},
+                    "color": None,
                     "show_instruction": None,
-                    "parsed_label_config": None,
-                    "ready": None,
-                    "skipped_annotations_number": None,
-                    "maximum_annotations": "integer",
-                    "queue_total": None,
-                    "id": "integer",
-                    "duplication_done": None,
-                    "review_total_tasks": None,
-                    "pinned_at": "datetime",
-                    "prompts": None,
-                    "annotation_limit_count": "integer",
-                    "is_draft": None,
-                    "start_training_on_annotation_update": None,
-                    "num_tasks_with_annotations": None,
-                    "created_by": {"id": "integer", "avatar": None},
-                    "title": None,
-                    "show_overlap_first": None,
-                    "queue_done": None,
-                    "data_types": None,
-                    "task_number": "integer",
-                    "description": None,
-                    "reveal_preannotations_interactively": None,
-                    "reviewed_number": None,
-                    "label_config": None,
-                    "control_weights": None,
                     "review_settings": {"id": "integer", "requeue_rejected_tasks_to_annotator": None},
-                    "comment_classification_config": None,
-                    "created_at": "datetime",
-                    "evaluate_predictions_automatically": None,
-                    "members_count": None,
-                    "rejected": None,
-                    "min_annotations_to_start_training": "integer",
-                    "pause_on_failed_annotator_evaluation": None,
-                    "overlap_cohort_percentage": "integer",
+                    "annotation_limit_count": "integer",
+                    "ready": None,
+                    "show_collab_predictions": None,
                     "organization": "integer",
-                    "skip_queue": None,
-                    "total_annotations_number": None,
-                    "show_skip_button": None,
-                    "finished_task_number": "integer",
-                    "annotator_evaluation_minimum_tasks": "integer",
-                    "workspace": None,
-                    "reviewer_queue_total": None,
+                    "pinned_at": "datetime",
+                    "allow_stream": None,
+                    "description": None,
+                    "enable_empty_annotation": None,
+                    "assignment_settings": {"id": "integer"},
+                    "custom_script": None,
                     "show_annotation_history": None,
-                    "workspace_title": None,
+                    "custom_task_lock_ttl": "integer",
+                    "finished_task_number": "integer",
+                    "config_suitable_for_bulk_annotation": None,
+                    "show_skip_button": None,
+                    "label_config": None,
                 }
             },
         ),

@@ -166,18 +166,18 @@ types:
       recordsFiltered: integer
     source:
       openapi: openapi/openapi.yaml
-  AllRolesProjectListSampling:
-    discriminated: false
-    union:
-      - SamplingEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   AllRolesProjectListSkipQueue:
     discriminated: false
     union:
       - SkipQueueEnum
+      - NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  AllRolesProjectListSampling:
+    discriminated: false
+    union:
+      - SamplingEnum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -187,68 +187,39 @@ types:
       Serializer get numbers from project queryset annotation,
       make sure, that you use correct one(Project.objects.with_counts())
     properties:
-      is_published:
-        type: optional<boolean>
-        docs: Whether or not the project is published to annotators
-      config_has_control_tags:
-        type: boolean
-        docs: Flag to detect is project ready for labeling
-      custom_task_lock_ttl:
-        type: optional<integer>
-        docs: TTL in seconds for task reservations, on new and existing tasks
-        validation:
-          min: 1
-          max: 86400
-      useful_annotation_number: string
-      color:
-        type: optional<string>
-        validation:
-          maxLength: 16
-      expert_instruction:
-        type: optional<string>
-        docs: Labeling instructions in HTML format
-      model_version:
-        type: optional<string>
-        docs: Machine learning model version
-      show_collab_predictions:
-        type: optional<boolean>
-        docs: If set, the annotator can view model predictions
-      total_predictions_number: integer
-      require_comment_on_skip:
-        type: optional<boolean>
-        default: false
-      queue_left: string
       annotation_limit_percent:
         type: optional<string>
         validation:
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-      show_ground_truth_first: optional<boolean>
-      members: string
-      allow_stream: string
+      evaluate_predictions_automatically:
+        type: optional<boolean>
+        docs: Retrieve and display predictions when loading a task
+      skip_queue: optional<AllRolesProjectListSkipQueue>
+      duplication_done:
+        type: optional<boolean>
+        default: false
       sampling: optional<AllRolesProjectListSampling>
-      custom_script: optional<string>
-      blueprints: list<BlueprintList>
-      ground_truth_number:
-        type: integer
-        docs: Honeypot annotation number in project
-      annotator_evaluation_minimum_score:
+      id: integer
+      reviewed_number: string
+      comment_classification_config: optional<string>
+      model_version:
         type: optional<string>
-        default: '95.00'
+        docs: Machine learning model version
+      queue_done: string
+      title:
+        type: optional<string>
+        docs: Project name. Must be between 3 and 50 characters long.
         validation:
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-      enable_empty_annotation:
-        type: optional<boolean>
-        docs: Allow annotators to submit empty annotations
-      config_suitable_for_bulk_annotation:
-        type: boolean
-        docs: Flag to detect is project ready for bulk annotation
-      assignment_settings: AssignmentSettings
-      show_instruction:
-        type: optional<boolean>
-        docs: Show instructions to the annotator before they start
-      parsed_label_config: unknown
-      ready: string
-      skipped_annotations_number: string
+          minLength: 3
+          maxLength: 50
+      task_number:
+        type: integer
+        docs: Total task number in project
+      annotator_evaluation_minimum_tasks:
+        type: optional<integer>
+        default: 10
+        validation:
+          min: 0
       maximum_annotations:
         type: optional<integer>
         docs: >-
@@ -258,61 +229,35 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      queue_total: string
-      id: integer
-      duplication_done:
-        type: optional<boolean>
-        default: false
-      review_total_tasks: string
-      pinned_at:
-        type: optional<datetime>
-        docs: Pinned date and time
-      prompts: string
-      annotation_limit_count:
-        type: optional<integer>
-        validation:
-          min: 1
-      is_draft:
-        type: optional<boolean>
-        docs: Whether or not the project is in the middle of being created
-      start_training_on_annotation_update:
-        type: boolean
-        docs: Start model training after any annotations are submitted or updated
       num_tasks_with_annotations: string
-      created_by:
-        type: optional<UserSimple>
-        docs: Project owner
-      title:
-        type: optional<string>
-        docs: Project name. Must be between 3 and 50 characters long.
-        validation:
-          minLength: 3
-          maxLength: 50
-      show_overlap_first: optional<boolean>
-      queue_done: string
-      data_types: unknown
-      task_number:
-        type: integer
-        docs: Total task number in project
-      description:
-        type: optional<string>
-        docs: Project description
+      total_predictions_number: integer
+      parsed_label_config: unknown
       reveal_preannotations_interactively:
         type: optional<boolean>
         docs: Reveal pre-annotations interactively
-      reviewed_number: string
-      label_config:
+      review_total_tasks: string
+      workspace_title: string
+      expert_instruction:
         type: optional<string>
-        docs: Label config in XML format. See more about it in documentation
+        docs: Labeling instructions in HTML format
+      created_by:
+        type: optional<UserSimple>
+        docs: Project owner
       control_weights: optional<unknown>
-      review_settings: ReviewSettings
-      comment_classification_config: optional<string>
-      created_at: datetime
-      evaluate_predictions_automatically:
+      config_has_control_tags:
+        type: boolean
+        docs: Flag to detect is project ready for labeling
+      require_comment_on_skip:
         type: optional<boolean>
-        docs: Retrieve and display predictions when loading a task
-      members_count: string
-      rejected: string
+        default: false
+      annotator_evaluation_minimum_score:
+        type: optional<string>
+        default: '95.00'
+        validation:
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+      total_annotations_number: string
+      skipped_annotations_number: string
+      useful_annotation_number: string
       min_annotations_to_start_training:
         type: optional<integer>
         docs: >-
@@ -321,32 +266,87 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      pause_on_failed_annotator_evaluation:
-        type: optional<boolean>
-        default: false
+      data_types: unknown
       overlap_cohort_percentage:
         type: optional<integer>
         validation:
           min: -2147483648
           max: 2147483647
-      organization: optional<integer>
-      skip_queue: optional<AllRolesProjectListSkipQueue>
-      total_annotations_number: string
-      show_skip_button:
+      is_published:
         type: optional<boolean>
-        docs: Show a skip button in interface and allow annotators to skip the task
-      finished_task_number: integer
-      annotator_evaluation_minimum_tasks:
-        type: optional<integer>
-        default: 10
-        validation:
-          min: 0
+        docs: Whether or not the project is published to annotators
+      start_training_on_annotation_update:
+        type: boolean
+        docs: Start model training after any annotations are submitted or updated
+      prompts: string
+      ground_truth_number:
+        type: integer
+        docs: Honeypot annotation number in project
+      show_ground_truth_first: optional<boolean>
+      created_at: datetime
+      queue_total: string
+      queue_left: string
+      rejected: string
+      show_overlap_first: optional<boolean>
+      members: string
+      members_count: string
       workspace: string
+      is_draft:
+        type: optional<boolean>
+        docs: Whether or not the project is in the middle of being created
       reviewer_queue_total: string
+      pause_on_failed_annotator_evaluation:
+        type: optional<boolean>
+        default: false
+      blueprints: list<BlueprintList>
+      color:
+        type: optional<string>
+        validation:
+          maxLength: 16
+      show_instruction:
+        type: optional<boolean>
+        docs: Show instructions to the annotator before they start
+      review_settings: ReviewSettings
+      annotation_limit_count:
+        type: optional<integer>
+        validation:
+          min: 1
+      ready: string
+      show_collab_predictions:
+        type: optional<boolean>
+        docs: If set, the annotator can view model predictions
+      organization: optional<integer>
+      pinned_at:
+        type: optional<datetime>
+        docs: Pinned date and time
+      allow_stream: string
+      description:
+        type: optional<string>
+        docs: Project description
+      enable_empty_annotation:
+        type: optional<boolean>
+        docs: Allow annotators to submit empty annotations
+      assignment_settings: AssignmentSettings
+      custom_script: optional<string>
       show_annotation_history:
         type: optional<boolean>
         docs: Show annotation history to annotator
-      workspace_title: string
+      custom_task_lock_ttl:
+        type: optional<integer>
+        docs: TTL in seconds for task reservations, on new and existing tasks
+        validation:
+          min: 1
+          max: 86400
+      finished_task_number: integer
+      config_suitable_for_bulk_annotation:
+        type: boolean
+        docs: Flag to detect is project ready for bulk annotation
+      show_skip_button:
+        type: optional<boolean>
+        docs: Show a skip button in interface and allow annotators to skip the task
+      label_config:
+        type: optional<string>
+        docs: Label config in XML format. See more about it in documentation
     source:
       openapi: openapi/openapi.yaml
   AnnotatedEnum:
@@ -1046,6 +1046,24 @@ types:
       dataset:
         type: integer
         docs: A unique integer value identifying this dataset.
+    source:
+      openapi: openapi/openapi.yaml
+  BatchFailedPredictions:
+    properties:
+      job_id:
+        type: string
+        validation:
+          maxLength: 255
+      failed_predictions: list<unknown>
+    source:
+      openapi: openapi/openapi.yaml
+  BatchPredictions:
+    properties:
+      job_id:
+        type: string
+        validation:
+          maxLength: 255
+      results: list<unknown>
     source:
       openapi: openapi/openapi.yaml
   BlankEnum: literal<"">
@@ -2186,6 +2204,28 @@ types:
       comment_authors:
         type: optional<list<integer>>
         docs: Users who wrote comments
+    source:
+      openapi: openapi/openapi.yaml
+  InferenceRunCostEstimate:
+    properties:
+      prompt_cost_usd:
+        type: optional<string>
+        docs: Cost of the prompt (in USD)
+      completion_cost_usd:
+        type: optional<string>
+        docs: Cost of the completion (in USD)
+      total_cost_usd:
+        type: optional<string>
+        docs: Total cost of the inference (in USD)
+      is_error:
+        type: optional<boolean>
+        docs: Whether an error occurred or not
+      error_type:
+        type: optional<string>
+        docs: Type of error (e.g. "Timeout", "Rate Limit", etc)
+      error_message:
+        type: optional<string>
+        docs: Error message details
     source:
       openapi: openapi/openapi.yaml
   LseapiTokenCreate:
@@ -4699,35 +4739,6 @@ types:
       created_by: optional<integer>
     source:
       openapi: openapi/openapi.yaml
-  ModelRunRequest:
-    properties:
-      project_subset: optional<ProjectSubsetEnum>
-      job_id:
-        type: optional<string>
-        docs: Job ID for inference job for a ModelRun e.g. Adala job ID
-        validation:
-          maxLength: 255
-      total_predictions:
-        type: optional<integer>
-        validation:
-          min: -2147483648
-          max: 2147483647
-      total_correct_predictions:
-        type: optional<integer>
-        validation:
-          min: -2147483648
-          max: 2147483647
-      total_tasks:
-        type: optional<integer>
-        validation:
-          min: -2147483648
-          max: 2147483647
-      predictions_updated_at: optional<datetime>
-      organization: optional<integer>
-      project: integer
-      model_version: integer
-    source:
-      openapi: openapi/openapi.yaml
   ModelRunStatusEnum:
     enum:
       - Pending
@@ -5628,6 +5639,31 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
+  RefinedPromptResponse:
+    properties:
+      title:
+        type: optional<string>
+        docs: Title of the refined prompt
+      reasoning:
+        type: optional<string>
+        docs: Reasoning behind the refinement
+      prompt:
+        type: string
+        docs: The refined prompt text
+      refinement_job_id:
+        type: optional<string>
+        docs: Unique identifier for the refinement job
+      refinement_status:
+        type: optional<string>
+        docs: Status of the refinement job
+      total_cost:
+        type: optional<string>
+        docs: Total cost of the refinement job (in USD)
+      previous_version:
+        type: optional<ThirdPartyModelVersion>
+        docs: Previous version of the prompt
     source:
       openapi: openapi/openapi.yaml
   RequeueRejectedTasksModeEnum:
