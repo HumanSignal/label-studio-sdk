@@ -2,7 +2,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    get_key_indicators:
+    list:
       path: /api/inference-runs/{id}/indicators/
       method: GET
       auth: true
@@ -17,7 +17,7 @@ service:
             id: 1
       audiences:
         - public
-    get_key_indicator:
+    get:
       path: /api/inference-runs/{id}/indicators/{indicator_key}
       method: GET
       auth: true

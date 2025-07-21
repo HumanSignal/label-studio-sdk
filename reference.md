@@ -5202,7 +5202,7 @@ client.model_providers.list_model_provider_choices()
 </details>
 
 ## Prompts
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">create_batch_failed_predictions</a>(...)</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_failed_predictions</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5235,7 +5235,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.prompts.create_batch_failed_predictions(
+client.prompts.batch_failed_predictions(
     job_id="job_id",
     failed_predictions=[],
 )
@@ -5282,7 +5282,7 @@ client.prompts.create_batch_failed_predictions(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">create_batch_predictions</a>(...)</code></summary>
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">batch_predictions</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5315,7 +5315,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.prompts.create_batch_predictions(
+client.prompts.batch_predictions(
     job_id="job_id",
     results=[],
 )
@@ -20700,7 +20700,7 @@ Reason for pausing
 </details>
 
 ## Prompts Indicators
-<details><summary><code>client.prompts.indicators.<a href="src/label_studio_sdk/prompts/indicators/client.py">get_key_indicators</a>(...)</code></summary>
+<details><summary><code>client.prompts.indicators.<a href="src/label_studio_sdk/prompts/indicators/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -20733,7 +20733,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.prompts.indicators.get_key_indicators(
+client.prompts.indicators.list(
     id=1,
 )
 
@@ -20771,7 +20771,7 @@ client.prompts.indicators.get_key_indicators(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.indicators.<a href="src/label_studio_sdk/prompts/indicators/client.py">get_key_indicator</a>(...)</code></summary>
+<details><summary><code>client.prompts.indicators.<a href="src/label_studio_sdk/prompts/indicators/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -20804,7 +20804,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.prompts.indicators.get_key_indicator(
+client.prompts.indicators.get(
     id=1,
     indicator_key="indicator_key",
 )

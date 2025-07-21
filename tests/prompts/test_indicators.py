@@ -4,27 +4,27 @@ from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
 
 
-async def test_get_key_indicators(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.prompts.indicators.get_key_indicators(id=1)  # type: ignore[func-returns-value]
+        client.prompts.indicators.list(id=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.prompts.indicators.get_key_indicators(id=1)  # type: ignore[func-returns-value]
+        await async_client.prompts.indicators.list(id=1)  # type: ignore[func-returns-value]
         is None
     )
 
 
-async def test_get_key_indicator(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.prompts.indicators.get_key_indicator(id=1, indicator_key="indicator_key")  # type: ignore[func-returns-value]
+        client.prompts.indicators.get(id=1, indicator_key="indicator_key")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.prompts.indicators.get_key_indicator(id=1, indicator_key="indicator_key")  # type: ignore[func-returns-value]
+        await async_client.prompts.indicators.get(id=1, indicator_key="indicator_key")  # type: ignore[func-returns-value]
         is None
     )

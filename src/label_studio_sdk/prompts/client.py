@@ -35,7 +35,7 @@ class PromptsClient:
         self.versions = VersionsClient(client_wrapper=self._client_wrapper)
         self.runs = RunsClient(client_wrapper=self._client_wrapper)
 
-    def create_batch_failed_predictions(
+    def batch_failed_predictions(
         self,
         *,
         job_id: str,
@@ -67,7 +67,7 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.prompts.create_batch_failed_predictions(
+        client.prompts.batch_failed_predictions(
             job_id="job_id",
             failed_predictions=[],
         )
@@ -99,7 +99,7 @@ class PromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create_batch_predictions(
+    def batch_predictions(
         self,
         *,
         job_id: str,
@@ -131,7 +131,7 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.prompts.create_batch_predictions(
+        client.prompts.batch_predictions(
             job_id="job_id",
             results=[],
         )
@@ -562,7 +562,7 @@ class AsyncPromptsClient:
         self.versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
         self.runs = AsyncRunsClient(client_wrapper=self._client_wrapper)
 
-    async def create_batch_failed_predictions(
+    async def batch_failed_predictions(
         self,
         *,
         job_id: str,
@@ -599,7 +599,7 @@ class AsyncPromptsClient:
 
 
         async def main() -> None:
-            await client.prompts.create_batch_failed_predictions(
+            await client.prompts.batch_failed_predictions(
                 job_id="job_id",
                 failed_predictions=[],
             )
@@ -634,7 +634,7 @@ class AsyncPromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create_batch_predictions(
+    async def batch_predictions(
         self,
         *,
         job_id: str,
@@ -671,7 +671,7 @@ class AsyncPromptsClient:
 
 
         async def main() -> None:
-            await client.prompts.create_batch_predictions(
+            await client.prompts.batch_predictions(
                 job_id="job_id",
                 results=[],
             )

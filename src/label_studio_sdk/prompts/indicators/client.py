@@ -13,7 +13,7 @@ class IndicatorsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_key_indicators(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Get key indicators for the Prompt dashboard.
 
@@ -36,7 +36,7 @@ class IndicatorsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.prompts.indicators.get_key_indicators(
+        client.prompts.indicators.list(
             id=1,
         )
         """
@@ -53,9 +53,7 @@ class IndicatorsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_key_indicator(
-        self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def get(self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Get a specific key indicator for the Prompt dashboard.
 
@@ -80,7 +78,7 @@ class IndicatorsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.prompts.indicators.get_key_indicator(
+        client.prompts.indicators.get(
             id=1,
             indicator_key="indicator_key",
         )
@@ -103,7 +101,7 @@ class AsyncIndicatorsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_key_indicators(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Get key indicators for the Prompt dashboard.
 
@@ -131,7 +129,7 @@ class AsyncIndicatorsClient:
 
 
         async def main() -> None:
-            await client.prompts.indicators.get_key_indicators(
+            await client.prompts.indicators.list(
                 id=1,
             )
 
@@ -151,7 +149,7 @@ class AsyncIndicatorsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_key_indicator(
+    async def get(
         self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
@@ -183,7 +181,7 @@ class AsyncIndicatorsClient:
 
 
         async def main() -> None:
-            await client.prompts.indicators.get_key_indicator(
+            await client.prompts.indicators.get(
                 id=1,
                 indicator_key="indicator_key",
             )
