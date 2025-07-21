@@ -120,6 +120,8 @@ def get_local_path(
             logger.debug(
                 f"Local Storage file path exists locally, use it as a local file: {filepath}"
             )
+            if cache_dir and download_resources:
+                shutil.copy(filepath, cache_dir)
             return filepath
 
     # try to get local directories
