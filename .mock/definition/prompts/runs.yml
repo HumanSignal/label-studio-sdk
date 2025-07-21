@@ -29,11 +29,14 @@ service:
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
+          parent_model:
+            type: optional<integer>
+            docs: The ID of the parent model for this Inference Run
           project:
-            type: integer
+            type: optional<integer>
             docs: The ID of the project this Inference Run makes predictions on
           project_subset:
-            type: RunsListRequestProjectSubset
+            type: optional<RunsListRequestProjectSubset>
             docs: >-
               Defines which tasks are operated on (e.g. HasGT will only operate
               on tasks with a ground truth annotation, but All will operate on
@@ -45,9 +48,6 @@ service:
         - path-parameters:
             prompt_id: 1
             version_id: 1
-          query-parameters:
-            project: 1
-            project_subset: All
           response:
             body:
               - id: 1

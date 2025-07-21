@@ -18,6 +18,9 @@ service:
       request:
         name: PausesListRequest
         query-parameters:
+          include_deleted:
+            type: optional<boolean>
+            docs: Include deleted pauses.
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.

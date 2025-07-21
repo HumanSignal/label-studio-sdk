@@ -7864,6 +7864,11 @@ paths:
       description: Retrieve a list of all pauses.
       summary: List pauses
       parameters:
+      - in: query
+        name: include_deleted
+        schema:
+          type: boolean
+        description: Include deleted pauses.
       - name: ordering
         required: false
         in: query
@@ -8795,11 +8800,15 @@ paths:
         schema:
           type: string
       - in: query
+        name: parent_model
+        schema:
+          type: integer
+        description: The ID of the parent model for this Inference Run
+      - in: query
         name: project
         schema:
           type: integer
         description: The ID of the project this Inference Run makes predictions on
-        required: true
       - in: query
         name: project_subset
         schema:
@@ -8810,7 +8819,6 @@ paths:
           - Sample
         description: Defines which tasks are operated on (e.g. HasGT will only operate
           on tasks with a ground truth annotation, but All will operate on all records)
-        required: true
       - in: path
         name: prompt_id
         schema:
@@ -14645,7 +14653,7 @@ paths:
       x-fern-sdk-group-name:
       - workspaces
       - members
-      x-fern-sdk-method-name: list_members
+      x-fern-sdk-method-name: list
       x-fern-audiences:
       - public
     post:
@@ -14684,7 +14692,7 @@ paths:
       x-fern-sdk-group-name:
       - workspaces
       - members
-      x-fern-sdk-method-name: create_member
+      x-fern-sdk-method-name: create
       x-fern-audiences:
       - public
     delete:
@@ -14708,7 +14716,7 @@ paths:
       x-fern-sdk-group-name:
       - workspaces
       - members
-      x-fern-sdk-method-name: delete_member
+      x-fern-sdk-method-name: delete
       x-fern-audiences:
       - public
   /api/workspaces/{id}/projects/:
@@ -14960,173 +14968,131 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
-        is_draft:
-          type: boolean
-          description: Whether or not the project is in the middle of being created
-        queue_done:
+        rejected:
           type: string
           readOnly: true
+        evaluate_predictions_automatically:
+          type: boolean
+          description: Retrieve and display predictions when loading a task
+        enable_empty_annotation:
+          type: boolean
+          description: Allow annotators to submit empty annotations
+        data_types:
+          readOnly: true
+          nullable: true
+        color:
+          type: string
+          nullable: true
+          maxLength: 16
+        review_settings:
+          $ref: '#/components/schemas/ReviewSettings'
         review_total_tasks:
           type: string
           readOnly: true
+        reviewed_number:
+          type: string
+          readOnly: true
+        show_instruction:
+          type: boolean
+          description: Show instructions to the annotator before they start
+        skip_queue:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SkipQueueEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        prompts:
+          type: string
+          readOnly: true
+        pause_on_failed_annotator_evaluation:
+          type: boolean
+          nullable: true
+          default: false
+        workspace_title:
+          type: string
+          readOnly: true
+        allow_stream:
+          type: string
+          readOnly: true
+        model_version:
+          type: string
+          nullable: true
+          description: Machine learning model version
+        num_tasks_with_annotations:
+          type: string
+          readOnly: true
+        total_predictions_number:
+          type: integer
+          readOnly: true
+        is_draft:
+          type: boolean
+          description: Whether or not the project is in the middle of being created
+        min_annotations_to_start_training:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Minimum number of completed tasks after which model training
+            is started
         show_ground_truth_first:
           type: boolean
         ground_truth_number:
           type: integer
           readOnly: true
           description: Honeypot annotation number in project
-        data_types:
+        parsed_label_config:
           readOnly: true
-          nullable: true
-        show_collab_predictions:
+          description: JSON-formatted labeling configuration
+        reveal_preannotations_interactively:
           type: boolean
-          title: Show predictions to annotator
-          description: If set, the annotator can view model predictions
-        useful_annotation_number:
-          type: string
-          readOnly: true
+          description: Reveal pre-annotations interactively
+        show_annotation_history:
+          type: boolean
+          description: Show annotation history to annotator
+        is_published:
+          type: boolean
+          title: Published
+          description: Whether or not the project is published to annotators
         description:
           type: string
           nullable: true
           description: Project description
-        pinned_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Pinned date and time
-        custom_task_lock_ttl:
-          type: integer
-          maximum: 86400
-          minimum: 1
-          nullable: true
-          description: TTL in seconds for task reservations, on new and existing tasks
-        maximum_annotations:
+        overlap_cohort_percentage:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
-          title: Maximum annotation number
-          description: Maximum number of annotations for one task. If the number of
-            annotations per task is equal or greater to this value, the task is completed
-            (is_labeled=True)
-        color:
+        custom_script:
           type: string
-          nullable: true
-          maxLength: 16
-        skipped_annotations_number:
+        queue_left:
           type: string
           readOnly: true
-        enable_empty_annotation:
-          type: boolean
-          description: Allow annotators to submit empty annotations
-        duplication_done:
-          type: boolean
-          default: false
-        require_comment_on_skip:
-          type: boolean
-          default: false
-        allow_stream:
+        title:
           type: string
-          readOnly: true
-        annotation_limit_count:
-          type: integer
-          minimum: 1
           nullable: true
+          description: Project name. Must be between 3 and 50 characters long.
+          maxLength: 50
+          minLength: 3
         annotation_limit_percent:
           type: string
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
-        blueprints:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueprintList'
-          readOnly: true
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        reviewer_queue_total:
-          type: string
-          readOnly: true
-        overlap_cohort_percentage:
+        organization:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        reveal_preannotations_interactively:
-          type: boolean
-          description: Reveal pre-annotations interactively
+          nullable: true
+        skipped_annotations_number:
+          type: string
+          readOnly: true
+        comment_classification_config:
+          type: string
         start_training_on_annotation_update:
           type: boolean
           readOnly: true
           description: Start model training after any annotations are submitted or
             updated
-        created_by:
-          allOf:
-          - $ref: '#/components/schemas/UserSimple'
-          description: Project owner
-        expert_instruction:
-          type: string
-          nullable: true
-          description: Labeling instructions in HTML format
-        show_skip_button:
-          type: boolean
-          description: Show a skip button in interface and allow annotators to skip
-            the task
-        evaluate_predictions_automatically:
-          type: boolean
-          description: Retrieve and display predictions when loading a task
-        organization:
-          type: integer
-          nullable: true
-        skip_queue:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SkipQueueEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        members:
-          type: string
-          readOnly: true
-        reviewed_number:
-          type: string
-          readOnly: true
-        queue_total:
-          type: string
-          readOnly: true
-        task_number:
-          type: integer
-          readOnly: true
-          description: Total task number in project
-        ready:
-          type: string
-          readOnly: true
-        workspace_title:
-          type: string
-          readOnly: true
-        num_tasks_with_annotations:
-          type: string
-          readOnly: true
-        workspace:
+        queue_done:
           type: string
           readOnly: true
         assignment_settings:
           $ref: '#/components/schemas/AssignmentSettings'
-        members_count:
-          type: string
-          readOnly: true
-        annotator_evaluation_minimum_score:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          nullable: true
-          default: '95.00'
-        finished_task_number:
-          type: integer
-          readOnly: true
-        annotator_evaluation_minimum_tasks:
-          type: integer
-          minimum: 0
-          nullable: true
-          default: 10
         control_weights:
           nullable: true
           description: 'Dict of weights for each control tag in metric calculation.
@@ -15137,82 +15103,124 @@ components:
             be twice more important than Airplaine, then you have to need the specify:
             {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0,
             ''Airplaine'': 0.5}, ''overall'': 0.33}'
-        rejected:
-          type: string
-          readOnly: true
-        show_annotation_history:
-          type: boolean
-          description: Show annotation history to annotator
-        comment_classification_config:
-          type: string
-        queue_left:
-          type: string
-          readOnly: true
-        min_annotations_to_start_training:
+        id:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          description: Minimum number of completed tasks after which model training
-            is started
+          readOnly: true
+        config_has_control_tags:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for labeling
+        reviewer_queue_total:
+          type: string
+          readOnly: true
+        ready:
+          type: string
+          readOnly: true
+        members:
+          type: string
+          readOnly: true
+        require_comment_on_skip:
+          type: boolean
+          default: false
+        show_skip_button:
+          type: boolean
+          description: Show a skip button in interface and allow annotators to skip
+            the task
+        finished_task_number:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        workspace:
+          type: string
+          readOnly: true
+        annotator_evaluation_minimum_score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+          default: '95.00'
         label_config:
           type: string
           nullable: true
           description: Label config in XML format. See more about it in documentation
-        total_predictions_number:
+        annotator_evaluation_minimum_tasks:
+          type: integer
+          minimum: 0
+          nullable: true
+          default: 10
+        useful_annotation_number:
+          type: string
+          readOnly: true
+        task_number:
           type: integer
           readOnly: true
+          description: Total task number in project
+        custom_task_lock_ttl:
+          type: integer
+          maximum: 86400
+          minimum: 1
+          nullable: true
+          description: TTL in seconds for task reservations, on new and existing tasks
+        show_overlap_first:
+          type: boolean
+        pinned_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Pinned date and time
+        expert_instruction:
+          type: string
+          nullable: true
+          description: Labeling instructions in HTML format
+        queue_total:
+          type: string
+          readOnly: true
+        config_suitable_for_bulk_annotation:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for bulk annotation
+        maximum_annotations:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Maximum annotation number
+          description: Maximum number of annotations for one task. If the number of
+            annotations per task is equal or greater to this value, the task is completed
+            (is_labeled=True)
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/UserSimple'
+          description: Project owner
         sampling:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/SamplingEnum'
           - $ref: '#/components/schemas/NullEnum'
-        review_settings:
-          $ref: '#/components/schemas/ReviewSettings'
-        custom_script:
+        duplication_done:
+          type: boolean
+          default: false
+        blueprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintList'
+          readOnly: true
+        members_count:
           type: string
-        model_version:
-          type: string
+          readOnly: true
+        show_collab_predictions:
+          type: boolean
+          title: Show predictions to annotator
+          description: If set, the annotator can view model predictions
+        annotation_limit_count:
+          type: integer
+          minimum: 1
           nullable: true
-          description: Machine learning model version
         total_annotations_number:
           type: string
           readOnly: true
-        pause_on_failed_annotator_evaluation:
-          type: boolean
-          nullable: true
-          default: false
-        show_overlap_first:
-          type: boolean
-        title:
-          type: string
-          nullable: true
-          description: Project name. Must be between 3 and 50 characters long.
-          maxLength: 50
-          minLength: 3
-        config_suitable_for_bulk_annotation:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for bulk annotation
-        parsed_label_config:
-          readOnly: true
-          description: JSON-formatted labeling configuration
-        config_has_control_tags:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for labeling
-        prompts:
-          type: string
-          readOnly: true
-        id:
-          type: integer
-          readOnly: true
-        is_published:
-          type: boolean
-          title: Published
-          description: Whether or not the project is published to annotators
-        show_instruction:
-          type: boolean
-          description: Show instructions to the annotator before they start
       required:
       - allow_stream
       - assignment_settings
@@ -23245,6 +23253,9 @@ components:
     PatchedThirdPartyModelVersionRequest:
       type: object
       properties:
+        parent_model:
+          type: integer
+          description: Parent model interface ID
         title:
           type: string
           minLength: 1
@@ -23272,8 +23283,6 @@ components:
           minLength: 1
           description: The model ID to use within the given provider, e.g. gpt-3.5
           maxLength: 255
-        parent_model:
-          type: integer
         model_provider_connection:
           type: integer
           nullable: true
@@ -25585,6 +25594,9 @@ components:
         score:
           type: string
           readOnly: true
+        parent_model:
+          type: integer
+          description: Parent model interface ID
         title:
           type: string
           description: Model name
@@ -25617,8 +25629,6 @@ components:
           type: string
           format: date-time
           readOnly: true
-        parent_model:
-          type: integer
         model_provider_connection:
           type: integer
           nullable: true
@@ -25629,7 +25639,6 @@ components:
       - created_at
       - created_by
       - id
-      - parent_model
       - prompt
       - provider_model_id
       - score
@@ -25638,6 +25647,9 @@ components:
     ThirdPartyModelVersionRequest:
       type: object
       properties:
+        parent_model:
+          type: integer
+          description: Parent model interface ID
         title:
           type: string
           minLength: 1
@@ -25665,8 +25677,6 @@ components:
           minLength: 1
           description: The model ID to use within the given provider, e.g. gpt-3.5
           maxLength: 255
-        parent_model:
-          type: integer
         model_provider_connection:
           type: integer
           nullable: true
@@ -25674,7 +25684,6 @@ components:
           type: integer
           nullable: true
       required:
-      - parent_model
       - prompt
       - provider_model_id
       - title

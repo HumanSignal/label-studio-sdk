@@ -17,6 +17,11 @@ class ThirdPartyModelVersion(UncheckedBaseModel):
     """
 
     score: str
+    parent_model: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Parent model interface ID
+    """
+
     title: str = pydantic.Field()
     """
     Model name
@@ -47,7 +52,6 @@ class ThirdPartyModelVersion(UncheckedBaseModel):
 
     created_at: dt.datetime
     updated_at: dt.datetime
-    parent_model: int
     model_provider_connection: typing.Optional[int] = None
     organization: typing.Optional[int] = None
 

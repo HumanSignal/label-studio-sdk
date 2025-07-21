@@ -24,6 +24,7 @@ class PausesClient:
         project_pk: int,
         user_pk: int,
         *,
+        include_deleted: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Pause]:
@@ -35,6 +36,9 @@ class PausesClient:
         project_pk : int
 
         user_pk : int
+
+        include_deleted : typing.Optional[bool]
+            Include deleted pauses.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -64,6 +68,7 @@ class PausesClient:
             f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/",
             method="GET",
             params={
+                "include_deleted": include_deleted,
                 "ordering": ordering,
             },
             request_options=request_options,
@@ -353,6 +358,7 @@ class AsyncPausesClient:
         project_pk: int,
         user_pk: int,
         *,
+        include_deleted: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Pause]:
@@ -364,6 +370,9 @@ class AsyncPausesClient:
         project_pk : int
 
         user_pk : int
+
+        include_deleted : typing.Optional[bool]
+            Include deleted pauses.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -401,6 +410,7 @@ class AsyncPausesClient:
             f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/",
             method="GET",
             params={
+                "include_deleted": include_deleted,
                 "ordering": ordering,
             },
             request_options=request_options,

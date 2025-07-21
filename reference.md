@@ -20655,6 +20655,14 @@ client.projects.pauses.list(
 <dl>
 <dd>
 
+**include_deleted:** `typing.Optional[bool]` — Include deleted pauses.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
     
 </dd>
@@ -21421,7 +21429,6 @@ client.prompts.versions.create(
     title="title",
     prompt="prompt",
     provider_model_id="provider_model_id",
-    parent_model=1,
 )
 
 ```
@@ -21470,7 +21477,7 @@ client.prompts.versions.create(
 <dl>
 <dd>
 
-**parent_model:** `int` 
+**parent_model:** `typing.Optional[int]` — Parent model interface ID
     
 </dd>
 </dl>
@@ -21752,6 +21759,14 @@ client.prompts.versions.update(
 <dl>
 <dd>
 
+**parent_model:** `typing.Optional[int]` — Parent model interface ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **title:** `typing.Optional[str]` — Model name
     
 </dd>
@@ -21787,14 +21802,6 @@ The model provider to use e.g. OpenAI
 <dd>
 
 **provider_model_id:** `typing.Optional[str]` — The model ID to use within the given provider, e.g. gpt-3.5
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**parent_model:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -22150,8 +22157,6 @@ client = LabelStudio(
 client.prompts.runs.list(
     prompt_id=1,
     version_id=1,
-    project=1,
-    project_subset="All",
 )
 
 ```
@@ -22184,23 +22189,31 @@ client.prompts.runs.list(
 <dl>
 <dd>
 
-**project:** `int` — The ID of the project this Inference Run makes predictions on
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project_subset:** `RunsListRequestProjectSubset` — Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_model:** `typing.Optional[int]` — The ID of the parent model for this Inference Run
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — The ID of the project this Inference Run makes predictions on
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_subset:** `typing.Optional[RunsListRequestProjectSubset]` — Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
     
 </dd>
 </dl>
@@ -22375,7 +22388,7 @@ client.prompts.runs.create(
 </details>
 
 ## Workspaces Members
-<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">list_members</a>(...)</code></summary>
+<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -22408,7 +22421,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.workspaces.members.list_members(
+client.workspaces.members.list(
     id=1,
 )
 
@@ -22446,7 +22459,7 @@ client.workspaces.members.list_members(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">create_member</a>(...)</code></summary>
+<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -22479,7 +22492,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.workspaces.members.create_member(
+client.workspaces.members.create(
     id=1,
     user=1,
 )
@@ -22534,7 +22547,7 @@ client.workspaces.members.create_member(
 </dl>
 </details>
 
-<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">delete_member</a>(...)</code></summary>
+<details><summary><code>client.workspaces.members.<a href="src/label_studio_sdk/workspaces/members/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -22567,7 +22580,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.workspaces.members.delete_member(
+client.workspaces.members.delete(
     id=1,
 )
 

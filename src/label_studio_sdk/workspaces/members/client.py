@@ -19,7 +19,7 @@ class MembersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list_members(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> WorkspaceMemberList:
+    def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> WorkspaceMemberList:
         """
         Get a list of all members in a specific workspace.
 
@@ -43,7 +43,7 @@ class MembersClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.workspaces.members.list_members(
+        client.workspaces.members.list(
             id=1,
         )
         """
@@ -66,7 +66,7 @@ class MembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create_member(
+    def create(
         self,
         id: int,
         *,
@@ -103,7 +103,7 @@ class MembersClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.workspaces.members.create_member(
+        client.workspaces.members.create(
             id=1,
             user=1,
         )
@@ -135,7 +135,7 @@ class MembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_member(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
 
@@ -158,7 +158,7 @@ class MembersClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.workspaces.members.delete_member(
+        client.workspaces.members.delete(
             id=1,
         )
         """
@@ -180,9 +180,7 @@ class AsyncMembersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list_members(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> WorkspaceMemberList:
+    async def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> WorkspaceMemberList:
         """
         Get a list of all members in a specific workspace.
 
@@ -211,7 +209,7 @@ class AsyncMembersClient:
 
 
         async def main() -> None:
-            await client.workspaces.members.list_members(
+            await client.workspaces.members.list(
                 id=1,
             )
 
@@ -237,7 +235,7 @@ class AsyncMembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create_member(
+    async def create(
         self,
         id: int,
         *,
@@ -279,7 +277,7 @@ class AsyncMembersClient:
 
 
         async def main() -> None:
-            await client.workspaces.members.create_member(
+            await client.workspaces.members.create(
                 id=1,
                 user=1,
             )
@@ -314,7 +312,7 @@ class AsyncMembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_member(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
 
@@ -342,7 +340,7 @@ class AsyncMembersClient:
 
 
         async def main() -> None:
-            await client.workspaces.members.delete_member(
+            await client.workspaces.members.delete(
                 id=1,
             )
 

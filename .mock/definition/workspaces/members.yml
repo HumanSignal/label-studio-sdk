@@ -4,7 +4,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    list_members:
+    list:
       path: /api/workspaces/{id}/memberships/
       method: GET
       auth: true
@@ -60,7 +60,7 @@ service:
               workspace: 1
       audiences:
         - public
-    create_member:
+    create:
       path: /api/workspaces/{id}/memberships/
       method: POST
       auth: true
@@ -95,7 +95,7 @@ service:
               workspace: 1
       audiences:
         - public
-    delete_member:
+    delete:
       path: /api/workspaces/{id}/memberships/
       method: DELETE
       auth: true

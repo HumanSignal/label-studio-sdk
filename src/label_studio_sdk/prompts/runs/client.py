@@ -26,9 +26,10 @@ class RunsClient:
         prompt_id: int,
         version_id: int,
         *,
-        project: int,
-        project_subset: RunsListRequestProjectSubset,
         ordering: typing.Optional[str] = None,
+        parent_model: typing.Optional[int] = None,
+        project: typing.Optional[int] = None,
+        project_subset: typing.Optional[RunsListRequestProjectSubset] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ModelRun]:
         """
@@ -40,14 +41,17 @@ class RunsClient:
 
         version_id : int
 
-        project : int
-            The ID of the project this Inference Run makes predictions on
-
-        project_subset : RunsListRequestProjectSubset
-            Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
-
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
+
+        parent_model : typing.Optional[int]
+            The ID of the parent model for this Inference Run
+
+        project : typing.Optional[int]
+            The ID of the project this Inference Run makes predictions on
+
+        project_subset : typing.Optional[RunsListRequestProjectSubset]
+            Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -68,8 +72,6 @@ class RunsClient:
         client.prompts.runs.list(
             prompt_id=1,
             version_id=1,
-            project=1,
-            project_subset="All",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -77,6 +79,7 @@ class RunsClient:
             method="GET",
             params={
                 "ordering": ordering,
+                "parent_model": parent_model,
                 "project": project,
                 "project_subset": project_subset,
             },
@@ -207,9 +210,10 @@ class AsyncRunsClient:
         prompt_id: int,
         version_id: int,
         *,
-        project: int,
-        project_subset: RunsListRequestProjectSubset,
         ordering: typing.Optional[str] = None,
+        parent_model: typing.Optional[int] = None,
+        project: typing.Optional[int] = None,
+        project_subset: typing.Optional[RunsListRequestProjectSubset] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ModelRun]:
         """
@@ -221,14 +225,17 @@ class AsyncRunsClient:
 
         version_id : int
 
-        project : int
-            The ID of the project this Inference Run makes predictions on
-
-        project_subset : RunsListRequestProjectSubset
-            Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
-
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
+
+        parent_model : typing.Optional[int]
+            The ID of the parent model for this Inference Run
+
+        project : typing.Optional[int]
+            The ID of the project this Inference Run makes predictions on
+
+        project_subset : typing.Optional[RunsListRequestProjectSubset]
+            Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -254,8 +261,6 @@ class AsyncRunsClient:
             await client.prompts.runs.list(
                 prompt_id=1,
                 version_id=1,
-                project=1,
-                project_subset="All",
             )
 
 
@@ -266,6 +271,7 @@ class AsyncRunsClient:
             method="GET",
             params={
                 "ordering": ordering,
+                "parent_model": parent_model,
                 "project": project,
                 "project_subset": project_subset,
             },

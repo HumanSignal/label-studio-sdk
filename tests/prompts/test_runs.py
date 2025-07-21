@@ -50,10 +50,10 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             }
         },
     )
-    response = client.prompts.runs.list(prompt_id=1, version_id=1, project=1, project_subset="All")
+    response = client.prompts.runs.list(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.runs.list(prompt_id=1, version_id=1, project=1, project_subset="All")
+    async_response = await async_client.prompts.runs.list(prompt_id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 

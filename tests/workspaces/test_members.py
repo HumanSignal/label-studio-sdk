@@ -6,7 +6,7 @@ import typing
 from ..utilities import validate_response
 
 
-async def test_list_members(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "user": {
             "id": 1,
@@ -79,31 +79,31 @@ async def test_list_members(client: LabelStudio, async_client: AsyncLabelStudio)
         },
         "workspace": "integer",
     }
-    response = client.workspaces.members.list_members(id=1)
+    response = client.workspaces.members.list(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.workspaces.members.list_members(id=1)
+    async_response = await async_client.workspaces.members.list(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_create_member(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"user": 1, "workspace": 1}
     expected_types: typing.Any = {"user": "integer", "workspace": "integer"}
-    response = client.workspaces.members.create_member(id=1, user=1)
+    response = client.workspaces.members.create(id=1, user=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.workspaces.members.create_member(id=1, user=1)
+    async_response = await async_client.workspaces.members.create(id=1, user=1)
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_delete_member(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.workspaces.members.delete_member(id=1)  # type: ignore[func-returns-value]
+        client.workspaces.members.delete(id=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.workspaces.members.delete_member(id=1)  # type: ignore[func-returns-value]
+        await async_client.workspaces.members.delete(id=1)  # type: ignore[func-returns-value]
         is None
     )

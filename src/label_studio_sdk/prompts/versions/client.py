@@ -133,7 +133,7 @@ class VersionsClient:
         title: str,
         prompt: str,
         provider_model_id: str,
-        parent_model: int,
+        parent_model: typing.Optional[int] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
@@ -155,7 +155,8 @@ class VersionsClient:
         provider_model_id : str
             The model ID to use within the given provider, e.g. gpt-3.5
 
-        parent_model : int
+        parent_model : typing.Optional[int]
+            Parent model interface ID
 
         provider : typing.Optional[ProviderEnum]
             The model provider to use e.g. OpenAI
@@ -193,18 +194,17 @@ class VersionsClient:
             title="title",
             prompt="prompt",
             provider_model_id="provider_model_id",
-            parent_model=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions",
             method="POST",
             json={
+                "parent_model": parent_model,
                 "title": title,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
-                "parent_model": parent_model,
                 "model_provider_connection": model_provider_connection,
                 "organization": organization,
             },
@@ -325,11 +325,11 @@ class VersionsClient:
         id: int,
         prompt_id: int,
         *,
+        parent_model: typing.Optional[int] = OMIT,
         title: typing.Optional[str] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
-        parent_model: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -342,6 +342,9 @@ class VersionsClient:
         id : int
 
         prompt_id : int
+
+        parent_model : typing.Optional[int]
+            Parent model interface ID
 
         title : typing.Optional[str]
             Model name
@@ -362,8 +365,6 @@ class VersionsClient:
 
         provider_model_id : typing.Optional[str]
             The model ID to use within the given provider, e.g. gpt-3.5
-
-        parent_model : typing.Optional[int]
 
         model_provider_connection : typing.Optional[int]
 
@@ -394,11 +395,11 @@ class VersionsClient:
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(id)}",
             method="PATCH",
             json={
+                "parent_model": parent_model,
                 "title": title,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
-                "parent_model": parent_model,
                 "model_provider_connection": model_provider_connection,
                 "organization": organization,
             },
@@ -759,7 +760,7 @@ class AsyncVersionsClient:
         title: str,
         prompt: str,
         provider_model_id: str,
-        parent_model: int,
+        parent_model: typing.Optional[int] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
@@ -781,7 +782,8 @@ class AsyncVersionsClient:
         provider_model_id : str
             The model ID to use within the given provider, e.g. gpt-3.5
 
-        parent_model : int
+        parent_model : typing.Optional[int]
+            Parent model interface ID
 
         provider : typing.Optional[ProviderEnum]
             The model provider to use e.g. OpenAI
@@ -824,7 +826,6 @@ class AsyncVersionsClient:
                 title="title",
                 prompt="prompt",
                 provider_model_id="provider_model_id",
-                parent_model=1,
             )
 
 
@@ -834,11 +835,11 @@ class AsyncVersionsClient:
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions",
             method="POST",
             json={
+                "parent_model": parent_model,
                 "title": title,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
-                "parent_model": parent_model,
                 "model_provider_connection": model_provider_connection,
                 "organization": organization,
             },
@@ -975,11 +976,11 @@ class AsyncVersionsClient:
         id: int,
         prompt_id: int,
         *,
+        parent_model: typing.Optional[int] = OMIT,
         title: typing.Optional[str] = OMIT,
         prompt: typing.Optional[str] = OMIT,
         provider: typing.Optional[ProviderEnum] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
-        parent_model: typing.Optional[int] = OMIT,
         model_provider_connection: typing.Optional[int] = OMIT,
         organization: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -992,6 +993,9 @@ class AsyncVersionsClient:
         id : int
 
         prompt_id : int
+
+        parent_model : typing.Optional[int]
+            Parent model interface ID
 
         title : typing.Optional[str]
             Model name
@@ -1012,8 +1016,6 @@ class AsyncVersionsClient:
 
         provider_model_id : typing.Optional[str]
             The model ID to use within the given provider, e.g. gpt-3.5
-
-        parent_model : typing.Optional[int]
 
         model_provider_connection : typing.Optional[int]
 
@@ -1052,11 +1054,11 @@ class AsyncVersionsClient:
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(id)}",
             method="PATCH",
             json={
+                "parent_model": parent_model,
                 "title": title,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
-                "parent_model": parent_model,
                 "model_provider_connection": model_provider_connection,
                 "organization": organization,
             },
