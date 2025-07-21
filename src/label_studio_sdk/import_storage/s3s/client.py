@@ -21,7 +21,11 @@ class S3SClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[LseS3ImportStorage]:
         """
         Get list of all S3 import storage connections set up with IAM role access.
@@ -30,6 +34,9 @@ class S3SClient:
         ----------
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
+
+        project : typing.Optional[int]
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -54,6 +61,7 @@ class S3SClient:
             method="GET",
             params={
                 "ordering": ordering,
+                "project": project,
             },
             request_options=request_options,
         )
@@ -750,7 +758,11 @@ class AsyncS3SClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[LseS3ImportStorage]:
         """
         Get list of all S3 import storage connections set up with IAM role access.
@@ -759,6 +771,9 @@ class AsyncS3SClient:
         ----------
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
+
+        project : typing.Optional[int]
+            Project ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -791,6 +806,7 @@ class AsyncS3SClient:
             method="GET",
             params={
                 "ordering": ordering,
+                "project": project,
             },
             request_options=request_options,
         )

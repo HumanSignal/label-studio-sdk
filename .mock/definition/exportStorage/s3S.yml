@@ -13,13 +13,16 @@ service:
         IAM role access.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get all export storage
+      display-name: List S3s export storage
       request:
         name: S3SListRequest
         query-parameters:
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
+          project:
+            type: optional<integer>
+            docs: Project ID
       response:
         docs: ''
         type: list<root.LseS3ExportStorage>
