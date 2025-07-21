@@ -5,6 +5,8 @@ display-name: Label Studio API
 auth-schemes:
   Token:
     header: Authorization
-    name: apiKey
+    name: api_key
     type: string
+    env: LABEL_STUDIO_API_KEY
+    prefix: 'Token '
 auth: Token
