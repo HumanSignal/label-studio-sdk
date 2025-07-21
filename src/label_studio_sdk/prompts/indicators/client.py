@@ -3,9 +3,12 @@
 from ...core.client_wrapper import SyncClientWrapper
 import typing
 from ...core.request_options import RequestOptions
+from .types.indicators_list_response_item import IndicatorsListResponseItem
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+from ...types.lse_key_indicator_value import LseKeyIndicatorValue
 from ...core.client_wrapper import AsyncClientWrapper
 
 
@@ -13,7 +16,9 @@ class IndicatorsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def list(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[IndicatorsListResponseItem]:
         """
         Get key indicators for the Prompt dashboard.
 
@@ -26,7 +31,8 @@ class IndicatorsClient:
 
         Returns
         -------
-        None
+        typing.List[IndicatorsListResponseItem]
+            Key indicators
 
         Examples
         --------
@@ -47,13 +53,21 @@ class IndicatorsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    typing.List[IndicatorsListResponseItem],
+                    construct_type(
+                        type_=typing.List[IndicatorsListResponseItem],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def get(
+        self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LseKeyIndicatorValue:
         """
         Get a specific key indicator for the Prompt dashboard.
 
@@ -68,7 +82,8 @@ class IndicatorsClient:
 
         Returns
         -------
-        None
+        LseKeyIndicatorValue
+            Key indicator
 
         Examples
         --------
@@ -90,7 +105,13 @@ class IndicatorsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    LseKeyIndicatorValue,
+                    construct_type(
+                        type_=LseKeyIndicatorValue,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -101,7 +122,9 @@ class AsyncIndicatorsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def list(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[IndicatorsListResponseItem]:
         """
         Get key indicators for the Prompt dashboard.
 
@@ -114,7 +137,8 @@ class AsyncIndicatorsClient:
 
         Returns
         -------
-        None
+        typing.List[IndicatorsListResponseItem]
+            Key indicators
 
         Examples
         --------
@@ -143,7 +167,13 @@ class AsyncIndicatorsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    typing.List[IndicatorsListResponseItem],
+                    construct_type(
+                        type_=typing.List[IndicatorsListResponseItem],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -151,7 +181,7 @@ class AsyncIndicatorsClient:
 
     async def get(
         self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    ) -> LseKeyIndicatorValue:
         """
         Get a specific key indicator for the Prompt dashboard.
 
@@ -166,7 +196,8 @@ class AsyncIndicatorsClient:
 
         Returns
         -------
-        None
+        LseKeyIndicatorValue
+            Key indicator
 
         Examples
         --------
@@ -196,7 +227,13 @@ class AsyncIndicatorsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    LseKeyIndicatorValue,
+                    construct_type(
+                        type_=LseKeyIndicatorValue,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

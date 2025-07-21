@@ -1,3 +1,10 @@
+types:
+  IndicatorsListResponseItem:
+    properties:
+      title: optional<string>
+      values: optional<map<string, unknown>>
+    source:
+      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
@@ -12,9 +19,17 @@ service:
       path-parameters:
         id: integer
       display-name: Get key indicators
+      response:
+        docs: Key indicators
+        type: list<IndicatorsListResponseItem>
       examples:
         - path-parameters:
             id: 1
+          response:
+            body:
+              - title: title
+                values:
+                  key: value
       audiences:
         - public
     get:
@@ -28,11 +43,21 @@ service:
         id: integer
         indicator_key: string
       display-name: Get key indicator
+      response:
+        docs: Key indicator
+        type: root.LseKeyIndicatorValue
       examples:
         - path-parameters:
             id: 1
             indicator_key: indicator_key
+          response:
+            body:
+              title: title
+              values:
+                key: value
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
+imports:
+  root: ../__package__.yml

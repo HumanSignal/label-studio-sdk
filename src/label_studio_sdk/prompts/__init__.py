@@ -2,9 +2,11 @@
 
 from .types import PromptsCompatibleProjectsRequestProjectType
 from . import indicators, runs, versions
+from .indicators import IndicatorsListResponseItem
 from .runs import RunsListRequestProjectSubset
 
 __all__ = [
+    "IndicatorsListResponseItem",
     "PromptsCompatibleProjectsRequestProjectType",
     "RunsListRequestProjectSubset",
     "indicators",

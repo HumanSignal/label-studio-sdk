@@ -54,6 +54,7 @@ from .lse_export_create import LseExportCreate
 from .lse_fields import LseFields
 from .lse_fields_onboarding_state import LseFieldsOnboardingState
 from .lse_fields_trial_role import LseFieldsTrialRole
+from .lse_key_indicator_value import LseKeyIndicatorValue
 from .lse_organization import LseOrganization
 from .lse_organization_custom_scripts_editable_by import LseOrganizationCustomScriptsEditableBy
 from .lse_project_create import LseProjectCreate
@@ -219,6 +220,7 @@ __all__ = [
     "LseFields",
     "LseFieldsOnboardingState",
     "LseFieldsTrialRole",
+    "LseKeyIndicatorValue",
     "LseOrganization",
     "LseOrganizationCustomScriptsEditableBy",
     "LseProjectCreate",
