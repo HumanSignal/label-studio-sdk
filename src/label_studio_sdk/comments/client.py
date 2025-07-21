@@ -21,10 +21,14 @@ class CommentsClient:
     def list(
         self,
         *,
-        annotators: typing.Optional[str] = None,
+        classifications: str,
+        region_ref: str,
+        annotation: typing.Optional[int] = None,
+        annotators: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        draft: typing.Optional[int] = None,
         expand_created_by: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
-        projects: typing.Optional[str] = None,
+        projects: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[MaybeExpandedComment]:
         """
@@ -32,17 +36,22 @@ class CommentsClient:
 
         Parameters
         ----------
-        annotators : typing.Optional[str]
-            Comma-separated list of annotator user IDs
+        classifications : str
+
+        region_ref : str
+
+        annotation : typing.Optional[int]
+
+        annotators : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        draft : typing.Optional[int]
 
         expand_created_by : typing.Optional[bool]
-            Expand the created_by field
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
-        projects : typing.Optional[str]
-            Comma-separated list of project IDs
+        projects : typing.Optional[typing.Union[int, typing.Sequence[int]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -60,16 +69,23 @@ class CommentsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.comments.list()
+        client.comments.list(
+            classifications="classifications",
+            region_ref="region_ref",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/comments/",
             method="GET",
             params={
+                "annotation": annotation,
                 "annotators": annotators,
+                "classifications": classifications,
+                "draft": draft,
                 "expand_created_by": expand_created_by,
                 "ordering": ordering,
                 "projects": projects,
+                "region_ref": region_ref,
             },
             request_options=request_options,
         )
@@ -437,10 +453,14 @@ class AsyncCommentsClient:
     async def list(
         self,
         *,
-        annotators: typing.Optional[str] = None,
+        classifications: str,
+        region_ref: str,
+        annotation: typing.Optional[int] = None,
+        annotators: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        draft: typing.Optional[int] = None,
         expand_created_by: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
-        projects: typing.Optional[str] = None,
+        projects: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[MaybeExpandedComment]:
         """
@@ -448,17 +468,22 @@ class AsyncCommentsClient:
 
         Parameters
         ----------
-        annotators : typing.Optional[str]
-            Comma-separated list of annotator user IDs
+        classifications : str
+
+        region_ref : str
+
+        annotation : typing.Optional[int]
+
+        annotators : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+
+        draft : typing.Optional[int]
 
         expand_created_by : typing.Optional[bool]
-            Expand the created_by field
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
-        projects : typing.Optional[str]
-            Comma-separated list of project IDs
+        projects : typing.Optional[typing.Union[int, typing.Sequence[int]]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -481,7 +506,10 @@ class AsyncCommentsClient:
 
 
         async def main() -> None:
-            await client.comments.list()
+            await client.comments.list(
+                classifications="classifications",
+                region_ref="region_ref",
+            )
 
 
         asyncio.run(main())
@@ -490,10 +518,14 @@ class AsyncCommentsClient:
             "api/comments/",
             method="GET",
             params={
+                "annotation": annotation,
                 "annotators": annotators,
+                "classifications": classifications,
+                "draft": draft,
                 "expand_created_by": expand_created_by,
                 "ordering": ordering,
                 "projects": projects,
+                "region_ref": region_ref,
             },
             request_options=request_options,
         )

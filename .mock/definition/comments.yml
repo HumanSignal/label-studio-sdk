@@ -15,39 +15,23 @@ service:
       request:
         name: CommentsListRequest
         query-parameters:
+          annotation: optional<integer>
           annotators:
-            type: optional<string>
-            docs: Comma-separated list of annotator user IDs
-          expand_created_by:
-            type: optional<boolean>
-            docs: Expand the created_by field
+            type: optional<integer>
+            allow-multiple: true
+          classifications: string
+          draft: optional<integer>
+          expand_created_by: optional<boolean>
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
           projects:
-            type: optional<string>
-            docs: Comma-separated list of project IDs
+            type: optional<integer>
+            allow-multiple: true
+          region_ref: string
       response:
         docs: List of comments
         type: list<root.MaybeExpandedComment>
-      examples:
-        - response:
-            body:
-              - id: 1
-                region_ref:
-                  key: value
-                classifications:
-                  key: value
-                text: text
-                created_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                is_resolved: true
-                resolved_at: '2024-01-15T09:30:00Z'
-                project: 1
-                task: 1
-                draft: 1
-                annotation: 1
-                created_by: 1
       audiences:
         - public
     create:

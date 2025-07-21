@@ -798,7 +798,10 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.comments.list()
+client.comments.list(
+    classifications="classifications",
+    region_ref="region_ref",
+)
 
 ```
 </dd>
@@ -814,7 +817,7 @@ client.comments.list()
 <dl>
 <dd>
 
-**annotators:** `typing.Optional[str]` — Comma-separated list of annotator user IDs
+**classifications:** `str` 
     
 </dd>
 </dl>
@@ -822,7 +825,39 @@ client.comments.list()
 <dl>
 <dd>
 
-**expand_created_by:** `typing.Optional[bool]` — Expand the created_by field
+**region_ref:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotators:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expand_created_by:** `typing.Optional[bool]` 
     
 </dd>
 </dl>
@@ -838,7 +873,7 @@ client.comments.list()
 <dl>
 <dd>
 
-**projects:** `typing.Optional[str]` — Comma-separated list of project IDs
+**projects:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
     
 </dd>
 </dl>
