@@ -226,16 +226,16 @@ class VersionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, id: int, prompt_id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ThirdPartyModelVersion:
         """
         Retrieve a specific prompt of a model.
 
         Parameters
         ----------
-        id : int
-
         prompt_id : int
+
+        version_id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -254,12 +254,12 @@ class VersionsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.get(
-            id=1,
             prompt_id=1,
+            version_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -277,15 +277,17 @@ class VersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, id: int, prompt_id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(
+        self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Delete a prompt version by ID
 
         Parameters
         ----------
-        id : int
-
         prompt_id : int
+
+        version_id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -303,12 +305,12 @@ class VersionsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.delete(
-            id=1,
             prompt_id=1,
+            version_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -322,8 +324,8 @@ class VersionsClient:
 
     def update(
         self,
-        id: int,
         prompt_id: int,
+        version_id: int,
         *,
         parent_model: typing.Optional[int] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -339,9 +341,9 @@ class VersionsClient:
 
         Parameters
         ----------
-        id : int
-
         prompt_id : int
+
+        version_id : int
 
         parent_model : typing.Optional[int]
             Parent model interface ID
@@ -387,12 +389,12 @@ class VersionsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.update(
-            id=1,
             prompt_id=1,
+            version_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="PATCH",
             json={
                 "parent_model": parent_model,
@@ -861,16 +863,16 @@ class AsyncVersionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, id: int, prompt_id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ThirdPartyModelVersion:
         """
         Retrieve a specific prompt of a model.
 
         Parameters
         ----------
-        id : int
-
         prompt_id : int
+
+        version_id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -894,15 +896,15 @@ class AsyncVersionsClient:
 
         async def main() -> None:
             await client.prompts.versions.get(
-                id=1,
                 prompt_id=1,
+                version_id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -920,15 +922,17 @@ class AsyncVersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, id: int, prompt_id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(
+        self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Delete a prompt version by ID
 
         Parameters
         ----------
-        id : int
-
         prompt_id : int
+
+        version_id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -951,15 +955,15 @@ class AsyncVersionsClient:
 
         async def main() -> None:
             await client.prompts.versions.delete(
-                id=1,
                 prompt_id=1,
+                version_id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -973,8 +977,8 @@ class AsyncVersionsClient:
 
     async def update(
         self,
-        id: int,
         prompt_id: int,
+        version_id: int,
         *,
         parent_model: typing.Optional[int] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -990,9 +994,9 @@ class AsyncVersionsClient:
 
         Parameters
         ----------
-        id : int
-
         prompt_id : int
+
+        version_id : int
 
         parent_model : typing.Optional[int]
             Parent model interface ID
@@ -1043,15 +1047,15 @@ class AsyncVersionsClient:
 
         async def main() -> None:
             await client.prompts.versions.update(
-                id=1,
                 prompt_id=1,
+                version_id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="PATCH",
             json={
                 "parent_model": parent_model,

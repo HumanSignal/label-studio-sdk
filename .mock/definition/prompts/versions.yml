@@ -112,23 +112,23 @@ service:
       audiences:
         - public
     get:
-      path: /api/prompts/{prompt_id}/versions/{id}
+      path: /api/prompts/{prompt_id}/versions/{version_id}
       method: GET
       auth: true
       docs: Retrieve a specific prompt of a model.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id: integer
         prompt_id: integer
+        version_id: integer
       display-name: Get prompt version
       response:
         docs: ''
         type: root.ThirdPartyModelVersion
       examples:
         - path-parameters:
-            id: 1
             prompt_id: 1
+            version_id: 1
           response:
             body:
               id: 1
@@ -151,32 +151,32 @@ service:
       audiences:
         - public
     delete:
-      path: /api/prompts/{prompt_id}/versions/{id}
+      path: /api/prompts/{prompt_id}/versions/{version_id}
       method: DELETE
       auth: true
       docs: Delete a prompt version by ID
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id: integer
         prompt_id: integer
+        version_id: integer
       display-name: Delete prompt version
       examples:
         - path-parameters:
-            id: 1
             prompt_id: 1
+            version_id: 1
       audiences:
         - public
     update:
-      path: /api/prompts/{prompt_id}/versions/{id}
+      path: /api/prompts/{prompt_id}/versions/{version_id}
       method: PATCH
       auth: true
       docs: Update a specific prompt version by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id: integer
         prompt_id: integer
+        version_id: integer
       display-name: Update prompt version
       request:
         name: PatchedThirdPartyModelVersionRequest
@@ -222,8 +222,8 @@ service:
         type: root.ThirdPartyModelVersion
       examples:
         - path-parameters:
-            id: 1
             prompt_id: 1
+            version_id: 1
           request: {}
           response:
             body:

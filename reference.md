@@ -21217,8 +21217,8 @@ client = LabelStudio(
     base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.get(
-    id=1,
     prompt_id=1,
+    version_id=1,
 )
 
 ```
@@ -21235,7 +21235,7 @@ client.prompts.versions.get(
 <dl>
 <dd>
 
-**id:** `int` 
+**prompt_id:** `int` 
     
 </dd>
 </dl>
@@ -21243,7 +21243,7 @@ client.prompts.versions.get(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
+**version_id:** `int` 
     
 </dd>
 </dl>
@@ -21297,8 +21297,8 @@ client = LabelStudio(
     base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.delete(
-    id=1,
     prompt_id=1,
+    version_id=1,
 )
 
 ```
@@ -21315,7 +21315,7 @@ client.prompts.versions.delete(
 <dl>
 <dd>
 
-**id:** `int` 
+**prompt_id:** `int` 
     
 </dd>
 </dl>
@@ -21323,7 +21323,7 @@ client.prompts.versions.delete(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
+**version_id:** `int` 
     
 </dd>
 </dl>
@@ -21377,8 +21377,8 @@ client = LabelStudio(
     base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.update(
-    id=1,
     prompt_id=1,
+    version_id=1,
 )
 
 ```
@@ -21395,7 +21395,7 @@ client.prompts.versions.update(
 <dl>
 <dd>
 
-**id:** `int` 
+**prompt_id:** `int` 
     
 </dd>
 </dl>
@@ -21403,7 +21403,7 @@ client.prompts.versions.update(
 <dl>
 <dd>
 
-**prompt_id:** `int` 
+**version_id:** `int` 
     
 </dd>
 </dl>

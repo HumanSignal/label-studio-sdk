@@ -149,22 +149,22 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "model_provider_connection": "integer",
         "organization": "integer",
     }
-    response = client.prompts.versions.get(id=1, prompt_id=1)
+    response = client.prompts.versions.get(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.get(id=1, prompt_id=1)
+    async_response = await async_client.prompts.versions.get(prompt_id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.prompts.versions.delete(id=1, prompt_id=1)  # type: ignore[func-returns-value]
+        client.prompts.versions.delete(prompt_id=1, version_id=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.prompts.versions.delete(id=1, prompt_id=1)  # type: ignore[func-returns-value]
+        await async_client.prompts.versions.delete(prompt_id=1, version_id=1)  # type: ignore[func-returns-value]
         is None
     )
 
@@ -204,10 +204,10 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "model_provider_connection": "integer",
         "organization": "integer",
     }
-    response = client.prompts.versions.update(id=1, prompt_id=1)
+    response = client.prompts.versions.update(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.update(id=1, prompt_id=1)
+    async_response = await async_client.prompts.versions.update(prompt_id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
