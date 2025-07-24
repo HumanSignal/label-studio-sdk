@@ -1,5 +1,6 @@
 [project]
 name = "label-studio-sdk"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "label-studio-sdk"
