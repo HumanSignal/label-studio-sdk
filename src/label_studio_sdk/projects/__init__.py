@@ -3,8 +3,8 @@
 from .types import (
     LseProjectCreateRequestSampling,
     LseProjectCreateRequestSkipQueue,
-    PatchedLseProjectRequestSampling,
-    PatchedLseProjectRequestSkipQueue,
+    PatchedLseProjectUpdateRequestSampling,
+    PatchedLseProjectUpdateRequestSkipQueue,
     ProjectsDuplicateResponse,
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
@@ -14,8 +14,8 @@ from . import exports, pauses
 __all__ = [
     "LseProjectCreateRequestSampling",
     "LseProjectCreateRequestSkipQueue",
-    "PatchedLseProjectRequestSampling",
-    "PatchedLseProjectRequestSkipQueue",
+    "PatchedLseProjectUpdateRequestSampling",
+    "PatchedLseProjectUpdateRequestSkipQueue",
     "ProjectsDuplicateResponse",
     "ProjectsImportTasksResponse",
     "ProjectsListRequestFilter",

@@ -4,4 +4,4 @@ import typing
 from ...types.sampling_enum import SamplingEnum
 from ...types.null_enum import NullEnum
 
-PatchedLseProjectRequestSampling = typing.Union[SamplingEnum, NullEnum]
+PatchedLseProjectUpdateRequestSampling = typing.Union[SamplingEnum, NullEnum]

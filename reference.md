@@ -7162,7 +7162,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**sampling:** `typing.Optional[PatchedLseProjectRequestSampling]` 
+**sampling:** `typing.Optional[PatchedLseProjectUpdateRequestSampling]` 
     
 </dd>
 </dl>
@@ -7226,7 +7226,7 @@ client.projects.update(
 <dl>
 <dd>
 
-**skip_queue:** `typing.Optional[PatchedLseProjectRequestSkipQueue]` 
+**skip_queue:** `typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]` 
     
 </dd>
 </dl>
@@ -7243,6 +7243,14 @@ client.projects.update(
 <dd>
 
 **pinned_at:** `typing.Optional[dt.datetime]` — Pinned date and time
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace:** `typing.Optional[int]` 
     
 </dd>
 </dl>
@@ -7275,14 +7283,6 @@ client.projects.update(
 <dd>
 
 **comment_classification_config:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**duplication_done:** `typing.Optional[bool]` 
     
 </dd>
 </dl>

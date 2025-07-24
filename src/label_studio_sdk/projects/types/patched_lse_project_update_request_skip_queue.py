@@ -4,4 +4,4 @@ import typing
 from ...types.skip_queue_enum import SkipQueueEnum
 from ...types.null_enum import NullEnum
 
-PatchedLseProjectRequestSkipQueue = typing.Union[SkipQueueEnum, NullEnum]
+PatchedLseProjectUpdateRequestSkipQueue = typing.Union[SkipQueueEnum, NullEnum]

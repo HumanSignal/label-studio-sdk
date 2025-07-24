@@ -20,8 +20,8 @@ from ..types.lse_project_create import LseProjectCreate
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.project import Project
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.patched_lse_project_request_sampling import PatchedLseProjectRequestSampling
-from .types.patched_lse_project_request_skip_queue import PatchedLseProjectRequestSkipQueue
+from .types.patched_lse_project_update_request_sampling import PatchedLseProjectUpdateRequestSampling
+from .types.patched_lse_project_update_request_skip_queue import PatchedLseProjectUpdateRequestSkipQueue
 from ..types.review_settings_request import ReviewSettingsRequest
 from ..types.assignment_settings_request import AssignmentSettingsRequest
 from ..types.lse_project_update import LseProjectUpdate
@@ -458,7 +458,7 @@ class ProjectsClient:
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
-        sampling: typing.Optional[PatchedLseProjectRequestSampling] = OMIT,
+        sampling: typing.Optional[PatchedLseProjectUpdateRequestSampling] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
@@ -466,14 +466,14 @@ class ProjectsClient:
         task_data_password: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[PatchedLseProjectRequestSkipQueue] = OMIT,
+        skip_queue: typing.Optional[PatchedLseProjectUpdateRequestSkipQueue] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
         assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         comment_classification_config: typing.Optional[str] = OMIT,
-        duplication_done: typing.Optional[bool] = OMIT,
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
@@ -539,7 +539,7 @@ class ProjectsClient:
         show_collab_predictions : typing.Optional[bool]
             If set, the annotator can view model predictions
 
-        sampling : typing.Optional[PatchedLseProjectRequestSampling]
+        sampling : typing.Optional[PatchedLseProjectUpdateRequestSampling]
 
         show_ground_truth_first : typing.Optional[bool]
 
@@ -558,13 +558,15 @@ class ProjectsClient:
         evaluate_predictions_automatically : typing.Optional[bool]
             Retrieve and display predictions when loading a task
 
-        skip_queue : typing.Optional[PatchedLseProjectRequestSkipQueue]
+        skip_queue : typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]
 
         reveal_preannotations_interactively : typing.Optional[bool]
             Reveal pre-annotations interactively
 
         pinned_at : typing.Optional[dt.datetime]
             Pinned date and time
+
+        workspace : typing.Optional[int]
 
         review_settings : typing.Optional[ReviewSettingsRequest]
 
@@ -573,8 +575,6 @@ class ProjectsClient:
         custom_script : typing.Optional[str]
 
         comment_classification_config : typing.Optional[str]
-
-        duplication_done : typing.Optional[bool]
 
         require_comment_on_skip : typing.Optional[bool]
 
@@ -635,7 +635,7 @@ class ProjectsClient:
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "show_collab_predictions": show_collab_predictions,
                 "sampling": convert_and_respect_annotation_metadata(
-                    object_=sampling, annotation=PatchedLseProjectRequestSampling, direction="write"
+                    object_=sampling, annotation=PatchedLseProjectUpdateRequestSampling, direction="write"
                 ),
                 "show_ground_truth_first": show_ground_truth_first,
                 "show_overlap_first": show_overlap_first,
@@ -645,10 +645,11 @@ class ProjectsClient:
                 "control_weights": control_weights,
                 "evaluate_predictions_automatically": evaluate_predictions_automatically,
                 "skip_queue": convert_and_respect_annotation_metadata(
-                    object_=skip_queue, annotation=PatchedLseProjectRequestSkipQueue, direction="write"
+                    object_=skip_queue, annotation=PatchedLseProjectUpdateRequestSkipQueue, direction="write"
                 ),
                 "reveal_preannotations_interactively": reveal_preannotations_interactively,
                 "pinned_at": pinned_at,
+                "workspace": workspace,
                 "review_settings": convert_and_respect_annotation_metadata(
                     object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
                 ),
@@ -657,7 +658,6 @@ class ProjectsClient:
                 ),
                 "custom_script": custom_script,
                 "comment_classification_config": comment_classification_config,
-                "duplication_done": duplication_done,
                 "require_comment_on_skip": require_comment_on_skip,
                 "custom_task_lock_ttl": custom_task_lock_ttl,
                 "annotation_limit_count": annotation_limit_count,
@@ -1418,7 +1418,7 @@ class AsyncProjectsClient:
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         min_annotations_to_start_training: typing.Optional[int] = OMIT,
         show_collab_predictions: typing.Optional[bool] = OMIT,
-        sampling: typing.Optional[PatchedLseProjectRequestSampling] = OMIT,
+        sampling: typing.Optional[PatchedLseProjectUpdateRequestSampling] = OMIT,
         show_ground_truth_first: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
         overlap_cohort_percentage: typing.Optional[int] = OMIT,
@@ -1426,14 +1426,14 @@ class AsyncProjectsClient:
         task_data_password: typing.Optional[str] = OMIT,
         control_weights: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         evaluate_predictions_automatically: typing.Optional[bool] = OMIT,
-        skip_queue: typing.Optional[PatchedLseProjectRequestSkipQueue] = OMIT,
+        skip_queue: typing.Optional[PatchedLseProjectUpdateRequestSkipQueue] = OMIT,
         reveal_preannotations_interactively: typing.Optional[bool] = OMIT,
         pinned_at: typing.Optional[dt.datetime] = OMIT,
+        workspace: typing.Optional[int] = OMIT,
         review_settings: typing.Optional[ReviewSettingsRequest] = OMIT,
         assignment_settings: typing.Optional[AssignmentSettingsRequest] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
         comment_classification_config: typing.Optional[str] = OMIT,
-        duplication_done: typing.Optional[bool] = OMIT,
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         custom_task_lock_ttl: typing.Optional[int] = OMIT,
         annotation_limit_count: typing.Optional[int] = OMIT,
@@ -1499,7 +1499,7 @@ class AsyncProjectsClient:
         show_collab_predictions : typing.Optional[bool]
             If set, the annotator can view model predictions
 
-        sampling : typing.Optional[PatchedLseProjectRequestSampling]
+        sampling : typing.Optional[PatchedLseProjectUpdateRequestSampling]
 
         show_ground_truth_first : typing.Optional[bool]
 
@@ -1518,13 +1518,15 @@ class AsyncProjectsClient:
         evaluate_predictions_automatically : typing.Optional[bool]
             Retrieve and display predictions when loading a task
 
-        skip_queue : typing.Optional[PatchedLseProjectRequestSkipQueue]
+        skip_queue : typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]
 
         reveal_preannotations_interactively : typing.Optional[bool]
             Reveal pre-annotations interactively
 
         pinned_at : typing.Optional[dt.datetime]
             Pinned date and time
+
+        workspace : typing.Optional[int]
 
         review_settings : typing.Optional[ReviewSettingsRequest]
 
@@ -1533,8 +1535,6 @@ class AsyncProjectsClient:
         custom_script : typing.Optional[str]
 
         comment_classification_config : typing.Optional[str]
-
-        duplication_done : typing.Optional[bool]
 
         require_comment_on_skip : typing.Optional[bool]
 
@@ -1603,7 +1603,7 @@ class AsyncProjectsClient:
                 "min_annotations_to_start_training": min_annotations_to_start_training,
                 "show_collab_predictions": show_collab_predictions,
                 "sampling": convert_and_respect_annotation_metadata(
-                    object_=sampling, annotation=PatchedLseProjectRequestSampling, direction="write"
+                    object_=sampling, annotation=PatchedLseProjectUpdateRequestSampling, direction="write"
                 ),
                 "show_ground_truth_first": show_ground_truth_first,
                 "show_overlap_first": show_overlap_first,
@@ -1613,10 +1613,11 @@ class AsyncProjectsClient:
                 "control_weights": control_weights,
                 "evaluate_predictions_automatically": evaluate_predictions_automatically,
                 "skip_queue": convert_and_respect_annotation_metadata(
-                    object_=skip_queue, annotation=PatchedLseProjectRequestSkipQueue, direction="write"
+                    object_=skip_queue, annotation=PatchedLseProjectUpdateRequestSkipQueue, direction="write"
                 ),
                 "reveal_preannotations_interactively": reveal_preannotations_interactively,
                 "pinned_at": pinned_at,
+                "workspace": workspace,
                 "review_settings": convert_and_respect_annotation_metadata(
                     object_=review_settings, annotation=ReviewSettingsRequest, direction="write"
                 ),
@@ -1625,7 +1626,6 @@ class AsyncProjectsClient:
                 ),
                 "custom_script": custom_script,
                 "comment_classification_config": comment_classification_config,
-                "duplication_done": duplication_done,
                 "require_comment_on_skip": require_comment_on_skip,
                 "custom_task_lock_ttl": custom_task_lock_ttl,
                 "annotation_limit_count": annotation_limit_count,
