@@ -23,8 +23,10 @@ from .types import (
     ConvertedFormatStatus,
     DataManagerTaskSerializer,
     DataManagerTaskSerializerAnnotatorsItem,
+    DataManagerTaskSerializerCommentAuthorsItem,
     DataManagerTaskSerializerDraftsItem,
     DataManagerTaskSerializerPredictionsItem,
+    DataManagerTaskSerializerPredictionsItemModelRun,
     Export,
     ExportFormat,
     ExportSnapshot,
@@ -157,7 +159,13 @@ from .ml import (
     MlUpdateResponse,
     MlUpdateResponseAuthMethod,
 )
-from .projects import ProjectsCreateResponse, ProjectsImportTasksResponse, ProjectsListResponse, ProjectsUpdateResponse
+from .projects import (
+    ProjectsCreateResponse,
+    ProjectsImportTasksResponse,
+    ProjectsListRequestFilter,
+    ProjectsListResponse,
+    ProjectsUpdateResponse,
+)
 from .prompts import (
     PromptsBatchFailedPredictionsRequestFailedPredictionsItem,
     PromptsBatchFailedPredictionsResponse,
@@ -227,8 +235,10 @@ __all__ = [
     "ConvertedFormatStatus",
     "DataManagerTaskSerializer",
     "DataManagerTaskSerializerAnnotatorsItem",
+    "DataManagerTaskSerializerCommentAuthorsItem",
     "DataManagerTaskSerializerDraftsItem",
     "DataManagerTaskSerializerPredictionsItem",
+    "DataManagerTaskSerializerPredictionsItemModelRun",
     "Export",
     "ExportFormat",
     "ExportSnapshot",
@@ -289,6 +299,7 @@ __all__ = [
     "ProjectSkipQueue",
     "ProjectsCreateResponse",
     "ProjectsImportTasksResponse",
+    "ProjectsListRequestFilter",
     "ProjectsListResponse",
     "ProjectsUpdateResponse",
     "Prompt",

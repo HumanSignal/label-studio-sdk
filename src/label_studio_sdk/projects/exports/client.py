@@ -55,7 +55,7 @@ class ExportsClient:
         ```
         To export specific tasks with IDs of 123 and 345, run the following from the command line:
         ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
+        curl -X GET "https://localhost:8080/api/projects/{id}/export?ids[]=123&ids[]=345" -H 'Authorization: Token abc123' --output 'annotations.json'
         ```
 
         You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
@@ -604,7 +604,7 @@ class AsyncExportsClient:
         ```
         To export specific tasks with IDs of 123 and 345, run the following from the command line:
         ```bash
-        curl -X GET https://localhost:8080/api/projects/{id}/export?ids[]=123\&ids[]=345 -H 'Authorization: Token abc123' --output 'annotations.json'
+        curl -X GET "https://localhost:8080/api/projects/{id}/export?ids[]=123&ids[]=345" -H 'Authorization: Token abc123' --output 'annotations.json'
         ```
 
         You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).

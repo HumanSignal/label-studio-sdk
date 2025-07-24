@@ -18,7 +18,7 @@ class BaseClientWrapper:
 
         # even in the async case, refreshing access token (when the existing one is expired) should be sync
         from ..tokens.client_ext import TokensClientExt
-        self._tokens_client = TokensClientExt(base_url=base_url, api_key=api_key)
+        self._tokens_client = TokensClientExt(base_url=base_url, api_key=api_key, client_wrapper=self)
 
 
     def get_timeout(self) -> typing.Optional[float]:

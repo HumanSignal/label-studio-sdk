@@ -666,15 +666,15 @@ types:
           maxLength: 256
       control_weights:
         type: optional<map<string, unknown>>
-        docs: >-
+        docs: >
           Dict of weights for each control tag in metric calculation. Each
-          control tag (e.g. label or choice) will have it's own key in control
-          weight dict with weight for each label and overall weight.For example,
-          if bounding box annotation with control tag named my_bbox should be
-          included with 0.33 weight in agreement calculation, and the first
-          label Car should be twice more important than Airplaine, then you have
-          to need the specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
-          {'Car': 1.0, 'Airplaine': 0.5}, 'overall': 0.33}
+          control tag (e.g. label or choice) will have its own key in control
+          weight dict with weight for each label and overall weight. For
+          example, if a bounding box annotation with a control tag named my_bbox
+          should be included with 0.33 weight in agreement calculation, and the
+          first label Car should be twice as important as Airplane, then you
+          need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
+          {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
       parsed_label_config:
         type: optional<map<string, unknown>>
         docs: JSON-formatted labeling configuration
@@ -1763,6 +1763,14 @@ types:
         docs: User who created the last annotation history item
     source:
       openapi: openapi/openapi.yaml
+  DataManagerTaskSerializerPredictionsItemModelRun:
+    discriminated: false
+    union:
+      - map<string, unknown>
+      - integer
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   DataManagerTaskSerializerPredictionsItem:
     properties:
       result:
@@ -1774,7 +1782,7 @@ types:
       model:
         type: optional<map<string, unknown>>
       model_run:
-        type: optional<map<string, unknown>>
+        type: optional<DataManagerTaskSerializerPredictionsItemModelRun>
       task:
         type: optional<integer>
       project:
@@ -1799,6 +1807,15 @@ types:
     inline: true
   DataManagerTaskSerializerAnnotatorsItem:
     discriminated: false
+    union:
+      - integer
+      - map<string, unknown>
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  DataManagerTaskSerializerCommentAuthorsItem:
+    discriminated: false
+    docs: Users who wrote comments
     union:
       - integer
       - map<string, unknown>
@@ -1874,7 +1891,7 @@ types:
         type: optional<integer>
         docs: Project ID for this task
       comment_authors:
-        type: optional<list<integer>>
+        type: optional<list<DataManagerTaskSerializerCommentAuthorsItem>>
         docs: Users who wrote comments
     source:
       openapi: openapi/openapi.yaml

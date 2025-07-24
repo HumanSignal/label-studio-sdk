@@ -1,6 +1,12 @@
-imports:
-  root: __package__.yml
 types:
+  ProjectsListRequestFilter:
+    enum:
+      - all
+      - pinned_only
+      - exclude_pinned
+    default: all
+    source:
+      openapi: openapi/openapi.yaml
   ProjectsListResponse:
     properties:
       count: integer
@@ -62,7 +68,7 @@ types:
         default: '#FFFFFF'
       control_weights:
         type: optional<map<string, unknown>>
-        docs: >-
+        docs: >
           Dict of weights for each control tag in metric calculation. Each
           control tag (e.g. label or choice) will have its own key in control
           weight dict with weight for each label and overall weight. For
@@ -70,7 +76,7 @@ types:
           should be included with 0.33 weight in agreement calculation, and the
           first label Car should be twice as important as Airplane, then you
           need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
-          {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
+          {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
     source:
       openapi: openapi/openapi.yaml
   ProjectsUpdateResponse:
@@ -123,7 +129,7 @@ types:
         default: '#FFFFFF'
       control_weights:
         type: optional<map<string, unknown>>
-        docs: >-
+        docs: >
           Dict of weights for each control tag in metric calculation. Each
           control tag (e.g. label or choice) will have its own key in control
           weight dict with weight for each label and overall weight. For
@@ -131,7 +137,7 @@ types:
           should be included with 0.33 weight in agreement calculation, and the
           first label Car should be twice as important as Airplane, then you
           need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
-          {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}
+          {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
     source:
       openapi: openapi/openapi.yaml
   ProjectsImportTasksResponse:
@@ -163,6 +169,8 @@ types:
         docs: The list of found data columns
     source:
       openapi: openapi/openapi.yaml
+imports:
+  root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -221,11 +229,30 @@ service:
           workspaces:
             type: optional<integer>
             docs: workspaces
+          include:
+            type: optional<string>
+            docs: >
+              Comma-separated list of count fields to include in the response to
+              optimize performance.  Available fields: task_number,
+              finished_task_number, total_predictions_number, 
+              total_annotations_number, num_tasks_with_annotations,
+              useful_annotation_number,  ground_truth_number,
+              skipped_annotations_number. If not specified, all count fields are
+              included.
+          filter:
+            type: optional<ProjectsListRequestFilter>
+            default: all
+            docs: >
+              Filter projects by pinned status. Use 'pinned_only' to return only
+              pinned projects,  'exclude_pinned' to return only non-pinned
+              projects, or 'all' to return all projects.
       response:
         docs: ''
         type: ProjectsListResponse
       examples:
-        - response:
+        - query-parameters:
+            include: task_number,total_annotations_number,num_tasks_with_annotations
+          response:
             body:
               count: 1
               next: next
@@ -358,7 +385,7 @@ service:
               default: '#FFFFFF'
             control_weights:
               type: optional<map<string, unknown>>
-              docs: >-
+              docs: >
                 Dict of weights for each control tag in metric calculation. Each
                 control tag (e.g. label or choice) will have its own key in
                 control weight dict with weight for each label and overall
@@ -367,7 +394,7 @@ service:
                 agreement calculation, and the first label Car should be twice
                 as important as Airplane, then you need to specify: {'my_bbox':
                 {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane':
-                0.5}, 'overall': 0.33}
+                0.5}, 'overall': 0.33}}
             workspace:
               type: optional<integer>
               docs: Workspace ID
@@ -625,7 +652,7 @@ service:
               default: '#FFFFFF'
             control_weights:
               type: optional<map<string, unknown>>
-              docs: >-
+              docs: >
                 Dict of weights for each control tag in metric calculation. Each
                 control tag (e.g. label or choice) will have its own key in
                 control weight dict with weight for each label and overall
@@ -634,7 +661,7 @@ service:
                 agreement calculation, and the first label Car should be twice
                 as important as Airplane, then you need to specify: {'my_bbox':
                 {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane':
-                0.5}, 'overall': 0.33}
+                0.5}, 'overall': 0.33}}
             workspace:
               type: optional<integer>
               docs: Workspace ID
@@ -718,10 +745,8 @@ service:
         ```bash
 
         curl -H 'Content-Type: application/json' -H 'Authorization: Token
-        abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text":
-        "Some text 1"}, {"text": "Some text 2"}]'
+        abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data
+        '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
 
         ```
 
@@ -749,10 +774,9 @@ service:
 
         ```bash
 
-        curl -H 'Authorization: Token abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' -F
-        ‘file=@path/to/my_file.csv’
+        curl -H 'Authorization: Token abc123' -X POST
+        'https://localhost:8080/api/projects/1/import' -F
+        'file=@path/to/my_file.csv'
 
         ```
 
@@ -766,11 +790,8 @@ service:
         ```bash
 
         curl -H 'Content-Type: application/json' -H 'Authorization: Token
-        abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' \
-
-        --data '[{"url": "http://example.com/test1.csv"}, {"url":
+        abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data
+        '[{"url": "http://example.com/test1.csv"}, {"url":
         "http://example.com/test2.csv"}]'
 
         ```

@@ -397,6 +397,7 @@ class PromptsClient:
     def batch_predictions(
         self,
         *,
+        num_predictions: typing.Optional[int] = None,
         modelrun_id: typing.Optional[int] = OMIT,
         results: typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -406,6 +407,9 @@ class PromptsClient:
 
         Parameters
         ----------
+        num_predictions : typing.Optional[int]
+            Number of predictions being sent
+
         modelrun_id : typing.Optional[int]
             Model Run ID to associate the prediction with
 
@@ -431,6 +435,9 @@ class PromptsClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/model-run/batch-predictions",
             method="POST",
+            params={
+                "num_predictions": num_predictions,
+            },
             json={
                 "modelrun_id": modelrun_id,
                 "results": convert_and_respect_annotation_metadata(
@@ -462,6 +469,7 @@ class PromptsClient:
     def batch_failed_predictions(
         self,
         *,
+        num_failed_predictions: typing.Optional[int] = None,
         modelrun_id: typing.Optional[int] = OMIT,
         failed_predictions: typing.Optional[
             typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
@@ -473,6 +481,9 @@ class PromptsClient:
 
         Parameters
         ----------
+        num_failed_predictions : typing.Optional[int]
+            Number of failed predictions being sent
+
         modelrun_id : typing.Optional[int]
             Model Run ID where the failed predictions came from
 
@@ -498,6 +509,9 @@ class PromptsClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/model-run/batch-failed-predictions",
             method="POST",
+            params={
+                "num_failed_predictions": num_failed_predictions,
+            },
             json={
                 "modelrun_id": modelrun_id,
                 "failed_predictions": convert_and_respect_annotation_metadata(
@@ -933,6 +947,7 @@ class AsyncPromptsClient:
     async def batch_predictions(
         self,
         *,
+        num_predictions: typing.Optional[int] = None,
         modelrun_id: typing.Optional[int] = OMIT,
         results: typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -942,6 +957,9 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
+        num_predictions : typing.Optional[int]
+            Number of predictions being sent
+
         modelrun_id : typing.Optional[int]
             Model Run ID to associate the prediction with
 
@@ -975,6 +993,9 @@ class AsyncPromptsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/model-run/batch-predictions",
             method="POST",
+            params={
+                "num_predictions": num_predictions,
+            },
             json={
                 "modelrun_id": modelrun_id,
                 "results": convert_and_respect_annotation_metadata(
@@ -1006,6 +1027,7 @@ class AsyncPromptsClient:
     async def batch_failed_predictions(
         self,
         *,
+        num_failed_predictions: typing.Optional[int] = None,
         modelrun_id: typing.Optional[int] = OMIT,
         failed_predictions: typing.Optional[
             typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
@@ -1017,6 +1039,9 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
+        num_failed_predictions : typing.Optional[int]
+            Number of failed predictions being sent
+
         modelrun_id : typing.Optional[int]
             Model Run ID where the failed predictions came from
 
@@ -1050,6 +1075,9 @@ class AsyncPromptsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/model-run/batch-failed-predictions",
             method="POST",
+            params={
+                "num_failed_predictions": num_failed_predictions,
+            },
             json={
                 "modelrun_id": modelrun_id,
                 "failed_predictions": convert_and_respect_annotation_metadata(

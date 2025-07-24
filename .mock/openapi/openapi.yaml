@@ -1473,9 +1473,9 @@ paths:
 
         ```bash
 
-        curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml -H 'Authorization: Token abc123'\
+        curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml -H 'Authorization: Token abc123' --data '{"url": "http://localhost:9090", "project": {project_id}}'
 
-        --data '{"url": "http://localhost:9090", "project": {project_id}}' 
+        ```
       requestBody:
         $ref: "#/components/requestBodies/api_ml_createData"
       responses:
@@ -2396,15 +2396,16 @@ paths:
                     default: "#FFFFFF"
                   control_weights:
                     title: control_weights
-                    description: "Dict of weights for each control tag in metric calculation. Each
-                      control tag (e.g. label or choice) will have its own key
-                      in control weight dict with weight for each label and
-                      overall weight. For example, if a bounding box annotation
-                      with a control tag named my_bbox should be included with
-                      0.33 weight in agreement calculation, and the first label
-                      Car should be twice as important as Airplane, then you
-                      need to specify: {'my_bbox': {'type': 'RectangleLabels',
-                      'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}"
+                    description: >
+                      Dict of weights for each control tag in metric calculation. Each
+                      control tag (e.g. label or choice) will have its own key in
+                      control weight dict with weight for each label and overall
+                      weight. For example, if a bounding box annotation with a
+                      control tag named my_bbox should be included with 0.33 weight
+                      in agreement calculation, and the first label Car should be
+                      twice as important as Airplane, then you need to specify:
+                      {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
+                      'Airplane': 0.5}, 'overall': 0.33}}
                     type: object
                     example:
                       my_bbox:
@@ -2586,15 +2587,16 @@ paths:
                     default: "#FFFFFF"
                   control_weights:
                     title: control_weights
-                    description: "Dict of weights for each control tag in metric calculation. Each
-                      control tag (e.g. label or choice) will have its own key
-                      in control weight dict with weight for each label and
-                      overall weight. For example, if a bounding box annotation
-                      with a control tag named my_bbox should be included with
-                      0.33 weight in agreement calculation, and the first label
-                      Car should be twice as important as Airplane, then you
-                      need to specify: {'my_bbox': {'type': 'RectangleLabels',
-                      'labels': {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}"
+                    description: >
+                      Dict of weights for each control tag in metric calculation. Each
+                      control tag (e.g. label or choice) will have its own key in
+                      control weight dict with weight for each label and overall
+                      weight. For example, if a bounding box annotation with a
+                      control tag named my_bbox should be included with 0.33 weight
+                      in agreement calculation, and the first label Car should be
+                      twice as important as Airplane, then you need to specify:
+                      {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
+                      'Airplane': 0.5}, 'overall': 0.33}}
                     type: object
                     example:
                       my_bbox:
@@ -2732,9 +2734,7 @@ paths:
 
         ```bash
 
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
 
         ```
 
@@ -2760,9 +2760,7 @@ paths:
 
         ```bash
 
-        curl -H 'Authorization: Token abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' -F ‘file=@path/to/my_file.csv’
+        curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
 
         ```
 
@@ -2774,11 +2772,7 @@ paths:
 
         ```bash
 
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-
-        -X POST 'https://localhost:8080/api/projects/1/import' \
-
-        --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
 
         ```
 
@@ -6700,7 +6694,8 @@ components:
                 default: "#FFFFFF"
               control_weights:
                 title: control_weights
-                description: "Dict of weights for each control tag in metric calculation. Each
+                description: >
+                  Dict of weights for each control tag in metric calculation. Each
                   control tag (e.g. label or choice) will have its own key in
                   control weight dict with weight for each label and overall
                   weight. For example, if a bounding box annotation with a
@@ -6708,7 +6703,7 @@ components:
                   in agreement calculation, and the first label Car should be
                   twice as important as Airplane, then you need to specify:
                   {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
-                  'Airplane': 0.5}, 'overall': 0.33}"
+                  'Airplane': 0.5}, 'overall': 0.33}}
                 type: object
                 example:
                   my_bbox:
@@ -8641,15 +8636,16 @@ components:
           nullable: true
         control_weights:
           title: Control weights
-          description: "Dict of weights for each control tag in metric calculation. Each
-            control tag (e.g. label or choice) will have it's own key in control
-            weight dict with weight for each label and overall weight.For
-            example, if bounding box annotation with control tag named my_bbox
-            should be included with 0.33 weight in agreement calculation, and
-            the first label Car should be twice more important than Airplaine,
-            then you have to need the specify: {'my_bbox': {'type':
-            'RectangleLabels', 'labels': {'Car': 1.0, 'Airplaine': 0.5},
-            'overall': 0.33}"
+          description: >
+            Dict of weights for each control tag in metric calculation. Each
+            control tag (e.g. label or choice) will have its own key in
+            control weight dict with weight for each label and overall
+            weight. For example, if a bounding box annotation with a
+            control tag named my_bbox should be included with 0.33 weight
+            in agreement calculation, and the first label Car should be
+            twice as important as Airplane, then you need to specify:
+            {'my_bbox': {'type': 'RectangleLabels', 'labels': {'Car': 1.0,
+            'Airplane': 0.5}, 'overall': 0.33}}
           type: object
           nullable: true
         parsed_label_config:
@@ -10283,7 +10279,9 @@ components:
                 type: object
                 title: ML Backend instance
               model_run:
-                type: object
+                oneOf:
+                  - type: object
+                  - type: integer
                 title: Model Run instance
               task:
                 type: integer
@@ -10452,7 +10450,9 @@ components:
           type: array
           items:
             description: Users who wrote comments
-            type: integer
+            oneOf:
+              - type: integer
+              - type: object
           uniqueItems: true
     Webhook:
       required:

@@ -3,6 +3,7 @@ import io
 import logging
 import os
 import shutil
+import base64
 from contextlib import contextmanager
 from tempfile import mkdtemp
 from urllib.parse import urlparse
@@ -201,7 +202,7 @@ def download_and_cache(
 
     # local storage: /data/local-files?d=dir/1.jpg => 1.jpg
     if is_local_storage_file:
-        url_filename = os.path.basename(url.split('?d=')[1])
+        url_filename = os.path.basename(url.split("?d=")[1])
     # cloud storage: s3://bucket/1.jpg => 1.jpg
     elif is_cloud_storage_file:
         url_filename = os.path.basename(url)
@@ -213,7 +214,11 @@ def download_and_cache(
     filepath = os.path.join(cache_dir, url_hash + "__" + url_filename)
 
     if not os.path.exists(filepath):
-        logger.info("Download {url} to {filepath}. download_resources: {download_resources}".format(url=url, filepath=filepath, download_resources=download_resources))
+        logger.info(
+            "Download {url} to {filepath}. download_resources: {download_resources}".format(
+                url=url, filepath=filepath, download_resources=download_resources
+            )
+        )
         if download_resources:
             headers = {
                 # avoid requests.exceptions.HTTPError: 403 Client Error: Forbidden. Please comply with the User-Agent policy:
@@ -256,3 +261,123 @@ def get_all_files_from_dir(d):
         if os.path.isfile(filepath):
             out.append(filepath)
     return out
+
+
+def get_base64_content(
+    url,
+    hostname=None,
+    access_token=None,
+    task_id=None,
+):
+    """This helper function is used to download a file and return its base64 representation without saving to filesystem.
+
+    :param url: File URL to download, it can be a uploaded file, local storage, cloud storage file or just http(s) url
+    :param hostname: Label Studio Hostname, it will be used for uploaded files, local storage files and cloud storage files
+      if not provided, it will be taken from LABEL_STUDIO_URL env variable
+    :param access_token: Label Studio access token, it will be used for uploaded files, local storage files and cloud storage files
+      if not provided, it will be taken from LABEL_STUDIO_API_KEY env variable
+    :param task_id: Label Studio Task ID, required for cloud storage files
+      because the URL will be rebuilt to `{hostname}/tasks/{task_id}/presign/?fileuri={url}`
+
+    :return: base64 encoded file content
+    """
+    # get environment variables
+    hostname = (
+        hostname
+        or os.getenv("LABEL_STUDIO_URL", "")
+        or os.getenv("LABEL_STUDIO_HOST", "")
+    )
+    access_token = (
+        access_token
+        or os.getenv("LABEL_STUDIO_API_KEY", "")
+        or os.getenv("LABEL_STUDIO_ACCESS_TOKEN", "")
+    )
+    if "localhost" in hostname:
+        logger.warning(
+            f"Using `localhost` ({hostname}) in LABEL_STUDIO_URL, "
+            f"`localhost` is not accessible inside of docker containers. "
+            f"You can check your IP with utilities like `ifconfig` and set it as LABEL_STUDIO_URL."
+        )
+    if hostname and not (
+        hostname.startswith("http://") or hostname.startswith("https://")
+    ):
+        raise ValueError(
+            f"Invalid hostname in LABEL_STUDIO_URL: {hostname}. "
+            "Please provide full URL starting with protocol (http:// or https://)."
+        )
+
+    # fix file upload url
+    if url.startswith("upload") or url.startswith("/upload"):
+        url = "/data" + ("" if url.startswith("/") else "/") + url
+
+    is_uploaded_file = url.startswith("/data/upload")
+    is_local_storage_file = url.startswith("/data/") and "?d=" in url
+    is_cloud_storage_file = (
+        url.startswith("s3:") or url.startswith("gs:") or url.startswith("azure-blob:")
+    )
+
+    # Local storage file: try to load locally
+    if is_local_storage_file:
+        filepath = url.split("?d=")[1]
+        filepath = safe_build_path(LOCAL_FILES_DOCUMENT_ROOT, filepath)
+        if os.path.exists(filepath):
+            logger.debug(
+                f"Local Storage file path exists locally, read content directly: {filepath}"
+            )
+            with open(filepath, "rb") as f:
+                return base64.b64encode(f.read()).decode("utf-8")
+
+    # Upload or Local Storage file
+    if is_uploaded_file or is_local_storage_file or is_cloud_storage_file:
+        # hostname check
+        if not hostname:
+            raise FileNotFoundError(
+                f"Can't resolve url, hostname not provided: {url}. "
+                "You can set LABEL_STUDIO_URL environment variable to use it as a hostname."
+            )
+        # uploaded and local storage file
+        elif is_uploaded_file or is_local_storage_file:
+            url = concat_urls(hostname, url)
+            logger.info("Resolving url using hostname [" + hostname + "]: " + url)
+        # s3, gs, azure-blob file
+        elif is_cloud_storage_file:
+            if task_id is None:
+                raise Exception(
+                    "Label Studio Task ID is required for cloud storage files"
+                )
+            url = concat_urls(hostname, f"/tasks/{task_id}/presign/?fileuri={url}")
+            logger.info(
+                "Cloud storage file: Resolving url using hostname ["
+                + hostname
+                + "]: "
+                + url
+            )
+
+        # check access token
+        if not access_token:
+            raise FileNotFoundError(
+                "To access uploaded and local storage files you have to "
+                "set LABEL_STUDIO_API_KEY environment variable."
+            )
+
+    # Download the content but don't save to filesystem
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36"
+    }
+
+    # check if url matches hostname - then uses access token to this Label Studio instance
+    parsed_url = urlparse(url)
+    if access_token and hostname and parsed_url.netloc == urlparse(hostname).netloc:
+        headers["Authorization"] = "Token " + access_token
+        logger.debug("Authorization token is used for get_base64_content")
+
+    try:
+        r = requests.get(url, headers=headers, verify=VERIFY_SSL)
+        r.raise_for_status()
+        return base64.b64encode(r.content).decode("utf-8")
+    except requests.exceptions.SSLError as e:
+        logger.error(
+            f"SSL error during requests.get('{url}'): {e}\n"
+            f"Try to set VERIFY_SSL=False in environment variables to bypass SSL verification."
+        )
+        raise e
