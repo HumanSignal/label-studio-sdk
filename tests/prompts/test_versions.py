@@ -235,7 +235,7 @@ async def test_get_cost_estimate(client: LabelStudio, async_client: AsyncLabelSt
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_get_refinement_status(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_get_refined_prompt(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "title": "title",
         "reasoning": "reasoning",
@@ -286,14 +286,14 @@ async def test_get_refinement_status(client: LabelStudio, async_client: AsyncLab
             "organization": "integer",
         },
     }
-    response = client.prompts.versions.get_refinement_status(prompt_id=1, version_id=1)
+    response = client.prompts.versions.get_refined_prompt(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.get_refinement_status(prompt_id=1, version_id=1)
+    async_response = await async_client.prompts.versions.get_refined_prompt(prompt_id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_refine(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_refine_prompt(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "title": "title",
         "reasoning": "reasoning",
@@ -344,7 +344,7 @@ async def test_refine(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "organization": "integer",
         },
     }
-    response = client.prompts.versions.refine(
+    response = client.prompts.versions.refine_prompt(
         prompt_id=1,
         version_id=1,
         teacher_model_provider_connection_id=1,
@@ -353,7 +353,7 @@ async def test_refine(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.refine(
+    async_response = await async_client.prompts.versions.refine_prompt(
         prompt_id=1,
         version_id=1,
         teacher_model_provider_connection_id=1,

@@ -477,7 +477,7 @@ class VersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_refinement_status(
+    def get_refined_prompt(
         self,
         prompt_id: int,
         version_id: int,
@@ -513,7 +513,7 @@ class VersionsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.prompts.versions.get_refinement_status(
+        client.prompts.versions.get_refined_prompt(
             prompt_id=1,
             version_id=1,
         )
@@ -540,7 +540,7 @@ class VersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def refine(
+    def refine_prompt(
         self,
         prompt_id: int,
         version_id: int,
@@ -588,7 +588,7 @@ class VersionsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.prompts.versions.refine(
+        client.prompts.versions.refine_prompt(
             prompt_id=1,
             version_id=1,
             teacher_model_provider_connection_id=1,
@@ -1146,7 +1146,7 @@ class AsyncVersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_refinement_status(
+    async def get_refined_prompt(
         self,
         prompt_id: int,
         version_id: int,
@@ -1187,7 +1187,7 @@ class AsyncVersionsClient:
 
 
         async def main() -> None:
-            await client.prompts.versions.get_refinement_status(
+            await client.prompts.versions.get_refined_prompt(
                 prompt_id=1,
                 version_id=1,
             )
@@ -1217,7 +1217,7 @@ class AsyncVersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def refine(
+    async def refine_prompt(
         self,
         prompt_id: int,
         version_id: int,
@@ -1270,7 +1270,7 @@ class AsyncVersionsClient:
 
 
         async def main() -> None:
-            await client.prompts.versions.refine(
+            await client.prompts.versions.refine_prompt(
                 prompt_id=1,
                 version_id=1,
                 teacher_model_provider_connection_id=1,

@@ -278,7 +278,7 @@ service:
               error_message: error_message
       audiences:
         - public
-    get_refinement_status:
+    get_refined_prompt:
       path: /api/prompts/{prompt_id}/versions/{version_id}/refine
       method: GET
       auth: true
@@ -290,7 +290,7 @@ service:
         version_id: integer
       display-name: Get refined prompt
       request:
-        name: VersionsGetRefinementStatusRequest
+        name: VersionsGetRefinedPromptRequest
         query-parameters:
           refinement_job_id:
             type: optional<string>
@@ -332,7 +332,7 @@ service:
                 organization: 1
       audiences:
         - public
-    refine:
+    refine_prompt:
       path: /api/prompts/{prompt_id}/versions/{version_id}/refine
       method: POST
       auth: true

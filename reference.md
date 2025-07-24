@@ -21569,7 +21569,7 @@ client.prompts.versions.get_cost_estimate(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get_refinement_status</a>(...)</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get_refined_prompt</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -21602,7 +21602,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.prompts.versions.get_refinement_status(
+client.prompts.versions.get_refined_prompt(
     prompt_id=1,
     version_id=1,
 )
@@ -21657,7 +21657,7 @@ client.prompts.versions.get_refinement_status(
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">refine</a>(...)</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">refine_prompt</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -21690,7 +21690,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.prompts.versions.refine(
+client.prompts.versions.refine_prompt(
     prompt_id=1,
     version_id=1,
     teacher_model_provider_connection_id=1,
