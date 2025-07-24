@@ -538,7 +538,7 @@ We'll cover setting up your environment, converting COCO annotations to Label St
 ### Prerequisites
 - Label Studio installed locally
 - COCO dataset with JSON annotation file and images in the directory `/coco/dataset`.
-- label-studio-converter installed (available via `pip install label-studio-converter`)
+- Label Studio SDK installed (available via `pip install label-studio-sdk`) -- this includes the `label-studio-converter` tool that you will use
 
 ### Step 1: Set Up Your Environment and Run Label Studio
 Before starting Label Studio, set the following environment variables to enable Local Storage file serving:
