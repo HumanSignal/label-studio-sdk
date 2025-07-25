@@ -19,7 +19,7 @@ class ExportTimeoutError(ApiError):
                 f"unable to retrieve export job {export_snapshot.id}. "
                 f"Current status: {export_snapshot.status}. "
                 f"Try manually checking the running job with "
-                f"`ls.projects.exports.get(project_id={project_id}, export_pk={export_snapshot.id})`."
+                f"`ls.projects.exports.get(id={project_id}, export_pk={export_snapshot.id})`."
             )
         )
 
