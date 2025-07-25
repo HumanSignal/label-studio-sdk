@@ -349,10 +349,9 @@ service:
           exportType:
             type: optional<string>
             docs: Selected export format
-      examples:
-        - path-parameters:
-            export_pk: export_pk
-            id: 1
+      response:
+        docs: Export file
+        type: file
       audiences:
         - public
   source:

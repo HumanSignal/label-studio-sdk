@@ -187,16 +187,3 @@ async def test_convert(client: LabelStudio, async_client: AsyncLabelStudio) -> N
         await async_client.projects.exports.convert(export_pk="export_pk", id=1, export_type="export_type")  # type: ignore[func-returns-value]
         is None
     )
-
-
-async def test_download(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.projects.exports.download(export_pk="export_pk", id=1)  # type: ignore[func-returns-value]
-        is None
-    )
-
-    assert (
-        await async_client.projects.exports.download(export_pk="export_pk", id=1)  # type: ignore[func-returns-value]
-        is None
-    )
