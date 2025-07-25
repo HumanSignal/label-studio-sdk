@@ -95,7 +95,7 @@ class ExportsClientExt(ExportsClient):
             self._poll_export(project_id, export_snapshot, None, timeout)
             # Convert to requested format if not JSON
             if export_type != "JSON":
-                converted_proc = self.convert(project_id, export_pk=export_snapshot.id, export_type=export_type, **(convert_kwargs or {}))
+                converted_proc = self.convert(id=project_id, export_pk=export_snapshot.id, export_type=export_type, **(convert_kwargs or {}))
                 self._poll_export(project_id, export_snapshot, converted_proc.converted_format, timeout)
 
             bytestream = self.download(id=project_id, export_pk=export_snapshot.id, export_type=export_type, request_options={'chunk_size': 1024}, **(download_kwargs or {}))
@@ -175,7 +175,7 @@ class AsyncExportsClientExt(AsyncExportsClient):
             await self._poll_export(project_id, export_snapshot, None, timeout)
             # Convert to requested format if not JSON
             if export_type != "JSON":
-                converted_proc = await self.convert(project_id, export_pk=export_snapshot.id, export_type=export_type, **(convert_kwargs or {}))
+                converted_proc = await self.convert(id=project_id, export_pk=export_snapshot.id, export_type=export_type, **(convert_kwargs or {}))
                 await self._poll_export(project_id, export_snapshot, converted_proc.converted_format, timeout)
 
             bytestream = self.download(id=project_id, export_pk=export_snapshot.id, export_type=export_type, request_options={'chunk_size': 1024}, **(download_kwargs or {}))
