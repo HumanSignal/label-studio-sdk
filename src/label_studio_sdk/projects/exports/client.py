@@ -17,6 +17,7 @@ from ...types.lse_annotation_filter_options_request import LseAnnotationFilterOp
 from ...types.serialization_options_request import SerializationOptionsRequest
 from ...types.lse_export_create import LseExportCreate
 from ...core.serialization import convert_and_respect_annotation_metadata
+from .types.exports_convert_response import ExportsConvertResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -424,7 +425,7 @@ class ExportsClient:
         export_type: str,
         download_resources: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> ExportsConvertResponse:
         """
         Convert export snapshot to selected format
 
@@ -447,7 +448,8 @@ class ExportsClient:
 
         Returns
         -------
-        None
+        ExportsConvertResponse
+
 
         Examples
         --------
@@ -478,7 +480,13 @@ class ExportsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    ExportsConvertResponse,
+                    construct_type(
+                        type_=ExportsConvertResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -985,7 +993,7 @@ class AsyncExportsClient:
         export_type: str,
         download_resources: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> ExportsConvertResponse:
         """
         Convert export snapshot to selected format
 
@@ -1008,7 +1016,8 @@ class AsyncExportsClient:
 
         Returns
         -------
-        None
+        ExportsConvertResponse
+
 
         Examples
         --------
@@ -1047,7 +1056,13 @@ class AsyncExportsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    ExportsConvertResponse,
+                    construct_type(
+                        type_=ExportsConvertResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

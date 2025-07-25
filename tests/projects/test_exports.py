@@ -177,13 +177,10 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_convert(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.projects.exports.convert(export_pk=1, id=1, export_type="export_type")  # type: ignore[func-returns-value]
-        is None
-    )
+    expected_response: typing.Any = {"export_type": "export_type", "converted_format": 1}
+    expected_types: typing.Any = {"export_type": None, "converted_format": "integer"}
+    response = client.projects.exports.convert(export_pk=1, id=1, export_type="export_type")
+    validate_response(response, expected_response, expected_types)
 
-    assert (
-        await async_client.projects.exports.convert(export_pk=1, id=1, export_type="export_type")  # type: ignore[func-returns-value]
-        is None
-    )
+    async_response = await async_client.projects.exports.convert(export_pk=1, id=1, export_type="export_type")
+    validate_response(async_response, expected_response, expected_types)

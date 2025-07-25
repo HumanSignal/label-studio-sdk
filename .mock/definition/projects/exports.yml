@@ -312,12 +312,19 @@ service:
               type: optional<boolean>
               docs: Download resources in converter.
         content-type: application/json
+      response:
+        docs: ''
+        type: ExportsConvertResponse
       examples:
         - path-parameters:
             export_pk: 1
             id: 1
           request:
             export_type: export_type
+          response:
+            body:
+              export_type: export_type
+              converted_format: 1
       audiences:
         - public
     download:
@@ -358,3 +365,10 @@ service:
     openapi: openapi/openapi.yaml
 imports:
   root: ../__package__.yml
+types:
+  ExportsConvertResponse:
+    properties:
+      export_type: optional<string>
+      converted_format: optional<integer>
+    source:
+      openapi: openapi/openapi.yaml

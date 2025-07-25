@@ -10,8 +10,10 @@ from .types import (
     ProjectsListRequestFilter,
 )
 from . import exports, pauses
+from .exports import ExportsConvertResponse
 
 __all__ = [
+    "ExportsConvertResponse",
     "LseProjectCreateRequestSampling",
     "LseProjectCreateRequestSkipQueue",
     "PatchedLseProjectUpdateRequestSampling",
