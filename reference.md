@@ -19920,7 +19920,7 @@ client = LabelStudio(
     base_url="https://yourhost.com/path/to/api",
 )
 client.projects.exports.get(
-    export_pk="export_pk",
+    export_pk=1,
     id=1,
 )
 
@@ -19938,7 +19938,7 @@ client.projects.exports.get(
 <dl>
 <dd>
 
-**export_pk:** `str` — Primary key identifying the export file.
+**export_pk:** `int` — Primary key identifying the export file.
     
 </dd>
 </dl>
@@ -20000,7 +20000,7 @@ client = LabelStudio(
     base_url="https://yourhost.com/path/to/api",
 )
 client.projects.exports.delete(
-    export_pk="export_pk",
+    export_pk=1,
     id=1,
 )
 
@@ -20018,7 +20018,7 @@ client.projects.exports.delete(
 <dl>
 <dd>
 
-**export_pk:** `str` — Primary key identifying the export file.
+**export_pk:** `int` — Primary key identifying the export file.
     
 </dd>
 </dl>
@@ -20080,7 +20080,7 @@ client = LabelStudio(
     base_url="https://yourhost.com/path/to/api",
 )
 client.projects.exports.convert(
-    export_pk="export_pk",
+    export_pk=1,
     id=1,
     export_type="export_type",
 )
@@ -20099,7 +20099,7 @@ client.projects.exports.convert(
 <dl>
 <dd>
 
-**export_pk:** `str` — Primary key identifying the export file.
+**export_pk:** `int` — Primary key identifying the export file.
     
 </dd>
 </dl>

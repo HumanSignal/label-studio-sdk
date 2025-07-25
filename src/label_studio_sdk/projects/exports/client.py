@@ -31,7 +31,7 @@ class ExportsClient:
         self,
         id: int,
         *,
-        download_all_tasks: typing.Optional[str] = None,
+        download_all_tasks: typing.Optional[bool] = None,
         download_resources: typing.Optional[bool] = None,
         export_type: typing.Optional[str] = None,
         ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -62,7 +62,7 @@ class ExportsClient:
         id : int
             A unique integer value identifying this project.
 
-        download_all_tasks : typing.Optional[str]
+        download_all_tasks : typing.Optional[bool]
             If true, download all tasks regardless of status. If false, download only annotated tasks.
 
         download_resources : typing.Optional[bool]
@@ -319,13 +319,13 @@ class ExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, export_pk: str, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
+    def get(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
         """
         Retrieve information about an export file by export ID for a specific project.
 
         Parameters
         ----------
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
 
         id : int
@@ -348,7 +348,7 @@ class ExportsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.projects.exports.get(
-            export_pk="export_pk",
+            export_pk=1,
             id=1,
         )
         """
@@ -371,13 +371,13 @@ class ExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, export_pk: str, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete an export file by specified export ID.
 
         Parameters
         ----------
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
 
         id : int
@@ -399,7 +399,7 @@ class ExportsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.projects.exports.delete(
-            export_pk="export_pk",
+            export_pk=1,
             id=1,
         )
         """
@@ -418,7 +418,7 @@ class ExportsClient:
 
     def convert(
         self,
-        export_pk: str,
+        export_pk: int,
         id: int,
         *,
         export_type: str,
@@ -430,7 +430,7 @@ class ExportsClient:
 
         Parameters
         ----------
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
 
         id : int
@@ -458,7 +458,7 @@ class ExportsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.projects.exports.convert(
-            export_pk="export_pk",
+            export_pk=1,
             id=1,
             export_type="export_type",
         )
@@ -486,7 +486,7 @@ class ExportsClient:
 
     def download(
         self,
-        export_pk: str,
+        export_pk: int,
         id: int,
         *,
         export_type: typing.Optional[str] = None,
@@ -504,7 +504,7 @@ class ExportsClient:
 
         Parameters
         ----------
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
 
         id : int
@@ -550,7 +550,7 @@ class AsyncExportsClient:
         self,
         id: int,
         *,
-        download_all_tasks: typing.Optional[str] = None,
+        download_all_tasks: typing.Optional[bool] = None,
         download_resources: typing.Optional[bool] = None,
         export_type: typing.Optional[str] = None,
         ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
@@ -581,7 +581,7 @@ class AsyncExportsClient:
         id : int
             A unique integer value identifying this project.
 
-        download_all_tasks : typing.Optional[str]
+        download_all_tasks : typing.Optional[bool]
             If true, download all tasks regardless of status. If false, download only annotated tasks.
 
         download_resources : typing.Optional[bool]
@@ -864,13 +864,13 @@ class AsyncExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, export_pk: str, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
+    async def get(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Export:
         """
         Retrieve information about an export file by export ID for a specific project.
 
         Parameters
         ----------
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
 
         id : int
@@ -898,7 +898,7 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.get(
-                export_pk="export_pk",
+                export_pk=1,
                 id=1,
             )
 
@@ -924,13 +924,13 @@ class AsyncExportsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, export_pk: str, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, export_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete an export file by specified export ID.
 
         Parameters
         ----------
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
 
         id : int
@@ -957,7 +957,7 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.delete(
-                export_pk="export_pk",
+                export_pk=1,
                 id=1,
             )
 
@@ -979,7 +979,7 @@ class AsyncExportsClient:
 
     async def convert(
         self,
-        export_pk: str,
+        export_pk: int,
         id: int,
         *,
         export_type: str,
@@ -991,7 +991,7 @@ class AsyncExportsClient:
 
         Parameters
         ----------
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
 
         id : int
@@ -1024,7 +1024,7 @@ class AsyncExportsClient:
 
         async def main() -> None:
             await client.projects.exports.convert(
-                export_pk="export_pk",
+                export_pk=1,
                 id=1,
                 export_type="export_type",
             )
@@ -1055,7 +1055,7 @@ class AsyncExportsClient:
 
     async def download(
         self,
-        export_pk: str,
+        export_pk: int,
         id: int,
         *,
         export_type: typing.Optional[str] = None,
@@ -1073,7 +1073,7 @@ class AsyncExportsClient:
 
         Parameters
         ----------
-        export_pk : str
+        export_pk : int
             Primary key identifying the export file.
 
         id : int

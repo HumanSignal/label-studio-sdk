@@ -156,22 +156,22 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "counters": None,
         "converted_formats": ("list", {0: {"id": "integer", "status": None, "export_type": None, "traceback": None}}),
     }
-    response = client.projects.exports.get(export_pk="export_pk", id=1)
+    response = client.projects.exports.get(export_pk=1, id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.exports.get(export_pk="export_pk", id=1)
+    async_response = await async_client.projects.exports.get(export_pk=1, id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.projects.exports.delete(export_pk="export_pk", id=1)  # type: ignore[func-returns-value]
+        client.projects.exports.delete(export_pk=1, id=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.projects.exports.delete(export_pk="export_pk", id=1)  # type: ignore[func-returns-value]
+        await async_client.projects.exports.delete(export_pk=1, id=1)  # type: ignore[func-returns-value]
         is None
     )
 
@@ -179,11 +179,11 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_convert(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.projects.exports.convert(export_pk="export_pk", id=1, export_type="export_type")  # type: ignore[func-returns-value]
+        client.projects.exports.convert(export_pk=1, id=1, export_type="export_type")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.projects.exports.convert(export_pk="export_pk", id=1, export_type="export_type")  # type: ignore[func-returns-value]
+        await async_client.projects.exports.convert(export_pk=1, id=1, export_type="export_type")  # type: ignore[func-returns-value]
         is None
     )

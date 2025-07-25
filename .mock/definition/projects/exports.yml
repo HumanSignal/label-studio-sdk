@@ -36,7 +36,7 @@ service:
         name: ExportsDownloadSyncRequest
         query-parameters:
           download_all_tasks:
-            type: optional<string>
+            type: optional<boolean>
             docs: >-
               If true, download all tasks regardless of status. If false,
               download only annotated tasks.
@@ -227,7 +227,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         export_pk:
-          type: string
+          type: integer
           docs: Primary key identifying the export file.
         id:
           type: integer
@@ -238,7 +238,7 @@ service:
         type: root.Export
       examples:
         - path-parameters:
-            export_pk: export_pk
+            export_pk: 1
             id: 1
           response:
             body:
@@ -272,7 +272,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         export_pk:
-          type: string
+          type: integer
           docs: Primary key identifying the export file.
         id:
           type: integer
@@ -280,7 +280,7 @@ service:
       display-name: Delete export snapshot
       examples:
         - path-parameters:
-            export_pk: export_pk
+            export_pk: 1
             id: 1
       audiences:
         - public
@@ -293,7 +293,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         export_pk:
-          type: string
+          type: integer
           docs: Primary key identifying the export file.
         id:
           type: integer
@@ -314,7 +314,7 @@ service:
         content-type: application/json
       examples:
         - path-parameters:
-            export_pk: export_pk
+            export_pk: 1
             id: 1
           request:
             export_type: export_type
@@ -337,7 +337,7 @@ service:
         openapi: openapi/openapi.yaml
       path-parameters:
         export_pk:
-          type: string
+          type: integer
           docs: Primary key identifying the export file.
         id:
           type: integer
