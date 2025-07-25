@@ -98,7 +98,7 @@ class ExportsClientExt(ExportsClient):
                 converted_proc = self.convert(project_id, export_pk=export_snapshot.id, export_type=export_type, **(convert_kwargs or {}))
                 self._poll_export(project_id, export_snapshot, converted_proc.converted_format, timeout)
 
-            bytestream = self.download(project_id, export_pk=export_snapshot.id, export_type=export_type, request_options={'chunk_size': 1024}, **(download_kwargs or {}))
+            bytestream = self.download(id=project_id, export_pk=export_snapshot.id, export_type=export_type, request_options={'chunk_size': 1024}, **(download_kwargs or {}))
         else:
             # Community edition exports are sync, so we can download the file immediately
             bytestream = self.download_sync(project_id, export_type=export_type, download_all_tasks=True, download_resources=True)
@@ -178,7 +178,7 @@ class AsyncExportsClientExt(AsyncExportsClient):
                 converted_proc = await self.convert(project_id, export_pk=export_snapshot.id, export_type=export_type, **(convert_kwargs or {}))
                 await self._poll_export(project_id, export_snapshot, converted_proc.converted_format, timeout)
 
-            bytestream = self.download(project_id, export_pk=export_snapshot.id, export_type=export_type, request_options={'chunk_size': 1024}, **(download_kwargs or {}))
+            bytestream = self.download(id=project_id, export_pk=export_snapshot.id, export_type=export_type, request_options={'chunk_size': 1024}, **(download_kwargs or {}))
         else:
             bytestream = self.download_sync(project_id, export_type=export_type, download_all_tasks=True, download_resources=True)
         return bytestream
