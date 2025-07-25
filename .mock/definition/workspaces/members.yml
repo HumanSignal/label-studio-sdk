@@ -16,48 +16,38 @@ service:
       display-name: List workspace memberships
       response:
         docs: A list of workspace memberships
-        type: root.WorkspaceMemberList
+        type: list<root.WorkspaceMemberList>
       examples:
         - path-parameters:
             id: 1
           response:
             body:
-              user:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                username: username
-                email: email
-                last_activity: '2024-01-15T09:30:00Z'
-                custom_hotkeys:
-                  key: value
-                avatar: avatar
-                initials: initials
-                phone: phone
-                active_organization: 1
-                active_organization_meta: active_organization_meta
-                allow_newsletters: true
-                date_joined: '2024-01-15T09:30:00Z'
-                org_membership:
-                  - role: role
-                    active: active
-                    organization_id: 1
-                lse_fields:
-                  invite_expired: invite_expired
-                  invite_expired_at: invite_expired_at
-                  invited_at: '2024-01-15T09:30:00Z'
-                  invite_activated: true
-                  trial_company: trial_company
-                  trial_role: annotator
-                  trial_models_in_production: trial_models_in_production
-                  trial_experience_labeling: trial_experience_labeling
-                  trial_license_enterprise: true
-                  social_auth_finished: true
-                  invited_by: 1
-                  onboarding_state: not_started
-                  email_notification_settings: email_notification_settings
-                pause: pause
-              workspace: 1
+              - user:
+                  id: 1
+                  first_name: first_name
+                  last_name: last_name
+                  username: username
+                  email: email
+                  last_activity: '2024-01-15T09:30:00Z'
+                  custom_hotkeys:
+                    key: value
+                  avatar: avatar
+                  initials: initials
+                  phone: phone
+                  active_organization: 1
+                  active_organization_meta: active_organization_meta
+                  allow_newsletters: true
+                  date_joined: '2024-01-15T09:30:00Z'
+                  org_membership:
+                    - role: role
+                      active: active
+                      organization_id: 1
+                  lse_fields:
+                    invite_expired: invite_expired
+                    invite_expired_at: invite_expired_at
+                    email_notification_settings: email_notification_settings
+                  pause: pause
+                workspace: 1
       audiences:
         - public
     create:

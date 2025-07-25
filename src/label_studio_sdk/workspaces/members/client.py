@@ -19,7 +19,9 @@ class MembersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> WorkspaceMemberList:
+    def list(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[WorkspaceMemberList]:
         """
         Get a list of all members in a specific workspace.
 
@@ -32,7 +34,7 @@ class MembersClient:
 
         Returns
         -------
-        WorkspaceMemberList
+        typing.List[WorkspaceMemberList]
             A list of workspace memberships
 
         Examples
@@ -55,9 +57,9 @@ class MembersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    WorkspaceMemberList,
+                    typing.List[WorkspaceMemberList],
                     construct_type(
-                        type_=WorkspaceMemberList,  # type: ignore
+                        type_=typing.List[WorkspaceMemberList],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -180,7 +182,9 @@ class AsyncMembersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> WorkspaceMemberList:
+    async def list(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[WorkspaceMemberList]:
         """
         Get a list of all members in a specific workspace.
 
@@ -193,7 +197,7 @@ class AsyncMembersClient:
 
         Returns
         -------
-        WorkspaceMemberList
+        typing.List[WorkspaceMemberList]
             A list of workspace memberships
 
         Examples
@@ -224,9 +228,9 @@ class AsyncMembersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    WorkspaceMemberList,
+                    typing.List[WorkspaceMemberList],
                     construct_type(
-                        type_=WorkspaceMemberList,  # type: ignore
+                        type_=typing.List[WorkspaceMemberList],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
