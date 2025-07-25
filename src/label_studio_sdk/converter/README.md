@@ -605,7 +605,7 @@ Now import the `output.json` file into Label Studio:
 After importing, you should see your images with the pre-annotated bounding boxes, segmentations, or keypoints in Label Studio. Verify that the annotations are correct and make any necessary adjustments.
 
 ### Annotation Type Support
-The COCO converter supports:
+The COCO converter supports (see more details and examples here: https://labelstud.io/guide/export.html#COCO):
 - ✅ **Bounding boxes** (object detection)
 - ✅ **Polygon segmentations** (instance segmentation) - experimental
 - ✅ **Keypoint detection** (pose estimation) - without skeleton connections
