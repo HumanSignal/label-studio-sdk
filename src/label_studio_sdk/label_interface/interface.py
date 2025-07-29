@@ -580,7 +580,7 @@ class LabelInterface:
             },
             "required": required_outputs
         }
-    
+
     def parse(self, config_string: str) -> Tuple[Dict, Dict, Dict, etree._Element]:
         """Parses the received configuration string into dictionaries
         of ControlTags, ObjectTags, and Labels, along with an XML tree
@@ -734,17 +734,19 @@ class LabelInterface:
         regions = []
         for r in obj.get(RESULT_KEY):
             if r.get('type') != "relation":
-                if not self.validate_region(r):
+                try:
+                    if not self.validate_region(r):
+                        return False
+                    regions.append(r)
+                except Exception:
                     return False
-
-                regions.append(r)
 
         for r in obj.get(RESULT_KEY):
             if r.get('type') == "relation" and \
                not self.validate_relation(r, regions):
                 return False
 
-        return True                                                
+        return True
         
     def validate_annotation(self, annotation):
         """Validates the given annotation against the current configuration.
@@ -766,11 +768,151 @@ class LabelInterface:
         """
         return self._validate_object(annotation)
 
-    def validate_prediction(self, prediction):
-        """Same as validate_annotation right now"""
-        return self._validate_object(prediction)
+    def validate_prediction(self, prediction, return_errors=False):
+        """
+        Validates the given prediction against the current configuration.
 
-    def validate_region(self, region) -> bool:
+        Args:
+            prediction (dict): The prediction to be validated
+            return_errors (bool): If True, returns a list of error messages instead of boolean
+
+        Returns:
+            Union[bool, List[str]]: If return_errors=False, returns True/False.
+                                   If return_errors=True, returns list of error messages.
+        """
+        if return_errors:
+            return self._validate_object_with_errors(prediction)
+        else:
+            return self._validate_object(prediction)
+
+    def _validate_object_with_errors(self, obj):
+        """
+        Validates an object (annotation/prediction) and returns detailed error messages.
+
+        Args:
+            obj (dict): The object to validate
+
+        Returns:
+            List[str]: List of error messages. Empty list if validation passes.
+        """
+        errors = []
+
+        try:
+            # Check if result key exists
+            if RESULT_KEY not in obj:
+                errors.append(f"Missing required field '{RESULT_KEY}'")
+                return errors
+
+            result = obj.get(RESULT_KEY)
+            if not isinstance(result, list):
+                errors.append(f"'{RESULT_KEY}' must be a list")
+                return errors
+
+            if not result:
+                errors.append(f"'{RESULT_KEY}' cannot be empty")
+                return errors
+
+            # Validate score if present
+            if 'score' in obj:
+                score = obj['score']
+                if score is not None:
+                    try:
+                        score_float = float(score)
+                        if not (0.0 <= score_float <= 1.0):
+                            errors.append(f"Score must be between 0.00 and 1.00 inclusive, got {score_float}")
+                    except (ValueError, TypeError):
+                        errors.append(f"Score must be a valid number, got {score}")
+
+            regions = []
+            relations_to_validate = []
+
+            # Validate each region
+            for i, region in enumerate(result):
+                if not isinstance(region, dict):
+                    errors.append(f"Region {i} must be a dictionary")
+                    continue
+
+                if region.get('type') != "relation":
+                    region_errors = self.validate_region(region, return_errors=True, region_index=i)
+                    errors.extend(region_errors)
+                    if not region_errors:  # Only add to regions if no errors
+                        regions.append(region)
+                else:
+                    # Store relation for later validation
+                    relations_to_validate.append((i, region))
+
+            # Validate relations after all regions are processed
+            for i, relation in relations_to_validate:
+                relation_error = self.validate_relation(relation, regions, return_errors=True, relation_index=i)
+                if relation_error:
+                    errors.append(relation_error)
+
+        except Exception as e:
+            errors.append(f"Unexpected error during validation: {str(e)}")
+
+        return errors
+
+    def _validate_region_logic(self, region, region_index=0):
+        """Helper method to perform region validation logic.
+
+        Args:
+            region (dict): The region to be validated.
+            region_index (int): Index of the region for error reporting.
+
+        Returns:
+            tuple: (is_valid, errors) where is_valid is bool and errors is list of strings.
+        """
+        errors = []
+
+        # Check required fields
+        required_fields = ['from_name', 'to_name', 'type', 'value']
+        for field in required_fields:
+            if field not in region:
+                errors.append(f"Region {region_index}: Missing required field '{field}'")
+
+        # If missing required fields, don't continue validation
+        if errors:
+            return False, errors
+
+        # Validate from_name exists in configuration
+        try:
+            control = self.get_control(region["from_name"])
+        except Exception as e:
+            errors.append(f"Region {region_index}: 'from_name' '{region['from_name']}' not found in configuration")
+            return False, errors
+
+        # Validate to_name exists in configuration
+        try:
+            obj = self.get_object(region["to_name"])
+        except Exception as e:
+            errors.append(f"Region {region_index}: 'to_name' '{region['to_name']}' not found in configuration")
+            return False, errors
+
+        # we should have both items present in the labeling config
+        if not control or not obj:
+            errors.append(f"Region {region_index}: Control or object not found in configuration")
+            return False, errors
+
+        # Validate type matches control tag
+        expected_type = control.tag.lower()
+        actual_type = region["type"].lower()
+        if actual_type != expected_type:
+            errors.append(f"Region {region_index}: Type '{actual_type}' does not match expected type '{expected_type}' for control '{region['from_name']}'")
+
+        # Validate to_name is in control's to_name list
+        if region["to_name"] not in control.to_name:
+            errors.append(f"Region {region_index}: 'to_name' '{region['to_name']}' is not valid for control '{region['from_name']}'. Valid options: {control.to_name}")
+
+        # Validate the value using control's validate_value method
+        try:
+            if not control.validate_value(region["value"]):
+                errors.append(f"Region {region_index}: Invalid value for control '{region['from_name']}'")
+        except Exception as e:
+            errors.append(f"Region {region_index}: Error validating value for control '{region['from_name']}': {str(e)}")
+
+        return len(errors) == 0, errors
+
+    def validate_region(self, region, return_errors=False, region_index=0):
         """Validates a region from the annotation against the current
         configuration.
 
@@ -780,53 +922,90 @@ class LabelInterface:
         - The 'to_name' in the region data connects to the same tag as in the configuration.
         - The actual value for example in <Labels /> tag is producing start, end, and labels.
 
-        If any of these validations fail, the function immediately
-        returns False. If all validations pass for a region, it
-        returns True.
-
         Args:
             region (dict): The region to be validated.
+            return_errors (bool): If True, returns a list of error messages instead of boolean
+            region_index (int): Index of the region for error reporting (used when return_errors=True)
 
         Returns:
-            bool: True if all checks pass for the region, False otherwise.
-
+            Union[bool, List[str]]: If return_errors=False, returns True/False.
+                                   If return_errors=True, returns list of error messages.
         """
-        control = self.get_control(region["from_name"])
-        obj = self.get_object(region["to_name"])
+        is_valid, errors = self._validate_region_logic(region, region_index)
 
-        # we should have both items present in the labeling config
-        if not control or not obj:
-            return False
+        if return_errors:
+            return errors
+        else:
+            return is_valid
 
-        # type of the region should match the tag name        
-        if control.tag.lower() != region["type"].lower():
-            return False
-        
-        # make sure that in config it connects to the same tag as
-        # immplied by the region data
-        if region["to_name"] not in control.to_name:
-            return False
-        
-        # validate the actual value, for example that <Labels /> tag
-        # is producing start, end, and labels
-        if not control.validate_value(region["value"]):
-            return False
-        
-        return True
+    def _validate_relation_logic(self, relation, regions, relation_index=0, _mapping=None):
+        """Helper method to perform relation validation logic.
+        Args:
+            relation (dict): The relation to validate
+            regions (list): List of validated regions
+            relation_index (int): Index of the relation for error reporting
+            _mapping (dict, optional): Mapping of region IDs to regions
 
-    def validate_relation(self, relation, regions, _mapping=None) -> bool:
-        """Validates that the relation is correct and all the associated objects are provided"""
-        if _mapping is None:
-            _mapping = { r['id']: r for r in regions }
+        Returns:
+            tuple: (is_valid, errors) where is_valid is bool and errors is list of strings.
+        """
+        errors = []
 
-        if relation.get("type") != "relation" or \
-           relation.get("direction") not in ("left", "right", "bi") or \
-           relation.get("from_id") not in _mapping or \
-           relation.get("to_id") not in _mapping:
-            return False
-        
-        return True
-    
+        try:
+            # Check required fields for relations
+            required_fields = ['type', 'direction', 'from_id', 'to_id']
+            for field in required_fields:
+                if field not in relation:
+                    errors.append(f"Relation {relation_index}: Missing required field '{field}'")
+
+            # Validate type
+            if relation.get("type") != "relation":
+                errors.append(f"Relation {relation_index}: Type must be 'relation', got '{relation.get('type')}'")
+
+            # Validate direction
+            valid_directions = ("left", "right", "bi")
+            if relation.get("direction") not in valid_directions:
+                errors.append(f"Relation {relation_index}: Direction must be one of {valid_directions}, got '{relation.get('direction')}'")
+
+            # Create mapping of region IDs
+            region_mapping = {r['id']: r for r in regions if 'id' in r}
+
+            # Validate from_id exists
+            from_id = relation.get("from_id")
+            if from_id not in region_mapping:
+                errors.append(f"Relation {relation_index}: 'from_id' '{from_id}' not found in regions")
+
+            # Validate to_id exists
+            to_id = relation.get("to_id")
+            if to_id not in region_mapping:
+                errors.append(f"Relation {relation_index}: 'to_id' '{to_id}' not found in regions")
+
+        except Exception as e:
+            errors.append(f"Relation {relation_index}: Error validating relation - {str(e)}")
+
+        return len(errors) == 0, errors
+
+    def validate_relation(self, relation, regions, return_errors=False, relation_index=0, _mapping=None):
+        """Validates that the relation is correct and all the associated objects are provided
+
+        Args:
+            relation (dict): The relation to validate
+            regions (list): List of validated regions
+            return_errors (bool): If True, returns error message string instead of boolean
+            relation_index (int): Index of the relation for error reporting (used when return_errors=True)
+            _mapping (dict, optional): Mapping of region IDs to regions
+
+        Returns:
+            Union[bool, str]: If return_errors=False, returns True/False.
+                             If return_errors=True, returns error message string or None.
+        """
+        is_valid, errors = self._validate_relation_logic(relation, regions, relation_index, _mapping)
+
+        if return_errors:
+            return errors
+        else:
+            return is_valid
+
     ### Generation
 
     def _sample_task(self, secure_mode=False):
