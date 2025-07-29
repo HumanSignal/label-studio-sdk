@@ -344,6 +344,7 @@ service:
               custom_script: custom_script
               comment_classification_config: comment_classification_config
               duplication_done: true
+              duplication_status: duplication_status
               require_comment_on_skip: true
               data_types:
                 key: value

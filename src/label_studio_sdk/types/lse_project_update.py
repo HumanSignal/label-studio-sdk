@@ -203,6 +203,7 @@ class LseProjectUpdate(UncheckedBaseModel):
     pause_on_failed_annotator_evaluation: typing.Optional[bool] = None
     annotator_evaluation_minimum_score: typing.Optional[str] = None
     annotator_evaluation_minimum_tasks: typing.Optional[int] = None
+    workspace_title: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
