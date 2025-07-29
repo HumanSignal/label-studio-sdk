@@ -312,6 +312,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "pause_on_failed_annotator_evaluation": True,
         "annotator_evaluation_minimum_score": "annotator_evaluation_minimum_score",
         "annotator_evaluation_minimum_tasks": 1,
+        "workspace_title": "workspace_title",
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -385,6 +386,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "pause_on_failed_annotator_evaluation": None,
         "annotator_evaluation_minimum_score": None,
         "annotator_evaluation_minimum_tasks": "integer",
+        "workspace_title": None,
     }
     response = client.projects.update(id=1)
     validate_response(response, expected_response, expected_types)
