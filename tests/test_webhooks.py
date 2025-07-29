@@ -81,11 +81,11 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_info(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.webhooks.info() is None  # type: ignore[func-returns-value]
 
-    assert await async_client.webhooks.info() is None  # type: ignore[func-returns-value]
+async def test_info(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    assert client.webhooks.info() is not None
+
+    assert await async_client.webhooks.info() is not None
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
