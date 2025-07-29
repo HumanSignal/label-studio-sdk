@@ -225,8 +225,25 @@ from .projects import (
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
 )
+<<<<<<< HEAD
 from .prompts import PromptsCompatibleProjectsRequestProjectType
 from .tasks import TasksListRequestFields
+=======
+from .projects import (
+    ProjectsCreateResponse,
+    ProjectsImportTasksResponse,
+    ProjectsListRequestFilter,
+    ProjectsListResponse,
+    ProjectsUpdateResponse,
+)
+from .prompts import (
+    PromptsBatchFailedPredictionsRequestFailedPredictionsItem,
+    PromptsBatchFailedPredictionsResponse,
+    PromptsBatchPredictionsRequestResultsItem,
+    PromptsBatchPredictionsResponse,
+)
+from .tasks import TasksListRequestFields, TasksListResponse
+>>>>>>> master
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
 from .version import __version__
 from .views import (
@@ -421,9 +438,27 @@ __all__ = [
     "ProjectsDuplicateResponse",
     "ProjectsImportTasksResponse",
     "ProjectsListRequestFilter",
+<<<<<<< HEAD
     "PromptsCompatibleProjectsRequestProjectType",
     "ProviderEnum",
     "ReasonEnum",
+=======
+    "ProjectsListResponse",
+    "ProjectsUpdateResponse",
+    "Prompt",
+    "PromptAssociatedProjectsItem",
+    "PromptAssociatedProjectsItemId",
+    "PromptCreatedBy",
+    "PromptOrganization",
+    "PromptVersion",
+    "PromptVersionCreatedBy",
+    "PromptVersionOrganization",
+    "PromptVersionProvider",
+    "PromptsBatchFailedPredictionsRequestFailedPredictionsItem",
+    "PromptsBatchFailedPredictionsResponse",
+    "PromptsBatchPredictionsRequestResultsItem",
+    "PromptsBatchPredictionsResponse",
+>>>>>>> master
     "RedisExportStorage",
     "RedisImportStorage",
     "RefinedPromptResponse",

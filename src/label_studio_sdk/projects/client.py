@@ -57,6 +57,8 @@ class ProjectsClient:
         page_size: typing.Optional[int] = None,
         title: typing.Optional[str] = None,
         workspaces: typing.Optional[int] = None,
+        include: typing.Optional[str] = None,
+        filter: typing.Optional[ProjectsListRequestFilter] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[AllRolesProjectList]:
         """
@@ -88,6 +90,12 @@ class ProjectsClient:
         workspaces : typing.Optional[int]
             workspaces
 
+        include : typing.Optional[str]
+            Comma-separated list of count fields to include in the response to optimize performance.  Available fields: task_number, finished_task_number, total_predictions_number,  total_annotations_number, num_tasks_with_annotations, useful_annotation_number,  ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        filter : typing.Optional[ProjectsListRequestFilter]
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects,  'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -104,7 +112,9 @@ class ProjectsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        response = client.projects.list()
+        response = client.projects.list(
+            include="task_number,total_annotations_number,num_tasks_with_annotations",
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -124,6 +134,8 @@ class ProjectsClient:
                 "page_size": page_size,
                 "title": title,
                 "workspaces": workspaces,
+                "include": include,
+                "filter": filter,
             },
             request_options=request_options,
         )
@@ -146,6 +158,8 @@ class ProjectsClient:
                     page_size=page_size,
                     title=title,
                     workspaces=workspaces,
+                    include=include,
+                    filter=filter,
                     request_options=request_options,
                 )
                 _items = _parsed_response.results
@@ -985,6 +999,8 @@ class AsyncProjectsClient:
         page_size: typing.Optional[int] = None,
         title: typing.Optional[str] = None,
         workspaces: typing.Optional[int] = None,
+        include: typing.Optional[str] = None,
+        filter: typing.Optional[ProjectsListRequestFilter] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[AllRolesProjectList]:
         """
@@ -1016,6 +1032,12 @@ class AsyncProjectsClient:
         workspaces : typing.Optional[int]
             workspaces
 
+        include : typing.Optional[str]
+            Comma-separated list of count fields to include in the response to optimize performance.  Available fields: task_number, finished_task_number, total_predictions_number,  total_annotations_number, num_tasks_with_annotations, useful_annotation_number,  ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        filter : typing.Optional[ProjectsListRequestFilter]
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects,  'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1037,7 +1059,9 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            response = await client.projects.list()
+            response = await client.projects.list(
+                include="task_number,total_annotations_number,num_tasks_with_annotations",
+            )
             async for item in response:
                 yield item
             # alternatively, you can paginate page-by-page
@@ -1060,6 +1084,8 @@ class AsyncProjectsClient:
                 "page_size": page_size,
                 "title": title,
                 "workspaces": workspaces,
+                "include": include,
+                "filter": filter,
             },
             request_options=request_options,
         )
@@ -1082,6 +1108,8 @@ class AsyncProjectsClient:
                     page_size=page_size,
                     title=title,
                     workspaces=workspaces,
+                    include=include,
+                    filter=filter,
                     request_options=request_options,
                 )
                 _items = _parsed_response.results

@@ -15,11 +15,11 @@ class ExportTimeoutError(ApiError):
         super().__init__(
             status_code=500,
             body=(
-                f"Export job timed out after {timeout} seconds: "
+                f"Export job timed out: "
                 f"unable to retrieve export job {export_snapshot.id}. "
                 f"Current status: {export_snapshot.status}. "
                 f"Try manually checking the running job with "
-                f"`ls.projects.exports.get(id={project_id}, export_pk={export_snapshot.id})`."
+                f"`ls.projects.exports.get(id=<PROJECT_ID>, export_pk={export_snapshot.id})`."
             )
         )
 

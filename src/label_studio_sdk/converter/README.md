@@ -425,6 +425,213 @@ e.g.:
 - The Local Storage in Label Studio is set up correctly with the Absolute local path to your images (`/yolo/datasets/one/images`)
 - For more details, refer to the documentation on [importing pre-annotated data](https://labelstud.io/guide/predictions.html) and [setting up Cloud Storages](https://labelstud.io/guide/storage).
 
+# COCO to Label Studio Converter 
+
+### COCO dataset structure
+
+Check the structure of COCO dataset first. The typical COCO dataset structure:
+
+```
+/coco/dataset
+  annotations/
+   - instances_train2017.json
+   - instances_val2017.json
+   - person_keypoints_train2017.json
+   - (other annotation files...)
+  train2017/
+   - 000000000139.jpg
+   - 000000000285.jpg
+   - ...
+  val2017/
+   - 000000000139.jpg
+   - 000000000285.jpg
+   - ...
+```
+
+*COCO JSON annotation file structure*
+
+```json
+{
+  "images": [
+    {
+      "id": 139,
+      "width": 426,
+      "height": 640,
+      "file_name": "000000000139.jpg"
+    }
+  ],
+  "annotations": [
+    {
+      "id": 1768,
+      "image_id": 139,
+      "category_id": 64,
+      "bbox": [412.8, 157.61, 11.65, 12.64],
+      "area": 147.24,
+      "iscrowd": 0,
+      "segmentation": [[...]]
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "person",
+      "supercategory": "person"
+    }
+  ]
+}
+```
+
+### Usage
+
+```
+label-studio-converter import coco -i /coco/dataset/annotations/instances_val2017.json -o ls-tasks.json --image-root-url "/data/local-files/?d=val2017"
+```
+Where the URL path from `?d=` is relative to the path you set in `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT`.
+
+**Note for Local Storages** 
+  * It's very important to set `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/coco/dataset` (**not** to `/coco/dataset/val2017`, but **`/coco/dataset`**) for Label Studio to run.
+  * [Add a new Local Storage](https://labelstud.io/guide/storage#Local-storage) in the project settings and set **Absolute local path** to `/coco/dataset/val2017` (or `c:\coco\dataset\val2017` for Windows). 
+
+**Note for Cloud Storages**
+  * Use `--image-root-url` to make correct prefixes for task URLs, e.g. `--image-root-url s3://my-bucket/coco/val2017/`.
+  * [Add a new Cloud Storage](https://labelstud.io/guide/storage) in the project settings with the corresponding bucket and prefix.
+
+**Additional Options**
+  * Use `--use-super-categories` to include COCO super categories in label names (e.g., "vehicle:car" instead of "car")
+  * Use `--out-type predictions` to import as predictions instead of ground truth annotations
+  * Use `--point-width 2.0` to adjust keypoint size for pose estimation tasks
+
+**Help command**
+
+```
+label-studio-converter import coco -h
+
+usage: label-studio-converter import coco [-h] -i INPUT [-o OUTPUT]
+                                          [--to-name TO_NAME]
+                                          [--from-name FROM_NAME]
+                                          [--out-type OUT_TYPE]
+                                          [--image-root-url IMAGE_ROOT_URL]
+                                          [--point-width POINT_WIDTH]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        input COCO json file
+  -o OUTPUT, --output OUTPUT
+                        output file with Label Studio JSON tasks
+  --to-name TO_NAME     object name from Label Studio labeling config
+  --from-name FROM_NAME
+                        control tag name from Label Studio labeling config
+  --out-type OUT_TYPE   annotation type - "annotations" or "predictions"
+  --image-root-url IMAGE_ROOT_URL
+                        root URL path where images will be hosted, e.g.:
+                        http://example.com/images or s3://my-bucket
+  --point-width POINT_WIDTH
+                        key point width (size)
+```
+
+## Tutorial: Importing COCO Pre-Annotated Images to Label Studio using Local Storage
+
+This tutorial will guide you through the process of importing a COCO dataset into Label Studio for further annotation or review. 
+We'll cover setting up your environment, converting COCO annotations to Label Studio's format, and importing them into your project.
+
+### Prerequisites
+- Label Studio installed locally
+- COCO dataset with JSON annotation file and images in the directory `/coco/dataset`.
+- Label Studio SDK installed (available via `pip install label-studio-sdk`) -- this includes the `label-studio-converter` tool that you will use
+
+### Step 1: Set Up Your Environment and Run Label Studio
+Before starting Label Studio, set the following environment variables to enable Local Storage file serving:
+
+Unix systems: 
+```
+export LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
+export LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/coco/dataset
+label-studio
+```
+
+Windows: 
+```
+set LABEL_STUDIO_LOCAL_FILES_SERVING_ENABLED=true
+set LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=C:\\coco\\dataset
+label-studio
+```
+
+Replace `/coco/dataset` with the actual path to your COCO dataset directory.
+
+### Step 2: Setup Local Storage
+1. Create a new project.
+2. Go to the project settings and select **Cloud Storage**. 
+3. Click **Add Source Storage** and select **Local files** from the **Storage Type** options.  
+4. Set the **Absolute local path** to `/coco/dataset/val2017` (or your image folder path, e.g., `c:\coco\dataset\val2017` on Windows).
+5. Click `Add storage`.
+
+Check more details about Local Storages [in the documentation](https://labelstud.io/guide/storage.html#Local-storage).
+
+### Step 3: Verify Image Access
+Before importing the converted annotations from COCO, verify that you can access an image from your Local storage via Label Studio. Open a new browser tab and enter the following URL:
+
+```
+http://localhost:8080/data/local-files/?d=val2017/000000000139.jpg
+```
+
+Replace `val2017/000000000139.jpg` with the path to one of your images. The image should display **in the new tab of the browser**.
+If you can't open an image, the Local Storage configuration is incorrect. The most likely reason is that you made a mistake when specifying your `Path` in Local Storage settings or in `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT`. 
+
+**Note:** The URL path from `?d=` should be relative to `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT=/coco/dataset`, 
+it means that the real path will be `/coco/dataset/val2017/000000000139.jpg` and this image should exist on your hard drive.
+
+### Step 4: Convert COCO Annotations
+Use the label-studio-converter to convert your COCO annotations to a format that Label Studio can understand:
+
+```
+label-studio-converter import coco -i /coco/dataset/annotations/instances_val2017.json -o output.json --image-root-url "/data/local-files/?d=val2017/"
+```
+
+**For different annotation types:**
+- **Object Detection (bounding boxes)**: Use `instances_*.json` files
+- **Instance Segmentation**: Use `instances_*.json` files (includes both bboxes and polygon segmentations)  
+- **Keypoint Detection (pose estimation)**: Use `person_keypoints_*.json` files
+- **With super categories**: Add `--use-super-categories` flag
+
+### Step 5: Import Converted Annotations
+Now import the `output.json` file into Label Studio:
+1. Go to your Label Studio project.
+2. From the Data Manager, click **Import**.
+3. Select the `output.json` file and import it.
+4. If a label configuration file was generated (e.g., `output.label_config.xml`), you can use it in your project settings under **Labeling Interface**.
+
+### Step 6: Verify Annotations
+After importing, you should see your images with the pre-annotated bounding boxes, segmentations, or keypoints in Label Studio. Verify that the annotations are correct and make any necessary adjustments.
+
+### Annotation Type Support
+The COCO converter supports (see more details and examples here: https://labelstud.io/guide/export.html#COCO):
+- ✅ **Bounding boxes** (object detection)
+- ✅ **Polygon segmentations** (instance segmentation) - experimental
+- ✅ **Keypoint detection** (pose estimation) - without skeleton connections
+- ❌ **RLE segmentations** - not yet supported
+
+### Troubleshooting
+If you encounter issues with paths or image access, ensure that:
+- The LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT is set correctly.
+- The `--image-root-url` in the conversion command matches the relative path:
+```
+`Absolute local path from Local Storage Settings` - `LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT` = `path for --image_root_url`
+```
+e.g.:
+```
+/coco/dataset/val2017 - /coco/dataset/ = val2017/
+```
+- The Local Storage in Label Studio is set up correctly with the Absolute local path to your images (`/coco/dataset/val2017`)
+- Your COCO JSON file is valid and contains the expected structure
+- Image file names in the COCO JSON match the actual files in your images directory
+- For more details, refer to the documentation on [importing pre-annotated data](https://labelstud.io/guide/predictions.html) and [setting up Cloud Storages](https://labelstud.io/guide/storage).
+
+**Common Issues:**
+- **"No labels converted"**: Check that your COCO JSON file contains annotations and that image files exist
+- **Images not loading**: Verify the image paths and Local Storage configuration
+- **Missing annotations**: Ensure the image IDs in the COCO JSON match the imported images
+
 ------------
 
 # Contributing

@@ -2,8 +2,23 @@ types:
   ProjectsListRequestFilter:
     enum:
       - all
-      - exclude_pinned
       - pinned_only
+      - exclude_pinned
+    default: all
+    source:
+      openapi: openapi/openapi.yaml
+  ProjectsListResponse:
+    properties:
+      count: integer
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      previous:
+        type: optional<string>
+        validation:
+          format: uri
+      results: list<root.Project>
     source:
       openapi: openapi/openapi.yaml
   LseProjectCreateRequestSampling:
@@ -74,6 +89,7 @@ types:
         docs: The list of found data columns
     source:
       openapi: openapi/openapi.yaml
+<<<<<<< HEAD
   ApiProjectsProjectExtraParamsRetrieveResponse:
     docs: Create or change annotator weights for statistics
     properties:
@@ -96,6 +112,8 @@ types:
         docs: If project uses Cohen's Kappa in calculation
     source:
       openapi: openapi/openapi.yaml
+=======
+>>>>>>> master
 imports:
   root: __package__.yml
 service:
@@ -150,11 +168,30 @@ service:
           workspaces:
             type: optional<integer>
             docs: workspaces
+          include:
+            type: optional<string>
+            docs: >
+              Comma-separated list of count fields to include in the response to
+              optimize performance.  Available fields: task_number,
+              finished_task_number, total_predictions_number, 
+              total_annotations_number, num_tasks_with_annotations,
+              useful_annotation_number,  ground_truth_number,
+              skipped_annotations_number. If not specified, all count fields are
+              included.
+          filter:
+            type: optional<ProjectsListRequestFilter>
+            default: all
+            docs: >
+              Filter projects by pinned status. Use 'pinned_only' to return only
+              pinned projects,  'exclude_pinned' to return only non-pinned
+              projects, or 'all' to return all projects.
       response:
         docs: ''
         type: root.PaginatedAllRolesProjectListList
       examples:
-        - response:
+        - query-parameters:
+            include: task_number,total_annotations_number,num_tasks_with_annotations
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4

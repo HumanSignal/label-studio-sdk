@@ -115,7 +115,6 @@ class TokensClientExt:
 
         # For sync client, use it directly
         if isinstance(existing_client, httpx.Client):
-            print(f"\nverify:{existing_client._transport._pool._ssl_context.verify_mode != ssl.CERT_NONE}")
             response = existing_client.request(
                 method="POST",
                 url=f"{self._base_url}/api/token/refresh/",
