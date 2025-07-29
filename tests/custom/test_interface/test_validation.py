@@ -26,8 +26,7 @@ def test_validate_region():
 
     r2 = copy.deepcopy(r1)
     r2["from_name"] = "wrong_name"
-    with pytest.raises(Exception):
-        conf.validate_region(r2)
+    assert conf.validate_region(r2) is False
 
     r3 = copy.deepcopy(r1)
     r3["value"]["choices"] = "WRONG_CLASS"
@@ -51,8 +50,7 @@ def test_validate_prediction():
 
     pred["result"] = [r2]
 
-    with pytest.raises(Exception):
-        conf.validate_prediction(pred)
+    assert conf.validate_prediction(pred) is False
 
 
 def test_validate_task():
@@ -132,8 +130,7 @@ def test_validate_annotation():
     d2 = copy.deepcopy(d)
     d2["result"][0]["from_name"] = "non_existent"
 
-    with pytest.raises(Exception):
-        li.validate_annotation(d2)
+    assert li.validate_annotation(d2) is False
 
     d3 = copy.deepcopy(d)
     d3["result"][0]["type"] = "non_existent"
