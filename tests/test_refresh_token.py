@@ -12,8 +12,6 @@ import pytest
 from label_studio_sdk import LabelStudio
 from label_studio_sdk.client import AsyncLabelStudio
 from label_studio_sdk.core.api_error import ApiError
-from label_studio_sdk.projects.types.projects_list_response import \
-    ProjectsListResponse
 from label_studio_sdk.types.token_refresh_response import TokenRefreshResponse
 from label_studio_sdk.tokens.client_ext import TokensClientExt
 
@@ -21,6 +19,14 @@ NOW = int(datetime.datetime.now(timezone.utc).timestamp())
 ONE_HOUR_AGO = NOW - 3600
 IN_ONE_HOUR = NOW + 3600
 BASE_URL = "https://mocked.test"
+
+
+empty_projects_list_response = {
+    "count": 0,
+    "results": [],
+    "next": None,
+    "previous": None,
+}
 
 
 @pytest.mark.respx(base_url=BASE_URL)
@@ -32,7 +38,7 @@ def test_refresh_token_auth(respx_mock):
         return_value=httpx.Response(200, json={"access": access_token})
     )
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = LabelStudio(
@@ -55,7 +61,7 @@ def test_initial_request_triggers_token_refresh(respx_mock):
         return_value=httpx.Response(200, json={"access": access_token})
     )
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = LabelStudio(
@@ -78,7 +84,7 @@ def test_expired_token_triggers_refresh(respx_mock):
         return_value=httpx.Response(200, json={"access": valid_access_token})
     )
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = LabelStudio(
@@ -102,7 +108,7 @@ def test_valid_token_skips_refresh(respx_mock):
         return_value=httpx.Response(200, json={"access": access_token})
     )
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = LabelStudio(
@@ -121,7 +127,7 @@ def test_legacy_token_detection(respx_mock):
     """Test that a non-JWT token is automatically detected as a legacy token."""
     legacy_token = "some-legacy-token-123"
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = LabelStudio(
@@ -140,7 +146,7 @@ async def test_async_legacy_token_detection(respx_mock):
     """Test that a non-JWT token is automatically detected as a legacy token in async client."""
     legacy_token = "some-legacy-token-123"
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     client = AsyncLabelStudio(
@@ -162,7 +168,7 @@ async def test_async_jwt_refresh_token(respx_mock):
         return_value=httpx.Response(200, json={"access": jwt_token})
     )
     projects_route = respx_mock.get("/api/projects/").mock(
-        return_value=httpx.Response(200, json=ProjectsListResponse(count=0, results=[]).dict())
+        return_value=httpx.Response(200, json=empty_projects_list_response)
     )
 
     async with httpx.AsyncClient() as http_client:
