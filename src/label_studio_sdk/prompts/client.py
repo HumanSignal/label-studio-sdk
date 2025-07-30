@@ -108,6 +108,7 @@ class PromptsClient:
         *,
         results: typing.Sequence[typing.Optional[typing.Any]],
         modelrun_id: int,
+        num_predictions: typing.Optional[int] = None,
         job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchPredictions:
@@ -119,6 +120,9 @@ class PromptsClient:
         results : typing.Sequence[typing.Optional[typing.Any]]
 
         modelrun_id : int
+
+        num_predictions : typing.Optional[int]
+            Number of predictions being sent (for telemetry only, has no effect)
 
         job_id : typing.Optional[str]
 
@@ -146,6 +150,9 @@ class PromptsClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/model-run/batch-predictions",
             method="POST",
+            params={
+                "num_predictions": num_predictions,
+            },
             json={
                 "job_id": job_id,
                 "results": results,
@@ -651,6 +658,7 @@ class AsyncPromptsClient:
         *,
         results: typing.Sequence[typing.Optional[typing.Any]],
         modelrun_id: int,
+        num_predictions: typing.Optional[int] = None,
         job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchPredictions:
@@ -662,6 +670,9 @@ class AsyncPromptsClient:
         results : typing.Sequence[typing.Optional[typing.Any]]
 
         modelrun_id : int
+
+        num_predictions : typing.Optional[int]
+            Number of predictions being sent (for telemetry only, has no effect)
 
         job_id : typing.Optional[str]
 
@@ -697,6 +708,9 @@ class AsyncPromptsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/model-run/batch-predictions",
             method="POST",
+            params={
+                "num_predictions": num_predictions,
+            },
             json={
                 "job_id": job_id,
                 "results": results,

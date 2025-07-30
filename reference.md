@@ -5358,6 +5358,14 @@ client.prompts.batch_predictions(
 <dl>
 <dd>
 
+**num_predictions:** `typing.Optional[int]` — Number of predictions being sent (for telemetry only, has no effect)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **job_id:** `typing.Optional[str]` 
     
 </dd>
