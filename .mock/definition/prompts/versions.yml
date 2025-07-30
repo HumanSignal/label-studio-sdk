@@ -246,7 +246,7 @@ service:
               organization: 1
       audiences:
         - public
-    get_cost_estimate:
+    cost_estimate:
       path: /api/prompts/{prompt_id}/versions/{version_id}/cost-estimate
       method: GET
       auth: true

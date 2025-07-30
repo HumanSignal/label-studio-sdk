@@ -21394,7 +21394,7 @@ The model provider to use e.g. OpenAI
 </dl>
 </details>
 
-<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">get_cost_estimate</a>(...)</code></summary>
+<details><summary><code>client.prompts.versions.<a href="src/label_studio_sdk/prompts/versions/client.py">cost_estimate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -21427,7 +21427,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.prompts.versions.get_cost_estimate(
+client.prompts.versions.cost_estimate(
     prompt_id=1,
     version_id=1,
 )

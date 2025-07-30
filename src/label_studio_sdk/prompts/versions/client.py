@@ -425,7 +425,7 @@ class VersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_cost_estimate(
+    def cost_estimate(
         self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> InferenceRunCostEstimate:
         """
@@ -453,7 +453,7 @@ class VersionsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.prompts.versions.get_cost_estimate(
+        client.prompts.versions.cost_estimate(
             prompt_id=1,
             version_id=1,
         )
@@ -1086,7 +1086,7 @@ class AsyncVersionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_cost_estimate(
+    async def cost_estimate(
         self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> InferenceRunCostEstimate:
         """
@@ -1119,7 +1119,7 @@ class AsyncVersionsClient:
 
 
         async def main() -> None:
-            await client.prompts.versions.get_cost_estimate(
+            await client.prompts.versions.cost_estimate(
                 prompt_id=1,
                 version_id=1,
             )
