@@ -729,72 +729,26 @@ class LabelInterface:
 
         return True
 
-    def _validate_object(self, obj):
-        """ """
-        regions = []
-        for r in obj.get(RESULT_KEY):
-            if r.get('type') != "relation":
-                try:
-                    if not self.validate_region(r):
-                        return False
-                    regions.append(r)
-                except Exception:
-                    return False
-
-        for r in obj.get(RESULT_KEY):
-            if r.get('type') == "relation" and \
-               not self.validate_relation(r, regions):
-                return False
-
-        return True
-        
-    def validate_annotation(self, annotation):
-        """Validates the given annotation against the current configuration.
-
-        This method applies the `validate_region` method to each
-        region in the annotation and returns False if any of these
-        validations fail. If all the regions pass the validation, it
-        returns True.
+    def _validate_object(self, obj, return_errors=False):
+        """
+        Validates an object (annotation/prediction) and returns boolean or error messages.
 
         Args:
-            annotation (dict): The annotation to be validated, where
-            each key-value pair denotes an attribute-value of the
-            annotation.
-
-        Returns:
-            bool: True if all regions in the annotation pass the
-            validation, False otherwise.
-
-        """
-        return self._validate_object(annotation)
-
-    def validate_prediction(self, prediction, return_errors=False):
-        """
-        Validates the given prediction against the current configuration.
-
-        Args:
-            prediction (dict): The prediction to be validated
-            return_errors (bool): If True, returns a list of error messages instead of boolean
+            obj (dict): The object to validate
+            return_errors (bool): If True, returns list of error messages. If False, returns boolean.
 
         Returns:
             Union[bool, List[str]]: If return_errors=False, returns True/False.
                                    If return_errors=True, returns list of error messages.
         """
+        errors = self._validate_object_logic(obj)
         if return_errors:
-            return self._validate_object_with_errors(prediction)
+            return errors
         else:
-            return self._validate_object(prediction)
+            return len(errors) == 0
 
-    def _validate_object_with_errors(self, obj):
-        """
-        Validates an object (annotation/prediction) and returns detailed error messages.
-
-        Args:
-            obj (dict): The object to validate
-
-        Returns:
-            List[str]: List of error messages. Empty list if validation passes.
-        """
+    def _validate_object_logic(self, obj):
+        """Core validation logic that returns error messages."""
         errors = []
 
         try:
@@ -851,6 +805,41 @@ class LabelInterface:
             errors.append(f"Unexpected error during validation: {str(e)}")
 
         return errors
+
+
+    def validate_annotation(self, annotation):
+        """Validates the given annotation against the current configuration.
+
+        This method applies the `validate_region` method to each
+        region in the annotation and returns False if any of these
+        validations fail. If all the regions pass the validation, it
+        returns True.
+
+        Args:
+            annotation (dict): The annotation to be validated, where
+            each key-value pair denotes an attribute-value of the
+            annotation.
+
+        Returns:
+            bool: True if all regions in the annotation pass the
+            validation, False otherwise.
+
+        """
+        return self._validate_object(annotation)
+
+    def validate_prediction(self, prediction, return_errors=False):
+        """
+        Validates the given prediction against the current configuration.
+
+        Args:
+            prediction (dict): The prediction to be validated
+            return_errors (bool): If True, returns a list of error messages instead of boolean
+
+        Returns:
+            Union[bool, List[str]]: If return_errors=False, returns True/False.
+                                   If return_errors=True, returns list of error messages.
+        """
+        return self._validate_object(prediction, return_errors)
 
     def _validate_region_logic(self, region, region_index=0):
         """Helper method to perform region validation logic.
