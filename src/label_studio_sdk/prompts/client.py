@@ -40,6 +40,7 @@ class PromptsClient:
         *,
         failed_predictions: typing.Sequence[typing.Optional[typing.Any]],
         modelrun_id: int,
+        num_failed_predictions: typing.Optional[int] = None,
         job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchFailedPredictions:
@@ -51,6 +52,9 @@ class PromptsClient:
         failed_predictions : typing.Sequence[typing.Optional[typing.Any]]
 
         modelrun_id : int
+
+        num_failed_predictions : typing.Optional[int]
+            Number of failed predictions being sent (for telemetry only, has no effect)
 
         job_id : typing.Optional[str]
 
@@ -78,6 +82,9 @@ class PromptsClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/model-run/batch-failed-predictions",
             method="POST",
+            params={
+                "num_failed_predictions": num_failed_predictions,
+            },
             json={
                 "job_id": job_id,
                 "failed_predictions": failed_predictions,
@@ -582,6 +589,7 @@ class AsyncPromptsClient:
         *,
         failed_predictions: typing.Sequence[typing.Optional[typing.Any]],
         modelrun_id: int,
+        num_failed_predictions: typing.Optional[int] = None,
         job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BatchFailedPredictions:
@@ -593,6 +601,9 @@ class AsyncPromptsClient:
         failed_predictions : typing.Sequence[typing.Optional[typing.Any]]
 
         modelrun_id : int
+
+        num_failed_predictions : typing.Optional[int]
+            Number of failed predictions being sent (for telemetry only, has no effect)
 
         job_id : typing.Optional[str]
 
@@ -628,6 +639,9 @@ class AsyncPromptsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/model-run/batch-failed-predictions",
             method="POST",
+            params={
+                "num_failed_predictions": num_failed_predictions,
+            },
             json={
                 "job_id": job_id,
                 "failed_predictions": failed_predictions,

@@ -5270,6 +5270,14 @@ client.prompts.batch_failed_predictions(
 <dl>
 <dd>
 
+**num_failed_predictions:** `typing.Optional[int]` — Number of failed predictions being sent (for telemetry only, has no effect)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **job_id:** `typing.Optional[str]` 
     
 </dd>
