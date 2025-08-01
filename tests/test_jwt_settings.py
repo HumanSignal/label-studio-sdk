@@ -24,7 +24,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "api_tokens_enabled": True,
         "legacy_api_tokens_enabled": True,
@@ -35,10 +35,8 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "legacy_api_tokens_enabled": None,
         "api_token_ttl_days": "integer",
     }
-    response = client.jwt_settings.create(api_tokens_enabled=True, legacy_api_tokens_enabled=True, api_token_ttl_days=1)
+    response = client.jwt_settings.update()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.jwt_settings.create(
-        api_tokens_enabled=True, legacy_api_tokens_enabled=True, api_token_ttl_days=1
-    )
+    async_response = await async_client.jwt_settings.update()
     validate_response(async_response, expected_response, expected_types)

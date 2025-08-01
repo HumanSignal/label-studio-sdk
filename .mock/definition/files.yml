@@ -8,15 +8,11 @@ service:
       path: /api/import/file-upload/{id}
       method: GET
       auth: true
-      docs: >-
-        Retrieve details about a specific uploaded file. To get the file upload
-        ID, use [Get files list](list).
+      docs: Retrieve details about a specific uploaded file.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this file upload.
+        id: integer
       display-name: Get file upload
       response:
         docs: ''
@@ -34,15 +30,11 @@ service:
       path: /api/import/file-upload/{id}
       method: DELETE
       auth: true
-      docs: >-
-        Delete a specific uploaded file. To get the file upload ID, use [Get
-        files list](list).
+      docs: Delete a specific uploaded file.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this file upload.
+        id: integer
       display-name: Delete file upload
       examples:
         - path-parameters:
@@ -53,31 +45,18 @@ service:
       path: /api/import/file-upload/{id}
       method: PATCH
       auth: true
-      docs: >
-
-        Update a specific uploaded file. To get the file upload ID, use [Get
-        files list](list). 
-
-
-        You will need to include the file data in the request body. For example:
-
-        ```bash
-
-        curl -H 'Authorization: Token abc123' -X POST
-        'https://localhost:8080/api/import/file-upload/245' -F
-        'file=@path/to/my_file.csv'
-
-        ```
+      docs: Update a specific uploaded file.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this file upload.
+        id: integer
       display-name: Update file upload
       request:
-        body: root.FileUpload
-        content-type: application/json
+        name: PatchedFileUploadRequest
+        body:
+          properties:
+            file: optional<file>
+        content-type: multipart/form-data
       response:
         docs: ''
         type: root.FileUpload
@@ -95,22 +74,14 @@ service:
       path: /api/projects/{id}/file-uploads
       method: GET
       auth: true
-      docs: >
+      docs: |2-
 
-        Retrieve the list of uploaded files used to create labeling tasks for a
-        specific project. These are files that have been uploaded directly to
-        Label Studio. 
-
-
-        You must provide a project ID. The project ID can be found in the URL
-        when viewing the project in Label Studio, or you can retrieve all
-        project IDs using [List all projects](../list). 
+                Retrieve the list of uploaded files used to create labeling tasks for a specific project.
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this file upload.
+        id: integer
       display-name: Get files list
       request:
         name: FilesListRequest
@@ -119,9 +90,12 @@ service:
             type: optional<boolean>
             docs: Set to "true" if you want to retrieve all file uploads
           ids:
-            type: optional<integer>
+            type: optional<string>
             allow-multiple: true
             docs: Specify the list of file upload IDs to retrieve, e.g. ids=[1,2,3]
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
       response:
         docs: ''
         type: list<root.FileUpload>
@@ -138,21 +112,14 @@ service:
       path: /api/projects/{id}/file-uploads
       method: DELETE
       auth: true
-      docs: >
+      docs: |2-
 
-        Delete uploaded files for a specific project. These are files that have
-        been uploaded directly to Label Studio. 
-
-
-        You must provide a project ID. The project ID can be found in the URL
-        when viewing the project in Label Studio, or you can retrieve all
-        project IDs using [List all projects](../list). 
+                Delete uploaded files for a specific project.
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this file upload.
+        id: integer
       display-name: Delete files
       examples:
         - path-parameters:
@@ -163,9 +130,7 @@ service:
       path: /data/upload/{filename}
       method: GET
       auth: true
-      docs: >-
-        Download a specific uploaded file. If you aren't sure of the file name,
-        try [Get files list](list) first.
+      docs: Download a specific uploaded file.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:

@@ -2,142 +2,47 @@ types:
   ProjectsListRequestFilter:
     enum:
       - all
-      - pinned_only
       - exclude_pinned
-    default: all
+      - pinned_only
     source:
       openapi: openapi/openapi.yaml
-  ProjectsListResponse:
-    properties:
-      count: integer
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: list<root.Project>
+  LseProjectCreateRequestSampling:
+    discriminated: false
+    union:
+      - root.SamplingEnum
+      - root.NullEnum
     source:
       openapi: openapi/openapi.yaml
-  ProjectsCreateResponse:
-    docs: Project
+    inline: true
+  LseProjectCreateRequestSkipQueue:
+    discriminated: false
+    union:
+      - root.SkipQueueEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  PatchedLseProjectUpdateRequestSampling:
+    discriminated: false
+    union:
+      - root.SamplingEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  PatchedLseProjectUpdateRequestSkipQueue:
+    discriminated: false
+    union:
+      - root.SkipQueueEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  ProjectsDuplicateResponse:
     properties:
       id:
-        type: optional<integer>
-        docs: Project ID
-      title:
-        type: optional<string>
-        docs: Project title
-      description:
-        type: optional<string>
-        docs: Project description
-      label_config:
-        type: optional<string>
-        docs: Label config in XML format
-      expert_instruction:
-        type: optional<string>
-        docs: Labeling instructions to show to the user
-      show_instruction:
-        type: optional<boolean>
-        docs: Show labeling instructions
-      show_skip_button:
-        type: optional<boolean>
-        docs: Show skip button
-      enable_empty_annotation:
-        type: optional<boolean>
-        docs: Allow empty annotations
-      show_annotation_history:
-        type: optional<boolean>
-        docs: Show annotation history
-      reveal_preannotations_interactively:
-        type: optional<boolean>
-        docs: >-
-          Reveal preannotations interactively. If set to True, predictions will
-          be shown to the user only after selecting the area of interest
-      show_collab_predictions:
-        type: optional<boolean>
-        docs: Show predictions to annotators
-      maximum_annotations:
-        type: optional<integer>
-        docs: Maximum annotations per task
-      color:
-        type: optional<string>
-        docs: Project color in HEX format
-        default: '#FFFFFF'
-      control_weights:
-        type: optional<map<string, unknown>>
-        docs: >
-          Dict of weights for each control tag in metric calculation. Each
-          control tag (e.g. label or choice) will have its own key in control
-          weight dict with weight for each label and overall weight. For
-          example, if a bounding box annotation with a control tag named my_bbox
-          should be included with 0.33 weight in agreement calculation, and the
-          first label Car should be twice as important as Airplane, then you
-          need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
-          {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
-    source:
-      openapi: openapi/openapi.yaml
-  ProjectsUpdateResponse:
-    docs: Project
-    properties:
-      title:
-        type: optional<string>
-        docs: Project title
-      description:
-        type: optional<string>
-        docs: Project description
-      label_config:
-        type: optional<string>
-        docs: Label config in XML format
-      expert_instruction:
-        type: optional<string>
-        docs: Labeling instructions to show to the user
-      show_instruction:
-        type: optional<boolean>
-        docs: Show labeling instructions
-      show_skip_button:
-        type: optional<boolean>
-        docs: Show skip button
-      enable_empty_annotation:
-        type: optional<boolean>
-        docs: Allow empty annotations
-      show_annotation_history:
-        type: optional<boolean>
-        docs: Show annotation history
-      reveal_preannotations_interactively:
-        type: optional<boolean>
-        docs: >-
-          Reveal preannotations interactively. If set to True, predictions will
-          be shown to the user only after selecting the area of interest
-      show_collab_predictions:
-        type: optional<boolean>
-        docs: Show predictions to annotators
-      maximum_annotations:
-        type: optional<integer>
-        docs: Maximum annotations per task
-      annotation_limit_count:
-        type: optional<integer>
-        docs: Maximum number of annotations per annotator
-      annotation_limit_percent:
-        type: optional<float>
-        docs: Maximum percentage of annotations per annotator
-      color:
-        type: optional<string>
-        docs: Project color in HEX format
-        default: '#FFFFFF'
-      control_weights:
-        type: optional<map<string, unknown>>
-        docs: >
-          Dict of weights for each control tag in metric calculation. Each
-          control tag (e.g. label or choice) will have its own key in control
-          weight dict with weight for each label and overall weight. For
-          example, if a bounding box annotation with a control tag named my_bbox
-          should be included with 0.33 weight in agreement calculation, and the
-          first label Car should be twice as important as Airplane, then you
-          need to specify: {'my_bbox': {'type': 'RectangleLabels', 'labels':
-          {'Car': 1.0, 'Airplane': 0.5}, 'overall': 0.33}}
+        type: integer
+        docs: The ID of the duplicated project.
     source:
       openapi: openapi/openapi.yaml
   ProjectsImportTasksResponse:
@@ -169,6 +74,28 @@ types:
         docs: The list of found data columns
     source:
       openapi: openapi/openapi.yaml
+  ApiProjectsProjectExtraParamsRetrieveResponse:
+    docs: Create or change annotator weights for statistics
+    properties:
+      annotator_params:
+        type: optional<list<map<string, unknown>>>
+        docs: Dict of users with weights
+      use_kappa:
+        type: optional<boolean>
+        docs: If project uses Cohen's Kappa in calculation
+    source:
+      openapi: openapi/openapi.yaml
+  ApiProjectsProjectExtraParamsCreateResponse:
+    docs: Create or change annotator weights for statistics
+    properties:
+      annotator_params:
+        type: optional<list<map<string, unknown>>>
+        docs: Dict of users with weights
+      use_kappa:
+        type: optional<boolean>
+        docs: If project uses Cohen's Kappa in calculation
+    source:
+      openapi: openapi/openapi.yaml
 imports:
   root: __package__.yml
 service:
@@ -179,288 +106,324 @@ service:
       path: /api/projects/
       method: GET
       auth: true
-      docs: >
-
-        Return a list of the projects within your organization.
-
-
-        To perform most tasks with the Label Studio API, you must specify the
-        project ID, sometimes referred to as the `pk`. The project ID can be
-        found in the URL when viewing the project in Label Studio, or you can
-        retrieve all project IDs using this API call. 
-
-
-        To retrieve a list of your Label Studio projects, update the following
-        command to match your own environment.
-
-        Replace the domain name, port, and authorization token, then run the
-        following from the command line:
-
-        ```bash
-
-        curl -X GET https://localhost:8080/api/projects/ -H 'Authorization:
-        Token abc123'
-
-        ```
+      docs: Retrieve a list of projects.
       pagination:
         offset: $request.page
         results: $response.results
       source:
         openapi: openapi/openapi.yaml
-      display-name: List all projects
+      display-name: List projects
       request:
         name: ProjectsListRequest
         query-parameters:
-          ordering:
-            type: optional<string>
-            docs: Which field to use when ordering the results.
+          filter:
+            type: optional<ProjectsListRequestFilter>
+            docs: >-
+              Filter projects by pinned status. Use 'pinned_only' to return only
+              pinned projects, 'exclude_pinned' to return only non-pinned
+              projects, or 'all' to return all projects.
           ids:
             type: optional<string>
             docs: ids
-          title:
+          include:
             type: optional<string>
-            docs: title
+            docs: >-
+              Comma-separated list of count fields to include in the response to
+              optimize performance. Available fields: task_number,
+              finished_task_number, total_predictions_number,
+              total_annotations_number, num_tasks_with_annotations,
+              useful_annotation_number, ground_truth_number,
+              skipped_annotations_number. If not specified, all count fields are
+              included.
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
           page:
             type: optional<integer>
             docs: A page number within the paginated result set.
           page_size:
             type: optional<integer>
             docs: Number of results to return per page.
+          title:
+            type: optional<string>
+            docs: title
           workspaces:
             type: optional<integer>
             docs: workspaces
-          include:
-            type: optional<string>
-            docs: >
-              Comma-separated list of count fields to include in the response to
-              optimize performance.  Available fields: task_number,
-              finished_task_number, total_predictions_number, 
-              total_annotations_number, num_tasks_with_annotations,
-              useful_annotation_number,  ground_truth_number,
-              skipped_annotations_number. If not specified, all count fields are
-              included.
-          filter:
-            type: optional<ProjectsListRequestFilter>
-            default: all
-            docs: >
-              Filter projects by pinned status. Use 'pinned_only' to return only
-              pinned projects,  'exclude_pinned' to return only non-pinned
-              projects, or 'all' to return all projects.
       response:
         docs: ''
-        type: ProjectsListResponse
+        type: root.PaginatedAllRolesProjectListList
       examples:
-        - query-parameters:
-            include: task_number,total_annotations_number,num_tasks_with_annotations
-          response:
+        - response:
             body:
-              count: 1
-              next: next
-              previous: previous
+              count: 123
+              next: http://api.example.org/accounts/?page=4
+              previous: http://api.example.org/accounts/?page=2
               results:
-                - id: 1
-                  title: title
-                  description: description
-                  label_config: label_config
-                  expert_instruction: expert_instruction
-                  show_instruction: true
-                  show_skip_button: true
-                  enable_empty_annotation: true
-                  show_annotation_history: true
-                  organization: 1
-                  prompts:
-                    - title: title
-                      input_fields:
-                        - input_fields
-                      output_classes:
-                        - output_classes
-                  color: color
-                  maximum_annotations: 1
-                  annotation_limit_count: 1
-                  annotation_limit_percent: 1.1
-                  is_published: true
-                  model_version: model_version
-                  is_draft: true
-                  created_at: '2024-01-15T09:30:00Z'
-                  min_annotations_to_start_training: 1
-                  start_training_on_annotation_update: true
-                  show_collab_predictions: true
-                  num_tasks_with_annotations: 1
-                  task_number: 1
-                  useful_annotation_number: 1
-                  ground_truth_number: 1
-                  skipped_annotations_number: 1
-                  total_annotations_number: 1
-                  total_predictions_number: 1
-                  sampling: Sequential sampling
-                  show_ground_truth_first: true
-                  show_overlap_first: true
-                  overlap_cohort_percentage: 1
-                  task_data_login: task_data_login
-                  task_data_password: task_data_password
+                - label_config: label_config
                   control_weights:
                     key: value
+                  description_short: description_short
+                  rejected: rejected
+                  description: description
+                  total_predictions_number: 1
+                  workspace: workspace
+                  created_by:
+                    id: 1
+                    avatar: avatar
+                  config_suitable_for_bulk_annotation: true
+                  custom_script: custom_script
+                  duplication_status: duplication_status
+                  workspace_title: workspace_title
+                  allow_stream: allow_stream
+                  show_annotation_history: true
+                  assignment_settings:
+                    id: 1
+                  review_total_tasks: review_total_tasks
+                  reviewed_number: reviewed_number
+                  show_skip_button: true
+                  skip_queue: REQUEUE_FOR_ME
+                  finished_task_number: 1
+                  annotation_limit_count: 1
+                  ground_truth_number: 1
+                  min_annotations_to_start_training: 1
+                  show_collab_predictions: true
+                  show_overlap_first: true
+                  start_training_on_annotation_update: true
+                  id: 1
+                  data_types:
+                    key: value
+                  is_published: true
                   parsed_label_config:
                     key: value
-                  evaluate_predictions_automatically: true
+                  expert_instruction: expert_instruction
+                  model_version: model_version
+                  enable_empty_annotation: true
+                  is_draft: true
+                  total_annotations_number: total_annotations_number
+                  custom_task_lock_ttl: 1
+                  prompts: prompts
+                  annotation_limit_percent: annotation_limit_percent
+                  maximum_annotations: 1
+                  reviewer_queue_total: reviewer_queue_total
+                  members_count: members_count
+                  members: members
+                  overlap_cohort_percentage: 1
+                  show_ground_truth_first: true
+                  show_instruction: true
+                  review_settings:
+                    id: 1
+                    requeue_rejected_tasks_to_annotator: true
+                  annotator_evaluation_minimum_tasks: 1
+                  queue_total: queue_total
+                  comment_classification_config: comment_classification_config
+                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
+                  require_comment_on_skip: true
+                  sampling: Sequential sampling
                   config_has_control_tags: true
-                  skip_queue: REQUEUE_FOR_ME
-                  reveal_preannotations_interactively: true
+                  organization: 1
                   pinned_at: '2024-01-15T09:30:00Z'
-                  finished_task_number: 1
-                  queue_total: 1
-                  queue_done: 1
+                  created_at: '2024-01-15T09:30:00Z'
+                  queue_done: queue_done
+                  queue_left: queue_left
+                  pause_on_failed_annotator_evaluation: true
+                  has_blueprints: has_blueprints
+                  num_tasks_with_annotations: num_tasks_with_annotations
+                  task_number: 1
+                  evaluate_predictions_automatically: true
+                  ready: ready
+                  blueprints:
+                    - id: 1
+                      share_id: share_id
+                      short_url: short_url
+                      created_at: '2024-01-15T09:30:00Z'
+                  color: color
+                  duplication_done: true
+                  skipped_annotations_number: skipped_annotations_number
+                  reveal_preannotations_interactively: true
+                  useful_annotation_number: useful_annotation_number
+                  title: title
       audiences:
         - public
     create:
       path: /api/projects/
       method: POST
       auth: true
-      docs: >
-
-        Create a project and set up the labeling interface. For more information
-        about setting up projects, see the following:
-
-        * [Create and configure
-        projects](https://labelstud.io/guide/setup_project)
-
-        * [Configure labeling interface](https://labelstud.io/guide/setup)
-
-        * [Project settings](https://labelstud.io/guide/project_settings)
-
-
-        ```bash
-
-        curl -H Content-Type:application/json -H 'Authorization: Token abc123'
-        -X POST 'https://localhost:8080/api/projects'     --data
-        '{"label_config": "<View>[...]</View>"}'
-
-        ```
+      docs: Create a project for a specific organization.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create new project
+      display-name: Create a project
       request:
-        name: ProjectsCreateRequest
+        name: LseProjectCreateRequest
         body:
           properties:
             title:
               type: optional<string>
-              docs: Project title
+              docs: Project name. Must be between 3 and 50 characters long.
+              validation:
+                minLength: 3
+                maxLength: 50
             description:
               type: optional<string>
               docs: Project description
             label_config:
               type: optional<string>
-              docs: Label config in XML format
+              docs: Label config in XML format. See more about it in documentation
             expert_instruction:
               type: optional<string>
-              docs: Labeling instructions to show to the user
+              docs: Labeling instructions in HTML format
             show_instruction:
               type: optional<boolean>
-              docs: Show labeling instructions
+              docs: Show instructions to the annotator before they start
             show_skip_button:
               type: optional<boolean>
-              docs: Show skip button
+              docs: >-
+                Show a skip button in interface and allow annotators to skip the
+                task
             enable_empty_annotation:
               type: optional<boolean>
-              docs: Allow empty annotations
+              docs: Allow annotators to submit empty annotations
             show_annotation_history:
               type: optional<boolean>
-              docs: Show annotation history
-            reveal_preannotations_interactively:
-              type: optional<boolean>
-              docs: >-
-                Reveal preannotations interactively. If set to True, predictions
-                will be shown to the user only after selecting the area of
-                interest
-            show_collab_predictions:
-              type: optional<boolean>
-              docs: Show predictions to annotators
-            maximum_annotations:
-              type: optional<integer>
-              docs: Maximum annotations per task
+              docs: Show annotation history to annotator
+            organization: optional<integer>
             color:
               type: optional<string>
-              docs: Project color in HEX format
-              default: '#FFFFFF'
-            control_weights:
-              type: optional<map<string, unknown>>
-              docs: >
-                Dict of weights for each control tag in metric calculation. Each
-                control tag (e.g. label or choice) will have its own key in
-                control weight dict with weight for each label and overall
-                weight. For example, if a bounding box annotation with a control
-                tag named my_bbox should be included with 0.33 weight in
-                agreement calculation, and the first label Car should be twice
-                as important as Airplane, then you need to specify: {'my_bbox':
-                {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane':
-                0.5}, 'overall': 0.33}}
-            workspace:
+              validation:
+                maxLength: 16
+            maximum_annotations:
               type: optional<integer>
-              docs: Workspace ID
+              docs: >-
+                Maximum number of annotations for one task. If the number of
+                annotations per task is equal or greater to this value, the task
+                is completed (is_labeled=True)
+              validation:
+                min: -2147483648
+                max: 2147483647
+            is_published:
+              type: optional<boolean>
+              docs: Whether or not the project is published to annotators
             model_version:
               type: optional<string>
-              docs: Model version
+              docs: Machine learning model version
+            is_draft:
+              type: optional<boolean>
+              docs: Whether or not the project is in the middle of being created
+            created_by:
+              type: optional<root.UserSimpleRequest>
+              docs: Project owner
+            min_annotations_to_start_training:
+              type: optional<integer>
+              docs: >-
+                Minimum number of completed tasks after which model training is
+                started
+              validation:
+                min: -2147483648
+                max: 2147483647
+            show_collab_predictions:
+              type: optional<boolean>
+              docs: If set, the annotator can view model predictions
+            sampling: optional<LseProjectCreateRequestSampling>
+            show_ground_truth_first: optional<boolean>
+            show_overlap_first: optional<boolean>
+            overlap_cohort_percentage:
+              type: optional<integer>
+              validation:
+                min: -2147483648
+                max: 2147483647
+            task_data_login:
+              type: optional<string>
+              docs: 'Task data credentials: login'
+              validation:
+                maxLength: 256
+            task_data_password:
+              type: optional<string>
+              docs: 'Task data credentials: password'
+              validation:
+                maxLength: 256
+            control_weights: optional<unknown>
+            evaluate_predictions_automatically:
+              type: optional<boolean>
+              docs: Retrieve and display predictions when loading a task
+            skip_queue: optional<LseProjectCreateRequestSkipQueue>
+            reveal_preannotations_interactively:
+              type: optional<boolean>
+              docs: Reveal pre-annotations interactively
+            pinned_at:
+              type: optional<datetime>
+              docs: Pinned date and time
+            workspace: optional<integer>
         content-type: application/json
       response:
         docs: ''
-        type: ProjectsCreateResponse
+        type: root.LseProjectCreate
       examples:
         - request: {}
           response:
             body:
               id: 1
-              title: My project
-              description: My first project
-              label_config: <View>[...]</View>
-              expert_instruction: Label all cats
+              title: title
+              description: description
+              label_config: label_config
+              expert_instruction: expert_instruction
               show_instruction: true
               show_skip_button: true
               enable_empty_annotation: true
               show_annotation_history: true
-              reveal_preannotations_interactively: true
-              show_collab_predictions: true
-              maximum_annotations: 1
+              organization: 1
               color: color
+              maximum_annotations: 1
+              is_published: true
+              model_version: model_version
+              is_draft: true
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              created_at: '2024-01-15T09:30:00Z'
+              min_annotations_to_start_training: 1
+              start_training_on_annotation_update: true
+              show_collab_predictions: true
+              num_tasks_with_annotations: 1
+              task_number: 1
+              useful_annotation_number: 1
+              ground_truth_number: 1
+              skipped_annotations_number: 1
+              total_annotations_number: 1
+              total_predictions_number: 1
+              sampling: Sequential sampling
+              show_ground_truth_first: true
+              show_overlap_first: true
+              overlap_cohort_percentage: 1
+              task_data_login: task_data_login
+              task_data_password: task_data_password
               control_weights:
-                my_bbox:
-                  type: RectangleLabels
-                  labels:
-                    Car: 1
-                    Airplaine: 0.5
-                  overall: 0.33
+                key: value
+              parsed_label_config:
+                key: value
+              evaluate_predictions_automatically: true
+              config_has_control_tags: true
+              skip_queue: REQUEUE_FOR_ME
+              reveal_preannotations_interactively: true
+              pinned_at: '2024-01-15T09:30:00Z'
+              finished_task_number: 1
+              queue_total: 1
+              queue_done: 1
+              config_suitable_for_bulk_annotation: true
+              workspace: 1
       audiences:
         - public
-    api_projects_validate_create:
-      path: /api/projects/validate/
-      method: POST
-      auth: true
-      docs: Validate an arbitrary labeling configuration.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Validate label config
-      request:
-        body: root.ProjectLabelConfig
-        content-type: application/json
-      examples:
-        - request:
-            label_config: label_config
-      audiences:
-        - internal
     get:
       path: /api/projects/{id}/
       method: GET
       auth: true
-      docs: >-
-        Retrieve information about a specific project by project ID. The project
-        ID can be found in the URL when viewing the project in Label Studio, or
-        you can retrieve all project IDs using [List all projects](list).
+      docs: Retrieve information about a project by project ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
+        id: integer
       display-name: Get project by ID
       response:
         docs: Project information
@@ -481,24 +444,8 @@ service:
               enable_empty_annotation: true
               show_annotation_history: true
               organization: 1
-              prompts:
-                - title: title
-                  description: description
-                  created_by: 1
-                  created_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  organization: 1
-                  input_fields:
-                    - input_fields
-                  output_classes:
-                    - output_classes
-                  associated_projects:
-                    - 1
-                  skill_name: skill_name
               color: '#FF0000'
               maximum_annotations: 1
-              annotation_limit_count: 10
-              annotation_limit_percent: 50
               is_published: true
               model_version: 1.0.0
               is_draft: false
@@ -525,10 +472,8 @@ service:
               overlap_cohort_percentage: 100
               task_data_login: user
               task_data_password: secret
-              control_weights:
-                key: value
-              parsed_label_config:
-                key: value
+              control_weights: {}
+              parsed_label_config: '{"tag": {...}}'
               evaluate_predictions_automatically: false
               config_has_control_tags: true
               skip_queue: REQUEUE_FOR_ME
@@ -537,27 +482,18 @@ service:
               finished_task_number: 10
               queue_total: 10
               queue_done: 100
+              config_suitable_for_bulk_annotation: true
       audiences:
         - public
     delete:
       path: /api/projects/{id}/
       method: DELETE
       auth: true
-      docs: >
-
-        Delete a project by specified project ID. Deleting a project permanently
-        removes all tasks, annotations, and project data from Label Studio.
-
-
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](list). 
+      docs: Delete a project by specified project ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
+        id: integer
       display-name: Delete project
       examples:
         - path-parameters:
@@ -568,236 +504,349 @@ service:
       path: /api/projects/{id}/
       method: PATCH
       auth: true
-      docs: >
-
-        Update the project settings for a specific project. For more
-        information, see the following:
-
-        * [Create and configure
-        projects](https://labelstud.io/guide/setup_project)
-
-        * [Configure labeling interface](https://labelstud.io/guide/setup)
-
-        * [Project settings](https://labelstud.io/guide/project_settings)
-
-
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](list). 
-
-
-        <Warning>
-
-        If you are modifying the labeling config for project that has
-        in-progress work, note the following:
-
-        * You cannot remove labels or change the type of labeling being
-        performed unless you delete any existing annotations that are using
-        those labels. 
-
-        * If you make changes to the labeling configuration, any tabs that you
-        might have created in the Data Manager are removed.
-
-        </Warning>
+      docs: Update the details of a specific project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-      display-name: Update a project
+        id: integer
+      display-name: Update project details
       request:
-        name: ProjectsUpdateRequest
+        name: PatchedLseProjectUpdateRequest
         body:
           properties:
             title:
               type: optional<string>
-              docs: Project title
+              docs: Project name. Must be between 3 and 50 characters long.
+              validation:
+                minLength: 3
+                maxLength: 50
             description:
               type: optional<string>
               docs: Project description
             label_config:
               type: optional<string>
-              docs: Label config in XML format
+              docs: Label config in XML format. See more about it in documentation
             expert_instruction:
               type: optional<string>
-              docs: Labeling instructions to show to the user
+              docs: Labeling instructions in HTML format
             show_instruction:
               type: optional<boolean>
-              docs: Show labeling instructions
+              docs: Show instructions to the annotator before they start
             show_skip_button:
               type: optional<boolean>
-              docs: Show skip button
+              docs: >-
+                Show a skip button in interface and allow annotators to skip the
+                task
             enable_empty_annotation:
               type: optional<boolean>
-              docs: Allow empty annotations
+              docs: Allow annotators to submit empty annotations
             show_annotation_history:
               type: optional<boolean>
-              docs: Show annotation history
-            reveal_preannotations_interactively:
-              type: optional<boolean>
-              docs: >-
-                Reveal preannotations interactively. If set to True, predictions
-                will be shown to the user only after selecting the area of
-                interest
-            show_collab_predictions:
-              type: optional<boolean>
-              docs: Show predictions to annotators
-            maximum_annotations:
-              type: optional<integer>
-              docs: Maximum annotations per task
+              docs: Show annotation history to annotator
+            organization: optional<integer>
             color:
               type: optional<string>
-              docs: Project color in HEX format
-              default: '#FFFFFF'
-            control_weights:
-              type: optional<map<string, unknown>>
-              docs: >
-                Dict of weights for each control tag in metric calculation. Each
-                control tag (e.g. label or choice) will have its own key in
-                control weight dict with weight for each label and overall
-                weight. For example, if a bounding box annotation with a control
-                tag named my_bbox should be included with 0.33 weight in
-                agreement calculation, and the first label Car should be twice
-                as important as Airplane, then you need to specify: {'my_bbox':
-                {'type': 'RectangleLabels', 'labels': {'Car': 1.0, 'Airplane':
-                0.5}, 'overall': 0.33}}
-            workspace:
+              validation:
+                maxLength: 16
+            maximum_annotations:
               type: optional<integer>
-              docs: Workspace ID
+              docs: >-
+                Maximum number of annotations for one task. If the number of
+                annotations per task is equal or greater to this value, the task
+                is completed (is_labeled=True)
+              validation:
+                min: -2147483648
+                max: 2147483647
+            is_published:
+              type: optional<boolean>
+              docs: Whether or not the project is published to annotators
             model_version:
               type: optional<string>
-              docs: Model version
+              docs: Machine learning model version
+            is_draft:
+              type: optional<boolean>
+              docs: Whether or not the project is in the middle of being created
+            created_by:
+              type: optional<root.UserSimpleRequest>
+              docs: Project owner
+            min_annotations_to_start_training:
+              type: optional<integer>
+              docs: >-
+                Minimum number of completed tasks after which model training is
+                started
+              validation:
+                min: -2147483648
+                max: 2147483647
+            show_collab_predictions:
+              type: optional<boolean>
+              docs: If set, the annotator can view model predictions
+            sampling: optional<PatchedLseProjectUpdateRequestSampling>
+            show_ground_truth_first: optional<boolean>
+            show_overlap_first: optional<boolean>
+            overlap_cohort_percentage:
+              type: optional<integer>
+              validation:
+                min: -2147483648
+                max: 2147483647
+            task_data_login:
+              type: optional<string>
+              docs: 'Task data credentials: login'
+              validation:
+                maxLength: 256
+            task_data_password:
+              type: optional<string>
+              docs: 'Task data credentials: password'
+              validation:
+                maxLength: 256
+            control_weights: optional<unknown>
+            evaluate_predictions_automatically:
+              type: optional<boolean>
+              docs: Retrieve and display predictions when loading a task
+            skip_queue: optional<PatchedLseProjectUpdateRequestSkipQueue>
+            reveal_preannotations_interactively:
+              type: optional<boolean>
+              docs: Reveal pre-annotations interactively
+            pinned_at:
+              type: optional<datetime>
+              docs: Pinned date and time
+            workspace: optional<integer>
+            review_settings: optional<root.ReviewSettingsRequest>
+            assignment_settings: optional<root.AssignmentSettingsRequest>
+            custom_script: optional<string>
+            comment_classification_config: optional<string>
+            require_comment_on_skip:
+              type: optional<boolean>
+              default: false
+            custom_task_lock_ttl:
+              type: optional<integer>
+              docs: TTL in seconds for task reservations, on new and existing tasks
+              validation:
+                min: 1
+                max: 86400
+            annotation_limit_count:
+              type: optional<integer>
+              validation:
+                min: 1
+            annotation_limit_percent:
+              type: optional<string>
+              validation:
+                pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+            pause_on_failed_annotator_evaluation:
+              type: optional<boolean>
+              default: false
+            annotator_evaluation_minimum_score:
+              type: optional<string>
+              default: '95.00'
+              validation:
+                pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+            annotator_evaluation_minimum_tasks:
+              type: optional<integer>
+              default: 10
+              validation:
+                min: 0
         content-type: application/json
       response:
         docs: ''
-        type: ProjectsUpdateResponse
+        type: root.LseProjectUpdate
       examples:
         - path-parameters:
             id: 1
           request: {}
           response:
             body:
-              title: My project
-              description: My first project
-              label_config: <View>[...]</View>
-              expert_instruction: Label all cats
+              id: 1
+              title: title
+              description: description
+              label_config: label_config
+              expert_instruction: expert_instruction
               show_instruction: true
               show_skip_button: true
               enable_empty_annotation: true
               show_annotation_history: true
-              reveal_preannotations_interactively: true
-              show_collab_predictions: true
-              maximum_annotations: 1
-              annotation_limit_count: 1
-              annotation_limit_percent: 1.1
+              organization: 1
               color: color
+              maximum_annotations: 1
+              is_published: true
+              model_version: model_version
+              is_draft: true
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              created_at: '2024-01-15T09:30:00Z'
+              min_annotations_to_start_training: 1
+              start_training_on_annotation_update: true
+              show_collab_predictions: true
+              num_tasks_with_annotations: 1
+              task_number: 1
+              useful_annotation_number: 1
+              ground_truth_number: 1
+              skipped_annotations_number: 1
+              total_annotations_number: 1
+              total_predictions_number: 1
+              sampling: Sequential sampling
+              show_ground_truth_first: true
+              show_overlap_first: true
+              overlap_cohort_percentage: 1
+              task_data_login: task_data_login
+              task_data_password: task_data_password
               control_weights:
-                my_bbox:
-                  type: RectangleLabels
-                  labels:
-                    Car: 1
-                    Airplaine: 0.5
-                  overall: 0.33
+                key: value
+              parsed_label_config:
+                key: value
+              evaluate_predictions_automatically: true
+              config_has_control_tags: true
+              skip_queue: REQUEUE_FOR_ME
+              reveal_preannotations_interactively: true
+              pinned_at: '2024-01-15T09:30:00Z'
+              finished_task_number: 1
+              queue_total: 1
+              queue_done: 1
+              config_suitable_for_bulk_annotation: true
+              workspace: 1
+              review_settings:
+                id: 1
+                requeue_rejected_tasks_to_annotator: true
+                review_criteria: all
+                anonymize_annotations: true
+                only_finished_tasks: true
+                instruction: instruction
+                show_instruction: true
+                show_data_manager_to_reviewers: true
+                show_agreement_to_reviewers: true
+                require_comment_on_reject: true
+                requeue_rejected_tasks_mode: requeue
+                review_only_manual_assignments: true
+                project: 1
+              assignment_settings:
+                id: 1
+                label_stream_task_distribution: auto_distribution
+                project: 1
+              custom_script: custom_script
+              comment_classification_config: comment_classification_config
+              require_comment_on_skip: true
+              custom_task_lock_ttl: 1
+              prompts: prompts
+              annotation_limit_count: 1
+              annotation_limit_percent: annotation_limit_percent
+              pause_on_failed_annotator_evaluation: true
+              annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
+              annotator_evaluation_minimum_tasks: 1
+              workspace_title: workspace_title
+      audiences:
+        - public
+    duplicate:
+      path: /api/projects/{id}/duplicate/
+      method: POST
+      auth: true
+      docs: Make a copy of project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Duplicate project
+      request:
+        name: ProjectDuplicateRequest
+        body:
+          properties:
+            mode:
+              type: root.ModeEnum
+              docs: >-
+                Data that you want to duplicate: settings only, with tasks, with
+                annotations
+
+
+                * `settings` - Only settings
+
+                * `settings,data` - Settings and tasks
+            workspace:
+              type: integer
+              docs: Workspace, where to place duplicated project
+            title:
+              type: string
+              docs: Title of duplicated project
+              validation:
+                minLength: 3
+                maxLength: 50
+            description:
+              type: optional<string>
+              docs: Description of duplicated project
+              default: ''
+        content-type: application/json
+      response:
+        docs: Project duplicated
+        type: ProjectsDuplicateResponse
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            mode: settings
+            workspace: 1
+            title: title
+          response:
+            body:
+              id: 1
       audiences:
         - public
     import_tasks:
       path: /api/projects/{id}/import
       method: POST
       auth: true
-      docs: >
+      docs: |2-
 
-        Use this API endpoint to import labeling tasks in bulk. Note that each
-        POST request is limited at 250K tasks and 200 MB.
+                    Import data as labeling tasks in bulk using this API endpoint. You can use this API endpoint to import multiple tasks.
+                    One POST request is limited at 250K tasks and 200 MB.
 
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](../projects/list). 
+                    **Note:** Imported data is verified against a project *label_config* and must
+                    include all variables that were used in the *label_config*. For example,
+                    if the label configuration has a *$text* variable, then each item in a data object
+                    must include a "text" field.
+                    <br>
 
+                    ## POST requests
+                    <hr style="opacity:0.3">
 
-        <Note>
+                    There are three possible ways to import tasks with this endpoint:
 
-        Imported data is verified against a project *label_config* and must
-        include all variables that were used in the *label_config*. 
+                    ### 1. **POST with data**
+                    Send JSON tasks as POST data. Only JSON is supported for POSTing files directly.
+                    Update this example to specify your authorization token and Label Studio instance host, then run the following from
+                    the command line.
 
+                    ```bash
+                    curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+                    -X POST 'http://localhost:8000/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+                    ```
 
-        For example, if the label configuration has a *$text* variable, then
-        each item in a data object must include a `text` field.
+                    ### 2. **POST with files**
+                    Send tasks as files. You can attach multiple files with different names.
 
-        </Note>
+                    - **JSON**: text files in JavaScript object notation format
+                    - **CSV**: text files with tables in Comma Separated Values format
+                    - **TSV**: text files with tables in Tab Separated Value format
+                    - **TXT**: simple text files are similar to CSV with one column and no header, supported for projects with one source only
 
+                    Update this example to specify your authorization token, Label Studio instance host, and file name and path,
+                    then run the following from the command line:
 
-        There are three possible ways to import tasks with this endpoint:
+                    ```bash
+                    curl -H 'Authorization: Token abc123' \
+                    -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'
+                    ```
 
+                    ### 3. **POST with URL**
+                    You can also provide a URL to a file with labeling tasks. Supported file formats are the same as in option 2.
 
-        #### 1. **POST with data**
+                    ```bash
+                    curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+                    -X POST 'http://localhost:8000/api/projects/1/import' \
+                    --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
+                    ```
 
-        Send JSON tasks as POST data. Only JSON is supported for POSTing files
-        directly.
-
-
-        Update this example to specify your authorization token and Label Studio
-        instance host, then run the following from
-
-        the command line:
-
-
-        ```bash
-
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token
-        abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data
-        '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
-
-        ```
-
-
-        #### 2. **POST with files**
-
-        Send tasks as files. You can attach multiple files with different names.
-
-
-        - **JSON**: text files in JavaScript object notation format
-
-        - **CSV**: text files with tables in Comma Separated Values format
-
-        - **TSV**: text files with tables in Tab Separated Value format
-
-        - **TXT**: simple text files are similar to CSV with one column and no
-        header, supported for projects with one source only
-
-
-        Update this example to specify your authorization token, Label Studio
-        instance host, and file name and path,
-
-        then run the following from the command line:
-
-
-        ```bash
-
-        curl -H 'Authorization: Token abc123' -X POST
-        'https://localhost:8080/api/projects/1/import' -F
-        'file=@path/to/my_file.csv'
-
-        ```
-
-
-        #### 3. **POST with URL**
-
-        You can also provide a URL to a file with labeling tasks. Supported file
-        formats are the same as in option 2.
-
-
-        ```bash
-
-        curl -H 'Content-Type: application/json' -H 'Authorization: Token
-        abc123' -X POST 'https://localhost:8080/api/projects/1/import' --data
-        '[{"url": "http://example.com/test1.csv"}, {"url":
-        "http://example.com/test2.csv"}]'
-
-        ```
-
-
-        <br>
+                    <br>
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -806,18 +855,12 @@ service:
           docs: A unique integer value identifying this project.
       display-name: Import tasks
       request:
-        body:
-          docs: List of tasks to import
-          type: list<map<string, unknown>>
+        body: list<root.ImportApiRequest>
         query-parameters:
           commit_to_project:
             type: optional<boolean>
             default: true
             docs: Set to "true" to immediately commit tasks to the project.
-          return_task_ids:
-            type: optional<boolean>
-            default: false
-            docs: Set to "true" to return task IDs in the response.
           preannotated_from_fields:
             type: optional<string>
             allow-multiple: true
@@ -827,6 +870,10 @@ service:
               items in the request, the system will create a task with the
               `text` field and a prediction with the `label` field when
               `preannoted_from_fields=["prediction"]`.
+          return_task_ids:
+            type: optional<boolean>
+            default: false
+            docs: Set to "true" to return task IDs in the response.
         name: ProjectsImportTasksRequest
         content-type: application/json
       response:
@@ -837,8 +884,7 @@ service:
       examples:
         - path-parameters:
             id: 1
-          request:
-            - key: value
+          request: []
           response:
             body:
               task_count: 1
@@ -854,7 +900,132 @@ service:
                 - data_columns
       audiences:
         - public
-    api_projects_reimports_read:
+    api_projects_members_retrieve:
+      path: /api/projects/{id}/members/
+      method: GET
+      auth: true
+      docs: Retrieve the members for a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get project members
+      response:
+        docs: ''
+        type: root.ProjectMember
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              user: 1
+    api_projects_members_create:
+      path: /api/projects/{id}/members/
+      method: POST
+      auth: true
+      docs: Add a member to a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Add project member
+      request:
+        name: ProjectMemberRequest
+        body:
+          properties:
+            user: integer
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.ProjectMember
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            user: 1
+          response:
+            body:
+              user: 1
+    api_projects_members_destroy:
+      path: /api/projects/{id}/members/
+      method: DELETE
+      auth: true
+      docs: Remove a member from a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Remove member from project
+      request:
+        name: ApiProjectsMembersDestroyRequest
+        query-parameters:
+          project_member:
+            type: optional<integer>
+            docs: A unique integer value identifying this project member.
+      examples:
+        - path-parameters:
+            id: 1
+    api_projects_project_extra_params_retrieve:
+      path: /api/projects/{id}/project-extra-params/
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve the annotator weights for statistics and Cohen's Kappa for a
+        specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get annotator weights
+      response:
+        docs: Annotator weights retrieved
+        type: ApiProjectsProjectExtraParamsRetrieveResponse
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              annotator_params:
+                - key: value
+              use_kappa: true
+    api_projects_project_extra_params_create:
+      path: /api/projects/{id}/project-extra-params/
+      method: POST
+      auth: true
+      docs: >-
+        Create annotator weights to be used in the annotation statistics for a
+        project, such as when calculating kappa metrics for inter-annotator
+        agreement.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Create annotator weights for statistics
+      request:
+        name: LseProjectParamsRequest
+        body:
+          properties:
+            use_kappa:
+              type: optional<boolean>
+              docs: >-
+                If categorical variables are used in labeling (e.g. choices),
+                Cohen's Kappa statistic is computed to measure inter-rater
+                reliability instead of basic agreement
+            annotator_params: optional<unknown>
+        content-type: application/json
+      response:
+        docs: Annotator weights created/updated
+        type: ApiProjectsProjectExtraParamsCreateResponse
+      examples:
+        - path-parameters:
+            id: 1
+          request: {}
+          response:
+            body:
+              annotator_params:
+                - key: value
+              use_kappa: true
+    api_projects_reimports_retrieve:
       path: /api/projects/{id}/reimports/{reimport_pk}/
       method: GET
       auth: true
@@ -865,7 +1036,7 @@ service:
         id:
           type: integer
           docs: A unique integer value identifying this project reimport.
-        reimport_pk: string
+        reimport_pk: integer
       display-name: Get project reimport info
       response:
         docs: ''
@@ -873,10 +1044,11 @@ service:
       examples:
         - path-parameters:
             id: 1
-            reimport_pk: reimport_pk
+            reimport_pk: 1
           response:
             body:
               id: 1
+              project: 1
               status: created
               error: error
               task_count: 1
@@ -890,26 +1062,19 @@ service:
                 key: value
               data_columns:
                 key: value
-              traceback: traceback
-              project: 1
       audiences:
         - internal
     api_projects_tasks_list:
       path: /api/projects/{id}/tasks/
       method: GET
       auth: true
-      docs: >
+      docs: |2-
 
-        Retrieve a paginated list of tasks for a specific project. For example,
-        use the following cURL command:
-
-        ```bash
-
-        curl -X GET
-        https://localhost:8080/api/projects/{id}/tasks/?page=1&page_size=10 -H
-        'Authorization: Token abc123'
-
-        ```
+                    Retrieve a paginated list of tasks for a specific project. For example, use the following cURL command:
+                    ```bash
+                    curl -X GET http://localhost:8000/api/projects/{id}/tasks/?page=1&page_size=10 -H 'Authorization: Token abc123'
+                    ```
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -920,6 +1085,9 @@ service:
       request:
         name: ApiProjectsTasksListRequest
         query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
           page:
             type: optional<integer>
             docs: '[or "start"] current page'
@@ -928,35 +1096,67 @@ service:
             docs: >-
               [or "length"] tasks per page, use -1 to obtain all tasks (in this
               case "page" has no effect and this operation might be slow)
+      response:
+        docs: ''
+        type: list<root.TaskSimple>
       examples:
         - path-parameters:
             id: 1
+          response:
+            body:
+              - id: 1
+                data:
+                  key: value
+                meta:
+                  key: value
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+                is_labeled: true
+                overlap: 1
+                inner_id: 1000000
+                total_annotations: 1
+                cancelled_annotations: 1
+                total_predictions: 1
+                comment_count: 1
+                unresolved_comment_count: 1
+                last_comment_updated_at: '2024-01-15T09:30:00Z'
+                project: 1
+                updated_by: 1
+                file_upload: 1
+                comment_authors:
+                  - 1
+                annotations:
+                  - id: 1
+                    created_username: created_username
+                    created_ago: created_ago
+                    created_at: '2024-01-15T09:30:00Z'
+                    updated_at: '2024-01-15T09:30:00Z'
+                predictions:
+                  - id: 1
+                    result:
+                      - key: value
+                    created_ago: created_ago
+                    created_at: '2024-01-15T09:30:00Z'
+                    updated_at: '2024-01-15T09:30:00Z'
+                    task: 1
       audiences:
         - internal
-    validate_config:
+    validate_label_config:
       path: /api/projects/{id}/validate/
       method: POST
       auth: true
-      docs: >
-
+      docs: >-
         Determine whether the label configuration for a specific project is
-        valid. For more information about setting up labeling configs, see
-        [Configure labeling interface](https://labelstud.io/guide/setup) and our
-        [Tags reference](https://labelstud.io/tags/).
-
-
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](list). 
+        valid.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id:
           type: integer
           docs: A unique integer value identifying this project.
-      display-name: Validate project labeling config
+      display-name: Validate project label config
       request:
-        body: root.ProjectLabelConfig
+        body: root.ProjectLabelConfigRequest
         content-type: application/json
       response:
         docs: ''
@@ -971,5 +1171,122 @@ service:
               label_config: label_config
       audiences:
         - public
+    api_projects_subset_tasks_list:
+      path: /api/projects/{project_pk}/subset-tasks
+      method: GET
+      auth: true
+      docs: |2-
+
+                Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
+                
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        project_pk: integer
+      display-name: Get Project Subset Task List with Predictions and Accuracy details
+      request:
+        name: ApiProjectsSubsetTasksListRequest
+        query-parameters:
+          model_run:
+            type: optional<integer>
+            docs: A unique ID of a ModelRun
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+          page:
+            type: optional<integer>
+            docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
+          project_subset:
+            type: optional<string>
+            docs: The project subset to retrieve tasks for
+      errors:
+        - root.BadRequestError
+      examples:
+        - path-parameters:
+            project_pk: 1
+    api_projects_subsets_retrieve:
+      path: /api/projects/{project_pk}/subsets
+      method: GET
+      auth: true
+      docs: |2-
+
+                Provides list of available subsets for a project along with count of tasks in each subset
+                
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        project_pk: integer
+      display-name: Get available subsets of a project (for prompts usage)
+      examples:
+        - path-parameters:
+            project_pk: 1
+    api_projects_counts_list:
+      path: /api/projects/counts/
+      method: GET
+      auth: true
+      docs: >-
+        Returns a list of projects with their counts. For example, task_number
+        which is the total task number in project
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List project's counts
+      request:
+        name: ApiProjectsCountsListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+          page:
+            type: optional<integer>
+            docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
+      response:
+        docs: ''
+        type: root.PaginatedLseProjectCountsList
+      examples:
+        - response:
+            body:
+              count: 123
+              next: http://api.example.org/accounts/?page=4
+              previous: http://api.example.org/accounts/?page=2
+              results:
+                - id: 1
+                  task_number: 1
+                  finished_task_number: 1
+                  total_predictions_number: 1
+                  total_annotations_number: total_annotations_number
+                  num_tasks_with_annotations: num_tasks_with_annotations
+                  useful_annotation_number: useful_annotation_number
+                  ground_truth_number: 1
+                  skipped_annotations_number: skipped_annotations_number
+                  rejected: rejected
+                  queue_total: queue_total
+                  queue_done: queue_done
+                  queue_left: queue_left
+                  reviewed_number: reviewed_number
+                  review_total_tasks: review_total_tasks
+    api_projects_validate_create:
+      path: /api/projects/validate/
+      method: POST
+      auth: true
+      docs: Validate an arbitrary labeling configuration.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Validate label config
+      request:
+        body: root.ProjectLabelConfigRequest
+        content-type: application/json
+      errors:
+        - root.BadRequestError
+      examples:
+        - request:
+            label_config: label_config
+      audiences:
+        - internal
   source:
     openapi: openapi/openapi.yaml

@@ -1,31 +1,166 @@
-types:
-  UsersResetTokenResponse:
-    docs: User token
-    properties:
-      token:
-        type: optional<string>
-        docs: Token
-    source:
-      openapi: openapi/openapi.yaml
-  UsersGetTokenResponse:
-    docs: User token
-    properties:
-      detail:
-        type: optional<string>
-        docs: Token
-    source:
-      openapi: openapi/openapi.yaml
+imports:
+  root: __package__.yml
 service:
   auth: false
   base-path: ''
   endpoints:
+    get_current_user:
+      path: /api/current-user
+      method: GET
+      auth: true
+      docs: Get info about the currently authenticated user.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Get current user info
+      response:
+        docs: ''
+        type: root.LseUserApi
+      examples:
+        - response:
+            body:
+              id: 1
+              first_name: first_name
+              last_name: last_name
+              username: username
+              email: email
+              last_activity: '2024-01-15T09:30:00Z'
+              custom_hotkeys:
+                key: value
+              avatar: avatar
+              initials: initials
+              phone: phone
+              active_organization: 1
+              active_organization_meta: active_organization_meta
+              allow_newsletters: true
+              date_joined: '2024-01-15T09:30:00Z'
+              org_membership:
+                - role: role
+                  active: active
+                  organization_id: 1
+      audiences:
+        - public
+    update_current_user:
+      path: /api/current-user
+      method: PATCH
+      auth: true
+      docs: Update details for the currently authenticated user.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Update current user
+      request:
+        name: PatchedLseUserSerializerUpdateRequest
+        body:
+          properties:
+            first_name:
+              type: optional<string>
+              validation:
+                maxLength: 256
+            last_name:
+              type: optional<string>
+              validation:
+                maxLength: 256
+            username:
+              type: optional<string>
+              validation:
+                minLength: 1
+                maxLength: 256
+            custom_hotkeys: optional<unknown>
+            phone:
+              type: optional<string>
+              validation:
+                maxLength: 256
+            active_organization: optional<integer>
+            allow_newsletters:
+              type: optional<boolean>
+              docs: Allow sending newsletters to user
+            date_joined: optional<datetime>
+            password:
+              type: optional<string>
+              validation:
+                minLength: 1
+            onboarding_state:
+              type: optional<string>
+              validation:
+                minLength: 1
+            is_email_verified: optional<boolean>
+            email_notification_settings: optional<unknown>
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.LseUserApi
+      examples:
+        - request: {}
+          response:
+            body:
+              id: 1
+              first_name: first_name
+              last_name: last_name
+              username: username
+              email: email
+              last_activity: '2024-01-15T09:30:00Z'
+              custom_hotkeys:
+                key: value
+              avatar: avatar
+              initials: initials
+              phone: phone
+              active_organization: 1
+              active_organization_meta: active_organization_meta
+              allow_newsletters: true
+              date_joined: '2024-01-15T09:30:00Z'
+              org_membership:
+                - role: role
+                  active: active
+                  organization_id: 1
+      audiences:
+        - public
+    get_hotkeys:
+      path: /api/current-user/hotkeys/
+      method: GET
+      auth: true
+      docs: Retrieve the custom hotkeys configuration for the current user.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Get user hotkeys
+      response:
+        docs: ''
+        type: root.Hotkeys
+      examples:
+        - response:
+            body:
+              custom_hotkeys:
+                key: value
+      audiences:
+        - public
+    update_hotkeys:
+      path: /api/current-user/hotkeys/
+      method: PATCH
+      auth: true
+      docs: Update the custom hotkeys configuration for the current user.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Update user hotkeys
+      request:
+        name: PatchedHotkeysRequest
+        body:
+          properties:
+            custom_hotkeys: optional<map<string, unknown>>
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.Hotkeys
+      examples:
+        - request: {}
+          response:
+            body:
+              custom_hotkeys:
+                key: value
+      audiences:
+        - public
     reset_token:
       path: /api/current-user/reset-token/
       method: POST
       auth: true
-      docs: >-
-        Reset your access token or API key. When reset, any scripts or
-        automations you have in place will need to be updated with the new key.
+      docs: Reset the user token for the current user.
       source:
         openapi: openapi/openapi.yaml
       display-name: Reset user token
@@ -42,11 +177,7 @@ service:
       path: /api/current-user/token
       method: GET
       auth: true
-      docs: >-
-        Get a access token to authenticate to the API as the current user. To
-        find this in the Label Studio interface, click **Account & Settings** in
-        the upper right. For more information, see [Access
-        Token](https://labelstud.io/guide/user_account#Access-token).
+      docs: Get a user token to authenticate to the API as the current user.
       source:
         openapi: openapi/openapi.yaml
       display-name: Get user token
@@ -63,15 +194,13 @@ service:
       path: /api/current-user/whoami
       method: GET
       auth: true
-      docs: >-
-        Get information about your user account, such as your username, email,
-        and user ID.
+      docs: Retrieve details of the account that you are using to access the API.
       source:
         openapi: openapi/openapi.yaml
       display-name: Retrieve my user
       response:
         docs: ''
-        type: root.BaseUser
+        type: root.LseUser
       examples:
         - response:
             body:
@@ -81,27 +210,53 @@ service:
               username: username
               email: email
               last_activity: '2024-01-15T09:30:00Z'
+              custom_hotkeys:
+                key: value
               avatar: avatar
               initials: initials
               phone: phone
               active_organization: 1
+              active_organization_meta: active_organization_meta
               allow_newsletters: true
               date_joined: '2024-01-15T09:30:00Z'
+              org_membership:
+                - role: role
+                  active: active
+                  organization_id: 1
+              lse_fields:
+                invite_expired: invite_expired
+                invite_expired_at: invite_expired_at
+                invited_at: '2024-01-15T09:30:00Z'
+                invite_activated: true
+                trial_company: trial_company
+                trial_role: annotator
+                trial_models_in_production: trial_models_in_production
+                trial_experience_labeling: trial_experience_labeling
+                trial_license_enterprise: true
+                social_auth_finished: true
+                invited_by: 1
+                onboarding_state: not_started
+                email_notification_settings: email_notification_settings
+              pause: pause
       audiences:
         - public
     list:
       path: /api/users/
       method: GET
       auth: true
-      docs: |
-
-        List all users in your Label Studio organization. 
+      docs: List the users that exist on the Label Studio server.
       source:
         openapi: openapi/openapi.yaml
       display-name: List users
+      request:
+        name: UsersListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
       response:
         docs: ''
-        type: list<root.BaseUser>
+        type: list<root.LseUserApi>
       examples:
         - response:
             body:
@@ -111,24 +266,29 @@ service:
                 username: username
                 email: email
                 last_activity: '2024-01-15T09:30:00Z'
+                custom_hotkeys:
+                  key: value
                 avatar: avatar
                 initials: initials
                 phone: phone
                 active_organization: 1
+                active_organization_meta: active_organization_meta
                 allow_newsletters: true
                 date_joined: '2024-01-15T09:30:00Z'
+                org_membership:
+                  - role: role
+                    active: active
+                    organization_id: 1
       audiences:
         - public
     create:
       path: /api/users/
       method: POST
       auth: true
-      docs: |
-
-        Create a user in Label Studio.
+      docs: Create a user in Label Studio.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create a user
+      display-name: Create new user
       request:
         name: UsersCreateRequest
         body:
@@ -163,7 +323,7 @@ service:
         content-type: application/json
       response:
         docs: ''
-        type: root.BaseUser
+        type: root.LseUser
       examples:
         - request: {}
           response:
@@ -174,24 +334,41 @@ service:
               username: username
               email: email
               last_activity: '2024-01-15T09:30:00Z'
+              custom_hotkeys:
+                key: value
               avatar: avatar
               initials: initials
               phone: phone
               active_organization: 1
+              active_organization_meta: active_organization_meta
               allow_newsletters: true
               date_joined: '2024-01-15T09:30:00Z'
+              org_membership:
+                - role: role
+                  active: active
+                  organization_id: 1
+              lse_fields:
+                invite_expired: invite_expired
+                invite_expired_at: invite_expired_at
+                invited_at: '2024-01-15T09:30:00Z'
+                invite_activated: true
+                trial_company: trial_company
+                trial_role: annotator
+                trial_models_in_production: trial_models_in_production
+                trial_experience_labeling: trial_experience_labeling
+                trial_license_enterprise: true
+                social_auth_finished: true
+                invited_by: 1
+                onboarding_state: not_started
+                email_notification_settings: email_notification_settings
+              pause: pause
       audiences:
         - public
     get:
       path: /api/users/{id}/
       method: GET
       auth: true
-      docs: >
-
-        Get info about a specific Label Studio user. 
-
-        You will need to provide their user ID. You can find a list of all user
-        IDs using [List users](list). 
+      docs: Get info about a specific Label Studio user, based on the user ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -201,7 +378,7 @@ service:
       display-name: Get user info
       response:
         docs: ''
-        type: root.BaseUser
+        type: root.LseUser
       examples:
         - path-parameters:
             id: 1
@@ -213,25 +390,43 @@ service:
               username: username
               email: email
               last_activity: '2024-01-15T09:30:00Z'
+              custom_hotkeys:
+                key: value
               avatar: avatar
               initials: initials
               phone: phone
               active_organization: 1
+              active_organization_meta: active_organization_meta
               allow_newsletters: true
               date_joined: '2024-01-15T09:30:00Z'
+              org_membership:
+                - role: role
+                  active: active
+                  organization_id: 1
+              lse_fields:
+                invite_expired: invite_expired
+                invite_expired_at: invite_expired_at
+                invited_at: '2024-01-15T09:30:00Z'
+                invite_activated: true
+                trial_company: trial_company
+                trial_role: annotator
+                trial_models_in_production: trial_models_in_production
+                trial_experience_labeling: trial_experience_labeling
+                trial_license_enterprise: true
+                social_auth_finished: true
+                invited_by: 1
+                onboarding_state: not_started
+                email_notification_settings: email_notification_settings
+              pause: pause
       audiences:
         - public
     delete:
       path: /api/users/{id}/
       method: DELETE
       auth: true
-      docs: >
-
-        Delete a specific Label Studio user.
-
-
-        You will need to provide their user ID. You can find a list of all user
-        IDs using [List users](list).
+      docs: >-
+        Delete a specific Label Studio user. Only available in community
+        edition.
 
 
         <Warning>Use caution when deleting a user, as this can cause issues such
@@ -253,14 +448,10 @@ service:
       path: /api/users/{id}/
       method: PATCH
       auth: true
-      docs: >
+      docs: |2-
 
-        Update details for a specific Label Studio user, such as their name or
-        contact information. 
-
-
-        You will need to provide their user ID. You can find a list of all user
-        IDs using [List users](list). 
+                Update details for a specific user, such as their name or contact information, in Label Studio.
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -303,7 +494,7 @@ service:
         content-type: application/json
       response:
         docs: ''
-        type: root.BaseUser
+        type: root.LseUser
       examples:
         - path-parameters:
             id: 1
@@ -316,76 +507,46 @@ service:
               username: username
               email: email
               last_activity: '2024-01-15T09:30:00Z'
+              custom_hotkeys:
+                key: value
               avatar: avatar
               initials: initials
               phone: phone
               active_organization: 1
+              active_organization_meta: active_organization_meta
               allow_newsletters: true
               date_joined: '2024-01-15T09:30:00Z'
+              org_membership:
+                - role: role
+                  active: active
+                  organization_id: 1
+              lse_fields:
+                invite_expired: invite_expired
+                invite_expired_at: invite_expired_at
+                invited_at: '2024-01-15T09:30:00Z'
+                invite_activated: true
+                trial_company: trial_company
+                trial_role: annotator
+                trial_models_in_production: trial_models_in_production
+                trial_experience_labeling: trial_experience_labeling
+                trial_license_enterprise: true
+                social_auth_finished: true
+                invited_by: 1
+                onboarding_state: not_started
+                email_notification_settings: email_notification_settings
+              pause: pause
       audiences:
         - public
-    get_product_tour:
-      path: /api/current-user/product-tour
-      method: GET
-      auth: true
-      docs: >-
-        Retrieve the state of a product tour for the current user. Creates a new
-        tour if it doesn't exist.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Retrieve product tour state
-      request:
-        name: UsersGetProductTourRequest
-        query-parameters:
-          name:
-            type: string
-            docs: Name of the product tour to retrieve.
-      response:
-        docs: Successfully retrieved product tour
-        type: root.ProductTour
-      examples:
-        - query-parameters:
-            name: name
-          response:
-            body:
-              id: 1
-              user: 1
-              name: name
-              state: ready
-              interaction_data:
-                index: 1
-                action: action
-                type: type
-                status: status
-                additional_data:
-                  key: value
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              steps:
-                - key: value
-      audiences:
-        - internal
-    update_product_tour:
-      path: /api/current-user/product-tour
-      method: PATCH
-      auth: true
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Update product tour state
-      request:
-        body: root.ApiUsersProductTourUpdate
-        query-parameters:
-          name:
-            type: string
-            docs: Name of the product tour to update
-        name: UsersUpdateProductTourRequest
-        content-type: application/json
-      response:
-        docs: Successfully updated product tour
-        type: root.ProductTour
-      audiences:
-        - internal
   source:
     openapi: openapi/openapi.yaml
-imports:
-  root: __package__.yml
+types:
+  UsersResetTokenResponse:
+    properties:
+      token: optional<string>
+    source:
+      openapi: openapi/openapi.yaml
+  UsersGetTokenResponse:
+    properties:
+      detail: optional<string>
+    source:
+      openapi: openapi/openapi.yaml

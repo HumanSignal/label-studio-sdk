@@ -5,9 +5,10 @@ from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.pause import Pause
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+from ...types.reason_enum import ReasonEnum
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -24,21 +25,23 @@ class PausesClient:
         user_pk: int,
         *,
         include_deleted: typing.Optional[bool] = None,
+        ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Pause]:
         """
-        Return a list of pause objects for the specified project and user.
+        Retrieve a list of all pauses.
 
         Parameters
         ----------
         project_pk : int
-            Project ID
 
         user_pk : int
-            User ID
 
         include_deleted : typing.Optional[bool]
-            Include deleted pauses
+            Include deleted pauses.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -46,7 +49,7 @@ class PausesClient:
         Returns
         -------
         typing.List[Pause]
-            Successfully retrieved a list of pauses
+
 
         Examples
         --------
@@ -54,6 +57,7 @@ class PausesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.pauses.list(
             project_pk=1,
@@ -61,10 +65,11 @@ class PausesClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses",
+            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/",
             method="GET",
             params={
                 "include_deleted": include_deleted,
+                "ordering": ordering,
             },
             request_options=request_options,
         )
@@ -72,7 +77,7 @@ class PausesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Pause],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Pause],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -87,24 +92,30 @@ class PausesClient:
         project_pk: int,
         user_pk: int,
         *,
-        reason: str,
+        reason: ReasonEnum,
         verbose_reason: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Pause:
         """
-        Create a new pause object for the specified project and user.
+        Create a new pause entry.
 
         Parameters
         ----------
         project_pk : int
-            Project ID
 
         user_pk : int
-            User ID
 
-        reason : str
+        reason : ReasonEnum
+            Reason for pausing
+
+            * `MANUAL` - Manual
+            * `BEHAVIOR_BASED` - Behavior-based
+            * `ANNOTATOR_EVALUATION` - Annotator evaluation
+            * `ANNOTATION_LIMIT` - Annotation limit
+            * `CUSTOM_SCRIPT` - Custom script
 
         verbose_reason : typing.Optional[str]
+            Detailed description of why the project is paused, will be readable by paused annotators
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -112,7 +123,7 @@ class PausesClient:
         Returns
         -------
         Pause
-            Successfully created a pause
+
 
         Examples
         --------
@@ -120,22 +131,20 @@ class PausesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.pauses.create(
             project_pk=1,
             user_pk=1,
-            reason="reason",
+            reason="MANUAL",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses",
+            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/",
             method="POST",
             json={
                 "reason": reason,
                 "verbose_reason": verbose_reason,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -144,7 +153,7 @@ class PausesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Pause,
-                    parse_obj_as(
+                    construct_type(
                         type_=Pause,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -155,21 +164,18 @@ class PausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Pause:
         """
-        Return detailed information about a specific pause.
+        Retrieve a specific pause by ID.
 
         Parameters
         ----------
+        id : str
+
         project_pk : int
-            Project ID
 
         user_pk : int
-            User ID
-
-        id : int
-            Pause ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -177,7 +183,7 @@ class PausesClient:
         Returns
         -------
         Pause
-            Successfully retrieved the pause
+
 
         Examples
         --------
@@ -185,15 +191,16 @@ class PausesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.pauses.get(
+            id="id",
             project_pk=1,
             user_pk=1,
-            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}",
+            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -201,7 +208,7 @@ class PausesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Pause,
-                    parse_obj_as(
+                    construct_type(
                         type_=Pause,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -212,21 +219,18 @@ class PausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        Remove a pause from the database.
+        Delete a specific pause by ID.
 
         Parameters
         ----------
+        id : str
+
         project_pk : int
-            Project ID
 
         user_pk : int
-            User ID
-
-        id : int
-            Pause ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -241,15 +245,16 @@ class PausesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.pauses.delete(
+            id="id",
             project_pk=1,
             user_pk=1,
-            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}",
+            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -263,31 +268,36 @@ class PausesClient:
 
     def update(
         self,
+        id: str,
         project_pk: int,
         user_pk: int,
-        id: int,
         *,
-        reason: str,
+        reason: typing.Optional[ReasonEnum] = OMIT,
         verbose_reason: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Pause:
         """
-        Partially update one or more fields of an existing pause.
+        Partially update a pause entry by ID.
 
         Parameters
         ----------
+        id : str
+
         project_pk : int
-            Project ID
 
         user_pk : int
-            User ID
 
-        id : int
-            Pause ID
+        reason : typing.Optional[ReasonEnum]
+            Reason for pausing
 
-        reason : str
+            * `MANUAL` - Manual
+            * `BEHAVIOR_BASED` - Behavior-based
+            * `ANNOTATOR_EVALUATION` - Annotator evaluation
+            * `ANNOTATION_LIMIT` - Annotation limit
+            * `CUSTOM_SCRIPT` - Custom script
 
         verbose_reason : typing.Optional[str]
+            Detailed description of why the project is paused, will be readable by paused annotators
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -295,7 +305,7 @@ class PausesClient:
         Returns
         -------
         Pause
-            Successfully updated the pause (partial)
+
 
         Examples
         --------
@@ -303,16 +313,16 @@ class PausesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.pauses.update(
+            id="id",
             project_pk=1,
             user_pk=1,
-            id=1,
-            reason="reason",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}",
+            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
                 "reason": reason,
@@ -328,7 +338,7 @@ class PausesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Pause,
-                    parse_obj_as(
+                    construct_type(
                         type_=Pause,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -349,21 +359,23 @@ class AsyncPausesClient:
         user_pk: int,
         *,
         include_deleted: typing.Optional[bool] = None,
+        ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Pause]:
         """
-        Return a list of pause objects for the specified project and user.
+        Retrieve a list of all pauses.
 
         Parameters
         ----------
         project_pk : int
-            Project ID
 
         user_pk : int
-            User ID
 
         include_deleted : typing.Optional[bool]
-            Include deleted pauses
+            Include deleted pauses.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -371,7 +383,7 @@ class AsyncPausesClient:
         Returns
         -------
         typing.List[Pause]
-            Successfully retrieved a list of pauses
+
 
         Examples
         --------
@@ -381,6 +393,7 @@ class AsyncPausesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -394,10 +407,11 @@ class AsyncPausesClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses",
+            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/",
             method="GET",
             params={
                 "include_deleted": include_deleted,
+                "ordering": ordering,
             },
             request_options=request_options,
         )
@@ -405,7 +419,7 @@ class AsyncPausesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Pause],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Pause],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -420,24 +434,30 @@ class AsyncPausesClient:
         project_pk: int,
         user_pk: int,
         *,
-        reason: str,
+        reason: ReasonEnum,
         verbose_reason: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Pause:
         """
-        Create a new pause object for the specified project and user.
+        Create a new pause entry.
 
         Parameters
         ----------
         project_pk : int
-            Project ID
 
         user_pk : int
-            User ID
 
-        reason : str
+        reason : ReasonEnum
+            Reason for pausing
+
+            * `MANUAL` - Manual
+            * `BEHAVIOR_BASED` - Behavior-based
+            * `ANNOTATOR_EVALUATION` - Annotator evaluation
+            * `ANNOTATION_LIMIT` - Annotation limit
+            * `CUSTOM_SCRIPT` - Custom script
 
         verbose_reason : typing.Optional[str]
+            Detailed description of why the project is paused, will be readable by paused annotators
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -445,7 +465,7 @@ class AsyncPausesClient:
         Returns
         -------
         Pause
-            Successfully created a pause
+
 
         Examples
         --------
@@ -455,6 +475,7 @@ class AsyncPausesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -462,21 +483,18 @@ class AsyncPausesClient:
             await client.projects.pauses.create(
                 project_pk=1,
                 user_pk=1,
-                reason="reason",
+                reason="MANUAL",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses",
+            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/",
             method="POST",
             json={
                 "reason": reason,
                 "verbose_reason": verbose_reason,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -485,7 +503,7 @@ class AsyncPausesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Pause,
-                    parse_obj_as(
+                    construct_type(
                         type_=Pause,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -496,21 +514,18 @@ class AsyncPausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Pause:
         """
-        Return detailed information about a specific pause.
+        Retrieve a specific pause by ID.
 
         Parameters
         ----------
+        id : str
+
         project_pk : int
-            Project ID
 
         user_pk : int
-            User ID
-
-        id : int
-            Pause ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -518,7 +533,7 @@ class AsyncPausesClient:
         Returns
         -------
         Pause
-            Successfully retrieved the pause
+
 
         Examples
         --------
@@ -528,21 +543,22 @@ class AsyncPausesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.projects.pauses.get(
+                id="id",
                 project_pk=1,
                 user_pk=1,
-                id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}",
+            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -550,7 +566,7 @@ class AsyncPausesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Pause,
-                    parse_obj_as(
+                    construct_type(
                         type_=Pause,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -561,21 +577,18 @@ class AsyncPausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self, project_pk: int, user_pk: int, id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        Remove a pause from the database.
+        Delete a specific pause by ID.
 
         Parameters
         ----------
+        id : str
+
         project_pk : int
-            Project ID
 
         user_pk : int
-            User ID
-
-        id : int
-            Pause ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -592,21 +605,22 @@ class AsyncPausesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.projects.pauses.delete(
+                id="id",
                 project_pk=1,
                 user_pk=1,
-                id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}",
+            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -620,31 +634,36 @@ class AsyncPausesClient:
 
     async def update(
         self,
+        id: str,
         project_pk: int,
         user_pk: int,
-        id: int,
         *,
-        reason: str,
+        reason: typing.Optional[ReasonEnum] = OMIT,
         verbose_reason: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Pause:
         """
-        Partially update one or more fields of an existing pause.
+        Partially update a pause entry by ID.
 
         Parameters
         ----------
+        id : str
+
         project_pk : int
-            Project ID
 
         user_pk : int
-            User ID
 
-        id : int
-            Pause ID
+        reason : typing.Optional[ReasonEnum]
+            Reason for pausing
 
-        reason : str
+            * `MANUAL` - Manual
+            * `BEHAVIOR_BASED` - Behavior-based
+            * `ANNOTATOR_EVALUATION` - Annotator evaluation
+            * `ANNOTATION_LIMIT` - Annotation limit
+            * `CUSTOM_SCRIPT` - Custom script
 
         verbose_reason : typing.Optional[str]
+            Detailed description of why the project is paused, will be readable by paused annotators
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -652,7 +671,7 @@ class AsyncPausesClient:
         Returns
         -------
         Pause
-            Successfully updated the pause (partial)
+
 
         Examples
         --------
@@ -662,22 +681,22 @@ class AsyncPausesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.projects.pauses.update(
+                id="id",
                 project_pk=1,
                 user_pk=1,
-                id=1,
-                reason="reason",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}",
+            f"api/projects/{jsonable_encoder(project_pk)}/members/{jsonable_encoder(user_pk)}/pauses/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
                 "reason": reason,
@@ -693,7 +712,7 @@ class AsyncPausesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Pause,
-                    parse_obj_as(
+                    construct_type(
                         type_=Pause,  # type: ignore
                         object_=_response.json(),
                     ),

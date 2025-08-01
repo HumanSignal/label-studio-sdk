@@ -4,15 +4,13 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.webhook import Webhook
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.webhook_actions_item import WebhookActionsItem
-import datetime as dt
+from ..types.actions_enum import ActionsEnum
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.webhooks_update_request_actions_item import WebhooksUpdateRequestActionsItem
-from ..types.webhook_serializer_for_update_actions_item import WebhookSerializerForUpdateActionsItem
 from ..types.webhook_serializer_for_update import WebhookSerializerForUpdate
+from .types.webhooks_info_response import WebhooksInfoResponse
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -27,12 +25,7 @@ class WebhooksClient:
         self, *, project: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Webhook]:
         """
-
         List all webhooks set up for your organization.
-
-        Webhooks in Label Studio let you set up integrations that subscribe to certain events that occur inside Label Studio. When an event is triggered, Label Studio sends an HTTP POST request to the configured webhook URL.
-
-        For more information, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks).
 
         Parameters
         ----------
@@ -53,6 +46,7 @@ class WebhooksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.webhooks.list()
         """
@@ -68,7 +62,7 @@ class WebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Webhook],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Webhook],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -82,35 +76,21 @@ class WebhooksClient:
         self,
         *,
         url: str,
-        id: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
         send_payload: typing.Optional[bool] = OMIT,
         send_for_all_actions: typing.Optional[bool] = OMIT,
-        headers: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        headers: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        actions: typing.Optional[typing.Sequence[WebhookActionsItem]] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
-
-        Create a webhook.
-        Label Studio provides several out-of-the box webhook events, which you can find listed here: [Available Label Studio webhooks](https://labelstud.io/guide/webhooks#Available-Label-Studio-webhooks).
-
-        If you want to create your own custom webhook, refer to [Create custom events for webhooks in Label Studio](https://labelstud.io/guide/webhook_create).
-
-        <Note>Label Studio makes two main types of events available to integrate with webhooks: project-level task events and organization events. If you want to use organization-level webhook events, you will need to set `LABEL_STUDIO_ALLOW_ORGANIZATION_WEBHOOKS=true`. </Note>
+        Create a webhook for your organization.
 
         Parameters
         ----------
         url : str
             URL of webhook
-
-        id : typing.Optional[int]
-
-        organization : typing.Optional[int]
 
         project : typing.Optional[int]
 
@@ -120,19 +100,12 @@ class WebhooksClient:
         send_for_all_actions : typing.Optional[bool]
             If value is False - used only for actions from WebhookAction
 
-        headers : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Key Value Json of headers
+        headers : typing.Optional[typing.Optional[typing.Any]]
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        actions : typing.Optional[typing.Sequence[WebhookActionsItem]]
-
-        created_at : typing.Optional[dt.datetime]
-            Creation time
-
-        updated_at : typing.Optional[dt.datetime]
-            Last update time
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -148,6 +121,7 @@ class WebhooksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.webhooks.create(
             url="url",
@@ -157,8 +131,6 @@ class WebhooksClient:
             "api/webhooks/",
             method="POST",
             json={
-                "id": id,
-                "organization": organization,
                 "project": project,
                 "url": url,
                 "send_payload": send_payload,
@@ -166,8 +138,9 @@ class WebhooksClient:
                 "headers": headers,
                 "is_active": is_active,
                 "actions": actions,
-                "created_at": created_at,
-                "updated_at": updated_at,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -176,7 +149,7 @@ class WebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -186,64 +159,11 @@ class WebhooksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def info(
-        self,
-        *,
-        organization_only: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-
-        Get descriptions of all available webhook actions to set up webhooks. For more information, see the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-
-        Parameters
-        ----------
-        organization_only : typing.Optional[bool]
-            organization-only or not
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.webhooks.info()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/webhooks/info/",
-            method="GET",
-            params={
-                "organization-only": organization_only,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
         """
-
-        Get information about a specific webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
-
-        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-
         Parameters
         ----------
         id : int
-            A unique integer value identifying this webhook.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -259,6 +179,7 @@ class WebhooksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.webhooks.get(
             id=1,
@@ -273,7 +194,7 @@ class WebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -285,15 +206,9 @@ class WebhooksClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
-
-        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-
         Parameters
         ----------
         id : int
-            A unique integer value identifying this webhook.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -308,6 +223,7 @@ class WebhooksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.webhooks.delete(
             id=1,
@@ -328,46 +244,22 @@ class WebhooksClient:
 
     def update(
         self,
-        id_: int,
+        id: int,
         *,
-        url: str,
-        webhook_serializer_for_update_url: str,
-        send_payload: typing.Optional[bool] = None,
-        send_for_all_actions: typing.Optional[bool] = None,
-        headers: typing.Optional[str] = None,
-        is_active: typing.Optional[bool] = None,
-        actions: typing.Optional[
-            typing.Union[WebhooksUpdateRequestActionsItem, typing.Sequence[WebhooksUpdateRequestActionsItem]]
-        ] = None,
-        id: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        webhook_serializer_for_update_send_payload: typing.Optional[bool] = OMIT,
-        webhook_serializer_for_update_send_for_all_actions: typing.Optional[bool] = OMIT,
-        webhook_serializer_for_update_headers: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        webhook_serializer_for_update_is_active: typing.Optional[bool] = OMIT,
-        webhook_serializer_for_update_actions: typing.Optional[
-            typing.Sequence[WebhookSerializerForUpdateActionsItem]
-        ] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
+        url: typing.Optional[str] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
+        headers: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_active: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WebhookSerializerForUpdate:
         """
-
-        Update a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
-
-        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-
         Parameters
         ----------
-        id_ : int
-            A unique integer value identifying this webhook.
+        id : int
 
-        url : str
-            URL of webhook
-
-        webhook_serializer_for_update_url : str
+        url : typing.Optional[str]
             URL of webhook
 
         send_payload : typing.Optional[bool]
@@ -376,39 +268,12 @@ class WebhooksClient:
         send_for_all_actions : typing.Optional[bool]
             If value is False - used only for actions from WebhookAction
 
-        headers : typing.Optional[str]
-            Key Value Json of headers
+        headers : typing.Optional[typing.Optional[typing.Any]]
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        actions : typing.Optional[typing.Union[WebhooksUpdateRequestActionsItem, typing.Sequence[WebhooksUpdateRequestActionsItem]]]
-
-        id : typing.Optional[int]
-
-        organization : typing.Optional[int]
-
-        project : typing.Optional[int]
-
-        webhook_serializer_for_update_send_payload : typing.Optional[bool]
-            If value is False send only action
-
-        webhook_serializer_for_update_send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
-
-        webhook_serializer_for_update_headers : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Key Value Json of headers
-
-        webhook_serializer_for_update_is_active : typing.Optional[bool]
-            If value is False the webhook is disabled
-
-        webhook_serializer_for_update_actions : typing.Optional[typing.Sequence[WebhookSerializerForUpdateActionsItem]]
-
-        created_at : typing.Optional[dt.datetime]
-            Creation time
-
-        updated_at : typing.Optional[dt.datetime]
-            Last update time
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -424,17 +289,16 @@ class WebhooksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.webhooks.update(
-            id_=1,
-            url="url",
-            webhook_serializer_for_update_url="url",
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/webhooks/{jsonable_encoder(id_)}/",
+            f"api/webhooks/{jsonable_encoder(id)}/",
             method="PATCH",
-            params={
+            json={
                 "url": url,
                 "send_payload": send_payload,
                 "send_for_all_actions": send_for_all_actions,
@@ -442,18 +306,8 @@ class WebhooksClient:
                 "is_active": is_active,
                 "actions": actions,
             },
-            json={
-                "id": id,
-                "organization": organization,
-                "project": project,
-                "url": url,
-                "send_payload": send_payload,
-                "send_for_all_actions": send_for_all_actions,
-                "headers": headers,
-                "is_active": is_active,
-                "actions": actions,
-                "created_at": created_at,
-                "updated_at": updated_at,
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -462,8 +316,62 @@ class WebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     WebhookSerializerForUpdate,
-                    parse_obj_as(
+                    construct_type(
                         type_=WebhookSerializerForUpdate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def info(
+        self,
+        *,
+        organization_only: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WebhooksInfoResponse:
+        """
+        Get descriptions of all available webhook actions to set up webhooks.
+
+        Parameters
+        ----------
+        organization_only : typing.Optional[bool]
+            organization-only or not
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhooksInfoResponse
+            Object with webhook action descriptions.
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.webhooks.info()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/webhooks/info/",
+            method="GET",
+            params={
+                "organization-only": organization_only,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    WebhooksInfoResponse,
+                    construct_type(
+                        type_=WebhooksInfoResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -481,12 +389,7 @@ class AsyncWebhooksClient:
         self, *, project: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Webhook]:
         """
-
         List all webhooks set up for your organization.
-
-        Webhooks in Label Studio let you set up integrations that subscribe to certain events that occur inside Label Studio. When an event is triggered, Label Studio sends an HTTP POST request to the configured webhook URL.
-
-        For more information, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks).
 
         Parameters
         ----------
@@ -509,6 +412,7 @@ class AsyncWebhooksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -530,7 +434,7 @@ class AsyncWebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Webhook],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Webhook],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -544,35 +448,21 @@ class AsyncWebhooksClient:
         self,
         *,
         url: str,
-        id: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
         send_payload: typing.Optional[bool] = OMIT,
         send_for_all_actions: typing.Optional[bool] = OMIT,
-        headers: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        headers: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        actions: typing.Optional[typing.Sequence[WebhookActionsItem]] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
-
-        Create a webhook.
-        Label Studio provides several out-of-the box webhook events, which you can find listed here: [Available Label Studio webhooks](https://labelstud.io/guide/webhooks#Available-Label-Studio-webhooks).
-
-        If you want to create your own custom webhook, refer to [Create custom events for webhooks in Label Studio](https://labelstud.io/guide/webhook_create).
-
-        <Note>Label Studio makes two main types of events available to integrate with webhooks: project-level task events and organization events. If you want to use organization-level webhook events, you will need to set `LABEL_STUDIO_ALLOW_ORGANIZATION_WEBHOOKS=true`. </Note>
+        Create a webhook for your organization.
 
         Parameters
         ----------
         url : str
             URL of webhook
-
-        id : typing.Optional[int]
-
-        organization : typing.Optional[int]
 
         project : typing.Optional[int]
 
@@ -582,19 +472,12 @@ class AsyncWebhooksClient:
         send_for_all_actions : typing.Optional[bool]
             If value is False - used only for actions from WebhookAction
 
-        headers : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Key Value Json of headers
+        headers : typing.Optional[typing.Optional[typing.Any]]
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        actions : typing.Optional[typing.Sequence[WebhookActionsItem]]
-
-        created_at : typing.Optional[dt.datetime]
-            Creation time
-
-        updated_at : typing.Optional[dt.datetime]
-            Last update time
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -612,6 +495,7 @@ class AsyncWebhooksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -627,8 +511,6 @@ class AsyncWebhooksClient:
             "api/webhooks/",
             method="POST",
             json={
-                "id": id,
-                "organization": organization,
                 "project": project,
                 "url": url,
                 "send_payload": send_payload,
@@ -636,8 +518,9 @@ class AsyncWebhooksClient:
                 "headers": headers,
                 "is_active": is_active,
                 "actions": actions,
-                "created_at": created_at,
-                "updated_at": updated_at,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -646,7 +529,7 @@ class AsyncWebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -656,72 +539,11 @@ class AsyncWebhooksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def info(
-        self,
-        *,
-        organization_only: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-
-        Get descriptions of all available webhook actions to set up webhooks. For more information, see the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-
-        Parameters
-        ----------
-        organization_only : typing.Optional[bool]
-            organization-only or not
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.webhooks.info()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/webhooks/info/",
-            method="GET",
-            params={
-                "organization-only": organization_only,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
         """
-
-        Get information about a specific webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
-
-        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-
         Parameters
         ----------
         id : int
-            A unique integer value identifying this webhook.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -739,6 +561,7 @@ class AsyncWebhooksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -759,7 +582,7 @@ class AsyncWebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -771,15 +594,9 @@ class AsyncWebhooksClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
-
-        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-
         Parameters
         ----------
         id : int
-            A unique integer value identifying this webhook.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -796,6 +613,7 @@ class AsyncWebhooksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -822,46 +640,22 @@ class AsyncWebhooksClient:
 
     async def update(
         self,
-        id_: int,
+        id: int,
         *,
-        url: str,
-        webhook_serializer_for_update_url: str,
-        send_payload: typing.Optional[bool] = None,
-        send_for_all_actions: typing.Optional[bool] = None,
-        headers: typing.Optional[str] = None,
-        is_active: typing.Optional[bool] = None,
-        actions: typing.Optional[
-            typing.Union[WebhooksUpdateRequestActionsItem, typing.Sequence[WebhooksUpdateRequestActionsItem]]
-        ] = None,
-        id: typing.Optional[int] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        webhook_serializer_for_update_send_payload: typing.Optional[bool] = OMIT,
-        webhook_serializer_for_update_send_for_all_actions: typing.Optional[bool] = OMIT,
-        webhook_serializer_for_update_headers: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        webhook_serializer_for_update_is_active: typing.Optional[bool] = OMIT,
-        webhook_serializer_for_update_actions: typing.Optional[
-            typing.Sequence[WebhookSerializerForUpdateActionsItem]
-        ] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
+        url: typing.Optional[str] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
+        headers: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_active: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WebhookSerializerForUpdate:
         """
-
-        Update a webhook. You will need to provide the webhook ID. You can get this from [List all webhooks](list).
-
-        For more information about webhooks, see [Set up webhooks in Label Studio](https://labelstud.io/guide/webhooks) and the [Webhook event reference](https://labelstud.io/guide/webhook_reference).
-
         Parameters
         ----------
-        id_ : int
-            A unique integer value identifying this webhook.
+        id : int
 
-        url : str
-            URL of webhook
-
-        webhook_serializer_for_update_url : str
+        url : typing.Optional[str]
             URL of webhook
 
         send_payload : typing.Optional[bool]
@@ -870,39 +664,12 @@ class AsyncWebhooksClient:
         send_for_all_actions : typing.Optional[bool]
             If value is False - used only for actions from WebhookAction
 
-        headers : typing.Optional[str]
-            Key Value Json of headers
+        headers : typing.Optional[typing.Optional[typing.Any]]
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        actions : typing.Optional[typing.Union[WebhooksUpdateRequestActionsItem, typing.Sequence[WebhooksUpdateRequestActionsItem]]]
-
-        id : typing.Optional[int]
-
-        organization : typing.Optional[int]
-
-        project : typing.Optional[int]
-
-        webhook_serializer_for_update_send_payload : typing.Optional[bool]
-            If value is False send only action
-
-        webhook_serializer_for_update_send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
-
-        webhook_serializer_for_update_headers : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Key Value Json of headers
-
-        webhook_serializer_for_update_is_active : typing.Optional[bool]
-            If value is False the webhook is disabled
-
-        webhook_serializer_for_update_actions : typing.Optional[typing.Sequence[WebhookSerializerForUpdateActionsItem]]
-
-        created_at : typing.Optional[dt.datetime]
-            Creation time
-
-        updated_at : typing.Optional[dt.datetime]
-            Last update time
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -920,23 +687,22 @@ class AsyncWebhooksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.webhooks.update(
-                id_=1,
-                url="url",
-                webhook_serializer_for_update_url="url",
+                id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/webhooks/{jsonable_encoder(id_)}/",
+            f"api/webhooks/{jsonable_encoder(id)}/",
             method="PATCH",
-            params={
+            json={
                 "url": url,
                 "send_payload": send_payload,
                 "send_for_all_actions": send_for_all_actions,
@@ -944,18 +710,8 @@ class AsyncWebhooksClient:
                 "is_active": is_active,
                 "actions": actions,
             },
-            json={
-                "id": id,
-                "organization": organization,
-                "project": project,
-                "url": url,
-                "send_payload": send_payload,
-                "send_for_all_actions": send_for_all_actions,
-                "headers": headers,
-                "is_active": is_active,
-                "actions": actions,
-                "created_at": created_at,
-                "updated_at": updated_at,
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -964,8 +720,70 @@ class AsyncWebhooksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     WebhookSerializerForUpdate,
-                    parse_obj_as(
+                    construct_type(
                         type_=WebhookSerializerForUpdate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def info(
+        self,
+        *,
+        organization_only: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WebhooksInfoResponse:
+        """
+        Get descriptions of all available webhook actions to set up webhooks.
+
+        Parameters
+        ----------
+        organization_only : typing.Optional[bool]
+            organization-only or not
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhooksInfoResponse
+            Object with webhook action descriptions.
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.info()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/webhooks/info/",
+            method="GET",
+            params={
+                "organization-only": organization_only,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    WebhooksInfoResponse,
+                    construct_type(
+                        type_=WebhooksInfoResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

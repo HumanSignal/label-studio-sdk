@@ -5,9 +5,10 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.file_upload import FileUpload
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from .. import core
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -20,12 +21,11 @@ class FilesClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> FileUpload:
         """
-        Retrieve details about a specific uploaded file. To get the file upload ID, use [Get files list](list).
+        Retrieve details about a specific uploaded file.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this file upload.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -41,6 +41,7 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.files.get(
             id=1,
@@ -55,7 +56,7 @@ class FilesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     FileUpload,
-                    parse_obj_as(
+                    construct_type(
                         type_=FileUpload,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -67,12 +68,11 @@ class FilesClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific uploaded file. To get the file upload ID, use [Get files list](list).
+        Delete a specific uploaded file.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this file upload.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -87,6 +87,7 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.files.delete(
             id=1,
@@ -107,29 +108,20 @@ class FilesClient:
 
     def update(
         self,
-        id_: int,
+        id: int,
         *,
-        id: typing.Optional[int] = OMIT,
-        file: typing.Optional[str] = OMIT,
+        file: typing.Optional[core.File] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FileUpload:
         """
-
-        Update a specific uploaded file. To get the file upload ID, use [Get files list](list).
-
-        You will need to include the file data in the request body. For example:
-        ```bash
-        curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/import/file-upload/245' -F 'file=@path/to/my_file.csv'
-        ```
+        Update a specific uploaded file.
 
         Parameters
         ----------
-        id_ : int
-            A unique integer value identifying this file upload.
+        id : int
 
-        id : typing.Optional[int]
-
-        file : typing.Optional[str]
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -145,16 +137,17 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.files.update(
-            id_=1,
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/import/file-upload/{jsonable_encoder(id_)}",
+            f"api/import/file-upload/{jsonable_encoder(id)}",
             method="PATCH",
-            json={
-                "id": id,
+            data={},
+            files={
                 "file": file,
             },
             request_options=request_options,
@@ -164,7 +157,7 @@ class FilesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     FileUpload,
-                    parse_obj_as(
+                    construct_type(
                         type_=FileUpload,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -179,25 +172,27 @@ class FilesClient:
         id: int,
         *,
         all_: typing.Optional[bool] = None,
-        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[FileUpload]:
         """
 
-        Retrieve the list of uploaded files used to create labeling tasks for a specific project. These are files that have been uploaded directly to Label Studio.
+                Retrieve the list of uploaded files used to create labeling tasks for a specific project.
 
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this file upload.
 
         all_ : typing.Optional[bool]
             Set to "true" if you want to retrieve all file uploads
 
-        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+        ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Specify the list of file upload IDs to retrieve, e.g. ids=[1,2,3]
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -213,6 +208,7 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.files.list(
             id=1,
@@ -224,6 +220,7 @@ class FilesClient:
             params={
                 "all": all_,
                 "ids": ids,
+                "ordering": ordering,
             },
             request_options=request_options,
         )
@@ -231,7 +228,7 @@ class FilesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[FileUpload],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[FileUpload],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -244,14 +241,12 @@ class FilesClient:
     def delete_many(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
 
-        Delete uploaded files for a specific project. These are files that have been uploaded directly to Label Studio.
+                Delete uploaded files for a specific project.
 
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this file upload.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -266,6 +261,7 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.files.delete_many(
             id=1,
@@ -286,7 +282,7 @@ class FilesClient:
 
     def download(self, filename: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Download a specific uploaded file. If you aren't sure of the file name, try [Get files list](list) first.
+        Download a specific uploaded file.
 
         Parameters
         ----------
@@ -305,6 +301,7 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.files.download(
             filename="filename",
@@ -330,12 +327,11 @@ class AsyncFilesClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> FileUpload:
         """
-        Retrieve details about a specific uploaded file. To get the file upload ID, use [Get files list](list).
+        Retrieve details about a specific uploaded file.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this file upload.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -353,6 +349,7 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -373,7 +370,7 @@ class AsyncFilesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     FileUpload,
-                    parse_obj_as(
+                    construct_type(
                         type_=FileUpload,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -385,12 +382,11 @@ class AsyncFilesClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific uploaded file. To get the file upload ID, use [Get files list](list).
+        Delete a specific uploaded file.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this file upload.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -407,6 +403,7 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -433,29 +430,20 @@ class AsyncFilesClient:
 
     async def update(
         self,
-        id_: int,
+        id: int,
         *,
-        id: typing.Optional[int] = OMIT,
-        file: typing.Optional[str] = OMIT,
+        file: typing.Optional[core.File] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> FileUpload:
         """
-
-        Update a specific uploaded file. To get the file upload ID, use [Get files list](list).
-
-        You will need to include the file data in the request body. For example:
-        ```bash
-        curl -H 'Authorization: Token abc123' -X POST 'https://localhost:8080/api/import/file-upload/245' -F 'file=@path/to/my_file.csv'
-        ```
+        Update a specific uploaded file.
 
         Parameters
         ----------
-        id_ : int
-            A unique integer value identifying this file upload.
+        id : int
 
-        id : typing.Optional[int]
-
-        file : typing.Optional[str]
+        file : typing.Optional[core.File]
+            See core.File for more documentation
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -473,22 +461,23 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.files.update(
-                id_=1,
+                id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/import/file-upload/{jsonable_encoder(id_)}",
+            f"api/import/file-upload/{jsonable_encoder(id)}",
             method="PATCH",
-            json={
-                "id": id,
+            data={},
+            files={
                 "file": file,
             },
             request_options=request_options,
@@ -498,7 +487,7 @@ class AsyncFilesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     FileUpload,
-                    parse_obj_as(
+                    construct_type(
                         type_=FileUpload,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -513,25 +502,27 @@ class AsyncFilesClient:
         id: int,
         *,
         all_: typing.Optional[bool] = None,
-        ids: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[FileUpload]:
         """
 
-        Retrieve the list of uploaded files used to create labeling tasks for a specific project. These are files that have been uploaded directly to Label Studio.
+                Retrieve the list of uploaded files used to create labeling tasks for a specific project.
 
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this file upload.
 
         all_ : typing.Optional[bool]
             Set to "true" if you want to retrieve all file uploads
 
-        ids : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+        ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
             Specify the list of file upload IDs to retrieve, e.g. ids=[1,2,3]
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -549,6 +540,7 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -566,6 +558,7 @@ class AsyncFilesClient:
             params={
                 "all": all_,
                 "ids": ids,
+                "ordering": ordering,
             },
             request_options=request_options,
         )
@@ -573,7 +566,7 @@ class AsyncFilesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[FileUpload],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[FileUpload],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -586,14 +579,12 @@ class AsyncFilesClient:
     async def delete_many(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
 
-        Delete uploaded files for a specific project. These are files that have been uploaded directly to Label Studio.
+                Delete uploaded files for a specific project.
 
-        You must provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../list).
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this file upload.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -610,6 +601,7 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -636,7 +628,7 @@ class AsyncFilesClient:
 
     async def download(self, filename: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Download a specific uploaded file. If you aren't sure of the file name, try [Get files list](list) first.
+        Download a specific uploaded file.
 
         Parameters
         ----------
@@ -657,6 +649,7 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 

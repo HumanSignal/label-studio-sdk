@@ -1,60 +1,35 @@
-imports:
-  root: __package__.yml
 service:
   auth: false
   base-path: ''
   endpoints:
-    api_dm_columns_list:
-      path: /api/dm/columns/
+    api_dm_actions_form_retrieve:
+      path: /api/dm/actions/{action_id}/form/
       method: GET
       auth: true
-      docs: >-
-        Retrieve the data manager columns available for the tasks in a specific
-        project. For more details, see [GET
-        api/actions](#/Data%20Manager/get_api_actions).
+      docs: Get the form configuration for a specific action.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Get data manager columns
+      path-parameters:
+        action_id: string
+      display-name: Get action form
       request:
-        name: ApiDmColumnsListRequest
+        name: ApiDmActionsFormRetrieveRequest
         query-parameters:
           project:
             type: integer
             docs: Project ID
       response:
-        docs: Columns retrieved successfully
-        type: unknown
-      errors:
-        - root.BadRequestError
-        - root.NotFoundError
+        docs: Action form configuration returned successfully
+        type: map<string, unknown>
       examples:
-        - name: response
+        - path-parameters:
+            action_id: action_id
           query-parameters:
             project: 1
           response:
             body:
-              columns:
-                - id: id
-                  title: ID
-                  type: Number
-                  help: Task ID
-                  target: tasks
-                  visibility_defaults:
-                    explore: true
-                    labeling: false
-                  project_defined: false
-                - id: completed_at
-                  title: Completed
-                  type: Datetime
-                  target: tasks
-                  help: Last annotation date
-                  visibility_defaults:
-                    explore: true
-                    labeling: false
-                  project_defined: false
-      audiences:
-        - internal
-    api_dm_project_list:
+              key: value
+    api_dm_project_retrieve:
       path: /api/dm/project/
       method: GET
       auth: true
@@ -93,23 +68,30 @@ service:
         content-type: application/json
       response:
         docs: ''
-        type: ApiDmViewsUpdateResponse
+        type: root.View
       examples:
         - path-parameters:
             id: id
           request: {}
           response:
             body:
-              data:
+              id: 1
+              filter_group:
+                id: 1
                 filters:
-                  conjunction: or
-                  items:
-                    - filter: filter:tasks:id
-                      operator: greater
-                      type: Number
-                      value: 123
-                ordering:
-                  - tasks:agreement
+                  - id: 1
+                    column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                key: value
+              ordering:
+                key: value
+              order: 1
+              selected_items:
+                key: value
+              user: 1
               project: 1
       audiences:
         - internal
@@ -448,345 +430,5 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
-  ApiDmViewsUpdateResponseDataFiltersConjunction:
-    enum:
-      - or
-      - and
-    docs: >-
-      Logical conjunction for the filters. This conjunction (either "or" or
-      "and") will be applied to all items in the filters list. It is not
-      possible to combine "or" and "and" within one list of filters. All filters
-      will be either combined with "or" or with "and", but not a mix of both.
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
-  ApiDmViewsUpdateResponseDataFiltersItemsItemFilter:
-    enum:
-      - value: filter:tasks:agreement
-        name: FilterTasksAgreement
-      - value: filter:tasks:annotations_results
-        name: FilterTasksAnnotationsResults
-      - value: filter:tasks:annotators
-        name: FilterTasksAnnotators
-      - value: filter:tasks:cancelled_annotations
-        name: FilterTasksCancelledAnnotations
-      - value: filter:tasks:comments
-        name: FilterTasksComments
-      - value: filter:tasks:completed_at
-        name: FilterTasksCompletedAt
-      - value: filter:tasks:created_at
-        name: FilterTasksCreatedAt
-      - value: filter:tasks:file_upload
-        name: FilterTasksFileUpload
-      - value: filter:tasks:ground_truth
-        name: FilterTasksGroundTruth
-      - value: filter:tasks:id
-        name: FilterTasksId
-      - value: filter:tasks:inner_id
-        name: FilterTasksInnerId
-      - value: filter:tasks:predictions_model_versions
-        name: FilterTasksPredictionsModelVersions
-      - value: filter:tasks:predictions_results
-        name: FilterTasksPredictionsResults
-      - value: filter:tasks:predictions_score
-        name: FilterTasksPredictionsScore
-      - value: filter:tasks:reviewed
-        name: FilterTasksReviewed
-      - value: filter:tasks:reviewers
-        name: FilterTasksReviewers
-      - value: filter:tasks:reviews_accepted
-        name: FilterTasksReviewsAccepted
-      - value: filter:tasks:reviews_rejected
-        name: FilterTasksReviewsRejected
-      - value: filter:tasks:total_annotations
-        name: FilterTasksTotalAnnotations
-      - value: filter:tasks:total_predictions
-        name: FilterTasksTotalPredictions
-      - value: filter:tasks:unresolved_comment_count
-        name: FilterTasksUnresolvedCommentCount
-      - value: filter:tasks:updated_at
-        name: FilterTasksUpdatedAt
-    docs: >-
-      Filter identifier, it should start with `filter:tasks:` prefix, e.g.
-      `filter:tasks:agreement`. For `task.data` fields it may look like
-      `filter:tasks:data.field_name`. If you need more info about columns, check
-      the [Get data manager
-      columns](#tag/Data-Manager/operation/api_dm_columns_list) API endpoint.
-      Possible values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement
-      for annotation results for a specific task (Enterprise
-      only)</li><br><li>`filter:tasks:annotations_results`<br> (String)
-      Annotation results for the tasks</li><br><li>`filter:tasks:annotators`<br>
-      (List) Annotators that completed the task (Community). Can include
-      assigned annotators (Enterprise only). Important note: the filter `type`
-      should be List, but the filter `value` is
-      integer</li><br><li>`filter:tasks:cancelled_annotations`<br> (Number)
-      Number of cancelled or skipped annotations for the
-      task</li><br><li>`filter:tasks:comments`<br> (Number) Number of comments
-      in a task</li><br><li>`filter:tasks:completed_at`<br> (Datetime) Time when
-      a task was fully annotated</li><br><li>`filter:tasks:created_at`<br>
-      (Datetime) Time the task was created
-      at</li><br><li>`filter:tasks:file_upload`<br> (String) Name of the file
-      uploaded to create the tasks</li><br><li>`filter:tasks:ground_truth`<br>
-      (Boolean) Ground truth status of the
-      tasks</li><br><li>`filter:tasks:id`<br> (Number) Task
-      ID</li><br><li>`filter:tasks:inner_id`<br> (Number) Task Inner ID, it
-      starts from 1 for all
-      projects</li><br><li>`filter:tasks:predictions_model_versions`<br>
-      (String) Model version used for the
-      predictions</li><br><li>`filter:tasks:predictions_results`<br> (String)
-      Prediction results for the
-      tasks</li><br><li>`filter:tasks:predictions_score`<br> (Number) Prediction
-      score for the task</li><br><li>`filter:tasks:reviewed`<br> (Boolean)
-      Whether the tasks have been reviewed (Enterprise
-      only)</li><br><li>`filter:tasks:reviewers`<br> (String) Reviewers that
-      reviewed the task, or assigned reviewers (Enterprise only). Important
-      note: the filter `type` should be List, but the filter `value` is
-      integer</li><br><li>`filter:tasks:reviews_accepted`<br> (Number) Number of
-      annotations accepted for a task in review (Enterprise
-      only)</li><br><li>`filter:tasks:reviews_rejected`<br> (Number) Number of
-      annotations rejected for a task in review (Enterprise
-      only)</li><br><li>`filter:tasks:total_annotations`<br> (Number) Total
-      number of annotations on a
-      task</li><br><li>`filter:tasks:total_predictions`<br> (Number) Total
-      number of predictions for the
-      task</li><br><li>`filter:tasks:unresolved_comment_count`<br> (Number)
-      Number of unresolved comments in a
-      task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the task
-      was updated at (e.g. new annotation was created, review added, etc)</li>
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
-  ApiDmViewsUpdateResponseDataFiltersItemsItemOperator:
-    enum:
-      - contains
-      - ends_with
-      - equal
-      - exists
-      - greater
-      - greater_or_equal
-      - in
-      - less
-      - less_or_equal
-      - not_contains
-      - not_equal
-      - not_exists
-      - not_in
-      - starts_with
-    docs: >-
-      Filter operator. Possible values:<br><li>`contains`<br>
-      Contains</li><br><li>`ends_with`<br> Ends with</li><br><li>`equal`<br>
-      Equal to</li><br><li>`exists`<br> Exists</li><br><li>`greater`<br> Greater
-      than</li><br><li>`greater_or_equal`<br> Greater than or equal
-      to</li><br><li>`in`<br> Is between min and max values, so the filter
-      `value` should be e.g. `{"min": 1, "max": 7}`</li><br><li>`less`<br> Less
-      than</li><br><li>`less_or_equal`<br> Less than or equal
-      to</li><br><li>`not_contains`<br> Does not
-      contain</li><br><li>`not_equal`<br> Not equal
-      to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is
-      not between min and max values, so the filter `value` should be e.g.
-      `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
-  ApiDmViewsUpdateResponseDataFiltersItemsItemValue:
-    discriminated: false
-    docs: Value to filter by
-    union:
-      - type: string
-        docs: String
-      - type: integer
-        docs: Integer
-      - type: float
-        docs: Float
-      - type: boolean
-        docs: Boolean
-      - type: map<string, unknown>
-        docs: List of strings or integers
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ApiDmViewsUpdateResponseDataFiltersItemsItem:
-    properties:
-      filter:
-        type: ApiDmViewsUpdateResponseDataFiltersItemsItemFilter
-        docs: >-
-          Filter identifier, it should start with `filter:tasks:` prefix, e.g.
-          `filter:tasks:agreement`. For `task.data` fields it may look like
-          `filter:tasks:data.field_name`. If you need more info about columns,
-          check the [Get data manager
-          columns](#tag/Data-Manager/operation/api_dm_columns_list) API
-          endpoint. Possible values:<br><li>`filter:tasks:agreement`<br>
-          (Number) Agreement for annotation results for a specific task
-          (Enterprise only)</li><br><li>`filter:tasks:annotations_results`<br>
-          (String) Annotation results for the
-          tasks</li><br><li>`filter:tasks:annotators`<br> (List) Annotators that
-          completed the task (Community). Can include assigned annotators
-          (Enterprise only). Important note: the filter `type` should be List,
-          but the filter `value` is
-          integer</li><br><li>`filter:tasks:cancelled_annotations`<br> (Number)
-          Number of cancelled or skipped annotations for the
-          task</li><br><li>`filter:tasks:comments`<br> (Number) Number of
-          comments in a task</li><br><li>`filter:tasks:completed_at`<br>
-          (Datetime) Time when a task was fully
-          annotated</li><br><li>`filter:tasks:created_at`<br> (Datetime) Time
-          the task was created at</li><br><li>`filter:tasks:file_upload`<br>
-          (String) Name of the file uploaded to create the
-          tasks</li><br><li>`filter:tasks:ground_truth`<br> (Boolean) Ground
-          truth status of the tasks</li><br><li>`filter:tasks:id`<br> (Number)
-          Task ID</li><br><li>`filter:tasks:inner_id`<br> (Number) Task Inner
-          ID, it starts from 1 for all
-          projects</li><br><li>`filter:tasks:predictions_model_versions`<br>
-          (String) Model version used for the
-          predictions</li><br><li>`filter:tasks:predictions_results`<br>
-          (String) Prediction results for the
-          tasks</li><br><li>`filter:tasks:predictions_score`<br> (Number)
-          Prediction score for the task</li><br><li>`filter:tasks:reviewed`<br>
-          (Boolean) Whether the tasks have been reviewed (Enterprise
-          only)</li><br><li>`filter:tasks:reviewers`<br> (String) Reviewers that
-          reviewed the task, or assigned reviewers (Enterprise only). Important
-          note: the filter `type` should be List, but the filter `value` is
-          integer</li><br><li>`filter:tasks:reviews_accepted`<br> (Number)
-          Number of annotations accepted for a task in review (Enterprise
-          only)</li><br><li>`filter:tasks:reviews_rejected`<br> (Number) Number
-          of annotations rejected for a task in review (Enterprise
-          only)</li><br><li>`filter:tasks:total_annotations`<br> (Number) Total
-          number of annotations on a
-          task</li><br><li>`filter:tasks:total_predictions`<br> (Number) Total
-          number of predictions for the
-          task</li><br><li>`filter:tasks:unresolved_comment_count`<br> (Number)
-          Number of unresolved comments in a
-          task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the
-          task was updated at (e.g. new annotation was created, review added,
-          etc)</li>
-      operator:
-        type: ApiDmViewsUpdateResponseDataFiltersItemsItemOperator
-        docs: >-
-          Filter operator. Possible values:<br><li>`contains`<br>
-          Contains</li><br><li>`ends_with`<br> Ends with</li><br><li>`equal`<br>
-          Equal to</li><br><li>`exists`<br> Exists</li><br><li>`greater`<br>
-          Greater than</li><br><li>`greater_or_equal`<br> Greater than or equal
-          to</li><br><li>`in`<br> Is between min and max values, so the filter
-          `value` should be e.g. `{"min": 1, "max": 7}`</li><br><li>`less`<br>
-          Less than</li><br><li>`less_or_equal`<br> Less than or equal
-          to</li><br><li>`not_contains`<br> Does not
-          contain</li><br><li>`not_equal`<br> Not equal
-          to</li><br><li>`not_exists`<br> Does not
-          exist</li><br><li>`not_in`<br> Is not between min and max values, so
-          the filter `value` should be e.g. `{"min": 1, "max":
-          7}`</li><br><li>`starts_with`<br> Starts with</li>
-      type:
-        type: string
-        docs: >-
-          Type of the filter value. Possible values:<br><li>`Boolean`<br>
-          Boolean</li><br><li>`Datetime`<br> Datetime string in
-          `strftime('%Y-%m-%dT%H:%M:%S.%fZ')` format</li><br><li>`List`<br> List
-          of items</li><br><li>`Number`<br> Float or
-          Integer</li><br><li>`String`<br> String</li><br><li>`Unknown`<br>
-          Unknown is explicitly converted to string format</li>
-      value:
-        type: ApiDmViewsUpdateResponseDataFiltersItemsItemValue
-        docs: Value to filter by
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ApiDmViewsUpdateResponseDataFilters:
-    docs: >-
-      Filters to apply on tasks. You can use [the helper class `Filters` from
-      this page](https://labelstud.io/sdk/data_manager.html) to create Data
-      Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter":
-      "filter:tasks:completed_at", "operator": "greater", "type": "Datetime",
-      "value": "2021-01-01T00:00:00.000Z"}]}`
-    properties:
-      conjunction:
-        type: ApiDmViewsUpdateResponseDataFiltersConjunction
-        docs: >-
-          Logical conjunction for the filters. This conjunction (either "or" or
-          "and") will be applied to all items in the filters list. It is not
-          possible to combine "or" and "and" within one list of filters. All
-          filters will be either combined with "or" or with "and", but not a mix
-          of both.
-      items:
-        docs: List of filter items
-        type: list<ApiDmViewsUpdateResponseDataFiltersItemsItem>
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ApiDmViewsUpdateResponseDataOrderingItem:
-    enum:
-      - value: tasks:agreement
-        name: TasksAgreement
-      - value: tasks:annotations_results
-        name: TasksAnnotationsResults
-      - value: tasks:annotators
-        name: TasksAnnotators
-      - value: tasks:cancelled_annotations
-        name: TasksCancelledAnnotations
-      - value: tasks:comments
-        name: TasksComments
-      - value: tasks:completed_at
-        name: TasksCompletedAt
-      - value: tasks:created_at
-        name: TasksCreatedAt
-      - value: tasks:file_upload
-        name: TasksFileUpload
-      - value: tasks:ground_truth
-        name: TasksGroundTruth
-      - value: tasks:id
-        name: TasksId
-      - value: tasks:inner_id
-        name: TasksInnerId
-      - value: tasks:predictions_model_versions
-        name: TasksPredictionsModelVersions
-      - value: tasks:predictions_results
-        name: TasksPredictionsResults
-      - value: tasks:predictions_score
-        name: TasksPredictionsScore
-      - value: tasks:reviewed
-        name: TasksReviewed
-      - value: tasks:reviewers
-        name: TasksReviewers
-      - value: tasks:reviews_accepted
-        name: TasksReviewsAccepted
-      - value: tasks:reviews_rejected
-        name: TasksReviewsRejected
-      - value: tasks:total_annotations
-        name: TasksTotalAnnotations
-      - value: tasks:total_predictions
-        name: TasksTotalPredictions
-      - value: tasks:unresolved_comment_count
-        name: TasksUnresolvedCommentCount
-      - value: tasks:updated_at
-        name: TasksUpdatedAt
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
-  ApiDmViewsUpdateResponseData:
-    docs: Custom view data
-    properties:
-      filters:
-        type: optional<ApiDmViewsUpdateResponseDataFilters>
-        docs: >-
-          Filters to apply on tasks. You can use [the helper class `Filters`
-          from this page](https://labelstud.io/sdk/data_manager.html) to create
-          Data Manager Filters.<br>Example: `{"conjunction": "or", "items":
-          [{"filter": "filter:tasks:completed_at", "operator": "greater",
-          "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-      ordering:
-        type: optional<list<ApiDmViewsUpdateResponseDataOrderingItem>>
-        docs: >-
-          List of fields to order by. Fields are similar to filters but without
-          the `filter:` prefix. To reverse the order, add a minus sign before
-          the field name, e.g. `-tasks:created_at`.
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ApiDmViewsUpdateResponse:
-    properties:
-      data:
-        type: optional<ApiDmViewsUpdateResponseData>
-        docs: Custom view data
-      project:
-        type: optional<integer>
-        docs: Project ID
-    source:
-      openapi: openapi/openapi.yaml
+imports:
+  root: __package__.yml

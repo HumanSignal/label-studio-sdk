@@ -8,175 +8,277 @@ service:
       path: /api/comments/
       method: GET
       auth: true
-      docs: |
-
-        Get a list of comments for a specific project.
+      docs: List all comments for a specific annotation ID.
       source:
         openapi: openapi/openapi.yaml
       display-name: List comments
       request:
         name: CommentsListRequest
         query-parameters:
-          project:
+          annotation: optional<integer>
+          annotators:
             type: optional<integer>
-            docs: Project ID
-          expand_created_by:
-            type: optional<boolean>
-            docs: Expand the created_by field with object instead of ID
-          annotation:
+            allow-multiple: true
+          draft: optional<integer>
+          expand_created_by: optional<boolean>
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+          projects:
             type: optional<integer>
-            docs: Annotation ID
+            allow-multiple: true
       response:
-        docs: ''
-        type: list<root.Comment>
+        docs: List of comments
+        type: list<root.MaybeExpandedComment>
       examples:
         - response:
             body:
               - id: 1
+                region_ref:
+                  key: value
+                classifications:
+                  key: value
                 text: text
-                project: 1
-                task: 1
-                annotation: 1
-                created_by: 1
                 created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
                 is_resolved: true
                 resolved_at: '2024-01-15T09:30:00Z'
+                project: 1
+                task: 1
+                draft: 1
+                annotation: 1
+                created_by: 1
       audiences:
         - public
     create:
       path: /api/comments/
       method: POST
       auth: true
-      docs: |
-
-        Create a new comment.
+      docs: Create a comment for a specific annotation ID.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create comment
       request:
+        body: root.CommentRequest
+        query-parameters:
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
         name: CommentsCreateRequest
-        body:
-          properties:
-            annotation: optional<integer>
-            project: optional<integer>
-            text: optional<string>
-            is_resolved: optional<boolean>
         content-type: application/json
       response:
         docs: ''
-        type: root.Comment
+        type: root.MaybeExpandedComment
       examples:
         - request: {}
           response:
             body:
               id: 1
+              region_ref:
+                key: value
+              classifications:
+                key: value
               text: text
-              project: 1
-              task: 1
-              annotation: 1
-              created_by: 1
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               is_resolved: true
               resolved_at: '2024-01-15T09:30:00Z'
+              project: 1
+              task: 1
+              draft: 1
+              annotation: 1
+              created_by: 1
       audiences:
         - public
     get:
-      path: /api/comments/{id}
+      path: /api/comments/{id}/
       method: GET
       auth: true
-      docs: |
-
-        Get a specific comment.
+      docs: Retrieve a specific comment by ID for an annotation.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Comment ID
+        id: string
       display-name: Get comment
+      request:
+        name: CommentsGetRequest
+        query-parameters:
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
       response:
         docs: ''
-        type: root.Comment
+        type: root.MaybeExpandedComment
       examples:
         - path-parameters:
-            id: 1
+            id: id
           response:
             body:
               id: 1
+              region_ref:
+                key: value
+              classifications:
+                key: value
               text: text
-              project: 1
-              task: 1
-              annotation: 1
-              created_by: 1
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               is_resolved: true
               resolved_at: '2024-01-15T09:30:00Z'
+              project: 1
+              task: 1
+              draft: 1
+              annotation: 1
+              created_by: 1
       audiences:
         - public
-    delete:
-      path: /api/comments/{id}
-      method: DELETE
+    api_comments_update:
+      path: /api/comments/{id}/
+      method: PUT
       auth: true
-      docs: |
-
-        Delete a specific comment.
+      docs: Overwrite a specific comment by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Comment ID
-      display-name: Delete comment
-      examples:
-        - path-parameters:
-            id: 1
-      audiences:
-        - public
-    update:
-      path: /api/comments/{id}
-      method: PATCH
-      auth: true
-      docs: |
-
-        Update a specific comment.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: Comment ID
-      display-name: Update comment
+        id: string
+      display-name: Put comment
       request:
-        name: CommentsUpdateRequest
-        body:
-          properties:
-            annotation: optional<integer>
-            project: optional<integer>
-            text: optional<string>
-            is_resolved: optional<boolean>
+        body: root.CommentRequest
+        query-parameters:
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
+        name: ApiCommentsUpdateRequest
         content-type: application/json
       response:
         docs: ''
         type: root.Comment
       examples:
         - path-parameters:
-            id: 1
+            id: id
           request: {}
           response:
             body:
               id: 1
+              region_ref:
+                key: value
+              classifications:
+                key: value
               text: text
-              project: 1
-              task: 1
-              annotation: 1
-              created_by: 1
               created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               is_resolved: true
               resolved_at: '2024-01-15T09:30:00Z'
+              project: 1
+              task: 1
+              draft: 1
+              annotation: 1
+              created_by: 1
+      audiences:
+        - internal
+    delete:
+      path: /api/comments/{id}/
+      method: DELETE
+      auth: true
+      docs: Delete a comment by ID
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+      display-name: Delete comment
+      request:
+        name: CommentsDeleteRequest
+        query-parameters:
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
+      examples:
+        - path-parameters:
+            id: id
+      audiences:
+        - public
+    update:
+      path: /api/comments/{id}/
+      method: PATCH
+      auth: true
+      docs: Update a specific comment by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+      display-name: Update comment
+      request:
+        name: PatchedCommentRequest
+        query-parameters:
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
+        body:
+          properties:
+            region_ref: optional<unknown>
+            classifications: optional<unknown>
+            text:
+              type: optional<string>
+              docs: Reviewer or annotator comment
+            is_resolved:
+              type: optional<boolean>
+              docs: True if the comment is resolved
+            draft: optional<integer>
+            annotation: optional<integer>
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.MaybeExpandedComment
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+          response:
+            body:
+              id: 1
+              region_ref:
+                key: value
+              classifications:
+                key: value
+              text: text
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              is_resolved: true
+              resolved_at: '2024-01-15T09:30:00Z'
+              project: 1
+              task: 1
+              draft: 1
+              annotation: 1
+              created_by: 1
+      audiences:
+        - public
+    export:
+      path: /api/comments/export/
+      method: GET
+      auth: true
+      docs: Export comments to CSV file
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Export comments to CSV
+      request:
+        name: CommentsExportRequest
+        query-parameters:
+          annotators:
+            type: optional<string>
+            docs: Comma-separated list of annotator user IDs
+          expand_created_by:
+            type: optional<boolean>
+            docs: Expand the created_by field
+          projects:
+            type: optional<string>
+            docs: Comma-separated list of project IDs
+          tz:
+            type: optional<string>
+            docs: >-
+              Timezone in which to export the data. Format IANA timezone name,
+              e.g. "America/New_York"
+      response:
+        docs: CSV file with comments
+        type: file
       audiences:
         - public
   source:

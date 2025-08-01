@@ -18,7 +18,6 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "title": "title",
             "auth_method": "NONE",
             "basic_auth_user": "basic_auth_user",
-            "basic_auth_pass": "basic_auth_pass",
             "basic_auth_pass_is_set": "basic_auth_pass_is_set",
             "description": "description",
             "extra_params": {"key": "value"},
@@ -43,10 +42,9 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "title": None,
                 "auth_method": None,
                 "basic_auth_user": None,
-                "basic_auth_pass": None,
                 "basic_auth_pass_is_set": None,
                 "description": None,
-                "extra_params": ("dict", {0: (None, None)}),
+                "extra_params": None,
                 "model_version": None,
                 "timeout": None,
                 "created_at": "datetime",
@@ -65,38 +63,6 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "url": "url",
-        "project": 1,
-        "is_interactive": True,
-        "title": "title",
-        "description": "description",
-        "auth_method": "NONE",
-        "basic_auth_user": "basic_auth_user",
-        "basic_auth_pass": "basic_auth_pass",
-        "extra_params": {"key": "value"},
-        "timeout": 1,
-    }
-    expected_types: typing.Any = {
-        "url": None,
-        "project": "integer",
-        "is_interactive": None,
-        "title": None,
-        "description": None,
-        "auth_method": None,
-        "basic_auth_user": None,
-        "basic_auth_pass": None,
-        "extra_params": ("dict", {0: (None, None)}),
-        "timeout": "integer",
-    }
-    response = client.ml.create()
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.ml.create()
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {
         "id": 1,
         "state": "CO",
         "readable_state": "readable_state",
@@ -106,7 +72,6 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "title": "title",
         "auth_method": "NONE",
         "basic_auth_user": "basic_auth_user",
-        "basic_auth_pass": "basic_auth_pass",
         "basic_auth_pass_is_set": "basic_auth_pass_is_set",
         "description": "description",
         "extra_params": {"key": "value"},
@@ -127,10 +92,57 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "title": None,
         "auth_method": None,
         "basic_auth_user": None,
-        "basic_auth_pass": None,
         "basic_auth_pass_is_set": None,
         "description": None,
-        "extra_params": ("dict", {0: (None, None)}),
+        "extra_params": None,
+        "model_version": None,
+        "timeout": None,
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "auto_update": None,
+        "project": "integer",
+    }
+    response = client.ml.create()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.ml.create()
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "id": 1,
+        "state": "CO",
+        "readable_state": "readable_state",
+        "is_interactive": True,
+        "url": "url",
+        "error_message": "error_message",
+        "title": "title",
+        "auth_method": "NONE",
+        "basic_auth_user": "basic_auth_user",
+        "basic_auth_pass_is_set": "basic_auth_pass_is_set",
+        "description": "description",
+        "extra_params": {"key": "value"},
+        "model_version": "model_version",
+        "timeout": 1.1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "updated_at": "2024-01-15T09:30:00Z",
+        "auto_update": True,
+        "project": 1,
+    }
+    expected_types: typing.Any = {
+        "id": "integer",
+        "state": None,
+        "readable_state": None,
+        "is_interactive": None,
+        "url": None,
+        "error_message": None,
+        "title": None,
+        "auth_method": None,
+        "basic_auth_user": None,
+        "basic_auth_pass_is_set": None,
+        "description": None,
+        "extra_params": None,
         "model_version": None,
         "timeout": None,
         "created_at": "datetime",
@@ -160,28 +172,44 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "url": "url",
-        "project": 1,
+        "id": 1,
+        "state": "CO",
+        "readable_state": "readable_state",
         "is_interactive": True,
+        "url": "url",
+        "error_message": "error_message",
         "title": "title",
-        "description": "description",
         "auth_method": "NONE",
         "basic_auth_user": "basic_auth_user",
-        "basic_auth_pass": "basic_auth_pass",
+        "basic_auth_pass_is_set": "basic_auth_pass_is_set",
+        "description": "description",
         "extra_params": {"key": "value"},
-        "timeout": 1,
+        "model_version": "model_version",
+        "timeout": 1.1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "updated_at": "2024-01-15T09:30:00Z",
+        "auto_update": True,
+        "project": 1,
     }
     expected_types: typing.Any = {
-        "url": None,
-        "project": "integer",
+        "id": "integer",
+        "state": None,
+        "readable_state": None,
         "is_interactive": None,
+        "url": None,
+        "error_message": None,
         "title": None,
-        "description": None,
         "auth_method": None,
         "basic_auth_user": None,
-        "basic_auth_pass": None,
-        "extra_params": ("dict", {0: (None, None)}),
-        "timeout": "integer",
+        "basic_auth_pass_is_set": None,
+        "description": None,
+        "extra_params": None,
+        "model_version": None,
+        "timeout": None,
+        "created_at": "datetime",
+        "updated_at": "datetime",
+        "auto_update": None,
+        "project": "integer",
     }
     response = client.ml.update(id=1)
     validate_response(response, expected_response, expected_types)
@@ -217,13 +245,10 @@ async def test_train(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 
 async def test_list_model_versions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.ml.list_model_versions(id="id")  # type: ignore[func-returns-value]
-        is None
-    )
+    expected_response: typing.Any = {"versions": ["versions"], "message": "message"}
+    expected_types: typing.Any = {"versions": ("list", {0: None}), "message": None}
+    response = client.ml.list_model_versions(id=1)
+    validate_response(response, expected_response, expected_types)
 
-    assert (
-        await async_client.ml.list_model_versions(id="id")  # type: ignore[func-returns-value]
-        is None
-    )
+    async_response = await async_client.ml.list_model_versions(id=1)
+    validate_response(async_response, expected_response, expected_types)
