@@ -145,3 +145,235 @@ NO_VALUE_CONF = f"""
   </Labels>
 </View>
 """
+
+# Prediction validation test configurations
+PREDICTION_CHOICES_CONFIG = """
+<View>
+  <Text name="text" value="$text"/>
+  <Choices name="choices" toName="text">
+    <Choice value="choice1"/>
+    <Choice value="choice2"/>
+    <Choice value="choice3"/>
+  </Choices>
+</View>
+"""
+
+PREDICTION_LABELS_CONFIG = """
+<View>
+  <Text name="text" value="$text"/>
+  <Labels name="labels" toName="text">
+    <Label value="label1" background="red"/>
+    <Label value="label2" background="blue"/>
+    <Label value="label3" background="green"/>
+  </Labels>
+</View>
+"""
+
+PREDICTION_BRUSH_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <Brush name="brush" toName="image" strokeWidth="5"/>
+</View>
+"""
+
+PREDICTION_BRUSH_LABELS_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <BrushLabels name="brushlabels" toName="image" strokeWidth="5">
+    <Label value="brush1" background="red"/>
+    <Label value="brush2" background="blue"/>
+  </BrushLabels>
+</View>
+"""
+
+PREDICTION_ELLIPSE_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <Ellipse name="ellipse" toName="image"/>
+</View>
+"""
+
+PREDICTION_ELLIPSE_LABELS_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <EllipseLabels name="ellipselabels" toName="image">
+    <Label value="ellipse1" background="red"/>
+    <Label value="ellipse2" background="blue"/>
+  </EllipseLabels>
+</View>
+"""
+
+PREDICTION_KEYPOINT_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <KeyPoint name="keypoint" toName="image"/>
+</View>
+"""
+
+PREDICTION_KEYPOINT_LABELS_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <KeyPointLabels name="keypointlabels" toName="image">
+    <Label value="keypoint1" background="red"/>
+    <Label value="keypoint2" background="blue"/>
+  </KeyPointLabels>
+</View>
+"""
+
+PREDICTION_POLYGON_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <Polygon name="polygon" toName="image"/>
+</View>
+"""
+
+PREDICTION_POLYGON_LABELS_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <PolygonLabels name="polygonlabels" toName="image">
+    <Label value="polygon1" background="red"/>
+    <Label value="polygon2" background="blue"/>
+  </PolygonLabels>
+</View>
+"""
+
+PREDICTION_RECTANGLE_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <Rectangle name="rectangle" toName="image"/>
+</View>
+"""
+
+PREDICTION_RECTANGLE_LABELS_CONFIG = """
+<View>
+  <Image name="image" value="$image"/>
+  <RectangleLabels name="rectanglelabels" toName="image">
+    <Label value="rectangle1" background="red"/>
+    <Label value="rectangle2" background="blue"/>
+  </RectangleLabels>
+</View>
+"""
+
+PREDICTION_VIDEO_RECTANGLE_CONFIG = """
+<View>
+  <Video name="video" value="$video"/>
+  <VideoRectangle name="videorectangle" toName="video"/>
+</View>
+"""
+
+PREDICTION_NUMBER_CONFIG = """
+<View>
+  <Text name="text" value="$text"/>
+  <Number name="number" toName="text" min="0" max="100"/>
+</View>
+"""
+
+PREDICTION_DATETIME_CONFIG = """
+<View>
+  <Text name="text" value="$text"/>
+  <DateTime name="datetime" toName="text"/>
+</View>
+"""
+
+PREDICTION_HYPERTEXT_LABELS_CONFIG = """
+<View>
+  <HyperText name="hypertext" value="$hypertext"/>
+  <HyperTextLabels name="hypertextlabels" toName="hypertext">
+    <Label value="html1" background="red"/>
+    <Label value="html2" background="blue"/>
+  </HyperTextLabels>
+</View>
+"""
+
+PREDICTION_PAIRWISE_CONFIG = """
+<View>
+  <Text name="text1" value="$text1"/>
+  <Text name="text2" value="$text2"/>
+  <Pairwise name="pairwise" toName="text1,text2"/>
+</View>
+"""
+
+PREDICTION_PARAGRAPH_LABELS_CONFIG = """
+<View>
+  <Paragraphs name="paragraphs" value="$paragraphs"/>
+  <ParagraphLabels name="paragraphlabels" toName="paragraphs">
+    <Label value="para1" background="red"/>
+    <Label value="para2" background="blue"/>
+  </ParagraphLabels>
+</View>
+"""
+
+PREDICTION_RANKER_CONFIG = """
+<View>
+  <Text name="text" value="$text"/>
+  <Ranker name="ranker" toName="text">
+    <Choice value="rank1"/>
+    <Choice value="rank2"/>
+    <Choice value="rank3"/>
+  </Ranker>
+</View>
+"""
+
+PREDICTION_RATING_CONFIG = """
+<View>
+  <Text name="text" value="$text"/>
+  <Rating name="rating" toName="text" maxRating="5"/>
+</View>
+"""
+
+PREDICTION_RELATIONS_CONFIG = """
+<View>
+  <Text name="text" value="$text"/>
+  <Labels name="labels" toName="text">
+    <Label value="label1" background="red"/>
+    <Label value="label2" background="blue"/>
+  </Labels>
+  <Relations name="relations" toName="text"/>
+</View>
+"""
+
+PREDICTION_TAXONOMY_CONFIG = """
+<View>
+  <Text name="text" value="$text"/>
+  <Taxonomy name="taxonomy" toName="text">
+    <Choice value="category1">
+      <Choice value="subcategory1"/>
+      <Choice value="subcategory2"/>
+    </Choice>
+    <Choice value="category2">
+      <Choice value="subcategory3"/>
+    </Choice>
+  </Taxonomy>
+</View>
+"""
+
+PREDICTION_TEXTAREA_CONFIG = """
+<View>
+  <Text name="text" value="$text"/>
+  <TextArea name="textarea" toName="text"/>
+</View>
+"""
+
+PREDICTION_TIMESERIES_LABELS_CONFIG = """
+<View>
+  <TimeSeries name="timeseries" value="$timeseries"/>
+  <TimeSeriesLabels name="timeserieslabels" toName="timeseries">
+    <Label value="ts1" background="red"/>
+    <Label value="ts2" background="blue"/>
+  </TimeSeriesLabels>
+</View>
+"""
+
+PREDICTION_COMPLEX_CONFIG = """
+<View>
+  <Text name="text" value="$text"/>
+  <Choices name="choices" toName="text">
+    <Choice value="choice1"/>
+    <Choice value="choice2"/>
+  </Choices>
+  <Labels name="labels" toName="text">
+    <Label value="label1" background="red"/>
+    <Label value="label2" background="blue"/>
+  </Labels>
+</View>
+"""

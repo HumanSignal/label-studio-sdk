@@ -912,6 +912,25 @@ class RatingTag(ControlTag):
     _value_class: Type[RatingValue] = RatingValue
     _label_attr_name: str = "rating"
 
+    def _validate_value_labels(self, value):
+        """Override to handle rating values correctly - ratings are not labels"""
+        if self._label_attr_name not in value:
+            return False
+
+        # For ratings, we just check that the rating value exists and is valid
+        # The actual validation is done by the RatingValue model
+        rating_value = value.get(self._label_attr_name)
+        if rating_value is None:
+            return False
+
+        # Check if rating is within valid range (0 to maxRating)
+        max_rating = int(self.attr.get('maxRating', 5))
+        try:
+            rating_int = int(rating_value)
+            return 0 <= rating_int <= max_rating
+        except (ValueError, TypeError):
+            return False
+
     def to_json_schema(self):
         """
         Converts the current RatingTag instance into a JSON Schema.
