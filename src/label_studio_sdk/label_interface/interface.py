@@ -895,11 +895,28 @@ class LabelInterface:
         # Validate the value using control's validate_value method
         try:
             if not control.validate_value(region["value"]):
-                errors.append(f"Region {region_index}: Invalid value for control '{region['from_name']}'")
+                # Get invalid value and valid values for better error message
+                invalid_value = region["value"]
+                valid_values = self._get_valid_values_for_control(control)
+                errors.append(f"Region {region_index}: Invalid value for control '{region['from_name']}'. Got: {invalid_value}. Valid options: {valid_values}")
         except Exception as e:
             errors.append(f"Region {region_index}: Error validating value for control '{region['from_name']}': {str(e)}")
 
         return len(errors) == 0, errors
+
+    def _get_valid_values_for_control(self, control):
+        """Get valid values for a control tag to provide better error messages."""
+        try:
+            if hasattr(control, 'labels') and control.labels:
+                # For tags with predefined labels (Choices, Labels, etc.)
+                return f"{control.labels}"
+            elif hasattr(control, '_value_class'):
+                # For tags with value classes, show the expected structure
+                return f"expected structure: {control._value_class.__name__}"
+            else:
+                return "no specific validation rules"
+        except Exception:
+            return "unknown validation rules"
 
     def validate_region(self, region, return_errors=False, region_index=0):
         """Validates a region from the annotation against the current
