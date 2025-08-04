@@ -5,7 +5,7 @@ from ..core.client_wrapper import SyncClientWrapper
 from .members.client import MembersClient
 from ..core.request_options import RequestOptions
 from ..types.workspace import Workspace
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.jsonable_encoder import jsonable_encoder
@@ -21,17 +21,24 @@ class WorkspacesClient:
         self._client_wrapper = client_wrapper
         self.members = MembersClient(client_wrapper=self._client_wrapper)
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Workspace]:
+    def list(
+        self,
+        *,
+        is_personal: typing.Optional[bool] = None,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[Workspace]:
         """
-
-        List all workspaces for your organization.
-
-        Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
-
-        For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+        List all workspaces for your organization. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 
         Parameters
         ----------
+        is_personal : typing.Optional[bool]
+            Workspace is a personal user workspace.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -46,19 +53,24 @@ class WorkspacesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.workspaces.list()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/workspaces",
+            "api/workspaces/",
             method="GET",
+            params={
+                "is_personal": is_personal,
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Workspace],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Workspace],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -71,41 +83,31 @@ class WorkspacesClient:
     def create(
         self,
         *,
-        title: typing.Optional[str] = OMIT,
+        title: str,
         description: typing.Optional[str] = OMIT,
-        is_public: typing.Optional[bool] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-
-        Create a new workspace.
-
-        Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
-
-        For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+        Create a new workspace. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 
         Parameters
         ----------
-        title : typing.Optional[str]
-            Workspace title
+        title : str
+            Workspace name
 
         description : typing.Optional[str]
             Workspace description
 
-        is_public : typing.Optional[bool]
-            Is workspace public
+        color : typing.Optional[str]
 
         is_personal : typing.Optional[bool]
-            Is workspace personal
-
-        color : typing.Optional[str]
-            Workspace color in HEX format
+            Workspace is a personal user workspace
 
         is_archived : typing.Optional[bool]
-            Is workspace archived
+            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -121,18 +123,20 @@ class WorkspacesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.workspaces.create()
+        client.workspaces.create(
+            title="title",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/workspaces",
+            "api/workspaces/",
             method="POST",
             json={
                 "title": title,
                 "description": description,
-                "is_public": is_public,
-                "is_personal": is_personal,
                 "color": color,
+                "is_personal": is_personal,
                 "is_archived": is_archived,
             },
             headers={
@@ -145,7 +149,7 @@ class WorkspacesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Workspace,
-                    parse_obj_as(
+                    construct_type(
                         type_=Workspace,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -157,13 +161,11 @@ class WorkspacesClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Workspace:
         """
-
-        Get information about a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Retrieve details for a specific workspace by ID.
 
         Parameters
         ----------
         id : int
-            Workspace ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -179,13 +181,14 @@ class WorkspacesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.workspaces.get(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}",
+            f"api/workspaces/{jsonable_encoder(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -193,7 +196,7 @@ class WorkspacesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Workspace,
-                    parse_obj_as(
+                    construct_type(
                         type_=Workspace,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -205,13 +208,11 @@ class WorkspacesClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Delete a specific workspace by ID.
 
         Parameters
         ----------
         id : int
-            Workspace ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -226,13 +227,14 @@ class WorkspacesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.workspaces.delete(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}",
+            f"api/workspaces/{jsonable_encoder(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -250,38 +252,31 @@ class WorkspacesClient:
         *,
         title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        is_public: typing.Optional[bool] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-
-        Update a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Update settings for a specific workspace by ID.
 
         Parameters
         ----------
         id : int
-            Workspace ID
 
         title : typing.Optional[str]
-            Workspace title
+            Workspace name
 
         description : typing.Optional[str]
             Workspace description
 
-        is_public : typing.Optional[bool]
-            Is workspace public
+        color : typing.Optional[str]
 
         is_personal : typing.Optional[bool]
-            Is workspace personal
-
-        color : typing.Optional[str]
-            Workspace color in HEX format
+            Workspace is a personal user workspace
 
         is_archived : typing.Optional[bool]
-            Is workspace archived
+            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -297,20 +292,20 @@ class WorkspacesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.workspaces.update(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}",
+            f"api/workspaces/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
                 "title": title,
                 "description": description,
-                "is_public": is_public,
-                "is_personal": is_personal,
                 "color": color,
+                "is_personal": is_personal,
                 "is_archived": is_archived,
             },
             headers={
@@ -323,7 +318,7 @@ class WorkspacesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Workspace,
-                    parse_obj_as(
+                    construct_type(
                         type_=Workspace,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -339,17 +334,24 @@ class AsyncWorkspacesClient:
         self._client_wrapper = client_wrapper
         self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Workspace]:
+    async def list(
+        self,
+        *,
+        is_personal: typing.Optional[bool] = None,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[Workspace]:
         """
-
-        List all workspaces for your organization.
-
-        Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
-
-        For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+        List all workspaces for your organization. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 
         Parameters
         ----------
+        is_personal : typing.Optional[bool]
+            Workspace is a personal user workspace.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -366,6 +368,7 @@ class AsyncWorkspacesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -376,15 +379,19 @@ class AsyncWorkspacesClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/workspaces",
+            "api/workspaces/",
             method="GET",
+            params={
+                "is_personal": is_personal,
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Workspace],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Workspace],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -397,41 +404,31 @@ class AsyncWorkspacesClient:
     async def create(
         self,
         *,
-        title: typing.Optional[str] = OMIT,
+        title: str,
         description: typing.Optional[str] = OMIT,
-        is_public: typing.Optional[bool] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-
-        Create a new workspace.
-
-        Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization.
-
-        For more information, see [Workspaces in Label Studio](https://docs.humansignal.com/guide/workspaces).
+        Create a new workspace. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 
         Parameters
         ----------
-        title : typing.Optional[str]
-            Workspace title
+        title : str
+            Workspace name
 
         description : typing.Optional[str]
             Workspace description
 
-        is_public : typing.Optional[bool]
-            Is workspace public
+        color : typing.Optional[str]
 
         is_personal : typing.Optional[bool]
-            Is workspace personal
-
-        color : typing.Optional[str]
-            Workspace color in HEX format
+            Workspace is a personal user workspace
 
         is_archived : typing.Optional[bool]
-            Is workspace archived
+            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -449,24 +446,26 @@ class AsyncWorkspacesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.workspaces.create()
+            await client.workspaces.create(
+                title="title",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/workspaces",
+            "api/workspaces/",
             method="POST",
             json={
                 "title": title,
                 "description": description,
-                "is_public": is_public,
-                "is_personal": is_personal,
                 "color": color,
+                "is_personal": is_personal,
                 "is_archived": is_archived,
             },
             headers={
@@ -479,7 +478,7 @@ class AsyncWorkspacesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Workspace,
-                    parse_obj_as(
+                    construct_type(
                         type_=Workspace,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -491,13 +490,11 @@ class AsyncWorkspacesClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Workspace:
         """
-
-        Get information about a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Retrieve details for a specific workspace by ID.
 
         Parameters
         ----------
         id : int
-            Workspace ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -515,6 +512,7 @@ class AsyncWorkspacesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -527,7 +525,7 @@ class AsyncWorkspacesClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}",
+            f"api/workspaces/{jsonable_encoder(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -535,7 +533,7 @@ class AsyncWorkspacesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Workspace,
-                    parse_obj_as(
+                    construct_type(
                         type_=Workspace,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -547,13 +545,11 @@ class AsyncWorkspacesClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Delete a specific workspace by ID.
 
         Parameters
         ----------
         id : int
-            Workspace ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -570,6 +566,7 @@ class AsyncWorkspacesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -582,7 +579,7 @@ class AsyncWorkspacesClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}",
+            f"api/workspaces/{jsonable_encoder(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -600,38 +597,31 @@ class AsyncWorkspacesClient:
         *,
         title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        is_public: typing.Optional[bool] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
         color: typing.Optional[str] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-
-        Update a specific workspace. You will need to provide the workspace ID. You can find this using [List workspaces](list).
+        Update settings for a specific workspace by ID.
 
         Parameters
         ----------
         id : int
-            Workspace ID
 
         title : typing.Optional[str]
-            Workspace title
+            Workspace name
 
         description : typing.Optional[str]
             Workspace description
 
-        is_public : typing.Optional[bool]
-            Is workspace public
+        color : typing.Optional[str]
 
         is_personal : typing.Optional[bool]
-            Is workspace personal
-
-        color : typing.Optional[str]
-            Workspace color in HEX format
+            Workspace is a personal user workspace
 
         is_archived : typing.Optional[bool]
-            Is workspace archived
+            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -649,6 +639,7 @@ class AsyncWorkspacesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -661,14 +652,13 @@ class AsyncWorkspacesClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/workspaces/{jsonable_encoder(id)}",
+            f"api/workspaces/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
                 "title": title,
                 "description": description,
-                "is_public": is_public,
-                "is_personal": is_personal,
                 "color": color,
+                "is_personal": is_personal,
                 "is_archived": is_archived,
             },
             headers={
@@ -681,7 +671,7 @@ class AsyncWorkspacesClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Workspace,
-                    parse_obj_as(
+                    construct_type(
                         type_=Workspace,  # type: ignore
                         object_=_response.json(),
                     ),

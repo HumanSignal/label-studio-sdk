@@ -7,8 +7,65 @@ from ..utilities import validate_response
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = [{"user": {"key": "value"}}]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: {"user": ("dict", {0: (None, None)})}})
+    expected_response: typing.Any = [
+        {
+            "user": {
+                "id": 1,
+                "first_name": "first_name",
+                "last_name": "last_name",
+                "username": "username",
+                "email": "email",
+                "last_activity": "2024-01-15T09:30:00Z",
+                "custom_hotkeys": {"key": "value"},
+                "avatar": "avatar",
+                "initials": "initials",
+                "phone": "phone",
+                "active_organization": 1,
+                "active_organization_meta": "active_organization_meta",
+                "allow_newsletters": True,
+                "date_joined": "2024-01-15T09:30:00Z",
+                "org_membership": [{"role": "role", "active": "active", "organization_id": 1}],
+                "lse_fields": {
+                    "invite_expired": "invite_expired",
+                    "invite_expired_at": "invite_expired_at",
+                    "email_notification_settings": "email_notification_settings",
+                },
+                "pause": "pause",
+            },
+            "workspace": 1,
+        }
+    ]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {
+            0: {
+                "user": {
+                    "id": "integer",
+                    "first_name": None,
+                    "last_name": None,
+                    "username": None,
+                    "email": None,
+                    "last_activity": "datetime",
+                    "custom_hotkeys": None,
+                    "avatar": None,
+                    "initials": None,
+                    "phone": None,
+                    "active_organization": "integer",
+                    "active_organization_meta": None,
+                    "allow_newsletters": None,
+                    "date_joined": "datetime",
+                    "org_membership": ("list", {0: {"role": None, "active": None, "organization_id": "integer"}}),
+                    "lse_fields": {
+                        "invite_expired": None,
+                        "invite_expired_at": None,
+                        "email_notification_settings": None,
+                    },
+                    "pause": None,
+                },
+                "workspace": "integer",
+            }
+        },
+    )
     response = client.workspaces.members.list(id=1)
     validate_response(response, expected_response, expected_types)
 
@@ -17,12 +74,12 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"user": 1}
-    expected_types: typing.Any = {"user": "integer"}
-    response = client.workspaces.members.create(id=1)
+    expected_response: typing.Any = {"user": 1, "workspace": 1}
+    expected_types: typing.Any = {"user": "integer", "workspace": "integer"}
+    response = client.workspaces.members.create(id=1, user=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.workspaces.members.create(id=1)
+    async_response = await async_client.workspaces.members.create(id=1, user=1)
     validate_response(async_response, expected_response, expected_types)
 
 

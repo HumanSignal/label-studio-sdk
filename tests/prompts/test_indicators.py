@@ -7,41 +7,23 @@ from ..utilities import validate_response
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = [
-        {
-            "key": "key",
-            "title": "title",
-            "main_kpi": "main_kpi",
-            "secondary_kpi": "secondary_kpi",
-            "additional_kpis": [{}],
-            "extra_kpis": [{}],
-        }
-    ]
+    expected_response: typing.Any = [{"title": "title", "values": {"key": "value"}}]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
-        {
-            0: {
-                "key": None,
-                "title": None,
-                "main_kpi": None,
-                "secondary_kpi": None,
-                "additional_kpis": ("list", {0: {}}),
-                "extra_kpis": ("list", {0: {}}),
-            }
-        },
+        {0: {"title": None, "values": ("dict", {0: (None, None)})}},
     )
-    response = client.prompts.indicators.list(pk=1)
+    response = client.prompts.indicators.list(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.indicators.list(pk=1)
+    async_response = await async_client.prompts.indicators.list(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"title": "title", "values": {"key": "value"}}
     expected_types: typing.Any = {"title": None, "values": ("dict", {0: (None, None)})}
-    response = client.prompts.indicators.get(indicator_key="indicator_key", pk=1)
+    response = client.prompts.indicators.get(id=1, indicator_key="indicator_key")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.indicators.get(indicator_key="indicator_key", pk=1)
+    async_response = await async_client.prompts.indicators.get(id=1, indicator_key="indicator_key")
     validate_response(async_response, expected_response, expected_types)

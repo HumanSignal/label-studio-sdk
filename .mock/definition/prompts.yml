@@ -4,300 +4,518 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    list:
-      path: /api/prompts/
-      method: GET
-      auth: true
-      docs: |
-        Get a list of prompts.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: List prompts
-      response:
-        docs: ''
-        type: list<root.Prompt>
-      examples:
-        - response:
-            body:
-              - title: title
-                description: description
-                created_by: 1
-                created_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
-                organization: 1
-                input_fields:
-                  - input_fields
-                output_classes:
-                  - output_classes
-                associated_projects:
-                  - 1
-                skill_name: skill_name
-      audiences:
-        - public
-    create:
-      path: /api/prompts/
+    batch_failed_predictions:
+      path: /api/model-run/batch-failed-predictions
       method: POST
       auth: true
-      docs: |
-        Create a new prompt.
+      docs: Create a new batch of failed predictions.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create prompt
+      display-name: Create batch of failed predictions
       request:
-        body: root.Prompt
+        name: BatchFailedPredictionsRequestRequest
+        query-parameters:
+          num_failed_predictions:
+            type: optional<integer>
+            docs: >-
+              Number of failed predictions being sent (for telemetry only, has
+              no effect)
+        body:
+          properties:
+            job_id:
+              type: optional<string>
+              validation:
+                minLength: 1
+                maxLength: 255
+            failed_predictions: list<unknown>
+            modelrun_id: integer
         content-type: application/json
       response:
         docs: ''
-        type: root.Prompt
+        type: root.BatchFailedPredictions
       examples:
         - request:
-            title: title
-            input_fields:
-              - input_fields
-            output_classes:
-              - output_classes
+            failed_predictions: []
+            modelrun_id: 1
           response:
             body:
-              title: title
-              description: description
-              created_by: 1
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              organization: 1
-              input_fields:
-                - input_fields
-              output_classes:
-                - output_classes
-              associated_projects:
-                - 1
-              skill_name: skill_name
-      audiences:
-        - public
-    get:
-      path: /api/prompts/{id}
-      method: GET
-      auth: true
-      docs: |
-        Get a prompt by ID.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: Prompt ID
-      display-name: Get prompt
-      response:
-        docs: ''
-        type: root.Prompt
-      examples:
-        - path-parameters:
-            id: 1
-          response:
-            body:
-              title: title
-              description: description
-              created_by: 1
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              organization: 1
-              input_fields:
-                - input_fields
-              output_classes:
-                - output_classes
-              associated_projects:
-                - 1
-              skill_name: skill_name
-      audiences:
-        - public
-    delete:
-      path: /api/prompts/{id}
-      method: DELETE
-      auth: true
-      docs: |
-        Delete a prompt by ID.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: Prompt ID
-      display-name: Delete prompt
-      examples:
-        - path-parameters:
-            id: 1
-      audiences:
-        - public
-    update:
-      path: /api/prompts/{id}
-      method: PATCH
-      auth: true
-      docs: |
-        Update a prompt by ID.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: Prompt ID
-      display-name: Update prompt
-      request:
-        body: root.Prompt
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.Prompt
-      examples:
-        - path-parameters:
-            id: 1
-          request:
-            title: title
-            input_fields:
-              - input_fields
-            output_classes:
-              - output_classes
-          response:
-            body:
-              title: title
-              description: description
-              created_by: 1
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              organization: 1
-              input_fields:
-                - input_fields
-              output_classes:
-                - output_classes
-              associated_projects:
-                - 1
-              skill_name: skill_name
+              job_id: job_id
+              failed_predictions:
+                - key: value
       audiences:
         - public
     batch_predictions:
       path: /api/model-run/batch-predictions
       method: POST
       auth: true
-      docs: |
-        Create a new batch prediction.
+      docs: Create a new batch prediction.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create batch predictions
       request:
-        name: PromptsBatchPredictionsRequest
+        name: BatchPredictionsRequestRequest
         query-parameters:
           num_predictions:
             type: optional<integer>
-            docs: Number of predictions being sent
+            docs: >-
+              Number of predictions being sent (for telemetry only, has no
+              effect)
         body:
           properties:
-            modelrun_id:
-              type: optional<integer>
-              docs: Model Run ID to associate the prediction with
-            results: optional<list<PromptsBatchPredictionsRequestResultsItem>>
+            job_id:
+              type: optional<string>
+              validation:
+                minLength: 1
+                maxLength: 255
+            results: list<unknown>
+            modelrun_id: integer
         content-type: application/json
       response:
         docs: ''
-        type: PromptsBatchPredictionsResponse
+        type: root.BatchPredictions
       examples:
-        - request: {}
+        - request:
+            results: []
+            modelrun_id: 1
           response:
             body:
-              detail: detail
+              job_id: job_id
+              results:
+                - key: value
       audiences:
         - public
-    batch_failed_predictions:
-      path: /api/model-run/batch-failed-predictions
-      method: POST
+    list:
+      path: /api/prompts/
+      method: GET
       auth: true
-      docs: |
-        Create a new batch of failed predictions.
+      docs: List all prompts.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create batch of failed predictions
+      display-name: List prompts
       request:
-        name: PromptsBatchFailedPredictionsRequest
+        name: PromptsListRequest
         query-parameters:
-          num_failed_predictions:
-            type: optional<integer>
-            docs: Number of failed predictions being sent
-        body:
-          properties:
-            modelrun_id:
-              type: optional<integer>
-              docs: Model Run ID where the failed predictions came from
-            failed_predictions: >-
-              optional<list<PromptsBatchFailedPredictionsRequestFailedPredictionsItem>>
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.ModelInterfaceSerializerGet>
+      examples:
+        - response:
+            body:
+              - id: 1
+                created_by:
+                  id: 1
+                  first_name: first_name
+                  last_name: last_name
+                  email: email
+                  avatar: avatar
+                skill_name: TextClassification
+                associated_projects:
+                  - id: 1
+                title: title
+                description: description
+                created_at: '2024-01-15T09:30:00Z'
+                updated_at: '2024-01-15T09:30:00Z'
+                input_fields:
+                  key: value
+                output_classes:
+                  key: value
+                organization: 1
+      audiences:
+        - public
+    create:
+      path: /api/prompts/
+      method: POST
+      auth: true
+      docs: Create a new prompt.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create prompt
+      request:
+        body: root.ModelInterfaceRequest
         content-type: application/json
       response:
         docs: ''
-        type: PromptsBatchFailedPredictionsResponse
+        type: root.ModelInterface
       examples:
-        - request: {}
+        - request:
+            title: title
           response:
             body:
-              detail: detail
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              skill_name: TextClassification
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              input_fields:
+                key: value
+              output_classes:
+                key: value
+              organization: 1
+              associated_projects:
+                - 1
+      audiences:
+        - public
+    get:
+      path: /api/prompts/{id}/
+      method: GET
+      auth: true
+      docs: Retrieve a specific prompt.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+      display-name: Get prompt
+      response:
+        docs: ''
+        type: root.ModelInterfaceSerializerGet
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              skill_name: TextClassification
+              associated_projects:
+                - id: 1
+                  title: title
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              input_fields:
+                key: value
+              output_classes:
+                key: value
+              organization: 1
+      audiences:
+        - public
+    api_prompts_update:
+      path: /api/prompts/{id}/
+      method: PUT
+      auth: true
+      docs: Overwrite a specific prompt by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+      display-name: Put prompt
+      request:
+        body: root.ModelInterfaceRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.ModelInterface
+      examples:
+        - path-parameters:
+            id: id
+          request:
+            title: title
+          response:
+            body:
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              skill_name: TextClassification
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              input_fields:
+                key: value
+              output_classes:
+                key: value
+              organization: 1
+              associated_projects:
+                - 1
+      audiences:
+        - internal
+    delete:
+      path: /api/prompts/{id}/
+      method: DELETE
+      auth: true
+      docs: Delete a prompt by ID
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+      display-name: Delete prompt
+      examples:
+        - path-parameters:
+            id: id
+      audiences:
+        - public
+    update:
+      path: /api/prompts/{id}/
+      method: PATCH
+      auth: true
+      docs: Update a specific prompt by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+      display-name: Update prompt
+      request:
+        name: PatchedModelInterfaceRequest
+        body:
+          properties:
+            created_by:
+              type: optional<root.UserSimpleRequest>
+              docs: User who created Dataset
+            skill_name: optional<root.SkillNameEnum>
+            title:
+              type: optional<string>
+              docs: Model name
+              validation:
+                minLength: 1
+                maxLength: 500
+            description:
+              type: optional<string>
+              docs: Model description
+            input_fields: optional<unknown>
+            output_classes: optional<unknown>
+            organization: optional<integer>
+            associated_projects: optional<list<integer>>
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.ModelInterface
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+          response:
+            body:
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              skill_name: TextClassification
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              input_fields:
+                key: value
+              output_classes:
+                key: value
+              organization: 1
+              associated_projects:
+                - 1
+      audiences:
+        - public
+    api_prompts_versions_update:
+      path: /api/prompts/{prompt_id}/versions/{version_id}
+      method: PUT
+      auth: true
+      docs: Overwrite a specific prompt version by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        prompt_id: integer
+        version_id: integer
+      display-name: Put prompt version
+      request:
+        body: root.ThirdPartyModelVersionRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.ThirdPartyModelVersion
+      examples:
+        - path-parameters:
+            prompt_id: 1
+            version_id: 1
+          request:
+            title: title
+            prompt: prompt
+            provider_model_id: provider_model_id
+          response:
+            body:
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              score: score
+              parent_model: 1
+              title: title
+              prompt: prompt
+              provider: OpenAI
+              provider_model_id: provider_model_id
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              model_provider_connection: 1
+              organization: 1
+      audiences:
+        - internal
+    api_prompts_versions_inference_runs_cancel_create:
+      path: >-
+        /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{inference_run_id}/cancel
+      method: POST
+      auth: true
+      docs: Cancel the inference run for the given api
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        inference_run_id: integer
+        prompt_id: integer
+        version_id: integer
+      display-name: Cancel Inference Run API
+      examples:
+        - path-parameters:
+            inference_run_id: 1
+            prompt_id: 1
+            version_id: 1
+    compatible_projects:
+      path: /api/prompts/compatible-projects
+      method: GET
+      auth: true
+      docs: Retrieve a list of compatible project for prompt.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List projects compatible with prompt
+      request:
+        name: PromptsCompatibleProjectsRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+          page:
+            type: optional<integer>
+            docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
+          project_type:
+            type: optional<PromptsCompatibleProjectsRequestProjectType>
+            default: TextClassification
+            docs: Skill to filter by
+      response:
+        docs: ''
+        type: root.PaginatedAllRolesProjectListList
+      examples:
+        - response:
+            body:
+              count: 123
+              next: http://api.example.org/accounts/?page=4
+              previous: http://api.example.org/accounts/?page=2
+              results:
+                - label_config: label_config
+                  control_weights:
+                    key: value
+                  description_short: description_short
+                  rejected: rejected
+                  description: description
+                  total_predictions_number: 1
+                  workspace: workspace
+                  created_by:
+                    id: 1
+                    avatar: avatar
+                  config_suitable_for_bulk_annotation: true
+                  custom_script: custom_script
+                  duplication_status: duplication_status
+                  workspace_title: workspace_title
+                  allow_stream: allow_stream
+                  show_annotation_history: true
+                  assignment_settings:
+                    id: 1
+                  review_total_tasks: review_total_tasks
+                  reviewed_number: reviewed_number
+                  show_skip_button: true
+                  skip_queue: REQUEUE_FOR_ME
+                  finished_task_number: 1
+                  annotation_limit_count: 1
+                  ground_truth_number: 1
+                  min_annotations_to_start_training: 1
+                  show_collab_predictions: true
+                  show_overlap_first: true
+                  start_training_on_annotation_update: true
+                  id: 1
+                  data_types:
+                    key: value
+                  is_published: true
+                  parsed_label_config:
+                    key: value
+                  expert_instruction: expert_instruction
+                  model_version: model_version
+                  enable_empty_annotation: true
+                  is_draft: true
+                  total_annotations_number: total_annotations_number
+                  custom_task_lock_ttl: 1
+                  prompts: prompts
+                  annotation_limit_percent: annotation_limit_percent
+                  maximum_annotations: 1
+                  reviewer_queue_total: reviewer_queue_total
+                  members_count: members_count
+                  members: members
+                  overlap_cohort_percentage: 1
+                  show_ground_truth_first: true
+                  show_instruction: true
+                  review_settings:
+                    id: 1
+                    requeue_rejected_tasks_to_annotator: true
+                  annotator_evaluation_minimum_tasks: 1
+                  queue_total: queue_total
+                  comment_classification_config: comment_classification_config
+                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
+                  require_comment_on_skip: true
+                  sampling: Sequential sampling
+                  config_has_control_tags: true
+                  organization: 1
+                  pinned_at: '2024-01-15T09:30:00Z'
+                  created_at: '2024-01-15T09:30:00Z'
+                  queue_done: queue_done
+                  queue_left: queue_left
+                  pause_on_failed_annotator_evaluation: true
+                  has_blueprints: has_blueprints
+                  num_tasks_with_annotations: num_tasks_with_annotations
+                  task_number: 1
+                  evaluate_predictions_automatically: true
+                  ready: ready
+                  blueprints:
+                    - id: 1
+                      share_id: share_id
+                      short_url: short_url
+                      created_at: '2024-01-15T09:30:00Z'
+                  color: color
+                  duplication_done: true
+                  skipped_annotations_number: skipped_annotations_number
+                  reveal_preannotations_interactively: true
+                  useful_annotation_number: useful_annotation_number
+                  title: title
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
 types:
-  PromptsBatchPredictionsRequestResultsItem:
-    properties:
-      task_id:
-        type: optional<integer>
-        docs: Task ID to associate the prediction with
-      output:
-        type: optional<map<string, unknown>>
-        docs: >
-          Prediction output that contains keys from labeling config. Each key
-          must be a valid control tag name from the labeling config. For
-          example, given the output: ```json {"sentiment": "positive"} ``` it
-          will be converted to the internal LS annotation format: ```json {
-            "value": {
-              "choices": ["positive"]
-            },
-            "from_name": "label",
-            "to_name": "",
-            ...
-          } ```
-      prompt_tokens:
-        type: optional<integer>
-        docs: Number of tokens in the prompt
-      completion_tokens:
-        type: optional<integer>
-        docs: Number of tokens in the completion
-      prompt_cost_usd:
-        type: optional<float>
-        docs: Cost of the prompt (in USD)
-      completion_cost_usd:
-        type: optional<float>
-        docs: Cost of the completion (in USD)
-      total_cost_usd:
-        type: optional<float>
-        docs: Total cost of the inference (in USD)
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  PromptsBatchPredictionsResponse:
-    properties:
-      detail: optional<string>
-    source:
-      openapi: openapi/openapi.yaml
-  PromptsBatchFailedPredictionsRequestFailedPredictionsItem:
-    properties:
-      task_id:
-        type: optional<integer>
-        docs: Task ID to associate the prediction with
-      error_type:
-        type: optional<string>
-        docs: Type of error (e.g. "Timeout", "Rate Limit", etc)
-      message:
-        type: optional<string>
-        docs: Error message details
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  PromptsBatchFailedPredictionsResponse:
-    properties:
-      detail: optional<string>
+  PromptsCompatibleProjectsRequestProjectType:
+    enum:
+      - NamedEntityRecognition
+      - TextClassification
+    default: TextClassification
     source:
       openapi: openapi/openapi.yaml

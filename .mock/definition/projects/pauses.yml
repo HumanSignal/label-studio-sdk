@@ -5,28 +5,27 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/projects/{project_pk}/members/{user_pk}/pauses
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/
       method: GET
       auth: true
-      docs: Return a list of pause objects for the specified project and user.
+      docs: Retrieve a list of all pauses.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        project_pk:
-          type: integer
-          docs: Project ID
-        user_pk:
-          type: integer
-          docs: User ID
-      display-name: Retrieve a list of pauses
+        project_pk: integer
+        user_pk: integer
+      display-name: List pauses
       request:
         name: PausesListRequest
         query-parameters:
           include_deleted:
             type: optional<boolean>
-            docs: Include deleted pauses
+            docs: Include deleted pauses.
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
       response:
-        docs: Successfully retrieved a list of pauses
+        docs: ''
         type: list<root.Pause>
       examples:
         - path-parameters:
@@ -37,8 +36,13 @@ service:
               - id: 1
                 project: 1
                 user: 1
-                paused_by: 1
-                reason: reason
+                paused_by:
+                  id: 1
+                  first_name: first_name
+                  last_name: last_name
+                  email: email
+                  avatar: avatar
+                reason: MANUAL
                 verbose_reason: verbose_reason
                 deleted_by: 1
                 deleted_at: '2024-01-15T09:30:00Z'
@@ -47,43 +51,40 @@ service:
       audiences:
         - public
     create:
-      path: /api/projects/{project_pk}/members/{user_pk}/pauses
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/
       method: POST
       auth: true
-      docs: Create a new pause object for the specified project and user.
+      docs: Create a new pause entry.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        project_pk:
-          type: integer
-          docs: Project ID
-        user_pk:
-          type: integer
-          docs: User ID
-      display-name: Create a new pause
+        project_pk: integer
+        user_pk: integer
+      display-name: Create pause
       request:
-        name: PausesCreateRequest
-        body:
-          properties:
-            reason: string
-            verbose_reason: optional<string>
+        body: root.PauseRequest
         content-type: application/json
       response:
-        docs: Successfully created a pause
+        docs: ''
         type: root.Pause
       examples:
         - path-parameters:
             project_pk: 1
             user_pk: 1
           request:
-            reason: reason
+            reason: MANUAL
           response:
             body:
               id: 1
               project: 1
               user: 1
-              paused_by: 1
-              reason: reason
+              paused_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              reason: MANUAL
               verbose_reason: verbose_reason
               deleted_by: 1
               deleted_at: '2024-01-15T09:30:00Z'
@@ -92,38 +93,37 @@ service:
       audiences:
         - public
     get:
-      path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
       method: GET
       auth: true
-      docs: Return detailed information about a specific pause.
+      docs: Retrieve a specific pause by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        project_pk:
-          type: integer
-          docs: Project ID
-        user_pk:
-          type: integer
-          docs: User ID
-        id:
-          type: integer
-          docs: Pause ID
-      display-name: Retrieve a pause by ID
+        id: string
+        project_pk: integer
+        user_pk: integer
+      display-name: Get pause
       response:
-        docs: Successfully retrieved the pause
+        docs: ''
         type: root.Pause
       examples:
         - path-parameters:
+            id: id
             project_pk: 1
             user_pk: 1
-            id: 1
           response:
             body:
               id: 1
               project: 1
               user: 1
-              paused_by: 1
-              reason: reason
+              paused_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              reason: MANUAL
               verbose_reason: verbose_reason
               deleted_by: 1
               deleted_at: '2024-01-15T09:30:00Z'
@@ -132,72 +132,77 @@ service:
       audiences:
         - public
     delete:
-      path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
       method: DELETE
       auth: true
-      docs: Remove a pause from the database.
+      docs: Delete a specific pause by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        project_pk:
-          type: integer
-          docs: Project ID
-        user_pk:
-          type: integer
-          docs: User ID
-        id:
-          type: integer
-          docs: Pause ID
-      display-name: Delete a pause
+        id: string
+        project_pk: integer
+        user_pk: integer
+      display-name: Delete pause
       examples:
         - path-parameters:
+            id: id
             project_pk: 1
             user_pk: 1
-            id: 1
       audiences:
         - public
     update:
-      path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
       method: PATCH
       auth: true
-      docs: Partially update one or more fields of an existing pause.
+      docs: Partially update a pause entry by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        project_pk:
-          type: integer
-          docs: Project ID
-        user_pk:
-          type: integer
-          docs: User ID
-        id:
-          type: integer
-          docs: Pause ID
-      display-name: Update a pause (partial)
+        id: string
+        project_pk: integer
+        user_pk: integer
+      display-name: Update pause
       request:
-        name: PausesUpdateRequest
+        name: PatchedPauseRequest
         body:
           properties:
-            reason: string
-            verbose_reason: optional<string>
+            reason:
+              type: optional<root.ReasonEnum>
+              docs: |-
+                Reason for pausing
+
+                * `MANUAL` - Manual
+                * `BEHAVIOR_BASED` - Behavior-based
+                * `ANNOTATOR_EVALUATION` - Annotator evaluation
+                * `ANNOTATION_LIMIT` - Annotation limit
+                * `CUSTOM_SCRIPT` - Custom script
+            verbose_reason:
+              type: optional<string>
+              docs: >-
+                Detailed description of why the project is paused, will be
+                readable by paused annotators
         content-type: application/json
       response:
-        docs: Successfully updated the pause (partial)
+        docs: ''
         type: root.Pause
       examples:
         - path-parameters:
+            id: id
             project_pk: 1
             user_pk: 1
-            id: 1
-          request:
-            reason: reason
+          request: {}
           response:
             body:
               id: 1
               project: 1
               user: 1
-              paused_by: 1
-              reason: reason
+              paused_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              reason: MANUAL
               verbose_reason: verbose_reason
               deleted_by: 1
               deleted_at: '2024-01-15T09:30:00Z'

@@ -5,10 +5,14 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.annotation import Annotation
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from .types.annotations_create_bulk_request_selected_items import AnnotationsCreateBulkRequestSelectedItems
+from ..types.selected_items_request import SelectedItemsRequest
+import datetime as dt
+from .types.annotation_bulk_serializer_with_selected_items_request_last_action import (
+    AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
+)
 from .types.annotations_create_bulk_response_item import AnnotationsCreateBulkResponseItem
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
@@ -23,15 +27,11 @@ class AnnotationsClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Annotation:
         """
-
-        Tasks can have multiple annotations. Use this call to retrieve a specific annotation using its ID.
-
-        You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
+        Retrieve a specific annotation for a task using the annotation result ID.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this annotation.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -47,6 +47,7 @@ class AnnotationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.annotations.get(
             id=1,
@@ -61,7 +62,7 @@ class AnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -73,17 +74,11 @@ class AnnotationsClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete an annotation.
-
-        <Warning>This action can't be undone!</Warning>
-
-        You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
+        Delete an annotation. This action can't be undone!
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this annotation.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -98,6 +93,7 @@ class AnnotationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.annotations.delete(
             id=1,
@@ -131,17 +127,11 @@ class AnnotationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Annotation:
         """
-
-        Update attributes for an existing annotation.
-
-        You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
-
-        For information about the JSON format used in the result, see [Label Studio JSON format of annotated tasks](https://labelstud.io/guide/export#Label-Studio-JSON-format-of-annotated-tasks).
+        Update existing attributes on an annotation.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this annotation.
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
             Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
@@ -181,6 +171,7 @@ class AnnotationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.annotations.update(
             id=1,
@@ -229,7 +220,7 @@ class AnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -239,17 +230,175 @@ class AnnotationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Annotation]:
+    def create_bulk(
+        self,
+        *,
+        result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
+        completed_by: typing.Optional[int] = OMIT,
+        unique_id: typing.Optional[str] = OMIT,
+        tasks: typing.Optional[typing.Sequence[int]] = OMIT,
+        selected_items: typing.Optional[SelectedItemsRequest] = OMIT,
+        was_cancelled: typing.Optional[bool] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        draft_created_at: typing.Optional[dt.datetime] = OMIT,
+        lead_time: typing.Optional[float] = OMIT,
+        import_id: typing.Optional[int] = OMIT,
+        last_action: typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction] = OMIT,
+        bulk_created: typing.Optional[bool] = OMIT,
+        task: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        updated_by: typing.Optional[int] = OMIT,
+        parent_prediction: typing.Optional[int] = OMIT,
+        parent_annotation: typing.Optional[int] = OMIT,
+        last_created_by: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
         """
+        Create multiple annotations at once
 
+        Parameters
+        ----------
+        result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
+            List of annotation results for the task
+
+        completed_by : typing.Optional[int]
+
+        unique_id : typing.Optional[str]
+
+        tasks : typing.Optional[typing.Sequence[int]]
+
+        selected_items : typing.Optional[SelectedItemsRequest]
+
+        was_cancelled : typing.Optional[bool]
+            User skipped the task
+
+        ground_truth : typing.Optional[bool]
+            This annotation is a Ground Truth (ground_truth)
+
+        draft_created_at : typing.Optional[dt.datetime]
+            Draft creation time
+
+        lead_time : typing.Optional[float]
+            How much time it took to annotate the task
+
+        import_id : typing.Optional[int]
+            Original annotation ID that was at the import step or NULL if this annotation wasn't imported
+
+        last_action : typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction]
+            Action which was performed in the last annotation history item
+
+            * `prediction` - Created from prediction
+            * `propagated_annotation` - Created from another annotation
+            * `imported` - Imported
+            * `submitted` - Submitted
+            * `updated` - Updated
+            * `skipped` - Skipped
+            * `accepted` - Accepted
+            * `rejected` - Rejected
+            * `fixed_and_accepted` - Fixed and accepted
+            * `deleted_review` - Deleted review
+
+        bulk_created : typing.Optional[bool]
+            Annotation was created in bulk mode
+
+        task : typing.Optional[int]
+            Corresponding task for this annotation
+
+        project : typing.Optional[int]
+            Project ID for this annotation
+
+        updated_by : typing.Optional[int]
+            Last user who updated this annotation
+
+        parent_prediction : typing.Optional[int]
+            Points to the prediction from which this annotation was created
+
+        parent_annotation : typing.Optional[int]
+            Points to the parent annotation from which this annotation was created
+
+        last_created_by : typing.Optional[int]
+            User who created the last annotation history item
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[AnnotationsCreateBulkResponseItem]
+            Bulk annotations created successfully
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.annotations.create_bulk()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/annotations/bulk/",
+            method="POST",
+            json={
+                "result": result,
+                "completed_by": completed_by,
+                "unique_id": unique_id,
+                "tasks": tasks,
+                "selected_items": convert_and_respect_annotation_metadata(
+                    object_=selected_items, annotation=SelectedItemsRequest, direction="write"
+                ),
+                "was_cancelled": was_cancelled,
+                "ground_truth": ground_truth,
+                "draft_created_at": draft_created_at,
+                "lead_time": lead_time,
+                "import_id": import_id,
+                "last_action": convert_and_respect_annotation_metadata(
+                    object_=last_action,
+                    annotation=AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
+                    direction="write",
+                ),
+                "bulk_created": bulk_created,
+                "task": task,
+                "project": project,
+                "updated_by": updated_by,
+                "parent_prediction": parent_prediction,
+                "parent_annotation": parent_annotation,
+                "last_created_by": last_created_by,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[AnnotationsCreateBulkResponseItem],
+                    construct_type(
+                        type_=typing.List[AnnotationsCreateBulkResponseItem],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list(
+        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[Annotation]:
+        """
         List all annotations for a task.
-
-        You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list).
 
         Parameters
         ----------
         id : int
             Task ID
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -265,6 +414,7 @@ class AnnotationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.annotations.list(
             id=1,
@@ -273,13 +423,16 @@ class AnnotationsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/tasks/{jsonable_encoder(id)}/annotations/",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Annotation],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Annotation],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -305,24 +458,21 @@ class AnnotationsClient:
     ) -> Annotation:
         """
 
-        Add annotations to a task like an annotator does.
+                Add annotations to a task like an annotator does. The content of the result field depends on your
+                labeling configuration. For example, send the following data as part of your POST
+                request to send an empty annotation with the ID of the user who completed the task:
 
-        You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list).
+                ```json
+                {
+                "result": {},
+                "was_cancelled": true,
+                "ground_truth": true,
+                "lead_time": 0,
+                "task": 0
+                "completed_by": 123
+                }
+                ```
 
-
-        The content of the result field depends on your labeling configuration. For example, send the following data as part of your POST
-        request to send an empty annotation with the ID of the user who completed the task:
-
-        ```json
-        {
-        "result": {},
-        "was_cancelled": true,
-        "ground_truth": true,
-        "lead_time": 0,
-        "task": 0
-        "completed_by": 123
-        }
-        ```
 
         Parameters
         ----------
@@ -367,6 +517,7 @@ class AnnotationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.annotations.create(
             id=1,
@@ -415,82 +566,8 @@ class AnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def create_bulk(
-        self,
-        *,
-        tasks: typing.Optional[typing.Sequence[int]] = OMIT,
-        selected_items: typing.Optional[AnnotationsCreateBulkRequestSelectedItems] = OMIT,
-        lead_time: typing.Optional[float] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        result: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
-        """
-        Create multiple annotations for specific tasks in a bulk operation.
-
-        Parameters
-        ----------
-        tasks : typing.Optional[typing.Sequence[int]]
-
-        selected_items : typing.Optional[AnnotationsCreateBulkRequestSelectedItems]
-
-        lead_time : typing.Optional[float]
-
-        project : typing.Optional[int]
-
-        result : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[AnnotationsCreateBulkResponseItem]
-            Annotations created successfully
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.annotations.create_bulk()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/annotations/bulk",
-            method="POST",
-            json={
-                "tasks": tasks,
-                "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=AnnotationsCreateBulkRequestSelectedItems, direction="write"
-                ),
-                "lead_time": lead_time,
-                "project": project,
-                "result": result,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[AnnotationsCreateBulkResponseItem],
-                    parse_obj_as(
-                        type_=typing.List[AnnotationsCreateBulkResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -506,15 +583,11 @@ class AsyncAnnotationsClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Annotation:
         """
-
-        Tasks can have multiple annotations. Use this call to retrieve a specific annotation using its ID.
-
-        You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
+        Retrieve a specific annotation for a task using the annotation result ID.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this annotation.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -532,6 +605,7 @@ class AsyncAnnotationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -552,7 +626,7 @@ class AsyncAnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -564,17 +638,11 @@ class AsyncAnnotationsClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete an annotation.
-
-        <Warning>This action can't be undone!</Warning>
-
-        You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
+        Delete an annotation. This action can't be undone!
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this annotation.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -591,6 +659,7 @@ class AsyncAnnotationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -630,17 +699,11 @@ class AsyncAnnotationsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Annotation:
         """
-
-        Update attributes for an existing annotation.
-
-        You will need to supply the annotation's unique ID. You can find the ID in the Label Studio UI listed at the top of the annotation in its tab. It is also listed in the History panel when viewing the annotation. Or you can use [Get all task annotations](list) to find all annotation IDs.
-
-        For information about the JSON format used in the result, see [Label Studio JSON format of annotated tasks](https://labelstud.io/guide/export#Label-Studio-JSON-format-of-annotated-tasks).
+        Update existing attributes on an annotation.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this annotation.
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
             Labeling result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/task_format)
@@ -682,6 +745,7 @@ class AsyncAnnotationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -736,7 +800,7 @@ class AsyncAnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -746,19 +810,183 @@ class AsyncAnnotationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    async def create_bulk(
+        self,
+        *,
+        result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
+        completed_by: typing.Optional[int] = OMIT,
+        unique_id: typing.Optional[str] = OMIT,
+        tasks: typing.Optional[typing.Sequence[int]] = OMIT,
+        selected_items: typing.Optional[SelectedItemsRequest] = OMIT,
+        was_cancelled: typing.Optional[bool] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        draft_created_at: typing.Optional[dt.datetime] = OMIT,
+        lead_time: typing.Optional[float] = OMIT,
+        import_id: typing.Optional[int] = OMIT,
+        last_action: typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction] = OMIT,
+        bulk_created: typing.Optional[bool] = OMIT,
+        task: typing.Optional[int] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        updated_by: typing.Optional[int] = OMIT,
+        parent_prediction: typing.Optional[int] = OMIT,
+        parent_annotation: typing.Optional[int] = OMIT,
+        last_created_by: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
+        """
+        Create multiple annotations at once
+
+        Parameters
+        ----------
+        result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
+            List of annotation results for the task
+
+        completed_by : typing.Optional[int]
+
+        unique_id : typing.Optional[str]
+
+        tasks : typing.Optional[typing.Sequence[int]]
+
+        selected_items : typing.Optional[SelectedItemsRequest]
+
+        was_cancelled : typing.Optional[bool]
+            User skipped the task
+
+        ground_truth : typing.Optional[bool]
+            This annotation is a Ground Truth (ground_truth)
+
+        draft_created_at : typing.Optional[dt.datetime]
+            Draft creation time
+
+        lead_time : typing.Optional[float]
+            How much time it took to annotate the task
+
+        import_id : typing.Optional[int]
+            Original annotation ID that was at the import step or NULL if this annotation wasn't imported
+
+        last_action : typing.Optional[AnnotationBulkSerializerWithSelectedItemsRequestLastAction]
+            Action which was performed in the last annotation history item
+
+            * `prediction` - Created from prediction
+            * `propagated_annotation` - Created from another annotation
+            * `imported` - Imported
+            * `submitted` - Submitted
+            * `updated` - Updated
+            * `skipped` - Skipped
+            * `accepted` - Accepted
+            * `rejected` - Rejected
+            * `fixed_and_accepted` - Fixed and accepted
+            * `deleted_review` - Deleted review
+
+        bulk_created : typing.Optional[bool]
+            Annotation was created in bulk mode
+
+        task : typing.Optional[int]
+            Corresponding task for this annotation
+
+        project : typing.Optional[int]
+            Project ID for this annotation
+
+        updated_by : typing.Optional[int]
+            Last user who updated this annotation
+
+        parent_prediction : typing.Optional[int]
+            Points to the prediction from which this annotation was created
+
+        parent_annotation : typing.Optional[int]
+            Points to the parent annotation from which this annotation was created
+
+        last_created_by : typing.Optional[int]
+            User who created the last annotation history item
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[AnnotationsCreateBulkResponseItem]
+            Bulk annotations created successfully
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.annotations.create_bulk()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/annotations/bulk/",
+            method="POST",
+            json={
+                "result": result,
+                "completed_by": completed_by,
+                "unique_id": unique_id,
+                "tasks": tasks,
+                "selected_items": convert_and_respect_annotation_metadata(
+                    object_=selected_items, annotation=SelectedItemsRequest, direction="write"
+                ),
+                "was_cancelled": was_cancelled,
+                "ground_truth": ground_truth,
+                "draft_created_at": draft_created_at,
+                "lead_time": lead_time,
+                "import_id": import_id,
+                "last_action": convert_and_respect_annotation_metadata(
+                    object_=last_action,
+                    annotation=AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
+                    direction="write",
+                ),
+                "bulk_created": bulk_created,
+                "task": task,
+                "project": project,
+                "updated_by": updated_by,
+                "parent_prediction": parent_prediction,
+                "parent_annotation": parent_annotation,
+                "last_created_by": last_created_by,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[AnnotationsCreateBulkResponseItem],
+                    construct_type(
+                        type_=typing.List[AnnotationsCreateBulkResponseItem],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     async def list(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Annotation]:
         """
-
         List all annotations for a task.
-
-        You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list).
 
         Parameters
         ----------
         id : int
             Task ID
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -776,6 +1004,7 @@ class AsyncAnnotationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -790,13 +1019,16 @@ class AsyncAnnotationsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/tasks/{jsonable_encoder(id)}/annotations/",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[Annotation],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[Annotation],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -822,24 +1054,21 @@ class AsyncAnnotationsClient:
     ) -> Annotation:
         """
 
-        Add annotations to a task like an annotator does.
+                Add annotations to a task like an annotator does. The content of the result field depends on your
+                labeling configuration. For example, send the following data as part of your POST
+                request to send an empty annotation with the ID of the user who completed the task:
 
-        You will need to supply the task ID. You can find this in Label Studio by opening a task and checking the URL. It is also listed at the top of the labeling interface. Or you can use [Get tasks list](../tasks/list).
+                ```json
+                {
+                "result": {},
+                "was_cancelled": true,
+                "ground_truth": true,
+                "lead_time": 0,
+                "task": 0
+                "completed_by": 123
+                }
+                ```
 
-
-        The content of the result field depends on your labeling configuration. For example, send the following data as part of your POST
-        request to send an empty annotation with the ID of the user who completed the task:
-
-        ```json
-        {
-        "result": {},
-        "was_cancelled": true,
-        "ground_truth": true,
-        "lead_time": 0,
-        "task": 0
-        "completed_by": 123
-        }
-        ```
 
         Parameters
         ----------
@@ -886,6 +1115,7 @@ class AsyncAnnotationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -940,90 +1170,8 @@ class AsyncAnnotationsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     Annotation,
-                    parse_obj_as(
+                    construct_type(
                         type_=Annotation,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def create_bulk(
-        self,
-        *,
-        tasks: typing.Optional[typing.Sequence[int]] = OMIT,
-        selected_items: typing.Optional[AnnotationsCreateBulkRequestSelectedItems] = OMIT,
-        lead_time: typing.Optional[float] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        result: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[AnnotationsCreateBulkResponseItem]:
-        """
-        Create multiple annotations for specific tasks in a bulk operation.
-
-        Parameters
-        ----------
-        tasks : typing.Optional[typing.Sequence[int]]
-
-        selected_items : typing.Optional[AnnotationsCreateBulkRequestSelectedItems]
-
-        lead_time : typing.Optional[float]
-
-        project : typing.Optional[int]
-
-        result : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[AnnotationsCreateBulkResponseItem]
-            Annotations created successfully
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.annotations.create_bulk()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/annotations/bulk",
-            method="POST",
-            json={
-                "tasks": tasks,
-                "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=AnnotationsCreateBulkRequestSelectedItems, direction="write"
-                ),
-                "lead_time": lead_time,
-                "project": project,
-                "result": result,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[AnnotationsCreateBulkResponseItem],
-                    parse_obj_as(
-                        type_=typing.List[AnnotationsCreateBulkResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

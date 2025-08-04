@@ -8,14 +8,13 @@ service:
       path: /api/jwt/settings
       method: GET
       auth: true
-      docs: |
-        Retrieve JWT settings for the currently-active organization.
+      docs: Retrieve JWT settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
       display-name: Retrieve JWT Settings
       response:
-        docs: JWT settings retrieved successfully
-        type: root.JwtSettingsResponse
+        docs: ''
+        type: root.LsejwtSettings
       examples:
         - response:
             body:
@@ -24,26 +23,36 @@ service:
               api_token_ttl_days: 1
       audiences:
         - public
-    create:
+    update:
       path: /api/jwt/settings
       method: POST
       auth: true
-      docs: |
-        Update JWT settings for the currently active organization.
+      docs: Update JWT settings for the currently active organization.
       source:
         openapi: openapi/openapi.yaml
       display-name: Update JWT Settings
       request:
-        body: root.JwtSettingsResponse
+        name: LsejwtSettingsRequest
+        body:
+          properties:
+            api_tokens_enabled:
+              type: optional<boolean>
+              docs: Enable JWT API token authentication for this organization
+            legacy_api_tokens_enabled:
+              type: optional<boolean>
+              docs: Enable legacy API token authentication for this organization
+            api_token_ttl_days:
+              type: optional<integer>
+              docs: Number of days before JWT API tokens expire
+              validation:
+                min: -2147483648
+                max: 2147483647
         content-type: application/json
       response:
-        docs: JWT settings updated successfully
-        type: root.JwtSettingsResponse
+        docs: ''
+        type: root.LsejwtSettings
       examples:
-        - request:
-            api_tokens_enabled: true
-            legacy_api_tokens_enabled: true
-            api_token_ttl_days: 1
+        - request: {}
           response:
             body:
               api_tokens_enabled: true

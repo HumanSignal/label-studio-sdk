@@ -10,7 +10,7 @@ from .s3s.client import S3SClient
 import typing
 from ..core.request_options import RequestOptions
 from .types.export_storage_list_types_response_item import ExportStorageListTypesResponseItem
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
@@ -46,7 +46,7 @@ class ExportStorageClient:
         Returns
         -------
         typing.List[ExportStorageListTypesResponseItem]
-
+            List of export storage types
 
         Examples
         --------
@@ -54,6 +54,7 @@ class ExportStorageClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.export_storage.list_types()
         """
@@ -66,7 +67,7 @@ class ExportStorageClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[ExportStorageListTypesResponseItem],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[ExportStorageListTypesResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -101,7 +102,7 @@ class AsyncExportStorageClient:
         Returns
         -------
         typing.List[ExportStorageListTypesResponseItem]
-
+            List of export storage types
 
         Examples
         --------
@@ -111,6 +112,7 @@ class AsyncExportStorageClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -129,7 +131,7 @@ class AsyncExportStorageClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[ExportStorageListTypesResponseItem],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[ExportStorageListTypesResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),

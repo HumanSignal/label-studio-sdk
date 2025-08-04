@@ -1,113 +1,105 @@
-types:
-  MembersListResponseItem:
-    properties:
-      user:
-        type: optional<map<string, unknown>>
-        docs: User ID of the workspace member
-    source:
-      openapi: openapi/openapi.yaml
-  MembersCreateResponse:
-    properties:
-      user:
-        type: optional<integer>
-        docs: User ID of the workspace member
-    source:
-      openapi: openapi/openapi.yaml
+imports:
+  root: ../__package__.yml
 service:
   auth: false
   base-path: ''
   endpoints:
     list:
-      path: /api/workspaces/{id}/memberships
+      path: /api/workspaces/{id}/memberships/
       method: GET
       auth: true
-      docs: >
-
-        List all workspace memberships for a specific workspace. You will need
-        to provide the workspace ID. You can find this using [List
-        workspaces](list).
+      docs: Get a list of all members in a specific workspace.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Workspace ID
+        id: integer
       display-name: List workspace memberships
       response:
-        docs: ''
-        type: list<MembersListResponseItem>
+        docs: A list of workspace memberships
+        type: list<root.WorkspaceMemberList>
       examples:
         - path-parameters:
             id: 1
           response:
             body:
               - user:
-                  key: value
+                  id: 1
+                  first_name: first_name
+                  last_name: last_name
+                  username: username
+                  email: email
+                  last_activity: '2024-01-15T09:30:00Z'
+                  custom_hotkeys:
+                    key: value
+                  avatar: avatar
+                  initials: initials
+                  phone: phone
+                  active_organization: 1
+                  active_organization_meta: active_organization_meta
+                  allow_newsletters: true
+                  date_joined: '2024-01-15T09:30:00Z'
+                  org_membership:
+                    - role: role
+                      active: active
+                      organization_id: 1
+                  lse_fields:
+                    invite_expired: invite_expired
+                    invite_expired_at: invite_expired_at
+                    email_notification_settings: email_notification_settings
+                  pause: pause
+                workspace: 1
       audiences:
         - public
     create:
-      path: /api/workspaces/{id}/memberships
+      path: /api/workspaces/{id}/memberships/
       method: POST
       auth: true
-      docs: >
-
-        Create a new workspace membership. You will need to provide the
-        workspace ID. You can find this using [List workspaces](list).
+      docs: Add a new workspace member by user ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Workspace ID
+        id: integer
       display-name: Create workspace membership
       request:
-        name: MembersCreateRequest
+        name: WorkspaceMemberCreateRequest
         body:
           properties:
             user:
+              type: integer
+              docs: User ID
+            workspace:
               type: optional<integer>
-              docs: User ID of the workspace member
+              docs: Workspace ID
         content-type: application/json
       response:
         docs: ''
-        type: MembersCreateResponse
+        type: root.WorkspaceMemberCreate
       examples:
         - path-parameters:
             id: 1
-          request: {}
+          request:
+            user: 1
           response:
             body:
               user: 1
+              workspace: 1
       audiences:
         - public
     delete:
-      path: /api/workspaces/{id}/memberships
+      path: /api/workspaces/{id}/memberships/
       method: DELETE
       auth: true
-      docs: >
-
-        Delete a specific workspace membership. You will need to provide the
-        workspace ID and the user ID. You can find this using [List workspace
-        memberships](list).
+      docs: >-
+        Remove a specific member by ID from a workspace. This endpoint expects
+        an object like `{"user_id": 123}`.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: Workspace ID
+        id: integer
       display-name: Delete workspace membership
-      request:
-        name: MembersDeleteRequest
-        body:
-          properties:
-            user:
-              type: optional<integer>
-              docs: User ID of the workspace member
-        content-type: application/json
       examples:
         - path-parameters:
             id: 1
-          request: {}
       audiences:
         - public
   source:

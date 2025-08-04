@@ -5,15 +5,18 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.project_import import ProjectImport
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from .types.tasks_list_request_fields import TasksListRequestFields
 from ..core.pagination import SyncPager
-from ..types.task import Task
-from .types.tasks_list_response import TasksListResponse
-from ..types.base_task import BaseTask
-from ..types.data_manager_task_serializer import DataManagerTaskSerializer
+from ..types.role_based_task import RoleBasedTask
+from ..types.paginated_role_based_task_list import PaginatedRoleBasedTaskList
+from ..errors.bad_request_error import BadRequestError
+from ..errors.unauthorized_error import UnauthorizedError
+from ..errors.forbidden_error import ForbiddenError
+import datetime as dt
+from ..types.lse_task import LseTask
 from ..core.client_wrapper import AsyncClientWrapper
 from ..core.pagination import AsyncPager
 
@@ -26,24 +29,17 @@ class TasksClient:
         self._client_wrapper = client_wrapper
 
     def create_many_status(
-        self, id: int, import_pk: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectImport:
         """
-
-        Get information about an async project import operation. This can be especially useful to monitor status, as large import jobs can take time.
-
-        You will need the project ID and the unique ID of the import operation.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        The import ID is returned as part of the response when you call [Import tasks](import-tasks).
+        Return data related to async project import operation
 
         Parameters
         ----------
         id : int
-            The project ID.
+            A unique integer value identifying this project import.
 
-        import_pk : str
+        import_pk : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -59,10 +55,11 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.create_many_status(
             id=1,
-            import_pk="import_pk",
+            import_pk=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -74,7 +71,7 @@ class TasksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ProjectImport,
-                    parse_obj_as(
+                    construct_type(
                         type_=ProjectImport,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -86,10 +83,7 @@ class TasksClient:
 
     def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete all tasks from a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
         Parameters
         ----------
@@ -109,6 +103,7 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.delete_all_tasks(
             id=1,
@@ -130,66 +125,74 @@ class TasksClient:
     def list(
         self,
         *,
+        fields: typing.Optional[TasksListRequestFields] = None,
+        include: typing.Optional[str] = None,
+        only_annotated: typing.Optional[bool] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
-        view: typing.Optional[int] = None,
         project: typing.Optional[int] = None,
-        resolve_uri: typing.Optional[bool] = None,
-        fields: typing.Optional[TasksListRequestFields] = None,
-        review: typing.Optional[bool] = None,
-        include: typing.Optional[str] = None,
         query: typing.Optional[str] = None,
+        resolve_uri: typing.Optional[bool] = None,
+        review: typing.Optional[bool] = None,
+        selected_items: typing.Optional[str] = None,
+        view: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Task]:
+    ) -> SyncPager[RoleBasedTask]:
         """
-
-        Retrieve a list of tasks.
-
-        You can use the query parameters to filter the list by project and/or view (a tab within the Data Manager). You can also optionally add pagination to make the response easier to parse.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). The view ID can be found using [List views](../views/list).
+        Retrieve a paginated list of tasks. The response format varies based on the user's role in the organization:
+        - **Admin/Owner**: Full task details with all annotations, reviews, and metadata
+        - **Reviewer**: Task details optimized for review workflow
+        - **Annotator**: Task details filtered to show only user's own annotations and assignments
 
         Parameters
         ----------
+        fields : typing.Optional[TasksListRequestFields]
+            Set to "all" if you want to include annotations and predictions in the response. Defaults to task_only
+
+        include : typing.Optional[str]
+            Specify which fields to include in the response
+
+        only_annotated : typing.Optional[bool]
+            Filter to show only tasks that have annotations
+
         page : typing.Optional[int]
             A page number within the paginated result set.
 
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        view : typing.Optional[int]
-            View ID
-
         project : typing.Optional[int]
             Project ID
+
+        query : typing.Optional[str]
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: {"filters": ..., "selectedItems": ..., "ordering": ...}. Check Data Manager > Create View > see data field for more details about filters, selectedItems and ordering.
+
+            filters: dict with "conjunction" string ("or" or "and") and list of filters in "items" array. Each filter is a dictionary with keys: "filter", "operator", "type", "value". Read more about available filters
+            Example: {"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}
+            selectedItems: dictionary with keys: "all", "included", "excluded". If "all" is false, "included" must be used. If "all" is true, "excluded" must be used.
+            Examples: {"all": false, "included": [1, 2, 3]} or {"all": true, "excluded": [4, 5]}
+            ordering: list of fields to order by. Currently, ordering is supported by only one parameter.
+            Example: ["completed_at"]
 
         resolve_uri : typing.Optional[bool]
             Resolve task data URIs using Cloud Storage
 
-        fields : typing.Optional[TasksListRequestFields]
-            Set to "all" if you want to include annotations and predictions in the response
-
         review : typing.Optional[bool]
             Get tasks for review
 
-        include : typing.Optional[str]
-            Specify which fields to include in the response
+        selected_items : typing.Optional[str]
+            JSON string of selected task IDs for review workflow
 
-        query : typing.Optional[str]
-            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check [Data Manager > Create View > see `data` field](#tag/Data-Manager/operation/api_dm_views_create) for more details about filters, selectedItems and ordering.
-
-            * **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/>                   Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-            * **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/>                   Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-            * **ordering**: list of fields to order by. Currently, ordering is supported by only one parameter. <br/>
-                               Example: `["completed_at"]`
+        view : typing.Optional[int]
+            View ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncPager[Task]
-            List of Tasks
+        SyncPager[RoleBasedTask]
+
 
         Examples
         --------
@@ -197,6 +200,7 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         response = client.tasks.list()
         for item in response:
@@ -210,42 +214,76 @@ class TasksClient:
             "api/tasks/",
             method="GET",
             params={
+                "fields": fields,
+                "include": include,
+                "only_annotated": only_annotated,
                 "page": page,
                 "page_size": page_size,
-                "view": view,
                 "project": project,
-                "resolve_uri": resolve_uri,
-                "fields": fields,
-                "review": review,
-                "include": include,
                 "query": query,
+                "resolve_uri": resolve_uri,
+                "review": review,
+                "selectedItems": selected_items,
+                "view": view,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    TasksListResponse,
-                    parse_obj_as(
-                        type_=TasksListResponse,  # type: ignore
+                    PaginatedRoleBasedTaskList,
+                    construct_type(
+                        type_=PaginatedRoleBasedTaskList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
+                    fields=fields,
+                    include=include,
+                    only_annotated=only_annotated,
                     page=page + 1,
                     page_size=page_size,
-                    view=view,
                     project=project,
-                    resolve_uri=resolve_uri,
-                    fields=fields,
-                    review=review,
-                    include=include,
                     query=query,
+                    resolve_uri=resolve_uri,
+                    review=review,
+                    selected_items=selected_items,
+                    view=view,
                     request_options=request_options,
                 )
                 _items = _parsed_response.tasks
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -254,33 +292,78 @@ class TasksClient:
     def create(
         self,
         *,
-        data: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        data: typing.Optional[typing.Any] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        inner_id: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
+        unresolved_comment_count: typing.Optional[int] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
         project: typing.Optional[int] = OMIT,
+        updated_by: typing.Optional[int] = OMIT,
+        file_upload: typing.Optional[int] = OMIT,
+        comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BaseTask:
+    ) -> LseTask:
         """
-
-        Create a new labeling task in Label Studio.
-
-        The data you provide depends on your labeling config and data type.
-
-        You will also need to provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+        Create a new task
 
         Parameters
         ----------
-        data : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Task data dictionary with arbitrary keys and values
+        data : typing.Optional[typing.Any]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        is_labeled : typing.Optional[bool]
+            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+
+        overlap : typing.Optional[int]
+            Number of distinct annotators that processed the current task
+
+        inner_id : typing.Optional[int]
+            Internal task ID in the project, starts with 1
+
+        total_annotations : typing.Optional[int]
+            Number of total annotations for the current task except cancelled annotations
+
+        cancelled_annotations : typing.Optional[int]
+            Number of total cancelled annotations for the current task
+
+        total_predictions : typing.Optional[int]
+            Number of total predictions for the current task
+
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
+
+        unresolved_comment_count : typing.Optional[int]
+            Number of unresolved comments in the task including all annotations
+
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
 
         project : typing.Optional[int]
-            Project ID
+            Project ID for this task
+
+        updated_by : typing.Optional[int]
+            Last annotator or reviewer who updated this task
+
+        file_upload : typing.Optional[int]
+            Uploaded file used as data source for this task
+
+        comment_authors : typing.Optional[typing.Sequence[int]]
+            Users who wrote comments
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BaseTask
-            Created task
+        LseTask
+
 
         Examples
         --------
@@ -288,10 +371,10 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.create(
-            data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
-            project=1,
+            data={"key": "value"},
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -299,7 +382,20 @@ class TasksClient:
             method="POST",
             json={
                 "data": data,
+                "meta": meta,
+                "is_labeled": is_labeled,
+                "overlap": overlap,
+                "inner_id": inner_id,
+                "total_annotations": total_annotations,
+                "cancelled_annotations": cancelled_annotations,
+                "total_predictions": total_predictions,
+                "comment_count": comment_count,
+                "unresolved_comment_count": unresolved_comment_count,
+                "last_comment_updated_at": last_comment_updated_at,
                 "project": project,
+                "updated_by": updated_by,
+                "file_upload": file_upload,
+                "comment_authors": comment_authors,
             },
             headers={
                 "content-type": "application/json",
@@ -310,9 +406,9 @@ class TasksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseTask,
-                    parse_obj_as(
-                        type_=BaseTask,  # type: ignore
+                    LseTask,
+                    construct_type(
+                        type_=LseTask,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -321,11 +417,9 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DataManagerTaskSerializer:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
         """
-
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
-        The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
         Parameters
         ----------
@@ -337,8 +431,8 @@ class TasksClient:
 
         Returns
         -------
-        DataManagerTaskSerializer
-            Task
+        RoleBasedTask
+
 
         Examples
         --------
@@ -346,6 +440,7 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.get(
             id="id",
@@ -359,9 +454,9 @@ class TasksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    DataManagerTaskSerializer,
-                    parse_obj_as(
-                        type_=DataManagerTaskSerializer,  # type: ignore
+                    RoleBasedTask,
+                    construct_type(
+                        type_=RoleBasedTask,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -372,12 +467,7 @@ class TasksClient:
 
     def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a task in Label Studio.
-
-        You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
-
-        <Warning>This action cannot be undone.</Warning>
+        Delete a task in Label Studio. This action cannot be undone!
 
         Parameters
         ----------
@@ -397,6 +487,7 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.delete(
             id="id",
@@ -419,34 +510,89 @@ class TasksClient:
         self,
         id: str,
         *,
-        data: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        inner_id: typing.Optional[int] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        completed_at: typing.Optional[dt.datetime] = OMIT,
+        predictions_score: typing.Optional[float] = OMIT,
+        avg_lead_time: typing.Optional[float] = OMIT,
+        draft_exists: typing.Optional[bool] = OMIT,
+        reviewed: typing.Optional[bool] = OMIT,
+        reviews_accepted: typing.Optional[int] = OMIT,
+        reviews_rejected: typing.Optional[int] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        data: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
+        unresolved_comment_count: typing.Optional[int] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BaseTask:
+    ) -> RoleBasedTask:
         """
-
         Update the attributes of an existing labeling task.
-
-        You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
         Parameters
         ----------
         id : str
             Task ID
 
-        data : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Task data dictionary with arbitrary keys and values
+        inner_id : typing.Optional[int]
+
+        cancelled_annotations : typing.Optional[int]
+
+        total_annotations : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        completed_at : typing.Optional[dt.datetime]
+
+        predictions_score : typing.Optional[float]
+
+        avg_lead_time : typing.Optional[float]
+
+        draft_exists : typing.Optional[bool]
+
+        reviewed : typing.Optional[bool]
+
+        reviews_accepted : typing.Optional[int]
+
+        reviews_rejected : typing.Optional[int]
+
+        ground_truth : typing.Optional[bool]
+
+        data : typing.Optional[typing.Optional[typing.Any]]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        is_labeled : typing.Optional[bool]
+            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+
+        overlap : typing.Optional[int]
+            Number of distinct annotators that processed the current task
+
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
+
+        unresolved_comment_count : typing.Optional[int]
+            Number of unresolved comments in the task including all annotations
+
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
 
         project : typing.Optional[int]
-            Project ID
+            Project ID for this task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BaseTask
-            Updated task
+        RoleBasedTask
+
 
         Examples
         --------
@@ -454,18 +600,35 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.update(
             id="id",
-            data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
-            project=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/tasks/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
+                "inner_id": inner_id,
+                "cancelled_annotations": cancelled_annotations,
+                "total_annotations": total_annotations,
+                "total_predictions": total_predictions,
+                "completed_at": completed_at,
+                "predictions_score": predictions_score,
+                "avg_lead_time": avg_lead_time,
+                "draft_exists": draft_exists,
+                "reviewed": reviewed,
+                "reviews_accepted": reviews_accepted,
+                "reviews_rejected": reviews_rejected,
+                "ground_truth": ground_truth,
                 "data": data,
+                "meta": meta,
+                "is_labeled": is_labeled,
+                "overlap": overlap,
+                "comment_count": comment_count,
+                "unresolved_comment_count": unresolved_comment_count,
+                "last_comment_updated_at": last_comment_updated_at,
                 "project": project,
             },
             headers={
@@ -477,9 +640,9 @@ class TasksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseTask,
-                    parse_obj_as(
-                        type_=BaseTask,  # type: ignore
+                    RoleBasedTask,
+                    construct_type(
+                        type_=RoleBasedTask,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -494,24 +657,17 @@ class AsyncTasksClient:
         self._client_wrapper = client_wrapper
 
     async def create_many_status(
-        self, id: int, import_pk: str, *, request_options: typing.Optional[RequestOptions] = None
+        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ProjectImport:
         """
-
-        Get information about an async project import operation. This can be especially useful to monitor status, as large import jobs can take time.
-
-        You will need the project ID and the unique ID of the import operation.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        The import ID is returned as part of the response when you call [Import tasks](import-tasks).
+        Return data related to async project import operation
 
         Parameters
         ----------
         id : int
-            The project ID.
+            A unique integer value identifying this project import.
 
-        import_pk : str
+        import_pk : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -529,13 +685,14 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.tasks.create_many_status(
                 id=1,
-                import_pk="import_pk",
+                import_pk=1,
             )
 
 
@@ -550,7 +707,7 @@ class AsyncTasksClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ProjectImport,
-                    parse_obj_as(
+                    construct_type(
                         type_=ProjectImport,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -562,10 +719,7 @@ class AsyncTasksClient:
 
     async def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
         Delete all tasks from a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
 
         Parameters
         ----------
@@ -587,6 +741,7 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -614,66 +769,74 @@ class AsyncTasksClient:
     async def list(
         self,
         *,
+        fields: typing.Optional[TasksListRequestFields] = None,
+        include: typing.Optional[str] = None,
+        only_annotated: typing.Optional[bool] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
-        view: typing.Optional[int] = None,
         project: typing.Optional[int] = None,
-        resolve_uri: typing.Optional[bool] = None,
-        fields: typing.Optional[TasksListRequestFields] = None,
-        review: typing.Optional[bool] = None,
-        include: typing.Optional[str] = None,
         query: typing.Optional[str] = None,
+        resolve_uri: typing.Optional[bool] = None,
+        review: typing.Optional[bool] = None,
+        selected_items: typing.Optional[str] = None,
+        view: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Task]:
+    ) -> AsyncPager[RoleBasedTask]:
         """
-
-        Retrieve a list of tasks.
-
-        You can use the query parameters to filter the list by project and/or view (a tab within the Data Manager). You can also optionally add pagination to make the response easier to parse.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list). The view ID can be found using [List views](../views/list).
+        Retrieve a paginated list of tasks. The response format varies based on the user's role in the organization:
+        - **Admin/Owner**: Full task details with all annotations, reviews, and metadata
+        - **Reviewer**: Task details optimized for review workflow
+        - **Annotator**: Task details filtered to show only user's own annotations and assignments
 
         Parameters
         ----------
+        fields : typing.Optional[TasksListRequestFields]
+            Set to "all" if you want to include annotations and predictions in the response. Defaults to task_only
+
+        include : typing.Optional[str]
+            Specify which fields to include in the response
+
+        only_annotated : typing.Optional[bool]
+            Filter to show only tasks that have annotations
+
         page : typing.Optional[int]
             A page number within the paginated result set.
 
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        view : typing.Optional[int]
-            View ID
-
         project : typing.Optional[int]
             Project ID
+
+        query : typing.Optional[str]
+            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: {"filters": ..., "selectedItems": ..., "ordering": ...}. Check Data Manager > Create View > see data field for more details about filters, selectedItems and ordering.
+
+            filters: dict with "conjunction" string ("or" or "and") and list of filters in "items" array. Each filter is a dictionary with keys: "filter", "operator", "type", "value". Read more about available filters
+            Example: {"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}
+            selectedItems: dictionary with keys: "all", "included", "excluded". If "all" is false, "included" must be used. If "all" is true, "excluded" must be used.
+            Examples: {"all": false, "included": [1, 2, 3]} or {"all": true, "excluded": [4, 5]}
+            ordering: list of fields to order by. Currently, ordering is supported by only one parameter.
+            Example: ["completed_at"]
 
         resolve_uri : typing.Optional[bool]
             Resolve task data URIs using Cloud Storage
 
-        fields : typing.Optional[TasksListRequestFields]
-            Set to "all" if you want to include annotations and predictions in the response
-
         review : typing.Optional[bool]
             Get tasks for review
 
-        include : typing.Optional[str]
-            Specify which fields to include in the response
+        selected_items : typing.Optional[str]
+            JSON string of selected task IDs for review workflow
 
-        query : typing.Optional[str]
-            Additional query to filter tasks. It must be JSON encoded string of dict containing one of the following parameters: `{"filters": ..., "selectedItems": ..., "ordering": ...}`. Check [Data Manager > Create View > see `data` field](#tag/Data-Manager/operation/api_dm_views_create) for more details about filters, selectedItems and ordering.
-
-            * **filters**: dict with `"conjunction"` string (`"or"` or `"and"`) and list of filters in `"items"` array. Each filter is a dictionary with keys: `"filter"`, `"operator"`, `"type"`, `"value"`. [Read more about available filters](https://labelstud.io/sdk/data_manager.html)<br/>                   Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-            * **selectedItems**: dictionary with keys: `"all"`, `"included"`, `"excluded"`. If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br/>                   Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-            * **ordering**: list of fields to order by. Currently, ordering is supported by only one parameter. <br/>
-                               Example: `["completed_at"]`
+        view : typing.Optional[int]
+            View ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[Task]
-            List of Tasks
+        AsyncPager[RoleBasedTask]
+
 
         Examples
         --------
@@ -683,6 +846,7 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -702,42 +866,76 @@ class AsyncTasksClient:
             "api/tasks/",
             method="GET",
             params={
+                "fields": fields,
+                "include": include,
+                "only_annotated": only_annotated,
                 "page": page,
                 "page_size": page_size,
-                "view": view,
                 "project": project,
-                "resolve_uri": resolve_uri,
-                "fields": fields,
-                "review": review,
-                "include": include,
                 "query": query,
+                "resolve_uri": resolve_uri,
+                "review": review,
+                "selectedItems": selected_items,
+                "view": view,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    TasksListResponse,
-                    parse_obj_as(
-                        type_=TasksListResponse,  # type: ignore
+                    PaginatedRoleBasedTaskList,
+                    construct_type(
+                        type_=PaginatedRoleBasedTaskList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 _has_next = True
                 _get_next = lambda: self.list(
+                    fields=fields,
+                    include=include,
+                    only_annotated=only_annotated,
                     page=page + 1,
                     page_size=page_size,
-                    view=view,
                     project=project,
-                    resolve_uri=resolve_uri,
-                    fields=fields,
-                    review=review,
-                    include=include,
                     query=query,
+                    resolve_uri=resolve_uri,
+                    review=review,
+                    selected_items=selected_items,
+                    view=view,
                     request_options=request_options,
                 )
                 _items = _parsed_response.tasks
                 return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -746,33 +944,78 @@ class AsyncTasksClient:
     async def create(
         self,
         *,
-        data: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        data: typing.Optional[typing.Any] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        inner_id: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
+        unresolved_comment_count: typing.Optional[int] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
         project: typing.Optional[int] = OMIT,
+        updated_by: typing.Optional[int] = OMIT,
+        file_upload: typing.Optional[int] = OMIT,
+        comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BaseTask:
+    ) -> LseTask:
         """
-
-        Create a new labeling task in Label Studio.
-
-        The data you provide depends on your labeling config and data type.
-
-        You will also need to provide a project ID. The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
+        Create a new task
 
         Parameters
         ----------
-        data : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Task data dictionary with arbitrary keys and values
+        data : typing.Optional[typing.Any]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        is_labeled : typing.Optional[bool]
+            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+
+        overlap : typing.Optional[int]
+            Number of distinct annotators that processed the current task
+
+        inner_id : typing.Optional[int]
+            Internal task ID in the project, starts with 1
+
+        total_annotations : typing.Optional[int]
+            Number of total annotations for the current task except cancelled annotations
+
+        cancelled_annotations : typing.Optional[int]
+            Number of total cancelled annotations for the current task
+
+        total_predictions : typing.Optional[int]
+            Number of total predictions for the current task
+
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
+
+        unresolved_comment_count : typing.Optional[int]
+            Number of unresolved comments in the task including all annotations
+
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
 
         project : typing.Optional[int]
-            Project ID
+            Project ID for this task
+
+        updated_by : typing.Optional[int]
+            Last annotator or reviewer who updated this task
+
+        file_upload : typing.Optional[int]
+            Uploaded file used as data source for this task
+
+        comment_authors : typing.Optional[typing.Sequence[int]]
+            Users who wrote comments
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BaseTask
-            Created task
+        LseTask
+
 
         Examples
         --------
@@ -782,16 +1025,13 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.tasks.create(
-                data={
-                    "image": "https://example.com/image.jpg",
-                    "text": "Hello, world!",
-                },
-                project=1,
+                data={"key": "value"},
             )
 
 
@@ -802,7 +1042,20 @@ class AsyncTasksClient:
             method="POST",
             json={
                 "data": data,
+                "meta": meta,
+                "is_labeled": is_labeled,
+                "overlap": overlap,
+                "inner_id": inner_id,
+                "total_annotations": total_annotations,
+                "cancelled_annotations": cancelled_annotations,
+                "total_predictions": total_predictions,
+                "comment_count": comment_count,
+                "unresolved_comment_count": unresolved_comment_count,
+                "last_comment_updated_at": last_comment_updated_at,
                 "project": project,
+                "updated_by": updated_by,
+                "file_upload": file_upload,
+                "comment_authors": comment_authors,
             },
             headers={
                 "content-type": "application/json",
@@ -813,9 +1066,9 @@ class AsyncTasksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseTask,
-                    parse_obj_as(
-                        type_=BaseTask,  # type: ignore
+                    LseTask,
+                    construct_type(
+                        type_=LseTask,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -824,13 +1077,9 @@ class AsyncTasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> DataManagerTaskSerializer:
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
         """
-
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
-        The task ID is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
         Parameters
         ----------
@@ -842,8 +1091,8 @@ class AsyncTasksClient:
 
         Returns
         -------
-        DataManagerTaskSerializer
-            Task
+        RoleBasedTask
+
 
         Examples
         --------
@@ -853,6 +1102,7 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -872,9 +1122,9 @@ class AsyncTasksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    DataManagerTaskSerializer,
-                    parse_obj_as(
-                        type_=DataManagerTaskSerializer,  # type: ignore
+                    RoleBasedTask,
+                    construct_type(
+                        type_=RoleBasedTask,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -885,12 +1135,7 @@ class AsyncTasksClient:
 
     async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a task in Label Studio.
-
-        You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
-
-        <Warning>This action cannot be undone.</Warning>
+        Delete a task in Label Studio. This action cannot be undone!
 
         Parameters
         ----------
@@ -912,6 +1157,7 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -940,34 +1186,89 @@ class AsyncTasksClient:
         self,
         id: str,
         *,
-        data: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        inner_id: typing.Optional[int] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        completed_at: typing.Optional[dt.datetime] = OMIT,
+        predictions_score: typing.Optional[float] = OMIT,
+        avg_lead_time: typing.Optional[float] = OMIT,
+        draft_exists: typing.Optional[bool] = OMIT,
+        reviewed: typing.Optional[bool] = OMIT,
+        reviews_accepted: typing.Optional[int] = OMIT,
+        reviews_rejected: typing.Optional[int] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        data: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
+        unresolved_comment_count: typing.Optional[int] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
         project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> BaseTask:
+    ) -> RoleBasedTask:
         """
-
         Update the attributes of an existing labeling task.
-
-        You will need the task ID. This is available from the Label Studio URL when viewing the task, or you can retrieve it programmatically with [Get task list](list).
 
         Parameters
         ----------
         id : str
             Task ID
 
-        data : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Task data dictionary with arbitrary keys and values
+        inner_id : typing.Optional[int]
+
+        cancelled_annotations : typing.Optional[int]
+
+        total_annotations : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        completed_at : typing.Optional[dt.datetime]
+
+        predictions_score : typing.Optional[float]
+
+        avg_lead_time : typing.Optional[float]
+
+        draft_exists : typing.Optional[bool]
+
+        reviewed : typing.Optional[bool]
+
+        reviews_accepted : typing.Optional[int]
+
+        reviews_rejected : typing.Optional[int]
+
+        ground_truth : typing.Optional[bool]
+
+        data : typing.Optional[typing.Optional[typing.Any]]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        is_labeled : typing.Optional[bool]
+            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+
+        overlap : typing.Optional[int]
+            Number of distinct annotators that processed the current task
+
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
+
+        unresolved_comment_count : typing.Optional[int]
+            Number of unresolved comments in the task including all annotations
+
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
 
         project : typing.Optional[int]
-            Project ID
+            Project ID for this task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        BaseTask
-            Updated task
+        RoleBasedTask
+
 
         Examples
         --------
@@ -977,17 +1278,13 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.tasks.update(
                 id="id",
-                data={
-                    "image": "https://example.com/image.jpg",
-                    "text": "Hello, world!",
-                },
-                project=1,
             )
 
 
@@ -997,7 +1294,25 @@ class AsyncTasksClient:
             f"api/tasks/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
+                "inner_id": inner_id,
+                "cancelled_annotations": cancelled_annotations,
+                "total_annotations": total_annotations,
+                "total_predictions": total_predictions,
+                "completed_at": completed_at,
+                "predictions_score": predictions_score,
+                "avg_lead_time": avg_lead_time,
+                "draft_exists": draft_exists,
+                "reviewed": reviewed,
+                "reviews_accepted": reviews_accepted,
+                "reviews_rejected": reviews_rejected,
+                "ground_truth": ground_truth,
                 "data": data,
+                "meta": meta,
+                "is_labeled": is_labeled,
+                "overlap": overlap,
+                "comment_count": comment_count,
+                "unresolved_comment_count": unresolved_comment_count,
+                "last_comment_updated_at": last_comment_updated_at,
                 "project": project,
             },
             headers={
@@ -1009,9 +1324,9 @@ class AsyncTasksClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    BaseTask,
-                    parse_obj_as(
-                        type_=BaseTask,  # type: ignore
+                    RoleBasedTask,
+                    construct_type(
+                        type_=RoleBasedTask,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

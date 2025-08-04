@@ -9,13 +9,22 @@ from .utilities import validate_response
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
+            "id": 1,
+            "created_by": {
+                "id": 1,
+                "first_name": "first_name",
+                "last_name": "last_name",
+                "email": "email",
+                "avatar": "avatar",
+            },
+            "model_params": "model_params",
             "provider": "OpenAI",
-            "api_key": "api_key",
             "deployment_name": "deployment_name",
             "endpoint": "endpoint",
+            "google_project_id": "google_project_id",
+            "google_location": "google_location",
+            "cached_available_models": "cached_available_models",
             "scope": "Organization",
-            "organization": 1,
-            "created_by": 1,
             "created_at": "2024-01-15T09:30:00Z",
             "updated_at": "2024-01-15T09:30:00Z",
             "is_internal": True,
@@ -24,19 +33,23 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "budget_reset_period": "Monthly",
             "budget_total_spent": 1.1,
             "budget_alert_threshold": 1.1,
+            "organization": 1,
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
+                "id": "integer",
+                "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+                "model_params": None,
                 "provider": None,
-                "api_key": None,
                 "deployment_name": None,
                 "endpoint": None,
+                "google_project_id": None,
+                "google_location": None,
+                "cached_available_models": None,
                 "scope": None,
-                "organization": "integer",
-                "created_by": "integer",
                 "created_at": "datetime",
                 "updated_at": "datetime",
                 "is_internal": None,
@@ -45,6 +58,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "budget_reset_period": None,
                 "budget_total_spent": None,
                 "budget_alert_threshold": None,
+                "organization": "integer",
             }
         },
     )
@@ -57,13 +71,22 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
+        "id": 1,
+        "created_by": {
+            "id": 1,
+            "first_name": "first_name",
+            "last_name": "last_name",
+            "email": "email",
+            "avatar": "avatar",
+        },
+        "model_params": "model_params",
         "provider": "OpenAI",
-        "api_key": "api_key",
         "deployment_name": "deployment_name",
         "endpoint": "endpoint",
+        "google_project_id": "google_project_id",
+        "google_location": "google_location",
+        "cached_available_models": "cached_available_models",
         "scope": "Organization",
-        "organization": 1,
-        "created_by": 1,
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
         "is_internal": True,
@@ -72,15 +95,19 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "budget_reset_period": "Monthly",
         "budget_total_spent": 1.1,
         "budget_alert_threshold": 1.1,
+        "organization": 1,
     }
     expected_types: typing.Any = {
+        "id": "integer",
+        "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "model_params": None,
         "provider": None,
-        "api_key": None,
         "deployment_name": None,
         "endpoint": None,
+        "google_project_id": None,
+        "google_location": None,
+        "cached_available_models": None,
         "scope": None,
-        "organization": "integer",
-        "created_by": "integer",
         "created_at": "datetime",
         "updated_at": "datetime",
         "is_internal": None,
@@ -89,23 +116,33 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "budget_reset_period": None,
         "budget_total_spent": None,
         "budget_alert_threshold": None,
+        "organization": "integer",
     }
-    response = client.model_providers.create(provider="OpenAI")
+    response = client.model_providers.create()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.model_providers.create(provider="OpenAI")
+    async_response = await async_client.model_providers.create()
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
+        "id": 1,
+        "created_by": {
+            "id": 1,
+            "first_name": "first_name",
+            "last_name": "last_name",
+            "email": "email",
+            "avatar": "avatar",
+        },
+        "model_params": "model_params",
         "provider": "OpenAI",
-        "api_key": "api_key",
         "deployment_name": "deployment_name",
         "endpoint": "endpoint",
+        "google_project_id": "google_project_id",
+        "google_location": "google_location",
+        "cached_available_models": "cached_available_models",
         "scope": "Organization",
-        "organization": 1,
-        "created_by": 1,
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
         "is_internal": True,
@@ -114,15 +151,19 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "budget_reset_period": "Monthly",
         "budget_total_spent": 1.1,
         "budget_alert_threshold": 1.1,
+        "organization": 1,
     }
     expected_types: typing.Any = {
+        "id": "integer",
+        "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "model_params": None,
         "provider": None,
-        "api_key": None,
         "deployment_name": None,
         "endpoint": None,
+        "google_project_id": None,
+        "google_location": None,
+        "cached_available_models": None,
         "scope": None,
-        "organization": "integer",
-        "created_by": "integer",
         "created_at": "datetime",
         "updated_at": "datetime",
         "is_internal": None,
@@ -131,36 +172,46 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "budget_reset_period": None,
         "budget_total_spent": None,
         "budget_alert_threshold": None,
+        "organization": "integer",
     }
-    response = client.model_providers.get(pk=1)
+    response = client.model_providers.get(id="id")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.model_providers.get(pk=1)
+    async_response = await async_client.model_providers.get(id="id")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.model_providers.delete(pk=1)  # type: ignore[func-returns-value]
+        client.model_providers.delete(id="id")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.model_providers.delete(pk=1)  # type: ignore[func-returns-value]
+        await async_client.model_providers.delete(id="id")  # type: ignore[func-returns-value]
         is None
     )
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
+        "id": 1,
+        "created_by": {
+            "id": 1,
+            "first_name": "first_name",
+            "last_name": "last_name",
+            "email": "email",
+            "avatar": "avatar",
+        },
+        "model_params": "model_params",
         "provider": "OpenAI",
-        "api_key": "api_key",
         "deployment_name": "deployment_name",
         "endpoint": "endpoint",
+        "google_project_id": "google_project_id",
+        "google_location": "google_location",
+        "cached_available_models": "cached_available_models",
         "scope": "Organization",
-        "organization": 1,
-        "created_by": 1,
         "created_at": "2024-01-15T09:30:00Z",
         "updated_at": "2024-01-15T09:30:00Z",
         "is_internal": True,
@@ -169,15 +220,19 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "budget_reset_period": "Monthly",
         "budget_total_spent": 1.1,
         "budget_alert_threshold": 1.1,
+        "organization": 1,
     }
     expected_types: typing.Any = {
+        "id": "integer",
+        "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "model_params": None,
         "provider": None,
-        "api_key": None,
         "deployment_name": None,
         "endpoint": None,
+        "google_project_id": None,
+        "google_location": None,
+        "cached_available_models": None,
         "scope": None,
-        "organization": "integer",
-        "created_by": "integer",
         "created_at": "datetime",
         "updated_at": "datetime",
         "is_internal": None,
@@ -186,9 +241,20 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "budget_reset_period": None,
         "budget_total_spent": None,
         "budget_alert_threshold": None,
+        "organization": "integer",
     }
-    response = client.model_providers.update(pk=1, provider="OpenAI")
+    response = client.model_providers.update(id="id")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.model_providers.update(pk=1, provider="OpenAI")
+    async_response = await async_client.model_providers.update(id="id")
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_list_model_provider_choices(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"provider_choices": ["provider_choices"]}
+    expected_types: typing.Any = {"provider_choices": ("list", {0: None})}
+    response = client.model_providers.list_model_provider_choices()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.model_providers.list_model_provider_choices()
     validate_response(async_response, expected_response, expected_types)

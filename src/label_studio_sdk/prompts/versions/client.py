@@ -3,16 +3,12 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.prompt_version import PromptVersion
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import parse_obj_as
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.prompt_version_provider import PromptVersionProvider
-from ...types.prompt_version_created_by import PromptVersionCreatedBy
-import datetime as dt
-from ...types.prompt_version_organization import PromptVersionOrganization
-from ...core.serialization import convert_and_respect_annotation_metadata
+from ...types.third_party_model_version import ThirdPartyModelVersion
+from ...core.unchecked_base_model import construct_type
+from ...types.provider_enum import ProviderEnum
 from ...types.inference_run_cost_estimate import InferenceRunCostEstimate
 from ...types.refined_prompt_response import RefinedPromptResponse
 from ...core.client_wrapper import AsyncClientWrapper
@@ -25,216 +21,13 @@ class VersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[PromptVersion]:
+    def get_default_version_name(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Get a list of prompt versions.
+        Get default prompt version name
 
         Parameters
         ----------
         id : int
-            Prompt ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[PromptVersion]
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.prompts.versions.list(
-            id=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[PromptVersion],
-                    parse_obj_as(
-                        type_=typing.List[PromptVersion],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def create(
-        self,
-        id: int,
-        *,
-        title: typing.Optional[str] = OMIT,
-        parent_model: typing.Optional[int] = OMIT,
-        model_provider_connection: typing.Optional[int] = OMIT,
-        prompt: typing.Optional[str] = OMIT,
-        provider: typing.Optional[PromptVersionProvider] = OMIT,
-        provider_model_id: typing.Optional[str] = OMIT,
-        created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
-        organization: typing.Optional[PromptVersionOrganization] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> PromptVersion:
-        """
-        Create a new version of a prompt.
-
-        Parameters
-        ----------
-        id : int
-            Prompt ID
-
-        title : typing.Optional[str]
-
-        parent_model : typing.Optional[int]
-
-        model_provider_connection : typing.Optional[int]
-
-        prompt : typing.Optional[str]
-
-        provider : typing.Optional[PromptVersionProvider]
-
-        provider_model_id : typing.Optional[str]
-
-        created_by : typing.Optional[PromptVersionCreatedBy]
-
-        created_at : typing.Optional[dt.datetime]
-
-        updated_at : typing.Optional[dt.datetime]
-
-        organization : typing.Optional[PromptVersionOrganization]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PromptVersion
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.prompts.versions.create(
-            id=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions",
-            method="POST",
-            json={
-                "title": title,
-                "parent_model": parent_model,
-                "model_provider_connection": model_provider_connection,
-                "prompt": prompt,
-                "provider": provider,
-                "provider_model_id": provider_model_id,
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptVersionCreatedBy, direction="write"
-                ),
-                "created_at": created_at,
-                "updated_at": updated_at,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptVersionOrganization, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    PromptVersion,
-                    parse_obj_as(
-                        type_=PromptVersion,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def get(
-        self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> PromptVersion:
-        """
-        Get a prompt version by ID.
-
-        Parameters
-        ----------
-        id : int
-            Prompt ID
-
-        version_id : int
-            Prompt Version ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PromptVersion
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.prompts.versions.get(
-            id=1,
-            version_id=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    PromptVersion,
-                    parse_obj_as(
-                        type_=PromptVersion,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def delete(self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Delete a prompt version by ID.
-
-        Parameters
-        ----------
-        id : int
-            Prompt ID
-
-        version_id : int
-            Prompt Version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -249,14 +42,275 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.prompts.versions.delete(
+        client.prompts.versions.get_default_version_name(
             id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/get-default-version-name",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list(
+        self,
+        prompt_id_: int,
+        *,
+        prompt_id: int,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[ThirdPartyModelVersion]:
+        """
+        List all versions of a prompt.
+
+        Parameters
+        ----------
+        prompt_id_ : int
+
+        prompt_id : int
+            A unique integer value identifying the model ID to list versions for.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ThirdPartyModelVersion]
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.prompts.versions.list(
+            prompt_id_=1,
+            prompt_id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id_)}/versions",
+            method="GET",
+            params={
+                "ordering": ordering,
+                "prompt_id": prompt_id,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[ThirdPartyModelVersion],
+                    construct_type(
+                        type_=typing.List[ThirdPartyModelVersion],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def create(
+        self,
+        prompt_id: int,
+        *,
+        title: str,
+        prompt: str,
+        provider_model_id: str,
+        parent_model: typing.Optional[int] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ThirdPartyModelVersion:
+        """
+        Create a new version of a prompt.
+
+        Parameters
+        ----------
+        prompt_id : int
+
+        title : str
+            Model name
+
+        prompt : str
+            Prompt to execute
+
+        provider_model_id : str
+            The model ID to use within the given provider, e.g. gpt-3.5
+
+        parent_model : typing.Optional[int]
+            Parent model interface ID
+
+        provider : typing.Optional[ProviderEnum]
+            The model provider to use e.g. OpenAI
+
+            * `OpenAI` - OpenAI
+            * `AzureOpenAI` - AzureOpenAI
+            * `AzureAIFoundry` - AzureAIFoundry
+            * `VertexAI` - VertexAI
+            * `Gemini` - Gemini
+            * `Anthropic` - Anthropic
+            * `Custom` - Custom
+
+        model_provider_connection : typing.Optional[int]
+
+        organization : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ThirdPartyModelVersion
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.prompts.versions.create(
+            prompt_id=1,
+            title="title",
+            prompt="prompt",
+            provider_model_id="provider_model_id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions",
+            method="POST",
+            json={
+                "parent_model": parent_model,
+                "title": title,
+                "prompt": prompt,
+                "provider": provider,
+                "provider_model_id": provider_model_id,
+                "model_provider_connection": model_provider_connection,
+                "organization": organization,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ThirdPartyModelVersion,
+                    construct_type(
+                        type_=ThirdPartyModelVersion,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(
+        self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ThirdPartyModelVersion:
+        """
+        Retrieve a specific prompt of a model.
+
+        Parameters
+        ----------
+        prompt_id : int
+
+        version_id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ThirdPartyModelVersion
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.prompts.versions.get(
+            prompt_id=1,
             version_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ThirdPartyModelVersion,
+                    construct_type(
+                        type_=ThirdPartyModelVersion,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete(
+        self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Delete a prompt version by ID
+
+        Parameters
+        ----------
+        prompt_id : int
+
+        version_id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.prompts.versions.delete(
+            prompt_id=1,
+            version_id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -270,58 +324,60 @@ class VersionsClient:
 
     def update(
         self,
-        id: int,
+        prompt_id: int,
         version_id: int,
         *,
-        title: typing.Optional[str] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
-        model_provider_connection: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         prompt: typing.Optional[str] = OMIT,
-        provider: typing.Optional[PromptVersionProvider] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
-        created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
-        organization: typing.Optional[PromptVersionOrganization] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PromptVersion:
+    ) -> ThirdPartyModelVersion:
         """
-        Update a prompt version by ID.
+        Update a specific prompt version by ID.
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        prompt_id : int
 
         version_id : int
-            Prompt Version ID
-
-        title : typing.Optional[str]
 
         parent_model : typing.Optional[int]
+            Parent model interface ID
+
+        title : typing.Optional[str]
+            Model name
+
+        prompt : typing.Optional[str]
+            Prompt to execute
+
+        provider : typing.Optional[ProviderEnum]
+            The model provider to use e.g. OpenAI
+
+            * `OpenAI` - OpenAI
+            * `AzureOpenAI` - AzureOpenAI
+            * `AzureAIFoundry` - AzureAIFoundry
+            * `VertexAI` - VertexAI
+            * `Gemini` - Gemini
+            * `Anthropic` - Anthropic
+            * `Custom` - Custom
+
+        provider_model_id : typing.Optional[str]
+            The model ID to use within the given provider, e.g. gpt-3.5
 
         model_provider_connection : typing.Optional[int]
 
-        prompt : typing.Optional[str]
-
-        provider : typing.Optional[PromptVersionProvider]
-
-        provider_model_id : typing.Optional[str]
-
-        created_by : typing.Optional[PromptVersionCreatedBy]
-
-        created_at : typing.Optional[dt.datetime]
-
-        updated_at : typing.Optional[dt.datetime]
-
-        organization : typing.Optional[PromptVersionOrganization]
+        organization : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        PromptVersion
+        ThirdPartyModelVersion
 
 
         Examples
@@ -330,30 +386,27 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.update(
-            id=1,
+            prompt_id=1,
             version_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="PATCH",
             json={
-                "title": title,
                 "parent_model": parent_model,
-                "model_provider_connection": model_provider_connection,
+                "title": title,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptVersionCreatedBy, direction="write"
-                ),
-                "created_at": created_at,
-                "updated_at": updated_at,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptVersionOrganization, direction="write"
-                ),
+                "model_provider_connection": model_provider_connection,
+                "organization": organization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -361,9 +414,9 @@ class VersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    PromptVersion,
-                    parse_obj_as(
-                        type_=PromptVersion,  # type: ignore
+                    ThirdPartyModelVersion,
+                    construct_type(
+                        type_=ThirdPartyModelVersion,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -373,30 +426,16 @@ class VersionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def cost_estimate(
-        self,
-        prompt_id: int,
-        version_id: int,
-        *,
-        project_id: int,
-        project_subset: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> InferenceRunCostEstimate:
         """
-        Get cost estimate for running a prompt version on a particular project/subset
+        Get an estimate of the cost for making an inference run on the selected Prompt Version and Project/ProjectSubset
 
         Parameters
         ----------
         prompt_id : int
-            Prompt ID
 
         version_id : int
-            Prompt Version ID
-
-        project_id : int
-            ID of the project to get an estimate for running on
-
-        project_subset : int
-            Subset of the project to get an estimate for running on (e.g. 'All', 'Sample', or 'HasGT')
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -404,7 +443,7 @@ class VersionsClient:
         Returns
         -------
         InferenceRunCostEstimate
-
+            Cost estimate response
 
         Examples
         --------
@@ -412,28 +451,23 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.cost_estimate(
             prompt_id=1,
             version_id=1,
-            project_id=1,
-            project_subset=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/cost-estimate",
-            method="POST",
-            params={
-                "project_id": project_id,
-                "project_subset": project_subset,
-            },
+            method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     InferenceRunCostEstimate,
-                    parse_obj_as(
+                    construct_type(
                         type_=InferenceRunCostEstimate,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -448,7 +482,7 @@ class VersionsClient:
         prompt_id: int,
         version_id: int,
         *,
-        refinement_job_id: str,
+        refinement_job_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
@@ -457,12 +491,10 @@ class VersionsClient:
         Parameters
         ----------
         prompt_id : int
-            Prompt ID
 
         version_id : int
-            Prompt Version ID
 
-        refinement_job_id : str
+        refinement_job_id : typing.Optional[str]
             Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
 
         request_options : typing.Optional[RequestOptions]
@@ -471,7 +503,7 @@ class VersionsClient:
         Returns
         -------
         RefinedPromptResponse
-
+            Refined prompt response
 
         Examples
         --------
@@ -479,11 +511,11 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.get_refined_prompt(
             prompt_id=1,
             version_id=1,
-            refinement_job_id="refinement_job_id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -498,7 +530,7 @@ class VersionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RefinedPromptResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=RefinedPromptResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -513,10 +545,10 @@ class VersionsClient:
         prompt_id: int,
         version_id: int,
         *,
+        teacher_model_provider_connection_id: int,
+        teacher_model_name: str,
+        project_id: int,
         async_: typing.Optional[bool] = None,
-        teacher_model_provider_connection_id: typing.Optional[int] = OMIT,
-        teacher_model_name: typing.Optional[str] = OMIT,
-        project_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
@@ -525,22 +557,20 @@ class VersionsClient:
         Parameters
         ----------
         prompt_id : int
-            Prompt ID
 
         version_id : int
-            Base Prompt Version ID
 
-        async_ : typing.Optional[bool]
-            Run the refinement job asynchronously
-
-        teacher_model_provider_connection_id : typing.Optional[int]
+        teacher_model_provider_connection_id : int
             Model Provider Connection ID to use to refine the prompt
 
-        teacher_model_name : typing.Optional[str]
+        teacher_model_name : str
             Name of the model to use to refine the prompt
 
-        project_id : typing.Optional[int]
+        project_id : int
             Project ID to target the refined prompt for
+
+        async_ : typing.Optional[bool]
+            Whether to run the refinement asynchronously
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -548,7 +578,7 @@ class VersionsClient:
         Returns
         -------
         RefinedPromptResponse
-
+            Refined prompt response
 
         Examples
         --------
@@ -556,10 +586,14 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.refine_prompt(
             prompt_id=1,
             version_id=1,
+            teacher_model_provider_connection_id=1,
+            teacher_model_name="teacher_model_name",
+            project_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -583,7 +617,7 @@ class VersionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RefinedPromptResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=RefinedPromptResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -598,244 +632,15 @@ class AsyncVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(
+    async def get_default_version_name(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[PromptVersion]:
-        """
-        Get a list of prompt versions.
-
-        Parameters
-        ----------
-        id : int
-            Prompt ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[PromptVersion]
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.prompts.versions.list(
-                id=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[PromptVersion],
-                    parse_obj_as(
-                        type_=typing.List[PromptVersion],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def create(
-        self,
-        id: int,
-        *,
-        title: typing.Optional[str] = OMIT,
-        parent_model: typing.Optional[int] = OMIT,
-        model_provider_connection: typing.Optional[int] = OMIT,
-        prompt: typing.Optional[str] = OMIT,
-        provider: typing.Optional[PromptVersionProvider] = OMIT,
-        provider_model_id: typing.Optional[str] = OMIT,
-        created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
-        organization: typing.Optional[PromptVersionOrganization] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> PromptVersion:
-        """
-        Create a new version of a prompt.
-
-        Parameters
-        ----------
-        id : int
-            Prompt ID
-
-        title : typing.Optional[str]
-
-        parent_model : typing.Optional[int]
-
-        model_provider_connection : typing.Optional[int]
-
-        prompt : typing.Optional[str]
-
-        provider : typing.Optional[PromptVersionProvider]
-
-        provider_model_id : typing.Optional[str]
-
-        created_by : typing.Optional[PromptVersionCreatedBy]
-
-        created_at : typing.Optional[dt.datetime]
-
-        updated_at : typing.Optional[dt.datetime]
-
-        organization : typing.Optional[PromptVersionOrganization]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PromptVersion
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.prompts.versions.create(
-                id=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions",
-            method="POST",
-            json={
-                "title": title,
-                "parent_model": parent_model,
-                "model_provider_connection": model_provider_connection,
-                "prompt": prompt,
-                "provider": provider,
-                "provider_model_id": provider_model_id,
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptVersionCreatedBy, direction="write"
-                ),
-                "created_at": created_at,
-                "updated_at": updated_at,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptVersionOrganization, direction="write"
-                ),
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    PromptVersion,
-                    parse_obj_as(
-                        type_=PromptVersion,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get(
-        self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> PromptVersion:
-        """
-        Get a prompt version by ID.
-
-        Parameters
-        ----------
-        id : int
-            Prompt ID
-
-        version_id : int
-            Prompt Version ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PromptVersion
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.prompts.versions.get(
-                id=1,
-                version_id=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    PromptVersion,
-                    parse_obj_as(
-                        type_=PromptVersion,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def delete(
-        self, id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        Delete a prompt version by ID.
+        Get default prompt version name
 
         Parameters
         ----------
         id : int
-            Prompt ID
-
-        version_id : int
-            Prompt Version ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -852,12 +657,246 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.prompts.versions.delete(
+            await client.prompts.versions.get_default_version_name(
                 id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/get-default-version-name",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list(
+        self,
+        prompt_id_: int,
+        *,
+        prompt_id: int,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[ThirdPartyModelVersion]:
+        """
+        List all versions of a prompt.
+
+        Parameters
+        ----------
+        prompt_id_ : int
+
+        prompt_id : int
+            A unique integer value identifying the model ID to list versions for.
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ThirdPartyModelVersion]
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.versions.list(
+                prompt_id_=1,
+                prompt_id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id_)}/versions",
+            method="GET",
+            params={
+                "ordering": ordering,
+                "prompt_id": prompt_id,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[ThirdPartyModelVersion],
+                    construct_type(
+                        type_=typing.List[ThirdPartyModelVersion],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def create(
+        self,
+        prompt_id: int,
+        *,
+        title: str,
+        prompt: str,
+        provider_model_id: str,
+        parent_model: typing.Optional[int] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ThirdPartyModelVersion:
+        """
+        Create a new version of a prompt.
+
+        Parameters
+        ----------
+        prompt_id : int
+
+        title : str
+            Model name
+
+        prompt : str
+            Prompt to execute
+
+        provider_model_id : str
+            The model ID to use within the given provider, e.g. gpt-3.5
+
+        parent_model : typing.Optional[int]
+            Parent model interface ID
+
+        provider : typing.Optional[ProviderEnum]
+            The model provider to use e.g. OpenAI
+
+            * `OpenAI` - OpenAI
+            * `AzureOpenAI` - AzureOpenAI
+            * `AzureAIFoundry` - AzureAIFoundry
+            * `VertexAI` - VertexAI
+            * `Gemini` - Gemini
+            * `Anthropic` - Anthropic
+            * `Custom` - Custom
+
+        model_provider_connection : typing.Optional[int]
+
+        organization : typing.Optional[int]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ThirdPartyModelVersion
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.versions.create(
+                prompt_id=1,
+                title="title",
+                prompt="prompt",
+                provider_model_id="provider_model_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions",
+            method="POST",
+            json={
+                "parent_model": parent_model,
+                "title": title,
+                "prompt": prompt,
+                "provider": provider,
+                "provider_model_id": provider_model_id,
+                "model_provider_connection": model_provider_connection,
+                "organization": organization,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ThirdPartyModelVersion,
+                    construct_type(
+                        type_=ThirdPartyModelVersion,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(
+        self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ThirdPartyModelVersion:
+        """
+        Retrieve a specific prompt of a model.
+
+        Parameters
+        ----------
+        prompt_id : int
+
+        version_id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ThirdPartyModelVersion
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.versions.get(
+                prompt_id=1,
                 version_id=1,
             )
 
@@ -865,7 +904,66 @@ class AsyncVersionsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ThirdPartyModelVersion,
+                    construct_type(
+                        type_=ThirdPartyModelVersion,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete(
+        self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Delete a prompt version by ID
+
+        Parameters
+        ----------
+        prompt_id : int
+
+        version_id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.versions.delete(
+                prompt_id=1,
+                version_id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -879,58 +977,60 @@ class AsyncVersionsClient:
 
     async def update(
         self,
-        id: int,
+        prompt_id: int,
         version_id: int,
         *,
-        title: typing.Optional[str] = OMIT,
         parent_model: typing.Optional[int] = OMIT,
-        model_provider_connection: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         prompt: typing.Optional[str] = OMIT,
-        provider: typing.Optional[PromptVersionProvider] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         provider_model_id: typing.Optional[str] = OMIT,
-        created_by: typing.Optional[PromptVersionCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
-        organization: typing.Optional[PromptVersionOrganization] = OMIT,
+        model_provider_connection: typing.Optional[int] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PromptVersion:
+    ) -> ThirdPartyModelVersion:
         """
-        Update a prompt version by ID.
+        Update a specific prompt version by ID.
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        prompt_id : int
 
         version_id : int
-            Prompt Version ID
-
-        title : typing.Optional[str]
 
         parent_model : typing.Optional[int]
+            Parent model interface ID
+
+        title : typing.Optional[str]
+            Model name
+
+        prompt : typing.Optional[str]
+            Prompt to execute
+
+        provider : typing.Optional[ProviderEnum]
+            The model provider to use e.g. OpenAI
+
+            * `OpenAI` - OpenAI
+            * `AzureOpenAI` - AzureOpenAI
+            * `AzureAIFoundry` - AzureAIFoundry
+            * `VertexAI` - VertexAI
+            * `Gemini` - Gemini
+            * `Anthropic` - Anthropic
+            * `Custom` - Custom
+
+        provider_model_id : typing.Optional[str]
+            The model ID to use within the given provider, e.g. gpt-3.5
 
         model_provider_connection : typing.Optional[int]
 
-        prompt : typing.Optional[str]
-
-        provider : typing.Optional[PromptVersionProvider]
-
-        provider_model_id : typing.Optional[str]
-
-        created_by : typing.Optional[PromptVersionCreatedBy]
-
-        created_at : typing.Optional[dt.datetime]
-
-        updated_at : typing.Optional[dt.datetime]
-
-        organization : typing.Optional[PromptVersionOrganization]
+        organization : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        PromptVersion
+        ThirdPartyModelVersion
 
 
         Examples
@@ -941,12 +1041,13 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.prompts.versions.update(
-                id=1,
+                prompt_id=1,
                 version_id=1,
             )
 
@@ -954,23 +1055,19 @@ class AsyncVersionsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}",
             method="PATCH",
             json={
-                "title": title,
                 "parent_model": parent_model,
-                "model_provider_connection": model_provider_connection,
+                "title": title,
                 "prompt": prompt,
                 "provider": provider,
                 "provider_model_id": provider_model_id,
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptVersionCreatedBy, direction="write"
-                ),
-                "created_at": created_at,
-                "updated_at": updated_at,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptVersionOrganization, direction="write"
-                ),
+                "model_provider_connection": model_provider_connection,
+                "organization": organization,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -978,9 +1075,9 @@ class AsyncVersionsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    PromptVersion,
-                    parse_obj_as(
-                        type_=PromptVersion,  # type: ignore
+                    ThirdPartyModelVersion,
+                    construct_type(
+                        type_=ThirdPartyModelVersion,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -990,30 +1087,16 @@ class AsyncVersionsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def cost_estimate(
-        self,
-        prompt_id: int,
-        version_id: int,
-        *,
-        project_id: int,
-        project_subset: int,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, prompt_id: int, version_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> InferenceRunCostEstimate:
         """
-        Get cost estimate for running a prompt version on a particular project/subset
+        Get an estimate of the cost for making an inference run on the selected Prompt Version and Project/ProjectSubset
 
         Parameters
         ----------
         prompt_id : int
-            Prompt ID
 
         version_id : int
-            Prompt Version ID
-
-        project_id : int
-            ID of the project to get an estimate for running on
-
-        project_subset : int
-            Subset of the project to get an estimate for running on (e.g. 'All', 'Sample', or 'HasGT')
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1021,7 +1104,7 @@ class AsyncVersionsClient:
         Returns
         -------
         InferenceRunCostEstimate
-
+            Cost estimate response
 
         Examples
         --------
@@ -1031,6 +1114,7 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1038,8 +1122,6 @@ class AsyncVersionsClient:
             await client.prompts.versions.cost_estimate(
                 prompt_id=1,
                 version_id=1,
-                project_id=1,
-                project_subset=1,
             )
 
 
@@ -1047,18 +1129,14 @@ class AsyncVersionsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/cost-estimate",
-            method="POST",
-            params={
-                "project_id": project_id,
-                "project_subset": project_subset,
-            },
+            method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     InferenceRunCostEstimate,
-                    parse_obj_as(
+                    construct_type(
                         type_=InferenceRunCostEstimate,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1073,7 +1151,7 @@ class AsyncVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
-        refinement_job_id: str,
+        refinement_job_id: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
@@ -1082,12 +1160,10 @@ class AsyncVersionsClient:
         Parameters
         ----------
         prompt_id : int
-            Prompt ID
 
         version_id : int
-            Prompt Version ID
 
-        refinement_job_id : str
+        refinement_job_id : typing.Optional[str]
             Refinement Job ID acquired from the `POST /api/prompts/{prompt_id}/versions/{version_id}/refine` endpoint
 
         request_options : typing.Optional[RequestOptions]
@@ -1096,7 +1172,7 @@ class AsyncVersionsClient:
         Returns
         -------
         RefinedPromptResponse
-
+            Refined prompt response
 
         Examples
         --------
@@ -1106,6 +1182,7 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1113,7 +1190,6 @@ class AsyncVersionsClient:
             await client.prompts.versions.get_refined_prompt(
                 prompt_id=1,
                 version_id=1,
-                refinement_job_id="refinement_job_id",
             )
 
 
@@ -1131,7 +1207,7 @@ class AsyncVersionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RefinedPromptResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=RefinedPromptResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -1146,10 +1222,10 @@ class AsyncVersionsClient:
         prompt_id: int,
         version_id: int,
         *,
+        teacher_model_provider_connection_id: int,
+        teacher_model_name: str,
+        project_id: int,
         async_: typing.Optional[bool] = None,
-        teacher_model_provider_connection_id: typing.Optional[int] = OMIT,
-        teacher_model_name: typing.Optional[str] = OMIT,
-        project_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RefinedPromptResponse:
         """
@@ -1158,22 +1234,20 @@ class AsyncVersionsClient:
         Parameters
         ----------
         prompt_id : int
-            Prompt ID
 
         version_id : int
-            Base Prompt Version ID
 
-        async_ : typing.Optional[bool]
-            Run the refinement job asynchronously
-
-        teacher_model_provider_connection_id : typing.Optional[int]
+        teacher_model_provider_connection_id : int
             Model Provider Connection ID to use to refine the prompt
 
-        teacher_model_name : typing.Optional[str]
+        teacher_model_name : str
             Name of the model to use to refine the prompt
 
-        project_id : typing.Optional[int]
+        project_id : int
             Project ID to target the refined prompt for
+
+        async_ : typing.Optional[bool]
+            Whether to run the refinement asynchronously
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1181,7 +1255,7 @@ class AsyncVersionsClient:
         Returns
         -------
         RefinedPromptResponse
-
+            Refined prompt response
 
         Examples
         --------
@@ -1191,6 +1265,7 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1198,6 +1273,9 @@ class AsyncVersionsClient:
             await client.prompts.versions.refine_prompt(
                 prompt_id=1,
                 version_id=1,
+                teacher_model_provider_connection_id=1,
+                teacher_model_name="teacher_model_name",
+                project_id=1,
             )
 
 
@@ -1224,7 +1302,7 @@ class AsyncVersionsClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RefinedPromptResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=RefinedPromptResponse,  # type: ignore
                         object_=_response.json(),
                     ),

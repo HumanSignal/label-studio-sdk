@@ -4,17 +4,13 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.model_provider_connection import ModelProviderConnection
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.model_provider_connection_provider import ModelProviderConnectionProvider
-from ..types.model_provider_connection_scope import ModelProviderConnectionScope
-from ..types.model_provider_connection_organization import ModelProviderConnectionOrganization
-from ..types.model_provider_connection_created_by import ModelProviderConnectionCreatedBy
-import datetime as dt
-from ..types.model_provider_connection_budget_reset_period import ModelProviderConnectionBudgetResetPeriod
-from ..core.serialization import convert_and_respect_annotation_metadata
+from ..types.provider_enum import ProviderEnum
+from ..types.scope_enum import ScopeEnum
 from ..core.jsonable_encoder import jsonable_encoder
+from .types.model_providers_list_model_provider_choices_response import ModelProvidersListModelProviderChoicesResponse
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -25,12 +21,17 @@ class ModelProvidersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[ModelProviderConnection]:
+    def list(
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ModelProviderConnection]:
         """
-        Get all model provider connections created by the user in the current organization.
+        List all model provider connections.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -45,19 +46,23 @@ class ModelProvidersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.model_providers.list()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/model-provider-connections/",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[ModelProviderConnection],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[ModelProviderConnection],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -70,20 +75,17 @@ class ModelProvidersClient:
     def create(
         self,
         *,
-        provider: ModelProviderConnectionProvider,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
+        auth_token: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ModelProviderConnectionScope] = OMIT,
-        organization: typing.Optional[ModelProviderConnectionOrganization] = OMIT,
-        created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        google_location: typing.Optional[str] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
         is_internal: typing.Optional[bool] = OMIT,
-        budget_limit: typing.Optional[float] = OMIT,
-        budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
-        budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
-        budget_total_spent: typing.Optional[float] = OMIT,
         budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
@@ -92,38 +94,36 @@ class ModelProvidersClient:
 
         Parameters
         ----------
-        provider : ModelProviderConnectionProvider
+        provider : typing.Optional[ProviderEnum]
 
         api_key : typing.Optional[str]
+            Model provider API key
+
+        auth_token : typing.Optional[str]
+            Model provider Auth token
 
         deployment_name : typing.Optional[str]
+            Azure OpenAI deployment name
 
         endpoint : typing.Optional[str]
+            Azure OpenAI endpoint
 
-        scope : typing.Optional[ModelProviderConnectionScope]
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
-        organization : typing.Optional[ModelProviderConnectionOrganization]
+        google_project_id : typing.Optional[str]
+            Google project ID
 
-        created_by : typing.Optional[ModelProviderConnectionCreatedBy]
+        google_location : typing.Optional[str]
+            Google project location
 
-        created_at : typing.Optional[dt.datetime]
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
 
-        updated_at : typing.Optional[dt.datetime]
+        scope : typing.Optional[ScopeEnum]
 
         is_internal : typing.Optional[bool]
-            Whether the model provider connection is internal, not visible to the user.
-
-        budget_limit : typing.Optional[float]
-            Budget limit for the model provider connection (null if unlimited)
-
-        budget_last_reset_date : typing.Optional[dt.datetime]
-            Date and time the budget was last reset
-
-        budget_reset_period : typing.Optional[ModelProviderConnectionBudgetResetPeriod]
-            Budget reset period for the model provider connection (null if not reset)
-
-        budget_total_spent : typing.Optional[float]
-            Tracked total budget spent for the given provider connection within the current budget period
+            Whether the model provider connection is internal, not visible to the user
 
         budget_alert_threshold : typing.Optional[float]
             Budget alert threshold for the given provider connection
@@ -142,10 +142,9 @@ class ModelProvidersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
-        client.model_providers.create(
-            provider="OpenAI",
-        )
+        client.model_providers.create()
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/model-provider-connections/",
@@ -153,22 +152,15 @@ class ModelProvidersClient:
             json={
                 "provider": provider,
                 "api_key": api_key,
+                "auth_token": auth_token,
                 "deployment_name": deployment_name,
                 "endpoint": endpoint,
+                "google_application_credentials": google_application_credentials,
+                "google_project_id": google_project_id,
+                "google_location": google_location,
+                "cached_available_models": cached_available_models,
                 "scope": scope,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=ModelProviderConnectionOrganization, direction="write"
-                ),
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=ModelProviderConnectionCreatedBy, direction="write"
-                ),
-                "created_at": created_at,
-                "updated_at": updated_at,
                 "is_internal": is_internal,
-                "budget_limit": budget_limit,
-                "budget_last_reset_date": budget_last_reset_date,
-                "budget_reset_period": budget_reset_period,
-                "budget_total_spent": budget_total_spent,
                 "budget_alert_threshold": budget_alert_threshold,
             },
             request_options=request_options,
@@ -178,7 +170,7 @@ class ModelProvidersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ModelProviderConnection,
-                    parse_obj_as(
+                    construct_type(
                         type_=ModelProviderConnection,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -188,14 +180,13 @@ class ModelProvidersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
         """
-        Get a model provider connection by ID.
+        Retrieve a specific model provider connection.
 
         Parameters
         ----------
-        pk : int
-            Model Provider Connection ID
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -211,13 +202,14 @@ class ModelProvidersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.model_providers.get(
-            pk=1,
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(pk)}",
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -225,7 +217,7 @@ class ModelProvidersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ModelProviderConnection,
-                    parse_obj_as(
+                    construct_type(
                         type_=ModelProviderConnection,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -235,14 +227,13 @@ class ModelProvidersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a model provider connection by ID.
+        Delete a model provider connection by ID
 
         Parameters
         ----------
-        pk : int
-            Model Provider Connection ID
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -257,13 +248,14 @@ class ModelProvidersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.model_providers.delete(
-            pk=1,
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(pk)}",
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -277,65 +269,59 @@ class ModelProvidersClient:
 
     def update(
         self,
-        pk: int,
+        id: str,
         *,
-        provider: ModelProviderConnectionProvider,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
+        auth_token: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ModelProviderConnectionScope] = OMIT,
-        organization: typing.Optional[ModelProviderConnectionOrganization] = OMIT,
-        created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        google_location: typing.Optional[str] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
         is_internal: typing.Optional[bool] = OMIT,
-        budget_limit: typing.Optional[float] = OMIT,
-        budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
-        budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
-        budget_total_spent: typing.Optional[float] = OMIT,
         budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
-        Update a model provider connection by ID.
+        Update a specific model provider connection by ID.
 
         Parameters
         ----------
-        pk : int
-            Model Provider Connection ID
+        id : str
 
-        provider : ModelProviderConnectionProvider
+        provider : typing.Optional[ProviderEnum]
 
         api_key : typing.Optional[str]
+            Model provider API key
+
+        auth_token : typing.Optional[str]
+            Model provider Auth token
 
         deployment_name : typing.Optional[str]
+            Azure OpenAI deployment name
 
         endpoint : typing.Optional[str]
+            Azure OpenAI endpoint
 
-        scope : typing.Optional[ModelProviderConnectionScope]
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
-        organization : typing.Optional[ModelProviderConnectionOrganization]
+        google_project_id : typing.Optional[str]
+            Google project ID
 
-        created_by : typing.Optional[ModelProviderConnectionCreatedBy]
+        google_location : typing.Optional[str]
+            Google project location
 
-        created_at : typing.Optional[dt.datetime]
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
 
-        updated_at : typing.Optional[dt.datetime]
+        scope : typing.Optional[ScopeEnum]
 
         is_internal : typing.Optional[bool]
-            Whether the model provider connection is internal, not visible to the user.
-
-        budget_limit : typing.Optional[float]
-            Budget limit for the model provider connection (null if unlimited)
-
-        budget_last_reset_date : typing.Optional[dt.datetime]
-            Date and time the budget was last reset
-
-        budget_reset_period : typing.Optional[ModelProviderConnectionBudgetResetPeriod]
-            Budget reset period for the model provider connection (null if not reset)
-
-        budget_total_spent : typing.Optional[float]
-            Tracked total budget spent for the given provider connection within the current budget period
+            Whether the model provider connection is internal, not visible to the user
 
         budget_alert_threshold : typing.Optional[float]
             Budget alert threshold for the given provider connection
@@ -354,35 +340,31 @@ class ModelProvidersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
         client.model_providers.update(
-            pk=1,
-            provider="OpenAI",
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(pk)}",
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
                 "provider": provider,
                 "api_key": api_key,
+                "auth_token": auth_token,
                 "deployment_name": deployment_name,
                 "endpoint": endpoint,
+                "google_application_credentials": google_application_credentials,
+                "google_project_id": google_project_id,
+                "google_location": google_location,
+                "cached_available_models": cached_available_models,
                 "scope": scope,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=ModelProviderConnectionOrganization, direction="write"
-                ),
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=ModelProviderConnectionCreatedBy, direction="write"
-                ),
-                "created_at": created_at,
-                "updated_at": updated_at,
                 "is_internal": is_internal,
-                "budget_limit": budget_limit,
-                "budget_last_reset_date": budget_last_reset_date,
-                "budget_reset_period": budget_reset_period,
-                "budget_total_spent": budget_total_spent,
                 "budget_alert_threshold": budget_alert_threshold,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -391,8 +373,53 @@ class ModelProvidersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ModelProviderConnection,
-                    parse_obj_as(
+                    construct_type(
                         type_=ModelProviderConnection,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list_model_provider_choices(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ModelProvidersListModelProviderChoicesResponse:
+        """
+        List all possible model provider choices
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProvidersListModelProviderChoicesResponse
+            List of model provider choices
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.model_providers.list_model_provider_choices()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/model-provider-connections/provider-choices",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ModelProvidersListModelProviderChoicesResponse,
+                    construct_type(
+                        type_=ModelProvidersListModelProviderChoicesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -407,13 +434,16 @@ class AsyncModelProvidersClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, request_options: typing.Optional[RequestOptions] = None
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ModelProviderConnection]:
         """
-        Get all model provider connections created by the user in the current organization.
+        List all model provider connections.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -430,6 +460,7 @@ class AsyncModelProvidersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -442,13 +473,16 @@ class AsyncModelProvidersClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/model-provider-connections/",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[ModelProviderConnection],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[ModelProviderConnection],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -461,20 +495,17 @@ class AsyncModelProvidersClient:
     async def create(
         self,
         *,
-        provider: ModelProviderConnectionProvider,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
+        auth_token: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ModelProviderConnectionScope] = OMIT,
-        organization: typing.Optional[ModelProviderConnectionOrganization] = OMIT,
-        created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        google_location: typing.Optional[str] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
         is_internal: typing.Optional[bool] = OMIT,
-        budget_limit: typing.Optional[float] = OMIT,
-        budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
-        budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
-        budget_total_spent: typing.Optional[float] = OMIT,
         budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
@@ -483,38 +514,36 @@ class AsyncModelProvidersClient:
 
         Parameters
         ----------
-        provider : ModelProviderConnectionProvider
+        provider : typing.Optional[ProviderEnum]
 
         api_key : typing.Optional[str]
+            Model provider API key
+
+        auth_token : typing.Optional[str]
+            Model provider Auth token
 
         deployment_name : typing.Optional[str]
+            Azure OpenAI deployment name
 
         endpoint : typing.Optional[str]
+            Azure OpenAI endpoint
 
-        scope : typing.Optional[ModelProviderConnectionScope]
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
-        organization : typing.Optional[ModelProviderConnectionOrganization]
+        google_project_id : typing.Optional[str]
+            Google project ID
 
-        created_by : typing.Optional[ModelProviderConnectionCreatedBy]
+        google_location : typing.Optional[str]
+            Google project location
 
-        created_at : typing.Optional[dt.datetime]
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
 
-        updated_at : typing.Optional[dt.datetime]
+        scope : typing.Optional[ScopeEnum]
 
         is_internal : typing.Optional[bool]
-            Whether the model provider connection is internal, not visible to the user.
-
-        budget_limit : typing.Optional[float]
-            Budget limit for the model provider connection (null if unlimited)
-
-        budget_last_reset_date : typing.Optional[dt.datetime]
-            Date and time the budget was last reset
-
-        budget_reset_period : typing.Optional[ModelProviderConnectionBudgetResetPeriod]
-            Budget reset period for the model provider connection (null if not reset)
-
-        budget_total_spent : typing.Optional[float]
-            Tracked total budget spent for the given provider connection within the current budget period
+            Whether the model provider connection is internal, not visible to the user
 
         budget_alert_threshold : typing.Optional[float]
             Budget alert threshold for the given provider connection
@@ -535,13 +564,12 @@ class AsyncModelProvidersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
-            await client.model_providers.create(
-                provider="OpenAI",
-            )
+            await client.model_providers.create()
 
 
         asyncio.run(main())
@@ -552,22 +580,15 @@ class AsyncModelProvidersClient:
             json={
                 "provider": provider,
                 "api_key": api_key,
+                "auth_token": auth_token,
                 "deployment_name": deployment_name,
                 "endpoint": endpoint,
+                "google_application_credentials": google_application_credentials,
+                "google_project_id": google_project_id,
+                "google_location": google_location,
+                "cached_available_models": cached_available_models,
                 "scope": scope,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=ModelProviderConnectionOrganization, direction="write"
-                ),
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=ModelProviderConnectionCreatedBy, direction="write"
-                ),
-                "created_at": created_at,
-                "updated_at": updated_at,
                 "is_internal": is_internal,
-                "budget_limit": budget_limit,
-                "budget_last_reset_date": budget_last_reset_date,
-                "budget_reset_period": budget_reset_period,
-                "budget_total_spent": budget_total_spent,
                 "budget_alert_threshold": budget_alert_threshold,
             },
             request_options=request_options,
@@ -577,7 +598,7 @@ class AsyncModelProvidersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ModelProviderConnection,
-                    parse_obj_as(
+                    construct_type(
                         type_=ModelProviderConnection,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -587,14 +608,13 @@ class AsyncModelProvidersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
         """
-        Get a model provider connection by ID.
+        Retrieve a specific model provider connection.
 
         Parameters
         ----------
-        pk : int
-            Model Provider Connection ID
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -612,19 +632,20 @@ class AsyncModelProvidersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.model_providers.get(
-                pk=1,
+                id="id",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(pk)}",
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
             method="GET",
             request_options=request_options,
         )
@@ -632,7 +653,7 @@ class AsyncModelProvidersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ModelProviderConnection,
-                    parse_obj_as(
+                    construct_type(
                         type_=ModelProviderConnection,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -642,14 +663,13 @@ class AsyncModelProvidersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a model provider connection by ID.
+        Delete a model provider connection by ID
 
         Parameters
         ----------
-        pk : int
-            Model Provider Connection ID
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -666,19 +686,20 @@ class AsyncModelProvidersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.model_providers.delete(
-                pk=1,
+                id="id",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(pk)}",
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -692,65 +713,59 @@ class AsyncModelProvidersClient:
 
     async def update(
         self,
-        pk: int,
+        id: str,
         *,
-        provider: ModelProviderConnectionProvider,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
+        auth_token: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ModelProviderConnectionScope] = OMIT,
-        organization: typing.Optional[ModelProviderConnectionOrganization] = OMIT,
-        created_by: typing.Optional[ModelProviderConnectionCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        google_location: typing.Optional[str] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
         is_internal: typing.Optional[bool] = OMIT,
-        budget_limit: typing.Optional[float] = OMIT,
-        budget_last_reset_date: typing.Optional[dt.datetime] = OMIT,
-        budget_reset_period: typing.Optional[ModelProviderConnectionBudgetResetPeriod] = OMIT,
-        budget_total_spent: typing.Optional[float] = OMIT,
         budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
-        Update a model provider connection by ID.
+        Update a specific model provider connection by ID.
 
         Parameters
         ----------
-        pk : int
-            Model Provider Connection ID
+        id : str
 
-        provider : ModelProviderConnectionProvider
+        provider : typing.Optional[ProviderEnum]
 
         api_key : typing.Optional[str]
+            Model provider API key
+
+        auth_token : typing.Optional[str]
+            Model provider Auth token
 
         deployment_name : typing.Optional[str]
+            Azure OpenAI deployment name
 
         endpoint : typing.Optional[str]
+            Azure OpenAI endpoint
 
-        scope : typing.Optional[ModelProviderConnectionScope]
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
-        organization : typing.Optional[ModelProviderConnectionOrganization]
+        google_project_id : typing.Optional[str]
+            Google project ID
 
-        created_by : typing.Optional[ModelProviderConnectionCreatedBy]
+        google_location : typing.Optional[str]
+            Google project location
 
-        created_at : typing.Optional[dt.datetime]
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
 
-        updated_at : typing.Optional[dt.datetime]
+        scope : typing.Optional[ScopeEnum]
 
         is_internal : typing.Optional[bool]
-            Whether the model provider connection is internal, not visible to the user.
-
-        budget_limit : typing.Optional[float]
-            Budget limit for the model provider connection (null if unlimited)
-
-        budget_last_reset_date : typing.Optional[dt.datetime]
-            Date and time the budget was last reset
-
-        budget_reset_period : typing.Optional[ModelProviderConnectionBudgetResetPeriod]
-            Budget reset period for the model provider connection (null if not reset)
-
-        budget_total_spent : typing.Optional[float]
-            Tracked total budget spent for the given provider connection within the current budget period
+            Whether the model provider connection is internal, not visible to the user
 
         budget_alert_threshold : typing.Optional[float]
             Budget alert threshold for the given provider connection
@@ -771,41 +786,37 @@ class AsyncModelProvidersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
         )
 
 
         async def main() -> None:
             await client.model_providers.update(
-                pk=1,
-                provider="OpenAI",
+                id="id",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(pk)}",
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
                 "provider": provider,
                 "api_key": api_key,
+                "auth_token": auth_token,
                 "deployment_name": deployment_name,
                 "endpoint": endpoint,
+                "google_application_credentials": google_application_credentials,
+                "google_project_id": google_project_id,
+                "google_location": google_location,
+                "cached_available_models": cached_available_models,
                 "scope": scope,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=ModelProviderConnectionOrganization, direction="write"
-                ),
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=ModelProviderConnectionCreatedBy, direction="write"
-                ),
-                "created_at": created_at,
-                "updated_at": updated_at,
                 "is_internal": is_internal,
-                "budget_limit": budget_limit,
-                "budget_last_reset_date": budget_last_reset_date,
-                "budget_reset_period": budget_reset_period,
-                "budget_total_spent": budget_total_spent,
                 "budget_alert_threshold": budget_alert_threshold,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -814,8 +825,61 @@ class AsyncModelProvidersClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     ModelProviderConnection,
-                    parse_obj_as(
+                    construct_type(
                         type_=ModelProviderConnection,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list_model_provider_choices(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ModelProvidersListModelProviderChoicesResponse:
+        """
+        List all possible model provider choices
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProvidersListModelProviderChoicesResponse
+            List of model provider choices
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.model_providers.list_model_provider_choices()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/model-provider-connections/provider-choices",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ModelProvidersListModelProviderChoicesResponse,
+                    construct_type(
+                        type_=ModelProvidersListModelProviderChoicesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
