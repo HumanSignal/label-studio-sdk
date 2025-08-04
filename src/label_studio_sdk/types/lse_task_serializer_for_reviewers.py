@@ -58,6 +58,9 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     reviews_accepted: typing.Optional[int] = None
     reviews_rejected: typing.Optional[int] = None
     ground_truth: typing.Optional[bool] = None
+    annotators_count: str
+    reviewers_count: str
+    comment_authors_count: str
     data: typing.Optional[typing.Any] = None
     meta: typing.Optional[typing.Optional[typing.Any]] = None
     created_at: dt.datetime = pydantic.Field()

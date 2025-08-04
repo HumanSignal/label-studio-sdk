@@ -2,14 +2,12 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .child_filter import ChildFilter
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class Filter(UncheckedBaseModel):
+class ChildFilter(UncheckedBaseModel):
     id: int
-    child_filter: typing.Optional[ChildFilter] = None
     index: typing.Optional[int] = pydantic.Field(default=None)
     """
     Display order among root filters only

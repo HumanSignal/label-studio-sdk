@@ -169,6 +169,18 @@ service:
       request:
         name: ApiOrganizationsMembershipsListRequest
         query-parameters:
+          exclude_project_id:
+            type: optional<integer>
+            docs: >-
+              Project ID to exclude users who are already associated with this
+              project (direct members, workspace members, or implicit
+              admin/owner access).
+          exclude_workspace_id:
+            type: optional<integer>
+            docs: >-
+              Workspace ID to exclude users who are already associated with this
+              workspace (direct workspace members or implicit admin/owner
+              access).
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
