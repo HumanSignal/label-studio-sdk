@@ -729,7 +729,7 @@ class LabelInterface:
 
         return True
 
-    def _validate_object(self, obj, return_errors=False):
+    def _validate_object(self, obj, return_errors=False) -> Union[bool, List[str]]:
         """
         Validates an object (annotation/prediction) and returns boolean or error messages.
 
@@ -747,7 +747,7 @@ class LabelInterface:
         else:
             return len(errors) == 0
 
-    def _validate_object_logic(self, obj):
+    def _validate_object_logic(self, obj) -> List[str]:
         """Core validation logic that returns error messages."""
         errors = []
 
@@ -783,7 +783,7 @@ class LabelInterface:
             # Validate each region
             for i, region in enumerate(result):
                 if not isinstance(region, dict):
-                    errors.append(f"Region {i} must be a dictionary")
+                    errors.append(f"Region must be a dictionary. Got {type(region)}: {region}")
                     continue
 
                 if region.get('type') != "relation":
@@ -877,11 +877,6 @@ class LabelInterface:
             errors.append(f"Region {region_index}: 'to_name' '{region['to_name']}' not found in configuration")
             return False, errors
 
-        # we should have both items present in the labeling config
-        if not control or not obj:
-            errors.append(f"Region {region_index}: Control or object not found in configuration")
-            return False, errors
-
         # Validate type matches control tag
         expected_type = control.tag.lower()
         actual_type = region["type"].lower()
@@ -944,13 +939,12 @@ class LabelInterface:
         else:
             return is_valid
 
-    def _validate_relation_logic(self, relation, regions, relation_index=0, _mapping=None):
+    def _validate_relation_logic(self, relation, regions, relation_index=0):
         """Helper method to perform relation validation logic.
         Args:
             relation (dict): The relation to validate
             regions (list): List of validated regions
             relation_index (int): Index of the relation for error reporting
-            _mapping (dict, optional): Mapping of region IDs to regions
 
         Returns:
             tuple: (is_valid, errors) where is_valid is bool and errors is list of strings.
@@ -991,7 +985,7 @@ class LabelInterface:
 
         return len(errors) == 0, errors
 
-    def validate_relation(self, relation, regions, return_errors=False, relation_index=0, _mapping=None):
+    def validate_relation(self, relation, regions, return_errors=False, relation_index=0):
         """Validates that the relation is correct and all the associated objects are provided
 
         Args:
@@ -999,13 +993,12 @@ class LabelInterface:
             regions (list): List of validated regions
             return_errors (bool): If True, returns error message string instead of boolean
             relation_index (int): Index of the relation for error reporting (used when return_errors=True)
-            _mapping (dict, optional): Mapping of region IDs to regions
 
         Returns:
             Union[bool, str]: If return_errors=False, returns True/False.
                              If return_errors=True, returns error message string or None.
         """
-        is_valid, errors = self._validate_relation_logic(relation, regions, relation_index, _mapping)
+        is_valid, errors = self._validate_relation_logic(relation, regions, relation_index)
 
         if return_errors:
             return errors
