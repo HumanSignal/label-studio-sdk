@@ -841,7 +841,7 @@ class LabelInterface:
         """
         return self._validate_object(prediction, return_errors)
 
-    def _validate_region_logic(self, region, region_index=0):
+    def _validate_region_logic(self, region, region_index=0) -> Tuple[bool, List[str]]:
         """Helper method to perform region validation logic.
 
         Args:
@@ -939,7 +939,7 @@ class LabelInterface:
         else:
             return is_valid
 
-    def _validate_relation_logic(self, relation, regions, relation_index=0):
+    def _validate_relation_logic(self, relation, regions, relation_index=0) -> Tuple[bool, List[str]]:
         """Helper method to perform relation validation logic.
         Args:
             relation (dict): The relation to validate
