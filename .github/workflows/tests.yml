@@ -24,7 +24,7 @@ on:
   workflow_dispatch:
 
 env:
-  POETRY_VERSION: 2.1.2
+  POETRY_VERSION: 2.1.4
 
 jobs:
   run_pytest:
