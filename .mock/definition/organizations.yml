@@ -86,6 +86,7 @@ service:
                 key: value
               custom_scripts_enabled: custom_scripts_enabled
               custom_scripts_editable_by: AD
+              email_notification_settings: email_notification_settings
       audiences:
         - public
     api_organizations_partial_update:
@@ -115,6 +116,7 @@ service:
               validation:
                 minLength: 1
             embed_settings: optional<unknown>
+            email_notification_settings: optional<unknown>
             token:
               type: optional<string>
               validation:
@@ -154,6 +156,7 @@ service:
                 key: value
               custom_scripts_enabled: custom_scripts_enabled
               custom_scripts_editable_by: AD
+              email_notification_settings: email_notification_settings
     api_organizations_memberships_list:
       path: /api/organizations/{id}/memberships
       method: GET
@@ -462,6 +465,7 @@ service:
                 Set to current time to disable the label stream navigation for
                 this organization. This will prevent users from going back in
                 the label stream to view previous labels.
+            email_notification_settings: optional<unknown>
         content-type: application/json
       response:
         docs: ''
@@ -485,6 +489,8 @@ service:
               annotator_reviewer_firewall_enabled_at: '2024-01-15T09:30:00Z'
               read_only_quick_view_enabled_at: '2024-01-15T09:30:00Z'
               label_stream_navigation_disabled_at: '2024-01-15T09:30:00Z'
+              email_notification_settings:
+                key: value
   source:
     openapi: openapi/openapi.yaml
 types:

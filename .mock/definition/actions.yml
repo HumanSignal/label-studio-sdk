@@ -12,8 +12,15 @@ service:
       source:
         openapi: openapi/openapi.yaml
       display-name: Get actions
+      request:
+        name: ActionsListRequest
+        query-parameters:
+          project:
+            type: integer
+            docs: Project ID
       examples:
-        - {}
+        - query-parameters:
+            project: 1
       audiences:
         - public
     create:

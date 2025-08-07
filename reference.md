@@ -2300,7 +2300,7 @@ client.users.update(
 </details>
 
 ## Actions
-<details><summary><code>client.actions.<a href="src/label_studio_sdk/actions/client.py">list</a>()</code></summary>
+<details><summary><code>client.actions.<a href="src/label_studio_sdk/actions/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2333,7 +2333,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.actions.list()
+client.actions.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -2345,6 +2347,14 @@ client.actions.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` — Project ID
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
