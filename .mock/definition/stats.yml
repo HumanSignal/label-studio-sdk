@@ -83,6 +83,9 @@ service:
       request:
         name: ApiProjectsStatsIaaRetrieveRequest
         query-parameters:
+          expand:
+            type: optional<string>
+            docs: Comma-separated list of fields to expand
           per_label:
             type: optional<boolean>
             default: false

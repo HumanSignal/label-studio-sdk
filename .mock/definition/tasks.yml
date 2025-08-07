@@ -373,6 +373,9 @@ service:
                   reviews_accepted: 1
                   reviews_rejected: 1
                   ground_truth: true
+                  annotators_count: annotators_count
+                  reviewers_count: reviewers_count
+                  comment_authors_count: comment_authors_count
                   data:
                     key: value
                   meta:
@@ -541,6 +544,9 @@ service:
               reviews_accepted: 1
               reviews_rejected: 1
               ground_truth: true
+              annotators_count: annotators_count
+              reviewers_count: reviewers_count
+              comment_authors_count: comment_authors_count
               data:
                 key: value
               meta:
@@ -689,6 +695,9 @@ service:
               reviews_accepted: 1
               reviews_rejected: 1
               ground_truth: true
+              annotators_count: annotators_count
+              reviewers_count: reviewers_count
+              comment_authors_count: comment_authors_count
               data:
                 key: value
               meta:
