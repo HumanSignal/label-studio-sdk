@@ -287,10 +287,9 @@ class ControlTag(LabelStudioTag):
 
     def _validate_value_labels(self, value):
         """ """
-        if self._label_attr_name not in value:
-            return False
-
-        return self._validate_labels(value.get(self._label_attr_name))
+        if hasattr(self, "_label_attr_name") and self._label_attr_name in value:
+            return self._validate_labels(value.get(self._label_attr_name))
+        return False
 
     def validate_value(self, value: dict) -> bool:
         """
@@ -971,6 +970,24 @@ class TaxonomyTag(ControlTag):
     tag: str = "Taxonomy"
     _value_class: Type[TaxonomyValue] = TaxonomyValue
     _label_attr_name: str = "taxonomy"
+
+    def _validate_value_labels(self, value):
+        """Validate taxonomy labels by flattening selected paths before subset check.
+
+        Expected value format:
+          { "taxonomy": [["A"], ["A", "B"], ...] }
+        """
+        paths = value.get("taxonomy")
+        if paths is None:
+            return False
+        if not isinstance(paths, list):
+            return False
+        flat_labels: List[str] = []
+        for path in paths:
+            if not isinstance(path, list):
+                return False
+            flat_labels.extend(path)
+        return self._validate_labels(flat_labels)
 
     def to_json_schema(self):
         """

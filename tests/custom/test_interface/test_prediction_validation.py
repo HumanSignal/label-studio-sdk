@@ -700,6 +700,46 @@ class TestPredictionValidation:
         invalid_pred["result"][0]["value"]["taxonomy"] = [["invalid_category"]]
         assert li.validate_prediction(invalid_pred) is False
 
+    def test_taxonomy_paths_validation(self):
+        """Test Taxonomy tag validation with multiple nested paths."""
+        TAXONOMY_CONFIG = """
+        <View>
+          <Text name="text" value="$text"/>
+          <Taxonomy name="taxonomy" toName="text">
+            <Choice value="Eukarya"/>
+            <Choice value="Oppossum"/>
+            <Choice value="Bacteria"/>
+            <Choice value="Archaea"/>
+          </Taxonomy>
+        </View>
+        """
+        li = LabelInterface(TAXONOMY_CONFIG)
+
+        valid_pred = {
+            "result": [
+                {
+                    "from_name": "taxonomy",
+                    "to_name": "text",
+                    "type": "taxonomy",
+                    "value": {
+                        "taxonomy": [
+                            ["Eukarya"],
+                            ["Eukarya", "Oppossum"],
+                            ["Bacteria"],
+                        ]
+                    },
+                }
+            ]
+        }
+        assert li.validate_prediction(valid_pred) is True
+
+        invalid_pred = copy.deepcopy(valid_pred)
+        invalid_pred["result"][0]["value"]["taxonomy"] = [["Invalid"]]
+        assert li.validate_prediction(invalid_pred) is False
+
+        errors = li.validate_prediction(invalid_pred, return_errors=True)
+        assert any("Invalid value for control 'taxonomy'" in e for e in errors)
+
     def test_textarea_validation(self):
         """Test TextArea tag validation"""
         li = LabelInterface(PREDICTION_TEXTAREA_CONFIG)
