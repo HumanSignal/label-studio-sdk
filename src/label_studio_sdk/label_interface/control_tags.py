@@ -498,13 +498,13 @@ class ControlTag(LabelStudioTag):
 
 
 class SpanSelection(BaseModel):
-    start: int = Field(..., ge=0)
-    end: int = Field(..., ge=0)
+    start: Union[int, str]
+    end: Union[int, str]
 
 
 class SpanSelectionOffsets(SpanSelection):
-    startOffset: int = Field(..., ge=0)
-    endOffset: int = Field(..., ge=0)
+    startOffset: Optional[int] = Field(None, ge=0)
+    endOffset: Optional[int] = Field(None, ge=0)
 
 
 class ChoicesValue(BaseModel):

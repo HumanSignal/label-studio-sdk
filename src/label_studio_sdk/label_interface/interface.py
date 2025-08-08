@@ -890,10 +890,37 @@ class LabelInterface:
         # Validate the value using control's validate_value method
         try:
             if not control.validate_value(region["value"]):
-                # Get invalid value and valid values for better error message
-                invalid_value = region["value"]
-                valid_values = self._get_valid_values_for_control(control)
-                errors.append(f"Region {region_index}: Invalid value for control '{region['from_name']}'. Got: {invalid_value}. Valid options: {valid_values}")
+                # Prefer a clearer message for rectangle geometry bounds
+                tag_lower = getattr(control, 'tag', '').lower()
+                if tag_lower in ('rectangle', 'rectanglelabels'):
+                    out_of_bounds_fields = []
+                    value = region["value"]
+                    for field in ("x", "y", "width", "height"):
+                        if field in value:
+                            try:
+                                v = float(value[field])
+                                if v < 0 or v > 100:
+                                    out_of_bounds_fields.append(f"{field} {value[field]}")
+                            except Exception:
+                                out_of_bounds_fields.append(f"{field} {value[field]}")
+                    if out_of_bounds_fields:
+                        errors.append(
+                            f"Region {region_index}: Invalid geometry for control '{region['from_name']}': "
+                            + ", ".join(out_of_bounds_fields)
+                            + " out of bounds [0, 100]"
+                        )
+                    else:
+                        invalid_value = region["value"]
+                        valid_values = self._get_valid_values_for_control(control)
+                        errors.append(
+                            f"Region {region_index}: Invalid value for control '{region['from_name']}'. Got: {invalid_value}. Valid options: {valid_values}"
+                        )
+                else:
+                    invalid_value = region["value"]
+                    valid_values = self._get_valid_values_for_control(control)
+                    errors.append(
+                        f"Region {region_index}: Invalid value for control '{region['from_name']}'. Got: {invalid_value}. Valid options: {valid_values}"
+                    )
         except Exception as e:
             errors.append(f"Region {region_index}: Error validating value for control '{region['from_name']}': {str(e)}")
 

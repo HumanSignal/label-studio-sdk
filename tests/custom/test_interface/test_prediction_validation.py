@@ -359,7 +359,7 @@ class TestPredictionValidation:
         
         # Check specific error message
         errors = li.validate_prediction(invalid_pred, return_errors=True)
-        assert any("Invalid value for control 'rectangle'" in error for error in errors)
+        assert any("Invalid geometry" in error and "out of bounds" in error for error in errors)
 
     def test_rectangle_labels_validation(self):
         """Test RectangleLabels tag validation"""
@@ -960,3 +960,73 @@ class TestPredictionValidation:
         # Check that error is in the error list
         errors = li.validate_prediction(invalid_pred, return_errors=True)
         assert any("must be a list" in error for error in errors) 
+
+    def test_rectangle_geometry_out_of_bounds_message(self):
+        """Predictions with width>100 or height>100 should produce geometry error message."""
+        CONFIG = """
+        <View>
+          <Image name="image" value="$image"/>
+          <RectangleLabels name="label" toName="image">
+            <Label value="Airplane"/>
+            <Label value="Car"/>
+          </RectangleLabels>
+        </View>
+        """
+        li = LabelInterface(CONFIG)
+
+        bad_pred = {
+            "model_version": "m0",
+            "result": [
+                {
+                    "from_name": "label",
+                    "to_name": "image",
+                    "type": "rectanglelabels",
+                    "value": {"x": 0, "y": 44.37, "width": 100.2, "height": 51.15, "rotation": 0, "rectanglelabels": ["Car"]},
+                }
+            ],
+        }
+
+        errors = li.validate_prediction(bad_pred, return_errors=True)
+        # Expect a geometry-specific error mentioning out of bounds
+        assert any("Invalid geometry" in e and "out of bounds" in e for e in errors) 
+
+    def test_hypertext_labels_with_xpath_positions(self):
+        """Labels over HyperText (valueType=url) using XPath start/end should validate."""
+        CONFIG = """
+        <View>
+          <Labels name="label" toName="html">
+            <Label value="PER"/>
+            <Label value="ORG"/>
+            <Label value="LOC"/>
+            <Label value="MISC"/>
+          </Labels>
+          <HyperText name="html" value="$text" valueType="url"/>
+        </View>
+        """
+        li = LabelInterface(CONFIG)
+
+        good_pred = {
+            "result": [
+                {
+                    "id": "r1",
+                    "type": "labels",
+                    "from_name": "label",
+                    "to_name": "html",
+                    "value": {
+                        "start": "/div[3]/div[1]/div[2]/div[1]/div[2]/div[3]/div[1]/div[1]/div[1]/p[1]/text()[1]",
+                        "end": "/div[3]/div[1]/div[2]/div[1]/div[2]/div[3]/div[1]/div[1]/div[1]/p[1]/text()[1]",
+                        "startOffset": 8,
+                        "endOffset": 17,
+                        "globalOffsets": {"start": 5377, "end": 5386},
+                        "labels": ["LOC"],
+                    },
+                }
+            ],
+        }
+        assert li.validate_prediction(good_pred) is True
+
+        bad_pred = copy.deepcopy(good_pred)
+        bad_pred["result"][0]["value"]["labels"] = ["NOT_IN_CONFIG"]
+        assert li.validate_prediction(bad_pred) is False
+        errors = li.validate_prediction(bad_pred, return_errors=True)
+        assert any("Invalid value for control 'label'" in e for e in errors) 
