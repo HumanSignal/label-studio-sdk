@@ -2,17 +2,15 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .child_filter import ChildFilter
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Filter(UncheckedBaseModel):
     id: int
-    child_filter: typing.Optional[ChildFilter] = None
     index: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Display order among root filters only
+    To keep filter order
     """
 
     column: str = pydantic.Field()
@@ -31,10 +29,6 @@ class Filter(UncheckedBaseModel):
     """
 
     value: typing.Optional[typing.Optional[typing.Any]] = None
-    parent: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Optional parent filter to create one-level hierarchy (child filters are AND-merged with parent)
-    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

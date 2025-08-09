@@ -10,12 +10,12 @@ from label_studio_sdk.actions import ActionsCreateRequestSelectedItemsExcluded
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.actions.list()  # type: ignore[func-returns-value]
+        client.actions.list(project=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.actions.list()  # type: ignore[func-returns-value]
+        await async_client.actions.list(project=1)  # type: ignore[func-returns-value]
         is None
     )
 

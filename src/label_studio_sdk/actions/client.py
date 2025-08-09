@@ -20,12 +20,15 @@ class ActionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def list(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Retrieve all the registered actions with descriptions that data manager can use.
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -41,11 +44,16 @@ class ActionsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.actions.list()
+        client.actions.list(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/dm/actions/",
             method="GET",
+            params={
+                "project": project,
+            },
             request_options=request_options,
         )
         try:
@@ -167,12 +175,15 @@ class AsyncActionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def list(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Retrieve all the registered actions with descriptions that data manager can use.
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -193,7 +204,9 @@ class AsyncActionsClient:
 
 
         async def main() -> None:
-            await client.actions.list()
+            await client.actions.list(
+                project=1,
+            )
 
 
         asyncio.run(main())
@@ -201,6 +214,9 @@ class AsyncActionsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/dm/actions/",
             method="GET",
+            params={
+                "project": project,
+            },
             request_options=request_options,
         )
         try:

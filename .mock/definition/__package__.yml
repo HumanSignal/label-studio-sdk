@@ -166,18 +166,18 @@ types:
       recordsFiltered: integer
     source:
       openapi: openapi/openapi.yaml
-  AllRolesProjectListSkipQueue:
-    discriminated: false
-    union:
-      - SkipQueueEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   AllRolesProjectListSampling:
     discriminated: false
     union:
       - SamplingEnum
+      - NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  AllRolesProjectListSkipQueue:
+    discriminated: false
+    union:
+      - SkipQueueEnum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -187,24 +187,157 @@ types:
       Serializer get numbers from project queryset annotation,
       make sure, that you use correct one(Project.objects.with_counts())
     properties:
-      id: integer
+      skipped_annotations_number: string
+      sampling: optional<AllRolesProjectListSampling>
+      num_tasks_with_annotations: string
+      enable_empty_annotation:
+        type: optional<boolean>
+        docs: Allow annotators to submit empty annotations
+      reveal_preannotations_interactively:
+        type: optional<boolean>
+        docs: Reveal pre-annotations interactively
+      is_draft:
+        type: optional<boolean>
+        docs: Whether or not the project is in the middle of being created
+      ground_truth_number:
+        type: integer
+        docs: Honeypot annotation number in project
+      reviewer_queue_total: string
       start_training_on_annotation_update:
         type: boolean
         docs: Start model training after any annotations are submitted or updated
+      show_annotation_history:
+        type: optional<boolean>
+        docs: Show annotation history to annotator
+      id: integer
+      config_suitable_for_bulk_annotation:
+        type: boolean
+        docs: Flag to detect is project ready for bulk annotation
+      description_short: string
+      config_has_control_tags:
+        type: boolean
+        docs: Flag to detect is project ready for labeling
+      has_blueprints: string
+      created_at: datetime
+      data_types: unknown
+      total_annotations_number: string
       useful_annotation_number: string
+      evaluate_predictions_automatically:
+        type: optional<boolean>
+        docs: Retrieve and display predictions when loading a task
+      show_skip_button:
+        type: optional<boolean>
+        docs: Show a skip button in interface and allow annotators to skip the task
+      workspace_title: string
+      expert_instruction:
+        type: optional<string>
+        docs: Labeling instructions in HTML format
+      color:
+        type: optional<string>
+        validation:
+          maxLength: 16
       pinned_at:
         type: optional<datetime>
         docs: Pinned date and time
-      skipped_annotations_number: string
-      workspace: string
+      queue_total: string
+      queue_done: string
+      queue_left: string
+      review_settings: ReviewSettings
       members_count: string
-      finished_task_number: integer
+      show_overlap_first: optional<boolean>
+      annotator_evaluation_minimum_tasks:
+        type: optional<integer>
+        default: 10
+        validation:
+          min: 0
+      reviewed_number: string
+      require_comment_on_skip:
+        type: optional<boolean>
+        default: false
+      prompts: string
+      title:
+        type: optional<string>
+        docs: Project name. Must be between 3 and 50 characters long.
+        validation:
+          minLength: 3
+          maxLength: 50
+      rejected: string
+      ready: string
+      model_version:
+        type: optional<string>
+        docs: Machine learning model version
+      workspace: string
+      custom_script: optional<string>
+      show_ground_truth_first: optional<boolean>
+      min_annotations_to_start_training:
+        type: optional<integer>
+        docs: >-
+          Minimum number of completed tasks after which model training is
+          started
+        validation:
+          min: -2147483648
+          max: 2147483647
+      skip_queue: optional<AllRolesProjectListSkipQueue>
+      created_by:
+        type: optional<UserSimple>
+        docs: Project owner
+      duplication_done:
+        type: optional<boolean>
+        default: false
+      review_total_tasks: string
+      pause_on_failed_annotator_evaluation:
+        type: optional<boolean>
+        default: false
+      organization: optional<integer>
+      overlap_cohort_percentage:
+        type: optional<integer>
+        validation:
+          min: -2147483648
+          max: 2147483647
+      members: string
+      description:
+        type: optional<string>
+        docs: Project description
+      duplication_status: optional<string>
       custom_task_lock_ttl:
         type: optional<integer>
         docs: TTL in seconds for task reservations, on new and existing tasks
         validation:
           min: 1
           max: 86400
+      comment_classification_config: optional<string>
+      annotator_evaluation_minimum_score:
+        type: optional<string>
+        default: '95.00'
+        validation:
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+      assignment_settings: AssignmentSettings
+      show_collab_predictions:
+        type: optional<boolean>
+        docs: If set, the annotator can view model predictions
+      total_predictions_number: integer
+      control_weights: optional<unknown>
+      blueprints: list<BlueprintList>
+      finished_task_number: integer
+      label_config:
+        type: optional<string>
+        docs: Label config in XML format. See more about it in documentation
+      annotation_limit_count:
+        type: optional<integer>
+        validation:
+          min: 1
+      is_published:
+        type: optional<boolean>
+        docs: Whether or not the project is published to annotators
+      parsed_label_config: unknown
+      task_number:
+        type: integer
+        docs: Total task number in project
+      annotation_limit_percent:
+        type: optional<string>
+        validation:
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+      allow_stream: string
       maximum_annotations:
         type: optional<integer>
         docs: >-
@@ -214,142 +347,9 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      custom_script: optional<string>
-      label_config:
-        type: optional<string>
-        docs: Label config in XML format. See more about it in documentation
-      title:
-        type: optional<string>
-        docs: Project name. Must be between 3 and 50 characters long.
-        validation:
-          minLength: 3
-          maxLength: 50
-      evaluate_predictions_automatically:
-        type: optional<boolean>
-        docs: Retrieve and display predictions when loading a task
-      allow_stream: string
-      ready: string
-      rejected: string
-      show_annotation_history:
-        type: optional<boolean>
-        docs: Show annotation history to annotator
-      total_annotations_number: string
-      show_overlap_first: optional<boolean>
-      reviewer_queue_total: string
-      description_short: string
-      task_number:
-        type: integer
-        docs: Total task number in project
-      total_predictions_number: integer
-      expert_instruction:
-        type: optional<string>
-        docs: Labeling instructions in HTML format
-      annotation_limit_count:
-        type: optional<integer>
-        validation:
-          min: 1
-      data_types: unknown
-      duplication_status: optional<string>
-      ground_truth_number:
-        type: integer
-        docs: Honeypot annotation number in project
-      overlap_cohort_percentage:
-        type: optional<integer>
-        validation:
-          min: -2147483648
-          max: 2147483647
-      model_version:
-        type: optional<string>
-        docs: Machine learning model version
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the annotator before they start
-      queue_done: string
-      config_suitable_for_bulk_annotation:
-        type: boolean
-        docs: Flag to detect is project ready for bulk annotation
-      members: string
-      comment_classification_config: optional<string>
-      annotator_evaluation_minimum_score:
-        type: optional<string>
-        default: '95.00'
-        validation:
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-      assignment_settings: AssignmentSettings
-      parsed_label_config: unknown
-      prompts: string
-      queue_total: string
-      color:
-        type: optional<string>
-        validation:
-          maxLength: 16
-      skip_queue: optional<AllRolesProjectListSkipQueue>
-      show_collab_predictions:
-        type: optional<boolean>
-        docs: If set, the annotator can view model predictions
-      annotation_limit_percent:
-        type: optional<string>
-        validation:
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-      review_total_tasks: string
-      is_published:
-        type: optional<boolean>
-        docs: Whether or not the project is published to annotators
-      num_tasks_with_annotations: string
-      control_weights: optional<unknown>
-      description:
-        type: optional<string>
-        docs: Project description
-      duplication_done:
-        type: optional<boolean>
-        default: false
-      created_by:
-        type: optional<UserSimple>
-        docs: Project owner
-      sampling: optional<AllRolesProjectListSampling>
-      require_comment_on_skip:
-        type: optional<boolean>
-        default: false
-      has_blueprints: string
-      annotator_evaluation_minimum_tasks:
-        type: optional<integer>
-        default: 10
-        validation:
-          min: 0
-      workspace_title: string
-      pause_on_failed_annotator_evaluation:
-        type: optional<boolean>
-        default: false
-      config_has_control_tags:
-        type: boolean
-        docs: Flag to detect is project ready for labeling
-      show_ground_truth_first: optional<boolean>
-      is_draft:
-        type: optional<boolean>
-        docs: Whether or not the project is in the middle of being created
-      review_settings: ReviewSettings
-      blueprints: list<BlueprintList>
-      reviewed_number: string
-      enable_empty_annotation:
-        type: optional<boolean>
-        docs: Allow annotators to submit empty annotations
-      created_at: datetime
-      reveal_preannotations_interactively:
-        type: optional<boolean>
-        docs: Reveal pre-annotations interactively
-      queue_left: string
-      min_annotations_to_start_training:
-        type: optional<integer>
-        docs: >-
-          Minimum number of completed tasks after which model training is
-          started
-        validation:
-          min: -2147483648
-          max: 2147483647
-      show_skip_button:
-        type: optional<boolean>
-        docs: Show a skip button in interface and allow annotators to skip the task
-      organization: optional<integer>
     source:
       openapi: openapi/openapi.yaml
   AnnotatedEnum:
@@ -1117,72 +1117,6 @@ types:
       * `Yearly` - Yearly
     source:
       openapi: openapi/openapi.yaml
-  ChildFilter:
-    properties:
-      id: integer
-      index:
-        type: optional<integer>
-        docs: Display order among root filters only
-        validation:
-          min: -2147483648
-          max: 2147483647
-      column:
-        type: string
-        docs: Field name
-        validation:
-          maxLength: 1024
-      type:
-        type: string
-        docs: Field type
-        validation:
-          maxLength: 1024
-      operator:
-        type: string
-        docs: Filter operator
-        validation:
-          maxLength: 1024
-      value: optional<unknown>
-      parent:
-        type: optional<integer>
-        docs: >-
-          Optional parent filter to create one-level hierarchy (child filters
-          are AND-merged with parent)
-    source:
-      openapi: openapi/openapi.yaml
-  ChildFilterRequest:
-    properties:
-      index:
-        type: optional<integer>
-        docs: Display order among root filters only
-        validation:
-          min: -2147483648
-          max: 2147483647
-      column:
-        type: string
-        docs: Field name
-        validation:
-          minLength: 1
-          maxLength: 1024
-      type:
-        type: string
-        docs: Field type
-        validation:
-          minLength: 1
-          maxLength: 1024
-      operator:
-        type: string
-        docs: Filter operator
-        validation:
-          minLength: 1
-          maxLength: 1024
-      value: optional<unknown>
-      parent:
-        type: optional<integer>
-        docs: >-
-          Optional parent filter to create one-level hierarchy (child filters
-          are AND-merged with parent)
-    source:
-      openapi: openapi/openapi.yaml
   Comment:
     properties:
       id: integer
@@ -1470,6 +1404,7 @@ types:
           Set to current time to disable the label stream navigation for this
           organization. This will prevent users from going back in the label
           stream to view previous labels.
+      email_notification_settings: optional<unknown>
     source:
       openapi: openapi/openapi.yaml
   DefaultRoleEnum:
@@ -1532,10 +1467,9 @@ types:
   Filter:
     properties:
       id: integer
-      child_filter: optional<ChildFilter>
       index:
         type: optional<integer>
-        docs: Display order among root filters only
+        docs: To keep filter order
         validation:
           min: -2147483648
           max: 2147483647
@@ -1555,11 +1489,6 @@ types:
         validation:
           maxLength: 1024
       value: optional<unknown>
-      parent:
-        type: optional<integer>
-        docs: >-
-          Optional parent filter to create one-level hierarchy (child filters
-          are AND-merged with parent)
     source:
       openapi: openapi/openapi.yaml
   FilterGroup:
@@ -1586,10 +1515,9 @@ types:
       openapi: openapi/openapi.yaml
   FilterRequest:
     properties:
-      child_filter: optional<ChildFilterRequest>
       index:
         type: optional<integer>
-        docs: Display order among root filters only
+        docs: To keep filter order
         validation:
           min: -2147483648
           max: 2147483647
@@ -1612,11 +1540,6 @@ types:
           minLength: 1
           maxLength: 1024
       value: optional<unknown>
-      parent:
-        type: optional<integer>
-        docs: >-
-          Optional parent filter to create one-level hierarchy (child filters
-          are AND-merged with parent)
     source:
       openapi: openapi/openapi.yaml
   FinishedEnum:
@@ -2901,6 +2824,7 @@ types:
 
           * `AD` - Administrator
           * `MA` - Manager
+      email_notification_settings: string
     source:
       openapi: openapi/openapi.yaml
   LseOrganizationMemberList:
