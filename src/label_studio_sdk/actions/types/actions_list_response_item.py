@@ -12,6 +12,7 @@ class ActionsListResponseItem(UncheckedBaseModel):
     title: typing.Optional[str] = None
     order: typing.Optional[int] = None
     permission: typing.Optional[str] = None
+    experimental: typing.Optional[bool] = None
     dialog: typing.Optional[ActionsListResponseItemDialog] = None
 
     if IS_PYDANTIC_V2:

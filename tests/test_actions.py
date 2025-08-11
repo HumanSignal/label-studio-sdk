@@ -16,11 +16,12 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
             "title": "Create Annotations From Predictions",
             "order": 91,
             "permission": "tasks.change",
+            "experimental": False,
             "dialog": {
                 "title": "Create Annotations From Predictions",
                 "text": "Create annotations from predictions using selected predictions set for each selected task. Your account will be assigned as an owner to those annotations.",
                 "type": "confirm",
-                "form": {"key": "value"},
+                "form": [{"key": "value"}],
             },
         }
     ]
@@ -32,7 +33,13 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
                 "title": None,
                 "order": "integer",
                 "permission": None,
-                "dialog": {"title": None, "text": None, "type": None, "form": ("dict", {0: (None, None)})},
+                "experimental": None,
+                "dialog": {
+                    "title": None,
+                    "text": None,
+                    "type": None,
+                    "form": ("list", {0: ("dict", {0: (None, None)})}),
+                },
             }
         },
     )

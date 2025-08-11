@@ -8,7 +8,7 @@ types:
       type:
         type: optional<string>
       form:
-        type: optional<map<string, unknown>>
+        type: optional<list<map<string, unknown>>>
     source:
       openapi: openapi/openapi.yaml
     inline: true
@@ -22,6 +22,8 @@ types:
         type: optional<integer>
       permission:
         type: optional<string>
+      experimental:
+        type: optional<boolean>
       dialog:
         type: optional<ActionsListResponseItemDialog>
     source:
@@ -420,6 +422,7 @@ service:
                 title: Create Annotations From Predictions
                 order: 91
                 permission: tasks.change
+                experimental: false
                 dialog:
                   title: Create Annotations From Predictions
                   text: >-
@@ -428,7 +431,7 @@ service:
                     assigned as an owner to those annotations.
                   type: confirm
                   form:
-                    key: value
+                    - key: value
       audiences:
         - public
     create:
