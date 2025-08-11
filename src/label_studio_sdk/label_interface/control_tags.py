@@ -311,6 +311,10 @@ class ControlTag(LabelStudioTag):
             True if the value is valid, False otherwise
         """
         
+        # Accept inputs that nest the payload under the control name, e.g. {"ranker": "rank": ["a", "b", "c"]}
+        if isinstance(value, dict) and self.name in value and isinstance(value[self.name], dict):
+            value = value[self.name]
+
         if hasattr(self, "_label_attr_name"):
             if not self._validate_value_labels(value):
                 return False

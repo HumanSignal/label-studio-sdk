@@ -1029,4 +1029,50 @@ class TestPredictionValidation:
         bad_pred["result"][0]["value"]["labels"] = ["NOT_IN_CONFIG"]
         assert li.validate_prediction(bad_pred) is False
         errors = li.validate_prediction(bad_pred, return_errors=True)
-        assert any("Invalid value for control 'label'" in e for e in errors) 
+        assert any("Invalid value for control 'label'" in e for e in errors)
+
+    def test_ranker_prediction_validation(self):
+        """Ranker predictions: accept both flat and nested payloads."""
+        CONFIG = """
+        <View>
+          <Text name="t" value="$text"/>
+          <Ranker name="ranker" toName="t"/>
+        </View>
+        """
+        li = LabelInterface(CONFIG)
+
+        flat_pred = {
+            "result": [
+                {
+                    "from_name": "ranker",
+                    "to_name": "t",
+                    "type": "ranker",
+                    "value": {"rank": ["a", "b", "c"]},
+                }
+            ]
+        }
+        assert li.validate_prediction(flat_pred) is True
+
+        nested_pred = {
+            "result": [
+                {
+                    "from_name": "ranker",
+                    "to_name": "t",
+                    "type": "ranker",
+                    "value": {"ranker": {"rank": ["c", "a", "b"]}},
+                }
+            ]
+        }
+        assert li.validate_prediction(nested_pred) is True
+
+        bad_pred = {
+            "result": [
+                {
+                    "from_name": "ranker",
+                    "to_name": "t",
+                    "type": "ranker",
+                    "value": {"selected": ["not-a-string"]},
+                }
+            ]
+        }
+        assert li.validate_prediction(bad_pred) is False
