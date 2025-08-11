@@ -24,6 +24,7 @@ from .batch_predictions import BatchPredictions
 from .blank_enum import BlankEnum
 from .blueprint_list import BlueprintList
 from .budget_reset_period_enum import BudgetResetPeriodEnum
+from .child_filter import ChildFilter
 from .comment import Comment
 from .comment_request import CommentRequest
 from .comment_serializer_with_expanded_user import CommentSerializerWithExpandedUser
@@ -190,6 +191,7 @@ __all__ = [
     "BlankEnum",
     "BlueprintList",
     "BudgetResetPeriodEnum",
+    "ChildFilter",
     "Comment",
     "CommentRequest",
     "CommentSerializerWithExpandedUser",

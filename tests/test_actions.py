@@ -2,22 +2,45 @@
 
 from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
+import typing
+from .utilities import validate_response
 from label_studio_sdk.actions import ActionsCreateRequestFilters
 from label_studio_sdk.actions import ActionsCreateRequestFiltersItemsItem
 from label_studio_sdk.actions import ActionsCreateRequestSelectedItemsExcluded
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.actions.list(project=1)  # type: ignore[func-returns-value]
-        is None
+    expected_response: typing.Any = [
+        {
+            "id": "predictions_to_annotations",
+            "title": "Create Annotations From Predictions",
+            "order": 91,
+            "permission": "tasks.change",
+            "dialog": {
+                "title": "Create Annotations From Predictions",
+                "text": "Create annotations from predictions using selected predictions set for each selected task. Your account will be assigned as an owner to those annotations.",
+                "type": "confirm",
+                "form": {"key": "value"},
+            },
+        }
+    ]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {
+            0: {
+                "id": None,
+                "title": None,
+                "order": "integer",
+                "permission": None,
+                "dialog": {"title": None, "text": None, "type": None, "form": ("dict", {0: (None, None)})},
+            }
+        },
     )
+    response = client.actions.list(project=1)
+    validate_response(response, expected_response, expected_types)
 
-    assert (
-        await async_client.actions.list(project=1)  # type: ignore[func-returns-value]
-        is None
-    )
+    async_response = await async_client.actions.list(project=1)
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
