@@ -160,89 +160,89 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - description_short: description_short
-                  description: description
-                  organization: 1
+                - maximum_annotations: 1
                   show_ground_truth_first: true
-                  comment_classification_config: comment_classification_config
-                  show_annotation_history: true
-                  num_tasks_with_annotations: num_tasks_with_annotations
-                  ground_truth_number: 1
-                  duplication_done: true
-                  start_training_on_annotation_update: true
-                  annotation_limit_percent: annotation_limit_percent
+                  annotation_limit_count: 1
+                  ready: ready
+                  reviewed_number: reviewed_number
+                  allow_stream: allow_stream
+                  description: description
+                  show_collab_predictions: true
+                  created_by:
+                    id: 1
+                    avatar: avatar
                   workspace_title: workspace_title
-                  finished_task_number: 1
+                  custom_task_lock_ttl: 1
+                  review_total_tasks: review_total_tasks
+                  queue_total: queue_total
+                  num_tasks_with_annotations: num_tasks_with_annotations
+                  config_suitable_for_bulk_annotation: true
+                  expert_instruction: expert_instruction
+                  members: members
+                  start_training_on_annotation_update: true
+                  pause_on_failed_annotator_evaluation: true
+                  color: color
+                  sampling: Sequential sampling
+                  pinned_at: '2024-01-15T09:30:00Z'
+                  reviewer_queue_total: reviewer_queue_total
+                  is_published: true
+                  queue_left: queue_left
+                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
+                  duplication_status: duplication_status
+                  title: title
+                  enable_empty_annotation: true
+                  ground_truth_number: 1
+                  workspace: workspace
                   prompts: prompts
+                  total_predictions_number: 1
+                  queue_done: queue_done
+                  show_annotation_history: true
+                  useful_annotation_number: useful_annotation_number
+                  evaluate_predictions_automatically: true
                   assignment_settings:
                     id: 1
-                  rejected: rejected
-                  pinned_at: '2024-01-15T09:30:00Z'
-                  is_draft: true
-                  queue_total: queue_total
-                  reveal_preannotations_interactively: true
-                  maximum_annotations: 1
-                  is_published: true
-                  reviewer_queue_total: reviewer_queue_total
-                  ready: ready
-                  queue_done: queue_done
-                  task_number: 1
-                  workspace: workspace
-                  skipped_annotations_number: skipped_annotations_number
-                  control_weights:
+                  parsed_label_config:
                     key: value
-                  show_instruction: true
-                  model_version: model_version
-                  skip_queue: REQUEUE_FOR_ME
-                  show_skip_button: true
+                  comment_classification_config: comment_classification_config
                   review_settings:
                     id: 1
                     requeue_rejected_tasks_to_annotator: true
-                  reviewed_number: reviewed_number
-                  custom_task_lock_ttl: 1
-                  duplication_status: duplication_status
-                  min_annotations_to_start_training: 1
-                  color: color
-                  parsed_label_config:
+                  data_types:
                     key: value
+                  has_blueprints: has_blueprints
+                  annotator_evaluation_minimum_tasks: 1
+                  rejected: rejected
+                  organization: 1
+                  id: 1
+                  total_annotations_number: total_annotations_number
                   members_count: members_count
-                  sampling: Sequential sampling
-                  annotation_limit_count: 1
+                  finished_task_number: 1
                   blueprints:
                     - id: 1
                       share_id: share_id
                       short_url: short_url
                       created_at: '2024-01-15T09:30:00Z'
-                  config_suitable_for_bulk_annotation: true
-                  expert_instruction: expert_instruction
-                  created_by:
-                    id: 1
-                    avatar: avatar
                   custom_script: custom_script
-                  title: title
-                  has_blueprints: has_blueprints
-                  annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
-                  pause_on_failed_annotator_evaluation: true
-                  id: 1
-                  config_has_control_tags: true
-                  evaluate_predictions_automatically: true
-                  members: members
-                  data_types:
-                    key: value
-                  useful_annotation_number: useful_annotation_number
-                  require_comment_on_skip: true
-                  queue_left: queue_left
-                  total_predictions_number: 1
+                  reveal_preannotations_interactively: true
                   label_config: label_config
-                  overlap_cohort_percentage: 1
-                  allow_stream: allow_stream
-                  show_collab_predictions: true
-                  review_total_tasks: review_total_tasks
-                  created_at: '2024-01-15T09:30:00Z'
-                  total_annotations_number: total_annotations_number
-                  annotator_evaluation_minimum_tasks: 1
-                  enable_empty_annotation: true
+                  require_comment_on_skip: true
+                  skip_queue: REQUEUE_FOR_ME
+                  description_short: description_short
+                  min_annotations_to_start_training: 1
+                  duplication_done: true
+                  annotation_limit_percent: annotation_limit_percent
+                  control_weights:
+                    key: value
+                  model_version: model_version
+                  show_skip_button: true
                   show_overlap_first: true
+                  show_instruction: true
+                  task_number: 1
+                  is_draft: true
+                  skipped_annotations_number: skipped_annotations_number
+                  config_has_control_tags: true
+                  created_at: '2024-01-15T09:30:00Z'
+                  overlap_cohort_percentage: 1
       audiences:
         - public
     create:
