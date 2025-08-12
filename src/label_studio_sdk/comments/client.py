@@ -22,11 +22,11 @@ class CommentsClient:
         self,
         *,
         annotation: typing.Optional[int] = None,
-        annotators: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        annotators: typing.Optional[str] = None,
         draft: typing.Optional[int] = None,
         expand_created_by: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
-        projects: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        projects: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[MaybeExpandedComment]:
         """
@@ -36,7 +36,7 @@ class CommentsClient:
         ----------
         annotation : typing.Optional[int]
 
-        annotators : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+        annotators : typing.Optional[str]
 
         draft : typing.Optional[int]
 
@@ -45,7 +45,7 @@ class CommentsClient:
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
-        projects : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+        projects : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -443,11 +443,11 @@ class AsyncCommentsClient:
         self,
         *,
         annotation: typing.Optional[int] = None,
-        annotators: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        annotators: typing.Optional[str] = None,
         draft: typing.Optional[int] = None,
         expand_created_by: typing.Optional[bool] = None,
         ordering: typing.Optional[str] = None,
-        projects: typing.Optional[typing.Union[int, typing.Sequence[int]]] = None,
+        projects: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[MaybeExpandedComment]:
         """
@@ -457,7 +457,7 @@ class AsyncCommentsClient:
         ----------
         annotation : typing.Optional[int]
 
-        annotators : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+        annotators : typing.Optional[str]
 
         draft : typing.Optional[int]
 
@@ -466,7 +466,7 @@ class AsyncCommentsClient:
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
 
-        projects : typing.Optional[typing.Union[int, typing.Sequence[int]]]
+        projects : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

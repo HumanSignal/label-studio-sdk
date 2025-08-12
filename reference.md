@@ -822,7 +822,7 @@ client.comments.list()
 <dl>
 <dd>
 
-**annotators:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+**annotators:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -854,7 +854,7 @@ client.comments.list()
 <dl>
 <dd>
 
-**projects:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+**projects:** `typing.Optional[str]` 
     
 </dd>
 </dl>
