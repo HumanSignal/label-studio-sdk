@@ -380,7 +380,9 @@ class CommentsClient:
     def export(
         self,
         *,
+        annotation: typing.Optional[int] = None,
         annotators: typing.Optional[str] = None,
+        draft: typing.Optional[int] = None,
         expand_created_by: typing.Optional[bool] = None,
         projects: typing.Optional[str] = None,
         tz: typing.Optional[str] = None,
@@ -391,14 +393,15 @@ class CommentsClient:
 
         Parameters
         ----------
+        annotation : typing.Optional[int]
+
         annotators : typing.Optional[str]
-            Comma-separated list of annotator user IDs
+
+        draft : typing.Optional[int]
 
         expand_created_by : typing.Optional[bool]
-            Expand the created_by field
 
         projects : typing.Optional[str]
-            Comma-separated list of project IDs
 
         tz : typing.Optional[str]
             Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
@@ -415,7 +418,9 @@ class CommentsClient:
             "api/comments/export/",
             method="GET",
             params={
+                "annotation": annotation,
                 "annotators": annotators,
+                "draft": draft,
                 "expand_created_by": expand_created_by,
                 "projects": projects,
                 "tz": tz,
@@ -841,7 +846,9 @@ class AsyncCommentsClient:
     async def export(
         self,
         *,
+        annotation: typing.Optional[int] = None,
         annotators: typing.Optional[str] = None,
+        draft: typing.Optional[int] = None,
         expand_created_by: typing.Optional[bool] = None,
         projects: typing.Optional[str] = None,
         tz: typing.Optional[str] = None,
@@ -852,14 +859,15 @@ class AsyncCommentsClient:
 
         Parameters
         ----------
+        annotation : typing.Optional[int]
+
         annotators : typing.Optional[str]
-            Comma-separated list of annotator user IDs
+
+        draft : typing.Optional[int]
 
         expand_created_by : typing.Optional[bool]
-            Expand the created_by field
 
         projects : typing.Optional[str]
-            Comma-separated list of project IDs
 
         tz : typing.Optional[str]
             Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
@@ -876,7 +884,9 @@ class AsyncCommentsClient:
             "api/comments/export/",
             method="GET",
             params={
+                "annotation": annotation,
                 "annotators": annotators,
+                "draft": draft,
                 "expand_created_by": expand_created_by,
                 "projects": projects,
                 "tz": tz,

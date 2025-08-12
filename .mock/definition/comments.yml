@@ -258,15 +258,11 @@ service:
       request:
         name: CommentsExportRequest
         query-parameters:
-          annotators:
-            type: optional<string>
-            docs: Comma-separated list of annotator user IDs
-          expand_created_by:
-            type: optional<boolean>
-            docs: Expand the created_by field
-          projects:
-            type: optional<string>
-            docs: Comma-separated list of project IDs
+          annotation: optional<integer>
+          annotators: optional<string>
+          draft: optional<integer>
+          expand_created_by: optional<boolean>
+          projects: optional<string>
           tz:
             type: optional<string>
             docs: >-
