@@ -51,16 +51,20 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     User IDs who updated this task
     """
 
-    reviewers: str
+    reviewers: typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
     comments: str
-    comment_authors: str
+    comment_authors: typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
     reviewed: typing.Optional[bool] = None
     reviews_accepted: typing.Optional[int] = None
     reviews_rejected: typing.Optional[int] = None
     ground_truth: typing.Optional[bool] = None
-    annotators_count: str
-    reviewers_count: str
-    comment_authors_count: str
+    annotators_count: int = pydantic.Field()
+    """
+    The annotators_count is calculated as the number of users with annotations (can be repeated, so same as the number of annotations) + the number of assignees without annotations.
+    """
+
+    reviewers_count: int
+    comment_authors_count: int
     data: typing.Optional[typing.Any] = None
     meta: typing.Optional[typing.Optional[typing.Any]] = None
     created_at: dt.datetime = pydantic.Field()
