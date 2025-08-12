@@ -171,49 +171,26 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_update_order(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {
-        "id": 1,
-        "filter_group": {
-            "id": 1,
-            "filters": [{"id": 1, "column": "column", "type": "type", "operator": "operator"}],
-            "conjunction": "conjunction",
-        },
-        "data": {"key": "value"},
-        "ordering": {"key": "value"},
-        "order": 1,
-        "selected_items": {"key": "value"},
-        "user": 1,
-        "project": 1,
-    }
-    expected_types: typing.Any = {
-        "id": "integer",
-        "filter_group": {
-            "id": "integer",
-            "filters": ("list", {0: {"id": "integer", "column": None, "type": None, "operator": None}}),
-            "conjunction": None,
-        },
-        "data": None,
-        "ordering": None,
-        "order": "integer",
-        "selected_items": None,
-        "user": "integer",
-        "project": "integer",
-    }
-    response = client.views.update_order(project=1, ids=[1])
-    validate_response(response, expected_response, expected_types)
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.views.update_order(project=1, ids=[1])  # type: ignore[func-returns-value]
+        is None
+    )
 
-    async_response = await async_client.views.update_order(project=1, ids=[1])
-    validate_response(async_response, expected_response, expected_types)
+    assert (
+        await async_client.views.update_order(project=1, ids=[1])  # type: ignore[func-returns-value]
+        is None
+    )
 
 
 async def test_delete_all(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.views.delete_all()  # type: ignore[func-returns-value]
+        client.views.delete_all(project=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.views.delete_all()  # type: ignore[func-returns-value]
+        await async_client.views.delete_all(project=1)  # type: ignore[func-returns-value]
         is None
     )

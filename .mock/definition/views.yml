@@ -218,48 +218,30 @@ service:
               docs: A list of view IDs in the desired order.
               type: list<integer>
         content-type: application/json
-      response:
-        docs: ''
-        type: root.View
       examples:
         - request:
             project: 1
             ids:
               - 1
-          response:
-            body:
-              id: 1
-              filter_group:
-                id: 1
-                filters:
-                  - id: 1
-                    column: column
-                    type: type
-                    operator: operator
-                conjunction: conjunction
-              data:
-                key: value
-              ordering:
-                key: value
-              order: 1
-              selected_items:
-                key: value
-              user: 1
-              project: 1
       audiences:
         - public
     delete_all:
       path: /api/dm/views/reset/
       method: DELETE
       auth: true
-      docs: >-
-        Delete all views for a specific project. Request body example:
-        `{"project": 1}`.
+      docs: Delete all views for a specific project.
       source:
         openapi: openapi/openapi.yaml
       display-name: Delete all project views
+      request:
+        name: ViewsDeleteAllRequest
+        query-parameters:
+          project:
+            type: integer
+            docs: Project ID
       examples:
-        - {}
+        - query-parameters:
+            project: 1
       audiences:
         - public
   source:
