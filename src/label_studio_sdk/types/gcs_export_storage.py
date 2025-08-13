@@ -4,7 +4,7 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import pydantic
 import datetime as dt
-from .status_d14enum import StatusD14Enum
+from .status_c5a_enum import StatusC5AEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -57,7 +57,7 @@ class GcsExportStorage(UncheckedBaseModel):
     Last sync job ID
     """
 
-    status: typing.Optional[StatusD14Enum] = None
+    status: typing.Optional[StatusC5AEnum] = None
     traceback: typing.Optional[str] = pydantic.Field(default=None)
     """
     Traceback report for the last failed sync
