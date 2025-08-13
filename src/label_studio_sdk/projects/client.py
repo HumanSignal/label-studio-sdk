@@ -803,7 +803,7 @@ class ProjectsClient:
         
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-                    -X POST 'http://localhost:8000/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+                    -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
                     ```
         
                     ### 2. **POST with files**
@@ -819,7 +819,7 @@ class ProjectsClient:
         
                     ```bash
                     curl -H 'Authorization: Token abc123' \
-                    -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'
+                    -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
                     ```
         
                     ### 3. **POST with URL**
@@ -827,7 +827,7 @@ class ProjectsClient:
         
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-                    -X POST 'http://localhost:8000/api/projects/1/import' \
+                    -X POST 'https://localhost:8080/api/projects/1/import' \
                     --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
                     ```
         
@@ -1779,7 +1779,7 @@ class AsyncProjectsClient:
         
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-                    -X POST 'http://localhost:8000/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+                    -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
                     ```
         
                     ### 2. **POST with files**
@@ -1795,7 +1795,7 @@ class AsyncProjectsClient:
         
                     ```bash
                     curl -H 'Authorization: Token abc123' \
-                    -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'
+                    -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
                     ```
         
                     ### 3. **POST with URL**
@@ -1803,7 +1803,7 @@ class AsyncProjectsClient:
         
                     ```bash
                     curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-                    -X POST 'http://localhost:8000/api/projects/1/import' \
+                    -X POST 'https://localhost:8080/api/projects/1/import' \
                     --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
                     ```
         

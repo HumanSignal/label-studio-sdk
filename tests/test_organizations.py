@@ -47,6 +47,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "embed_settings": {"key": "value"},
         "custom_scripts_enabled": "custom_scripts_enabled",
         "custom_scripts_editable_by": "AD",
+        "email_notification_settings": "email_notification_settings",
     }
     expected_types: typing.Any = {
         "id": "integer",
@@ -60,6 +61,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "embed_settings": None,
         "custom_scripts_enabled": None,
         "custom_scripts_editable_by": None,
+        "email_notification_settings": None,
     }
     response = client.organizations.get(id=1)
     validate_response(response, expected_response, expected_types)
