@@ -16,17 +16,13 @@ service:
         name: CommentsListRequest
         query-parameters:
           annotation: optional<integer>
-          annotators:
-            type: optional<integer>
-            allow-multiple: true
+          annotators: optional<string>
           draft: optional<integer>
           expand_created_by: optional<boolean>
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
-          projects:
-            type: optional<integer>
-            allow-multiple: true
+          projects: optional<string>
       response:
         docs: List of comments
         type: list<root.MaybeExpandedComment>
@@ -262,15 +258,11 @@ service:
       request:
         name: CommentsExportRequest
         query-parameters:
-          annotators:
-            type: optional<string>
-            docs: Comma-separated list of annotator user IDs
-          expand_created_by:
-            type: optional<boolean>
-            docs: Expand the created_by field
-          projects:
-            type: optional<string>
-            docs: Comma-separated list of project IDs
+          annotation: optional<integer>
+          annotators: optional<string>
+          draft: optional<integer>
+          expand_created_by: optional<boolean>
+          projects: optional<string>
           tz:
             type: optional<string>
             docs: >-

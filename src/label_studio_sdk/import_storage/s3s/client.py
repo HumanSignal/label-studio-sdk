@@ -604,7 +604,7 @@ class S3SClient:
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LseS3ImportStorage:
+    ) -> None:
         """
         Validate a specific S3 import storage connection that was set up with IAM role access.
 
@@ -688,8 +688,7 @@ class S3SClient:
 
         Returns
         -------
-        LseS3ImportStorage
-
+        None
 
         Examples
         --------
@@ -740,13 +739,7 @@ class S3SClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    LseS3ImportStorage,
-                    construct_type(
-                        type_=LseS3ImportStorage,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -1389,7 +1382,7 @@ class AsyncS3SClient:
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LseS3ImportStorage:
+    ) -> None:
         """
         Validate a specific S3 import storage connection that was set up with IAM role access.
 
@@ -1473,8 +1466,7 @@ class AsyncS3SClient:
 
         Returns
         -------
-        LseS3ImportStorage
-
+        None
 
         Examples
         --------
@@ -1533,13 +1525,7 @@ class AsyncS3SClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    LseS3ImportStorage,
-                    construct_type(
-                        type_=LseS3ImportStorage,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

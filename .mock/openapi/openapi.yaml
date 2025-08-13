@@ -650,9 +650,7 @@ paths:
       - in: query
         name: annotators
         schema:
-          type: array
-          items:
-            type: integer
+          type: string
       - in: query
         name: draft
         schema:
@@ -671,9 +669,7 @@ paths:
       - in: query
         name: projects
         schema:
-          type: array
-          items:
-            type: integer
+          type: string
       tags:
       - Comments
       security:
@@ -871,20 +867,26 @@ paths:
       summary: Export comments to CSV
       parameters:
       - in: query
+        name: annotation
+        schema:
+          type: integer
+      - in: query
         name: annotators
         schema:
           type: string
-        description: Comma-separated list of annotator user IDs
+      - in: query
+        name: draft
+        schema:
+          type: integer
       - in: query
         name: expand_created_by
         schema:
           type: boolean
-        description: Expand the created_by field
+          default: false
       - in: query
         name: projects
         schema:
           type: string
-        description: Comma-separated list of project IDs
       - in: query
         name: tz
         schema:
@@ -2453,13 +2455,83 @@ paths:
       description: Retrieve all the registered actions with descriptions that data
         manager can use.
       summary: Get actions
+      parameters:
+      - in: query
+        name: project
+        schema:
+          type: integer
+        description: Project ID
+        required: true
       tags:
       - Data Manager
       security:
       - Token: []
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                type: array
+                title: Action list
+                description: List of available actions
+                items:
+                  type: object
+                  title: Action
+                  properties:
+                    id:
+                      type: string
+                      title: Action ID
+                    title:
+                      type: string
+                      title: Title
+                    order:
+                      type: integer
+                      title: Order
+                    permission:
+                      type: string
+                      title: Permission
+                    experimental:
+                      type: boolean
+                      title: Experimental
+                    dialog:
+                      type: object
+                      title: Dialog
+                      properties:
+                        title:
+                          type: string
+                          title: Title
+                          nullable: true
+                        text:
+                          type: string
+                          title: Text
+                          nullable: true
+                        type:
+                          type: string
+                          title: Type
+                          nullable: true
+                        form:
+                          type: array
+                          title: Form
+                          items:
+                            type: object
+                          nullable: true
+              examples:
+                Response:
+                  value:
+                  - id: predictions_to_annotations
+                    title: Create Annotations From Predictions
+                    order: 91
+                    permission: tasks.change
+                    experimental: false
+                    dialog:
+                      title: Create Annotations From Predictions
+                      text: Create annotations from predictions using selected predictions
+                        set for each selected task. Your account will be assigned
+                        as an owner to those annotations.
+                      type: confirm
+                      form: null
+                  summary: response
+          description: Actions retrieved successfully
       x-fern-sdk-group-name: actions
       x-fern-sdk-method-name: list
       x-fern-audiences:
@@ -3614,11 +3686,7 @@ paths:
       - Token: []
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/View'
-          description: ''
+          description: View order updated successfully
       x-fern-sdk-group-name: views
       x-fern-sdk-method-name: update_order
       x-fern-audiences:
@@ -3626,9 +3694,15 @@ paths:
   /api/dm/views/reset/:
     delete:
       operationId: api_dm_views_reset_destroy
-      description: 'Delete all views for a specific project. Request body example:
-        `{"project": 1}`.'
+      description: Delete all views for a specific project.
       summary: Delete all project views
+      parameters:
+      - in: query
+        name: project
+        schema:
+          type: integer
+        description: Project ID
+        required: true
       tags:
       - Data Manager
       security:
@@ -9622,6 +9696,197 @@ paths:
       x-fern-sdk-method-name: validate
       x-fern-audiences:
       - public
+  /api/storages/azure_spi/:
+    get:
+      operationId: api_storages_azure_spi_list
+      description: Get list of all Azure import storage connections set up with Service
+        Principal authentication.
+      summary: Get Azure SPI import storage
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      tags:
+      - 'Storage: Azure SPI'
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AzureServicePrincipalImportStorage'
+          description: ''
+    post:
+      operationId: api_storages_azure_spi_create
+      description: Create Azure import storage with Service Principal authentication.
+      summary: Create Azure import storage with SPI
+      tags:
+      - 'Storage: Azure SPI'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalImportStorage'
+          description: ''
+  /api/storages/azure_spi/{id}:
+    get:
+      operationId: api_storages_azure_spi_retrieve
+      description: Get a specific Azure import storage connection that was set up
+        with Service Principal authentication.
+      summary: Get Azure SPI import storage
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - 'Storage: Azure SPI'
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalImportStorage'
+          description: ''
+    patch:
+      operationId: api_storages_azure_spi_partial_update
+      description: Update a specific Azure import storage connection that was set
+        up with Service Principal authentication.
+      summary: Update Azure SPI import storage
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - 'Storage: Azure SPI'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAzureServicePrincipalImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAzureServicePrincipalImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAzureServicePrincipalImportStorageRequest'
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalImportStorage'
+          description: ''
+    delete:
+      operationId: api_storages_azure_spi_destroy
+      description: Delete a specific Azure import storage connection that was set
+        up with Service Principal authentication.
+      summary: Delete Azure SPI import storage
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - 'Storage: Azure SPI'
+      security:
+      - Token: []
+      responses:
+        '204':
+          description: No response body
+  /api/storages/azure_spi/{id}/sync:
+    post:
+      operationId: api_storages_azure_spi_sync_create
+      description: Sync tasks from an Azure import storage connection that was set
+        up with Service Principal authentication.
+      summary: Sync Azure SPI import storage
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - 'Storage: Azure SPI'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalImportStorage'
+          description: ''
+  /api/storages/azure_spi/validate:
+    post:
+      operationId: api_storages_azure_spi_validate_create
+      description: Validate a specific Azure import storage connection that was set
+        up with Service Principal authentication.
+      summary: Validate Azure SPI import storage
+      tags:
+      - 'Storage: Azure SPI'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalImportStorage'
+          description: ''
   /api/storages/export:
     get:
       operationId: api_storages_export_list
@@ -9939,6 +10204,197 @@ paths:
       x-fern-sdk-method-name: validate
       x-fern-audiences:
       - public
+  /api/storages/export/azure_spi:
+    get:
+      operationId: api_storages_export_azure_spi_list
+      description: Get a list of all Azure export storage connections that were set
+        up with Service Principal authentication.
+      summary: Get all Azure SPI export storage
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      tags:
+      - 'Storage: Azure SPI'
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AzureServicePrincipalExportStorage'
+          description: ''
+    post:
+      operationId: api_storages_export_azure_spi_create
+      description: Create an Azure export storage connection with Service Principal
+        authentication to store annotations.
+      summary: Create Azure export storage with SPI authentication
+      tags:
+      - 'Storage: Azure SPI'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalExportStorage'
+          description: ''
+  /api/storages/export/azure_spi/{id}:
+    get:
+      operationId: api_storages_export_azure_spi_retrieve
+      description: Get a specific Azure export storage connection that was set up
+        with Service Principal authentication.
+      summary: Get Azure SPI export storage
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - 'Storage: Azure SPI'
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalExportStorage'
+          description: ''
+    patch:
+      operationId: api_storages_export_azure_spi_partial_update
+      description: Update a specific Azure export storage connection that was set
+        up with Service Principal authentication.
+      summary: Update Azure SPI export storage
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - 'Storage: Azure SPI'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedAzureServicePrincipalExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedAzureServicePrincipalExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedAzureServicePrincipalExportStorageRequest'
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalExportStorage'
+          description: ''
+    delete:
+      operationId: api_storages_export_azure_spi_destroy
+      description: Delete a specific Azure export storage connection that was set
+        up with Service Principal authentication.
+      summary: Delete Azure SPI export storage
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - 'Storage: Azure SPI'
+      security:
+      - Token: []
+      responses:
+        '204':
+          description: No response body
+  /api/storages/export/azure_spi/{id}/sync:
+    post:
+      operationId: api_storages_export_azure_spi_sync_create
+      description: Sync tasks from an Azure SPI export storage.
+      summary: Sync Azure SPI export storage
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - 'Storage: Azure SPI'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalExportStorage'
+          description: ''
+  /api/storages/export/azure_spi/validate:
+    post:
+      operationId: api_storages_export_azure_spi_validate_create
+      description: Validate a specific Azure export storage connection that was set
+        up with Service Principal authentication.
+      summary: Validate Azure SPI export storage
+      tags:
+      - 'Storage: Azure SPI'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+        required: true
+      security:
+      - Token: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalExportStorage'
+          description: ''
   /api/storages/export/gcs:
     get:
       operationId: api_storages_export_gcs_list
@@ -11521,12 +11977,8 @@ paths:
       security:
       - Token: []
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LseS3ExportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       x-fern-sdk-group-name:
       - export_storage
       - s3s
@@ -13258,12 +13710,8 @@ paths:
       security:
       - Token: []
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LseS3ImportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       x-fern-sdk-group-name:
       - import_storage
       - s3s
@@ -15024,40 +15472,40 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
-        id:
-          type: integer
-          readOnly: true
-        start_training_on_annotation_update:
+        is_draft:
           type: boolean
-          readOnly: true
-          description: Start model training after any annotations are submitted or
-            updated
-        useful_annotation_number:
-          type: string
-          readOnly: true
-        pinned_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Pinned date and time
+          description: Whether or not the project is in the middle of being created
         skipped_annotations_number:
           type: string
           readOnly: true
-        workspace:
+        title:
           type: string
-          readOnly: true
-        members_count:
-          type: string
-          readOnly: true
-        finished_task_number:
-          type: integer
-          readOnly: true
+          nullable: true
+          description: Project name. Must be between 3 and 50 characters long.
+          maxLength: 50
+          minLength: 3
+        review_settings:
+          $ref: '#/components/schemas/ReviewSettings'
         custom_task_lock_ttl:
           type: integer
           maximum: 86400
           minimum: 1
           nullable: true
           description: TTL in seconds for task reservations, on new and existing tasks
+        workspace_title:
+          type: string
+          readOnly: true
+        parsed_label_config:
+          readOnly: true
+          description: JSON-formatted labeling configuration
+        members:
+          type: string
+          readOnly: true
+        custom_script:
+          type: string
+        finished_task_number:
+          type: integer
+          readOnly: true
         maximum_annotations:
           type: integer
           maximum: 2147483647
@@ -15066,106 +15514,50 @@ components:
           description: Maximum number of annotations for one task. If the number of
             annotations per task is equal or greater to this value, the task is completed
             (is_labeled=True)
-        custom_script:
-          type: string
-        label_config:
-          type: string
-          nullable: true
-          description: Label config in XML format. See more about it in documentation
-        title:
-          type: string
-          nullable: true
-          description: Project name. Must be between 3 and 50 characters long.
-          maxLength: 50
-          minLength: 3
-        evaluate_predictions_automatically:
+        show_ground_truth_first:
           type: boolean
-          description: Retrieve and display predictions when loading a task
-        allow_stream:
-          type: string
-          readOnly: true
-        ready:
-          type: string
-          readOnly: true
-        rejected:
-          type: string
-          readOnly: true
-        show_annotation_history:
-          type: boolean
-          description: Show annotation history to annotator
-        total_annotations_number:
-          type: string
-          readOnly: true
-        show_overlap_first:
-          type: boolean
-        reviewer_queue_total:
-          type: string
-          readOnly: true
-        description_short:
-          type: string
-          readOnly: true
-        task_number:
-          type: integer
-          readOnly: true
-          description: Total task number in project
-        total_predictions_number:
-          type: integer
-          readOnly: true
-        expert_instruction:
-          type: string
-          nullable: true
-          description: Labeling instructions in HTML format
-        annotation_limit_count:
-          type: integer
-          minimum: 1
-          nullable: true
-        data_types:
-          readOnly: true
-          nullable: true
-        duplication_status:
-          type: string
-        ground_truth_number:
-          type: integer
-          readOnly: true
-          description: Honeypot annotation number in project
-        overlap_cohort_percentage:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        model_version:
-          type: string
-          nullable: true
-          description: Machine learning model version
         show_instruction:
           type: boolean
           description: Show instructions to the annotator before they start
-        queue_done:
-          type: string
+        control_weights:
+          nullable: true
+          description: 'Dict of weights for each control tag in metric calculation.
+            Each control tag (e.g. label or choice) will have it''s own key in control
+            weight dict with weight for each label and overall weight.For example,
+            if bounding box annotation with control tag named my_bbox should be included
+            with 0.33 weight in agreement calculation, and the first label Car should
+            be twice more important than Airplaine, then you have to need the specify:
+            {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0,
+            ''Airplaine'': 0.5}, ''overall'': 0.33}'
+        id:
+          type: integer
           readOnly: true
-        config_suitable_for_bulk_annotation:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for bulk annotation
-        members:
-          type: string
-          readOnly: true
-        comment_classification_config:
-          type: string
-        annotator_evaluation_minimum_score:
+        annotation_limit_percent:
           type: string
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
-          default: '95.00'
-        assignment_settings:
-          $ref: '#/components/schemas/AssignmentSettings'
-        parsed_label_config:
+        reviewed_number:
+          type: string
           readOnly: true
-          description: JSON-formatted labeling configuration
+        queue_done:
+          type: string
+          readOnly: true
+        model_version:
+          type: string
+          nullable: true
+          description: Machine learning model version
         prompts:
           type: string
           readOnly: true
-        queue_total:
+        show_collab_predictions:
+          type: boolean
+          title: Show predictions to annotator
+          description: If set, the annotator can view model predictions
+        queue_left:
+          type: string
+          readOnly: true
+        rejected:
           type: string
           readOnly: true
         color:
@@ -15177,99 +15569,83 @@ components:
           oneOf:
           - $ref: '#/components/schemas/SkipQueueEnum'
           - $ref: '#/components/schemas/NullEnum'
-        show_collab_predictions:
-          type: boolean
-          title: Show predictions to annotator
-          description: If set, the annotator can view model predictions
-        annotation_limit_percent:
-          type: string
-          format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          nullable: true
-        review_total_tasks:
+        description_short:
           type: string
           readOnly: true
-        is_published:
-          type: boolean
-          title: Published
-          description: Whether or not the project is published to annotators
-        num_tasks_with_annotations:
-          type: string
-          readOnly: true
-        control_weights:
-          nullable: true
-          description: 'Dict of weights for each control tag in metric calculation.
-            Each control tag (e.g. label or choice) will have it''s own key in control
-            weight dict with weight for each label and overall weight.For example,
-            if bounding box annotation with control tag named my_bbox should be included
-            with 0.33 weight in agreement calculation, and the first label Car should
-            be twice more important than Airplaine, then you have to need the specify:
-            {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0,
-            ''Airplaine'': 0.5}, ''overall'': 0.33}'
-        description:
-          type: string
-          nullable: true
-          description: Project description
-        duplication_done:
-          type: boolean
-          default: false
-        created_by:
-          allOf:
-          - $ref: '#/components/schemas/UserSimple'
-          description: Project owner
-        sampling:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SamplingEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        require_comment_on_skip:
-          type: boolean
-          default: false
-        has_blueprints:
-          type: string
-          readOnly: true
-        annotator_evaluation_minimum_tasks:
+        annotation_limit_count:
           type: integer
-          minimum: 0
+          minimum: 1
           nullable: true
-          default: 10
-        workspace_title:
-          type: string
+        data_types:
           readOnly: true
-        pause_on_failed_annotator_evaluation:
-          type: boolean
           nullable: true
-          default: false
-        config_has_control_tags:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for labeling
-        show_ground_truth_first:
-          type: boolean
-        is_draft:
-          type: boolean
-          description: Whether or not the project is in the middle of being created
-        review_settings:
-          $ref: '#/components/schemas/ReviewSettings'
         blueprints:
           type: array
           items:
             $ref: '#/components/schemas/BlueprintList'
           readOnly: true
-        reviewed_number:
+        workspace:
           type: string
           readOnly: true
-        enable_empty_annotation:
-          type: boolean
-          description: Allow annotators to submit empty annotations
-        created_at:
+        duplication_status:
           type: string
-          format: date-time
+        num_tasks_with_annotations:
+          type: string
           readOnly: true
-        reveal_preannotations_interactively:
+        start_training_on_annotation_update:
           type: boolean
-          description: Reveal pre-annotations interactively
-        queue_left:
+          readOnly: true
+          description: Start model training after any annotations are submitted or
+            updated
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/UserSimple'
+          description: Project owner
+        task_number:
+          type: integer
+          readOnly: true
+          description: Total task number in project
+        reviewer_queue_total:
+          type: string
+          readOnly: true
+        annotator_evaluation_minimum_score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+          default: '95.00'
+        allow_stream:
+          type: string
+          readOnly: true
+        total_predictions_number:
+          type: integer
+          readOnly: true
+        description:
+          type: string
+          nullable: true
+          description: Project description
+        queue_total:
+          type: string
+          readOnly: true
+        comment_classification_config:
+          type: string
+        annotator_evaluation_minimum_tasks:
+          type: integer
+          minimum: 0
+          nullable: true
+          default: 10
+        is_published:
+          type: boolean
+          title: Published
+          description: Whether or not the project is published to annotators
+        total_annotations_number:
+          type: string
+          readOnly: true
+        label_config:
+          type: string
+          nullable: true
+          description: Label config in XML format. See more about it in documentation
+        members_count:
           type: string
           readOnly: true
         min_annotations_to_start_training:
@@ -15278,13 +15654,85 @@ components:
           minimum: -2147483648
           description: Minimum number of completed tasks after which model training
             is started
+        reveal_preannotations_interactively:
+          type: boolean
+          description: Reveal pre-annotations interactively
+        sampling:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SamplingEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        overlap_cohort_percentage:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        pause_on_failed_annotator_evaluation:
+          type: boolean
+          nullable: true
+          default: false
+        duplication_done:
+          type: boolean
+          default: false
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        useful_annotation_number:
+          type: string
+          readOnly: true
+        pinned_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Pinned date and time
+        organization:
+          type: integer
+          nullable: true
+        ready:
+          type: string
+          readOnly: true
+        enable_empty_annotation:
+          type: boolean
+          description: Allow annotators to submit empty annotations
+        show_overlap_first:
+          type: boolean
+        expert_instruction:
+          type: string
+          nullable: true
+          description: Labeling instructions in HTML format
         show_skip_button:
           type: boolean
           description: Show a skip button in interface and allow annotators to skip
             the task
-        organization:
+        has_blueprints:
+          type: string
+          readOnly: true
+        config_suitable_for_bulk_annotation:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for bulk annotation
+        review_total_tasks:
+          type: string
+          readOnly: true
+        show_annotation_history:
+          type: boolean
+          description: Show annotation history to annotator
+        config_has_control_tags:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for labeling
+        ground_truth_number:
           type: integer
-          nullable: true
+          readOnly: true
+          description: Honeypot annotation number in project
+        require_comment_on_skip:
+          type: boolean
+          default: false
+        assignment_settings:
+          $ref: '#/components/schemas/AssignmentSettings'
+        evaluate_predictions_automatically:
+          type: boolean
+          description: Retrieve and display predictions when loading a task
       required:
       - allow_stream
       - assignment_settings
@@ -16233,6 +16681,380 @@ components:
           description: A unique integer value identifying this dataset.
       required:
       - dataset
+    AzureServicePrincipalExportStorage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          type: string
+          readOnly: true
+          default: azure_spi
+        synchronizable:
+          type: boolean
+          default: true
+        prefix:
+          type: string
+          nullable: true
+          description: Azure blob prefix name
+        regex_filter:
+          type: string
+          nullable: true
+          description: Cloud storage regex for filtering objects
+        use_blob_urls:
+          type: boolean
+          description: Interpret objects as BLOBs and generate URLs
+        account_name:
+          type: string
+          nullable: true
+          description: Azure Blob account name
+        container:
+          type: string
+          nullable: true
+          description: Azure blob container
+        tenant_id:
+          type: string
+          nullable: true
+          description: Azure Tenant ID
+        client_id:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client ID
+        client_secret:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client Secret
+        user_delegation_key:
+          type: string
+          nullable: true
+          description: User Delegation Key (Backend)
+        last_sync:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last sync finished time
+        last_sync_count:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Count of tasks synced last time
+        last_sync_job:
+          type: string
+          nullable: true
+          description: Last sync job ID
+          maxLength: 256
+        status:
+          $ref: '#/components/schemas/StatusD14Enum'
+        traceback:
+          type: string
+          nullable: true
+          description: Traceback report for the last failed sync
+        meta:
+          nullable: true
+          description: Meta and debug information about storage processes
+        title:
+          type: string
+          nullable: true
+          description: Cloud storage title
+          maxLength: 256
+        description:
+          type: string
+          nullable: true
+          description: Cloud storage description
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Creation time
+        can_delete_objects:
+          type: boolean
+          nullable: true
+          description: Deletion from storage enabled
+        project:
+          type: integer
+          description: A unique integer value identifying this project.
+      required:
+      - created_at
+      - id
+      - project
+      - type
+    AzureServicePrincipalExportStorageRequest:
+      type: object
+      properties:
+        synchronizable:
+          type: boolean
+          default: true
+        prefix:
+          type: string
+          nullable: true
+          description: Azure blob prefix name
+        regex_filter:
+          type: string
+          nullable: true
+          description: Cloud storage regex for filtering objects
+        use_blob_urls:
+          type: boolean
+          description: Interpret objects as BLOBs and generate URLs
+        account_name:
+          type: string
+          nullable: true
+          description: Azure Blob account name
+        container:
+          type: string
+          nullable: true
+          description: Azure blob container
+        tenant_id:
+          type: string
+          nullable: true
+          description: Azure Tenant ID
+        client_id:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client ID
+        client_secret:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client Secret
+        user_delegation_key:
+          type: string
+          nullable: true
+          description: User Delegation Key (Backend)
+        last_sync:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last sync finished time
+        last_sync_count:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Count of tasks synced last time
+        last_sync_job:
+          type: string
+          nullable: true
+          description: Last sync job ID
+          maxLength: 256
+        status:
+          $ref: '#/components/schemas/StatusD14Enum'
+        traceback:
+          type: string
+          nullable: true
+          description: Traceback report for the last failed sync
+        meta:
+          nullable: true
+          description: Meta and debug information about storage processes
+        title:
+          type: string
+          nullable: true
+          description: Cloud storage title
+          maxLength: 256
+        description:
+          type: string
+          nullable: true
+          description: Cloud storage description
+        can_delete_objects:
+          type: boolean
+          nullable: true
+          description: Deletion from storage enabled
+        project:
+          type: integer
+          description: A unique integer value identifying this project.
+      required:
+      - project
+    AzureServicePrincipalImportStorage:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        type:
+          type: string
+          readOnly: true
+          default: azure_spi
+        synchronizable:
+          type: boolean
+          default: true
+        presign:
+          type: boolean
+          default: true
+        prefix:
+          type: string
+          nullable: true
+          description: Azure blob prefix name
+        regex_filter:
+          type: string
+          nullable: true
+          description: Cloud storage regex for filtering objects
+        use_blob_urls:
+          type: boolean
+          description: Interpret objects as BLOBs and generate URLs
+        account_name:
+          type: string
+          nullable: true
+          description: Azure Blob account name
+        container:
+          type: string
+          nullable: true
+          description: Azure blob container
+        tenant_id:
+          type: string
+          nullable: true
+          description: Azure Tenant ID
+        client_id:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client ID
+        client_secret:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client Secret
+        user_delegation_key:
+          type: string
+          nullable: true
+          description: User Delegation Key (Backend)
+        last_sync:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last sync finished time
+        last_sync_count:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Count of tasks synced last time
+        last_sync_job:
+          type: string
+          nullable: true
+          description: Last sync job ID
+          maxLength: 256
+        status:
+          $ref: '#/components/schemas/StatusD14Enum'
+        traceback:
+          type: string
+          nullable: true
+          description: Traceback report for the last failed sync
+        meta:
+          nullable: true
+          description: Meta and debug information about storage processes
+        title:
+          type: string
+          nullable: true
+          description: Cloud storage title
+          maxLength: 256
+        description:
+          type: string
+          nullable: true
+          description: Cloud storage description
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Creation time
+        presign_ttl:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: Presigned URLs TTL (in minutes)
+        project:
+          type: integer
+          description: A unique integer value identifying this project.
+      required:
+      - created_at
+      - id
+      - project
+      - type
+    AzureServicePrincipalImportStorageRequest:
+      type: object
+      properties:
+        synchronizable:
+          type: boolean
+          default: true
+        presign:
+          type: boolean
+          default: true
+        prefix:
+          type: string
+          nullable: true
+          description: Azure blob prefix name
+        regex_filter:
+          type: string
+          nullable: true
+          description: Cloud storage regex for filtering objects
+        use_blob_urls:
+          type: boolean
+          description: Interpret objects as BLOBs and generate URLs
+        account_name:
+          type: string
+          nullable: true
+          description: Azure Blob account name
+        container:
+          type: string
+          nullable: true
+          description: Azure blob container
+        tenant_id:
+          type: string
+          nullable: true
+          description: Azure Tenant ID
+        client_id:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client ID
+        client_secret:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client Secret
+        user_delegation_key:
+          type: string
+          nullable: true
+          description: User Delegation Key (Backend)
+        last_sync:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last sync finished time
+        last_sync_count:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Count of tasks synced last time
+        last_sync_job:
+          type: string
+          nullable: true
+          description: Last sync job ID
+          maxLength: 256
+        status:
+          $ref: '#/components/schemas/StatusD14Enum'
+        traceback:
+          type: string
+          nullable: true
+          description: Traceback report for the last failed sync
+        meta:
+          nullable: true
+          description: Meta and debug information about storage processes
+        title:
+          type: string
+          nullable: true
+          description: Cloud storage title
+          maxLength: 256
+        description:
+          type: string
+          nullable: true
+          description: Cloud storage description
+        presign_ttl:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: Presigned URLs TTL (in minutes)
+        project:
+          type: integer
+          description: A unique integer value identifying this project.
+      required:
+      - project
     BatchFailedPredictions:
       type: object
       properties:
@@ -16885,6 +17707,11 @@ components:
           description: Set to current time to disable the label stream navigation
             for this organization. This will prevent users from going back in the
             label stream to view previous labels.
+        email_notification_settings:
+          nullable: true
+          description: 'Email notification settings for this organization. Controls
+            which email notifications users can receive. Structure: {"notifications_allowed":
+            {"notification_type": bool}}'
       required:
       - organization
     DefaultRoleEnum:
@@ -18759,10 +19586,14 @@ components:
           oneOf:
           - $ref: '#/components/schemas/CustomScriptsEditableByEnum'
           - $ref: '#/components/schemas/NullEnum'
+        email_notification_settings:
+          type: string
+          readOnly: true
       required:
       - billing
       - created_at
       - custom_scripts_enabled
+      - email_notification_settings
       - id
       - title
       - token
@@ -20334,13 +21165,19 @@ components:
             title: User IDs
           readOnly: true
         reviewers:
-          type: string
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
           readOnly: true
         comments:
           type: string
           readOnly: true
         comment_authors:
-          type: string
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
           readOnly: true
         reviewed:
           type: boolean
@@ -20351,13 +21188,16 @@ components:
         ground_truth:
           type: boolean
         annotators_count:
-          type: string
+          type: integer
+          description: The annotators_count is calculated as the number of users with
+            annotations (can be repeated, so same as the number of annotations) +
+            the number of assignees without annotations.
           readOnly: true
         reviewers_count:
-          type: string
+          type: integer
           readOnly: true
         comment_authors_count:
-          type: string
+          type: integer
           readOnly: true
         data:
           description: User imported or uploaded data for a task. Data is formatted
@@ -20869,13 +21709,19 @@ components:
             title: User IDs
           readOnly: true
         reviewers:
-          type: string
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
           readOnly: true
         comments:
           type: string
           readOnly: true
         comment_authors:
-          type: string
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
           readOnly: true
         reviewed:
           type: boolean
@@ -20886,13 +21732,16 @@ components:
         ground_truth:
           type: boolean
         annotators_count:
-          type: string
+          type: integer
+          description: The annotators_count is calculated as the number of users with
+            annotations (can be repeated, so same as the number of annotations) +
+            the number of assignees without annotations.
           readOnly: true
         reviewers_count:
-          type: string
+          type: integer
           readOnly: true
         comment_authors_count:
-          type: string
+          type: integer
           readOnly: true
         data:
           description: User imported or uploaded data for a task. Data is formatted
@@ -22160,6 +23009,174 @@ components:
         dataset:
           type: integer
           description: A unique integer value identifying this dataset.
+    PatchedAzureServicePrincipalExportStorageRequest:
+      type: object
+      properties:
+        synchronizable:
+          type: boolean
+          default: true
+        prefix:
+          type: string
+          nullable: true
+          description: Azure blob prefix name
+        regex_filter:
+          type: string
+          nullable: true
+          description: Cloud storage regex for filtering objects
+        use_blob_urls:
+          type: boolean
+          description: Interpret objects as BLOBs and generate URLs
+        account_name:
+          type: string
+          nullable: true
+          description: Azure Blob account name
+        container:
+          type: string
+          nullable: true
+          description: Azure blob container
+        tenant_id:
+          type: string
+          nullable: true
+          description: Azure Tenant ID
+        client_id:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client ID
+        client_secret:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client Secret
+        user_delegation_key:
+          type: string
+          nullable: true
+          description: User Delegation Key (Backend)
+        last_sync:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last sync finished time
+        last_sync_count:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Count of tasks synced last time
+        last_sync_job:
+          type: string
+          nullable: true
+          description: Last sync job ID
+          maxLength: 256
+        status:
+          $ref: '#/components/schemas/StatusD14Enum'
+        traceback:
+          type: string
+          nullable: true
+          description: Traceback report for the last failed sync
+        meta:
+          nullable: true
+          description: Meta and debug information about storage processes
+        title:
+          type: string
+          nullable: true
+          description: Cloud storage title
+          maxLength: 256
+        description:
+          type: string
+          nullable: true
+          description: Cloud storage description
+        can_delete_objects:
+          type: boolean
+          nullable: true
+          description: Deletion from storage enabled
+        project:
+          type: integer
+          description: A unique integer value identifying this project.
+    PatchedAzureServicePrincipalImportStorageRequest:
+      type: object
+      properties:
+        synchronizable:
+          type: boolean
+          default: true
+        presign:
+          type: boolean
+          default: true
+        prefix:
+          type: string
+          nullable: true
+          description: Azure blob prefix name
+        regex_filter:
+          type: string
+          nullable: true
+          description: Cloud storage regex for filtering objects
+        use_blob_urls:
+          type: boolean
+          description: Interpret objects as BLOBs and generate URLs
+        account_name:
+          type: string
+          nullable: true
+          description: Azure Blob account name
+        container:
+          type: string
+          nullable: true
+          description: Azure blob container
+        tenant_id:
+          type: string
+          nullable: true
+          description: Azure Tenant ID
+        client_id:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client ID
+        client_secret:
+          type: string
+          nullable: true
+          description: Azure Blob Service Principal Client Secret
+        user_delegation_key:
+          type: string
+          nullable: true
+          description: User Delegation Key (Backend)
+        last_sync:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last sync finished time
+        last_sync_count:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          description: Count of tasks synced last time
+        last_sync_job:
+          type: string
+          nullable: true
+          description: Last sync job ID
+          maxLength: 256
+        status:
+          $ref: '#/components/schemas/StatusD14Enum'
+        traceback:
+          type: string
+          nullable: true
+          description: Traceback report for the last failed sync
+        meta:
+          nullable: true
+          description: Meta and debug information about storage processes
+        title:
+          type: string
+          nullable: true
+          description: Cloud storage title
+          maxLength: 256
+        description:
+          type: string
+          nullable: true
+          description: Cloud storage description
+        presign_ttl:
+          type: integer
+          maximum: 32767
+          minimum: 0
+          description: Presigned URLs TTL (in minutes)
+        project:
+          type: integer
+          description: A unique integer value identifying this project.
     PatchedCommentRequest:
       type: object
       properties:
@@ -22315,6 +23332,11 @@ components:
           description: Set to current time to disable the label stream navigation
             for this organization. This will prevent users from going back in the
             label stream to view previous labels.
+        email_notification_settings:
+          nullable: true
+          description: 'Email notification settings for this organization. Controls
+            which email notifications users can receive. Structure: {"notifications_allowed":
+            {"notification_type": bool}}'
     PatchedFileUploadRequest:
       type: object
       properties:
@@ -22665,6 +23687,9 @@ components:
           nullable: true
           minLength: 1
         embed_settings:
+          writeOnly: true
+          nullable: true
+        email_notification_settings:
           writeOnly: true
           nullable: true
         token:

@@ -187,24 +187,28 @@ types:
       Serializer get numbers from project queryset annotation,
       make sure, that you use correct one(Project.objects.with_counts())
     properties:
-      id: integer
-      start_training_on_annotation_update:
-        type: boolean
-        docs: Start model training after any annotations are submitted or updated
-      useful_annotation_number: string
-      pinned_at:
-        type: optional<datetime>
-        docs: Pinned date and time
+      is_draft:
+        type: optional<boolean>
+        docs: Whether or not the project is in the middle of being created
       skipped_annotations_number: string
-      workspace: string
-      members_count: string
-      finished_task_number: integer
+      title:
+        type: optional<string>
+        docs: Project name. Must be between 3 and 50 characters long.
+        validation:
+          minLength: 3
+          maxLength: 50
+      review_settings: ReviewSettings
       custom_task_lock_ttl:
         type: optional<integer>
         docs: TTL in seconds for task reservations, on new and existing tasks
         validation:
           min: 1
           max: 86400
+      workspace_title: string
+      parsed_label_config: unknown
+      members: string
+      custom_script: optional<string>
+      finished_task_number: integer
       maximum_annotations:
         type: optional<integer>
         docs: >-
@@ -214,130 +218,77 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
-      custom_script: optional<string>
-      label_config:
-        type: optional<string>
-        docs: Label config in XML format. See more about it in documentation
-      title:
-        type: optional<string>
-        docs: Project name. Must be between 3 and 50 characters long.
-        validation:
-          minLength: 3
-          maxLength: 50
-      evaluate_predictions_automatically:
-        type: optional<boolean>
-        docs: Retrieve and display predictions when loading a task
-      allow_stream: string
-      ready: string
-      rejected: string
-      show_annotation_history:
-        type: optional<boolean>
-        docs: Show annotation history to annotator
-      total_annotations_number: string
-      show_overlap_first: optional<boolean>
-      reviewer_queue_total: string
-      description_short: string
-      task_number:
-        type: integer
-        docs: Total task number in project
-      total_predictions_number: integer
-      expert_instruction:
-        type: optional<string>
-        docs: Labeling instructions in HTML format
-      annotation_limit_count:
-        type: optional<integer>
-        validation:
-          min: 1
-      data_types: unknown
-      duplication_status: optional<string>
-      ground_truth_number:
-        type: integer
-        docs: Honeypot annotation number in project
-      overlap_cohort_percentage:
-        type: optional<integer>
-        validation:
-          min: -2147483648
-          max: 2147483647
-      model_version:
-        type: optional<string>
-        docs: Machine learning model version
+      show_ground_truth_first: optional<boolean>
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the annotator before they start
-      queue_done: string
-      config_suitable_for_bulk_annotation:
-        type: boolean
-        docs: Flag to detect is project ready for bulk annotation
-      members: string
-      comment_classification_config: optional<string>
-      annotator_evaluation_minimum_score:
+      control_weights: optional<unknown>
+      id: integer
+      annotation_limit_percent:
         type: optional<string>
-        default: '95.00'
         validation:
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-      assignment_settings: AssignmentSettings
-      parsed_label_config: unknown
+      reviewed_number: string
+      queue_done: string
+      model_version:
+        type: optional<string>
+        docs: Machine learning model version
       prompts: string
-      queue_total: string
+      show_collab_predictions:
+        type: optional<boolean>
+        docs: If set, the annotator can view model predictions
+      queue_left: string
+      rejected: string
       color:
         type: optional<string>
         validation:
           maxLength: 16
       skip_queue: optional<AllRolesProjectListSkipQueue>
-      show_collab_predictions:
-        type: optional<boolean>
-        docs: If set, the annotator can view model predictions
-      annotation_limit_percent:
-        type: optional<string>
+      description_short: string
+      annotation_limit_count:
+        type: optional<integer>
         validation:
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-      review_total_tasks: string
-      is_published:
-        type: optional<boolean>
-        docs: Whether or not the project is published to annotators
+          min: 1
+      data_types: unknown
+      blueprints: list<BlueprintList>
+      workspace: string
+      duplication_status: optional<string>
       num_tasks_with_annotations: string
-      control_weights: optional<unknown>
-      description:
-        type: optional<string>
-        docs: Project description
-      duplication_done:
-        type: optional<boolean>
-        default: false
+      start_training_on_annotation_update:
+        type: boolean
+        docs: Start model training after any annotations are submitted or updated
       created_by:
         type: optional<UserSimple>
         docs: Project owner
-      sampling: optional<AllRolesProjectListSampling>
-      require_comment_on_skip:
-        type: optional<boolean>
-        default: false
-      has_blueprints: string
+      task_number:
+        type: integer
+        docs: Total task number in project
+      reviewer_queue_total: string
+      annotator_evaluation_minimum_score:
+        type: optional<string>
+        default: '95.00'
+        validation:
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+      allow_stream: string
+      total_predictions_number: integer
+      description:
+        type: optional<string>
+        docs: Project description
+      queue_total: string
+      comment_classification_config: optional<string>
       annotator_evaluation_minimum_tasks:
         type: optional<integer>
         default: 10
         validation:
           min: 0
-      workspace_title: string
-      pause_on_failed_annotator_evaluation:
+      is_published:
         type: optional<boolean>
-        default: false
-      config_has_control_tags:
-        type: boolean
-        docs: Flag to detect is project ready for labeling
-      show_ground_truth_first: optional<boolean>
-      is_draft:
-        type: optional<boolean>
-        docs: Whether or not the project is in the middle of being created
-      review_settings: ReviewSettings
-      blueprints: list<BlueprintList>
-      reviewed_number: string
-      enable_empty_annotation:
-        type: optional<boolean>
-        docs: Allow annotators to submit empty annotations
-      created_at: datetime
-      reveal_preannotations_interactively:
-        type: optional<boolean>
-        docs: Reveal pre-annotations interactively
-      queue_left: string
+        docs: Whether or not the project is published to annotators
+      total_annotations_number: string
+      label_config:
+        type: optional<string>
+        docs: Label config in XML format. See more about it in documentation
+      members_count: string
       min_annotations_to_start_training:
         type: optional<integer>
         docs: >-
@@ -346,10 +297,59 @@ types:
         validation:
           min: -2147483648
           max: 2147483647
+      reveal_preannotations_interactively:
+        type: optional<boolean>
+        docs: Reveal pre-annotations interactively
+      sampling: optional<AllRolesProjectListSampling>
+      overlap_cohort_percentage:
+        type: optional<integer>
+        validation:
+          min: -2147483648
+          max: 2147483647
+      pause_on_failed_annotator_evaluation:
+        type: optional<boolean>
+        default: false
+      duplication_done:
+        type: optional<boolean>
+        default: false
+      created_at: datetime
+      useful_annotation_number: string
+      pinned_at:
+        type: optional<datetime>
+        docs: Pinned date and time
+      organization: optional<integer>
+      ready: string
+      enable_empty_annotation:
+        type: optional<boolean>
+        docs: Allow annotators to submit empty annotations
+      show_overlap_first: optional<boolean>
+      expert_instruction:
+        type: optional<string>
+        docs: Labeling instructions in HTML format
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
-      organization: optional<integer>
+      has_blueprints: string
+      config_suitable_for_bulk_annotation:
+        type: boolean
+        docs: Flag to detect is project ready for bulk annotation
+      review_total_tasks: string
+      show_annotation_history:
+        type: optional<boolean>
+        docs: Show annotation history to annotator
+      config_has_control_tags:
+        type: boolean
+        docs: Flag to detect is project ready for labeling
+      ground_truth_number:
+        type: integer
+        docs: Honeypot annotation number in project
+      require_comment_on_skip:
+        type: optional<boolean>
+        default: false
+      assignment_settings: AssignmentSettings
+      evaluate_predictions_automatically:
+        type: optional<boolean>
+        docs: Retrieve and display predictions when loading a task
     source:
       openapi: openapi/openapi.yaml
   AnnotatedEnum:
@@ -1051,6 +1051,300 @@ types:
         docs: A unique integer value identifying this dataset.
     source:
       openapi: openapi/openapi.yaml
+  AzureServicePrincipalExportStorage:
+    properties:
+      id: integer
+      type:
+        type: string
+        default: azure_spi
+      synchronizable:
+        type: optional<boolean>
+        default: true
+      prefix:
+        type: optional<string>
+        docs: Azure blob prefix name
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
+      account_name:
+        type: optional<string>
+        docs: Azure Blob account name
+      container:
+        type: optional<string>
+        docs: Azure blob container
+      tenant_id:
+        type: optional<string>
+        docs: Azure Tenant ID
+      client_id:
+        type: optional<string>
+        docs: Azure Blob Service Principal Client ID
+      client_secret:
+        type: optional<string>
+        docs: Azure Blob Service Principal Client Secret
+      user_delegation_key:
+        type: optional<string>
+        docs: User Delegation Key (Backend)
+      last_sync:
+        type: optional<datetime>
+        docs: Last sync finished time
+      last_sync_count:
+        type: optional<integer>
+        docs: Count of tasks synced last time
+        validation:
+          min: 0
+          max: 2147483647
+      last_sync_job:
+        type: optional<string>
+        docs: Last sync job ID
+        validation:
+          maxLength: 256
+      status: optional<StatusD14Enum>
+      traceback:
+        type: optional<string>
+        docs: Traceback report for the last failed sync
+      meta: optional<unknown>
+      title:
+        type: optional<string>
+        docs: Cloud storage title
+        validation:
+          maxLength: 256
+      description:
+        type: optional<string>
+        docs: Cloud storage description
+      created_at:
+        type: datetime
+        docs: Creation time
+      can_delete_objects:
+        type: optional<boolean>
+        docs: Deletion from storage enabled
+      project:
+        type: integer
+        docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
+  AzureServicePrincipalExportStorageRequest:
+    properties:
+      synchronizable:
+        type: optional<boolean>
+        default: true
+      prefix:
+        type: optional<string>
+        docs: Azure blob prefix name
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
+      account_name:
+        type: optional<string>
+        docs: Azure Blob account name
+      container:
+        type: optional<string>
+        docs: Azure blob container
+      tenant_id:
+        type: optional<string>
+        docs: Azure Tenant ID
+      client_id:
+        type: optional<string>
+        docs: Azure Blob Service Principal Client ID
+      client_secret:
+        type: optional<string>
+        docs: Azure Blob Service Principal Client Secret
+      user_delegation_key:
+        type: optional<string>
+        docs: User Delegation Key (Backend)
+      last_sync:
+        type: optional<datetime>
+        docs: Last sync finished time
+      last_sync_count:
+        type: optional<integer>
+        docs: Count of tasks synced last time
+        validation:
+          min: 0
+          max: 2147483647
+      last_sync_job:
+        type: optional<string>
+        docs: Last sync job ID
+        validation:
+          maxLength: 256
+      status: optional<StatusD14Enum>
+      traceback:
+        type: optional<string>
+        docs: Traceback report for the last failed sync
+      meta: optional<unknown>
+      title:
+        type: optional<string>
+        docs: Cloud storage title
+        validation:
+          maxLength: 256
+      description:
+        type: optional<string>
+        docs: Cloud storage description
+      can_delete_objects:
+        type: optional<boolean>
+        docs: Deletion from storage enabled
+      project:
+        type: integer
+        docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
+  AzureServicePrincipalImportStorage:
+    properties:
+      id: integer
+      type:
+        type: string
+        default: azure_spi
+      synchronizable:
+        type: optional<boolean>
+        default: true
+      presign:
+        type: optional<boolean>
+        default: true
+      prefix:
+        type: optional<string>
+        docs: Azure blob prefix name
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
+      account_name:
+        type: optional<string>
+        docs: Azure Blob account name
+      container:
+        type: optional<string>
+        docs: Azure blob container
+      tenant_id:
+        type: optional<string>
+        docs: Azure Tenant ID
+      client_id:
+        type: optional<string>
+        docs: Azure Blob Service Principal Client ID
+      client_secret:
+        type: optional<string>
+        docs: Azure Blob Service Principal Client Secret
+      user_delegation_key:
+        type: optional<string>
+        docs: User Delegation Key (Backend)
+      last_sync:
+        type: optional<datetime>
+        docs: Last sync finished time
+      last_sync_count:
+        type: optional<integer>
+        docs: Count of tasks synced last time
+        validation:
+          min: 0
+          max: 2147483647
+      last_sync_job:
+        type: optional<string>
+        docs: Last sync job ID
+        validation:
+          maxLength: 256
+      status: optional<StatusD14Enum>
+      traceback:
+        type: optional<string>
+        docs: Traceback report for the last failed sync
+      meta: optional<unknown>
+      title:
+        type: optional<string>
+        docs: Cloud storage title
+        validation:
+          maxLength: 256
+      description:
+        type: optional<string>
+        docs: Cloud storage description
+      created_at:
+        type: datetime
+        docs: Creation time
+      presign_ttl:
+        type: optional<integer>
+        docs: Presigned URLs TTL (in minutes)
+        validation:
+          min: 0
+          max: 32767
+      project:
+        type: integer
+        docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
+  AzureServicePrincipalImportStorageRequest:
+    properties:
+      synchronizable:
+        type: optional<boolean>
+        default: true
+      presign:
+        type: optional<boolean>
+        default: true
+      prefix:
+        type: optional<string>
+        docs: Azure blob prefix name
+      regex_filter:
+        type: optional<string>
+        docs: Cloud storage regex for filtering objects
+      use_blob_urls:
+        type: optional<boolean>
+        docs: Interpret objects as BLOBs and generate URLs
+      account_name:
+        type: optional<string>
+        docs: Azure Blob account name
+      container:
+        type: optional<string>
+        docs: Azure blob container
+      tenant_id:
+        type: optional<string>
+        docs: Azure Tenant ID
+      client_id:
+        type: optional<string>
+        docs: Azure Blob Service Principal Client ID
+      client_secret:
+        type: optional<string>
+        docs: Azure Blob Service Principal Client Secret
+      user_delegation_key:
+        type: optional<string>
+        docs: User Delegation Key (Backend)
+      last_sync:
+        type: optional<datetime>
+        docs: Last sync finished time
+      last_sync_count:
+        type: optional<integer>
+        docs: Count of tasks synced last time
+        validation:
+          min: 0
+          max: 2147483647
+      last_sync_job:
+        type: optional<string>
+        docs: Last sync job ID
+        validation:
+          maxLength: 256
+      status: optional<StatusD14Enum>
+      traceback:
+        type: optional<string>
+        docs: Traceback report for the last failed sync
+      meta: optional<unknown>
+      title:
+        type: optional<string>
+        docs: Cloud storage title
+        validation:
+          maxLength: 256
+      description:
+        type: optional<string>
+        docs: Cloud storage description
+      presign_ttl:
+        type: optional<integer>
+        docs: Presigned URLs TTL (in minutes)
+        validation:
+          min: 0
+          max: 32767
+      project:
+        type: integer
+        docs: A unique integer value identifying this project.
+    source:
+      openapi: openapi/openapi.yaml
   BatchFailedPredictions:
     properties:
       job_id:
@@ -1470,6 +1764,7 @@ types:
           Set to current time to disable the label stream navigation for this
           organization. This will prevent users from going back in the label
           stream to view previous labels.
+      email_notification_settings: optional<unknown>
     source:
       openapi: openapi/openapi.yaml
   DefaultRoleEnum:
@@ -2901,6 +3196,7 @@ types:
 
           * `AD` - Administrator
           * `MA` - Manager
+      email_notification_settings: string
     source:
       openapi: openapi/openapi.yaml
   LseOrganizationMemberList:
@@ -3924,16 +4220,21 @@ types:
       updated_by:
         docs: User IDs who updated this task
         type: list<map<string, unknown>>
-      reviewers: string
+      reviewers: list<map<string, unknown>>
       comments: string
-      comment_authors: string
+      comment_authors: list<map<string, unknown>>
       reviewed: optional<boolean>
       reviews_accepted: optional<integer>
       reviews_rejected: optional<integer>
       ground_truth: optional<boolean>
-      annotators_count: string
-      reviewers_count: string
-      comment_authors_count: string
+      annotators_count:
+        type: integer
+        docs: >-
+          The annotators_count is calculated as the number of users with
+          annotations (can be repeated, so same as the number of annotations) +
+          the number of assignees without annotations.
+      reviewers_count: integer
+      comment_authors_count: integer
       data: unknown
       meta: optional<unknown>
       created_at:
@@ -4365,16 +4666,21 @@ types:
       updated_by:
         docs: User IDs who updated this task
         type: list<map<string, unknown>>
-      reviewers: string
+      reviewers: list<map<string, unknown>>
       comments: string
-      comment_authors: string
+      comment_authors: list<map<string, unknown>>
       reviewed: optional<boolean>
       reviews_accepted: optional<integer>
       reviews_rejected: optional<integer>
       ground_truth: optional<boolean>
-      annotators_count: string
-      reviewers_count: string
-      comment_authors_count: string
+      annotators_count:
+        type: integer
+        docs: >-
+          The annotators_count is calculated as the number of users with
+          annotations (can be repeated, so same as the number of annotations) +
+          the number of assignees without annotations.
+      reviewers_count: integer
+      comment_authors_count: integer
       data: unknown
       meta: optional<unknown>
       created_at:

@@ -210,6 +210,8 @@ from .actions import (
     ActionsCreateRequestSelectedItems,
     ActionsCreateRequestSelectedItemsExcluded,
     ActionsCreateRequestSelectedItemsIncluded,
+    ActionsListResponseItem,
+    ActionsListResponseItemDialog,
 )
 from .annotations import AnnotationBulkSerializerWithSelectedItemsRequestLastAction, AnnotationsCreateBulkResponseItem
 from .client import AsyncLabelStudio, LabelStudio
@@ -280,6 +282,8 @@ __all__ = [
     "ActionsCreateRequestSelectedItemsExcluded",
     "ActionsCreateRequestSelectedItemsIncluded",
     "ActionsEnum",
+    "ActionsListResponseItem",
+    "ActionsListResponseItemDialog",
     "AllRolesProjectList",
     "AllRolesProjectListSampling",
     "AllRolesProjectListSkipQueue",
