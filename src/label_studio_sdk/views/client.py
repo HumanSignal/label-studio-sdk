@@ -299,7 +299,7 @@ class ViewsClient:
 
     def update_order(
         self, *, project: int, ids: typing.Sequence[int], request_options: typing.Optional[RequestOptions] = None
-    ) -> View:
+    ) -> None:
         """
         Update the order field of views based on the provided list of view IDs
 
@@ -315,8 +315,7 @@ class ViewsClient:
 
         Returns
         -------
-        View
-
+        None
 
         Examples
         --------
@@ -346,24 +345,21 @@ class ViewsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    View,
-                    construct_type(
-                        type_=View,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete all views for a specific project. Request body example: `{"project": 1}`.
+        Delete all views for a specific project.
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -379,11 +375,16 @@ class ViewsClient:
             api_key="YOUR_API_KEY",
             base_url="https://yourhost.com/path/to/api",
         )
-        client.views.delete_all()
+        client.views.delete_all(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/dm/views/reset/",
             method="DELETE",
+            params={
+                "project": project,
+            },
             request_options=request_options,
         )
         try:
@@ -717,7 +718,7 @@ class AsyncViewsClient:
 
     async def update_order(
         self, *, project: int, ids: typing.Sequence[int], request_options: typing.Optional[RequestOptions] = None
-    ) -> View:
+    ) -> None:
         """
         Update the order field of views based on the provided list of view IDs
 
@@ -733,8 +734,7 @@ class AsyncViewsClient:
 
         Returns
         -------
-        View
-
+        None
 
         Examples
         --------
@@ -772,24 +772,21 @@ class AsyncViewsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    View,
-                    construct_type(
-                        type_=View,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_all(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete all views for a specific project. Request body example: `{"project": 1}`.
+        Delete all views for a specific project.
 
         Parameters
         ----------
+        project : int
+            Project ID
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -810,7 +807,9 @@ class AsyncViewsClient:
 
 
         async def main() -> None:
-            await client.views.delete_all()
+            await client.views.delete_all(
+                project=1,
+            )
 
 
         asyncio.run(main())
@@ -818,6 +817,9 @@ class AsyncViewsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/dm/views/reset/",
             method="DELETE",
+            params={
+                "project": project,
+            },
             request_options=request_options,
         )
         try:

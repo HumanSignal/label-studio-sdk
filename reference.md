@@ -822,7 +822,7 @@ client.comments.list()
 <dl>
 <dd>
 
-**annotators:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+**annotators:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -854,7 +854,7 @@ client.comments.list()
 <dl>
 <dd>
 
-**projects:** `typing.Optional[typing.Union[int, typing.Sequence[int]]]` 
+**projects:** `typing.Optional[str]` 
     
 </dd>
 </dl>
@@ -2300,7 +2300,7 @@ client.users.update(
 </details>
 
 ## Actions
-<details><summary><code>client.actions.<a href="src/label_studio_sdk/actions/client.py">list</a>()</code></summary>
+<details><summary><code>client.actions.<a href="src/label_studio_sdk/actions/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2333,7 +2333,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.actions.list()
+client.actions.list(
+    project=1,
+)
 
 ```
 </dd>
@@ -2345,6 +2347,14 @@ client.actions.list()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` — Project ID
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -2950,7 +2960,7 @@ client.views.update_order(
 </dl>
 </details>
 
-<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">delete_all</a>()</code></summary>
+<details><summary><code>client.views.<a href="src/label_studio_sdk/views/client.py">delete_all</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2962,7 +2972,7 @@ client.views.update_order(
 <dl>
 <dd>
 
-Delete all views for a specific project. Request body example: `{"project": 1}`.
+Delete all views for a specific project.
 </dd>
 </dl>
 </dd>
@@ -2983,7 +2993,9 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
     base_url="https://yourhost.com/path/to/api",
 )
-client.views.delete_all()
+client.views.delete_all(
+    project=1,
+)
 
 ```
 </dd>
@@ -2995,6 +3007,14 @@ client.views.delete_all()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` — Project ID
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

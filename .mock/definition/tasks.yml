@@ -366,16 +366,18 @@ service:
                   draft_exists: true
                   updated_by:
                     - key: value
-                  reviewers: reviewers
+                  reviewers:
+                    - key: value
                   comments: comments
-                  comment_authors: comment_authors
+                  comment_authors:
+                    - key: value
                   reviewed: true
                   reviews_accepted: 1
                   reviews_rejected: 1
                   ground_truth: true
-                  annotators_count: annotators_count
-                  reviewers_count: reviewers_count
-                  comment_authors_count: comment_authors_count
+                  annotators_count: 1
+                  reviewers_count: 1
+                  comment_authors_count: 1
                   data:
                     key: value
                   meta:
@@ -537,16 +539,18 @@ service:
               draft_exists: true
               updated_by:
                 - key: value
-              reviewers: reviewers
+              reviewers:
+                - key: value
               comments: comments
-              comment_authors: comment_authors
+              comment_authors:
+                - key: value
               reviewed: true
               reviews_accepted: 1
               reviews_rejected: 1
               ground_truth: true
-              annotators_count: annotators_count
-              reviewers_count: reviewers_count
-              comment_authors_count: comment_authors_count
+              annotators_count: 1
+              reviewers_count: 1
+              comment_authors_count: 1
               data:
                 key: value
               meta:
@@ -688,16 +692,18 @@ service:
               draft_exists: true
               updated_by:
                 - key: value
-              reviewers: reviewers
+              reviewers:
+                - key: value
               comments: comments
-              comment_authors: comment_authors
+              comment_authors:
+                - key: value
               reviewed: true
               reviews_accepted: 1
               reviews_rejected: 1
               ground_truth: true
-              annotators_count: annotators_count
-              reviewers_count: reviewers_count
-              comment_authors_count: comment_authors_count
+              annotators_count: 1
+              reviewers_count: 1
+              comment_authors_count: 1
               data:
                 key: value
               meta:
