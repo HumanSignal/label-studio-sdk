@@ -3864,7 +3864,7 @@ client.jwt_settings.update()
     List all configured ML backends for a specific project by ID.
     Use the following cURL command:
     ```bash
-    curl https://localhost:8080/api/ml?project={project_id} -H 'Authorization: Token abc123'
+    curl http://localhost:8000/api/ml?project={project_id} -H 'Authorization: Token abc123'
     
 </dd>
 </dl>
@@ -3938,7 +3938,7 @@ client.ml.list()
     Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL 
     command:
     ```bash
-    curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml -H 'Authorization: Token abc123'\
+    curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml -H 'Authorization: Token abc123'\
     --data '{"url": "http://localhost:9090", "project": {project_id}}' 
     
 </dd>
@@ -4085,7 +4085,7 @@ client.ml.create()
     Get details about a specific ML backend connection by ID. For example, make a GET request using the
     following cURL command:
     ```bash
-    curl https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+    curl http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
     
 </dd>
 </dl>
@@ -4161,7 +4161,7 @@ client.ml.get(
     Remove an existing ML backend connection by ID. For example, use the
     following cURL command:
     ```bash
-    curl -X DELETE https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+    curl -X DELETE http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
     
 </dd>
 </dl>
@@ -4236,7 +4236,7 @@ client.ml.delete(
 
     Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
     ```bash
-    curl -X PATCH -H 'Content-type: application/json' https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
+    curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
     --data '{"url": "http://localhost:9091"}' 
     
 </dd>
@@ -7539,7 +7539,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 
             ```bash
             curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-            -X POST 'https://localhost:8080/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
+            -X POST 'http://localhost:8000/api/projects/1/import' --data '[{"text": "Some text 1"}, {"text": "Some text 2"}]'
             ```
 
             ### 2. **POST with files**
@@ -7555,7 +7555,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 
             ```bash
             curl -H 'Authorization: Token abc123' \
-            -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'
+            -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'
             ```
 
             ### 3. **POST with URL**
@@ -7563,7 +7563,7 @@ Data that you want to duplicate: settings only, with tasks, with annotations
 
             ```bash
             curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
-            -X POST 'https://localhost:8080/api/projects/1/import' \
+            -X POST 'http://localhost:8000/api/projects/1/import' \
             --data '[{"url": "http://example.com/test1.csv"}, {"url": "http://example.com/test2.csv"}]'
             ```
 

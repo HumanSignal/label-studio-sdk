@@ -4349,7 +4349,7 @@ paths:
     get:
       operationId: api_ml_list
       description: "\n    List all configured ML backends for a specific project by\
-        \ ID.\n    Use the following cURL command:\n    ```bash\n    curl https://localhost:8080/api/ml?project={project_id}\
+        \ ID.\n    Use the following cURL command:\n    ```bash\n    curl http://localhost:8000/api/ml?project={project_id}\
         \ -H 'Authorization: Token abc123'\n    "
       summary: List ML backends
       parameters:
@@ -4379,7 +4379,7 @@ paths:
       operationId: api_ml_create
       description: "\n    Add an ML backend to a project using the Label Studio UI\
         \ or by sending a POST request using the following cURL \n    command:\n \
-        \   ```bash\n    curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml\
+        \   ```bash\n    curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml\
         \ -H 'Authorization: Token abc123'\\\n    --data '{\"url\": \"http://localhost:9090\"\
         , \"project\": {project_id}}' \n    "
       summary: Add ML Backend
@@ -4443,7 +4443,7 @@ paths:
       operationId: api_ml_retrieve
       description: "\n    Get details about a specific ML backend connection by ID.\
         \ For example, make a GET request using the\n    following cURL command:\n\
-        \    ```bash\n    curl https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization:\
+        \    ```bash\n    curl http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization:\
         \ Token abc123'\n    "
       summary: Get ML Backend
       parameters:
@@ -4471,7 +4471,7 @@ paths:
       operationId: api_ml_partial_update
       description: "\n    Update ML backend parameters using the Label Studio UI or\
         \ by sending a PATCH request using the following cURL command:\n    ```bash\n\
-        \    curl -X PATCH -H 'Content-type: application/json' https://localhost:8080/api/ml/{ml_backend_ID}\
+        \    curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID}\
         \ -H 'Authorization: Token abc123'\\\n    --data '{\"url\": \"http://localhost:9091\"\
         }' \n    "
       summary: Update ML Backend
@@ -4539,7 +4539,7 @@ paths:
     delete:
       operationId: api_ml_destroy
       description: "\n    Remove an existing ML backend connection by ID. For example,\
-        \ use the\n    following cURL command:\n    ```bash\n    curl -X DELETE https://localhost:8080/api/ml/{ml_backend_ID}\
+        \ use the\n    following cURL command:\n    ```bash\n    curl -X DELETE http://localhost:8000/api/ml/{ml_backend_ID}\
         \ -H 'Authorization: Token abc123'\n    "
       summary: Remove ML Backend
       parameters:
@@ -6575,14 +6575,14 @@ paths:
         \        Export annotated tasks as a file in a specific format.\n        For\
         \ example, to export JSON annotations for a project to a file called `annotations.json`,\n\
         \        run the following from the command line:\n        ```bash\n     \
-        \   curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON\
+        \   curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON\
         \ -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n\
         \        To export all tasks, including skipped tasks and others without annotations,\
         \ run the following from the command line:\n        ```bash\n        curl\
-        \ -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true\
+        \ -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true\
         \ -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n\
         \        To export specific tasks with IDs of 123 and 345, run the following\
-        \ from the command line:\n        ```bash\n        curl -X GET 'https://localhost:8080/api/projects/{id}/export?ids[]=123&ids[]=345'\
+        \ from the command line:\n        ```bash\n        curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345'\
         \ -H 'Authorization: Token abc123' --output 'annotations.json'\n        ```\n\
         \        "
       summary: Easy export of tasks and annotations
@@ -7004,7 +7004,7 @@ paths:
         \ token and Label Studio instance host, then run the following from\n    \
         \        the command line.\n\n            ```bash\n            curl -H 'Content-Type:\
         \ application/json' -H 'Authorization: Token abc123' \\\n            -X POST\
-        \ 'https://localhost:8080/api/projects/1/import' --data '[{\"text\": \"Some\
+        \ 'http://localhost:8000/api/projects/1/import' --data '[{\"text\": \"Some\
         \ text 1\"}, {\"text\": \"Some text 2\"}]'\n            ```\n\n          \
         \  ### 2. **POST with files**\n            Send tasks as files. You can attach\
         \ multiple files with different names.\n\n            - **JSON**: text files\
@@ -7016,14 +7016,14 @@ paths:
         \ specify your authorization token, Label Studio instance host, and file name\
         \ and path,\n            then run the following from the command line:\n\n\
         \            ```bash\n            curl -H 'Authorization: Token abc123' \\\
-        \n            -X POST 'https://localhost:8080/api/projects/1/import' -F 'file=@path/to/my_file.csv'\n\
+        \n            -X POST 'http://localhost:8000/api/projects/1/import' -F 'file=@path/to/my_file.csv'\n\
         \            ```\n\n            ### 3. **POST with URL**\n            You\
         \ can also provide a URL to a file with labeling tasks. Supported file formats\
         \ are the same as in option 2.\n\n            ```bash\n            curl -H\
         \ 'Content-Type: application/json' -H 'Authorization: Token abc123' \\\n \
-        \           -X POST 'https://localhost:8080/api/projects/1/import' \\\n  \
-        \          --data '[{\"url\": \"http://example.com/test1.csv\"}, {\"url\"\
-        : \"http://example.com/test2.csv\"}]'\n            ```\n\n            <br>\n\
+        \           -X POST 'http://localhost:8000/api/projects/1/import' \\\n   \
+        \         --data '[{\"url\": \"http://example.com/test1.csv\"}, {\"url\":\
+        \ \"http://example.com/test2.csv\"}]'\n            ```\n\n            <br>\n\
         \        "
       summary: Import tasks
       parameters:
@@ -7585,7 +7585,7 @@ paths:
       operationId: api_projects_tasks_list
       description: "\n            Retrieve a paginated list of tasks for a specific\
         \ project. For example, use the following cURL command:\n            ```bash\n\
-        \            curl -X GET https://localhost:8080/api/projects/{id}/tasks/?page=1&page_size=10\
+        \            curl -X GET http://localhost:8000/api/projects/{id}/tasks/?page=1&page_size=10\
         \ -H 'Authorization: Token abc123'\n            ```\n        "
       summary: List project tasks
       parameters:
@@ -15472,29 +15472,52 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
-        expert_instruction:
-          type: string
-          nullable: true
-          description: Labeling instructions in HTML format
-        show_ground_truth_first:
-          type: boolean
-        allow_stream:
+        members:
           type: string
           readOnly: true
+        review_total_tasks:
+          type: string
+          readOnly: true
+        organization:
+          type: integer
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        annotation_limit_count:
+          type: integer
+          minimum: 1
+          nullable: true
+        description_short:
+          type: string
+          readOnly: true
+        is_draft:
+          type: boolean
+          description: Whether or not the project is in the middle of being created
         review_settings:
           $ref: '#/components/schemas/ReviewSettings'
+        rejected:
+          type: string
+          readOnly: true
+        color:
+          type: string
+          nullable: true
+          maxLength: 16
         total_annotations_number:
           type: string
           readOnly: true
-        queue_left:
-          type: string
-          readOnly: true
-        min_annotations_to_start_training:
+        overlap_cohort_percentage:
           type: integer
           maximum: 2147483647
           minimum: -2147483648
-          description: Minimum number of completed tasks after which model training
-            is started
+        ground_truth_number:
+          type: integer
+          readOnly: true
+          description: Honeypot annotation number in project
+        total_predictions_number:
+          type: integer
+          readOnly: true
         task_number:
           type: integer
           readOnly: true
@@ -15509,87 +15532,34 @@ components:
             be twice more important than Airplaine, then you have to need the specify:
             {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0,
             ''Airplaine'': 0.5}, ''overall'': 0.33}'
-        members_count:
-          type: string
-          readOnly: true
-        enable_empty_annotation:
-          type: boolean
-          description: Allow annotators to submit empty annotations
-        evaluate_predictions_automatically:
-          type: boolean
-          description: Retrieve and display predictions when loading a task
-        comment_classification_config:
-          type: string
-        model_version:
-          type: string
+        sampling:
           nullable: true
-          description: Machine learning model version
-        review_total_tasks:
+          oneOf:
+          - $ref: '#/components/schemas/SamplingEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        skipped_annotations_number:
           type: string
           readOnly: true
-        is_published:
-          type: boolean
-          title: Published
-          description: Whether or not the project is published to annotators
-        created_by:
-          allOf:
-          - $ref: '#/components/schemas/UserSimple'
-          description: Project owner
-        data_types:
-          readOnly: true
-          nullable: true
-        total_predictions_number:
+        id:
           type: integer
           readOnly: true
-        organization:
-          type: integer
-          nullable: true
-        blueprints:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueprintList'
-          readOnly: true
-        useful_annotation_number:
-          type: string
-          readOnly: true
-        rejected:
-          type: string
-          readOnly: true
-        annotation_limit_count:
-          type: integer
-          minimum: 1
-          nullable: true
-        pinned_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Pinned date and time
-        annotation_limit_percent:
+        annotator_evaluation_minimum_score:
           type: string
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
-        show_collab_predictions:
+          default: '95.00'
+        start_training_on_annotation_update:
           type: boolean
-          title: Show predictions to annotator
-          description: If set, the annotator can view model predictions
-        ground_truth_number:
-          type: integer
           readOnly: true
-          description: Honeypot annotation number in project
-        skipped_annotations_number:
+          description: Start model training after any annotations are submitted or
+            updated
+        title:
           type: string
-          readOnly: true
-        workspace:
-          type: string
-          readOnly: true
-        pause_on_failed_annotator_evaluation:
-          type: boolean
           nullable: true
-          default: false
-        reveal_preannotations_interactively:
-          type: boolean
-          description: Reveal pre-annotations interactively
+          description: Project name. Must be between 3 and 50 characters long.
+          maxLength: 50
+          minLength: 3
         show_annotation_history:
           type: boolean
           description: Show annotation history to annotator
@@ -15598,95 +15568,37 @@ components:
           oneOf:
           - $ref: '#/components/schemas/SkipQueueEnum'
           - $ref: '#/components/schemas/NullEnum'
-        finished_task_number:
-          type: integer
+        ready:
+          type: string
           readOnly: true
-        is_draft:
+        duplication_status:
+          type: string
+        config_has_control_tags:
           type: boolean
-          description: Whether or not the project is in the middle of being created
-        color:
+          readOnly: true
+          description: Flag to detect is project ready for labeling
+        show_instruction:
+          type: boolean
+          description: Show instructions to the annotator before they start
+        workspace_title:
           type: string
-          nullable: true
-          maxLength: 16
-        annotator_evaluation_minimum_score:
+          readOnly: true
+        comment_classification_config:
           type: string
-          format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          nullable: true
-          default: '95.00'
+        min_annotations_to_start_training:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Minimum number of completed tasks after which model training
+            is started
         annotator_evaluation_minimum_tasks:
           type: integer
           minimum: 0
           nullable: true
           default: 10
-        label_config:
-          type: string
-          nullable: true
-          description: Label config in XML format. See more about it in documentation
-        sampling:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SamplingEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        custom_task_lock_ttl:
-          type: integer
-          maximum: 86400
-          minimum: 1
-          nullable: true
-          description: TTL in seconds for task reservations, on new and existing tasks
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        assignment_settings:
-          $ref: '#/components/schemas/AssignmentSettings'
-        description:
-          type: string
-          nullable: true
-          description: Project description
-        config_has_control_tags:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for labeling
-        members:
+        workspace:
           type: string
           readOnly: true
-        custom_script:
-          type: string
-        workspace_title:
-          type: string
-          readOnly: true
-        id:
-          type: integer
-          readOnly: true
-        show_overlap_first:
-          type: boolean
-        overlap_cohort_percentage:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        reviewer_queue_total:
-          type: string
-          readOnly: true
-        queue_done:
-          type: string
-          readOnly: true
-        queue_total:
-          type: string
-          readOnly: true
-        description_short:
-          type: string
-          readOnly: true
-        parsed_label_config:
-          readOnly: true
-          description: JSON-formatted labeling configuration
-        num_tasks_with_annotations:
-          type: string
-          readOnly: true
-        config_suitable_for_bulk_annotation:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for bulk annotation
         maximum_annotations:
           type: integer
           maximum: 2147483647
@@ -15695,44 +15607,132 @@ components:
           description: Maximum number of annotations for one task. If the number of
             annotations per task is equal or greater to this value, the task is completed
             (is_labeled=True)
-        prompts:
-          type: string
-          readOnly: true
-        start_training_on_annotation_update:
+        show_overlap_first:
           type: boolean
-          readOnly: true
-          description: Start model training after any annotations are submitted or
-            updated
-        show_instruction:
+        annotation_limit_percent:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          nullable: true
+        evaluate_predictions_automatically:
           type: boolean
-          description: Show instructions to the annotator before they start
-        duplication_status:
-          type: string
-        show_skip_button:
+          description: Retrieve and display predictions when loading a task
+        assignment_settings:
+          $ref: '#/components/schemas/AssignmentSettings'
+        duplication_done:
           type: boolean
-          description: Show a skip button in interface and allow annotators to skip
-            the task
-        ready:
+          default: false
+        blueprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintList'
+          readOnly: true
+        useful_annotation_number:
           type: string
           readOnly: true
-        has_blueprints:
+        custom_script:
           type: string
-          readOnly: true
+        label_config:
+          type: string
+          nullable: true
+          description: Label config in XML format. See more about it in documentation
+        is_published:
+          type: boolean
+          title: Published
+          description: Whether or not the project is published to annotators
+        model_version:
+          type: string
+          nullable: true
+          description: Machine learning model version
         reviewed_number:
+          type: string
+          readOnly: true
+        description:
+          type: string
+          nullable: true
+          description: Project description
+        queue_done:
           type: string
           readOnly: true
         require_comment_on_skip:
           type: boolean
           default: false
-        title:
+        data_types:
+          readOnly: true
+          nullable: true
+        show_ground_truth_first:
+          type: boolean
+        members_count:
+          type: string
+          readOnly: true
+        num_tasks_with_annotations:
+          type: string
+          readOnly: true
+        prompts:
+          type: string
+          readOnly: true
+        allow_stream:
+          type: string
+          readOnly: true
+        parsed_label_config:
+          readOnly: true
+          description: JSON-formatted labeling configuration
+        custom_task_lock_ttl:
+          type: integer
+          maximum: 86400
+          minimum: 1
+          nullable: true
+          description: TTL in seconds for task reservations, on new and existing tasks
+        reviewer_queue_total:
+          type: string
+          readOnly: true
+        finished_task_number:
+          type: integer
+          readOnly: true
+        pause_on_failed_annotator_evaluation:
+          type: boolean
+          nullable: true
+          default: false
+        show_collab_predictions:
+          type: boolean
+          title: Show predictions to annotator
+          description: If set, the annotator can view model predictions
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/UserSimple'
+          description: Project owner
+        reveal_preannotations_interactively:
+          type: boolean
+          description: Reveal pre-annotations interactively
+        has_blueprints:
+          type: string
+          readOnly: true
+        pinned_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Pinned date and time
+        config_suitable_for_bulk_annotation:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for bulk annotation
+        show_skip_button:
+          type: boolean
+          description: Show a skip button in interface and allow annotators to skip
+            the task
+        enable_empty_annotation:
+          type: boolean
+          description: Allow annotators to submit empty annotations
+        expert_instruction:
           type: string
           nullable: true
-          description: Project name. Must be between 3 and 50 characters long.
-          maxLength: 50
-          minLength: 3
-        duplication_done:
-          type: boolean
-          default: false
+          description: Labeling instructions in HTML format
+        queue_total:
+          type: string
+          readOnly: true
+        queue_left:
+          type: string
+          readOnly: true
       required:
       - allow_stream
       - assignment_settings
