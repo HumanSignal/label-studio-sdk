@@ -46,7 +46,6 @@ class ModelProvidersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.model_providers.list()
         """
@@ -142,7 +141,6 @@ class ModelProvidersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.model_providers.create()
         """
@@ -202,7 +200,6 @@ class ModelProvidersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.model_providers.get(
             id="id",
@@ -248,7 +245,6 @@ class ModelProvidersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.model_providers.delete(
             id="id",
@@ -340,7 +336,6 @@ class ModelProvidersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.model_providers.update(
             id="id",
@@ -405,7 +400,6 @@ class ModelProvidersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.model_providers.list_model_provider_choices()
         """
@@ -460,7 +454,6 @@ class AsyncModelProvidersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -564,7 +557,6 @@ class AsyncModelProvidersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -632,7 +624,6 @@ class AsyncModelProvidersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -686,7 +677,6 @@ class AsyncModelProvidersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -786,7 +776,6 @@ class AsyncModelProvidersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -859,7 +848,6 @@ class AsyncModelProvidersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

@@ -50,7 +50,6 @@ class PredictionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.predictions.list()
         """
@@ -117,7 +116,6 @@ class PredictionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.predictions.create(
             result=[
@@ -194,7 +192,6 @@ class PredictionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.predictions.get(
             id=1,
@@ -241,7 +238,6 @@ class PredictionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.predictions.delete(
             id=1,
@@ -304,7 +300,6 @@ class PredictionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.predictions.update(
             id=1,
@@ -398,7 +393,6 @@ class AsyncPredictionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -473,7 +467,6 @@ class AsyncPredictionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -558,7 +551,6 @@ class AsyncPredictionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -613,7 +605,6 @@ class AsyncPredictionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -684,7 +675,6 @@ class AsyncPredictionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

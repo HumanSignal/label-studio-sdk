@@ -41,7 +41,6 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.files.get(
             id=1,
@@ -87,7 +86,6 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.files.delete(
             id=1,
@@ -137,7 +135,6 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.files.update(
             id=1,
@@ -208,7 +205,6 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.files.list(
             id=1,
@@ -261,7 +257,6 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.files.delete_many(
             id=1,
@@ -301,7 +296,6 @@ class FilesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.files.download(
             filename="filename",
@@ -349,7 +343,6 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -403,7 +396,6 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -461,7 +453,6 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -540,7 +531,6 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -601,7 +591,6 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -649,7 +638,6 @@ class AsyncFilesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

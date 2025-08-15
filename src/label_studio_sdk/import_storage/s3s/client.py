@@ -52,7 +52,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.list()
         """
@@ -202,7 +201,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.create(
             role_arn="role_arn",
@@ -279,7 +277,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.get(
             id=1,
@@ -325,7 +322,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.delete(
             id=1,
@@ -470,7 +466,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.update(
             id=1,
@@ -549,7 +544,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.sync(
             id=1,
@@ -696,7 +690,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.validate(
             role_arn="role_arn",
@@ -784,7 +777,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -942,7 +934,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1027,7 +1018,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1081,7 +1071,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1234,7 +1223,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1321,7 +1309,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1476,7 +1463,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

@@ -11,7 +11,7 @@ from .types import (
 )
 from . import exports, pauses, stats
 from .exports import ExportsConvertResponse
-from .stats import StatsIaaResponse
+from .stats import StatsIaaResponse, StatsIaaResponseCommonTasks, StatsIaaResponseIaa, StatsIaaResponseStd
 
 __all__ = [
     "ExportsConvertResponse",
@@ -23,6 +23,9 @@ __all__ = [
     "ProjectsImportTasksResponse",
     "ProjectsListRequestFilter",
     "StatsIaaResponse",
+    "StatsIaaResponseCommonTasks",
+    "StatsIaaResponseIaa",
+    "StatsIaaResponseStd",
     "exports",
     "pauses",
     "stats",

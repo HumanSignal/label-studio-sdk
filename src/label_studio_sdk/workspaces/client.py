@@ -53,7 +53,6 @@ class WorkspacesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.workspaces.list()
         """
@@ -123,7 +122,6 @@ class WorkspacesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.workspaces.create(
             title="title",
@@ -181,7 +179,6 @@ class WorkspacesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.workspaces.get(
             id=1,
@@ -227,7 +224,6 @@ class WorkspacesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.workspaces.delete(
             id=1,
@@ -292,7 +288,6 @@ class WorkspacesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.workspaces.update(
             id=1,
@@ -368,7 +363,6 @@ class AsyncWorkspacesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -446,7 +440,6 @@ class AsyncWorkspacesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -512,7 +505,6 @@ class AsyncWorkspacesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -566,7 +558,6 @@ class AsyncWorkspacesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -639,7 +630,6 @@ class AsyncWorkspacesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

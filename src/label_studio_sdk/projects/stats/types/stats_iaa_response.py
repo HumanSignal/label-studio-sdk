@@ -3,17 +3,20 @@
 from ....core.unchecked_base_model import UncheckedBaseModel
 import typing_extensions
 import typing
+from .stats_iaa_response_iaa import StatsIaaResponseIaa
 from ....core.serialization import FieldMetadata
 import pydantic
+from .stats_iaa_response_std import StatsIaaResponseStd
+from .stats_iaa_response_common_tasks import StatsIaaResponseCommonTasks
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class StatsIaaResponse(UncheckedBaseModel):
-    iaa: typing_extensions.Annotated[typing.Optional[typing.List[typing.List[float]]], FieldMetadata(alias="IAA")] = (
-        pydantic.Field(default=None)
+    iaa: typing_extensions.Annotated[typing.Optional[StatsIaaResponseIaa], FieldMetadata(alias="IAA")] = pydantic.Field(
+        default=None
     )
     """
-    Inter-Annotator Agreement matrix (2D array)
+    Inter-Annotator Agreement matrix - 2D array when per_label=false, object with label keys when per_label=true
     """
 
     users: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(default=None)
@@ -21,14 +24,14 @@ class StatsIaaResponse(UncheckedBaseModel):
     List of users in the matrix
     """
 
-    std: typing.Optional[float] = pydantic.Field(default=None)
+    std: typing.Optional[StatsIaaResponseStd] = pydantic.Field(default=None)
     """
-    Standard deviation (if requested)
+    Standard deviation - number when per_label=false, object with label keys when per_label=true
     """
 
-    common_tasks: typing.Optional[typing.List[typing.List[float]]] = pydantic.Field(default=None)
+    common_tasks: typing.Optional[StatsIaaResponseCommonTasks] = pydantic.Field(default=None)
     """
-    Number of common tasks between annotators (2D array)
+    Common tasks matrix - 2D array when per_label=false, object with label keys when per_label=true
     """
 
     if IS_PYDANTIC_V2:

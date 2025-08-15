@@ -37,7 +37,6 @@ class JwtSettingsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.jwt_settings.get()
         """
@@ -96,7 +95,6 @@ class JwtSettingsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.jwt_settings.update()
         """
@@ -155,7 +153,6 @@ class AsyncJwtSettingsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -222,7 +219,6 @@ class AsyncJwtSettingsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

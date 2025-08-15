@@ -67,7 +67,6 @@ class RunsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.runs.list(
             prompt_id=1,
@@ -154,7 +153,6 @@ class RunsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.runs.create(
             prompt_id=1,
@@ -248,7 +246,6 @@ class AsyncRunsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -343,7 +340,6 @@ class AsyncRunsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

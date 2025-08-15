@@ -50,7 +50,6 @@ class AzureClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.export_storage.azure.list()
         """
@@ -133,7 +132,6 @@ class AzureClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.export_storage.azure.create()
         """
@@ -192,7 +190,6 @@ class AzureClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.export_storage.azure.get(
             id=1,
@@ -238,7 +235,6 @@ class AzureClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.export_storage.azure.delete(
             id=1,
@@ -316,7 +312,6 @@ class AzureClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.export_storage.azure.update(
             id=1,
@@ -377,7 +372,6 @@ class AzureClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.export_storage.azure.sync(
             id=1,
@@ -461,7 +455,6 @@ class AzureClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.export_storage.azure.validate()
         """
@@ -532,7 +525,6 @@ class AsyncAzureClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -623,7 +615,6 @@ class AsyncAzureClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -690,7 +681,6 @@ class AsyncAzureClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -744,7 +734,6 @@ class AsyncAzureClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -830,7 +819,6 @@ class AsyncAzureClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -899,7 +887,6 @@ class AsyncAzureClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -991,7 +978,6 @@ class AsyncAzureClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

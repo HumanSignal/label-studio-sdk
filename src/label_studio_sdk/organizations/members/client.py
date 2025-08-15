@@ -45,7 +45,6 @@ class MembersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.organizations.members.get(
             id=1,
@@ -95,7 +94,6 @@ class MembersClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.organizations.members.delete(
             id=1,
@@ -179,7 +177,6 @@ class AsyncMembersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -237,7 +234,6 @@ class AsyncMembersClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

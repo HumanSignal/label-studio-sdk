@@ -31,7 +31,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.annotations.get(
     id=1,
@@ -102,7 +101,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.annotations.delete(
     id=1,
@@ -173,7 +171,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.annotations.update(
     id=1,
@@ -328,7 +325,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.annotations.create_bulk()
 
@@ -546,7 +542,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.annotations.list(
     id=1,
@@ -640,7 +635,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.annotations.create(
     id=1,
@@ -796,7 +790,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.comments.list()
 
@@ -905,7 +898,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.comments.create()
 
@@ -1022,7 +1014,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.comments.get(
     id="id",
@@ -1101,7 +1092,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.comments.delete(
     id="id",
@@ -1180,7 +1170,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.comments.update(
     id="id",
@@ -1308,7 +1297,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.get_current_user()
 
@@ -1369,7 +1357,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.update_current_user()
 
@@ -1526,7 +1513,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.get_hotkeys()
 
@@ -1587,7 +1573,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.update_hotkeys()
 
@@ -1656,7 +1641,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.reset_token()
 
@@ -1717,7 +1701,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.get_token()
 
@@ -1778,7 +1761,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.whoami()
 
@@ -1839,7 +1821,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.list()
 
@@ -1908,7 +1889,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.create()
 
@@ -2041,7 +2021,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.get(
     id=1,
@@ -2114,7 +2093,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.delete(
     id=1,
@@ -2187,7 +2165,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.users.update(
     id=1,
@@ -2331,7 +2308,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.actions.list(
     project=1,
@@ -2407,7 +2383,6 @@ from label_studio_sdk.actions import (
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.actions.create(
     id="delete_annotators",
@@ -2536,7 +2511,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.views.list()
 
@@ -2605,7 +2579,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.views.create()
 
@@ -2682,7 +2655,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.views.get(
     id="id",
@@ -2753,7 +2725,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.views.delete(
     id="id",
@@ -2824,7 +2795,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.views.update(
     id="id",
@@ -2911,7 +2881,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.views.update_order(
     project=1,
@@ -2991,7 +2960,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.views.delete_all(
     project=1,
@@ -3063,7 +3031,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.files.get(
     id=1,
@@ -3134,7 +3101,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.files.delete(
     id=1,
@@ -3205,7 +3171,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.files.update(
     id=1,
@@ -3288,7 +3253,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.files.list(
     id=1,
@@ -3385,7 +3349,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.files.delete_many(
     id=1,
@@ -3456,7 +3419,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.files.download(
     filename="filename",
@@ -3528,7 +3490,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.organizations.reset_token()
 
@@ -3591,7 +3552,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.organizations.list()
 
@@ -3660,7 +3620,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.organizations.get(
     id=1,
@@ -3732,7 +3691,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.jwt_settings.get()
 
@@ -3793,7 +3751,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.jwt_settings.update()
 
@@ -3884,7 +3841,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.ml.list()
 
@@ -3959,7 +3915,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.ml.create()
 
@@ -4105,7 +4060,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.ml.get(
     id=1,
@@ -4181,7 +4135,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.ml.delete(
     id=1,
@@ -4257,7 +4210,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.ml.update(
     id=1,
@@ -4412,7 +4364,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.ml.predict_interactive(
     id=1,
@@ -4505,7 +4456,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.ml.train(
     id=1,
@@ -4584,7 +4534,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.ml.list_model_versions(
     id=1,
@@ -4656,7 +4605,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.model_providers.list()
 
@@ -4725,7 +4673,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.model_providers.create()
 
@@ -4882,7 +4829,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.model_providers.get(
     id="id",
@@ -4953,7 +4899,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.model_providers.delete(
     id="id",
@@ -5024,7 +4969,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.model_providers.update(
     id="id",
@@ -5191,7 +5135,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.model_providers.list_model_provider_choices()
 
@@ -5253,7 +5196,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.batch_failed_predictions(
     failed_predictions=[],
@@ -5349,7 +5291,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.batch_predictions(
     results=[],
@@ -5445,7 +5386,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.list()
 
@@ -5514,7 +5454,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.create(
     title="title",
@@ -5641,7 +5580,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.get(
     id="id",
@@ -5712,7 +5650,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.delete(
     id="id",
@@ -5783,7 +5720,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.update(
     id="id",
@@ -5918,7 +5854,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.compatible_projects()
 
@@ -6012,7 +5947,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.predictions.list()
 
@@ -6089,7 +6023,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.predictions.create(
     result=[
@@ -6203,7 +6136,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.predictions.get(
     id=1,
@@ -6274,7 +6206,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.predictions.delete(
     id=1,
@@ -6345,7 +6276,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.predictions.update(
     id=1,
@@ -6469,7 +6399,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 response = client.projects.list()
 for item in response:
@@ -6599,7 +6528,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.create()
 
@@ -6892,7 +6820,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.get(
     id=1,
@@ -6963,7 +6890,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.delete(
     id=1,
@@ -7034,7 +6960,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.update(
     id=1,
@@ -7425,7 +7350,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.duplicate(
     id=1,
@@ -7587,7 +7511,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.import_tasks(
     id=1,
@@ -7691,7 +7614,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.validate_label_config(
     id=1,
@@ -7772,7 +7694,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.tasks.create_many_status(
     id=1,
@@ -7852,7 +7773,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.tasks.delete_all_tasks(
     id=1,
@@ -7926,7 +7846,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 response = client.tasks.list()
 for item in response:
@@ -8089,7 +8008,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.tasks.create(
     data={"key": "value"},
@@ -8272,7 +8190,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.tasks.get(
     id="id",
@@ -8343,7 +8260,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.tasks.delete(
     id="id",
@@ -8414,7 +8330,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.tasks.update(
     id="id",
@@ -8646,7 +8561,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.list_types()
 
@@ -8708,7 +8622,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.list_types()
 
@@ -8770,7 +8683,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.tokens.list()
 
@@ -8839,7 +8751,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.tokens.create()
 
@@ -8900,7 +8811,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.tokens.blacklist(
     refresh="refresh",
@@ -8971,7 +8881,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.tokens.refresh(
     refresh="refresh",
@@ -9042,7 +8951,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.tokens.rotate(
     refresh="refresh",
@@ -9114,7 +9022,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.versions.get()
 
@@ -9176,7 +9083,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.webhooks.list()
 
@@ -9245,7 +9151,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.webhooks.create(
     url="url",
@@ -9350,7 +9255,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.webhooks.get(
     id=1,
@@ -9407,7 +9311,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.webhooks.delete(
     id=1,
@@ -9464,7 +9367,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.webhooks.update(
     id=1,
@@ -9583,7 +9485,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.webhooks.info()
 
@@ -9653,7 +9554,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.workspaces.list()
 
@@ -9730,7 +9630,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.workspaces.create(
     title="title",
@@ -9833,7 +9732,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.workspaces.get(
     id=1,
@@ -9904,7 +9802,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.workspaces.delete(
     id=1,
@@ -9975,7 +9872,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.workspaces.update(
     id=1,
@@ -10087,7 +9983,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.azure.list()
 
@@ -10164,7 +10059,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.azure.create()
 
@@ -10289,7 +10183,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.azure.get(
     id=1,
@@ -10360,7 +10253,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.azure.delete(
     id=1,
@@ -10431,7 +10323,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.azure.update(
     id=1,
@@ -10566,7 +10457,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.azure.sync(
     id=1,
@@ -10637,7 +10527,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.azure.validate()
 
@@ -10771,7 +10660,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.gcs.list()
 
@@ -10848,7 +10736,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.gcs.create()
 
@@ -10973,7 +10860,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.gcs.get(
     id=1,
@@ -11044,7 +10930,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.gcs.delete(
     id=1,
@@ -11115,7 +11000,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.gcs.update(
     id=1,
@@ -11250,7 +11134,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.gcs.sync(
     id=1,
@@ -11321,7 +11204,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.gcs.validate()
 
@@ -11455,7 +11337,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.local.list()
 
@@ -11532,7 +11413,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.local.create()
 
@@ -11641,7 +11521,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.local.get(
     id=1,
@@ -11712,7 +11591,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.local.delete(
     id=1,
@@ -11783,7 +11661,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.local.update(
     id=1,
@@ -11902,7 +11779,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.local.sync(
     id=1,
@@ -11973,7 +11849,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.local.validate()
 
@@ -12091,7 +11966,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.redis.list()
 
@@ -12168,7 +12042,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.redis.create()
 
@@ -12301,7 +12174,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.redis.get(
     id=1,
@@ -12372,7 +12244,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.redis.delete(
     id=1,
@@ -12443,7 +12314,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.redis.update(
     id=1,
@@ -12586,7 +12456,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.redis.sync(
     id=1,
@@ -12657,7 +12526,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.redis.validate()
 
@@ -12799,7 +12667,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3.list()
 
@@ -12876,7 +12743,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3.create()
 
@@ -13033,7 +12899,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3.get(
     id=1,
@@ -13104,7 +12969,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3.delete(
     id=1,
@@ -13175,7 +13039,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3.update(
     id=1,
@@ -13342,7 +13205,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3.sync(
     id=1,
@@ -13413,7 +13275,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3.validate()
 
@@ -13579,7 +13440,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3s.list()
 
@@ -13656,7 +13516,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3s.create(
     role_arn="role_arn",
@@ -13912,7 +13771,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3s.get(
     id=1,
@@ -13983,7 +13841,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3s.delete(
     id=1,
@@ -14054,7 +13911,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3s.update(
     id=1,
@@ -14317,7 +14173,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3s.sync(
     id=1,
@@ -14388,7 +14243,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.export_storage.s3s.validate(
     role_arn="role_arn",
@@ -14645,7 +14499,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.azure.list()
 
@@ -14722,7 +14575,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.azure.create()
 
@@ -14871,7 +14723,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.azure.get(
     id=1,
@@ -14942,7 +14793,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.azure.delete(
     id=1,
@@ -15013,7 +14863,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.azure.update(
     id=1,
@@ -15172,7 +15021,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.azure.sync(
     id=1,
@@ -15243,7 +15091,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.azure.validate()
 
@@ -15401,7 +15248,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.gcs.list()
 
@@ -15478,7 +15324,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.gcs.create()
 
@@ -15627,7 +15472,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.gcs.get(
     id=1,
@@ -15698,7 +15542,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.gcs.delete(
     id=1,
@@ -15769,7 +15612,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.gcs.update(
     id=1,
@@ -15928,7 +15770,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.gcs.sync(
     id=1,
@@ -15999,7 +15840,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.gcs.validate()
 
@@ -16157,7 +15997,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.local.list()
 
@@ -16234,7 +16073,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.local.create()
 
@@ -16343,7 +16181,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.local.get(
     id=1,
@@ -16414,7 +16251,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.local.delete(
     id=1,
@@ -16485,7 +16321,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.local.update(
     id=1,
@@ -16604,7 +16439,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.local.sync(
     id=1,
@@ -16675,7 +16509,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.local.validate()
 
@@ -16793,7 +16626,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.redis.list()
 
@@ -16870,7 +16702,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.redis.create()
 
@@ -17003,7 +16834,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.redis.get(
     id=1,
@@ -17074,7 +16904,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.redis.delete(
     id=1,
@@ -17145,7 +16974,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.redis.update(
     id=1,
@@ -17288,7 +17116,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.redis.sync(
     id=1,
@@ -17359,7 +17186,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.redis.validate()
 
@@ -17501,7 +17327,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3.list()
 
@@ -17578,7 +17403,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3.create()
 
@@ -17767,7 +17591,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3.get(
     id=1,
@@ -17838,7 +17661,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3.delete(
     id=1,
@@ -17909,7 +17731,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3.update(
     id=1,
@@ -18108,7 +17929,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3.sync(
     id=1,
@@ -18179,7 +17999,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3.validate()
 
@@ -18377,7 +18196,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3s.list()
 
@@ -18454,7 +18272,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3s.create(
     role_arn="role_arn",
@@ -18726,7 +18543,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3s.get(
     id=1,
@@ -18797,7 +18613,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3s.delete(
     id=1,
@@ -18868,7 +18683,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3s.update(
     id=1,
@@ -19147,7 +18961,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3s.sync(
     id=1,
@@ -19218,7 +19031,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.import_storage.s3s.validate(
     role_arn="role_arn",
@@ -19491,7 +19303,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.organizations.members.get(
     id=1,
@@ -19571,7 +19382,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.organizations.members.delete(
     id=1,
@@ -19652,7 +19462,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.exports.list_formats(
     id=1,
@@ -19723,7 +19532,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.exports.list(
     id=1,
@@ -19802,7 +19610,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.exports.create(
     id=1,
@@ -19953,7 +19760,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.exports.get(
     export_pk=1,
@@ -20033,7 +19839,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.exports.delete(
     export_pk=1,
@@ -20113,7 +19918,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.exports.convert(
     export_pk=1,
@@ -20211,7 +20015,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.stats.iaa(
     id=1,
@@ -20315,7 +20118,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.pauses.list(
     project_pk=1,
@@ -20411,7 +20213,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.pauses.create(
     project_pk=1,
@@ -20516,7 +20317,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.pauses.get(
     id="id",
@@ -20605,7 +20405,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.pauses.delete(
     id="id",
@@ -20694,7 +20493,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.projects.pauses.update(
     id="id",
@@ -20808,7 +20606,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.indicators.list(
     id=1,
@@ -20879,7 +20676,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.indicators.get(
     id=1,
@@ -20960,7 +20756,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.get_default_version_name(
     id=1,
@@ -21031,7 +20826,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.list(
     prompt_id_=1,
@@ -21119,7 +20913,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.create(
     prompt_id=1,
@@ -21259,7 +21052,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.get(
     prompt_id=1,
@@ -21339,7 +21131,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.delete(
     prompt_id=1,
@@ -21419,7 +21210,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.update(
     prompt_id=1,
@@ -21565,7 +21355,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.cost_estimate(
     prompt_id=1,
@@ -21645,7 +21434,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.get_refined_prompt(
     prompt_id=1,
@@ -21733,7 +21521,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.versions.refine_prompt(
     prompt_id=1,
@@ -21849,7 +21636,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.runs.list(
     prompt_id=1,
@@ -21961,7 +21747,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.prompts.runs.create(
     prompt_id=1,
@@ -22107,7 +21892,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.workspaces.members.list(
     id=1,
@@ -22178,7 +21962,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.workspaces.members.create(
     id=1,
@@ -22266,7 +22049,6 @@ from label_studio_sdk import LabelStudio
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
-    base_url="https://yourhost.com/path/to/api",
 )
 client.workspaces.members.delete(
     id=1,

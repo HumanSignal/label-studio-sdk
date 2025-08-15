@@ -55,7 +55,6 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.create_many_status(
             id=1,
@@ -103,7 +102,6 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.delete_all_tasks(
             id=1,
@@ -200,7 +198,6 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         response = client.tasks.list()
         for item in response:
@@ -371,7 +368,6 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.create(
             data={"key": "value"},
@@ -440,7 +436,6 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.get(
             id="id",
@@ -487,7 +482,6 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.delete(
             id="id",
@@ -600,7 +594,6 @@ class TasksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.tasks.update(
             id="id",
@@ -685,7 +678,6 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -741,7 +733,6 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -846,7 +837,6 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1025,7 +1015,6 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1102,7 +1091,6 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1157,7 +1145,6 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1278,7 +1265,6 @@ class AsyncTasksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

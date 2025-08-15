@@ -215,6 +215,7 @@ from .actions import (
 )
 from .annotations import AnnotationBulkSerializerWithSelectedItemsRequestLastAction, AnnotationsCreateBulkResponseItem
 from .client import AsyncLabelStudio, LabelStudio
+from .environment import LabelStudioEnvironment
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
 from .ml import MlCreateRequestAuthMethod, MlListModelVersionsResponse, MlUpdateRequestAuthMethod
@@ -335,6 +336,7 @@ __all__ = [
     "InternalServerError",
     "LabelStreamTaskDistributionEnum",
     "LabelStudio",
+    "LabelStudioEnvironment",
     "LastActionEnum",
     "LocalFilesExportStorage",
     "LocalFilesImportStorage",

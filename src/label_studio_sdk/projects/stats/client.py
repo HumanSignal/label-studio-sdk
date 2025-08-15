@@ -58,7 +58,6 @@ class StatsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.stats.iaa(
             id=1,
@@ -139,7 +138,6 @@ class AsyncStatsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

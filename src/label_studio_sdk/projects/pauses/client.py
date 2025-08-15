@@ -57,7 +57,6 @@ class PausesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.pauses.list(
             project_pk=1,
@@ -131,7 +130,6 @@ class PausesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.pauses.create(
             project_pk=1,
@@ -191,7 +189,6 @@ class PausesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.pauses.get(
             id="id",
@@ -245,7 +242,6 @@ class PausesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.pauses.delete(
             id="id",
@@ -313,7 +309,6 @@ class PausesClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.projects.pauses.update(
             id="id",
@@ -393,7 +388,6 @@ class AsyncPausesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -475,7 +469,6 @@ class AsyncPausesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -543,7 +536,6 @@ class AsyncPausesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -605,7 +597,6 @@ class AsyncPausesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -681,7 +672,6 @@ class AsyncPausesClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
