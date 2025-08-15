@@ -42,10 +42,16 @@ This version has a number of documentation and functional improvements over SDK 
 
 ### Enhancements 
 
+**Enterprise-only**
+
+- Added a new `projects.stats.iaa` endpoint to return stats from the inter-annotator agreement matrix. 
+- You can now update task comments.
+
+**Enterprise and open source**
+
+- Expanded support to include all project settings, many of which were missing in SDK 1. For example, in Enterprise environments you can now configure `assignment_settings`, `review_settings`, `annotator_evaluation`, and many more.
 - Fixed passing the `project` parameter in `actions.list()` (broken in SDK 1). 
 - Added support for `sync` to S3 exports.
-- Expanded support to include all project settings, many of which were missing in SDK 1. For example, in Enterprise environments you can now configure `assignment_settings`, `review_settings`, `annotator_evaluation`, and many more.
-- You can now update task comments (Enterprise-only).
 - Relaxed request/response validation reduces pydantic errors in SDK 2.
 
 ### Breaking changes
