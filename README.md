@@ -75,7 +75,7 @@ The version of `label-studio-sdk<1` is deprecated and no longer supported. We re
 
 <details>
 
-<summary>**To use SDK <1**</summary>
+<summary> To use SDK <1 </summary>
 
 If you still want to use the deprecated version, you can install it with `pip install "label-studio-sdk<1"`. 
 
