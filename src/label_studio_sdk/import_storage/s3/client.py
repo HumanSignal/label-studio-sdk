@@ -50,7 +50,6 @@ class S3Client:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3.list()
         """
@@ -165,7 +164,6 @@ class S3Client:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3.create()
         """
@@ -232,7 +230,6 @@ class S3Client:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3.get(
             id=1,
@@ -278,7 +275,6 @@ class S3Client:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3.delete(
             id=1,
@@ -388,7 +384,6 @@ class S3Client:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3.update(
             id=1,
@@ -458,7 +453,6 @@ class S3Client:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3.sync(
             id=1,
@@ -574,7 +568,6 @@ class S3Client:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3.validate()
         """
@@ -653,7 +646,6 @@ class AsyncS3Client:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -776,7 +768,6 @@ class AsyncS3Client:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -851,7 +842,6 @@ class AsyncS3Client:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -905,7 +895,6 @@ class AsyncS3Client:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1023,7 +1012,6 @@ class AsyncS3Client:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1101,7 +1089,6 @@ class AsyncS3Client:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1225,7 +1212,6 @@ class AsyncS3Client:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

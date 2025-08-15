@@ -47,7 +47,6 @@ class AnnotationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.annotations.get(
             id=1,
@@ -93,7 +92,6 @@ class AnnotationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.annotations.delete(
             id=1,
@@ -171,7 +169,6 @@ class AnnotationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.annotations.update(
             id=1,
@@ -333,7 +330,6 @@ class AnnotationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.annotations.create_bulk()
         """
@@ -414,7 +410,6 @@ class AnnotationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.annotations.list(
             id=1,
@@ -517,7 +512,6 @@ class AnnotationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.annotations.create(
             id=1,
@@ -605,7 +599,6 @@ class AsyncAnnotationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -659,7 +652,6 @@ class AsyncAnnotationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -745,7 +737,6 @@ class AsyncAnnotationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -915,7 +906,6 @@ class AsyncAnnotationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1004,7 +994,6 @@ class AsyncAnnotationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1115,7 +1104,6 @@ class AsyncAnnotationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

@@ -52,7 +52,6 @@ class MlClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.ml.list()
         """
@@ -148,7 +147,6 @@ class MlClient:
         
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.ml.create()
         """
@@ -214,7 +212,6 @@ class MlClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.ml.get(
             id=1,
@@ -265,7 +262,6 @@ class MlClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.ml.delete(
             id=1,
@@ -356,7 +352,6 @@ class MlClient:
         
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.ml.update(
             id=1,
@@ -435,7 +430,6 @@ class MlClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.ml.predict_interactive(
             id=1,
@@ -499,7 +493,6 @@ class MlClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.ml.train(
             id=1,
@@ -559,7 +552,6 @@ class MlClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.ml.list_model_versions(
             id=1,
@@ -621,7 +613,6 @@ class AsyncMlClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -725,7 +716,6 @@ class AsyncMlClient:
         
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         
         
@@ -799,7 +789,6 @@ class AsyncMlClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -858,7 +847,6 @@ class AsyncMlClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -957,7 +945,6 @@ class AsyncMlClient:
         
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         
         
@@ -1044,7 +1031,6 @@ class AsyncMlClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1116,7 +1102,6 @@ class AsyncMlClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1184,7 +1169,6 @@ class AsyncMlClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

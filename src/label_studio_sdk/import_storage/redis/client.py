@@ -50,7 +50,6 @@ class RedisClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.redis.list()
         """
@@ -137,7 +136,6 @@ class RedisClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.redis.create()
         """
@@ -197,7 +195,6 @@ class RedisClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.redis.get(
             id=1,
@@ -243,7 +240,6 @@ class RedisClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.redis.delete(
             id=1,
@@ -325,7 +321,6 @@ class RedisClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.redis.update(
             id=1,
@@ -388,7 +383,6 @@ class RedisClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.redis.sync(
             id=1,
@@ -476,7 +470,6 @@ class RedisClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.redis.validate()
         """
@@ -548,7 +541,6 @@ class AsyncRedisClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -643,7 +635,6 @@ class AsyncRedisClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -711,7 +702,6 @@ class AsyncRedisClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -765,7 +755,6 @@ class AsyncRedisClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -855,7 +844,6 @@ class AsyncRedisClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -926,7 +914,6 @@ class AsyncRedisClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1022,7 +1009,6 @@ class AsyncRedisClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

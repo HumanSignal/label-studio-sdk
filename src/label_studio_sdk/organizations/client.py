@@ -40,7 +40,6 @@ class OrganizationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.organizations.reset_token()
         """
@@ -90,7 +89,6 @@ class OrganizationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.organizations.list()
         """
@@ -138,7 +136,6 @@ class OrganizationsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.organizations.get(
             id=1,
@@ -191,7 +188,6 @@ class AsyncOrganizationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -249,7 +245,6 @@ class AsyncOrganizationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -305,7 +300,6 @@ class AsyncOrganizationsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

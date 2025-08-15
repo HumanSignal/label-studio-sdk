@@ -42,7 +42,6 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.get_default_version_name(
             id=1,
@@ -96,7 +95,6 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.list(
             prompt_id_=1,
@@ -187,7 +185,6 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.create(
             prompt_id=1,
@@ -251,7 +248,6 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.get(
             prompt_id=1,
@@ -302,7 +298,6 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.delete(
             prompt_id=1,
@@ -386,7 +381,6 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.update(
             prompt_id=1,
@@ -451,7 +445,6 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.cost_estimate(
             prompt_id=1,
@@ -511,7 +504,6 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.get_refined_prompt(
             prompt_id=1,
@@ -586,7 +578,6 @@ class VersionsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.versions.refine_prompt(
             prompt_id=1,
@@ -657,7 +648,6 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -719,7 +709,6 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -818,7 +807,6 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -890,7 +878,6 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -949,7 +936,6 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1041,7 +1027,6 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1114,7 +1099,6 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1182,7 +1166,6 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1265,7 +1248,6 @@ class AsyncVersionsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

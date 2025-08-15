@@ -218,7 +218,7 @@ service:
               docs: Last sync job ID
               validation:
                 maxLength: 256
-            status: optional<root.StatusD14Enum>
+            status: optional<root.StatusC5AEnum>
             traceback:
               type: optional<string>
               docs: Traceback report for the last failed sync
@@ -581,7 +581,7 @@ service:
               docs: Last sync job ID
               validation:
                 maxLength: 256
-            status: optional<root.StatusD14Enum>
+            status: optional<root.StatusC5AEnum>
             traceback:
               type: optional<string>
               docs: Traceback report for the last failed sync

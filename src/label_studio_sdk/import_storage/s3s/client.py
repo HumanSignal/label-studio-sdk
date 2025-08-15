@@ -8,7 +8,7 @@ from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 import datetime as dt
-from ...types.status_d14enum import StatusD14Enum
+from ...types.status_c5a_enum import StatusC5AEnum
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.client_wrapper import AsyncClientWrapper
 
@@ -52,7 +52,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.list()
         """
@@ -89,7 +88,7 @@ class S3SClient:
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusD14Enum] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -134,7 +133,7 @@ class S3SClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusD14Enum]
+        status : typing.Optional[StatusC5AEnum]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -202,7 +201,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.create(
             role_arn="role_arn",
@@ -279,7 +277,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.get(
             id=1,
@@ -325,7 +322,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.delete(
             id=1,
@@ -353,7 +349,7 @@ class S3SClient:
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusD14Enum] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -396,7 +392,7 @@ class S3SClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusD14Enum]
+        status : typing.Optional[StatusC5AEnum]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -470,7 +466,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.update(
             id=1,
@@ -549,7 +544,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.sync(
             id=1,
@@ -584,7 +578,7 @@ class S3SClient:
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusD14Enum] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -629,7 +623,7 @@ class S3SClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusD14Enum]
+        status : typing.Optional[StatusC5AEnum]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -696,7 +690,6 @@ class S3SClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.import_storage.s3s.validate(
             role_arn="role_arn",
@@ -784,7 +777,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -827,7 +819,7 @@ class AsyncS3SClient:
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusD14Enum] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -872,7 +864,7 @@ class AsyncS3SClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusD14Enum]
+        status : typing.Optional[StatusC5AEnum]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -942,7 +934,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1027,7 +1018,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1081,7 +1071,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1115,7 +1104,7 @@ class AsyncS3SClient:
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusD14Enum] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -1158,7 +1147,7 @@ class AsyncS3SClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusD14Enum]
+        status : typing.Optional[StatusC5AEnum]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -1234,7 +1223,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1321,7 +1309,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -1362,7 +1349,7 @@ class AsyncS3SClient:
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
-        status: typing.Optional[StatusD14Enum] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -1407,7 +1394,7 @@ class AsyncS3SClient:
         last_sync_job : typing.Optional[str]
             Last sync job ID
 
-        status : typing.Optional[StatusD14Enum]
+        status : typing.Optional[StatusC5AEnum]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
@@ -1476,7 +1463,6 @@ class AsyncS3SClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

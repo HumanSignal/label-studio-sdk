@@ -46,7 +46,6 @@ class WebhooksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.webhooks.list()
         """
@@ -121,7 +120,6 @@ class WebhooksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.webhooks.create(
             url="url",
@@ -179,7 +177,6 @@ class WebhooksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.webhooks.get(
             id=1,
@@ -223,7 +220,6 @@ class WebhooksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.webhooks.delete(
             id=1,
@@ -289,7 +285,6 @@ class WebhooksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.webhooks.update(
             id=1,
@@ -354,7 +349,6 @@ class WebhooksClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.webhooks.info()
         """
@@ -412,7 +406,6 @@ class AsyncWebhooksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -495,7 +488,6 @@ class AsyncWebhooksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -561,7 +553,6 @@ class AsyncWebhooksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -613,7 +604,6 @@ class AsyncWebhooksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -687,7 +677,6 @@ class AsyncWebhooksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -760,7 +749,6 @@ class AsyncWebhooksClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 

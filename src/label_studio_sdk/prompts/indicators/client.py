@@ -40,7 +40,6 @@ class IndicatorsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.indicators.list(
             id=1,
@@ -91,7 +90,6 @@ class IndicatorsClient:
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
         client.prompts.indicators.get(
             id=1,
@@ -148,7 +146,6 @@ class AsyncIndicatorsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
@@ -207,7 +204,6 @@ class AsyncIndicatorsClient:
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
-            base_url="https://yourhost.com/path/to/api",
         )
 
 
