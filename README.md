@@ -34,15 +34,13 @@ ls = LabelStudio(
 
 # Versions
 
-## SDK 2.0+
+## SDK 2.0.0
 
 In August 2025, we released SDK version 2.0.0. 
 
-The version has a number of documentation improvements, including documentation for all supported parameters. 
+This version has a number of documentation and functional improvements over SDK 1. 
 
 ### Enhancements 
-
-Other enhancements include:
 
 - Fixed passing the `project` parameter in `actions.list()` (broken in SDK 1). 
 - Added support for `sync` to S3 exports.
@@ -61,8 +59,8 @@ Other enhancements include:
 
 **Enterprise and open source**
 
-- In `projects.exports` calls, the project ID is now passed as `id`, while and the export ID is passed as `export_pk`.
-- Task predictions responses are now object types instead of dicts.
+- In `projects.exports` calls, the project ID is now passed as `id`, while the export ID is passed as `export_pk`.
+- Task prediction responses are now object types instead of dicts.
 
 ## SDK 1.0+
 
@@ -77,7 +75,7 @@ The version of `label-studio-sdk<1` is deprecated and no longer supported. We re
 
 <details>
 
-<summary>To use SDK <1</summary>
+<summary>**To use SDK <1**</summary>
 
 If you still want to use the deprecated version, you can install it with `pip install "label-studio-sdk<1"`. 
 
