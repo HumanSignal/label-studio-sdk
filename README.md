@@ -34,9 +34,13 @@ ls = LabelStudio(
 
 # Versions
 
+## SDK 2.0+
+
 In August 2025, we released SDK version 2.0.0. 
 
 The version has a number of documentation improvements, including documentation for all supported parameters. 
+
+### Enhancements 
 
 Other enhancements include:
 
@@ -60,29 +64,40 @@ Other enhancements include:
 - In `projects.exports` calls, the project ID is now passed as `id`, while and the export ID is passed as `export_pk`.
 - Task predictions responses are now object types instead of dicts.
 
-<!-- Note about deprecated version <1 -->
+## SDK 1.0+
 
----
-> :warning: **Note**<br/>
->
-> The version of `label-studio-sdk<1` is deprecated and no longer supported. We recommend updating to the latest version.
-> If you still want to use the deprecated version, you can install it with `pip install "label-studio-sdk<1"`.
-> OR You can find the branch with the old version by cloning the repository and checking out the branch as follows:
->
-> ```sh
-> git clone https://github.com/HumanSignal/label-studio-sdk.git
-> cd label-studio-sdk
-> git fetch origin
-> git checkout release/0.0.34
-> ```
-> 
-> OR you can change your import statements as follows:
-> ```python
-> from label_studio_sdk import Client
-> from label_studio_sdk.data_manager import Filters, Column, Operator, Type
-> from label_studio_sdk._legacy import Project
-> ```
----
+SDK 1 was released in June 2024. 
+
+If you use the Label Studio SDK 1 package in any automated pipelines, we strongly recommend pinning your SDK version to `<2.0.0` until you can reconcile the breaking changes. 
+
+
+## SDK <1
+
+The version of `label-studio-sdk<1` is deprecated and no longer supported. We recommend updating to the latest version.
+
+<details>
+
+<summary>To use SDK <1</summary>
+
+If you still want to use the deprecated version, you can install it with `pip install "label-studio-sdk<1"`. 
+
+OR You can find the branch with the old version by cloning the repository and checking out the branch as follows:
+
+```sh
+git clone https://github.com/HumanSignal/label-studio-sdk.git
+cd label-studio-sdk
+git fetch origin
+git checkout release/0.0.34
+```
+
+OR you can change your import statements as follows:
+```python
+from label_studio_sdk import Client
+from label_studio_sdk.data_manager import Filters, Column, Operator, Type
+from label_studio_sdk._legacy import Project
+```
+
+</details>
 
 # Examples
 
