@@ -1,28 +1,5 @@
 # Label Studio Python Library
 
-<!-- Note about deprecated version <1 -->
----
-> :warning: **Note**<br/>
->
-> The version of `label-studio-sdk<1` is deprecated and no longer supported. We recommend updating to the latest version.
-> If you still want to use the old version, you can install it with `pip install "label-studio-sdk<1"`.
-> OR You can find the branch with the old version by cloning the repository and checking out the branch as follows:
->
-> ```sh
-> git clone https://github.com/HumanSignal/label-studio-sdk.git
-> cd label-studio-sdk
-> git fetch origin
-> git checkout release/0.0.34
-> ```
-> 
-> OR you can change your import statements as follows:
-> ```python
-> from label_studio_sdk import Client
-> from label_studio_sdk.data_manager import Filters, Column, Operator, Type
-> from label_studio_sdk._legacy import Project
-> ```
----
-
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-SDK%20generated%20by%20Fern-brightgreen)](https://github.com/fern-api/fern)
 [![pypi](https://img.shields.io/pypi/v/label-studio-sdk.svg)](https://pypi.python.org/pypi/label-studio-sdk)
 
@@ -55,6 +32,58 @@ ls = LabelStudio(
 )
 ```
 
+# Versions
+
+In August 2025, we released SDK version 2.0.0. 
+
+The version has a number of documentation improvements, including documentation for all supported parameters. 
+
+Other enhancements include:
+
+- Fixed passing the `project` parameter in `actions.list()` (broken in SDK 1). 
+- Added support for `sync` to S3 exports.
+- Expanded support to include all project settings, many of which were missing in SDK 1. For example, in Enterprise environments you can now configure `assignment_settings`, `review_settings`, `annotator_evaluation`, and many more.
+- You can now update task comments (Enterprise-only).
+- Relaxed request/response validation reduces pydantic errors in SDK 2.
+
+### Breaking changes
+
+**Enterprise-only**
+
+- `comments.create` no longer accepts a `project` argument.
+- In `prompts.indicators`, the `pk` parameter is now `id`.
+- In `prompts.runs` and `prompts.versions`, the `id` parameter is now `prompt_id`.
+- `workspaces.members.list` responses are now objects instead of dictionaries.
+
+**Enterprise and open source**
+
+- In `projects.exports` calls, the project ID is now passed as `id`, while and the export ID is passed as `export_pk`.
+- Task predictions responses are now object types instead of dicts.
+
+<!-- Note about deprecated version <1 -->
+
+---
+> :warning: **Note**<br/>
+>
+> The version of `label-studio-sdk<1` is deprecated and no longer supported. We recommend updating to the latest version.
+> If you still want to use the deprecated version, you can install it with `pip install "label-studio-sdk<1"`.
+> OR You can find the branch with the old version by cloning the repository and checking out the branch as follows:
+>
+> ```sh
+> git clone https://github.com/HumanSignal/label-studio-sdk.git
+> cd label-studio-sdk
+> git fetch origin
+> git checkout release/0.0.34
+> ```
+> 
+> OR you can change your import statements as follows:
+> ```python
+> from label_studio_sdk import Client
+> from label_studio_sdk.data_manager import Filters, Column, Operator, Type
+> from label_studio_sdk._legacy import Project
+> ```
+---
+
 # Examples
 
 Check more examples [here](https://api.labelstud.io/).
@@ -66,7 +95,7 @@ from label_studio_sdk.label_interface import LabelInterface
 from label_studio_sdk.label_interface.create import labels
 
 project = ls.projects.create(
-    name="Project name",
+    title="Project name",
     description="Project description",
     label_config=LabelInterface.create({
       "image": "Image",
