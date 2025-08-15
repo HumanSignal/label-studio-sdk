@@ -7453,7 +7453,41 @@ paths:
                   std:
                     type: number
                     description: Standard deviation (if requested)
+                  common_tasks:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: number
+                    description: Number of common tasks between annotators (2D array)
+              examples:
+                Inter-AnnotatorAgreementMatrix:
+                  value:
+                    IAA:
+                    - - 1.0
+                      - 0.5
+                    - - 0.5
+                      - 1.0
+                    users:
+                    - id: 1
+                      email: user1@example.com
+                    - id: 2
+                      email: user2@example.com
+                    common_tasks:
+                    - - 0.0
+                      - 1.0
+                    - - 1.0
+                      - 0.0
+                  summary: Inter-Annotator Agreement Matrix
+                  description: Example of Inter-Annotator Agreement matrix with user
+                    data
           description: Inter-Annotator Agreement matrix
+      x-fern-sdk-group-name:
+      - projects
+      - stats
+      x-fern-sdk-method-name: iaa
+      x-fern-audiences:
+      - public
   /api/projects/{id}/stats/agreement_annotator/{user_id}:
     get:
       operationId: api_projects_stats_agreement_annotator_retrieve
@@ -15475,7 +15509,27 @@ components:
         is_draft:
           type: boolean
           description: Whether or not the project is in the middle of being created
-        skipped_annotations_number:
+        parsed_label_config:
+          readOnly: true
+          description: JSON-formatted labeling configuration
+        description:
+          type: string
+          nullable: true
+          description: Project description
+        show_skip_button:
+          type: boolean
+          description: Show a skip button in interface and allow annotators to skip
+            the task
+        num_tasks_with_annotations:
+          type: string
+          readOnly: true
+        show_annotation_history:
+          type: boolean
+          description: Show annotation history to annotator
+        queue_total:
+          type: string
+          readOnly: true
+        prompts:
           type: string
           readOnly: true
         title:
@@ -15484,27 +15538,96 @@ components:
           description: Project name. Must be between 3 and 50 characters long.
           maxLength: 50
           minLength: 3
-        review_settings:
-          $ref: '#/components/schemas/ReviewSettings'
-        custom_task_lock_ttl:
+        ground_truth_number:
           type: integer
-          maximum: 86400
-          minimum: 1
+          readOnly: true
+          description: Honeypot annotation number in project
+        show_ground_truth_first:
+          type: boolean
+        label_config:
+          type: string
           nullable: true
-          description: TTL in seconds for task reservations, on new and existing tasks
+          description: Label config in XML format. See more about it in documentation
+        rejected:
+          type: string
+          readOnly: true
+        show_overlap_first:
+          type: boolean
+        workspace:
+          type: string
+          readOnly: true
+        start_training_on_annotation_update:
+          type: boolean
+          readOnly: true
+          description: Start model training after any annotations are submitted or
+            updated
+        is_published:
+          type: boolean
+          title: Published
+          description: Whether or not the project is published to annotators
+        review_total_tasks:
+          type: string
+          readOnly: true
+        queue_left:
+          type: string
+          readOnly: true
+        config_suitable_for_bulk_annotation:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for bulk annotation
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        total_predictions_number:
+          type: integer
+          readOnly: true
         workspace_title:
           type: string
           readOnly: true
-        parsed_label_config:
-          readOnly: true
-          description: JSON-formatted labeling configuration
-        members:
+        description_short:
           type: string
           readOnly: true
-        custom_script:
-          type: string
-        finished_task_number:
+        annotator_evaluation_minimum_tasks:
           type: integer
+          minimum: 0
+          nullable: true
+          default: 10
+        overlap_cohort_percentage:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        ready:
+          type: string
+          readOnly: true
+        sampling:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SamplingEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        min_annotations_to_start_training:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Minimum number of completed tasks after which model training
+            is started
+        evaluate_predictions_automatically:
+          type: boolean
+          description: Retrieve and display predictions when loading a task
+        queue_done:
+          type: string
+          readOnly: true
+        duplication_done:
+          type: boolean
+          default: false
+        duplication_status:
+          type: string
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/UserSimple'
+          description: Project owner
+        reviewed_number:
+          type: string
           readOnly: true
         maximum_annotations:
           type: integer
@@ -15514,11 +15637,6 @@ components:
           description: Maximum number of annotations for one task. If the number of
             annotations per task is equal or greater to this value, the task is completed
             (is_labeled=True)
-        show_ground_truth_first:
-          type: boolean
-        show_instruction:
-          type: boolean
-          description: Show instructions to the annotator before they start
         control_weights:
           nullable: true
           description: 'Dict of weights for each control tag in metric calculation.
@@ -15532,80 +15650,36 @@ components:
         id:
           type: integer
           readOnly: true
+        members:
+          type: string
+          readOnly: true
+        pinned_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Pinned date and time
         annotation_limit_percent:
           type: string
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
-        reviewed_number:
-          type: string
-          readOnly: true
-        queue_done:
-          type: string
-          readOnly: true
-        model_version:
-          type: string
-          nullable: true
-          description: Machine learning model version
-        prompts:
-          type: string
-          readOnly: true
-        show_collab_predictions:
-          type: boolean
-          title: Show predictions to annotator
-          description: If set, the annotator can view model predictions
-        queue_left:
-          type: string
-          readOnly: true
-        rejected:
-          type: string
-          readOnly: true
-        color:
-          type: string
-          nullable: true
-          maxLength: 16
         skip_queue:
           nullable: true
           oneOf:
           - $ref: '#/components/schemas/SkipQueueEnum'
           - $ref: '#/components/schemas/NullEnum'
-        description_short:
-          type: string
-          readOnly: true
-        annotation_limit_count:
-          type: integer
-          minimum: 1
-          nullable: true
-        data_types:
-          readOnly: true
-          nullable: true
-        blueprints:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueprintList'
-          readOnly: true
-        workspace:
-          type: string
-          readOnly: true
-        duplication_status:
-          type: string
-        num_tasks_with_annotations:
-          type: string
-          readOnly: true
-        start_training_on_annotation_update:
+        require_comment_on_skip:
           type: boolean
-          readOnly: true
-          description: Start model training after any annotations are submitted or
-            updated
-        created_by:
-          allOf:
-          - $ref: '#/components/schemas/UserSimple'
-          description: Project owner
-        task_number:
-          type: integer
-          readOnly: true
-          description: Total task number in project
-        reviewer_queue_total:
+          default: false
+        expert_instruction:
+          type: string
+          nullable: true
+          description: Labeling instructions in HTML format
+        show_collab_predictions:
+          type: boolean
+          title: Show predictions to annotator
+          description: If set, the annotator can view model predictions
+        total_annotations_number:
           type: string
           readOnly: true
         annotator_evaluation_minimum_score:
@@ -15614,125 +15688,85 @@ components:
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
           default: '95.00'
+        color:
+          type: string
+          nullable: true
+          maxLength: 16
+        assignment_settings:
+          $ref: '#/components/schemas/AssignmentSettings'
+        custom_script:
+          type: string
+        reviewer_queue_total:
+          type: string
+          readOnly: true
+        custom_task_lock_ttl:
+          type: integer
+          maximum: 86400
+          minimum: 1
+          nullable: true
+          description: TTL in seconds for task reservations, on new and existing tasks
+        annotation_limit_count:
+          type: integer
+          minimum: 1
+          nullable: true
+        show_instruction:
+          type: boolean
+          description: Show instructions to the annotator before they start
+        task_number:
+          type: integer
+          readOnly: true
+          description: Total task number in project
+        enable_empty_annotation:
+          type: boolean
+          description: Allow annotators to submit empty annotations
+        review_settings:
+          $ref: '#/components/schemas/ReviewSettings'
+        blueprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintList'
+          readOnly: true
+        organization:
+          type: integer
+          nullable: true
         allow_stream:
           type: string
           readOnly: true
-        total_predictions_number:
+        finished_task_number:
           type: integer
-          readOnly: true
-        description:
-          type: string
-          nullable: true
-          description: Project description
-        queue_total:
-          type: string
           readOnly: true
         comment_classification_config:
           type: string
-        annotator_evaluation_minimum_tasks:
-          type: integer
-          minimum: 0
-          nullable: true
-          default: 10
-        is_published:
-          type: boolean
-          title: Published
-          description: Whether or not the project is published to annotators
-        total_annotations_number:
-          type: string
-          readOnly: true
-        label_config:
-          type: string
-          nullable: true
-          description: Label config in XML format. See more about it in documentation
         members_count:
           type: string
-          readOnly: true
-        min_annotations_to_start_training:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          description: Minimum number of completed tasks after which model training
-            is started
-        reveal_preannotations_interactively:
-          type: boolean
-          description: Reveal pre-annotations interactively
-        sampling:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SamplingEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        overlap_cohort_percentage:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        pause_on_failed_annotator_evaluation:
-          type: boolean
-          nullable: true
-          default: false
-        duplication_done:
-          type: boolean
-          default: false
-        created_at:
-          type: string
-          format: date-time
           readOnly: true
         useful_annotation_number:
           type: string
           readOnly: true
-        pinned_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Pinned date and time
-        organization:
-          type: integer
-          nullable: true
-        ready:
-          type: string
-          readOnly: true
-        enable_empty_annotation:
+        pause_on_failed_annotator_evaluation:
           type: boolean
-          description: Allow annotators to submit empty annotations
-        show_overlap_first:
-          type: boolean
-        expert_instruction:
+          nullable: true
+          default: false
+        model_version:
           type: string
           nullable: true
-          description: Labeling instructions in HTML format
-        show_skip_button:
+          description: Machine learning model version
+        reveal_preannotations_interactively:
           type: boolean
-          description: Show a skip button in interface and allow annotators to skip
-            the task
+          description: Reveal pre-annotations interactively
         has_blueprints:
           type: string
           readOnly: true
-        config_suitable_for_bulk_annotation:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for bulk annotation
-        review_total_tasks:
+        skipped_annotations_number:
           type: string
           readOnly: true
-        show_annotation_history:
-          type: boolean
-          description: Show annotation history to annotator
+        data_types:
+          readOnly: true
+          nullable: true
         config_has_control_tags:
           type: boolean
           readOnly: true
           description: Flag to detect is project ready for labeling
-        ground_truth_number:
-          type: integer
-          readOnly: true
-          description: Honeypot annotation number in project
-        require_comment_on_skip:
-          type: boolean
-          default: false
-        assignment_settings:
-          $ref: '#/components/schemas/AssignmentSettings'
-        evaluate_predictions_automatically:
-          type: boolean
-          description: Retrieve and display predictions when loading a task
       required:
       - allow_stream
       - assignment_settings
@@ -16368,7 +16402,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16458,7 +16492,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16549,7 +16583,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16647,7 +16681,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16746,7 +16780,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16838,7 +16872,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -16932,7 +16966,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -17028,7 +17062,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -17975,7 +18009,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18073,7 +18107,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18160,7 +18194,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18250,7 +18284,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18355,7 +18389,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18452,7 +18486,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18551,7 +18585,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -18652,7 +18686,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -19175,7 +19209,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -19250,7 +19284,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -20618,7 +20652,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -20726,7 +20760,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -20837,7 +20871,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -20952,7 +20986,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -22977,7 +23011,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23067,7 +23101,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23152,7 +23186,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23392,7 +23426,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23487,7 +23521,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23577,7 +23611,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23896,7 +23930,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -23997,7 +24031,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -24368,7 +24402,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -25558,7 +25592,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -25651,7 +25685,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -25949,7 +25983,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -26066,7 +26100,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -26172,7 +26206,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -26278,7 +26312,7 @@ components:
           description: Last sync job ID
           maxLength: 256
         status:
-          $ref: '#/components/schemas/StatusD14Enum'
+          $ref: '#/components/schemas/StatusC5aEnum'
         traceback:
           type: string
           nullable: true
@@ -26647,13 +26681,14 @@ components:
         * `in_progress` - In progress
         * `failed` - Failed
         * `completed` - Completed
-    StatusD14Enum:
+    StatusC5aEnum:
       enum:
       - initialized
       - queued
       - in_progress
       - failed
       - completed
+      - completed_with_errors
       type: string
       description: |-
         * `initialized` - Initialized
@@ -26661,6 +26696,7 @@ components:
         * `in_progress` - In progress
         * `failed` - Failed
         * `completed` - Completed
+        * `completed_with_errors` - Completed with errors
     TaskAssignment:
       type: object
       properties:

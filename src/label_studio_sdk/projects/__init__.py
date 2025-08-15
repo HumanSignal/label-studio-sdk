@@ -9,8 +9,9 @@ from .types import (
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
 )
-from . import exports, pauses
+from . import exports, pauses, stats
 from .exports import ExportsConvertResponse
+from .stats import StatsIaaResponse
 
 __all__ = [
     "ExportsConvertResponse",
@@ -21,6 +22,8 @@ __all__ = [
     "ProjectsDuplicateResponse",
     "ProjectsImportTasksResponse",
     "ProjectsListRequestFilter",
+    "StatsIaaResponse",
     "exports",
     "pauses",
+    "stats",
 ]

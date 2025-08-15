@@ -13725,7 +13725,7 @@ client.export_storage.s3s.create(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusD14Enum]` 
+**status:** `typing.Optional[StatusC5AEnum]` 
     
 </dd>
 </dl>
@@ -14114,7 +14114,7 @@ client.export_storage.s3s.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusD14Enum]` 
+**status:** `typing.Optional[StatusC5AEnum]` 
     
 </dd>
 </dl>
@@ -14457,7 +14457,7 @@ client.export_storage.s3s.validate(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusD14Enum]` 
+**status:** `typing.Optional[StatusC5AEnum]` 
     
 </dd>
 </dl>
@@ -18531,7 +18531,7 @@ client.import_storage.s3s.create(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusD14Enum]` 
+**status:** `typing.Optional[StatusC5AEnum]` 
     
 </dd>
 </dl>
@@ -18936,7 +18936,7 @@ client.import_storage.s3s.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusD14Enum]` 
+**status:** `typing.Optional[StatusC5AEnum]` 
     
 </dd>
 </dl>
@@ -19295,7 +19295,7 @@ client.import_storage.s3s.validate(
 <dl>
 <dd>
 
-**status:** `typing.Optional[StatusD14Enum]` 
+**status:** `typing.Optional[StatusC5AEnum]` 
     
 </dd>
 </dl>
@@ -20160,6 +20160,110 @@ client.projects.exports.convert(
 <dd>
 
 **download_resources:** `typing.Optional[bool]` — Download resources in converter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Projects Stats
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">iaa</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get Inter-Annotator Agreement (IAA) matrix for a project, showing agreement between all annotators.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.projects.stats.iaa(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expand:** `typing.Optional[str]` — Comma-separated list of fields to expand
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_label:** `typing.Optional[bool]` — Calculate IAA per label
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**std:** `typing.Optional[bool]` — Include standard deviation in results
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task:** `typing.Optional[str]` — Comma-separated list of task IDs to filter by
     
 </dd>
 </dl>
