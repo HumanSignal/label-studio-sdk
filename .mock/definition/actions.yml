@@ -406,6 +406,9 @@ service:
       request:
         name: ActionsListRequest
         query-parameters:
+          organization:
+            type: integer
+            docs: Organization ID
           project:
             type: integer
             docs: Project ID
@@ -415,6 +418,7 @@ service:
       examples:
         - name: response
           query-parameters:
+            organization: 1
             project: 1
           response:
             body:

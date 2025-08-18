@@ -23,13 +23,16 @@ class ActionsClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, organization: int, project: int, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ActionsListResponseItem]:
         """
         Retrieve all the registered actions with descriptions that data manager can use.
 
         Parameters
         ----------
+        organization : int
+            Organization ID
+
         project : int
             Project ID
 
@@ -49,6 +52,7 @@ class ActionsClient:
             api_key="YOUR_API_KEY",
         )
         client.actions.list(
+            organization=1,
             project=1,
         )
         """
@@ -56,6 +60,7 @@ class ActionsClient:
             "api/dm/actions/",
             method="GET",
             params={
+                "organization": organization,
                 "project": project,
             },
             request_options=request_options,
@@ -185,13 +190,16 @@ class AsyncActionsClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: int, request_options: typing.Optional[RequestOptions] = None
+        self, *, organization: int, project: int, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ActionsListResponseItem]:
         """
         Retrieve all the registered actions with descriptions that data manager can use.
 
         Parameters
         ----------
+        organization : int
+            Organization ID
+
         project : int
             Project ID
 
@@ -216,6 +224,7 @@ class AsyncActionsClient:
 
         async def main() -> None:
             await client.actions.list(
+                organization=1,
                 project=1,
             )
 
@@ -226,6 +235,7 @@ class AsyncActionsClient:
             "api/dm/actions/",
             method="GET",
             params={
+                "organization": organization,
                 "project": project,
             },
             request_options=request_options,

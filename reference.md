@@ -2310,6 +2310,7 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.actions.list(
+    organization=1,
     project=1,
 )
 
@@ -2323,6 +2324,14 @@ client.actions.list(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**organization:** `int` — Organization ID
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
