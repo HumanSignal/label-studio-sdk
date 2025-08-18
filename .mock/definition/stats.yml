@@ -1,4 +1,17 @@
 types:
+  ApiProjectsStatsIaaRetrieveResponse:
+    properties:
+      IAA:
+        type: optional<list<list<double>>>
+        docs: Inter-Annotator Agreement matrix (2D array)
+      users:
+        type: optional<list<map<string, unknown>>>
+        docs: List of users in the matrix
+      std:
+        type: optional<double>
+        docs: Standard deviation (if requested)
+    source:
+      openapi: openapi/openapi.yaml
   ApiProjectsStatsAgreementAnnotatorRetrieveResponse:
     properties:
       Agreement_per_annotator:
@@ -55,6 +68,48 @@ service:
   auth: false
   base-path: ''
   endpoints:
+    api_projects_stats_IAA_retrieve:
+      path: /api/projects/{id}/stats/IAA
+      method: GET
+      auth: true
+      docs: >-
+        Get Inter-Annotator Agreement (IAA) matrix for a project, showing
+        agreement between all annotators.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get Inter-Annotator Agreement matrix
+      request:
+        name: ApiProjectsStatsIaaRetrieveRequest
+        query-parameters:
+          expand:
+            type: optional<string>
+            docs: Comma-separated list of fields to expand
+          per_label:
+            type: optional<boolean>
+            default: false
+            docs: Calculate IAA per label
+          std:
+            type: optional<boolean>
+            default: false
+            docs: Include standard deviation in results
+          task:
+            type: optional<string>
+            docs: Comma-separated list of task IDs to filter by
+      response:
+        docs: Inter-Annotator Agreement matrix
+        type: ApiProjectsStatsIaaRetrieveResponse
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              IAA:
+                - - 1.1
+              users:
+                - key: value
+              std: 1.1
     api_projects_stats_agreement_annotator_retrieve:
       path: /api/projects/{id}/stats/agreement_annotator/{user_id}
       method: GET

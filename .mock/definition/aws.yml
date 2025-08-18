@@ -20,10 +20,6 @@ service:
           end_date:
             type: optional<string>
             docs: End date for AWS logs filtering
-          limit:
-            type: optional<integer>
-            default: 100
-            docs: Limit the number of logs to return
           start_date:
             type: optional<string>
             docs: Start date for AWS logs filtering
