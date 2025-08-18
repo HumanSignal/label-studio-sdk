@@ -563,6 +563,233 @@ paths:
       x-fern-sdk-method-name: create_bulk
       x-fern-audiences:
       - public
+  /api/billing/info:
+    get:
+      operationId: api_billing_info_retrieve
+      description: Retrieve billing checks and feature flags for the active organization.
+      summary: Get billing info
+      tags:
+      - Billing
+      security:
+      - Token: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/_BillingInfoResponse'
+              examples:
+                Real-sample:
+                  value:
+                    billing_checks:
+                      users:
+                        count: 110
+                        total: 221
+                        limit: 1000
+                        reached: false
+                      trial_days: 0
+                      projects:
+                        count: 2044
+                        limit: 1000000
+                        reached: false
+                      organization_is_active: true
+                      license_issued: '2000-01-01'
+                      license_warning: '2030-01-01'
+                      is_license_warning: false
+                      license_expires: '2030-01-02'
+                      is_license_expired: false
+                      prompts_enabled: true
+                      prompts_status: Enabled
+                      prompts_warning: null
+                      is_prompts_warning: false
+                      prompts_expire: null
+                      is_prompts_expire: false
+                      prompts_api_keys_enabled: true
+                      import_storages:
+                        count: 0
+                        limit: 0
+                        reached: false
+                      export_storages:
+                        count: 0
+                        limit: 0
+                        reached: false
+                      results:
+                        count: 42949
+                        limit: 1000000000
+                        reached: false
+                    billing_flags:
+                      cloud_instance: true
+                      allow_activity_log: true
+                      allow_invite_project_experts: true
+                      allow_sso: true
+                      white_label_id: null
+                      allow_data_credentials: false
+                      allow_organization_webhooks: false
+                      disable_members_page: false
+                      secure_mode: false
+                      manual_workspace_management: true
+                      manual_role_management: true
+                      hide_storage_settings_for_manager: false
+                      disable_project_imports: false
+                      automax_token_exists: true
+                      automax_enabled: true
+                      storage_persistence: true
+                      allow_ai: true
+                      early_adopter: true
+                      allow_ask_ai: true
+                      allow_invite_people: true
+                      allow_storage_proxy: true
+                      embed_enabled: true
+                      embed_domains:
+                      - domain: http://localhost:3000
+                      - domain: https://purple-zoos-flash.loca.lt
+                      embed_settings:
+                        public_verify_alg:
+                        - RS256
+                        public_verify_key: '....'
+                      activated_at: null
+                  summary: real-sample
+                Cloud:
+                  value:
+                    billing_checks:
+                      users:
+                        count: 5
+                        total: 6
+                        limit: 10
+                        reached: false
+                      projects:
+                        count: 3
+                        limit: 50
+                        reached: false
+                      results:
+                        count: 100
+                        limit: 1000
+                        reached: false
+                      trial_days: 14
+                      organization_is_active: true
+                      license_issued: '2023-01-01'
+                      license_warning: '2024-12-01'
+                      is_license_warning: false
+                      license_expires: '2025-01-01'
+                      is_license_expired: false
+                      prompts_enabled: true
+                      prompts_status: Enabled
+                      prompts_warning: null
+                      is_prompts_warning: false
+                      prompts_expire: '2024-12-31'
+                      is_prompts_expire: false
+                      prompts_api_keys_enabled: true
+                      import_storages:
+                        count: 0
+                        limit: 0
+                        reached: false
+                      export_storages:
+                        count: 0
+                        limit: 0
+                        reached: false
+                    billing_flags:
+                      activated_at: '2023-01-01T00:00:00Z'
+                      cloud_instance: true
+                      allow_activity_log: true
+                      allow_invite_project_experts: true
+                      allow_sso: false
+                      white_label_id: null
+                      allow_data_credentials: true
+                      allow_organization_webhooks: true
+                      disable_members_page: false
+                      secure_mode: false
+                      manual_workspace_management: false
+                      manual_role_management: false
+                      hide_storage_settings_for_manager: false
+                      disable_project_imports: false
+                      automax_token_exists: false
+                      automax_enabled: true
+                      storage_persistence: true
+                      allow_ai: true
+                      early_adopter: false
+                      allow_ask_ai: true
+                      allow_invite_people: true
+                      allow_storage_proxy: true
+                      embed_enabled: false
+                      embed_domains:
+                      - domain: http://localhost:3000
+                      - domain: https://example.com
+                      embed_settings:
+                        public_verify_alg:
+                        - RS256
+                        public_verify_key: '....'
+                  summary: cloud
+                Enterprise:
+                  value:
+                    billing_checks:
+                      users:
+                        count: 20
+                        total: 22
+                        limit: 100
+                        reached: false
+                      projects:
+                        count: 15
+                        limit: 200
+                        reached: false
+                      results:
+                        count: 25000
+                        limit: 100000
+                        reached: false
+                      trial_days: 0
+                      organization_is_active: true
+                      license_issued: '2023-01-01'
+                      license_warning: '2024-12-01'
+                      is_license_warning: false
+                      license_expires: '2025-01-01'
+                      is_license_expired: false
+                      prompts_enabled: true
+                      prompts_status: Enabled
+                      prompts_warning: null
+                      is_prompts_warning: false
+                      prompts_expire: null
+                      is_prompts_expire: false
+                      prompts_api_keys_enabled: true
+                      import_storages:
+                        count: 0
+                        limit: 0
+                        reached: false
+                      export_storages:
+                        count: 0
+                        limit: 0
+                        reached: false
+                    billing_flags:
+                      activated_at: null
+                      cloud_instance: false
+                      allow_activity_log: true
+                      allow_invite_project_experts: true
+                      allow_sso: true
+                      white_label_id: wl-1
+                      allow_data_credentials: true
+                      allow_organization_webhooks: true
+                      disable_members_page: false
+                      secure_mode: false
+                      manual_workspace_management: false
+                      manual_role_management: false
+                      hide_storage_settings_for_manager: false
+                      disable_project_imports: false
+                      automax_token_exists: true
+                      automax_enabled: true
+                      storage_persistence: true
+                      allow_ai: false
+                      early_adopter: true
+                      allow_ask_ai: true
+                      allow_invite_people: true
+                      allow_storage_proxy: true
+                      embed_enabled: false
+                      embed_domains:
+                      - domain: http://localhost:3000
+                      - domain: https://example.com
+                      embed_settings:
+                        public_verify_alg:
+                        - RS256
+                        public_verify_key: '....'
+                  summary: enterprise
+          description: Billing information for the active organization
   /api/blueprints/:
     post:
       operationId: api_blueprints_create
@@ -5184,20 +5411,39 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedLseOrganizationMemberListList'
           description: ''
+      x-fern-sdk-group-name:
+      - organizations
+      - members
+      x-fern-sdk-method-name: list
+      x-fern-audiences:
+      - public
     post:
       operationId: api_organizations_memberships_create
-      description: "\n    Assign a role to a user in an organization. To do so, make\
-        \ the following cURL request:\n\n    ```bash\n    curl -H 'Content-Type: application/json'\
-        \ -H 'Authorization: Token abc123' \\\n    -X POST 'https://label-studio-host/api/organizations/{{id}}/memberships'\
-        \ --data '[{{\"user_id\": Int, \"role\": \"NO|DI|OW|AD|MA|AN|RE\" }}]'\n \
-        \   ```\n    \n    Enumerate a role with one of the following abbreviations:\n\
-        \n    | Role | Full Role Name |\n    | --- | --- |\n    | NO | Not Activated\
-        \ |\n    | DI | Deactivated |\n    | OW | Owner |\n    | AD | Administrator\
-        \ |\n    | MA | Manager |\n    | AN | Annotator |\n    | RE | Reviewer |\n\
-        \n    For example, to set a user with an ID of 9 as an annotator, make the\
-        \ following cURL request:\n    ```bash\n    curl -H 'Content-Type: application/json'\
-        \ -H 'Authorization: Token abc123' \\\n    -X POST 'https://label-studio-host/api/organizations/{{id}}/memberships'\
-        \ --data '[{{\"user_id\": 9, \"role\": \"AN\" }}]'\n    ```\n    "
+      description: |-
+        Assign a role to a user in an organization. To do so, make the following cURL request:
+
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://label-studio-host/api/organizations/{{id}}/memberships' --data '[{{"user_id": Int, "role": "NO|DI|OW|AD|MA|AN|RE" }}]'
+        ```
+
+        Enumerate a role with one of the following abbreviations:
+
+        | Role | Full Role Name |
+        | --- | --- |
+        | NO | Not Activated |
+        | DI | Deactivated |
+        | OW | Owner |
+        | AD | Administrator |
+        | MA | Manager |
+        | AN | Annotator |
+        | RE | Reviewer |
+
+        For example, to set a user with an ID of 9 as an annotator, make the following cURL request:
+        ```bash
+        curl -H 'Content-Type: application/json' -H 'Authorization: Token abc123' \
+        -X POST 'https://label-studio-host/api/organizations/{{id}}/memberships' --data '[{{"user_id": 9, "role": "AN" }}]'
+        ```
       summary: Create organization member/role
       parameters:
       - in: path
@@ -5229,27 +5475,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseOrganizationMemberList'
           description: ''
+      x-fern-sdk-group-name:
+      - organizations
+      - members
+      x-fern-sdk-method-name: create
+      x-fern-audiences:
+      - public
     patch:
       operationId: api_organizations_memberships_partial_update
-      description: "\n    Update organization membership or role for a specific user\
-        \ ID.\n\n    **User Rotation Best Practices for API Usage**\n    \n    To\
-        \ maintain compliance with our licensing terms and ensure optimal performance\
-        \ of HumanSignal's APIs, please consider the following guidelines when managing\
-        \ user assignments:\n    \n    * **Maintain a 7-Day Minimum Assignment**:\
-        \ Once a licensed seat is assigned to a user, maintain that assignment for\
-        \ at least seven consecutive days before rotating it to another user.\n\n\
-        \    * **Automate, Monitor, and Log Rotations**: Implement automated scheduling\
-        \ and logging mechanisms to track the timing of user rotations. This helps\
-        \ ensure that rotations adhere to the seven-day minimum period.\n\n    * **Adhere\
-        \ to API Update Frequency and Wait Periods**: When updating user assignments\
-        \ via our APIs, follow the recommended frequency and wait period guidelines\
-        \ provided in the HumanSignal API documentation. Avoid sending rapid, successive\
-        \ requests that might overload the endpoint. Instead, incorporate appropriate\
-        \ delays between calls as specified in the documentation.\n    \n    * **Avoid\
-        \ Overloading the API Endpoint**: Design your integration to batch or schedule\
-        \ updates where possible, and implement backoff strategies if the API indicates\
-        \ rate limiting. This helps prevent service disruptions and ensures a smooth\
-        \ operation.\n    "
+      description: |+
+        Update organization membership or role for a specific user ID.
+
+        **User Rotation Best Practices for API Usage**
+
+        To maintain compliance with our licensing terms and ensure optimal performance of HumanSignal's APIs, please consider the following guidelines when managing user assignments:
+
+        * **Maintain a 7-Day Minimum Assignment**: Once a licensed seat is assigned to a user, maintain that assignment for at least seven consecutive days before rotating it to another user.
+
+        * **Automate, Monitor, and Log Rotations**: Implement automated scheduling and logging mechanisms to track the timing of user rotations. This helps ensure that rotations adhere to the seven-day minimum period.
+
+        * **Adhere to API Update Frequency and Wait Periods**: When updating user assignments via our APIs, follow the recommended frequency and wait period guidelines provided in the HumanSignal API documentation. Avoid sending rapid, successive requests that might overload the endpoint. Instead, incorporate appropriate delays between calls as specified in the documentation.
+
+        * **Avoid Overloading the API Endpoint**: Design your integration to batch or schedule updates where possible, and implement backoff strategies if the API indicates rate limiting. This helps prevent service disruptions and ensures a smooth operation.
+
       summary: Update organization member/role
       parameters:
       - in: path
@@ -5280,6 +5528,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/LseOrganizationMemberList'
           description: ''
+      x-fern-sdk-group-name:
+      - organizations
+      - members
+      x-fern-sdk-method-name: update
+      x-fern-audiences:
+      - public
   /api/organizations/{id}/memberships/{user_pk}/:
     get:
       operationId: api_organizations_memberships_retrieve
@@ -5384,6 +5638,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/DefaultRole'
           description: ''
+      x-fern-sdk-group-name:
+      - organizations
+      - members
+      x-fern-sdk-method-name: updated_default_role
+      x-fern-audiences:
+      - public
   /api/predictions/:
     get:
       operationId: api_predictions_list
@@ -15576,41 +15836,181 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
-        workspace_title:
+        custom_script:
+          type: string
+        show_collab_predictions:
+          type: boolean
+          title: Show predictions to annotator
+          description: If set, the annotator can view model predictions
+        skip_queue:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SkipQueueEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        data_types:
+          readOnly: true
+          nullable: true
+        queue_total:
+          type: string
+          readOnly: true
+        label_config:
+          type: string
+          nullable: true
+          description: Label config in XML format. See more about it in documentation
+        is_published:
+          type: boolean
+          title: Published
+          description: Whether or not the project is published to annotators
+        min_annotations_to_start_training:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Minimum number of completed tasks after which model training
+            is started
+        sampling:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SamplingEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        evaluate_predictions_automatically:
+          type: boolean
+          description: Retrieve and display predictions when loading a task
+        finished_task_number:
+          type: integer
+          readOnly: true
+        workspace:
+          type: string
+          readOnly: true
+        queue_left:
+          type: string
+          readOnly: true
+        pause_on_failed_annotator_evaluation:
+          type: boolean
+          nullable: true
+          default: false
+        annotator_evaluation_minimum_tasks:
+          type: integer
+          minimum: 0
+          nullable: true
+          default: 10
+        rejected:
+          type: string
+          readOnly: true
+        duplication_done:
+          type: boolean
+          default: false
+        is_draft:
+          type: boolean
+          description: Whether or not the project is in the middle of being created
+        require_comment_on_skip:
+          type: boolean
+          default: false
+        parsed_label_config:
+          readOnly: true
+          description: JSON-formatted labeling configuration
+        pinned_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Pinned date and time
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        enable_empty_annotation:
+          type: boolean
+          description: Allow annotators to submit empty annotations
+        model_version:
+          type: string
+          nullable: true
+          description: Machine learning model version
+        queue_done:
+          type: string
+          readOnly: true
+        annotation_limit_count:
+          type: integer
+          minimum: 1
+          nullable: true
+        id:
+          type: integer
+          readOnly: true
+        color:
+          type: string
+          nullable: true
+          maxLength: 16
+        has_blueprints:
+          type: string
+          readOnly: true
+        reviewed_number:
           type: string
           readOnly: true
         ready:
           type: string
           readOnly: true
-        overlap_cohort_percentage:
+        config_has_control_tags:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for labeling
+        show_instruction:
+          type: boolean
+          description: Show instructions to the annotator before they start
+        total_predictions_number:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        queue_left:
+          readOnly: true
+        num_tasks_with_annotations:
+          type: string
+          readOnly: true
+        reviewer_queue_total:
           type: string
           readOnly: true
         config_suitable_for_bulk_annotation:
           type: boolean
           readOnly: true
           description: Flag to detect is project ready for bulk annotation
-        has_blueprints:
+        description:
           type: string
-          readOnly: true
-        show_overlap_first:
-          type: boolean
-        queue_total:
-          type: string
-          readOnly: true
-        enable_empty_annotation:
-          type: boolean
-          description: Allow annotators to submit empty annotations
-        custom_task_lock_ttl:
-          type: integer
-          maximum: 86400
-          minimum: 1
           nullable: true
-          description: TTL in seconds for task reservations, on new and existing tasks
-        prompts:
+          description: Project description
+        workspace_title:
+          type: string
+          readOnly: true
+        total_annotations_number:
+          type: string
+          readOnly: true
+        reveal_preannotations_interactively:
+          type: boolean
+          description: Reveal pre-annotations interactively
+        expert_instruction:
+          type: string
+          nullable: true
+          description: Labeling instructions in HTML format
+        assignment_settings:
+          $ref: '#/components/schemas/AssignmentSettings'
+        show_skip_button:
+          type: boolean
+          description: Show a skip button in interface and allow annotators to skip
+            the task
+        review_settings:
+          $ref: '#/components/schemas/ReviewSettings'
+        comment_classification_config:
+          type: string
+        duplication_status:
+          type: string
+        task_number:
+          type: integer
+          readOnly: true
+          description: Total task number in project
+        organization:
+          type: integer
+          nullable: true
+        overlap_cohort_percentage:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        members_count:
+          type: string
+          readOnly: true
+        review_total_tasks:
           type: string
           readOnly: true
         start_training_on_annotation_update:
@@ -15618,79 +16018,41 @@ components:
           readOnly: true
           description: Start model training after any annotations are submitted or
             updated
-        evaluate_predictions_automatically:
-          type: boolean
-          description: Retrieve and display predictions when loading a task
-        show_instruction:
-          type: boolean
-          description: Show instructions to the annotator before they start
-        color:
-          type: string
-          nullable: true
-          maxLength: 16
-        sampling:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SamplingEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        created_by:
-          allOf:
-          - $ref: '#/components/schemas/UserSimple'
-          description: Project owner
-        reveal_preannotations_interactively:
-          type: boolean
-          description: Reveal pre-annotations interactively
-        pinned_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Pinned date and time
-        finished_task_number:
-          type: integer
-          readOnly: true
-        parsed_label_config:
-          readOnly: true
-          description: JSON-formatted labeling configuration
-        duplication_done:
-          type: boolean
-          default: false
-        reviewer_queue_total:
-          type: string
-          readOnly: true
-        show_ground_truth_first:
-          type: boolean
-        task_number:
-          type: integer
-          readOnly: true
-          description: Total task number in project
-        num_tasks_with_annotations:
-          type: string
-          readOnly: true
-        description_short:
-          type: string
-          readOnly: true
-        id:
-          type: integer
-          readOnly: true
-        allow_stream:
-          type: string
-          readOnly: true
         annotation_limit_percent:
           type: string
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        annotation_limit_count:
+        ground_truth_number:
           type: integer
+          readOnly: true
+          description: Honeypot annotation number in project
+        useful_annotation_number:
+          type: string
+          readOnly: true
+        allow_stream:
+          type: string
+          readOnly: true
+        skipped_annotations_number:
+          type: string
+          readOnly: true
+        description_short:
+          type: string
+          readOnly: true
+        prompts:
+          type: string
+          readOnly: true
+        custom_task_lock_ttl:
+          type: integer
+          maximum: 86400
           minimum: 1
           nullable: true
-        queue_done:
+          description: TTL in seconds for task reservations, on new and existing tasks
+        members:
           type: string
           readOnly: true
+        show_overlap_first:
+          type: boolean
         control_weights:
           nullable: true
           description: 'Dict of weights for each control tag in metric calculation.
@@ -15701,131 +16063,24 @@ components:
             be twice more important than Airplaine, then you have to need the specify:
             {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0,
             ''Airplaine'': 0.5}, ''overall'': 0.33}'
-        data_types:
-          readOnly: true
-          nullable: true
-        reviewed_number:
-          type: string
-          readOnly: true
-        total_annotations_number:
-          type: string
-          readOnly: true
-        total_predictions_number:
-          type: integer
-          readOnly: true
-        config_has_control_tags:
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/UserSimple'
+          description: Project owner
+        show_ground_truth_first:
           type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for labeling
-        blueprints:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueprintList'
-          readOnly: true
-        is_published:
-          type: boolean
-          title: Published
-          description: Whether or not the project is published to annotators
-        duplication_status:
-          type: string
-        review_total_tasks:
-          type: string
-          readOnly: true
-        show_skip_button:
-          type: boolean
-          description: Show a skip button in interface and allow annotators to skip
-            the task
-        is_draft:
-          type: boolean
-          description: Whether or not the project is in the middle of being created
         title:
           type: string
           nullable: true
           description: Project name. Must be between 3 and 50 characters long.
           maxLength: 50
           minLength: 3
-        show_collab_predictions:
-          type: boolean
-          title: Show predictions to annotator
-          description: If set, the annotator can view model predictions
-        members:
-          type: string
-          readOnly: true
-        min_annotations_to_start_training:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          description: Minimum number of completed tasks after which model training
-            is started
-        workspace:
-          type: string
-          readOnly: true
-        organization:
-          type: integer
-          nullable: true
-        assignment_settings:
-          $ref: '#/components/schemas/AssignmentSettings'
-        annotator_evaluation_minimum_tasks:
-          type: integer
-          minimum: 0
-          nullable: true
-          default: 10
-        skipped_annotations_number:
-          type: string
-          readOnly: true
         annotator_evaluation_minimum_score:
           type: string
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
           default: '95.00'
-        comment_classification_config:
-          type: string
-        description:
-          type: string
-          nullable: true
-          description: Project description
-        expert_instruction:
-          type: string
-          nullable: true
-          description: Labeling instructions in HTML format
-        show_annotation_history:
-          type: boolean
-          description: Show annotation history to annotator
-        skip_queue:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SkipQueueEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        review_settings:
-          $ref: '#/components/schemas/ReviewSettings'
-        members_count:
-          type: string
-          readOnly: true
-        model_version:
-          type: string
-          nullable: true
-          description: Machine learning model version
-        useful_annotation_number:
-          type: string
-          readOnly: true
-        custom_script:
-          type: string
-        require_comment_on_skip:
-          type: boolean
-          default: false
-        ground_truth_number:
-          type: integer
-          readOnly: true
-          description: Honeypot annotation number in project
-        pause_on_failed_annotator_evaluation:
-          type: boolean
-          nullable: true
-          default: false
-        label_config:
-          type: string
-          nullable: true
-          description: Label config in XML format. See more about it in documentation
         maximum_annotations:
           type: integer
           maximum: 2147483647
@@ -15834,8 +16089,13 @@ components:
           description: Maximum number of annotations for one task. If the number of
             annotations per task is equal or greater to this value, the task is completed
             (is_labeled=True)
-        rejected:
-          type: string
+        show_annotation_history:
+          type: boolean
+          description: Show annotation history to annotator
+        blueprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintList'
           readOnly: true
       required:
       - allow_stream
@@ -25576,6 +25836,24 @@ components:
           nullable: true
       required:
       - name
+    PromptsStatusEnum:
+      enum:
+      - Enabled
+      - Cloud license per organization disabled
+      - On-premise global license disabled
+      - Expired
+      - Adala not connected
+      - Disabled for this organization [FF]
+      - unknown
+      type: string
+      description: |-
+        * `Enabled` - Enabled
+        * `Cloud license per organization disabled` - Cloud license per organization disabled
+        * `On-premise global license disabled` - On-premise global license disabled
+        * `Expired` - Expired
+        * `Adala not connected` - Adala not connected
+        * `Disabled for this organization [FF]` - Disabled for this organization [FF]
+        * `unknown` - unknown
     ProviderEnum:
       enum:
       - OpenAI
@@ -27501,6 +27779,184 @@ components:
           description: Workspace is archived
       required:
       - title
+    _BillingChecks:
+      type: object
+      properties:
+        users:
+          $ref: '#/components/schemas/_CountLimit'
+        projects:
+          $ref: '#/components/schemas/_CountLimit'
+        results:
+          $ref: '#/components/schemas/_CountLimit'
+        trial_days:
+          type: integer
+        organization_is_active:
+          type: boolean
+        license_issued:
+          type: string
+          format: date
+          nullable: true
+        license_warning:
+          type: string
+          format: date
+          nullable: true
+        is_license_warning:
+          type: boolean
+        license_expires:
+          type: string
+          format: date
+          nullable: true
+        is_license_expired:
+          type: boolean
+        prompts_enabled:
+          type: boolean
+        prompts_status:
+          $ref: '#/components/schemas/PromptsStatusEnum'
+        prompts_warning:
+          type: string
+          nullable: true
+        is_prompts_warning:
+          type: boolean
+        prompts_expire:
+          type: string
+          nullable: true
+        is_prompts_expire:
+          type: boolean
+        prompts_api_keys_enabled:
+          type: boolean
+        import_storages:
+          $ref: '#/components/schemas/_CountLimit'
+        export_storages:
+          $ref: '#/components/schemas/_CountLimit'
+      required:
+      - export_storages
+      - import_storages
+      - is_license_expired
+      - is_license_warning
+      - is_prompts_expire
+      - is_prompts_warning
+      - license_expires
+      - license_issued
+      - license_warning
+      - organization_is_active
+      - projects
+      - prompts_api_keys_enabled
+      - prompts_enabled
+      - prompts_expire
+      - prompts_status
+      - prompts_warning
+      - results
+      - trial_days
+      - users
+    _BillingFlags:
+      type: object
+      properties:
+        activated_at:
+          type: string
+          format: date-time
+          nullable: true
+        cloud_instance:
+          type: boolean
+        allow_activity_log:
+          type: boolean
+        allow_invite_project_experts:
+          type: boolean
+        allow_sso:
+          type: boolean
+        white_label_id:
+          type: string
+          nullable: true
+        allow_data_credentials:
+          type: boolean
+        allow_organization_webhooks:
+          type: boolean
+        disable_members_page:
+          type: boolean
+        secure_mode:
+          type: boolean
+        manual_workspace_management:
+          type: boolean
+        manual_role_management:
+          type: boolean
+        hide_storage_settings_for_manager:
+          type: boolean
+        disable_project_imports:
+          type: boolean
+        automax_token_exists:
+          type: boolean
+        automax_enabled:
+          type: boolean
+        storage_persistence:
+          type: boolean
+        allow_ai:
+          type: boolean
+        early_adopter:
+          type: boolean
+        allow_ask_ai:
+          type: boolean
+        allow_invite_people:
+          type: boolean
+        allow_storage_proxy:
+          type: boolean
+        embed_enabled:
+          type: boolean
+        embed_domains:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        embed_settings:
+          type: object
+          additionalProperties: {}
+      required:
+      - activated_at
+      - allow_activity_log
+      - allow_ai
+      - allow_ask_ai
+      - allow_data_credentials
+      - allow_invite_people
+      - allow_invite_project_experts
+      - allow_organization_webhooks
+      - allow_sso
+      - allow_storage_proxy
+      - automax_enabled
+      - automax_token_exists
+      - cloud_instance
+      - disable_members_page
+      - disable_project_imports
+      - early_adopter
+      - embed_enabled
+      - hide_storage_settings_for_manager
+      - manual_role_management
+      - manual_workspace_management
+      - secure_mode
+      - storage_persistence
+      - white_label_id
+    _BillingInfoResponse:
+      type: object
+      properties:
+        billing_checks:
+          $ref: '#/components/schemas/_BillingChecks'
+        billing_flags:
+          $ref: '#/components/schemas/_BillingFlags'
+      required:
+      - billing_checks
+      - billing_flags
+    _CountLimit:
+      type: object
+      properties:
+        count:
+          type: integer
+        limit:
+          type: integer
+        reached:
+          type: boolean
+        total:
+          type: integer
+      required:
+      - count
+      - limit
+      - reached
   securitySchemes:
     Token:
       type: apiKey

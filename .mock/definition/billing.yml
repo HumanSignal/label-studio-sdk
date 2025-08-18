@@ -1,0 +1,242 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_billing_info_retrieve:
+      path: /api/billing/info
+      method: GET
+      auth: true
+      docs: Retrieve billing checks and feature flags for the active organization.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Get billing info
+      response:
+        docs: Billing information for the active organization
+        type: root.BillingInfoResponse
+      examples:
+        - name: real-sample
+          response:
+            body:
+              billing_checks:
+                users:
+                  count: 110
+                  limit: 1000
+                  reached: false
+                  total: 221
+                projects:
+                  count: 2044
+                  limit: 1000000
+                  reached: false
+                  total: 1
+                results:
+                  count: 42949
+                  limit: 1000000000
+                  reached: false
+                  total: 1
+                trial_days: 0
+                organization_is_active: true
+                license_issued: '2000-01-01'
+                license_warning: '2030-01-01'
+                is_license_warning: false
+                license_expires: '2030-01-02'
+                is_license_expired: false
+                prompts_enabled: true
+                prompts_status: Enabled
+                prompts_warning: prompts_warning
+                is_prompts_warning: false
+                prompts_expire: prompts_expire
+                is_prompts_expire: false
+                prompts_api_keys_enabled: true
+                import_storages:
+                  count: 0
+                  limit: 0
+                  reached: false
+                  total: 1
+                export_storages:
+                  count: 0
+                  limit: 0
+                  reached: false
+                  total: 1
+              billing_flags:
+                activated_at: '2024-01-15T09:30:00Z'
+                cloud_instance: true
+                allow_activity_log: true
+                allow_invite_project_experts: true
+                allow_sso: true
+                white_label_id: white_label_id
+                allow_data_credentials: false
+                allow_organization_webhooks: false
+                disable_members_page: false
+                secure_mode: false
+                manual_workspace_management: true
+                manual_role_management: true
+                hide_storage_settings_for_manager: false
+                disable_project_imports: false
+                automax_token_exists: true
+                automax_enabled: true
+                storage_persistence: true
+                allow_ai: true
+                early_adopter: true
+                allow_ask_ai: true
+                allow_invite_people: true
+                allow_storage_proxy: true
+                embed_enabled: true
+                embed_domains:
+                  - domain: http://localhost:3000
+                  - domain: https://purple-zoos-flash.loca.lt
+                embed_settings:
+                  public_verify_alg:
+                    - RS256
+                  public_verify_key: ....
+        - name: cloud
+          response:
+            body:
+              billing_checks:
+                users:
+                  count: 5
+                  limit: 10
+                  reached: false
+                  total: 6
+                projects:
+                  count: 3
+                  limit: 50
+                  reached: false
+                  total: 1
+                results:
+                  count: 100
+                  limit: 1000
+                  reached: false
+                  total: 1
+                trial_days: 14
+                organization_is_active: true
+                license_issued: '2023-01-01'
+                license_warning: '2024-12-01'
+                is_license_warning: false
+                license_expires: '2025-01-01'
+                is_license_expired: false
+                prompts_enabled: true
+                prompts_status: Enabled
+                prompts_warning: prompts_warning
+                is_prompts_warning: false
+                prompts_expire: '2024-12-31'
+                is_prompts_expire: false
+                prompts_api_keys_enabled: true
+                import_storages:
+                  count: 0
+                  limit: 0
+                  reached: false
+                  total: 1
+                export_storages:
+                  count: 0
+                  limit: 0
+                  reached: false
+                  total: 1
+              billing_flags:
+                activated_at: '2023-01-01T00:00:00Z'
+                cloud_instance: true
+                allow_activity_log: true
+                allow_invite_project_experts: true
+                allow_sso: false
+                white_label_id: white_label_id
+                allow_data_credentials: true
+                allow_organization_webhooks: true
+                disable_members_page: false
+                secure_mode: false
+                manual_workspace_management: false
+                manual_role_management: false
+                hide_storage_settings_for_manager: false
+                disable_project_imports: false
+                automax_token_exists: false
+                automax_enabled: true
+                storage_persistence: true
+                allow_ai: true
+                early_adopter: false
+                allow_ask_ai: true
+                allow_invite_people: true
+                allow_storage_proxy: true
+                embed_enabled: false
+                embed_domains:
+                  - domain: http://localhost:3000
+                  - domain: https://example.com
+                embed_settings:
+                  public_verify_alg:
+                    - RS256
+                  public_verify_key: ....
+        - name: enterprise
+          response:
+            body:
+              billing_checks:
+                users:
+                  count: 20
+                  limit: 100
+                  reached: false
+                  total: 22
+                projects:
+                  count: 15
+                  limit: 200
+                  reached: false
+                  total: 1
+                results:
+                  count: 25000
+                  limit: 100000
+                  reached: false
+                  total: 1
+                trial_days: 0
+                organization_is_active: true
+                license_issued: '2023-01-01'
+                license_warning: '2024-12-01'
+                is_license_warning: false
+                license_expires: '2025-01-01'
+                is_license_expired: false
+                prompts_enabled: true
+                prompts_status: Enabled
+                prompts_warning: prompts_warning
+                is_prompts_warning: false
+                prompts_expire: prompts_expire
+                is_prompts_expire: false
+                prompts_api_keys_enabled: true
+                import_storages:
+                  count: 0
+                  limit: 0
+                  reached: false
+                  total: 1
+                export_storages:
+                  count: 0
+                  limit: 0
+                  reached: false
+                  total: 1
+              billing_flags:
+                activated_at: '2024-01-15T09:30:00Z'
+                cloud_instance: false
+                allow_activity_log: true
+                allow_invite_project_experts: true
+                allow_sso: true
+                white_label_id: wl-1
+                allow_data_credentials: true
+                allow_organization_webhooks: true
+                disable_members_page: false
+                secure_mode: false
+                manual_workspace_management: false
+                manual_role_management: false
+                hide_storage_settings_for_manager: false
+                disable_project_imports: false
+                automax_token_exists: true
+                automax_enabled: true
+                storage_persistence: true
+                allow_ai: false
+                early_adopter: true
+                allow_ask_ai: true
+                allow_invite_people: true
+                allow_storage_proxy: true
+                embed_enabled: false
+                embed_domains:
+                  - domain: http://localhost:3000
+                  - domain: https://example.com
+                embed_settings:
+                  public_verify_alg:
+                    - RS256
+                  public_verify_key: ....
+  source:
+    openapi: openapi/openapi.yaml
