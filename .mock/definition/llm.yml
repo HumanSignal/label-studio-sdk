@@ -1,0 +1,30 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_llm_openai_chat_completions_create:
+      path: /api/llm/openai/chat/completions
+      method: POST
+      auth: true
+      docs: >-
+        Proxy requests to OpenAI /chat/completions and return the full response
+        payload.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Proxy to OpenAI Chat Completions
+      request:
+        body: map<string, unknown>
+        content-type: application/json
+      response:
+        docs: ''
+        type: map<string, unknown>
+      examples:
+        - request:
+            key: value
+          response:
+            body:
+              key: value
+      audiences:
+        - internal
+  source:
+    openapi: openapi/openapi.yaml
