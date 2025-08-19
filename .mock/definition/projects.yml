@@ -160,89 +160,89 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - workspace_title: workspace_title
-                  ready: ready
-                  overlap_cohort_percentage: 1
-                  queue_left: queue_left
-                  config_suitable_for_bulk_annotation: true
-                  has_blueprints: has_blueprints
-                  show_overlap_first: true
-                  queue_total: queue_total
-                  enable_empty_annotation: true
-                  custom_task_lock_ttl: 1
-                  prompts: prompts
-                  start_training_on_annotation_update: true
-                  evaluate_predictions_automatically: true
+                - expert_instruction: expert_instruction
+                  ground_truth_number: 1
+                  title: title
                   show_instruction: true
                   color: color
-                  sampling: Sequential sampling
-                  created_by:
-                    id: 1
-                    avatar: avatar
-                  reveal_preannotations_interactively: true
-                  pinned_at: '2024-01-15T09:30:00Z'
-                  finished_task_number: 1
+                  total_predictions_number: 1
+                  prompts: prompts
+                  num_tasks_with_annotations: num_tasks_with_annotations
+                  show_skip_button: true
+                  id: 1
+                  queue_done: queue_done
+                  rejected: rejected
+                  skipped_annotations_number: skipped_annotations_number
+                  pause_on_failed_annotator_evaluation: true
+                  members: members
+                  allow_stream: allow_stream
                   parsed_label_config:
                     key: value
-                  duplication_done: true
-                  reviewer_queue_total: reviewer_queue_total
-                  show_ground_truth_first: true
-                  task_number: 1
-                  num_tasks_with_annotations: num_tasks_with_annotations
-                  description_short: description_short
-                  id: 1
-                  allow_stream: allow_stream
+                  useful_annotation_number: useful_annotation_number
+                  config_suitable_for_bulk_annotation: true
+                  show_annotation_history: true
                   annotation_limit_percent: annotation_limit_percent
-                  created_at: '2024-01-15T09:30:00Z'
-                  annotation_limit_count: 1
-                  queue_done: queue_done
+                  workspace_title: workspace_title
+                  organization: 1
+                  is_published: true
                   control_weights:
                     key: value
-                  data_types:
-                    key: value
-                  reviewed_number: reviewed_number
-                  total_annotations_number: total_annotations_number
-                  total_predictions_number: 1
-                  config_has_control_tags: true
                   blueprints:
                     - id: 1
                       share_id: share_id
                       short_url: short_url
                       created_at: '2024-01-15T09:30:00Z'
-                  is_published: true
-                  duplication_status: duplication_status
-                  review_total_tasks: review_total_tasks
-                  show_skip_button: true
-                  is_draft: true
-                  title: title
-                  show_collab_predictions: true
-                  members: members
-                  min_annotations_to_start_training: 1
-                  workspace: workspace
-                  organization: 1
+                  has_blueprints: has_blueprints
+                  custom_script: custom_script
+                  enable_empty_annotation: true
+                  task_number: 1
+                  show_ground_truth_first: true
+                  finished_task_number: 1
                   assignment_settings:
                     id: 1
-                  annotator_evaluation_minimum_tasks: 1
-                  skipped_annotations_number: skipped_annotations_number
                   annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
-                  comment_classification_config: comment_classification_config
-                  description: description
-                  expert_instruction: expert_instruction
-                  show_annotation_history: true
-                  skip_queue: REQUEUE_FOR_ME
+                  data_types:
+                    key: value
+                  start_training_on_annotation_update: true
                   review_settings:
                     id: 1
                     requeue_rejected_tasks_to_annotator: true
-                  members_count: members_count
-                  model_version: model_version
-                  useful_annotation_number: useful_annotation_number
-                  custom_script: custom_script
-                  require_comment_on_skip: true
-                  ground_truth_number: 1
-                  pause_on_failed_annotator_evaluation: true
+                  review_total_tasks: review_total_tasks
+                  reveal_preannotations_interactively: true
                   label_config: label_config
+                  show_collab_predictions: true
+                  workspace: workspace
+                  annotation_limit_count: 1
+                  description_short: description_short
+                  skip_queue: REQUEUE_FOR_ME
+                  total_annotations_number: total_annotations_number
+                  require_comment_on_skip: true
+                  config_has_control_tags: true
+                  comment_classification_config: comment_classification_config
+                  is_draft: true
+                  duplication_status: duplication_status
                   maximum_annotations: 1
-                  rejected: rejected
+                  model_version: model_version
+                  queue_total: queue_total
+                  evaluate_predictions_automatically: true
+                  reviewed_number: reviewed_number
+                  min_annotations_to_start_training: 1
+                  created_by:
+                    id: 1
+                    avatar: avatar
+                  ready: ready
+                  sampling: Sequential sampling
+                  show_overlap_first: true
+                  reviewer_queue_total: reviewer_queue_total
+                  queue_left: queue_left
+                  description: description
+                  duplication_done: true
+                  overlap_cohort_percentage: 1
+                  custom_task_lock_ttl: 1
+                  members_count: members_count
+                  annotator_evaluation_minimum_tasks: 1
+                  created_at: '2024-01-15T09:30:00Z'
+                  pinned_at: '2024-01-15T09:30:00Z'
       audiences:
         - public
     create:
@@ -904,12 +904,30 @@ service:
       path: /api/projects/{id}/members/
       method: GET
       auth: true
-      docs: Retrieve the members for a specific project.
+      docs: >-
+        Retrieve the members for a specific project. Pagination is available
+        when the fflag_feat_fit_449_datamanager_filter_members_short feature
+        flag is enabled.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
       display-name: Get project members
+      request:
+        name: ApiProjectsMembersRetrieveRequest
+        query-parameters:
+          no_annotators:
+            type: optional<boolean>
+            docs: Exclude annotators from the results.
+          page:
+            type: optional<integer>
+            docs: Page number for pagination.
+          page_size:
+            type: optional<integer>
+            docs: 'Number of items per page (default: 50).'
+          with_deleted:
+            type: optional<boolean>
+            docs: Include deleted members in the results.
       response:
         docs: ''
         type: root.ProjectMember
