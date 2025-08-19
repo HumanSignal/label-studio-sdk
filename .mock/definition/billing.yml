@@ -4,7 +4,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_billing_info_retrieve:
+    info:
       path: /api/billing/info
       method: GET
       auth: true
@@ -238,5 +238,7 @@ service:
                   public_verify_alg:
                     - RS256
                   public_verify_key: ....
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml

@@ -272,39 +272,3 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         await async_client.organizations.members.delete(id=1, user_pk=1)  # type: ignore[func-returns-value]
         is None
     )
-
-
-async def test_updated_default_role(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {
-        "organization": 1,
-        "default_role": "OW",
-        "external_id": "external_id",
-        "embed_domains": {"key": "value"},
-        "embed_settings": {"key": "value"},
-        "extra_data_on_activity_logs": True,
-        "custom_scripts_enabled_at": "2024-01-15T09:30:00Z",
-        "custom_scripts_editable_by": "AD",
-        "annotator_reviewer_firewall_enabled_at": "2024-01-15T09:30:00Z",
-        "read_only_quick_view_enabled_at": "2024-01-15T09:30:00Z",
-        "label_stream_navigation_disabled_at": "2024-01-15T09:30:00Z",
-        "email_notification_settings": {"key": "value"},
-    }
-    expected_types: typing.Any = {
-        "organization": "integer",
-        "default_role": None,
-        "external_id": None,
-        "embed_domains": None,
-        "embed_settings": None,
-        "extra_data_on_activity_logs": None,
-        "custom_scripts_enabled_at": "datetime",
-        "custom_scripts_editable_by": None,
-        "annotator_reviewer_firewall_enabled_at": "datetime",
-        "read_only_quick_view_enabled_at": "datetime",
-        "label_stream_navigation_disabled_at": "datetime",
-        "email_notification_settings": None,
-    }
-    response = client.organizations.members.updated_default_role(id=1)
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.organizations.members.updated_default_role(id=1)
-    validate_response(async_response, expected_response, expected_types)

@@ -577,7 +577,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/_BillingInfoResponse'
+                $ref: '#/components/schemas/BillingInfoResponse'
               examples:
                 Real-sample:
                   value:
@@ -790,6 +790,11 @@ paths:
                         public_verify_key: '....'
                   summary: enterprise
           description: Billing information for the active organization
+      x-fern-sdk-group-name:
+      - billing
+      x-fern-sdk-method-name: info
+      x-fern-audiences:
+      - public
   /api/blueprints/:
     post:
       operationId: api_blueprints_create
@@ -5638,12 +5643,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/DefaultRole'
           description: ''
-      x-fern-sdk-group-name:
-      - organizations
-      - members
-      x-fern-sdk-method-name: updated_default_role
-      x-fern-audiences:
-      - public
   /api/predictions/:
     get:
       operationId: api_predictions_list
@@ -15836,210 +15835,61 @@ components:
         Serializer get numbers from project queryset annotation,
         make sure, that you use correct one(Project.objects.with_counts())
       properties:
-        custom_script:
-          type: string
-        show_collab_predictions:
-          type: boolean
-          title: Show predictions to annotator
-          description: If set, the annotator can view model predictions
-        skip_queue:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SkipQueueEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        data_types:
-          readOnly: true
-          nullable: true
-        queue_total:
-          type: string
-          readOnly: true
-        label_config:
+        color:
           type: string
           nullable: true
-          description: Label config in XML format. See more about it in documentation
-        is_published:
-          type: boolean
-          title: Published
-          description: Whether or not the project is published to annotators
-        min_annotations_to_start_training:
+          maxLength: 16
+        total_predictions_number:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          description: Minimum number of completed tasks after which model training
-            is started
-        sampling:
-          nullable: true
-          oneOf:
-          - $ref: '#/components/schemas/SamplingEnum'
-          - $ref: '#/components/schemas/NullEnum'
-        evaluate_predictions_automatically:
-          type: boolean
-          description: Retrieve and display predictions when loading a task
-        finished_task_number:
-          type: integer
-          readOnly: true
-        workspace:
-          type: string
-          readOnly: true
-        queue_left:
-          type: string
-          readOnly: true
-        pause_on_failed_annotator_evaluation:
-          type: boolean
-          nullable: true
-          default: false
-        annotator_evaluation_minimum_tasks:
-          type: integer
-          minimum: 0
-          nullable: true
-          default: 10
-        rejected:
-          type: string
-          readOnly: true
-        duplication_done:
-          type: boolean
-          default: false
-        is_draft:
-          type: boolean
-          description: Whether or not the project is in the middle of being created
-        require_comment_on_skip:
-          type: boolean
-          default: false
-        parsed_label_config:
-          readOnly: true
-          description: JSON-formatted labeling configuration
-        pinned_at:
-          type: string
-          format: date-time
-          nullable: true
-          description: Pinned date and time
-        created_at:
-          type: string
-          format: date-time
-          readOnly: true
-        enable_empty_annotation:
-          type: boolean
-          description: Allow annotators to submit empty annotations
-        model_version:
-          type: string
-          nullable: true
-          description: Machine learning model version
-        queue_done:
-          type: string
           readOnly: true
         annotation_limit_count:
           type: integer
           minimum: 1
           nullable: true
-        id:
-          type: integer
-          readOnly: true
-        color:
+        annotator_evaluation_minimum_score:
           type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
-          maxLength: 16
+          default: '95.00'
         has_blueprints:
           type: string
           readOnly: true
-        reviewed_number:
+        comment_classification_config:
           type: string
-          readOnly: true
-        ready:
-          type: string
-          readOnly: true
-        config_has_control_tags:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for labeling
-        show_instruction:
-          type: boolean
-          description: Show instructions to the annotator before they start
-        total_predictions_number:
-          type: integer
-          readOnly: true
-        num_tasks_with_annotations:
-          type: string
-          readOnly: true
-        reviewer_queue_total:
-          type: string
-          readOnly: true
-        config_suitable_for_bulk_annotation:
-          type: boolean
-          readOnly: true
-          description: Flag to detect is project ready for bulk annotation
-        description:
-          type: string
-          nullable: true
-          description: Project description
-        workspace_title:
-          type: string
-          readOnly: true
-        total_annotations_number:
-          type: string
-          readOnly: true
         reveal_preannotations_interactively:
           type: boolean
           description: Reveal pre-annotations interactively
-        expert_instruction:
-          type: string
-          nullable: true
-          description: Labeling instructions in HTML format
-        assignment_settings:
-          $ref: '#/components/schemas/AssignmentSettings'
-        show_skip_button:
-          type: boolean
-          description: Show a skip button in interface and allow annotators to skip
-            the task
-        review_settings:
-          $ref: '#/components/schemas/ReviewSettings'
-        comment_classification_config:
-          type: string
-        duplication_status:
-          type: string
-        task_number:
-          type: integer
-          readOnly: true
-          description: Total task number in project
-        organization:
-          type: integer
-          nullable: true
-        overlap_cohort_percentage:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        members_count:
-          type: string
-          readOnly: true
-        review_total_tasks:
-          type: string
-          readOnly: true
-        start_training_on_annotation_update:
-          type: boolean
-          readOnly: true
-          description: Start model training after any annotations are submitted or
-            updated
         annotation_limit_percent:
           type: string
           format: decimal
           pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
-        ground_truth_number:
-          type: integer
-          readOnly: true
-          description: Honeypot annotation number in project
-        useful_annotation_number:
-          type: string
-          readOnly: true
-        allow_stream:
-          type: string
-          readOnly: true
         skipped_annotations_number:
           type: string
           readOnly: true
-        description_short:
+        require_comment_on_skip:
+          type: boolean
+          default: false
+        config_has_control_tags:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for labeling
+        reviewed_number:
           type: string
           readOnly: true
-        prompts:
+        reviewer_queue_total:
+          type: string
+          readOnly: true
+        queue_done:
+          type: string
+          readOnly: true
+        pinned_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Pinned date and time
+        queue_total:
           type: string
           readOnly: true
         custom_task_lock_ttl:
@@ -16048,11 +15898,39 @@ components:
           minimum: 1
           nullable: true
           description: TTL in seconds for task reservations, on new and existing tasks
-        members:
+        enable_empty_annotation:
+          type: boolean
+          description: Allow annotators to submit empty annotations
+        title:
+          type: string
+          nullable: true
+          description: Project name. Must be between 3 and 50 characters long.
+          maxLength: 50
+          minLength: 3
+        useful_annotation_number:
           type: string
           readOnly: true
-        show_overlap_first:
+        prompts:
+          type: string
+          readOnly: true
+        is_published:
           type: boolean
+          title: Published
+          description: Whether or not the project is published to annotators
+        total_annotations_number:
+          type: string
+          readOnly: true
+        review_settings:
+          $ref: '#/components/schemas/ReviewSettings'
+        parsed_label_config:
+          readOnly: true
+          description: JSON-formatted labeling configuration
+        ground_truth_number:
+          type: integer
+          readOnly: true
+          description: Honeypot annotation number in project
+        custom_script:
+          type: string
         control_weights:
           nullable: true
           description: 'Dict of weights for each control tag in metric calculation.
@@ -16063,24 +15941,138 @@ components:
             be twice more important than Airplaine, then you have to need the specify:
             {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0,
             ''Airplaine'': 0.5}, ''overall'': 0.33}'
-        created_by:
-          allOf:
-          - $ref: '#/components/schemas/UserSimple'
-          description: Project owner
+        is_draft:
+          type: boolean
+          description: Whether or not the project is in the middle of being created
+        workspace_title:
+          type: string
+          readOnly: true
+        show_overlap_first:
+          type: boolean
+        start_training_on_annotation_update:
+          type: boolean
+          readOnly: true
+          description: Start model training after any annotations are submitted or
+            updated
+        min_annotations_to_start_training:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          description: Minimum number of completed tasks after which model training
+            is started
+        duplication_status:
+          type: string
+        blueprints:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlueprintList'
+          readOnly: true
+        data_types:
+          readOnly: true
+          nullable: true
         show_ground_truth_first:
           type: boolean
-        title:
+        allow_stream:
+          type: string
+          readOnly: true
+        num_tasks_with_annotations:
+          type: string
+          readOnly: true
+        config_suitable_for_bulk_annotation:
+          type: boolean
+          readOnly: true
+          description: Flag to detect is project ready for bulk annotation
+        task_number:
+          type: integer
+          readOnly: true
+          description: Total task number in project
+        id:
+          type: integer
+          readOnly: true
+        pause_on_failed_annotator_evaluation:
+          type: boolean
+          nullable: true
+          default: false
+        expert_instruction:
           type: string
           nullable: true
-          description: Project name. Must be between 3 and 50 characters long.
-          maxLength: 50
-          minLength: 3
-        annotator_evaluation_minimum_score:
+          description: Labeling instructions in HTML format
+        evaluate_predictions_automatically:
+          type: boolean
+          description: Retrieve and display predictions when loading a task
+        model_version:
           type: string
-          format: decimal
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
           nullable: true
-          default: '95.00'
+          description: Machine learning model version
+        members:
+          type: string
+          readOnly: true
+        label_config:
+          type: string
+          nullable: true
+          description: Label config in XML format. See more about it in documentation
+        overlap_cohort_percentage:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+        rejected:
+          type: string
+          readOnly: true
+        show_skip_button:
+          type: boolean
+          description: Show a skip button in interface and allow annotators to skip
+            the task
+        workspace:
+          type: string
+          readOnly: true
+        description:
+          type: string
+          nullable: true
+          description: Project description
+        assignment_settings:
+          $ref: '#/components/schemas/AssignmentSettings'
+        duplication_done:
+          type: boolean
+          default: false
+        show_annotation_history:
+          type: boolean
+          description: Show annotation history to annotator
+        finished_task_number:
+          type: integer
+          readOnly: true
+        members_count:
+          type: string
+          readOnly: true
+        description_short:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        ready:
+          type: string
+          readOnly: true
+        sampling:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SamplingEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        queue_left:
+          type: string
+          readOnly: true
+        organization:
+          type: integer
+          nullable: true
+        show_collab_predictions:
+          type: boolean
+          title: Show predictions to annotator
+          description: If set, the annotator can view model predictions
+        skip_queue:
+          nullable: true
+          oneOf:
+          - $ref: '#/components/schemas/SkipQueueEnum'
+          - $ref: '#/components/schemas/NullEnum'
         maximum_annotations:
           type: integer
           maximum: 2147483647
@@ -16089,14 +16081,21 @@ components:
           description: Maximum number of annotations for one task. If the number of
             annotations per task is equal or greater to this value, the task is completed
             (is_labeled=True)
-        show_annotation_history:
+        show_instruction:
           type: boolean
-          description: Show annotation history to annotator
-        blueprints:
-          type: array
-          items:
-            $ref: '#/components/schemas/BlueprintList'
+          description: Show instructions to the annotator before they start
+        review_total_tasks:
+          type: string
           readOnly: true
+        created_by:
+          allOf:
+          - $ref: '#/components/schemas/UserSimple'
+          description: Project owner
+        annotator_evaluation_minimum_tasks:
+          type: integer
+          minimum: 0
+          nullable: true
+          default: 10
       required:
       - allow_stream
       - assignment_settings
@@ -17473,6 +17472,169 @@ components:
       required:
       - modelrun_id
       - results
+    BillingChecks:
+      type: object
+      properties:
+        users:
+          $ref: '#/components/schemas/CountLimit'
+        projects:
+          $ref: '#/components/schemas/CountLimit'
+        results:
+          $ref: '#/components/schemas/CountLimit'
+        trial_days:
+          type: integer
+        organization_is_active:
+          type: boolean
+        license_issued:
+          type: string
+          format: date
+          nullable: true
+        license_warning:
+          type: string
+          format: date
+          nullable: true
+        is_license_warning:
+          type: boolean
+        license_expires:
+          type: string
+          format: date
+          nullable: true
+        is_license_expired:
+          type: boolean
+        prompts_enabled:
+          type: boolean
+        prompts_status:
+          $ref: '#/components/schemas/PromptsStatusEnum'
+        prompts_warning:
+          type: string
+          nullable: true
+        is_prompts_warning:
+          type: boolean
+        prompts_expire:
+          type: string
+          nullable: true
+        is_prompts_expire:
+          type: boolean
+        prompts_api_keys_enabled:
+          type: boolean
+        import_storages:
+          $ref: '#/components/schemas/CountLimit'
+        export_storages:
+          $ref: '#/components/schemas/CountLimit'
+      required:
+      - export_storages
+      - import_storages
+      - is_license_expired
+      - is_license_warning
+      - is_prompts_expire
+      - is_prompts_warning
+      - license_expires
+      - license_issued
+      - license_warning
+      - organization_is_active
+      - projects
+      - prompts_api_keys_enabled
+      - prompts_enabled
+      - prompts_expire
+      - prompts_status
+      - prompts_warning
+      - results
+      - trial_days
+      - users
+    BillingFlags:
+      type: object
+      properties:
+        activated_at:
+          type: string
+          format: date-time
+          nullable: true
+        cloud_instance:
+          type: boolean
+        allow_activity_log:
+          type: boolean
+        allow_invite_project_experts:
+          type: boolean
+        allow_sso:
+          type: boolean
+        white_label_id:
+          type: string
+          nullable: true
+        allow_data_credentials:
+          type: boolean
+        allow_organization_webhooks:
+          type: boolean
+        disable_members_page:
+          type: boolean
+        secure_mode:
+          type: boolean
+        manual_workspace_management:
+          type: boolean
+        manual_role_management:
+          type: boolean
+        hide_storage_settings_for_manager:
+          type: boolean
+        disable_project_imports:
+          type: boolean
+        automax_token_exists:
+          type: boolean
+        automax_enabled:
+          type: boolean
+        storage_persistence:
+          type: boolean
+        allow_ai:
+          type: boolean
+        early_adopter:
+          type: boolean
+        allow_ask_ai:
+          type: boolean
+        allow_invite_people:
+          type: boolean
+        allow_storage_proxy:
+          type: boolean
+        embed_enabled:
+          type: boolean
+        embed_domains:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        embed_settings:
+          type: object
+          additionalProperties: {}
+      required:
+      - activated_at
+      - allow_activity_log
+      - allow_ai
+      - allow_ask_ai
+      - allow_data_credentials
+      - allow_invite_people
+      - allow_invite_project_experts
+      - allow_organization_webhooks
+      - allow_sso
+      - allow_storage_proxy
+      - automax_enabled
+      - automax_token_exists
+      - cloud_instance
+      - disable_members_page
+      - disable_project_imports
+      - early_adopter
+      - embed_enabled
+      - hide_storage_settings_for_manager
+      - manual_role_management
+      - manual_workspace_management
+      - secure_mode
+      - storage_persistence
+      - white_label_id
+    BillingInfoResponse:
+      type: object
+      properties:
+        billing_checks:
+          $ref: '#/components/schemas/BillingChecks'
+        billing_flags:
+          $ref: '#/components/schemas/BillingFlags'
+      required:
+      - billing_checks
+      - billing_flags
     BlankEnum:
       enum:
       - ''
@@ -17830,6 +17992,21 @@ components:
           description: Traceback report in case of errors
       required:
       - export_type
+    CountLimit:
+      type: object
+      properties:
+        count:
+          type: integer
+        limit:
+          type: integer
+        reached:
+          type: boolean
+        total:
+          type: integer
+      required:
+      - count
+      - limit
+      - reached
     CustomScriptsEditableByEnum:
       enum:
       - AD
@@ -27779,184 +27956,6 @@ components:
           description: Workspace is archived
       required:
       - title
-    _BillingChecks:
-      type: object
-      properties:
-        users:
-          $ref: '#/components/schemas/_CountLimit'
-        projects:
-          $ref: '#/components/schemas/_CountLimit'
-        results:
-          $ref: '#/components/schemas/_CountLimit'
-        trial_days:
-          type: integer
-        organization_is_active:
-          type: boolean
-        license_issued:
-          type: string
-          format: date
-          nullable: true
-        license_warning:
-          type: string
-          format: date
-          nullable: true
-        is_license_warning:
-          type: boolean
-        license_expires:
-          type: string
-          format: date
-          nullable: true
-        is_license_expired:
-          type: boolean
-        prompts_enabled:
-          type: boolean
-        prompts_status:
-          $ref: '#/components/schemas/PromptsStatusEnum'
-        prompts_warning:
-          type: string
-          nullable: true
-        is_prompts_warning:
-          type: boolean
-        prompts_expire:
-          type: string
-          nullable: true
-        is_prompts_expire:
-          type: boolean
-        prompts_api_keys_enabled:
-          type: boolean
-        import_storages:
-          $ref: '#/components/schemas/_CountLimit'
-        export_storages:
-          $ref: '#/components/schemas/_CountLimit'
-      required:
-      - export_storages
-      - import_storages
-      - is_license_expired
-      - is_license_warning
-      - is_prompts_expire
-      - is_prompts_warning
-      - license_expires
-      - license_issued
-      - license_warning
-      - organization_is_active
-      - projects
-      - prompts_api_keys_enabled
-      - prompts_enabled
-      - prompts_expire
-      - prompts_status
-      - prompts_warning
-      - results
-      - trial_days
-      - users
-    _BillingFlags:
-      type: object
-      properties:
-        activated_at:
-          type: string
-          format: date-time
-          nullable: true
-        cloud_instance:
-          type: boolean
-        allow_activity_log:
-          type: boolean
-        allow_invite_project_experts:
-          type: boolean
-        allow_sso:
-          type: boolean
-        white_label_id:
-          type: string
-          nullable: true
-        allow_data_credentials:
-          type: boolean
-        allow_organization_webhooks:
-          type: boolean
-        disable_members_page:
-          type: boolean
-        secure_mode:
-          type: boolean
-        manual_workspace_management:
-          type: boolean
-        manual_role_management:
-          type: boolean
-        hide_storage_settings_for_manager:
-          type: boolean
-        disable_project_imports:
-          type: boolean
-        automax_token_exists:
-          type: boolean
-        automax_enabled:
-          type: boolean
-        storage_persistence:
-          type: boolean
-        allow_ai:
-          type: boolean
-        early_adopter:
-          type: boolean
-        allow_ask_ai:
-          type: boolean
-        allow_invite_people:
-          type: boolean
-        allow_storage_proxy:
-          type: boolean
-        embed_enabled:
-          type: boolean
-        embed_domains:
-          type: array
-          items:
-            type: object
-            additionalProperties: {}
-        embed_settings:
-          type: object
-          additionalProperties: {}
-      required:
-      - activated_at
-      - allow_activity_log
-      - allow_ai
-      - allow_ask_ai
-      - allow_data_credentials
-      - allow_invite_people
-      - allow_invite_project_experts
-      - allow_organization_webhooks
-      - allow_sso
-      - allow_storage_proxy
-      - automax_enabled
-      - automax_token_exists
-      - cloud_instance
-      - disable_members_page
-      - disable_project_imports
-      - early_adopter
-      - embed_enabled
-      - hide_storage_settings_for_manager
-      - manual_role_management
-      - manual_workspace_management
-      - secure_mode
-      - storage_persistence
-      - white_label_id
-    _BillingInfoResponse:
-      type: object
-      properties:
-        billing_checks:
-          $ref: '#/components/schemas/_BillingChecks'
-        billing_flags:
-          $ref: '#/components/schemas/_BillingFlags'
-      required:
-      - billing_checks
-      - billing_flags
-    _CountLimit:
-      type: object
-      properties:
-        count:
-          type: integer
-        limit:
-          type: integer
-        reached:
-          type: boolean
-        total:
-          type: integer
-      required:
-      - count
-      - limit
-      - reached
   securitySchemes:
     Token:
       type: apiKey

@@ -758,6 +758,67 @@ client.annotations.create(
 </dl>
 </details>
 
+## Billing
+<details><summary><code>client.billing.<a href="src/label_studio_sdk/billing/client.py">info</a>()</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve billing checks and feature flags for the active organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.billing.info()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Comments
 <details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">list</a>(...)</code></summary>
 <dl>
@@ -19739,187 +19800,6 @@ client.organizations.members.delete(
 <dd>
 
 **user_pk:** `int` — A unique integer value identifying the user to be deleted from the organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.organizations.members.<a href="src/label_studio_sdk/organizations/members/client.py">updated_default_role</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update the default role for members of a specific organization.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.organizations.members.updated_default_role(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**organization:** `typing.Optional[int]` — A unique integer value identifying this organization.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**default_role:** `typing.Optional[DefaultRoleEnum]` 
-
-Default membership role for invited users
-
-* `OW` - Owner
-* `AD` - Administrator
-* `MA` - Manager
-* `RE` - Reviewer
-* `AN` - Annotator
-* `DI` - Deactivated
-* `NO` - Not Activated
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**external_id:** `typing.Optional[str]` — External ID to uniquely identify this organization
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_domains:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**embed_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**extra_data_on_activity_logs:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_scripts_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to enabled custom scripts for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**custom_scripts_editable_by:** `typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy]` 
-
-Set the minimum user role that can edit custom scripts in the UI.
-
-* `AD` - Administrator
-* `MA` - Manager
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**annotator_reviewer_firewall_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to restrict data sharing between annotators and reviewers in the label stream, review stream, and notifications (which will be disabled). In these settings, information about annotator and reviewer identity is suppressed in the UI.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**read_only_quick_view_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to prevent creating or editing annotations in quick view.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**label_stream_navigation_disabled_at:** `typing.Optional[dt.datetime]` — Set to current time to disable the label stream navigation for this organization. This will prevent users from going back in the label stream to view previous labels.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_notification_settings:** `typing.Optional[typing.Optional[typing.Any]]` 
     
 </dd>
 </dl>
