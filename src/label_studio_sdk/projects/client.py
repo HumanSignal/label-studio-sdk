@@ -55,6 +55,7 @@ class ProjectsClient:
         filter: typing.Optional[ProjectsListRequestFilter] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
+        members_limit: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -75,6 +76,9 @@ class ProjectsClient:
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        members_limit : typing.Optional[int]
+            Maximum number of members to return.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -121,6 +125,7 @@ class ProjectsClient:
                 "filter": filter,
                 "ids": ids,
                 "include": include,
+                "members_limit": members_limit,
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
@@ -143,6 +148,7 @@ class ProjectsClient:
                     filter=filter,
                     ids=ids,
                     include=include,
+                    members_limit=members_limit,
                     ordering=ordering,
                     page=page + 1,
                     page_size=page_size,
@@ -976,6 +982,7 @@ class AsyncProjectsClient:
         filter: typing.Optional[ProjectsListRequestFilter] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
+        members_limit: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
@@ -996,6 +1003,9 @@ class AsyncProjectsClient:
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
+
+        members_limit : typing.Optional[int]
+            Maximum number of members to return.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -1050,6 +1060,7 @@ class AsyncProjectsClient:
                 "filter": filter,
                 "ids": ids,
                 "include": include,
+                "members_limit": members_limit,
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
@@ -1072,6 +1083,7 @@ class AsyncProjectsClient:
                     filter=filter,
                     ids=ids,
                     include=include,
+                    members_limit=members_limit,
                     ordering=ordering,
                     page=page + 1,
                     page_size=page_size,
