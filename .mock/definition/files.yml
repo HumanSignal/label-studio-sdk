@@ -24,6 +24,7 @@ service:
             body:
               id: 1
               file: file
+              size: 1
       audiences:
         - public
     delete:
@@ -68,6 +69,7 @@ service:
             body:
               id: 1
               file: file
+              size: 1
       audiences:
         - public
     list:
@@ -106,6 +108,7 @@ service:
             body:
               - id: 1
                 file: file
+                size: 1
       audiences:
         - public
     delete_many:
