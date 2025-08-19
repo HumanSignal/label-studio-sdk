@@ -7,6 +7,7 @@ import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import SyncClientWrapper
 from .annotations.client import AnnotationsClient
+from .billing.client import BillingClient
 from .comments.client import CommentsClient
 from .users.client import UsersClient
 from .actions.client import ActionsClient
@@ -28,6 +29,7 @@ from .webhooks.client import WebhooksClient
 from .workspaces.client import WorkspacesClient
 from .core.client_wrapper import AsyncClientWrapper
 from .annotations.client import AsyncAnnotationsClient
+from .billing.client import AsyncBillingClient
 from .comments.client import AsyncCommentsClient
 from .users.client import AsyncUsersClient
 from .actions.client import AsyncActionsClient
@@ -112,6 +114,7 @@ class LabelStudioBase:
             timeout=_defaulted_timeout,
         )
         self.annotations = AnnotationsClient(client_wrapper=self._client_wrapper)
+        self.billing = BillingClient(client_wrapper=self._client_wrapper)
         self.comments = CommentsClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
         self.actions = ActionsClient(client_wrapper=self._client_wrapper)
@@ -196,6 +199,7 @@ class AsyncLabelStudioBase:
             timeout=_defaulted_timeout,
         )
         self.annotations = AsyncAnnotationsClient(client_wrapper=self._client_wrapper)
+        self.billing = AsyncBillingClient(client_wrapper=self._client_wrapper)
         self.comments = AsyncCommentsClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
         self.actions = AsyncActionsClient(client_wrapper=self._client_wrapper)
