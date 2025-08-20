@@ -80,16 +80,16 @@ class MlClient:
     def create(
         self,
         *,
-        url: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        is_interactive: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         auth_method: typing.Optional[MlCreateRequestAuthMethod] = OMIT,
-        basic_auth_user: typing.Optional[str] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        project: typing.Optional[int] = OMIT,
         timeout: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
@@ -103,35 +103,35 @@ class MlClient:
         
         Parameters
         ----------
-        url : typing.Optional[str]
-            ML backend URL
-        
-        project : typing.Optional[int]
-            Project ID
-        
-        is_interactive : typing.Optional[bool]
-            Is interactive
-        
-        title : typing.Optional[str]
-            Title
-        
-        description : typing.Optional[str]
-            Description
-        
         auth_method : typing.Optional[MlCreateRequestAuthMethod]
             Auth method
-        
-        basic_auth_user : typing.Optional[str]
-            Basic auth user
         
         basic_auth_pass : typing.Optional[str]
             Basic auth password
         
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        description : typing.Optional[str]
+            Description
+        
         extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Extra parameters
         
+        is_interactive : typing.Optional[bool]
+            Is interactive
+        
+        project : typing.Optional[int]
+            Project ID
+        
         timeout : typing.Optional[int]
             Response model timeout
+        
+        title : typing.Optional[str]
+            Title
+        
+        url : typing.Optional[str]
+            ML backend URL
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -154,16 +154,16 @@ class MlClient:
             "api/ml/",
             method="POST",
             json={
-                "url": url,
-                "project": project,
-                "is_interactive": is_interactive,
-                "title": title,
-                "description": description,
                 "auth_method": auth_method,
-                "basic_auth_user": basic_auth_user,
                 "basic_auth_pass": basic_auth_pass,
+                "basic_auth_user": basic_auth_user,
+                "description": description,
                 "extra_params": extra_params,
+                "is_interactive": is_interactive,
+                "project": project,
                 "timeout": timeout,
+                "title": title,
+                "url": url,
             },
             headers={
                 "content-type": "application/json",
@@ -284,16 +284,16 @@ class MlClient:
         self,
         id: int,
         *,
-        url: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        is_interactive: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         auth_method: typing.Optional[MlUpdateRequestAuthMethod] = OMIT,
-        basic_auth_user: typing.Optional[str] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        project: typing.Optional[int] = OMIT,
         timeout: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
@@ -308,35 +308,35 @@ class MlClient:
         ----------
         id : int
         
-        url : typing.Optional[str]
-            ML backend URL
-        
-        project : typing.Optional[int]
-            Project ID
-        
-        is_interactive : typing.Optional[bool]
-            Is interactive
-        
-        title : typing.Optional[str]
-            Title
-        
-        description : typing.Optional[str]
-            Description
-        
         auth_method : typing.Optional[MlUpdateRequestAuthMethod]
             Auth method
-        
-        basic_auth_user : typing.Optional[str]
-            Basic auth user
         
         basic_auth_pass : typing.Optional[str]
             Basic auth password
         
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        description : typing.Optional[str]
+            Description
+        
         extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Extra parameters
         
+        is_interactive : typing.Optional[bool]
+            Is interactive
+        
+        project : typing.Optional[int]
+            Project ID
+        
         timeout : typing.Optional[int]
             Response model timeout
+        
+        title : typing.Optional[str]
+            Title
+        
+        url : typing.Optional[str]
+            ML backend URL
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -361,16 +361,16 @@ class MlClient:
             f"api/ml/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "url": url,
-                "project": project,
-                "is_interactive": is_interactive,
-                "title": title,
-                "description": description,
                 "auth_method": auth_method,
-                "basic_auth_user": basic_auth_user,
                 "basic_auth_pass": basic_auth_pass,
+                "basic_auth_user": basic_auth_user,
+                "description": description,
                 "extra_params": extra_params,
+                "is_interactive": is_interactive,
+                "project": project,
                 "timeout": timeout,
+                "title": title,
+                "url": url,
             },
             headers={
                 "content-type": "application/json",
@@ -440,8 +440,8 @@ class MlClient:
             f"api/ml/{jsonable_encoder(id)}/interactive-annotating",
             method="POST",
             json={
-                "task": task,
                 "context": context,
+                "task": task,
             },
             headers={
                 "content-type": "application/json",
@@ -647,16 +647,16 @@ class AsyncMlClient:
     async def create(
         self,
         *,
-        url: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        is_interactive: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         auth_method: typing.Optional[MlCreateRequestAuthMethod] = OMIT,
-        basic_auth_user: typing.Optional[str] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        project: typing.Optional[int] = OMIT,
         timeout: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
@@ -670,35 +670,35 @@ class AsyncMlClient:
         
         Parameters
         ----------
-        url : typing.Optional[str]
-            ML backend URL
-        
-        project : typing.Optional[int]
-            Project ID
-        
-        is_interactive : typing.Optional[bool]
-            Is interactive
-        
-        title : typing.Optional[str]
-            Title
-        
-        description : typing.Optional[str]
-            Description
-        
         auth_method : typing.Optional[MlCreateRequestAuthMethod]
             Auth method
-        
-        basic_auth_user : typing.Optional[str]
-            Basic auth user
         
         basic_auth_pass : typing.Optional[str]
             Basic auth password
         
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        description : typing.Optional[str]
+            Description
+        
         extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Extra parameters
         
+        is_interactive : typing.Optional[bool]
+            Is interactive
+        
+        project : typing.Optional[int]
+            Project ID
+        
         timeout : typing.Optional[int]
             Response model timeout
+        
+        title : typing.Optional[str]
+            Title
+        
+        url : typing.Optional[str]
+            ML backend URL
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -729,16 +729,16 @@ class AsyncMlClient:
             "api/ml/",
             method="POST",
             json={
-                "url": url,
-                "project": project,
-                "is_interactive": is_interactive,
-                "title": title,
-                "description": description,
                 "auth_method": auth_method,
-                "basic_auth_user": basic_auth_user,
                 "basic_auth_pass": basic_auth_pass,
+                "basic_auth_user": basic_auth_user,
+                "description": description,
                 "extra_params": extra_params,
+                "is_interactive": is_interactive,
+                "project": project,
                 "timeout": timeout,
+                "title": title,
+                "url": url,
             },
             headers={
                 "content-type": "application/json",
@@ -875,16 +875,16 @@ class AsyncMlClient:
         self,
         id: int,
         *,
-        url: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        is_interactive: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         auth_method: typing.Optional[MlUpdateRequestAuthMethod] = OMIT,
-        basic_auth_user: typing.Optional[str] = OMIT,
         basic_auth_pass: typing.Optional[str] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
         extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        project: typing.Optional[int] = OMIT,
         timeout: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        url: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
@@ -899,35 +899,35 @@ class AsyncMlClient:
         ----------
         id : int
         
-        url : typing.Optional[str]
-            ML backend URL
-        
-        project : typing.Optional[int]
-            Project ID
-        
-        is_interactive : typing.Optional[bool]
-            Is interactive
-        
-        title : typing.Optional[str]
-            Title
-        
-        description : typing.Optional[str]
-            Description
-        
         auth_method : typing.Optional[MlUpdateRequestAuthMethod]
             Auth method
-        
-        basic_auth_user : typing.Optional[str]
-            Basic auth user
         
         basic_auth_pass : typing.Optional[str]
             Basic auth password
         
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        description : typing.Optional[str]
+            Description
+        
         extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
             Extra parameters
         
+        is_interactive : typing.Optional[bool]
+            Is interactive
+        
+        project : typing.Optional[int]
+            Project ID
+        
         timeout : typing.Optional[int]
             Response model timeout
+        
+        title : typing.Optional[str]
+            Title
+        
+        url : typing.Optional[str]
+            ML backend URL
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -960,16 +960,16 @@ class AsyncMlClient:
             f"api/ml/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "url": url,
-                "project": project,
-                "is_interactive": is_interactive,
-                "title": title,
-                "description": description,
                 "auth_method": auth_method,
-                "basic_auth_user": basic_auth_user,
                 "basic_auth_pass": basic_auth_pass,
+                "basic_auth_user": basic_auth_user,
+                "description": description,
                 "extra_params": extra_params,
+                "is_interactive": is_interactive,
+                "project": project,
                 "timeout": timeout,
+                "title": title,
+                "url": url,
             },
             headers={
                 "content-type": "application/json",
@@ -1047,8 +1047,8 @@ class AsyncMlClient:
             f"api/ml/{jsonable_encoder(id)}/interactive-annotating",
             method="POST",
             json={
-                "task": task,
                 "context": context,
+                "task": task,
             },
             headers={
                 "content-type": "application/json",

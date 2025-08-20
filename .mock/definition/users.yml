@@ -18,25 +18,25 @@ service:
       examples:
         - response:
             body:
-              id: 1
-              first_name: first_name
-              last_name: last_name
-              username: username
-              email: email
-              last_activity: '2024-01-15T09:30:00Z'
-              custom_hotkeys:
-                key: value
-              avatar: avatar
-              initials: initials
-              phone: phone
               active_organization: 1
               active_organization_meta: active_organization_meta
               allow_newsletters: true
+              avatar: avatar
+              custom_hotkeys:
+                key: value
               date_joined: '2024-01-15T09:30:00Z'
+              email: email
+              first_name: first_name
+              id: 1
+              initials: initials
+              last_activity: '2024-01-15T09:30:00Z'
+              last_name: last_name
               org_membership:
-                - role: role
-                  active: active
+                - active: active
                   organization_id: 1
+                  role: role
+              phone: phone
+              username: username
       audiences:
         - public
     update_current_user:
@@ -51,11 +51,31 @@ service:
         name: PatchedLseUserSerializerUpdateRequest
         body:
           properties:
+            active_organization: optional<integer>
+            allow_newsletters:
+              type: optional<boolean>
+              docs: Allow sending newsletters to user
+            custom_hotkeys: optional<unknown>
+            date_joined: optional<datetime>
+            email_notification_settings: optional<unknown>
             first_name:
               type: optional<string>
               validation:
                 maxLength: 256
+            is_email_verified: optional<boolean>
             last_name:
+              type: optional<string>
+              validation:
+                maxLength: 256
+            onboarding_state:
+              type: optional<string>
+              validation:
+                minLength: 1
+            password:
+              type: optional<string>
+              validation:
+                minLength: 1
+            phone:
               type: optional<string>
               validation:
                 maxLength: 256
@@ -64,26 +84,6 @@ service:
               validation:
                 minLength: 1
                 maxLength: 256
-            custom_hotkeys: optional<unknown>
-            phone:
-              type: optional<string>
-              validation:
-                maxLength: 256
-            active_organization: optional<integer>
-            allow_newsletters:
-              type: optional<boolean>
-              docs: Allow sending newsletters to user
-            date_joined: optional<datetime>
-            password:
-              type: optional<string>
-              validation:
-                minLength: 1
-            onboarding_state:
-              type: optional<string>
-              validation:
-                minLength: 1
-            is_email_verified: optional<boolean>
-            email_notification_settings: optional<unknown>
         content-type: application/json
       response:
         docs: ''
@@ -92,25 +92,25 @@ service:
         - request: {}
           response:
             body:
-              id: 1
-              first_name: first_name
-              last_name: last_name
-              username: username
-              email: email
-              last_activity: '2024-01-15T09:30:00Z'
-              custom_hotkeys:
-                key: value
-              avatar: avatar
-              initials: initials
-              phone: phone
               active_organization: 1
               active_organization_meta: active_organization_meta
               allow_newsletters: true
+              avatar: avatar
+              custom_hotkeys:
+                key: value
               date_joined: '2024-01-15T09:30:00Z'
+              email: email
+              first_name: first_name
+              id: 1
+              initials: initials
+              last_activity: '2024-01-15T09:30:00Z'
+              last_name: last_name
               org_membership:
-                - role: role
-                  active: active
+                - active: active
                   organization_id: 1
+                  role: role
+              phone: phone
+              username: username
       audiences:
         - public
     get_hotkeys:
@@ -204,40 +204,40 @@ service:
       examples:
         - response:
             body:
-              id: 1
-              first_name: first_name
-              last_name: last_name
-              username: username
-              email: email
-              last_activity: '2024-01-15T09:30:00Z'
-              custom_hotkeys:
-                key: value
-              avatar: avatar
-              initials: initials
-              phone: phone
               active_organization: 1
               active_organization_meta: active_organization_meta
               allow_newsletters: true
+              avatar: avatar
+              custom_hotkeys:
+                key: value
               date_joined: '2024-01-15T09:30:00Z'
-              org_membership:
-                - role: role
-                  active: active
-                  organization_id: 1
+              email: email
+              first_name: first_name
+              id: 1
+              initials: initials
+              last_activity: '2024-01-15T09:30:00Z'
+              last_name: last_name
               lse_fields:
+                email_notification_settings: email_notification_settings
+                invite_activated: true
                 invite_expired: invite_expired
                 invite_expired_at: invite_expired_at
                 invited_at: '2024-01-15T09:30:00Z'
-                invite_activated: true
-                trial_company: trial_company
-                trial_role: annotator
-                trial_models_in_production: trial_models_in_production
-                trial_experience_labeling: trial_experience_labeling
-                trial_license_enterprise: true
-                social_auth_finished: true
                 invited_by: 1
                 onboarding_state: not_started
-                email_notification_settings: email_notification_settings
+                social_auth_finished: true
+                trial_company: trial_company
+                trial_experience_labeling: trial_experience_labeling
+                trial_license_enterprise: true
+                trial_models_in_production: trial_models_in_production
+                trial_role: annotator
+              org_membership:
+                - active: active
+                  organization_id: 1
+                  role: role
               pause: pause
+              phone: phone
+              username: username
       audiences:
         - public
     list:
@@ -260,25 +260,25 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                first_name: first_name
-                last_name: last_name
-                username: username
-                email: email
-                last_activity: '2024-01-15T09:30:00Z'
-                custom_hotkeys:
-                  key: value
-                avatar: avatar
-                initials: initials
-                phone: phone
-                active_organization: 1
+              - active_organization: 1
                 active_organization_meta: active_organization_meta
                 allow_newsletters: true
+                avatar: avatar
+                custom_hotkeys:
+                  key: value
                 date_joined: '2024-01-15T09:30:00Z'
+                email: email
+                first_name: first_name
+                id: 1
+                initials: initials
+                last_activity: '2024-01-15T09:30:00Z'
+                last_name: last_name
                 org_membership:
-                  - role: role
-                    active: active
+                  - active: active
                     organization_id: 1
+                    role: role
+                phone: phone
+                username: username
       audiences:
         - public
     create:
@@ -293,33 +293,33 @@ service:
         name: UsersCreateRequest
         body:
           properties:
-            id:
-              type: optional<integer>
-              docs: User ID
-            first_name:
-              type: optional<string>
-              docs: First name of the user
-            last_name:
-              type: optional<string>
-              docs: Last name of the user
-            username:
-              type: optional<string>
-              docs: Username of the user
-            email:
-              type: optional<string>
-              docs: Email of the user
-            avatar:
-              type: optional<string>
-              docs: Avatar URL of the user
-            initials:
-              type: optional<string>
-              docs: Initials of the user
-            phone:
-              type: optional<string>
-              docs: Phone number of the user
             allow_newsletters:
               type: optional<boolean>
               docs: Whether the user allows newsletters
+            avatar:
+              type: optional<string>
+              docs: Avatar URL of the user
+            email:
+              type: optional<string>
+              docs: Email of the user
+            first_name:
+              type: optional<string>
+              docs: First name of the user
+            id:
+              type: optional<integer>
+              docs: User ID
+            initials:
+              type: optional<string>
+              docs: Initials of the user
+            last_name:
+              type: optional<string>
+              docs: Last name of the user
+            phone:
+              type: optional<string>
+              docs: Phone number of the user
+            username:
+              type: optional<string>
+              docs: Username of the user
         content-type: application/json
       response:
         docs: ''
@@ -328,40 +328,40 @@ service:
         - request: {}
           response:
             body:
-              id: 1
-              first_name: first_name
-              last_name: last_name
-              username: username
-              email: email
-              last_activity: '2024-01-15T09:30:00Z'
-              custom_hotkeys:
-                key: value
-              avatar: avatar
-              initials: initials
-              phone: phone
               active_organization: 1
               active_organization_meta: active_organization_meta
               allow_newsletters: true
+              avatar: avatar
+              custom_hotkeys:
+                key: value
               date_joined: '2024-01-15T09:30:00Z'
-              org_membership:
-                - role: role
-                  active: active
-                  organization_id: 1
+              email: email
+              first_name: first_name
+              id: 1
+              initials: initials
+              last_activity: '2024-01-15T09:30:00Z'
+              last_name: last_name
               lse_fields:
+                email_notification_settings: email_notification_settings
+                invite_activated: true
                 invite_expired: invite_expired
                 invite_expired_at: invite_expired_at
                 invited_at: '2024-01-15T09:30:00Z'
-                invite_activated: true
-                trial_company: trial_company
-                trial_role: annotator
-                trial_models_in_production: trial_models_in_production
-                trial_experience_labeling: trial_experience_labeling
-                trial_license_enterprise: true
-                social_auth_finished: true
                 invited_by: 1
                 onboarding_state: not_started
-                email_notification_settings: email_notification_settings
+                social_auth_finished: true
+                trial_company: trial_company
+                trial_experience_labeling: trial_experience_labeling
+                trial_license_enterprise: true
+                trial_models_in_production: trial_models_in_production
+                trial_role: annotator
+              org_membership:
+                - active: active
+                  organization_id: 1
+                  role: role
               pause: pause
+              phone: phone
+              username: username
       audiences:
         - public
     get:
@@ -384,40 +384,40 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              first_name: first_name
-              last_name: last_name
-              username: username
-              email: email
-              last_activity: '2024-01-15T09:30:00Z'
-              custom_hotkeys:
-                key: value
-              avatar: avatar
-              initials: initials
-              phone: phone
               active_organization: 1
               active_organization_meta: active_organization_meta
               allow_newsletters: true
+              avatar: avatar
+              custom_hotkeys:
+                key: value
               date_joined: '2024-01-15T09:30:00Z'
-              org_membership:
-                - role: role
-                  active: active
-                  organization_id: 1
+              email: email
+              first_name: first_name
+              id: 1
+              initials: initials
+              last_activity: '2024-01-15T09:30:00Z'
+              last_name: last_name
               lse_fields:
+                email_notification_settings: email_notification_settings
+                invite_activated: true
                 invite_expired: invite_expired
                 invite_expired_at: invite_expired_at
                 invited_at: '2024-01-15T09:30:00Z'
-                invite_activated: true
-                trial_company: trial_company
-                trial_role: annotator
-                trial_models_in_production: trial_models_in_production
-                trial_experience_labeling: trial_experience_labeling
-                trial_license_enterprise: true
-                social_auth_finished: true
                 invited_by: 1
                 onboarding_state: not_started
-                email_notification_settings: email_notification_settings
+                social_auth_finished: true
+                trial_company: trial_company
+                trial_experience_labeling: trial_experience_labeling
+                trial_license_enterprise: true
+                trial_models_in_production: trial_models_in_production
+                trial_role: annotator
+              org_membership:
+                - active: active
+                  organization_id: 1
+                  role: role
               pause: pause
+              phone: phone
+              username: username
       audiences:
         - public
     delete:
@@ -463,34 +463,34 @@ service:
         name: UsersUpdateRequest
         body:
           properties:
+            allow_newsletters:
+              type: optional<boolean>
+              docs: Whether the user allows newsletters
+            avatar:
+              type: optional<string>
+              docs: Avatar URL of the user
+            email:
+              type: optional<string>
+              docs: Email of the user
+            first_name:
+              type: optional<string>
+              docs: First name of the user
             id:
               type: optional<integer>
               docs: User ID
               name: usersUpdateRequestId
-            first_name:
-              type: optional<string>
-              docs: First name of the user
-            last_name:
-              type: optional<string>
-              docs: Last name of the user
-            username:
-              type: optional<string>
-              docs: Username of the user
-            email:
-              type: optional<string>
-              docs: Email of the user
-            avatar:
-              type: optional<string>
-              docs: Avatar URL of the user
             initials:
               type: optional<string>
               docs: Initials of the user
+            last_name:
+              type: optional<string>
+              docs: Last name of the user
             phone:
               type: optional<string>
               docs: Phone number of the user
-            allow_newsletters:
-              type: optional<boolean>
-              docs: Whether the user allows newsletters
+            username:
+              type: optional<string>
+              docs: Username of the user
         content-type: application/json
       response:
         docs: ''
@@ -501,40 +501,40 @@ service:
           request: {}
           response:
             body:
-              id: 1
-              first_name: first_name
-              last_name: last_name
-              username: username
-              email: email
-              last_activity: '2024-01-15T09:30:00Z'
-              custom_hotkeys:
-                key: value
-              avatar: avatar
-              initials: initials
-              phone: phone
               active_organization: 1
               active_organization_meta: active_organization_meta
               allow_newsletters: true
+              avatar: avatar
+              custom_hotkeys:
+                key: value
               date_joined: '2024-01-15T09:30:00Z'
-              org_membership:
-                - role: role
-                  active: active
-                  organization_id: 1
+              email: email
+              first_name: first_name
+              id: 1
+              initials: initials
+              last_activity: '2024-01-15T09:30:00Z'
+              last_name: last_name
               lse_fields:
+                email_notification_settings: email_notification_settings
+                invite_activated: true
                 invite_expired: invite_expired
                 invite_expired_at: invite_expired_at
                 invited_at: '2024-01-15T09:30:00Z'
-                invite_activated: true
-                trial_company: trial_company
-                trial_role: annotator
-                trial_models_in_production: trial_models_in_production
-                trial_experience_labeling: trial_experience_labeling
-                trial_license_enterprise: true
-                social_auth_finished: true
                 invited_by: 1
                 onboarding_state: not_started
-                email_notification_settings: email_notification_settings
+                social_auth_finished: true
+                trial_company: trial_company
+                trial_experience_labeling: trial_experience_labeling
+                trial_license_enterprise: true
+                trial_models_in_production: trial_models_in_production
+                trial_role: annotator
+              org_membership:
+                - active: active
+                  organization_id: 1
+                  role: role
               pause: pause
+              phone: phone
+              username: username
       audiences:
         - public
   source:
