@@ -4251,6 +4251,39 @@ paths:
         - internal
       x-fern-sdk-group-name: labels
       x-fern-sdk-method-name: update
+  /api/llm/openai/chat/completions:
+    post:
+      description: Proxy requests to OpenAI /chat/completions and return the full response payload.
+      operationId: api_llm_openai_chat_completions_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties: {}
+              type: object
+          application/x-www-form-urlencoded:
+            schema:
+              additionalProperties: {}
+              type: object
+          multipart/form-data:
+            schema:
+              additionalProperties: {}
+              type: object
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                additionalProperties: {}
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: Proxy to OpenAI Chat Completions
+      tags:
+        - LLM
+      x-fern-audiences:
+        - internal
   /api/ml/:
     get:
       description: "\n    List all configured ML backends for a specific project by ID.\n    Use the following cURL command:\n    ```bash\n    curl http://localhost:8000/api/ml?project={project_id} -H 'Authorization: Token abc123'\n    "
