@@ -64,12 +64,12 @@ service:
             id: 1
           response:
             body:
-              tasks: 1
-              annotations: 1
               annotated_tasks: 1
-              skipped_tasks: 1
-              reviewed_tasks: 1
+              annotations: 1
               remaining_tasks: 1
+              reviewed_tasks: 1
+              skipped_tasks: 1
+              tasks: 1
     api_projects_dashboard_members_retrieve:
       path: /api/projects/{id}/dashboard-members
       method: GET
@@ -120,93 +120,93 @@ service:
             id: 1
           response:
             body:
-              users:
-                - key: value
               similarity:
                 - key: value
               stats:
-                - finished: 1
-                  skipped: 1
-                  accepted: 1
-                  rejected: 1
-                  progress: 1
+                - accepted: 1
+                  finished: 1
+                  gt: 1.1
                   mean_time: 1.1
                   median_time: 1.1
-                  gt: 1.1
                   predictions: 1.1
+                  progress: 1
+                  rejected: 1
                   review_score: 1.1
+                  skipped: 1
+              users:
+                - key: value
   source:
     openapi: openapi/openapi.yaml
 types:
   ApiProjectsDashboardRetrieveResponse:
     properties:
-      tasks:
-        type: optional<integer>
-        docs: Total number of tasks
-      annotations:
-        type: optional<integer>
-        docs: Total number of annotations
       annotated_tasks:
         type: optional<integer>
         docs: Number of annotated (completed) tasks
-      skipped_tasks:
+      annotations:
         type: optional<integer>
-        docs: Number of tasks that have been skipped by at least one annotator
-      reviewed_tasks:
-        type: optional<integer>
-        docs: Number of tasks that have been reviewed by at least one reviewer
+        docs: Total number of annotations
       remaining_tasks:
         type: optional<integer>
         docs: Total number of uncompleted tasks
+      reviewed_tasks:
+        type: optional<integer>
+        docs: Number of tasks that have been reviewed by at least one reviewer
+      skipped_tasks:
+        type: optional<integer>
+        docs: Number of tasks that have been skipped by at least one annotator
+      tasks:
+        type: optional<integer>
+        docs: Total number of tasks
     source:
       openapi: openapi/openapi.yaml
   ApiProjectsDashboardMembersRetrieveResponseStatsItem:
     docs: User statistics
     properties:
-      finished:
-        type: optional<integer>
-      skipped:
-        type: optional<integer>
       accepted:
         type: optional<integer>
         docs: Number of annotations marked as "Accepted" by reviewer
-      rejected:
+      finished:
         type: optional<integer>
-        docs: Number of annotations marked as "Rejected" by reviewer
-      progress:
-        type: optional<integer>
-        docs: Fraction of annotation work done so far
+      gt:
+        type: optional<double>
+        docs: Average agreement with Ground Truth annotations
       mean_time:
         type: optional<double>
         docs: Average mean time spent on annotation
       median_time:
         type: optional<double>
         docs: Average median time spent on annotation
-      gt:
-        type: optional<double>
-        docs: Average agreement with Ground Truth annotations
       predictions:
         type: optional<double>
         docs: Average agreement with predictions
+      progress:
+        type: optional<integer>
+        docs: Fraction of annotation work done so far
+      rejected:
+        type: optional<integer>
+        docs: Number of annotations marked as "Rejected" by reviewer
       review_score:
         type: optional<double>
         docs: >-
           Average reviewing score, when calling with "per_label=true", returns
           dictionary with labels to score breakdown
+      skipped:
+        type: optional<integer>
     source:
       openapi: openapi/openapi.yaml
     inline: true
   ApiProjectsDashboardMembersRetrieveResponse:
     docs: Task creation response
     properties:
-      users:
-        type: optional<list<map<string, unknown>>>
-        docs: List of users
       similarity:
         type: optional<list<map<string, unknown>>>
         docs: Consensus statistics between different users
       stats:
         type: optional<list<ApiProjectsDashboardMembersRetrieveResponseStatsItem>>
         docs: Number of annotated (completed) tasks
+      users:
+        type: optional<list<map<string, unknown>>>
+        docs: List of users
     source:
       openapi: openapi/openapi.yaml

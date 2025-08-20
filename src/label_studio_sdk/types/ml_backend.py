@@ -2,10 +2,10 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .state_enum import StateEnum
-import pydantic
 from .auth_method_enum import AuthMethodEnum
+import pydantic
 import datetime as dt
+from .state_enum import StateEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -14,17 +14,22 @@ class MlBackend(UncheckedBaseModel):
     Serializer for MLBackend model.
     """
 
-    id: int
-    state: typing.Optional[StateEnum] = None
-    readable_state: str
-    is_interactive: typing.Optional[bool] = pydantic.Field(default=None)
+    auth_method: typing.Optional[AuthMethodEnum] = None
+    auto_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Used to interactively annotate tasks. If true, model returns one list with results
+    If false, model version is set by the user, if true - getting latest version from backend.
     """
 
-    url: str = pydantic.Field()
+    basic_auth_pass_is_set: str
+    basic_auth_user: typing.Optional[str] = pydantic.Field(default=None)
     """
-    URL for the machine learning model server
+    HTTP Basic Auth user
+    """
+
+    created_at: dt.datetime
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Description for the machine learning backend
     """
 
     error_message: typing.Optional[str] = pydantic.Field(default=None)
@@ -32,42 +37,36 @@ class MlBackend(UncheckedBaseModel):
     Error message in error state
     """
 
-    title: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Name of the machine learning backend
-    """
-
-    auth_method: typing.Optional[AuthMethodEnum] = None
-    basic_auth_user: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    HTTP Basic Auth user
-    """
-
-    basic_auth_pass_is_set: str
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Description for the machine learning backend
-    """
-
     extra_params: typing.Optional[typing.Optional[typing.Any]] = None
+    id: int
+    is_interactive: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Used to interactively annotate tasks. If true, model returns one list with results
+    """
+
     model_version: typing.Optional[str] = pydantic.Field(default=None)
     """
     Current model version associated with this machine learning backend
     """
 
+    project: int
+    readable_state: str
+    state: typing.Optional[StateEnum] = None
     timeout: typing.Optional[float] = pydantic.Field(default=None)
     """
     Response model timeout
     """
 
-    created_at: dt.datetime
-    updated_at: dt.datetime
-    auto_update: typing.Optional[bool] = pydantic.Field(default=None)
+    title: typing.Optional[str] = pydantic.Field(default=None)
     """
-    If false, model version is set by the user, if true - getting latest version from backend.
+    Name of the machine learning backend
     """
 
-    project: int
+    updated_at: dt.datetime
+    url: str = pydantic.Field()
+    """
+    URL for the machine learning model server
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

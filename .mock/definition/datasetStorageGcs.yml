@@ -27,31 +27,31 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                type: type
-                synchronizable: true
-                presign: true
-                bucket: bucket
-                prefix: prefix
-                regex_filter: regex_filter
-                use_blob_urls: true
+              - bucket: bucket
+                created_at: '2024-01-15T09:30:00Z'
+                dataset: 1
+                description: description
+                glob_pattern: glob_pattern
                 google_application_credentials: google_application_credentials
                 google_project_id: google_project_id
+                id: 1
+                job_id: job_id
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
-                status: initialized
-                traceback: traceback
                 meta:
                   key: value
-                title: title
-                description: description
-                created_at: '2024-01-15T09:30:00Z'
+                prefix: prefix
+                presign: true
                 presign_ttl: 1
-                glob_pattern: glob_pattern
+                regex_filter: regex_filter
+                status: initialized
                 synced: true
-                job_id: job_id
-                dataset: 1
+                synchronizable: true
+                title: title
+                traceback: traceback
+                type: type
+                use_blob_urls: true
     api_dataset_storages_gcs_create:
       path: /api/dataset-storages/gcs/
       method: POST
@@ -71,31 +71,121 @@ service:
             dataset: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
               bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
+              created_at: '2024-01-15T09:30:00Z'
+              dataset: 1
+              description: description
+              glob_pattern: glob_pattern
               google_application_credentials: google_application_credentials
               google_project_id: google_project_id
+              id: 1
+              job_id: job_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
+              prefix: prefix
+              presign: true
               presign_ttl: 1
-              glob_pattern: glob_pattern
+              regex_filter: regex_filter
+              status: initialized
               synced: true
-              job_id: job_id
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
+    api_dataset_storages_gcs_check_for_records_create:
+      path: /api/dataset-storages/gcs/check-for-records/
+      method: POST
+      auth: true
+      docs: >-
+        Checks for existence of records matching the file pattern in the
+        bucket/prefix
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Check for records given the file pattern
+      request:
+        body: root.GcsDatasetStorageRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.GcsDatasetStorage
+      examples:
+        - request:
+            dataset: 1
+          response:
+            body:
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
               dataset: 1
+              description: description
+              glob_pattern: glob_pattern
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
+              id: 1
+              job_id: job_id
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              presign: true
+              presign_ttl: 1
+              regex_filter: regex_filter
+              status: initialized
+              synced: true
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
+    api_dataset_storages_gcs_validate_create:
+      path: /api/dataset-storages/gcs/validate/
+      method: POST
+      auth: true
+      docs: Validate a specific GCS import storage connection.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Validate import storage
+      request:
+        body: root.GcsDatasetStorageRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.GcsDatasetStorage
+      examples:
+        - request:
+            dataset: 1
+          response:
+            body:
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
+              dataset: 1
+              description: description
+              glob_pattern: glob_pattern
+              google_application_credentials: google_application_credentials
+              google_project_id: google_project_id
+              id: 1
+              job_id: job_id
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              presign: true
+              presign_ttl: 1
+              regex_filter: regex_filter
+              status: initialized
+              synced: true
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
     api_dataset_storages_gcs_retrieve:
       path: /api/dataset-storages/gcs/{id}/
       method: GET
@@ -114,31 +204,31 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
               bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
+              created_at: '2024-01-15T09:30:00Z'
+              dataset: 1
+              description: description
+              glob_pattern: glob_pattern
               google_application_credentials: google_application_credentials
               google_project_id: google_project_id
+              id: 1
+              job_id: job_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
+              prefix: prefix
+              presign: true
               presign_ttl: 1
-              glob_pattern: glob_pattern
+              regex_filter: regex_filter
+              status: initialized
               synced: true
-              job_id: job_id
-              dataset: 1
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
     api_dataset_storages_gcs_destroy:
       path: /api/dataset-storages/gcs/{id}/
       method: DELETE
@@ -166,24 +256,18 @@ service:
         name: PatchedGcsDatasetStorageRequest
         body:
           properties:
-            synchronizable:
-              type: optional<boolean>
-              default: true
-            presign:
-              type: optional<boolean>
-              default: true
             bucket:
               type: optional<string>
               docs: GCS bucket name
-            prefix:
+            dataset:
+              type: optional<integer>
+              docs: A unique integer value identifying this dataset.
+            description:
               type: optional<string>
-              docs: GCS bucket prefix
-            regex_filter:
+              docs: Cloud storage description
+            glob_pattern:
               type: optional<string>
-              docs: Cloud storage regex for filtering objects
-            use_blob_urls:
-              type: optional<boolean>
-              docs: Interpret objects as BLOBs and generate URLs
+              docs: Glob pattern for syncing from bucket
             google_application_credentials:
               type: optional<string>
               docs: The content of GOOGLE_APPLICATION_CREDENTIALS json file
@@ -204,34 +288,40 @@ service:
               docs: Last sync job ID
               validation:
                 maxLength: 256
-            status: optional<root.StatusC5AEnum>
-            traceback:
-              type: optional<string>
-              docs: Traceback report for the last failed sync
             meta: optional<unknown>
-            title:
+            prefix:
               type: optional<string>
-              docs: Cloud storage title
-              validation:
-                maxLength: 256
-            description:
-              type: optional<string>
-              docs: Cloud storage description
+              docs: GCS bucket prefix
+            presign:
+              type: optional<boolean>
+              default: true
             presign_ttl:
               type: optional<integer>
               docs: Presigned URLs TTL (in minutes)
               validation:
                 min: 0
                 max: 32767
-            glob_pattern:
+            regex_filter:
               type: optional<string>
-              docs: Glob pattern for syncing from bucket
+              docs: Cloud storage regex for filtering objects
+            status: optional<root.StatusC5AEnum>
             synced:
               type: optional<boolean>
               docs: Flag if dataset has been previously synced or not
-            dataset:
-              type: optional<integer>
-              docs: A unique integer value identifying this dataset.
+            synchronizable:
+              type: optional<boolean>
+              default: true
+            title:
+              type: optional<string>
+              docs: Cloud storage title
+              validation:
+                maxLength: 256
+            traceback:
+              type: optional<string>
+              docs: Traceback report for the last failed sync
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
         content-type: application/json
       response:
         docs: ''
@@ -242,31 +332,31 @@ service:
           request: {}
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
               bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
+              created_at: '2024-01-15T09:30:00Z'
+              dataset: 1
+              description: description
+              glob_pattern: glob_pattern
               google_application_credentials: google_application_credentials
               google_project_id: google_project_id
+              id: 1
+              job_id: job_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
+              prefix: prefix
+              presign: true
               presign_ttl: 1
-              glob_pattern: glob_pattern
+              regex_filter: regex_filter
+              status: initialized
               synced: true
-              job_id: job_id
-              dataset: 1
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
     api_dataset_storages_gcs_columns_retrieve:
       path: /api/dataset-storages/gcs/{id}/columns/
       method: GET
@@ -303,120 +393,30 @@ service:
             dataset: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
               bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
+              created_at: '2024-01-15T09:30:00Z'
+              dataset: 1
+              description: description
+              glob_pattern: glob_pattern
               google_application_credentials: google_application_credentials
               google_project_id: google_project_id
+              id: 1
+              job_id: job_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              presign_ttl: 1
-              glob_pattern: glob_pattern
-              synced: true
-              job_id: job_id
-              dataset: 1
-    api_dataset_storages_gcs_check_for_records_create:
-      path: /api/dataset-storages/gcs/check-for-records/
-      method: POST
-      auth: true
-      docs: >-
-        Checks for existence of records matching the file pattern in the
-        bucket/prefix
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Check for records given the file pattern
-      request:
-        body: root.GcsDatasetStorageRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.GcsDatasetStorage
-      examples:
-        - request:
-            dataset: 1
-          response:
-            body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              bucket: bucket
               prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
-              meta:
-                key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              presign_ttl: 1
-              glob_pattern: glob_pattern
-              synced: true
-              job_id: job_id
-              dataset: 1
-    api_dataset_storages_gcs_validate_create:
-      path: /api/dataset-storages/gcs/validate/
-      method: POST
-      auth: true
-      docs: Validate a specific GCS import storage connection.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Validate import storage
-      request:
-        body: root.GcsDatasetStorageRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.GcsDatasetStorage
-      examples:
-        - request:
-            dataset: 1
-          response:
-            body:
-              id: 1
-              type: type
-              synchronizable: true
               presign: true
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              google_application_credentials: google_application_credentials
-              google_project_id: google_project_id
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
-              meta:
-                key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
               presign_ttl: 1
-              glob_pattern: glob_pattern
+              regex_filter: regex_filter
+              status: initialized
               synced: true
-              job_id: job_id
-              dataset: 1
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
   source:
     openapi: openapi/openapi.yaml

@@ -7,10 +7,10 @@ from .utilities import validate_response
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = [{"token": "token", "created_at": "created_at", "expires_at": "expires_at"}]
+    expected_response: typing.Any = [{"created_at": "created_at", "expires_at": "expires_at", "token": "token"}]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
-        {0: {"token": None, "created_at": None, "expires_at": None}},
+        {0: {"created_at": None, "expires_at": None, "token": None}},
     )
     response = client.tokens.list()
     validate_response(response, expected_response, expected_types)
@@ -20,8 +20,8 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"token": "token", "created_at": "created_at", "expires_at": "expires_at"}
-    expected_types: typing.Any = {"token": None, "created_at": None, "expires_at": None}
+    expected_response: typing.Any = {"created_at": "created_at", "expires_at": "expires_at", "token": "token"}
+    expected_types: typing.Any = {"created_at": None, "expires_at": None, "token": None}
     response = client.tokens.create()
     validate_response(response, expected_response, expected_types)
 

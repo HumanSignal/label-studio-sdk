@@ -7,10 +7,10 @@ import pydantic
 
 
 class ActionsListResponseItemDialog(UncheckedBaseModel):
-    title: typing.Optional[str] = None
-    text: typing.Optional[str] = None
-    type: typing.Optional[str] = None
     form: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = None
+    text: typing.Optional[str] = None
+    title: typing.Optional[str] = None
+    type: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
