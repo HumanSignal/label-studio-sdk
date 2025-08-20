@@ -28,22 +28,22 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                comment: comment
-                organization_id: 1
-                project_id: 1
+              - action: prediction
                 annotation_id: 1
-                draft_id: 1
-                review_id: 1
-                task_id: 1
-                result:
-                  key: value
-                lead_time: 1.1
-                action: prediction
-                started_at: '2024-01-15T09:30:00Z'
+                comment: comment
+                comment_id: 1
                 created_at: '2024-01-15T09:30:00Z'
                 created_by: 1
-                comment_id: 1
+                draft_id: 1
+                id: 1
+                lead_time: 1.1
+                organization_id: 1
+                project_id: 1
+                result:
+                  key: value
+                review_id: 1
+                started_at: '2024-01-15T09:30:00Z'
+                task_id: 1
     api_annotation_history_destroy:
       path: /api/annotation-history/
       method: DELETE
@@ -93,22 +93,22 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - id: 1
-                  comment: comment
-                  organization_id: 1
-                  project_id: 1
+                - action: prediction
                   annotation_id: 1
-                  draft_id: 1
-                  review_id: 1
-                  task_id: 1
-                  result:
-                    key: value
-                  lead_time: 1.1
-                  action: prediction
-                  started_at: '2024-01-15T09:30:00Z'
+                  comment: comment
+                  comment_id: 1
                   created_at: '2024-01-15T09:30:00Z'
                   created_by: 1
-                  comment_id: 1
+                  draft_id: 1
+                  id: 1
+                  lead_time: 1.1
+                  organization_id: 1
+                  project_id: 1
+                  result:
+                    key: value
+                  review_id: 1
+                  started_at: '2024-01-15T09:30:00Z'
+                  task_id: 1
   source:
     openapi: openapi/openapi.yaml
 types:

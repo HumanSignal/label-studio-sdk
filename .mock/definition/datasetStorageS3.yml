@@ -27,36 +27,36 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                type: type
-                synchronizable: true
-                presign: true
-                last_sync: '2024-01-15T09:30:00Z'
-                last_sync_count: 1
-                last_sync_job: last_sync_job
-                status: initialized
-                traceback: traceback
-                meta:
-                  key: value
-                title: title
-                description: description
-                created_at: '2024-01-15T09:30:00Z'
-                bucket: bucket
-                prefix: prefix
-                regex_filter: regex_filter
-                use_blob_urls: true
-                aws_access_key_id: aws_access_key_id
+              - aws_access_key_id: aws_access_key_id
                 aws_secret_access_key: aws_secret_access_key
                 aws_session_token: aws_session_token
                 aws_sse_kms_key_id: aws_sse_kms_key_id
-                region_name: region_name
-                s3_endpoint: s3_endpoint
+                bucket: bucket
+                created_at: '2024-01-15T09:30:00Z'
+                dataset: 1
+                description: description
+                glob_pattern: glob_pattern
+                id: 1
+                job_id: job_id
+                last_sync: '2024-01-15T09:30:00Z'
+                last_sync_count: 1
+                last_sync_job: last_sync_job
+                meta:
+                  key: value
+                prefix: prefix
+                presign: true
                 presign_ttl: 1
                 recursive_scan: true
-                glob_pattern: glob_pattern
+                regex_filter: regex_filter
+                region_name: region_name
+                s3_endpoint: s3_endpoint
+                status: initialized
                 synced: true
-                job_id: job_id
-                dataset: 1
+                synchronizable: true
+                title: title
+                traceback: traceback
+                type: type
+                use_blob_urls: true
     api_dataset_storages_s3_create:
       path: /api/dataset-storages/s3/
       method: POST
@@ -76,36 +76,136 @@ service:
             dataset: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
-              meta:
-                key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
+              dataset: 1
+              description: description
+              glob_pattern: glob_pattern
+              id: 1
+              job_id: job_id
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              presign: true
               presign_ttl: 1
               recursive_scan: true
-              glob_pattern: glob_pattern
+              regex_filter: regex_filter
+              region_name: region_name
+              s3_endpoint: s3_endpoint
+              status: initialized
               synced: true
-              job_id: job_id
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
+    api_dataset_storages_s3_check_for_records_create:
+      path: /api/dataset-storages/s3/check-for-records/
+      method: POST
+      auth: true
+      docs: >-
+        Checks for existence of records matching the file pattern in the
+        bucket/prefix
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Check for records given the file pattern
+      request:
+        body: root.S3DatasetStorageRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.S3DatasetStorage
+      examples:
+        - request:
+            dataset: 1
+          response:
+            body:
+              aws_access_key_id: aws_access_key_id
+              aws_secret_access_key: aws_secret_access_key
+              aws_session_token: aws_session_token
+              aws_sse_kms_key_id: aws_sse_kms_key_id
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
               dataset: 1
+              description: description
+              glob_pattern: glob_pattern
+              id: 1
+              job_id: job_id
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              presign: true
+              presign_ttl: 1
+              recursive_scan: true
+              regex_filter: regex_filter
+              region_name: region_name
+              s3_endpoint: s3_endpoint
+              status: initialized
+              synced: true
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
+    api_dataset_storages_s3_validate_create:
+      path: /api/dataset-storages/s3/validate/
+      method: POST
+      auth: true
+      docs: Validate a specific S3 import storage connection.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Validate import storage
+      request:
+        body: root.S3DatasetStorageRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.S3DatasetStorage
+      examples:
+        - request:
+            dataset: 1
+          response:
+            body:
+              aws_access_key_id: aws_access_key_id
+              aws_secret_access_key: aws_secret_access_key
+              aws_session_token: aws_session_token
+              aws_sse_kms_key_id: aws_sse_kms_key_id
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
+              dataset: 1
+              description: description
+              glob_pattern: glob_pattern
+              id: 1
+              job_id: job_id
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              presign: true
+              presign_ttl: 1
+              recursive_scan: true
+              regex_filter: regex_filter
+              region_name: region_name
+              s3_endpoint: s3_endpoint
+              status: initialized
+              synced: true
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
     api_dataset_storages_s3_retrieve:
       path: /api/dataset-storages/s3/{id}/
       method: GET
@@ -124,36 +224,36 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
-              meta:
-                key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
+              dataset: 1
+              description: description
+              glob_pattern: glob_pattern
+              id: 1
+              job_id: job_id
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              presign: true
               presign_ttl: 1
               recursive_scan: true
-              glob_pattern: glob_pattern
+              regex_filter: regex_filter
+              region_name: region_name
+              s3_endpoint: s3_endpoint
+              status: initialized
               synced: true
-              job_id: job_id
-              dataset: 1
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
     api_dataset_storages_s3_destroy:
       path: /api/dataset-storages/s3/{id}/
       method: DELETE
@@ -181,12 +281,30 @@ service:
         name: PatchedS3DatasetStorageRequest
         body:
           properties:
-            synchronizable:
-              type: optional<boolean>
-              default: true
-            presign:
-              type: optional<boolean>
-              default: true
+            aws_access_key_id:
+              type: optional<string>
+              docs: AWS_ACCESS_KEY_ID
+            aws_secret_access_key:
+              type: optional<string>
+              docs: AWS_SECRET_ACCESS_KEY
+            aws_session_token:
+              type: optional<string>
+              docs: AWS_SESSION_TOKEN
+            aws_sse_kms_key_id:
+              type: optional<string>
+              docs: AWS SSE KMS Key ID
+            bucket:
+              type: optional<string>
+              docs: S3 bucket name
+            dataset:
+              type: optional<integer>
+              docs: A unique integer value identifying this dataset.
+            description:
+              type: optional<string>
+              docs: Cloud storage description
+            glob_pattern:
+              type: optional<string>
+              docs: Glob pattern for syncing from bucket
             last_sync:
               type: optional<datetime>
               docs: Last sync finished time
@@ -201,49 +319,13 @@ service:
               docs: Last sync job ID
               validation:
                 maxLength: 256
-            status: optional<root.StatusC5AEnum>
-            traceback:
-              type: optional<string>
-              docs: Traceback report for the last failed sync
             meta: optional<unknown>
-            title:
-              type: optional<string>
-              docs: Cloud storage title
-              validation:
-                maxLength: 256
-            description:
-              type: optional<string>
-              docs: Cloud storage description
-            bucket:
-              type: optional<string>
-              docs: S3 bucket name
             prefix:
               type: optional<string>
               docs: S3 bucket prefix
-            regex_filter:
-              type: optional<string>
-              docs: Cloud storage regex for filtering objects
-            use_blob_urls:
+            presign:
               type: optional<boolean>
-              docs: Interpret objects as BLOBs and generate URLs
-            aws_access_key_id:
-              type: optional<string>
-              docs: AWS_ACCESS_KEY_ID
-            aws_secret_access_key:
-              type: optional<string>
-              docs: AWS_SECRET_ACCESS_KEY
-            aws_session_token:
-              type: optional<string>
-              docs: AWS_SESSION_TOKEN
-            aws_sse_kms_key_id:
-              type: optional<string>
-              docs: AWS SSE KMS Key ID
-            region_name:
-              type: optional<string>
-              docs: AWS Region
-            s3_endpoint:
-              type: optional<string>
-              docs: S3 Endpoint
+              default: true
             presign_ttl:
               type: optional<integer>
               docs: Presigned URLs TTL (in minutes)
@@ -253,15 +335,33 @@ service:
             recursive_scan:
               type: optional<boolean>
               docs: Perform recursive scan over the bucket content
-            glob_pattern:
+            regex_filter:
               type: optional<string>
-              docs: Glob pattern for syncing from bucket
+              docs: Cloud storage regex for filtering objects
+            region_name:
+              type: optional<string>
+              docs: AWS Region
+            s3_endpoint:
+              type: optional<string>
+              docs: S3 Endpoint
+            status: optional<root.StatusC5AEnum>
             synced:
               type: optional<boolean>
               docs: Flag if dataset has been previously synced or not
-            dataset:
-              type: optional<integer>
-              docs: A unique integer value identifying this dataset.
+            synchronizable:
+              type: optional<boolean>
+              default: true
+            title:
+              type: optional<string>
+              docs: Cloud storage title
+              validation:
+                maxLength: 256
+            traceback:
+              type: optional<string>
+              docs: Traceback report for the last failed sync
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
         content-type: application/json
       response:
         docs: ''
@@ -272,36 +372,36 @@ service:
           request: {}
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
-              meta:
-                key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
+              dataset: 1
+              description: description
+              glob_pattern: glob_pattern
+              id: 1
+              job_id: job_id
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              presign: true
               presign_ttl: 1
               recursive_scan: true
-              glob_pattern: glob_pattern
+              regex_filter: regex_filter
+              region_name: region_name
+              s3_endpoint: s3_endpoint
+              status: initialized
               synced: true
-              job_id: job_id
-              dataset: 1
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
     api_dataset_storages_s3_columns_retrieve:
       path: /api/dataset-storages/s3/{id}/columns/
       method: GET
@@ -338,135 +438,35 @@ service:
             dataset: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
-              meta:
-                key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
-              presign_ttl: 1
-              recursive_scan: true
-              glob_pattern: glob_pattern
-              synced: true
-              job_id: job_id
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
               dataset: 1
-    api_dataset_storages_s3_check_for_records_create:
-      path: /api/dataset-storages/s3/check-for-records/
-      method: POST
-      auth: true
-      docs: >-
-        Checks for existence of records matching the file pattern in the
-        bucket/prefix
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Check for records given the file pattern
-      request:
-        body: root.S3DatasetStorageRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.S3DatasetStorage
-      examples:
-        - request:
-            dataset: 1
-          response:
-            body:
+              description: description
+              glob_pattern: glob_pattern
               id: 1
-              type: type
-              synchronizable: true
-              presign: true
+              job_id: job_id
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              bucket: bucket
               prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              aws_access_key_id: aws_access_key_id
-              aws_secret_access_key: aws_secret_access_key
-              aws_session_token: aws_session_token
-              aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
-              presign_ttl: 1
-              recursive_scan: true
-              glob_pattern: glob_pattern
-              synced: true
-              job_id: job_id
-              dataset: 1
-    api_dataset_storages_s3_validate_create:
-      path: /api/dataset-storages/s3/validate/
-      method: POST
-      auth: true
-      docs: Validate a specific S3 import storage connection.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Validate import storage
-      request:
-        body: root.S3DatasetStorageRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.S3DatasetStorage
-      examples:
-        - request:
-            dataset: 1
-          response:
-            body:
-              id: 1
-              type: type
-              synchronizable: true
               presign: true
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
-              meta:
-                key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              aws_access_key_id: aws_access_key_id
-              aws_secret_access_key: aws_secret_access_key
-              aws_session_token: aws_session_token
-              aws_sse_kms_key_id: aws_sse_kms_key_id
-              region_name: region_name
-              s3_endpoint: s3_endpoint
               presign_ttl: 1
               recursive_scan: true
-              glob_pattern: glob_pattern
+              regex_filter: regex_filter
+              region_name: region_name
+              s3_endpoint: s3_endpoint
+              status: initialized
               synced: true
-              job_id: job_id
-              dataset: 1
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
   source:
     openapi: openapi/openapi.yaml

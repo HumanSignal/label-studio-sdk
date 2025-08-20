@@ -26,17 +26,17 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                created_by: 1
+              - accepted: true
+                annotation: 1
                 created_at: '2024-01-15T09:30:00Z'
-                accepted: true
+                created_by: 1
+                fixed_annotation_history: 1
+                id: 1
+                last_annotation_history: 1
+                previous_annotation_history: 1
+                remove_from_queue: true
                 result:
                   key: value
-                annotation: 1
-                fixed_annotation_history: 1
-                previous_annotation_history: 1
-                last_annotation_history: 1
-                remove_from_queue: true
                 started_at: '2024-01-15T09:30:00Z'
     api_annotation_reviews_create:
       path: /api/annotation-reviews/
@@ -57,17 +57,17 @@ service:
             annotation: 1
           response:
             body:
-              id: 1
-              created_by: 1
-              created_at: '2024-01-15T09:30:00Z'
               accepted: true
+              annotation: 1
+              created_at: '2024-01-15T09:30:00Z'
+              created_by: 1
+              fixed_annotation_history: 1
+              id: 1
+              last_annotation_history: 1
+              previous_annotation_history: 1
+              remove_from_queue: true
               result:
                 key: value
-              annotation: 1
-              fixed_annotation_history: 1
-              previous_annotation_history: 1
-              last_annotation_history: 1
-              remove_from_queue: true
               started_at: '2024-01-15T09:30:00Z'
     api_annotation_reviews_retrieve:
       path: /api/annotation-reviews/{id}/
@@ -89,17 +89,17 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              created_by: 1
-              created_at: '2024-01-15T09:30:00Z'
               accepted: true
+              annotation: 1
+              created_at: '2024-01-15T09:30:00Z'
+              created_by: 1
+              fixed_annotation_history: 1
+              id: 1
+              last_annotation_history: 1
+              previous_annotation_history: 1
+              remove_from_queue: true
               result:
                 key: value
-              annotation: 1
-              fixed_annotation_history: 1
-              previous_annotation_history: 1
-              last_annotation_history: 1
-              remove_from_queue: true
               started_at: '2024-01-15T09:30:00Z'
     api_annotation_reviews_update:
       path: /api/annotation-reviews/{id}/
@@ -126,17 +126,17 @@ service:
             annotation: 1
           response:
             body:
-              id: 1
-              created_by: 1
-              created_at: '2024-01-15T09:30:00Z'
               accepted: true
+              annotation: 1
+              created_at: '2024-01-15T09:30:00Z'
+              created_by: 1
+              fixed_annotation_history: 1
+              id: 1
+              last_annotation_history: 1
+              previous_annotation_history: 1
+              remove_from_queue: true
               result:
                 key: value
-              annotation: 1
-              fixed_annotation_history: 1
-              previous_annotation_history: 1
-              last_annotation_history: 1
-              remove_from_queue: true
               started_at: '2024-01-15T09:30:00Z'
     api_annotation_reviews_destroy:
       path: /api/annotation-reviews/{id}/
@@ -172,16 +172,16 @@ service:
             accepted:
               type: optional<boolean>
               docs: Accepted or rejected (if false) flag
-            result: optional<unknown>
             annotation:
               type: optional<integer>
               docs: Corresponding annotation
-            last_annotation_history: optional<integer>
             comment:
               type: optional<string>
               validation:
                 minLength: 1
+            last_annotation_history: optional<integer>
             remove_from_queue: optional<boolean>
+            result: optional<unknown>
             started_at: optional<datetime>
         content-type: application/json
       response:
@@ -193,17 +193,17 @@ service:
           request: {}
           response:
             body:
-              id: 1
-              created_by: 1
-              created_at: '2024-01-15T09:30:00Z'
               accepted: true
+              annotation: 1
+              created_at: '2024-01-15T09:30:00Z'
+              created_by: 1
+              fixed_annotation_history: 1
+              id: 1
+              last_annotation_history: 1
+              previous_annotation_history: 1
+              remove_from_queue: true
               result:
                 key: value
-              annotation: 1
-              fixed_annotation_history: 1
-              previous_annotation_history: 1
-              last_annotation_history: 1
-              remove_from_queue: true
               started_at: '2024-01-15T09:30:00Z'
   source:
     openapi: openapi/openapi.yaml

@@ -22,8 +22,8 @@ service:
             id: 1
           response:
             body:
-              id: 1
               file: file
+              id: 1
       audiences:
         - public
     delete:
@@ -66,8 +66,8 @@ service:
           request: {}
           response:
             body:
-              id: 1
               file: file
+              id: 1
       audiences:
         - public
     list:
@@ -104,8 +104,8 @@ service:
             id: 1
           response:
             body:
-              - id: 1
-                file: file
+              - file: file
+                id: 1
       audiences:
         - public
     delete_many:
