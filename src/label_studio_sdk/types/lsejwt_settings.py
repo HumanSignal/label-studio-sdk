@@ -7,6 +7,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LsejwtSettings(UncheckedBaseModel):
+    api_token_ttl_days: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of days before JWT API tokens expire
+    """
+
     api_tokens_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Enable JWT API token authentication for this organization
@@ -15,11 +20,6 @@ class LsejwtSettings(UncheckedBaseModel):
     legacy_api_tokens_enabled: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Enable legacy API token authentication for this organization
-    """
-
-    api_token_ttl_days: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of days before JWT API tokens expire
     """
 
     if IS_PYDANTIC_V2:

@@ -71,14 +71,14 @@ service:
         - response:
             body:
               - data:
-                  - id: 1
-                    user_id: 1
+                  - datetime: '2024-01-15T09:30:00Z'
                     email: email
-                    request_url: request_url
+                    id: 1
                     request_method: request_method
+                    request_url: request_url
                     response_code: response_code
-                    datetime: '2024-01-15T09:30:00Z'
-                recordsTotal: 1
+                    user_id: 1
                 recordsFiltered: 1
+                recordsTotal: 1
   source:
     openapi: openapi/openapi.yaml

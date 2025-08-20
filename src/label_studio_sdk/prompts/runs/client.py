@@ -9,8 +9,8 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.project_subset_enum import ProjectSubsetEnum
 import datetime as dt
+from ...types.project_subset_enum import ProjectSubsetEnum
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -104,13 +104,13 @@ class RunsClient:
         version_id: int,
         *,
         project: int,
-        project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
         job_id: typing.Optional[str] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
-        total_correct_predictions: typing.Optional[int] = OMIT,
-        total_tasks: typing.Optional[int] = OMIT,
-        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
+        project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
+        total_correct_predictions: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        total_tasks: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelRun:
         """
@@ -124,20 +124,20 @@ class RunsClient:
 
         project : int
 
-        project_subset : typing.Optional[ProjectSubsetEnum]
-
         job_id : typing.Optional[str]
             Job ID for inference job for a ModelRun e.g. Adala job ID
 
-        total_predictions : typing.Optional[int]
-
-        total_correct_predictions : typing.Optional[int]
-
-        total_tasks : typing.Optional[int]
+        organization : typing.Optional[int]
 
         predictions_updated_at : typing.Optional[dt.datetime]
 
-        organization : typing.Optional[int]
+        project_subset : typing.Optional[ProjectSubsetEnum]
+
+        total_correct_predictions : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        total_tasks : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -164,14 +164,14 @@ class RunsClient:
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
             method="POST",
             json={
-                "project_subset": project_subset,
                 "job_id": job_id,
-                "total_predictions": total_predictions,
-                "total_correct_predictions": total_correct_predictions,
-                "total_tasks": total_tasks,
-                "predictions_updated_at": predictions_updated_at,
                 "organization": organization,
+                "predictions_updated_at": predictions_updated_at,
                 "project": project,
+                "project_subset": project_subset,
+                "total_correct_predictions": total_correct_predictions,
+                "total_predictions": total_predictions,
+                "total_tasks": total_tasks,
             },
             headers={
                 "content-type": "application/json",
@@ -289,13 +289,13 @@ class AsyncRunsClient:
         version_id: int,
         *,
         project: int,
-        project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
         job_id: typing.Optional[str] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
-        total_correct_predictions: typing.Optional[int] = OMIT,
-        total_tasks: typing.Optional[int] = OMIT,
-        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
+        project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
+        total_correct_predictions: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        total_tasks: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelRun:
         """
@@ -309,20 +309,20 @@ class AsyncRunsClient:
 
         project : int
 
-        project_subset : typing.Optional[ProjectSubsetEnum]
-
         job_id : typing.Optional[str]
             Job ID for inference job for a ModelRun e.g. Adala job ID
 
-        total_predictions : typing.Optional[int]
-
-        total_correct_predictions : typing.Optional[int]
-
-        total_tasks : typing.Optional[int]
+        organization : typing.Optional[int]
 
         predictions_updated_at : typing.Optional[dt.datetime]
 
-        organization : typing.Optional[int]
+        project_subset : typing.Optional[ProjectSubsetEnum]
+
+        total_correct_predictions : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        total_tasks : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -357,14 +357,14 @@ class AsyncRunsClient:
             f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
             method="POST",
             json={
-                "project_subset": project_subset,
                 "job_id": job_id,
-                "total_predictions": total_predictions,
-                "total_correct_predictions": total_correct_predictions,
-                "total_tasks": total_tasks,
-                "predictions_updated_at": predictions_updated_at,
                 "organization": organization,
+                "predictions_updated_at": predictions_updated_at,
                 "project": project,
+                "project_subset": project_subset,
+                "total_correct_predictions": total_correct_predictions,
+                "total_predictions": total_predictions,
+                "total_tasks": total_tasks,
             },
             headers={
                 "content-type": "application/json",

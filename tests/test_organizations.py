@@ -7,8 +7,8 @@ from .utilities import validate_response
 
 
 async def test_reset_token(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"token": "token", "invite_url": "invite_url"}
-    expected_types: typing.Any = {"token": None, "invite_url": None}
+    expected_response: typing.Any = {"invite_url": "invite_url", "token": "token"}
+    expected_types: typing.Any = {"invite_url": None, "token": None}
     response = client.organizations.reset_token()
     validate_response(response, expected_response, expected_types)
 
@@ -18,11 +18,11 @@ async def test_reset_token(client: LabelStudio, async_client: AsyncLabelStudio) 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
-        {"id": 1, "title": "title", "contact_info": "contact_info", "created_at": "2024-01-15T09:30:00Z"}
+        {"contact_info": "contact_info", "created_at": "2024-01-15T09:30:00Z", "id": 1, "title": "title"}
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
-        {0: {"id": "integer", "title": None, "contact_info": None, "created_at": "datetime"}},
+        {0: {"contact_info": None, "created_at": "datetime", "id": "integer", "title": None}},
     )
     response = client.organizations.list()
     validate_response(response, expected_response, expected_types)
@@ -33,35 +33,35 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "external_id": "external_id",
-        "title": "title",
-        "token": "token",
-        "default_role": "OW",
-        "created_at": "2024-01-15T09:30:00Z",
         "billing": {
-            "manual_workspace_management": "manual_workspace_management",
             "manual_role_management": "manual_role_management",
+            "manual_workspace_management": "manual_workspace_management",
         },
+        "created_at": "2024-01-15T09:30:00Z",
+        "custom_scripts_editable_by": "AD",
+        "custom_scripts_enabled": "custom_scripts_enabled",
+        "default_role": "OW",
+        "email_notification_settings": "email_notification_settings",
         "embed_domains": {"key": "value"},
         "embed_settings": {"key": "value"},
-        "custom_scripts_enabled": "custom_scripts_enabled",
-        "custom_scripts_editable_by": "AD",
-        "email_notification_settings": "email_notification_settings",
+        "external_id": "external_id",
+        "id": 1,
+        "title": "title",
+        "token": "token",
     }
     expected_types: typing.Any = {
-        "id": "integer",
-        "external_id": None,
-        "title": None,
-        "token": None,
-        "default_role": None,
+        "billing": {"manual_role_management": None, "manual_workspace_management": None},
         "created_at": "datetime",
-        "billing": {"manual_workspace_management": None, "manual_role_management": None},
+        "custom_scripts_editable_by": None,
+        "custom_scripts_enabled": None,
+        "default_role": None,
+        "email_notification_settings": None,
         "embed_domains": None,
         "embed_settings": None,
-        "custom_scripts_enabled": None,
-        "custom_scripts_editable_by": None,
-        "email_notification_settings": None,
+        "external_id": None,
+        "id": "integer",
+        "title": None,
+        "token": None,
     }
     response = client.organizations.get(id=1)
     validate_response(response, expected_response, expected_types)
