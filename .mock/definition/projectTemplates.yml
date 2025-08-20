@@ -350,7 +350,7 @@ service:
                 key: value
               reviewer_queue_total: reviewer_queue_total
               queue_left: queue_left
-              members_count: members_count
+              members_count: 1
               custom_task_lock_ttl: 1
               prompts: prompts
               annotation_limit_count: 1
