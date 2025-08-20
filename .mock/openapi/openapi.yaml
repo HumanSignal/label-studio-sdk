@@ -17622,9 +17622,14 @@ components:
         id:
           readOnly: true
           type: integer
+        size:
+          nullable: true
+          readOnly: true
+          type: integer
       required:
         - file
         - id
+        - size
       type: object
     Filter:
       properties:

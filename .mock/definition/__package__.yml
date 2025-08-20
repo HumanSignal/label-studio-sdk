@@ -1897,6 +1897,7 @@ types:
     properties:
       file: string
       id: integer
+      size: optional<integer>
     source:
       openapi: openapi/openapi.yaml
   Filter:
