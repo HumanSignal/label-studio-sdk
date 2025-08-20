@@ -12,34 +12,34 @@ from label_studio_sdk.actions import ActionsCreateRequestSelectedItemsExcluded
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
+            "dialog": {
+                "form": [{"key": "value"}],
+                "text": "Create annotations from predictions using selected predictions set for each selected task. Your account will be assigned as an owner to those annotations.",
+                "title": "Create Annotations From Predictions",
+                "type": "confirm",
+            },
+            "experimental": False,
             "id": "predictions_to_annotations",
-            "title": "Create Annotations From Predictions",
             "order": 91,
             "permission": "tasks.change",
-            "experimental": False,
-            "dialog": {
-                "title": "Create Annotations From Predictions",
-                "text": "Create annotations from predictions using selected predictions set for each selected task. Your account will be assigned as an owner to those annotations.",
-                "type": "confirm",
-                "form": [{"key": "value"}],
-            },
+            "title": "Create Annotations From Predictions",
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
+                "dialog": {
+                    "form": ("list", {0: ("dict", {0: (None, None)})}),
+                    "text": None,
+                    "title": None,
+                    "type": None,
+                },
+                "experimental": None,
                 "id": None,
-                "title": None,
                 "order": "integer",
                 "permission": None,
-                "experimental": None,
-                "dialog": {
-                    "title": None,
-                    "text": None,
-                    "type": None,
-                    "form": ("list", {0: ("dict", {0: (None, None)})}),
-                },
+                "title": None,
             }
         },
     )
@@ -64,8 +64,8 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                     )
                 ],
             ),
-            selected_items=ActionsCreateRequestSelectedItemsExcluded(all_=True, excluded=[124, 125, 126]),
             ordering=["tasks:total_annotations"],
+            selected_items=ActionsCreateRequestSelectedItemsExcluded(all_=True, excluded=[124, 125, 126]),
         )  # type: ignore[func-returns-value]
         is None
     )
@@ -82,8 +82,8 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                     )
                 ],
             ),
-            selected_items=ActionsCreateRequestSelectedItemsExcluded(all_=True, excluded=[124, 125, 126]),
             ordering=["tasks:total_annotations"],
+            selected_items=ActionsCreateRequestSelectedItemsExcluded(all_=True, excluded=[124, 125, 126]),
         )  # type: ignore[func-returns-value]
         is None
     )
