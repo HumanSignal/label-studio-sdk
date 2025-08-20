@@ -2,47 +2,47 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-import pydantic
 import datetime as dt
+import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Comment(UncheckedBaseModel):
-    id: int
-    region_ref: typing.Optional[typing.Optional[typing.Any]] = None
+    annotation: typing.Optional[int] = None
     classifications: typing.Optional[typing.Optional[typing.Any]] = None
-    text: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Reviewer or annotator comment
-    """
-
     created_at: dt.datetime = pydantic.Field()
     """
     Creation time
     """
 
-    updated_at: dt.datetime = pydantic.Field()
+    created_by: int = pydantic.Field()
     """
-    Last updated time
+    User who made this comment
     """
 
+    draft: typing.Optional[int] = None
+    id: int
     is_resolved: typing.Optional[bool] = pydantic.Field(default=None)
     """
     True if the comment is resolved
     """
 
+    project: typing.Optional[int] = None
+    region_ref: typing.Optional[typing.Optional[typing.Any]] = None
     resolved_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Resolving time
     """
 
-    project: typing.Optional[int] = None
     task: typing.Optional[int] = None
-    draft: typing.Optional[int] = None
-    annotation: typing.Optional[int] = None
-    created_by: int = pydantic.Field()
+    text: typing.Optional[str] = pydantic.Field(default=None)
     """
-    User who made this comment
+    Reviewer or annotator comment
+    """
+
+    updated_at: dt.datetime = pydantic.Field()
+    """
+    Last updated time
     """
 
     if IS_PYDANTIC_V2:

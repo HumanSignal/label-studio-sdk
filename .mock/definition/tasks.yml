@@ -26,33 +26,33 @@ service:
             import_pk: 1
           response:
             body:
-              id: 1
-              project: 1
-              preannotated_from_fields:
-                key: value
-              commit_to_project: true
-              return_task_ids: true
-              status: created
-              url: url
-              error: error
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              finished_at: '2024-01-15T09:30:00Z'
-              task_count: 1
               annotation_count: 1
-              prediction_count: 1
+              commit_to_project: true
+              could_be_tasks_list: true
+              created_at: '2024-01-15T09:30:00Z'
+              data_columns:
+                key: value
               duration: 1
+              error: error
               file_upload_ids:
                 key: value
-              could_be_tasks_list: true
+              finished_at: '2024-01-15T09:30:00Z'
               found_formats:
                 key: value
-              data_columns:
+              id: 1
+              preannotated_from_fields:
+                key: value
+              prediction_count: 1
+              project: 1
+              return_task_ids: true
+              status: created
+              task_count: 1
+              task_ids:
                 key: value
               tasks:
                 key: value
-              task_ids:
-                key: value
+              updated_at: '2024-01-15T09:30:00Z'
+              url: url
       audiences:
         - public
     delete_all_tasks:
@@ -72,139 +72,6 @@ service:
             id: 1
       audiences:
         - public
-    api_projects_tasks_assignees_retrieve:
-      path: /api/projects/{id}/tasks/{task_pk}/assignees
-      method: GET
-      auth: true
-      docs: >-
-        Retrieve a list of tasks and assignees for those tasks for a specific
-        project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-        task_pk:
-          type: integer
-          docs: A unique integer value identifying this task.
-      display-name: Get assigned tasks and assignees
-      response:
-        docs: ''
-        type: root.TaskAssignment
-      examples:
-        - path-parameters:
-            id: 1
-            task_pk: 1
-          response:
-            body:
-              id: 1
-              created_at: '2024-01-15T09:30:00Z'
-              type: AN
-              assignee: 1
-              task: 1
-    api_projects_tasks_assignees_create_2:
-      path: /api/projects/{id}/tasks/{task_pk}/assignees
-      method: POST
-      auth: true
-      docs: Assign a user to a task in a specific project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-        task_pk:
-          type: integer
-          docs: A unique integer value identifying this task.
-      display-name: Create task assignee
-      request:
-        body: root.TaskAssignmentRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.TaskAssignment
-      examples:
-        - path-parameters:
-            id: 1
-            task_pk: 1
-          request:
-            assignee: 1
-            task: 1
-          response:
-            body:
-              id: 1
-              created_at: '2024-01-15T09:30:00Z'
-              type: AN
-              assignee: 1
-              task: 1
-    api_projects_tasks_assignees_destroy:
-      path: /api/projects/{id}/tasks/{task_pk}/assignees
-      method: DELETE
-      auth: true
-      docs: Remove the assignee for a task for a specific project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-        task_pk:
-          type: integer
-          docs: A unique integer value identifying this task.
-      display-name: Delete task assignee
-      examples:
-        - path-parameters:
-            id: 1
-            task_pk: 1
-    api_projects_tasks_assignees_partial_update:
-      path: /api/projects/{id}/tasks/{task_pk}/assignees
-      method: PATCH
-      auth: true
-      docs: Update the assignee for a task in a specific project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-        task_pk:
-          type: integer
-          docs: A unique integer value identifying this task.
-      display-name: Update task assignee
-      request:
-        name: PatchedTaskAssignmentRequest
-        body:
-          properties:
-            type:
-              type: optional<root.TypeEnum>
-              docs: |-
-                Type of assignment: Annotate|Review
-
-                * `AN` - Annotate
-                * `RE` - Review
-            assignee:
-              type: optional<integer>
-              docs: Assigned user
-            task:
-              type: optional<integer>
-              docs: Assigned task
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.TaskAssignment
-      examples:
-        - path-parameters:
-            id: 1
-            task_pk: 1
-          request: {}
-          response:
-            body:
-              id: 1
-              created_at: '2024-01-15T09:30:00Z'
-              type: AN
-              assignee: 1
-              task: 1
     api_projects_tasks_assignees_create:
       path: /api/projects/{id}/tasks/assignees
       method: POST
@@ -244,6 +111,139 @@ service:
             body:
               assignments:
                 - key: value
+    api_projects_tasks_assignees_retrieve:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve a list of tasks and assignees for those tasks for a specific
+        project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Get assigned tasks and assignees
+      response:
+        docs: ''
+        type: root.TaskAssignment
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+          response:
+            body:
+              assignee: 1
+              created_at: '2024-01-15T09:30:00Z'
+              id: 1
+              task: 1
+              type: AN
+    api_projects_tasks_assignees_create_2:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: POST
+      auth: true
+      docs: Assign a user to a task in a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Create task assignee
+      request:
+        body: root.TaskAssignmentRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.TaskAssignment
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+          request:
+            assignee: 1
+            task: 1
+          response:
+            body:
+              assignee: 1
+              created_at: '2024-01-15T09:30:00Z'
+              id: 1
+              task: 1
+              type: AN
+    api_projects_tasks_assignees_destroy:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: DELETE
+      auth: true
+      docs: Remove the assignee for a task for a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Delete task assignee
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+    api_projects_tasks_assignees_partial_update:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: PATCH
+      auth: true
+      docs: Update the assignee for a task in a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Update task assignee
+      request:
+        name: PatchedTaskAssignmentRequest
+        body:
+          properties:
+            assignee:
+              type: optional<integer>
+              docs: Assigned user
+            task:
+              type: optional<integer>
+              docs: Assigned task
+            type:
+              type: optional<root.TypeEnum>
+              docs: |-
+                Type of assignment: Annotate|Review
+
+                * `AN` - Annotate
+                * `RE` - Review
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.TaskAssignment
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+          request: {}
+          response:
+            body:
+              assignee: 1
+              created_at: '2024-01-15T09:30:00Z'
+              id: 1
+              task: 1
+              type: AN
     list:
       path: /api/tasks/
       method: GET
@@ -341,55 +341,55 @@ service:
         - response:
             body:
               tasks:
-                - id: 1
-                  agreement: agreement
-                  predictions:
-                    - {}
+                - agreement: agreement
                   annotations: annotations
-                  drafts:
-                    - {}
+                  annotations_ids: annotations_ids
+                  annotations_results: annotations_results
                   annotators:
                     - 1
-                  inner_id: 1
-                  cancelled_annotations: 1
-                  total_annotations: 1
-                  total_predictions: 1
-                  completed_at: '2024-01-15T09:30:00Z'
-                  annotations_results: annotations_results
-                  predictions_results: predictions_results
-                  predictions_score: 1.1
-                  file_upload: file_upload
-                  storage_filename: storage_filename
-                  annotations_ids: annotations_ids
-                  predictions_model_versions: predictions_model_versions
+                  annotators_count: 1
                   avg_lead_time: 1.1
-                  draft_exists: true
-                  updated_by:
-                    - key: value
-                  reviewers:
-                    - key: value
-                  comments: comments
+                  cancelled_annotations: 1
                   comment_authors:
                     - key: value
-                  reviewed: true
-                  reviews_accepted: 1
-                  reviews_rejected: 1
-                  ground_truth: true
-                  annotators_count: 1
-                  reviewers_count: 1
                   comment_authors_count: 1
+                  comment_count: 1
+                  comments: comments
+                  completed_at: '2024-01-15T09:30:00Z'
+                  created_at: '2024-01-15T09:30:00Z'
                   data:
                     key: value
+                  draft_exists: true
+                  drafts:
+                    - {}
+                  file_upload: file_upload
+                  ground_truth: true
+                  id: 1
+                  inner_id: 1
+                  is_labeled: true
+                  last_comment_updated_at: '2024-01-15T09:30:00Z'
                   meta:
                     key: value
-                  created_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-                  is_labeled: true
                   overlap: 1
-                  comment_count: 1
-                  unresolved_comment_count: 1
-                  last_comment_updated_at: '2024-01-15T09:30:00Z'
+                  predictions:
+                    - {}
+                  predictions_model_versions: predictions_model_versions
+                  predictions_results: predictions_results
+                  predictions_score: 1.1
                   project: 1
+                  reviewed: true
+                  reviewers:
+                    - key: value
+                  reviewers_count: 1
+                  reviews_accepted: 1
+                  reviews_rejected: 1
+                  storage_filename: storage_filename
+                  total_annotations: 1
+                  total_predictions: 1
+                  unresolved_comment_count: 1
+                  updated_at: '2024-01-15T09:30:00Z'
+                  updated_by:
+                    - key: value
               total: 123
               total_annotations: 456
               total_predictions: 78
@@ -407,22 +407,46 @@ service:
         name: LseTaskRequest
         body:
           properties:
+            cancelled_annotations:
+              type: optional<integer>
+              docs: Number of total cancelled annotations for the current task
+              validation:
+                min: -2147483648
+                max: 2147483647
+            comment_authors:
+              type: optional<list<integer>>
+              docs: Users who wrote comments
+            comment_count:
+              type: optional<integer>
+              docs: Number of comments in the task including all annotations
+              validation:
+                min: -2147483648
+                max: 2147483647
             data: unknown
-            meta: optional<unknown>
+            file_upload:
+              type: optional<integer>
+              docs: Uploaded file used as data source for this task
+            inner_id:
+              type: optional<long>
+              docs: Internal task ID in the project, starts with 1
             is_labeled:
               type: optional<boolean>
               docs: >-
                 True if the number of annotations for this task is greater than
                 or equal to the number of maximum_completions for the project
+            last_comment_updated_at:
+              type: optional<datetime>
+              docs: When the last comment was updated
+            meta: optional<unknown>
             overlap:
               type: optional<integer>
               docs: Number of distinct annotators that processed the current task
               validation:
                 min: -2147483648
                 max: 2147483647
-            inner_id:
-              type: optional<long>
-              docs: Internal task ID in the project, starts with 1
+            project:
+              type: optional<integer>
+              docs: Project ID for this task
             total_annotations:
               type: optional<integer>
               docs: >-
@@ -431,21 +455,9 @@ service:
               validation:
                 min: -2147483648
                 max: 2147483647
-            cancelled_annotations:
-              type: optional<integer>
-              docs: Number of total cancelled annotations for the current task
-              validation:
-                min: -2147483648
-                max: 2147483647
             total_predictions:
               type: optional<integer>
               docs: Number of total predictions for the current task
-              validation:
-                min: -2147483648
-                max: 2147483647
-            comment_count:
-              type: optional<integer>
-              docs: Number of comments in the task including all annotations
               validation:
                 min: -2147483648
                 max: 2147483647
@@ -457,21 +469,9 @@ service:
               validation:
                 min: -2147483648
                 max: 2147483647
-            last_comment_updated_at:
-              type: optional<datetime>
-              docs: When the last comment was updated
-            project:
-              type: optional<integer>
-              docs: Project ID for this task
             updated_by:
               type: optional<integer>
               docs: Last annotator or reviewer who updated this task
-            file_upload:
-              type: optional<integer>
-              docs: Uploaded file used as data source for this task
-            comment_authors:
-              type: optional<list<integer>>
-              docs: Users who wrote comments
         content-type: application/json
       response:
         docs: ''
@@ -500,69 +500,69 @@ service:
             id: id
           response:
             body:
-              id: 1
               agreement: agreement
-              predictions:
-                - result:
+              annotations: annotations
+              annotations_ids: annotations_ids
+              annotations_results: annotations_results
+              annotators:
+                - 1
+              annotators_count: 1
+              avg_lead_time: 1.1
+              cancelled_annotations: 1
+              comment_authors:
+                - key: value
+              comment_authors_count: 1
+              comment_count: 1
+              comments: comments
+              completed_at: '2024-01-15T09:30:00Z'
+              created_at: '2024-01-15T09:30:00Z'
+              data:
+                key: value
+              draft_exists: true
+              drafts:
+                - created_at: '2024-01-15T09:30:00Z'
+                  result:
                     - key: value
-                  score: 1.1
-                  model_version: model_version
+                  updated_at: '2024-01-15T09:30:00Z'
+              file_upload: file_upload
+              ground_truth: true
+              id: 1
+              inner_id: 1
+              is_labeled: true
+              last_comment_updated_at: '2024-01-15T09:30:00Z'
+              meta:
+                key: value
+              overlap: 1
+              predictions:
+                - created_at: '2024-01-15T09:30:00Z'
                   model:
                     key: value
                   model_run:
                     key: value
-                  task: 1
+                  model_version: model_version
                   project: 1
-                  created_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-              annotations: annotations
-              drafts:
-                - result:
+                  result:
                     - key: value
-                  created_at: '2024-01-15T09:30:00Z'
+                  score: 1.1
+                  task: 1
                   updated_at: '2024-01-15T09:30:00Z'
-              annotators:
-                - 1
-              inner_id: 1
-              cancelled_annotations: 1
-              total_annotations: 1
-              total_predictions: 1
-              completed_at: '2024-01-15T09:30:00Z'
-              annotations_results: annotations_results
+              predictions_model_versions: predictions_model_versions
               predictions_results: predictions_results
               predictions_score: 1.1
-              file_upload: file_upload
-              storage_filename: storage_filename
-              annotations_ids: annotations_ids
-              predictions_model_versions: predictions_model_versions
-              avg_lead_time: 1.1
-              draft_exists: true
-              updated_by:
-                - key: value
+              project: 1
+              reviewed: true
               reviewers:
                 - key: value
-              comments: comments
-              comment_authors:
-                - key: value
-              reviewed: true
+              reviewers_count: 1
               reviews_accepted: 1
               reviews_rejected: 1
-              ground_truth: true
-              annotators_count: 1
-              reviewers_count: 1
-              comment_authors_count: 1
-              data:
-                key: value
-              meta:
-                key: value
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              is_labeled: true
-              overlap: 1
-              comment_count: 1
+              storage_filename: storage_filename
+              total_annotations: 1
+              total_predictions: 1
               unresolved_comment_count: 1
-              last_comment_updated_at: '2024-01-15T09:30:00Z'
-              project: 1
+              updated_at: '2024-01-15T09:30:00Z'
+              updated_by:
+                - key: value
       audiences:
         - public
     delete:
@@ -598,37 +598,43 @@ service:
         name: PatchedLseTaskRequest
         body:
           properties:
-            inner_id: optional<integer>
-            cancelled_annotations: optional<integer>
-            total_annotations: optional<integer>
-            total_predictions: optional<integer>
-            completed_at: optional<datetime>
-            predictions_score: optional<double>
             avg_lead_time: optional<double>
-            draft_exists: optional<boolean>
-            reviewed: optional<boolean>
-            reviews_accepted: optional<integer>
-            reviews_rejected: optional<integer>
-            ground_truth: optional<boolean>
-            data: optional<unknown>
-            meta: optional<unknown>
-            is_labeled:
-              type: optional<boolean>
-              docs: >-
-                True if the number of annotations for this task is greater than
-                or equal to the number of maximum_completions for the project
-            overlap:
-              type: optional<integer>
-              docs: Number of distinct annotators that processed the current task
-              validation:
-                min: -2147483648
-                max: 2147483647
+            cancelled_annotations: optional<integer>
             comment_count:
               type: optional<integer>
               docs: Number of comments in the task including all annotations
               validation:
                 min: -2147483648
                 max: 2147483647
+            completed_at: optional<datetime>
+            data: optional<unknown>
+            draft_exists: optional<boolean>
+            ground_truth: optional<boolean>
+            inner_id: optional<integer>
+            is_labeled:
+              type: optional<boolean>
+              docs: >-
+                True if the number of annotations for this task is greater than
+                or equal to the number of maximum_completions for the project
+            last_comment_updated_at:
+              type: optional<datetime>
+              docs: When the last comment was updated
+            meta: optional<unknown>
+            overlap:
+              type: optional<integer>
+              docs: Number of distinct annotators that processed the current task
+              validation:
+                min: -2147483648
+                max: 2147483647
+            predictions_score: optional<double>
+            project:
+              type: optional<integer>
+              docs: Project ID for this task
+            reviewed: optional<boolean>
+            reviews_accepted: optional<integer>
+            reviews_rejected: optional<integer>
+            total_annotations: optional<integer>
+            total_predictions: optional<integer>
             unresolved_comment_count:
               type: optional<integer>
               docs: >-
@@ -637,12 +643,6 @@ service:
               validation:
                 min: -2147483648
                 max: 2147483647
-            last_comment_updated_at:
-              type: optional<datetime>
-              docs: When the last comment was updated
-            project:
-              type: optional<integer>
-              docs: Project ID for this task
         content-type: application/json
       response:
         docs: ''
@@ -653,69 +653,69 @@ service:
           request: {}
           response:
             body:
-              id: 1
               agreement: agreement
-              predictions:
-                - result:
+              annotations: annotations
+              annotations_ids: annotations_ids
+              annotations_results: annotations_results
+              annotators:
+                - 1
+              annotators_count: 1
+              avg_lead_time: 1.1
+              cancelled_annotations: 1
+              comment_authors:
+                - key: value
+              comment_authors_count: 1
+              comment_count: 1
+              comments: comments
+              completed_at: '2024-01-15T09:30:00Z'
+              created_at: '2024-01-15T09:30:00Z'
+              data:
+                key: value
+              draft_exists: true
+              drafts:
+                - created_at: '2024-01-15T09:30:00Z'
+                  result:
                     - key: value
-                  score: 1.1
-                  model_version: model_version
+                  updated_at: '2024-01-15T09:30:00Z'
+              file_upload: file_upload
+              ground_truth: true
+              id: 1
+              inner_id: 1
+              is_labeled: true
+              last_comment_updated_at: '2024-01-15T09:30:00Z'
+              meta:
+                key: value
+              overlap: 1
+              predictions:
+                - created_at: '2024-01-15T09:30:00Z'
                   model:
                     key: value
                   model_run:
                     key: value
-                  task: 1
+                  model_version: model_version
                   project: 1
-                  created_at: '2024-01-15T09:30:00Z'
-                  updated_at: '2024-01-15T09:30:00Z'
-              annotations: annotations
-              drafts:
-                - result:
+                  result:
                     - key: value
-                  created_at: '2024-01-15T09:30:00Z'
+                  score: 1.1
+                  task: 1
                   updated_at: '2024-01-15T09:30:00Z'
-              annotators:
-                - 1
-              inner_id: 1
-              cancelled_annotations: 1
-              total_annotations: 1
-              total_predictions: 1
-              completed_at: '2024-01-15T09:30:00Z'
-              annotations_results: annotations_results
+              predictions_model_versions: predictions_model_versions
               predictions_results: predictions_results
               predictions_score: 1.1
-              file_upload: file_upload
-              storage_filename: storage_filename
-              annotations_ids: annotations_ids
-              predictions_model_versions: predictions_model_versions
-              avg_lead_time: 1.1
-              draft_exists: true
-              updated_by:
-                - key: value
+              project: 1
+              reviewed: true
               reviewers:
                 - key: value
-              comments: comments
-              comment_authors:
-                - key: value
-              reviewed: true
+              reviewers_count: 1
               reviews_accepted: 1
               reviews_rejected: 1
-              ground_truth: true
-              annotators_count: 1
-              reviewers_count: 1
-              comment_authors_count: 1
-              data:
-                key: value
-              meta:
-                key: value
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              is_labeled: true
-              overlap: 1
-              comment_count: 1
+              storage_filename: storage_filename
+              total_annotations: 1
+              total_predictions: 1
               unresolved_comment_count: 1
-              last_comment_updated_at: '2024-01-15T09:30:00Z'
-              project: 1
+              updated_at: '2024-01-15T09:30:00Z'
+              updated_by:
+                - key: value
       audiences:
         - public
   source:

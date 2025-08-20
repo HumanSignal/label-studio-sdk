@@ -18,11 +18,11 @@ service:
       examples:
         - response:
             body:
-              workspaces_groups:
+              projects_groups:
                 key: value
               roles_groups:
                 key: value
-              projects_groups:
+              workspaces_groups:
                 key: value
     api_saml_settings_create:
       path: /api/saml/settings
@@ -36,9 +36,9 @@ service:
         name: SamlSettingsUpdateRequest
         body:
           properties:
-            workspaces_groups: optional<list<list<string>>>
-            roles_groups: optional<list<list<string>>>
             projects_groups: optional<list<root.ProjectGroupRequest>>
+            roles_groups: optional<list<list<string>>>
+            workspaces_groups: optional<list<list<string>>>
         content-type: application/json
       response:
         docs: ''
@@ -47,14 +47,14 @@ service:
         - request: {}
           response:
             body:
-              workspaces_groups:
-                - - workspaces_groups
+              projects_groups:
+                - group: group
+                  project_id: 1
+                  role: Inherit
               roles_groups:
                 - - roles_groups
-              projects_groups:
-                - project_id: 1
-                  group: group
-                  role: Inherit
+              workspaces_groups:
+                - - workspaces_groups
     api_scim_settings_retrieve:
       path: /api/scim/settings
       method: GET
@@ -69,11 +69,11 @@ service:
       examples:
         - response:
             body:
-              workspaces_groups:
+              projects_groups:
                 key: value
               roles_groups:
                 key: value
-              projects_groups:
+              workspaces_groups:
                 key: value
     api_scim_settings_create:
       path: /api/scim/settings
@@ -87,9 +87,9 @@ service:
         name: ScimSettingsUpdateRequest
         body:
           properties:
-            workspaces_groups: optional<list<list<string>>>
-            roles_groups: optional<list<list<string>>>
             projects_groups: optional<list<root.ProjectGroupRequest>>
+            roles_groups: optional<list<list<string>>>
+            workspaces_groups: optional<list<list<string>>>
         content-type: application/json
       response:
         docs: ''
@@ -98,13 +98,13 @@ service:
         - request: {}
           response:
             body:
-              workspaces_groups:
-                - - workspaces_groups
+              projects_groups:
+                - group: group
+                  project_id: 1
+                  role: Inherit
               roles_groups:
                 - - roles_groups
-              projects_groups:
-                - project_id: 1
-                  group: group
-                  role: Inherit
+              workspaces_groups:
+                - - workspaces_groups
   source:
     openapi: openapi/openapi.yaml

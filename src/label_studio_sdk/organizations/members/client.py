@@ -112,8 +112,8 @@ class MembersClient:
         self,
         id: int,
         *,
-        user_id: typing.Optional[int] = OMIT,
         role: typing.Optional[Role9E7Enum] = OMIT,
+        user_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
         """
@@ -136,9 +136,9 @@ class MembersClient:
         id : int
             A unique integer value identifying this organization.
 
-        user_id : typing.Optional[int]
-
         role : typing.Optional[Role9E7Enum]
+
+        user_id : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -163,8 +163,8 @@ class MembersClient:
             f"api/organizations/{jsonable_encoder(id)}/memberships",
             method="PATCH",
             json={
-                "user_id": user_id,
                 "role": role,
+                "user_id": user_id,
             },
             headers={
                 "content-type": "application/json",
@@ -412,8 +412,8 @@ class AsyncMembersClient:
         self,
         id: int,
         *,
-        user_id: typing.Optional[int] = OMIT,
         role: typing.Optional[Role9E7Enum] = OMIT,
+        user_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
         """
@@ -436,9 +436,9 @@ class AsyncMembersClient:
         id : int
             A unique integer value identifying this organization.
 
-        user_id : typing.Optional[int]
-
         role : typing.Optional[Role9E7Enum]
+
+        user_id : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -471,8 +471,8 @@ class AsyncMembersClient:
             f"api/organizations/{jsonable_encoder(id)}/memberships",
             method="PATCH",
             json={
-                "user_id": user_id,
                 "role": role,
+                "user_id": user_id,
             },
             headers={
                 "content-type": "application/json",
