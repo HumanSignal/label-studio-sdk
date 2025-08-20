@@ -17,17 +17,17 @@ service:
         body:
           properties:
             created_by: optional<integer>
-            title:
-              type: optional<string>
-              docs: Blueprint name. Must be between 3 and 50 characters long.
-              validation:
-                maxLength: 50
             description:
               type: optional<string>
               docs: Project description
             label_config:
               type: optional<string>
               docs: Labeling configuration in XML format
+            title:
+              type: optional<string>
+              docs: Blueprint name. Must be between 3 and 50 characters long.
+              validation:
+                maxLength: 50
         content-type: application/json
       response:
         docs: ''
@@ -36,15 +36,15 @@ service:
         - request: {}
           response:
             body:
+              created_at: '2024-01-15T09:30:00Z'
+              created_by: 1
+              description: description
               id: 1
+              label_config: label_config
+              project: 1
               share_id: share_id
               short_url: short_url
-              project: 1
-              created_by: 1
               title: title
-              description: description
-              label_config: label_config
-              created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
     api_blueprints_destroy:
       path: /api/blueprints/{id}/
