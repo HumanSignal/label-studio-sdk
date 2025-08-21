@@ -109,8 +109,8 @@ service:
             task: 1
           response:
             body:
-              assignments:
-                - key: value
+              assignments: 1
+              async: true
     api_projects_tasks_assignees_retrieve:
       path: /api/projects/{id}/tasks/{task_pk}/assignees
       method: GET
@@ -723,7 +723,8 @@ service:
 types:
   ApiProjectsTasksAssigneesCreateResponse:
     properties:
-      assignments: optional<list<map<string, unknown>>>
+      assignments: optional<integer>
+      async: optional<boolean>
     source:
       openapi: openapi/openapi.yaml
   TasksListRequestFields:
