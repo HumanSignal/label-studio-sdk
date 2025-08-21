@@ -2,33 +2,33 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+import datetime as dt
+import pydantic
 from .project_subset_enum import ProjectSubsetEnum
 from .model_run_status_enum import ModelRunStatusEnum
-import pydantic
-import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ModelRun(UncheckedBaseModel):
+    completed_at: typing.Optional[dt.datetime] = None
+    created_at: dt.datetime
+    created_by: typing.Optional[int] = None
     id: int
-    parent_model: int
-    project_subset: typing.Optional[ProjectSubsetEnum] = None
-    status: ModelRunStatusEnum
     job_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Job ID for inference job for a ModelRun e.g. Adala job ID
     """
 
-    total_predictions: typing.Optional[int] = None
-    total_correct_predictions: typing.Optional[int] = None
-    total_tasks: typing.Optional[int] = None
-    created_at: dt.datetime
-    triggered_at: typing.Optional[dt.datetime] = None
-    predictions_updated_at: typing.Optional[dt.datetime] = None
-    completed_at: typing.Optional[dt.datetime] = None
     organization: typing.Optional[int] = None
+    parent_model: int
+    predictions_updated_at: typing.Optional[dt.datetime] = None
     project: int
-    created_by: typing.Optional[int] = None
+    project_subset: typing.Optional[ProjectSubsetEnum] = None
+    status: ModelRunStatusEnum
+    total_correct_predictions: typing.Optional[int] = None
+    total_predictions: typing.Optional[int] = None
+    total_tasks: typing.Optional[int] = None
+    triggered_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

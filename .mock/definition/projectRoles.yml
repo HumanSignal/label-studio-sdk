@@ -4,32 +4,6 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_projects_roles_retrieve:
-      path: /api/projects/{id}/roles
-      method: GET
-      auth: true
-      docs: |2-
-
-                List users and their project level roles for a given project.
-                If user is not listed here and is a member of the project then they would behave as assigned role in organization.
-                
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: List project roles
-      response:
-        docs: ''
-        type: root.ProjectRole
-      examples:
-        - path-parameters:
-            id: 1
-          response:
-            body:
-              id: 1
-              role: OW
-              user: 1
-              project: 1
     api_projects_roles_list:
       path: /api/projects/roles/
       method: GET
@@ -55,9 +29,9 @@ service:
         - response:
             body:
               - id: 1
+                project: 1
                 role: OW
                 user: 1
-                project: 1
     api_projects_roles_create:
       path: /api/projects/roles/
       method: POST
@@ -73,6 +47,7 @@ service:
         name: ProjectRoleRequest
         body:
           properties:
+            project: integer
             role:
               type: root.Role9E7Enum
               docs: |-
@@ -86,22 +61,21 @@ service:
                 * `DI` - Deactivated
                 * `NO` - Not Activated
             user: integer
-            project: integer
         content-type: application/json
       response:
         docs: ''
         type: root.ProjectRole
       examples:
         - request:
+            project: 1
             role: OW
             user: 1
-            project: 1
           response:
             body:
               id: 1
+              project: 1
               role: OW
               user: 1
-              project: 1
     api_projects_roles_destroy:
       path: /api/projects/roles/{id}/
       method: DELETE
@@ -120,5 +94,31 @@ service:
       examples:
         - path-parameters:
             id: 1
+    api_projects_roles_retrieve:
+      path: /api/projects/{id}/roles
+      method: GET
+      auth: true
+      docs: |2-
+
+                List users and their project level roles for a given project.
+                If user is not listed here and is a member of the project then they would behave as assigned role in organization.
+                
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: List project roles
+      response:
+        docs: ''
+        type: root.ProjectRole
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              id: 1
+              project: 1
+              role: OW
+              user: 1
   source:
     openapi: openapi/openapi.yaml

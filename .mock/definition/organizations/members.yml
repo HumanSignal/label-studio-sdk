@@ -57,20 +57,20 @@ service:
               results:
                 - id: 1
                   organization: 1
+                  role: role
                   user:
-                    id: 1
-                    username: username
-                    last_activity: '2024-01-15T09:30:00Z'
                     avatar: avatar
+                    contributed_to_projects: contributed_to_projects
+                    created_projects: created_projects
+                    id: 1
                     initials: initials
+                    last_activity: '2024-01-15T09:30:00Z'
                     lse_fields:
+                      email_notification_settings: email_notification_settings
                       invite_expired: invite_expired
                       invite_expired_at: invite_expired_at
-                      email_notification_settings: email_notification_settings
                     pause: pause
-                    created_projects: created_projects
-                    contributed_to_projects: contributed_to_projects
-                  role: role
+                    username: username
       audiences:
         - public
     update:
@@ -123,8 +123,8 @@ service:
         name: PatchedOrganizationMemberCreateUpdateRequest
         body:
           properties:
-            user_id: optional<integer>
             role: optional<root.Role9E7Enum>
+            user_id: optional<integer>
         content-type: application/json
       response:
         docs: ''
@@ -137,39 +137,39 @@ service:
             body:
               id: 1
               organization: 1
+              role: role
               user:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                username: username
-                email: email
-                last_activity: '2024-01-15T09:30:00Z'
-                custom_hotkeys:
-                  key: value
-                avatar: avatar
-                initials: initials
-                phone: phone
                 active_organization: 1
                 allow_newsletters: true
+                avatar: avatar
+                contributed_to_projects: contributed_to_projects
+                created_projects: created_projects
+                custom_hotkeys:
+                  key: value
                 date_joined: '2024-01-15T09:30:00Z'
+                email: email
+                first_name: first_name
+                id: 1
+                initials: initials
+                last_activity: '2024-01-15T09:30:00Z'
+                last_name: last_name
                 lse_fields:
+                  email_notification_settings: email_notification_settings
+                  invite_activated: true
                   invite_expired: invite_expired
                   invite_expired_at: invite_expired_at
                   invited_at: '2024-01-15T09:30:00Z'
-                  invite_activated: true
-                  trial_company: trial_company
-                  trial_role: annotator
-                  trial_models_in_production: trial_models_in_production
-                  trial_experience_labeling: trial_experience_labeling
-                  trial_license_enterprise: true
-                  social_auth_finished: true
                   invited_by: 1
                   onboarding_state: not_started
-                  email_notification_settings: email_notification_settings
+                  social_auth_finished: true
+                  trial_company: trial_company
+                  trial_experience_labeling: trial_experience_labeling
+                  trial_license_enterprise: true
+                  trial_models_in_production: trial_models_in_production
+                  trial_role: annotator
                 pause: pause
-                created_projects: created_projects
-                contributed_to_projects: contributed_to_projects
-              role: role
+                phone: phone
+                username: username
       audiences:
         - public
     get:
@@ -196,11 +196,11 @@ service:
             user_pk: 1
           response:
             body:
-              user: 1
-              organization: 1
-              contributed_projects_count: contributed_projects_count
               annotations_count: annotations_count
+              contributed_projects_count: contributed_projects_count
               created_at: '2024-01-15T09:30:00Z'
+              organization: 1
+              user: 1
       audiences:
         - public
     delete:

@@ -95,12 +95,12 @@ class CommentsClient:
         self,
         *,
         expand_created_by: typing.Optional[bool] = None,
-        region_ref: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        classifications: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        text: typing.Optional[str] = OMIT,
-        is_resolved: typing.Optional[bool] = OMIT,
-        draft: typing.Optional[int] = OMIT,
         annotation: typing.Optional[int] = OMIT,
+        classifications: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        draft: typing.Optional[int] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
+        region_ref: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MaybeExpandedComment:
         """
@@ -111,19 +111,19 @@ class CommentsClient:
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
 
-        region_ref : typing.Optional[typing.Optional[typing.Any]]
+        annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
 
-        text : typing.Optional[str]
-            Reviewer or annotator comment
+        draft : typing.Optional[int]
 
         is_resolved : typing.Optional[bool]
             True if the comment is resolved
 
-        draft : typing.Optional[int]
+        region_ref : typing.Optional[typing.Optional[typing.Any]]
 
-        annotation : typing.Optional[int]
+        text : typing.Optional[str]
+            Reviewer or annotator comment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -149,12 +149,12 @@ class CommentsClient:
                 "expand_created_by": expand_created_by,
             },
             json={
-                "region_ref": region_ref,
-                "classifications": classifications,
-                "text": text,
-                "is_resolved": is_resolved,
-                "draft": draft,
                 "annotation": annotation,
+                "classifications": classifications,
+                "draft": draft,
+                "is_resolved": is_resolved,
+                "region_ref": region_ref,
+                "text": text,
             },
             request_options=request_options,
             omit=OMIT,
@@ -172,6 +172,68 @@ class CommentsClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def export(
+        self,
+        *,
+        annotation: typing.Optional[int] = None,
+        annotators: typing.Optional[str] = None,
+        draft: typing.Optional[int] = None,
+        expand_created_by: typing.Optional[bool] = None,
+        projects: typing.Optional[str] = None,
+        tz: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+        Export comments to CSV file
+
+        Parameters
+        ----------
+        annotation : typing.Optional[int]
+
+        annotators : typing.Optional[str]
+
+        draft : typing.Optional[int]
+
+        expand_created_by : typing.Optional[bool]
+
+        projects : typing.Optional[str]
+
+        tz : typing.Optional[str]
+            Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+            CSV file with comments
+        """
+        with self._client_wrapper.httpx_client.stream(
+            "api/comments/export/",
+            method="GET",
+            params={
+                "annotation": annotation,
+                "annotators": annotators,
+                "draft": draft,
+                "expand_created_by": expand_created_by,
+                "projects": projects,
+                "tz": tz,
+            },
+            request_options=request_options,
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                _response.read()
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
         self,
@@ -287,12 +349,12 @@ class CommentsClient:
         id: str,
         *,
         expand_created_by: typing.Optional[bool] = None,
-        region_ref: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        classifications: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        text: typing.Optional[str] = OMIT,
-        is_resolved: typing.Optional[bool] = OMIT,
-        draft: typing.Optional[int] = OMIT,
         annotation: typing.Optional[int] = OMIT,
+        classifications: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        draft: typing.Optional[int] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
+        region_ref: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MaybeExpandedComment:
         """
@@ -305,19 +367,19 @@ class CommentsClient:
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
 
-        region_ref : typing.Optional[typing.Optional[typing.Any]]
+        annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
 
-        text : typing.Optional[str]
-            Reviewer or annotator comment
+        draft : typing.Optional[int]
 
         is_resolved : typing.Optional[bool]
             True if the comment is resolved
 
-        draft : typing.Optional[int]
+        region_ref : typing.Optional[typing.Optional[typing.Any]]
 
-        annotation : typing.Optional[int]
+        text : typing.Optional[str]
+            Reviewer or annotator comment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -345,12 +407,12 @@ class CommentsClient:
                 "expand_created_by": expand_created_by,
             },
             json={
-                "region_ref": region_ref,
-                "classifications": classifications,
-                "text": text,
-                "is_resolved": is_resolved,
-                "draft": draft,
                 "annotation": annotation,
+                "classifications": classifications,
+                "draft": draft,
+                "is_resolved": is_resolved,
+                "region_ref": region_ref,
+                "text": text,
             },
             headers={
                 "content-type": "application/json",
@@ -371,68 +433,6 @@ class CommentsClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def export(
-        self,
-        *,
-        annotation: typing.Optional[int] = None,
-        annotators: typing.Optional[str] = None,
-        draft: typing.Optional[int] = None,
-        expand_created_by: typing.Optional[bool] = None,
-        projects: typing.Optional[str] = None,
-        tz: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
-        """
-        Export comments to CSV file
-
-        Parameters
-        ----------
-        annotation : typing.Optional[int]
-
-        annotators : typing.Optional[str]
-
-        draft : typing.Optional[int]
-
-        expand_created_by : typing.Optional[bool]
-
-        projects : typing.Optional[str]
-
-        tz : typing.Optional[str]
-            Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-
-        Yields
-        ------
-        typing.Iterator[bytes]
-            CSV file with comments
-        """
-        with self._client_wrapper.httpx_client.stream(
-            "api/comments/export/",
-            method="GET",
-            params={
-                "annotation": annotation,
-                "annotators": annotators,
-                "draft": draft,
-                "expand_created_by": expand_created_by,
-                "projects": projects,
-                "tz": tz,
-            },
-            request_options=request_options,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
-                    for _chunk in _response.iter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                _response.read()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
 class AsyncCommentsClient:
@@ -524,12 +524,12 @@ class AsyncCommentsClient:
         self,
         *,
         expand_created_by: typing.Optional[bool] = None,
-        region_ref: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        classifications: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        text: typing.Optional[str] = OMIT,
-        is_resolved: typing.Optional[bool] = OMIT,
-        draft: typing.Optional[int] = OMIT,
         annotation: typing.Optional[int] = OMIT,
+        classifications: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        draft: typing.Optional[int] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
+        region_ref: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MaybeExpandedComment:
         """
@@ -540,19 +540,19 @@ class AsyncCommentsClient:
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
 
-        region_ref : typing.Optional[typing.Optional[typing.Any]]
+        annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
 
-        text : typing.Optional[str]
-            Reviewer or annotator comment
+        draft : typing.Optional[int]
 
         is_resolved : typing.Optional[bool]
             True if the comment is resolved
 
-        draft : typing.Optional[int]
+        region_ref : typing.Optional[typing.Optional[typing.Any]]
 
-        annotation : typing.Optional[int]
+        text : typing.Optional[str]
+            Reviewer or annotator comment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -586,12 +586,12 @@ class AsyncCommentsClient:
                 "expand_created_by": expand_created_by,
             },
             json={
-                "region_ref": region_ref,
-                "classifications": classifications,
-                "text": text,
-                "is_resolved": is_resolved,
-                "draft": draft,
                 "annotation": annotation,
+                "classifications": classifications,
+                "draft": draft,
+                "is_resolved": is_resolved,
+                "region_ref": region_ref,
+                "text": text,
             },
             request_options=request_options,
             omit=OMIT,
@@ -609,6 +609,68 @@ class AsyncCommentsClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def export(
+        self,
+        *,
+        annotation: typing.Optional[int] = None,
+        annotators: typing.Optional[str] = None,
+        draft: typing.Optional[int] = None,
+        expand_created_by: typing.Optional[bool] = None,
+        projects: typing.Optional[str] = None,
+        tz: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Export comments to CSV file
+
+        Parameters
+        ----------
+        annotation : typing.Optional[int]
+
+        annotators : typing.Optional[str]
+
+        draft : typing.Optional[int]
+
+        expand_created_by : typing.Optional[bool]
+
+        projects : typing.Optional[str]
+
+        tz : typing.Optional[str]
+            Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+            CSV file with comments
+        """
+        async with self._client_wrapper.httpx_client.stream(
+            "api/comments/export/",
+            method="GET",
+            params={
+                "annotation": annotation,
+                "annotators": annotators,
+                "draft": draft,
+                "expand_created_by": expand_created_by,
+                "projects": projects,
+                "tz": tz,
+            },
+            request_options=request_options,
+        ) as _response:
+            try:
+                if 200 <= _response.status_code < 300:
+                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
+                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
+                        yield _chunk
+                    return
+                await _response.aread()
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
         self,
@@ -740,12 +802,12 @@ class AsyncCommentsClient:
         id: str,
         *,
         expand_created_by: typing.Optional[bool] = None,
-        region_ref: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        classifications: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        text: typing.Optional[str] = OMIT,
-        is_resolved: typing.Optional[bool] = OMIT,
-        draft: typing.Optional[int] = OMIT,
         annotation: typing.Optional[int] = OMIT,
+        classifications: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        draft: typing.Optional[int] = OMIT,
+        is_resolved: typing.Optional[bool] = OMIT,
+        region_ref: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        text: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MaybeExpandedComment:
         """
@@ -758,19 +820,19 @@ class AsyncCommentsClient:
         expand_created_by : typing.Optional[bool]
             Expand the created_by field
 
-        region_ref : typing.Optional[typing.Optional[typing.Any]]
+        annotation : typing.Optional[int]
 
         classifications : typing.Optional[typing.Optional[typing.Any]]
 
-        text : typing.Optional[str]
-            Reviewer or annotator comment
+        draft : typing.Optional[int]
 
         is_resolved : typing.Optional[bool]
             True if the comment is resolved
 
-        draft : typing.Optional[int]
+        region_ref : typing.Optional[typing.Optional[typing.Any]]
 
-        annotation : typing.Optional[int]
+        text : typing.Optional[str]
+            Reviewer or annotator comment
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -806,12 +868,12 @@ class AsyncCommentsClient:
                 "expand_created_by": expand_created_by,
             },
             json={
-                "region_ref": region_ref,
-                "classifications": classifications,
-                "text": text,
-                "is_resolved": is_resolved,
-                "draft": draft,
                 "annotation": annotation,
+                "classifications": classifications,
+                "draft": draft,
+                "is_resolved": is_resolved,
+                "region_ref": region_ref,
+                "text": text,
             },
             headers={
                 "content-type": "application/json",
@@ -832,65 +894,3 @@ class AsyncCommentsClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def export(
-        self,
-        *,
-        annotation: typing.Optional[int] = None,
-        annotators: typing.Optional[str] = None,
-        draft: typing.Optional[int] = None,
-        expand_created_by: typing.Optional[bool] = None,
-        projects: typing.Optional[str] = None,
-        tz: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
-        """
-        Export comments to CSV file
-
-        Parameters
-        ----------
-        annotation : typing.Optional[int]
-
-        annotators : typing.Optional[str]
-
-        draft : typing.Optional[int]
-
-        expand_created_by : typing.Optional[bool]
-
-        projects : typing.Optional[str]
-
-        tz : typing.Optional[str]
-            Timezone in which to export the data. Format IANA timezone name, e.g. "America/New_York"
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-
-        Yields
-        ------
-        typing.AsyncIterator[bytes]
-            CSV file with comments
-        """
-        async with self._client_wrapper.httpx_client.stream(
-            "api/comments/export/",
-            method="GET",
-            params={
-                "annotation": annotation,
-                "annotators": annotators,
-                "draft": draft,
-                "expand_created_by": expand_created_by,
-                "projects": projects,
-                "tz": tz,
-            },
-            request_options=request_options,
-        ) as _response:
-            try:
-                if 200 <= _response.status_code < 300:
-                    _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
-                    async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size):
-                        yield _chunk
-                    return
-                await _response.aread()
-                _response_json = _response.json()
-            except JSONDecodeError:
-                raise ApiError(status_code=_response.status_code, body=_response.text)
-            raise ApiError(status_code=_response.status_code, body=_response_json)

@@ -28,11 +28,11 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - id: 1
-                  annotations_count: 1
+                - annotations_count: 1
                   from_name: from_name
-                  project: 1
+                  id: 1
                   label: 1
+                  project: 1
       audiences:
         - internal
     create:
@@ -55,8 +55,8 @@ service:
               validation:
                 minLength: 1
                 maxLength: 2048
-            project: integer
             label: integer
+            project: integer
         content-type: application/json
       response:
         docs: ''
@@ -64,15 +64,15 @@ service:
       examples:
         - request:
             from_name: from_name
-            project: 1
             label: 1
+            project: 1
           response:
             body:
-              id: 1
               annotations_count: 1
               from_name: from_name
-              project: 1
+              id: 1
               label: 1
+              project: 1
       audiences:
         - internal
     get:
@@ -93,11 +93,11 @@ service:
             id: id
           response:
             body:
-              id: 1
               annotations_count: 1
               from_name: from_name
-              project: 1
+              id: 1
               label: 1
+              project: 1
       audiences:
         - internal
     delete:
@@ -143,8 +143,8 @@ service:
               validation:
                 minLength: 1
                 maxLength: 2048
-            project: optional<integer>
             label: optional<integer>
+            project: optional<integer>
         content-type: application/json
       response:
         docs: ''
@@ -155,11 +155,11 @@ service:
           request: {}
           response:
             body:
-              id: 1
               annotations_count: 1
               from_name: from_name
-              project: 1
+              id: 1
               label: 1
+              project: 1
       audiences:
         - internal
     update_many:
