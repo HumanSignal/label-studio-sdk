@@ -23,30 +23,30 @@ service:
           response:
             body:
               - user:
-                  id: 1
-                  first_name: first_name
-                  last_name: last_name
-                  username: username
-                  email: email
-                  last_activity: '2024-01-15T09:30:00Z'
-                  custom_hotkeys:
-                    key: value
-                  avatar: avatar
-                  initials: initials
-                  phone: phone
                   active_organization: 1
                   active_organization_meta: active_organization_meta
                   allow_newsletters: true
+                  avatar: avatar
+                  custom_hotkeys:
+                    key: value
                   date_joined: '2024-01-15T09:30:00Z'
-                  org_membership:
-                    - role: role
-                      active: active
-                      organization_id: 1
+                  email: email
+                  first_name: first_name
+                  id: 1
+                  initials: initials
+                  last_activity: '2024-01-15T09:30:00Z'
+                  last_name: last_name
                   lse_fields:
+                    email_notification_settings: email_notification_settings
                     invite_expired: invite_expired
                     invite_expired_at: invite_expired_at
-                    email_notification_settings: email_notification_settings
+                  org_membership:
+                    - active: active
+                      organization_id: 1
+                      role: role
                   pause: pause
+                  phone: phone
+                  username: username
                 workspace: 1
       audiences:
         - public

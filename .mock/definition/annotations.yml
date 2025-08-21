@@ -1,9 +1,127 @@
 imports:
   root: __package__.yml
+types:
+  AnnotationBulkSerializerWithSelectedItemsRequestLastAction:
+    discriminated: false
+    docs: |-
+      Action which was performed in the last annotation history item
+
+      * `prediction` - Created from prediction
+      * `propagated_annotation` - Created from another annotation
+      * `imported` - Imported
+      * `submitted` - Submitted
+      * `updated` - Updated
+      * `skipped` - Skipped
+      * `accepted` - Accepted
+      * `rejected` - Rejected
+      * `fixed_and_accepted` - Fixed and accepted
+      * `deleted_review` - Deleted review
+    union:
+      - root.LastActionEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  AnnotationsCreateBulkResponseItem:
+    properties:
+      id:
+        type: integer
+        docs: Annotation ID
+    source:
+      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
   endpoints:
+    create_bulk:
+      path: /api/annotations/bulk/
+      method: POST
+      auth: true
+      docs: Create multiple annotations at once
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Bulk create annotations
+      request:
+        name: AnnotationBulkSerializerWithSelectedItemsRequest
+        body:
+          properties:
+            bulk_created:
+              type: optional<boolean>
+              docs: Annotation was created in bulk mode
+            completed_by: optional<integer>
+            draft_created_at:
+              type: optional<datetime>
+              docs: Draft creation time
+            ground_truth:
+              type: optional<boolean>
+              docs: This annotation is a Ground Truth (ground_truth)
+            import_id:
+              type: optional<long>
+              docs: >-
+                Original annotation ID that was at the import step or NULL if
+                this annotation wasn't imported
+            last_action:
+              type: >-
+                optional<AnnotationBulkSerializerWithSelectedItemsRequestLastAction>
+              docs: |-
+                Action which was performed in the last annotation history item
+
+                * `prediction` - Created from prediction
+                * `propagated_annotation` - Created from another annotation
+                * `imported` - Imported
+                * `submitted` - Submitted
+                * `updated` - Updated
+                * `skipped` - Skipped
+                * `accepted` - Accepted
+                * `rejected` - Rejected
+                * `fixed_and_accepted` - Fixed and accepted
+                * `deleted_review` - Deleted review
+            last_created_by:
+              type: optional<integer>
+              docs: User who created the last annotation history item
+            lead_time:
+              type: optional<double>
+              docs: How much time it took to annotate the task
+            parent_annotation:
+              type: optional<integer>
+              docs: >-
+                Points to the parent annotation from which this annotation was
+                created
+            parent_prediction:
+              type: optional<integer>
+              docs: Points to the prediction from which this annotation was created
+            project:
+              type: optional<integer>
+              docs: Project ID for this annotation
+            result:
+              type: optional<list<map<string, unknown>>>
+              docs: List of annotation results for the task
+            selected_items: optional<root.SelectedItemsRequest>
+            task:
+              type: optional<integer>
+              docs: Corresponding task for this annotation
+            tasks: optional<list<integer>>
+            unique_id:
+              type: optional<string>
+              validation:
+                minLength: 1
+            updated_by:
+              type: optional<integer>
+              docs: Last user who updated this annotation
+            was_cancelled:
+              type: optional<boolean>
+              docs: User skipped the task
+        content-type: application/json
+      response:
+        docs: Bulk annotations created successfully
+        type: list<AnnotationsCreateBulkResponseItem>
+      examples:
+        - request: {}
+          response:
+            body:
+              - id: 1
+      audiences:
+        - public
     get:
       path: /api/annotations/{id}/
       method: GET
@@ -25,41 +143,41 @@ service:
             id: 1
           response:
             body:
+              bulk_created: true
+              completed_by: 1
+              created_ago: created_ago
+              created_at: '2024-01-15T09:30:00Z'
+              created_username: created_username
+              draft_created_at: '2024-01-15T09:30:00Z'
+              ground_truth: false
               id: 1
+              import_id: 1000000
+              last_action: prediction
+              last_created_by: 1
+              lead_time: 10
+              parent_annotation: 1
+              parent_prediction: 1
+              project: 1
               result:
-                - original_width: 1920
-                  original_height: 1080
+                - from_name: bboxes
                   image_rotation: 0
-                  from_name: bboxes
+                  original_height: 1080
+                  original_width: 1920
                   to_name: image
                   type: rectanglelabels
                   value:
-                    x: 20
-                    'y': 30
-                    width: 50
                     height: 60
                     rotation: 0
                     values:
                       rectanglelabels:
                         - Person
-              created_username: created_username
-              created_ago: created_ago
-              completed_by: 1
-              was_cancelled: false
-              ground_truth: false
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              draft_created_at: '2024-01-15T09:30:00Z'
-              lead_time: 10
-              import_id: 1000000
-              last_action: prediction
-              bulk_created: true
+                    width: 50
+                    x: 20
+                    'y': 30
               task: 1
-              project: 1
+              updated_at: '2024-01-15T09:30:00Z'
               updated_by: 1
-              parent_prediction: 1
-              parent_annotation: 1
-              last_created_by: 1
+              was_cancelled: false
       audiences:
         - public
     delete:
@@ -91,6 +209,18 @@ service:
         name: AnnotationsUpdateRequest
         body:
           properties:
+            completed_by:
+              type: optional<integer>
+              docs: User ID of the person who created this annotation
+            ground_truth:
+              type: optional<boolean>
+              docs: This annotation is a Ground Truth
+            lead_time:
+              type: optional<double>
+              docs: How much time it took to annotate the task (in seconds)
+            project:
+              type: optional<integer>
+              docs: Project ID for this annotation
             result:
               type: optional<list<map<string, unknown>>>
               docs: >-
@@ -100,24 +230,12 @@ service:
             task:
               type: optional<integer>
               docs: Corresponding task for this annotation
-            project:
-              type: optional<integer>
-              docs: Project ID for this annotation
-            completed_by:
-              type: optional<integer>
-              docs: User ID of the person who created this annotation
             updated_by:
               type: optional<integer>
               docs: Last user who updated this annotation
             was_cancelled:
               type: optional<boolean>
               docs: User skipped the task
-            ground_truth:
-              type: optional<boolean>
-              docs: This annotation is a Ground Truth
-            lead_time:
-              type: optional<double>
-              docs: How much time it took to annotate the task (in seconds)
         content-type: application/json
       response:
         docs: Updated annotation
@@ -127,61 +245,61 @@ service:
           path-parameters:
             id: 1
           request:
+            ground_truth: true
             result:
-              - original_width: 1920
-                original_height: 1080
+              - from_name: bboxes
                 image_rotation: 0
-                from_name: bboxes
+                original_height: 1080
+                original_width: 1920
                 to_name: image
                 type: rectanglelabels
                 value:
-                  x: 20
-                  'y': 30
-                  width: 50
                   height: 60
                   rotation: 0
                   values:
                     rectanglelabels:
                       - Person
+                  width: 50
+                  x: 20
+                  'y': 30
             was_cancelled: false
-            ground_truth: true
           response:
             body:
+              bulk_created: true
+              completed_by: 1
+              created_ago: created_ago
+              created_at: '2024-01-15T09:30:00Z'
+              created_username: created_username
+              draft_created_at: '2024-01-15T09:30:00Z'
+              ground_truth: false
               id: 1
+              import_id: 1000000
+              last_action: prediction
+              last_created_by: 1
+              lead_time: 10
+              parent_annotation: 1
+              parent_prediction: 1
+              project: 1
               result:
-                - original_width: 1920
-                  original_height: 1080
+                - from_name: bboxes
                   image_rotation: 0
-                  from_name: bboxes
+                  original_height: 1080
+                  original_width: 1920
                   to_name: image
                   type: rectanglelabels
                   value:
-                    x: 20
-                    'y': 30
-                    width: 50
                     height: 60
                     rotation: 0
                     values:
                       rectanglelabels:
                         - Person
-              created_username: created_username
-              created_ago: created_ago
-              completed_by: 1
-              was_cancelled: false
-              ground_truth: false
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              draft_created_at: '2024-01-15T09:30:00Z'
-              lead_time: 10
-              import_id: 1000000
-              last_action: prediction
-              bulk_created: true
+                    width: 50
+                    x: 20
+                    'y': 30
               task: 1
-              project: 1
+              updated_at: '2024-01-15T09:30:00Z'
               updated_by: 1
-              parent_prediction: 1
-              parent_annotation: 1
-              last_created_by: 1
+              was_cancelled: false
       audiences:
         - public
     api_annotations_convert_to_draft_create:
@@ -199,95 +317,6 @@ service:
             id: 1
       audiences:
         - internal
-    create_bulk:
-      path: /api/annotations/bulk/
-      method: POST
-      auth: true
-      docs: Create multiple annotations at once
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Bulk create annotations
-      request:
-        name: AnnotationBulkSerializerWithSelectedItemsRequest
-        body:
-          properties:
-            result:
-              type: optional<list<map<string, unknown>>>
-              docs: List of annotation results for the task
-            completed_by: optional<integer>
-            unique_id:
-              type: optional<string>
-              validation:
-                minLength: 1
-            tasks: optional<list<integer>>
-            selected_items: optional<root.SelectedItemsRequest>
-            was_cancelled:
-              type: optional<boolean>
-              docs: User skipped the task
-            ground_truth:
-              type: optional<boolean>
-              docs: This annotation is a Ground Truth (ground_truth)
-            draft_created_at:
-              type: optional<datetime>
-              docs: Draft creation time
-            lead_time:
-              type: optional<double>
-              docs: How much time it took to annotate the task
-            import_id:
-              type: optional<long>
-              docs: >-
-                Original annotation ID that was at the import step or NULL if
-                this annotation wasn't imported
-            last_action:
-              type: >-
-                optional<AnnotationBulkSerializerWithSelectedItemsRequestLastAction>
-              docs: |-
-                Action which was performed in the last annotation history item
-
-                * `prediction` - Created from prediction
-                * `propagated_annotation` - Created from another annotation
-                * `imported` - Imported
-                * `submitted` - Submitted
-                * `updated` - Updated
-                * `skipped` - Skipped
-                * `accepted` - Accepted
-                * `rejected` - Rejected
-                * `fixed_and_accepted` - Fixed and accepted
-                * `deleted_review` - Deleted review
-            bulk_created:
-              type: optional<boolean>
-              docs: Annotation was created in bulk mode
-            task:
-              type: optional<integer>
-              docs: Corresponding task for this annotation
-            project:
-              type: optional<integer>
-              docs: Project ID for this annotation
-            updated_by:
-              type: optional<integer>
-              docs: Last user who updated this annotation
-            parent_prediction:
-              type: optional<integer>
-              docs: Points to the prediction from which this annotation was created
-            parent_annotation:
-              type: optional<integer>
-              docs: >-
-                Points to the parent annotation from which this annotation was
-                created
-            last_created_by:
-              type: optional<integer>
-              docs: User who created the last annotation history item
-        content-type: application/json
-      response:
-        docs: Bulk annotations created successfully
-        type: list<AnnotationsCreateBulkResponseItem>
-      examples:
-        - request: {}
-          response:
-            body:
-              - id: 1
-      audiences:
-        - public
     list:
       path: /api/tasks/{id}/annotations/
       method: GET
@@ -315,27 +344,27 @@ service:
             id: 1
           response:
             body:
-              - id: 1
-                result:
-                  - key: value
-                created_username: created_username
-                created_ago: created_ago
+              - bulk_created: true
                 completed_by: 1
-                was_cancelled: true
-                ground_truth: true
+                created_ago: created_ago
                 created_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
+                created_username: created_username
                 draft_created_at: '2024-01-15T09:30:00Z'
-                lead_time: 1.1
+                ground_truth: true
+                id: 1
                 import_id: 1000000
                 last_action: prediction
-                bulk_created: true
-                task: 1
-                project: 1
-                updated_by: 1
-                parent_prediction: 1
-                parent_annotation: 1
                 last_created_by: 1
+                lead_time: 1.1
+                parent_annotation: 1
+                parent_prediction: 1
+                project: 1
+                result:
+                  - key: value
+                task: 1
+                updated_at: '2024-01-15T09:30:00Z'
+                updated_by: 1
+                was_cancelled: true
       audiences:
         - public
     create:
@@ -370,6 +399,18 @@ service:
         name: AnnotationsCreateRequest
         body:
           properties:
+            completed_by:
+              type: optional<integer>
+              docs: User ID of the person who created this annotation
+            ground_truth:
+              type: optional<boolean>
+              docs: This annotation is a Ground Truth
+            lead_time:
+              type: optional<double>
+              docs: How much time it took to annotate the task (in seconds)
+            project:
+              type: optional<integer>
+              docs: Project ID for this annotation
             result:
               type: optional<list<map<string, unknown>>>
               docs: >-
@@ -379,24 +420,12 @@ service:
             task:
               type: optional<integer>
               docs: Corresponding task for this annotation
-            project:
-              type: optional<integer>
-              docs: Project ID for this annotation
-            completed_by:
-              type: optional<integer>
-              docs: User ID of the person who created this annotation
             updated_by:
               type: optional<integer>
               docs: Last user who updated this annotation
             was_cancelled:
               type: optional<boolean>
               docs: User skipped the task
-            ground_truth:
-              type: optional<boolean>
-              docs: This annotation is a Ground Truth
-            lead_time:
-              type: optional<double>
-              docs: How much time it took to annotate the task (in seconds)
         content-type: application/json
       response:
         docs: Created annotation
@@ -406,91 +435,62 @@ service:
           path-parameters:
             id: 1
           request:
+            ground_truth: true
             result:
-              - original_width: 1920
-                original_height: 1080
+              - from_name: bboxes
                 image_rotation: 0
-                from_name: bboxes
+                original_height: 1080
+                original_width: 1920
                 to_name: image
                 type: rectanglelabels
                 value:
-                  x: 20
-                  'y': 30
-                  width: 50
                   height: 60
                   rotation: 0
                   values:
                     rectanglelabels:
                       - Person
+                  width: 50
+                  x: 20
+                  'y': 30
             was_cancelled: false
-            ground_truth: true
           response:
             body:
+              bulk_created: true
+              completed_by: 1
+              created_ago: created_ago
+              created_at: '2024-01-15T09:30:00Z'
+              created_username: created_username
+              draft_created_at: '2024-01-15T09:30:00Z'
+              ground_truth: false
               id: 1
+              import_id: 1000000
+              last_action: prediction
+              last_created_by: 1
+              lead_time: 10
+              parent_annotation: 1
+              parent_prediction: 1
+              project: 1
               result:
-                - original_width: 1920
-                  original_height: 1080
+                - from_name: bboxes
                   image_rotation: 0
-                  from_name: bboxes
+                  original_height: 1080
+                  original_width: 1920
                   to_name: image
                   type: rectanglelabels
                   value:
-                    x: 20
-                    'y': 30
-                    width: 50
                     height: 60
                     rotation: 0
                     values:
                       rectanglelabels:
                         - Person
-              created_username: created_username
-              created_ago: created_ago
-              completed_by: 1
-              was_cancelled: false
-              ground_truth: false
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              draft_created_at: '2024-01-15T09:30:00Z'
-              lead_time: 10
-              import_id: 1000000
-              last_action: prediction
-              bulk_created: true
+                    width: 50
+                    x: 20
+                    'y': 30
               task: 1
-              project: 1
+              updated_at: '2024-01-15T09:30:00Z'
               updated_by: 1
-              parent_prediction: 1
-              parent_annotation: 1
-              last_created_by: 1
+              was_cancelled: false
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
-types:
-  AnnotationBulkSerializerWithSelectedItemsRequestLastAction:
-    discriminated: false
-    docs: |-
-      Action which was performed in the last annotation history item
-
-      * `prediction` - Created from prediction
-      * `propagated_annotation` - Created from another annotation
-      * `imported` - Imported
-      * `submitted` - Submitted
-      * `updated` - Updated
-      * `skipped` - Skipped
-      * `accepted` - Accepted
-      * `rejected` - Rejected
-      * `fixed_and_accepted` - Fixed and accepted
-      * `deleted_review` - Deleted review
-    union:
-      - root.LastActionEnum
-      - root.NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  AnnotationsCreateBulkResponseItem:
-    properties:
-      id:
-        type: integer
-        docs: Annotation ID
-    source:
-      openapi: openapi/openapi.yaml

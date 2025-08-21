@@ -135,6 +135,102 @@ class ViewsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def update_order(
+        self, *, ids: typing.Sequence[int], project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Update the order field of views based on the provided list of view IDs
+
+        Parameters
+        ----------
+        ids : typing.Sequence[int]
+            A list of view IDs in the desired order.
+
+        project : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.views.update_order(
+            ids=[1],
+            project=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/dm/views/order/",
+            method="POST",
+            json={
+                "ids": ids,
+                "project": project,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete all views for a specific project.
+
+        Parameters
+        ----------
+        project : int
+            Project ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.views.delete_all(
+            project=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/dm/views/reset/",
+            method="DELETE",
+            params={
+                "project": project,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> View:
         """
         Get the details about a specific view in the data manager
@@ -292,102 +388,6 @@ class ViewsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def update_order(
-        self, *, project: int, ids: typing.Sequence[int], request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Update the order field of views based on the provided list of view IDs
-
-        Parameters
-        ----------
-        project : int
-
-        ids : typing.Sequence[int]
-            A list of view IDs in the desired order.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.views.update_order(
-            project=1,
-            ids=[1],
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/dm/views/order/",
-            method="POST",
-            json={
-                "project": project,
-                "ids": ids,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Delete all views for a specific project.
-
-        Parameters
-        ----------
-        project : int
-            Project ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.views.delete_all(
-            project=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/dm/views/reset/",
-            method="DELETE",
-            params={
-                "project": project,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
 
 class AsyncViewsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -518,6 +518,118 @@ class AsyncViewsClient:
                         object_=_response.json(),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update_order(
+        self, *, ids: typing.Sequence[int], project: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Update the order field of views based on the provided list of view IDs
+
+        Parameters
+        ----------
+        ids : typing.Sequence[int]
+            A list of view IDs in the desired order.
+
+        project : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.views.update_order(
+                ids=[1],
+                project=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/dm/views/order/",
+            method="POST",
+            json={
+                "ids": ids,
+                "project": project,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete all views for a specific project.
+
+        Parameters
+        ----------
+        project : int
+            Project ID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.views.delete_all(
+                project=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/dm/views/reset/",
+            method="DELETE",
+            params={
+                "project": project,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -699,118 +811,6 @@ class AsyncViewsClient:
                         object_=_response.json(),
                     ),
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def update_order(
-        self, *, project: int, ids: typing.Sequence[int], request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Update the order field of views based on the provided list of view IDs
-
-        Parameters
-        ----------
-        project : int
-
-        ids : typing.Sequence[int]
-            A list of view IDs in the desired order.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.views.update_order(
-                project=1,
-                ids=[1],
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/dm/views/order/",
-            method="POST",
-            json={
-                "project": project,
-                "ids": ids,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def delete_all(self, *, project: int, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Delete all views for a specific project.
-
-        Parameters
-        ----------
-        project : int
-            Project ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.views.delete_all(
-                project=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/dm/views/reset/",
-            method="DELETE",
-            params={
-                "project": project,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
