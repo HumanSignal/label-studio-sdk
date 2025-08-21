@@ -108,23 +108,23 @@ service:
             id: 1
           response:
             body:
-              - title: title
-                id: 1
-                created_by:
-                  id: 1
-                  first_name: first_name
-                  last_name: last_name
-                  email: email
-                  avatar: avatar
-                created_at: '2024-01-15T09:30:00Z'
-                finished_at: '2024-01-15T09:30:00Z'
-                status: created
-                md5: md5
+              - converted_formats:
+                  - export_type: export_type
+                    id: 1
                 counters:
                   key: value
-                converted_formats:
-                  - id: 1
-                    export_type: export_type
+                created_at: '2024-01-15T09:30:00Z'
+                created_by:
+                  avatar: avatar
+                  email: email
+                  first_name: first_name
+                  id: 1
+                  last_name: last_name
+                finished_at: '2024-01-15T09:30:00Z'
+                id: 1
+                md5: md5
+                status: created
+                title: title
       audiences:
         - public
     create:
@@ -145,25 +145,25 @@ service:
         name: LseExportCreateRequest
         body:
           properties:
-            title:
-              type: optional<string>
-              validation:
-                maxLength: 2048
+            annotation_filter_options: optional<root.LseAnnotationFilterOptionsRequest>
+            converted_formats: optional<list<root.ConvertedFormatRequest>>
+            counters: optional<unknown>
             created_by: optional<root.UserSimpleRequest>
             finished_at:
               type: optional<datetime>
               docs: Complete or fail time
-            status: optional<root.Status7BfEnum>
             md5:
               type: optional<string>
               validation:
                 minLength: 1
                 maxLength: 128
-            counters: optional<unknown>
-            converted_formats: optional<list<root.ConvertedFormatRequest>>
-            task_filter_options: optional<root.LseTaskFilterOptionsRequest>
-            annotation_filter_options: optional<root.LseAnnotationFilterOptionsRequest>
             serialization_options: optional<root.SerializationOptionsRequest>
+            status: optional<root.Status7BfEnum>
+            task_filter_options: optional<root.LseTaskFilterOptionsRequest>
+            title:
+              type: optional<string>
+              validation:
+                maxLength: 2048
         content-type: application/json
       response:
         docs: ''
@@ -174,46 +174,46 @@ service:
           request: {}
           response:
             body:
-              title: title
-              id: 1
-              created_by:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                email: email
-                avatar: avatar
-              created_at: '2024-01-15T09:30:00Z'
-              finished_at: '2024-01-15T09:30:00Z'
-              status: created
-              md5: md5
+              annotation_filter_options:
+                ground_truth: true
+                reviewed: only
+                skipped: true
+                usual: true
+              converted_formats:
+                - export_type: export_type
+                  id: 1
+                  status: created
+                  traceback: traceback
               counters:
                 key: value
-              converted_formats:
-                - id: 1
-                  status: created
-                  export_type: export_type
-                  traceback: traceback
-              task_filter_options:
-                view: 1
-                skipped: only
-                finished: only
-                annotated: only
-                only_with_annotations: true
-                reviewed: only
-              annotation_filter_options:
-                usual: true
-                ground_truth: true
-                skipped: true
-                reviewed: only
+              created_at: '2024-01-15T09:30:00Z'
+              created_by:
+                avatar: avatar
+                email: email
+                first_name: first_name
+                id: 1
+                last_name: last_name
+              finished_at: '2024-01-15T09:30:00Z'
+              id: 1
+              md5: md5
               serialization_options:
-                drafts:
-                  only_id: true
-                predictions:
-                  only_id: true
-                include_annotation_history: true
                 annotations__completed_by:
                   only_id: true
+                drafts:
+                  only_id: true
+                include_annotation_history: true
                 interpolate_key_frames: true
+                predictions:
+                  only_id: true
+              status: created
+              task_filter_options:
+                annotated: only
+                finished: only
+                only_with_annotations: true
+                reviewed: only
+                skipped: only
+                view: 1
+              title: title
       audiences:
         - public
     get:
@@ -242,25 +242,25 @@ service:
             id: 1
           response:
             body:
-              title: title
-              id: 1
-              created_by:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                email: email
-                avatar: avatar
-              created_at: '2024-01-15T09:30:00Z'
-              finished_at: '2024-01-15T09:30:00Z'
-              status: created
-              md5: md5
+              converted_formats:
+                - export_type: export_type
+                  id: 1
+                  status: created
+                  traceback: traceback
               counters:
                 key: value
-              converted_formats:
-                - id: 1
-                  status: created
-                  export_type: export_type
-                  traceback: traceback
+              created_at: '2024-01-15T09:30:00Z'
+              created_by:
+                avatar: avatar
+                email: email
+                first_name: first_name
+                id: 1
+                last_name: last_name
+              finished_at: '2024-01-15T09:30:00Z'
+              id: 1
+              md5: md5
+              status: created
+              title: title
       audiences:
         - public
     delete:
@@ -303,14 +303,14 @@ service:
         name: ExportConvertRequest
         body:
           properties:
+            download_resources:
+              type: optional<boolean>
+              docs: Download resources in converter.
             export_type:
               type: string
               docs: Export file format.
               validation:
                 minLength: 1
-            download_resources:
-              type: optional<boolean>
-              docs: Download resources in converter.
         content-type: application/json
       response:
         docs: ''
@@ -323,8 +323,8 @@ service:
             export_type: export_type
           response:
             body:
-              export_type: export_type
               converted_format: 1
+              export_type: export_type
       audiences:
         - public
     download:
@@ -368,7 +368,7 @@ imports:
 types:
   ExportsConvertResponse:
     properties:
-      export_type: optional<string>
       converted_format: optional<integer>
+      export_type: optional<string>
     source:
       openapi: openapi/openapi.yaml

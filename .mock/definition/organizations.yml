@@ -20,8 +20,8 @@ service:
       examples:
         - response:
             body:
-              token: token
               invite_url: invite_url
+              token: token
       audiences:
         - public
     list:
@@ -47,10 +47,10 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                title: title
-                contact_info: contact_info
+              - contact_info: contact_info
                 created_at: '2024-01-15T09:30:00Z'
+                id: 1
+                title: title
       audiences:
         - public
     get:
@@ -71,22 +71,22 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              external_id: external_id
-              title: title
-              token: token
-              default_role: OW
-              created_at: '2024-01-15T09:30:00Z'
               billing:
-                manual_workspace_management: manual_workspace_management
                 manual_role_management: manual_role_management
+                manual_workspace_management: manual_workspace_management
+              created_at: '2024-01-15T09:30:00Z'
+              custom_scripts_editable_by: AD
+              custom_scripts_enabled: custom_scripts_enabled
+              default_role: OW
+              email_notification_settings: email_notification_settings
               embed_domains:
                 key: value
               embed_settings:
                 key: value
-              custom_scripts_enabled: custom_scripts_enabled
-              custom_scripts_editable_by: AD
-              email_notification_settings: email_notification_settings
+              external_id: external_id
+              id: 1
+              title: title
+              token: token
       audiences:
         - public
     api_organizations_partial_update:
@@ -105,28 +105,28 @@ service:
         name: PatchedLseOrganizationSerializerUpdateRequest
         body:
           properties:
-            title:
-              type: optional<string>
-              validation:
-                minLength: 1
-            embed_domains: optional<list<map<string, string>>>
-            custom_scripts_enabled: optional<boolean>
-            custom_scripts_editable_by:
-              type: optional<string>
-              validation:
-                minLength: 1
-            embed_settings: optional<unknown>
-            email_notification_settings: optional<unknown>
-            token:
-              type: optional<string>
-              validation:
-                maxLength: 256
             contact_info:
               type: optional<string>
               validation:
                 format: email
                 maxLength: 254
             created_by: optional<integer>
+            custom_scripts_editable_by:
+              type: optional<string>
+              validation:
+                minLength: 1
+            custom_scripts_enabled: optional<boolean>
+            email_notification_settings: optional<unknown>
+            embed_domains: optional<list<map<string, string>>>
+            embed_settings: optional<unknown>
+            title:
+              type: optional<string>
+              validation:
+                minLength: 1
+            token:
+              type: optional<string>
+              validation:
+                maxLength: 256
         content-type: application/json
       response:
         docs: ''
@@ -141,22 +141,22 @@ service:
           request: {}
           response:
             body:
-              id: 1
-              external_id: external_id
-              title: title
-              token: token
-              default_role: OW
-              created_at: '2024-01-15T09:30:00Z'
               billing:
-                manual_workspace_management: manual_workspace_management
                 manual_role_management: manual_role_management
+                manual_workspace_management: manual_workspace_management
+              created_at: '2024-01-15T09:30:00Z'
+              custom_scripts_editable_by: AD
+              custom_scripts_enabled: custom_scripts_enabled
+              default_role: OW
+              email_notification_settings: email_notification_settings
               embed_domains:
                 key: value
               embed_settings:
                 key: value
-              custom_scripts_enabled: custom_scripts_enabled
-              custom_scripts_editable_by: AD
-              email_notification_settings: email_notification_settings
+              external_id: external_id
+              id: 1
+              title: title
+              token: token
     api_organizations_set_default_role_partial_update:
       path: /api/organizations/{id}/set-default-role
       method: PATCH
@@ -171,9 +171,32 @@ service:
         name: PatchedDefaultRoleRequest
         body:
           properties:
-            organization:
-              type: optional<integer>
-              docs: A unique integer value identifying this organization.
+            annotator_reviewer_firewall_enabled_at:
+              type: optional<datetime>
+              docs: >-
+                Set to current time to restrict data sharing between annotators
+                and reviewers in the label stream, review stream, and
+                notifications (which will be disabled). In these settings,
+                information about annotator and reviewer identity is suppressed
+                in the UI.
+            custom_scripts_editable_by:
+              type: optional<PatchedDefaultRoleRequestCustomScriptsEditableBy>
+              docs: >-
+                Set the minimum user role that can edit custom scripts in the
+                UI.
+
+
+                * `AD` - Administrator
+
+                * `MA` - Manager
+            custom_scripts_enabled_at:
+              type: optional<datetime>
+              docs: >-
+                Set to current time to enabled custom scripts for this
+                organization. Can only be enabled if no organization members are
+                active members of any other organizations; otherwise an error
+                will be raised. If this occurs, contact the LEAP team for
+                assistance with enabling custom scripts.
             default_role:
               type: optional<root.DefaultRoleEnum>
               docs: |-
@@ -186,50 +209,27 @@ service:
                 * `AN` - Annotator
                 * `DI` - Deactivated
                 * `NO` - Not Activated
+            email_notification_settings: optional<unknown>
+            embed_domains: optional<unknown>
+            embed_settings: optional<unknown>
             external_id:
               type: optional<string>
               docs: External ID to uniquely identify this organization
-            embed_domains: optional<unknown>
-            embed_settings: optional<unknown>
             extra_data_on_activity_logs: optional<boolean>
-            custom_scripts_enabled_at:
-              type: optional<datetime>
-              docs: >-
-                Set to current time to enabled custom scripts for this
-                organization. Can only be enabled if no organization members are
-                active members of any other organizations; otherwise an error
-                will be raised. If this occurs, contact the LEAP team for
-                assistance with enabling custom scripts.
-            custom_scripts_editable_by:
-              type: optional<PatchedDefaultRoleRequestCustomScriptsEditableBy>
-              docs: >-
-                Set the minimum user role that can edit custom scripts in the
-                UI.
-
-
-                * `AD` - Administrator
-
-                * `MA` - Manager
-            annotator_reviewer_firewall_enabled_at:
-              type: optional<datetime>
-              docs: >-
-                Set to current time to restrict data sharing between annotators
-                and reviewers in the label stream, review stream, and
-                notifications (which will be disabled). In these settings,
-                information about annotator and reviewer identity is suppressed
-                in the UI.
-            read_only_quick_view_enabled_at:
-              type: optional<datetime>
-              docs: >-
-                Set to current time to prevent creating or editing annotations
-                in quick view.
             label_stream_navigation_disabled_at:
               type: optional<datetime>
               docs: >-
                 Set to current time to disable the label stream navigation for
                 this organization. This will prevent users from going back in
                 the label stream to view previous labels.
-            email_notification_settings: optional<unknown>
+            organization:
+              type: optional<integer>
+              docs: A unique integer value identifying this organization.
+            read_only_quick_view_enabled_at:
+              type: optional<datetime>
+              docs: >-
+                Set to current time to prevent creating or editing annotations
+                in quick view.
         content-type: application/json
       response:
         docs: ''
@@ -240,21 +240,21 @@ service:
           request: {}
           response:
             body:
-              organization: 1
+              annotator_reviewer_firewall_enabled_at: '2024-01-15T09:30:00Z'
+              custom_scripts_editable_by: AD
+              custom_scripts_enabled_at: '2024-01-15T09:30:00Z'
               default_role: OW
-              external_id: external_id
+              email_notification_settings:
+                key: value
               embed_domains:
                 key: value
               embed_settings:
                 key: value
+              external_id: external_id
               extra_data_on_activity_logs: true
-              custom_scripts_enabled_at: '2024-01-15T09:30:00Z'
-              custom_scripts_editable_by: AD
-              annotator_reviewer_firewall_enabled_at: '2024-01-15T09:30:00Z'
-              read_only_quick_view_enabled_at: '2024-01-15T09:30:00Z'
               label_stream_navigation_disabled_at: '2024-01-15T09:30:00Z'
-              email_notification_settings:
-                key: value
+              organization: 1
+              read_only_quick_view_enabled_at: '2024-01-15T09:30:00Z'
   source:
     openapi: openapi/openapi.yaml
 types:
