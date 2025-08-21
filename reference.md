@@ -20401,14 +20401,20 @@ Assign multiple tasks to a specific user for a specific project.
 
 ```python
 from label_studio_sdk import LabelStudio
+from label_studio_sdk.projects.assignments import (
+    AssignmentsBulkAssignRequestSelectedItemsIncluded,
+)
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.projects.assignments.bulk_assign(
     id=1,
-    assignee=1,
-    task=1,
+    selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(
+        all_=True,
+    ),
+    type="AN",
+    users=[1],
 )
 
 ```
@@ -20433,7 +20439,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**assignee:** `int` — Assigned user
+**selected_items:** `AssignmentsBulkAssignRequestSelectedItems` — Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
     
 </dd>
 </dl>
@@ -20441,7 +20447,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**task:** `int` — Assigned task
+**type:** `AssignmentsBulkAssignRequestType` — Assignment type. Use AN for annotate or RE for review.
     
 </dd>
 </dl>
@@ -20449,7 +20455,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**selected_items:** `typing.Optional[bool]` — Selected items
+**users:** `typing.Sequence[int]` — List of user IDs to assign
     
 </dd>
 </dl>
@@ -20457,28 +20463,7 @@ client.projects.assignments.bulk_assign(
 <dl>
 <dd>
 
-**type:** `typing.Optional[str]` — Assignment type
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**users:** `typing.Optional[str]` — Assignees
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task_assignment_request_type:** `typing.Optional[TypeEnum]` 
-
-Type of assignment: Annotate|Review
-
-* `AN` - Annotate
-* `RE` - Review
+**filters:** `typing.Optional[AssignmentsBulkAssignRequestFilters]` — Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
     
 </dd>
 </dl>
@@ -20612,8 +20597,8 @@ client = LabelStudio(
 client.projects.assignments.assign(
     id=1,
     task_pk=1,
-    assignee=1,
-    task=1,
+    type="AN",
+    users=[1],
 )
 
 ```
@@ -20646,7 +20631,7 @@ client.projects.assignments.assign(
 <dl>
 <dd>
 
-**assignee:** `int` — Assigned user
+**type:** `AssignmentsAssignRequestType` — Assignment type. Use AN for annotate or RE for review.
     
 </dd>
 </dl>
@@ -20654,20 +20639,7 @@ client.projects.assignments.assign(
 <dl>
 <dd>
 
-**task:** `int` — Assigned task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `typing.Optional[TypeEnum]` 
-
-Type of assignment: Annotate|Review
-
-* `AN` - Annotate
-* `RE` - Review
+**users:** `typing.Sequence[int]` — List of user IDs to assign
     
 </dd>
 </dl>
@@ -20801,6 +20773,8 @@ client = LabelStudio(
 client.projects.assignments.update_assignment(
     id=1,
     task_pk=1,
+    type="AN",
+    users=[1],
 )
 
 ```
@@ -20833,7 +20807,7 @@ client.projects.assignments.update_assignment(
 <dl>
 <dd>
 
-**assignee:** `typing.Optional[int]` — Assigned user
+**type:** `AssignmentsUpdateAssignmentRequestType` — Assignment type. Use AN for annotate or RE for review.
     
 </dd>
 </dl>
@@ -20841,20 +20815,7 @@ client.projects.assignments.update_assignment(
 <dl>
 <dd>
 
-**task:** `typing.Optional[int]` — Assigned task
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `typing.Optional[TypeEnum]` 
-
-Type of assignment: Annotate|Review
-
-* `AN` - Annotate
-* `RE` - Review
+**users:** `typing.Sequence[int]` — List of user IDs to assign
     
 </dd>
 </dl>

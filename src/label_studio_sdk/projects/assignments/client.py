@@ -2,15 +2,20 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from ...types.type_enum import TypeEnum
+from .types.assignments_bulk_assign_request_selected_items import AssignmentsBulkAssignRequestSelectedItems
+from .types.assignments_bulk_assign_request_type import AssignmentsBulkAssignRequestType
+from .types.assignments_bulk_assign_request_filters import AssignmentsBulkAssignRequestFilters
 from ...core.request_options import RequestOptions
 from .types.assignments_bulk_assign_response import AssignmentsBulkAssignResponse
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.bad_request_error import BadRequestError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.task_assignment import TaskAssignment
+from .types.assignments_assign_request_type import AssignmentsAssignRequestType
+from .types.assignments_update_assignment_request_type import AssignmentsUpdateAssignmentRequestType
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -25,12 +30,10 @@ class AssignmentsClient:
         self,
         id: int,
         *,
-        assignee: int,
-        task: int,
-        selected_items: typing.Optional[bool] = None,
-        type: typing.Optional[str] = None,
-        users: typing.Optional[str] = None,
-        task_assignment_request_type: typing.Optional[TypeEnum] = OMIT,
+        selected_items: AssignmentsBulkAssignRequestSelectedItems,
+        type: AssignmentsBulkAssignRequestType,
+        users: typing.Sequence[int],
+        filters: typing.Optional[AssignmentsBulkAssignRequestFilters] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AssignmentsBulkAssignResponse:
         """
@@ -40,26 +43,17 @@ class AssignmentsClient:
         ----------
         id : int
 
-        assignee : int
-            Assigned user
+        selected_items : AssignmentsBulkAssignRequestSelectedItems
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
-        task : int
-            Assigned task
+        type : AssignmentsBulkAssignRequestType
+            Assignment type. Use AN for annotate or RE for review.
 
-        selected_items : typing.Optional[bool]
-            Selected items
+        users : typing.Sequence[int]
+            List of user IDs to assign
 
-        type : typing.Optional[str]
-            Assignment type
-
-        users : typing.Optional[str]
-            Assignees
-
-        task_assignment_request_type : typing.Optional[TypeEnum]
-            Type of assignment: Annotate|Review
-
-            * `AN` - Annotate
-            * `RE` - Review
+        filters : typing.Optional[AssignmentsBulkAssignRequestFilters]
+            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -72,28 +66,37 @@ class AssignmentsClient:
         Examples
         --------
         from label_studio_sdk import LabelStudio
+        from label_studio_sdk.projects.assignments import (
+            AssignmentsBulkAssignRequestSelectedItemsIncluded,
+        )
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
         client.projects.assignments.bulk_assign(
             id=1,
-            assignee=1,
-            task=1,
+            selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(
+                all_=True,
+            ),
+            type="AN",
+            users=[1],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/tasks/assignees",
             method="POST",
-            params={
-                "selected_items": selected_items,
+            json={
+                "filters": convert_and_respect_annotation_metadata(
+                    object_=filters, annotation=AssignmentsBulkAssignRequestFilters, direction="write"
+                ),
+                "selectedItems": convert_and_respect_annotation_metadata(
+                    object_=selected_items, annotation=AssignmentsBulkAssignRequestSelectedItems, direction="write"
+                ),
                 "type": type,
                 "users": users,
             },
-            json={
-                "assignee": assignee,
-                "task": task,
-                "type": type,
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -124,7 +127,7 @@ class AssignmentsClient:
 
     def list_assignments(
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> TaskAssignment:
+    ) -> typing.List[TaskAssignment]:
         """
         Retrieve a list of tasks and assignees for those tasks for a specific project.
 
@@ -141,8 +144,8 @@ class AssignmentsClient:
 
         Returns
         -------
-        TaskAssignment
-
+        typing.List[TaskAssignment]
+            List of assignments for the task
 
         Examples
         --------
@@ -164,9 +167,9 @@ class AssignmentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    TaskAssignment,
+                    typing.List[TaskAssignment],
                     construct_type(
-                        type_=TaskAssignment,  # type: ignore
+                        type_=typing.List[TaskAssignment],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -180,9 +183,8 @@ class AssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        assignee: int,
-        task: int,
-        type: typing.Optional[TypeEnum] = OMIT,
+        type: AssignmentsAssignRequestType,
+        users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
         """
@@ -196,17 +198,11 @@ class AssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        assignee : int
-            Assigned user
+        type : AssignmentsAssignRequestType
+            Assignment type. Use AN for annotate or RE for review.
 
-        task : int
-            Assigned task
-
-        type : typing.Optional[TypeEnum]
-            Type of assignment: Annotate|Review
-
-            * `AN` - Annotate
-            * `RE` - Review
+        users : typing.Sequence[int]
+            List of user IDs to assign
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -226,17 +222,19 @@ class AssignmentsClient:
         client.projects.assignments.assign(
             id=1,
             task_pk=1,
-            assignee=1,
-            task=1,
+            type="AN",
+            users=[1],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
             method="POST",
             json={
-                "assignee": assignee,
-                "task": task,
                 "type": type,
+                "users": users,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -306,9 +304,8 @@ class AssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        assignee: typing.Optional[int] = OMIT,
-        task: typing.Optional[int] = OMIT,
-        type: typing.Optional[TypeEnum] = OMIT,
+        type: AssignmentsUpdateAssignmentRequestType,
+        users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
         """
@@ -322,17 +319,11 @@ class AssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        assignee : typing.Optional[int]
-            Assigned user
+        type : AssignmentsUpdateAssignmentRequestType
+            Assignment type. Use AN for annotate or RE for review.
 
-        task : typing.Optional[int]
-            Assigned task
-
-        type : typing.Optional[TypeEnum]
-            Type of assignment: Annotate|Review
-
-            * `AN` - Annotate
-            * `RE` - Review
+        users : typing.Sequence[int]
+            List of user IDs to assign
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -352,15 +343,16 @@ class AssignmentsClient:
         client.projects.assignments.update_assignment(
             id=1,
             task_pk=1,
+            type="AN",
+            users=[1],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
             method="PATCH",
             json={
-                "assignee": assignee,
-                "task": task,
                 "type": type,
+                "users": users,
             },
             headers={
                 "content-type": "application/json",
@@ -391,12 +383,10 @@ class AsyncAssignmentsClient:
         self,
         id: int,
         *,
-        assignee: int,
-        task: int,
-        selected_items: typing.Optional[bool] = None,
-        type: typing.Optional[str] = None,
-        users: typing.Optional[str] = None,
-        task_assignment_request_type: typing.Optional[TypeEnum] = OMIT,
+        selected_items: AssignmentsBulkAssignRequestSelectedItems,
+        type: AssignmentsBulkAssignRequestType,
+        users: typing.Sequence[int],
+        filters: typing.Optional[AssignmentsBulkAssignRequestFilters] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AssignmentsBulkAssignResponse:
         """
@@ -406,26 +396,17 @@ class AsyncAssignmentsClient:
         ----------
         id : int
 
-        assignee : int
-            Assigned user
+        selected_items : AssignmentsBulkAssignRequestSelectedItems
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
-        task : int
-            Assigned task
+        type : AssignmentsBulkAssignRequestType
+            Assignment type. Use AN for annotate or RE for review.
 
-        selected_items : typing.Optional[bool]
-            Selected items
+        users : typing.Sequence[int]
+            List of user IDs to assign
 
-        type : typing.Optional[str]
-            Assignment type
-
-        users : typing.Optional[str]
-            Assignees
-
-        task_assignment_request_type : typing.Optional[TypeEnum]
-            Type of assignment: Annotate|Review
-
-            * `AN` - Annotate
-            * `RE` - Review
+        filters : typing.Optional[AssignmentsBulkAssignRequestFilters]
+            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -440,6 +421,9 @@ class AsyncAssignmentsClient:
         import asyncio
 
         from label_studio_sdk import AsyncLabelStudio
+        from label_studio_sdk.projects.assignments import (
+            AssignmentsBulkAssignRequestSelectedItemsIncluded,
+        )
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
@@ -449,8 +433,11 @@ class AsyncAssignmentsClient:
         async def main() -> None:
             await client.projects.assignments.bulk_assign(
                 id=1,
-                assignee=1,
-                task=1,
+                selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(
+                    all_=True,
+                ),
+                type="AN",
+                users=[1],
             )
 
 
@@ -459,15 +446,18 @@ class AsyncAssignmentsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/tasks/assignees",
             method="POST",
-            params={
-                "selected_items": selected_items,
+            json={
+                "filters": convert_and_respect_annotation_metadata(
+                    object_=filters, annotation=AssignmentsBulkAssignRequestFilters, direction="write"
+                ),
+                "selectedItems": convert_and_respect_annotation_metadata(
+                    object_=selected_items, annotation=AssignmentsBulkAssignRequestSelectedItems, direction="write"
+                ),
                 "type": type,
                 "users": users,
             },
-            json={
-                "assignee": assignee,
-                "task": task,
-                "type": type,
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -498,7 +488,7 @@ class AsyncAssignmentsClient:
 
     async def list_assignments(
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> TaskAssignment:
+    ) -> typing.List[TaskAssignment]:
         """
         Retrieve a list of tasks and assignees for those tasks for a specific project.
 
@@ -515,8 +505,8 @@ class AsyncAssignmentsClient:
 
         Returns
         -------
-        TaskAssignment
-
+        typing.List[TaskAssignment]
+            List of assignments for the task
 
         Examples
         --------
@@ -546,9 +536,9 @@ class AsyncAssignmentsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    TaskAssignment,
+                    typing.List[TaskAssignment],
                     construct_type(
-                        type_=TaskAssignment,  # type: ignore
+                        type_=typing.List[TaskAssignment],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -562,9 +552,8 @@ class AsyncAssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        assignee: int,
-        task: int,
-        type: typing.Optional[TypeEnum] = OMIT,
+        type: AssignmentsAssignRequestType,
+        users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
         """
@@ -578,17 +567,11 @@ class AsyncAssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        assignee : int
-            Assigned user
+        type : AssignmentsAssignRequestType
+            Assignment type. Use AN for annotate or RE for review.
 
-        task : int
-            Assigned task
-
-        type : typing.Optional[TypeEnum]
-            Type of assignment: Annotate|Review
-
-            * `AN` - Annotate
-            * `RE` - Review
+        users : typing.Sequence[int]
+            List of user IDs to assign
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -613,8 +596,8 @@ class AsyncAssignmentsClient:
             await client.projects.assignments.assign(
                 id=1,
                 task_pk=1,
-                assignee=1,
-                task=1,
+                type="AN",
+                users=[1],
             )
 
 
@@ -624,9 +607,11 @@ class AsyncAssignmentsClient:
             f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
             method="POST",
             json={
-                "assignee": assignee,
-                "task": task,
                 "type": type,
+                "users": users,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -704,9 +689,8 @@ class AsyncAssignmentsClient:
         id: int,
         task_pk: int,
         *,
-        assignee: typing.Optional[int] = OMIT,
-        task: typing.Optional[int] = OMIT,
-        type: typing.Optional[TypeEnum] = OMIT,
+        type: AssignmentsUpdateAssignmentRequestType,
+        users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
         """
@@ -720,17 +704,11 @@ class AsyncAssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        assignee : typing.Optional[int]
-            Assigned user
+        type : AssignmentsUpdateAssignmentRequestType
+            Assignment type. Use AN for annotate or RE for review.
 
-        task : typing.Optional[int]
-            Assigned task
-
-        type : typing.Optional[TypeEnum]
-            Type of assignment: Annotate|Review
-
-            * `AN` - Annotate
-            * `RE` - Review
+        users : typing.Sequence[int]
+            List of user IDs to assign
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -755,6 +733,8 @@ class AsyncAssignmentsClient:
             await client.projects.assignments.update_assignment(
                 id=1,
                 task_pk=1,
+                type="AN",
+                users=[1],
             )
 
 
@@ -764,9 +744,8 @@ class AsyncAssignmentsClient:
             f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
             method="PATCH",
             json={
-                "assignee": assignee,
-                "task": task,
                 "type": type,
+                "users": users,
             },
             headers={
                 "content-type": "application/json",

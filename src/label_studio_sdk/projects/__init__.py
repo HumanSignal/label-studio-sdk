@@ -10,12 +10,38 @@ from .types import (
     ProjectsListRequestFilter,
 )
 from . import assignments, exports, pauses, stats
-from .assignments import AssignmentsBulkAssignResponse
+from .assignments import (
+    AssignmentsAssignRequestType,
+    AssignmentsBulkAssignRequestFilters,
+    AssignmentsBulkAssignRequestFiltersConjunction,
+    AssignmentsBulkAssignRequestFiltersItemsItem,
+    AssignmentsBulkAssignRequestFiltersItemsItemFilter,
+    AssignmentsBulkAssignRequestFiltersItemsItemOperator,
+    AssignmentsBulkAssignRequestFiltersItemsItemValue,
+    AssignmentsBulkAssignRequestSelectedItems,
+    AssignmentsBulkAssignRequestSelectedItemsExcluded,
+    AssignmentsBulkAssignRequestSelectedItemsIncluded,
+    AssignmentsBulkAssignRequestType,
+    AssignmentsBulkAssignResponse,
+    AssignmentsUpdateAssignmentRequestType,
+)
 from .exports import ExportsConvertResponse
 from .stats import StatsIaaResponse, StatsIaaResponseCommonTasks, StatsIaaResponseIaa, StatsIaaResponseStd
 
 __all__ = [
+    "AssignmentsAssignRequestType",
+    "AssignmentsBulkAssignRequestFilters",
+    "AssignmentsBulkAssignRequestFiltersConjunction",
+    "AssignmentsBulkAssignRequestFiltersItemsItem",
+    "AssignmentsBulkAssignRequestFiltersItemsItemFilter",
+    "AssignmentsBulkAssignRequestFiltersItemsItemOperator",
+    "AssignmentsBulkAssignRequestFiltersItemsItemValue",
+    "AssignmentsBulkAssignRequestSelectedItems",
+    "AssignmentsBulkAssignRequestSelectedItemsExcluded",
+    "AssignmentsBulkAssignRequestSelectedItemsIncluded",
+    "AssignmentsBulkAssignRequestType",
     "AssignmentsBulkAssignResponse",
+    "AssignmentsUpdateAssignmentRequestType",
     "ExportsConvertResponse",
     "LseProjectCreateRequestSampling",
     "LseProjectCreateRequestSkipQueue",

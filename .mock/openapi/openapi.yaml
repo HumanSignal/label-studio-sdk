@@ -7647,33 +7647,162 @@ paths:
           required: true
           schema:
             type: integer
-        - description: Selected items
-          in: query
-          name: selected_items
-          schema:
-            type: boolean
-        - description: Assignment type
-          in: query
-          name: type
-          schema:
-            type: string
-        - description: Assignees
-          in: query
-          name: users
-          schema:
-            type: string
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TaskAssignmentRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TaskAssignmentRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TaskAssignmentRequest'
-        required: true
+              properties:
+                filters:
+                  description: 'Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`'
+                  properties:
+                    conjunction:
+                      description: Logical conjunction for the filters. This conjunction (either "or" or "and") will be applied to all items in the filters list. It is not possible to combine "or" and "and" within one list of filters. All filters will be either combined with "or" or with "and", but not a mix of both.
+                      enum:
+                        - or
+                        - and
+                      type: string
+                    items:
+                      description: List of filter items
+                      items:
+                        example:
+                          filter: filter:tasks:id
+                          operator: greater
+                          type: Number
+                          value: 123
+                        properties:
+                          filter:
+                            description: 'Filter identifier, it should start with `filter:tasks:` prefix, e.g. `filter:tasks:agreement`. For `task.data` fields it may look like `filter:tasks:data.field_name`. If you need more info about columns, check the [Get data manager columns](#tag/Data-Manager/operation/api_dm_columns_list) API endpoint. Possible values:<br><li>`filter:tasks:agreement`<br> (Number) Agreement for annotation results for a specific task (Enterprise only)</li><br><li>`filter:tasks:annotations_results`<br> (String) Annotation results for the tasks</li><br><li>`filter:tasks:annotators`<br> (List) Annotators that completed the task (Community). Can include assigned annotators (Enterprise only). Important note: the filter `type` should be List, but the filter `value` is integer</li><br><li>`filter:tasks:cancelled_annotations`<br> (Number) Number of cancelled or skipped annotations for the task</li><br><li>`filter:tasks:comments`<br> (Number) Number of comments in a task</li><br><li>`filter:tasks:completed_at`<br> (Datetime) Time when a task was fully annotated</li><br><li>`filter:tasks:created_at`<br> (Datetime) Time the task was created at</li><br><li>`filter:tasks:file_upload`<br> (String) Name of the file uploaded to create the tasks</li><br><li>`filter:tasks:ground_truth`<br> (Boolean) Ground truth status of the tasks</li><br><li>`filter:tasks:id`<br> (Number) Task ID</li><br><li>`filter:tasks:inner_id`<br> (Number) Task Inner ID, it starts from 1 for all projects</li><br><li>`filter:tasks:predictions_model_versions`<br> (String) Model version used for the predictions</li><br><li>`filter:tasks:predictions_results`<br> (String) Prediction results for the tasks</li><br><li>`filter:tasks:predictions_score`<br> (Number) Prediction score for the task</li><br><li>`filter:tasks:reviewed`<br> (Boolean) Whether the tasks have been reviewed (Enterprise only)</li><br><li>`filter:tasks:reviewers`<br> (String) Reviewers that reviewed the task, or assigned reviewers (Enterprise only). Important note: the filter `type` should be List, but the filter `value` is integer</li><br><li>`filter:tasks:reviews_accepted`<br> (Number) Number of annotations accepted for a task in review (Enterprise only)</li><br><li>`filter:tasks:reviews_rejected`<br> (Number) Number of annotations rejected for a task in review (Enterprise only)</li><br><li>`filter:tasks:total_annotations`<br> (Number) Total number of annotations on a task</li><br><li>`filter:tasks:total_predictions`<br> (Number) Total number of predictions for the task</li><br><li>`filter:tasks:unresolved_comment_count`<br> (Number) Number of unresolved comments in a task</li><br><li>`filter:tasks:updated_at`<br> (Datetime) Time the task was updated at (e.g. new annotation was created, review added, etc)</li>'
+                            enum:
+                              - filter:tasks:agreement
+                              - filter:tasks:annotations_results
+                              - filter:tasks:annotators
+                              - filter:tasks:cancelled_annotations
+                              - filter:tasks:comments
+                              - filter:tasks:completed_at
+                              - filter:tasks:created_at
+                              - filter:tasks:file_upload
+                              - filter:tasks:ground_truth
+                              - filter:tasks:id
+                              - filter:tasks:inner_id
+                              - filter:tasks:predictions_model_versions
+                              - filter:tasks:predictions_results
+                              - filter:tasks:predictions_score
+                              - filter:tasks:reviewed
+                              - filter:tasks:reviewers
+                              - filter:tasks:reviews_accepted
+                              - filter:tasks:reviews_rejected
+                              - filter:tasks:total_annotations
+                              - filter:tasks:total_predictions
+                              - filter:tasks:unresolved_comment_count
+                              - filter:tasks:updated_at
+                            type: string
+                          operator:
+                            description: 'Filter operator. Possible values:<br><li>`contains`<br> Contains</li><br><li>`ends_with`<br> Ends with</li><br><li>`equal`<br> Equal to</li><br><li>`exists`<br> Exists</li><br><li>`greater`<br> Greater than</li><br><li>`greater_or_equal`<br> Greater than or equal to</li><br><li>`in`<br> Is between min and max values, so the filter `value` should be e.g. `{"min": 1, "max": 7}`</li><br><li>`less`<br> Less than</li><br><li>`less_or_equal`<br> Less than or equal to</li><br><li>`not_contains`<br> Does not contain</li><br><li>`not_equal`<br> Not equal to</li><br><li>`not_exists`<br> Does not exist</li><br><li>`not_in`<br> Is not between min and max values, so the filter `value` should be e.g. `{"min": 1, "max": 7}`</li><br><li>`starts_with`<br> Starts with</li>'
+                            enum:
+                              - contains
+                              - ends_with
+                              - equal
+                              - exists
+                              - greater
+                              - greater_or_equal
+                              - in
+                              - less
+                              - less_or_equal
+                              - not_contains
+                              - not_equal
+                              - not_exists
+                              - not_in
+                              - starts_with
+                            type: string
+                          type:
+                            description: Type of the filter value. Possible values:<br><li>`Boolean`<br> Boolean</li><br><li>`Datetime`<br> Datetime string in `strftime('%Y-%m-%dT%H:%M:%S.%fZ')` format</li><br><li>`List`<br> List of items</li><br><li>`Number`<br> Float or Integer</li><br><li>`String`<br> String</li><br><li>`Unknown`<br> Unknown is explicitly converted to string format</li>
+                            type: string
+                          value:
+                            description: Value to filter by
+                            oneOf:
+                              - description: String
+                                title: String
+                                type: string
+                              - description: Integer
+                                title: Integer
+                                type: integer
+                              - description: Float
+                                format: float
+                                title: Float
+                                type: number
+                              - description: Boolean
+                                title: Boolean
+                                type: boolean
+                              - description: Dictionary is used for some operator types, e.g. `in` and `not_in`
+                                title: Dictionary
+                                type: object
+                              - description: List of strings or integers
+                                title: List
+                                type: object
+                            type: object
+                        required:
+                          - filter
+                          - operator
+                          - type
+                          - value
+                        type: object
+                      type: array
+                  required:
+                    - conjunction
+                    - items
+                  type: object
+                selectedItems:
+                  description: 'Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`'
+                  oneOf:
+                    - properties:
+                        all:
+                          description: No tasks are selected
+                          enum:
+                            - false
+                          type: boolean
+                        included:
+                          description: List of included task IDs
+                          items:
+                            type: integer
+                          type: array
+                      required:
+                        - all
+                      title: 'all: false'
+                      type: object
+                    - properties:
+                        all:
+                          description: All tasks are selected
+                          enum:
+                            - true
+                          type: boolean
+                        excluded:
+                          description: List of excluded task IDs
+                          items:
+                            type: integer
+                          type: array
+                      required:
+                        - all
+                      title: 'all: true'
+                      type: object
+                  required:
+                    - all
+                  type: object
+                type:
+                  description: Assignment type. Use AN for annotate or RE for review.
+                  enum:
+                    - AN
+                    - RE
+                  type: string
+                users:
+                  description: List of user IDs to assign
+                  items:
+                    type: integer
+                  type: array
+              required:
+                - type
+                - users
+                - selectedItems
+              type: object
       responses:
         '201':
           content:
@@ -7751,8 +7880,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TaskAssignment'
-          description: ''
+                items:
+                  $ref: '#/components/schemas/TaskAssignment'
+                type: array
+          description: List of assignments for the task
       security:
         - Token: []
       summary: Get assigned tasks and assignees
@@ -7784,13 +7915,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedTaskAssignmentRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/PatchedTaskAssignmentRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/PatchedTaskAssignmentRequest'
+              properties:
+                type:
+                  description: Assignment type. Use AN for annotate or RE for review.
+                  enum:
+                    - AN
+                    - RE
+                  type: string
+                users:
+                  description: List of user IDs to assign
+                  items:
+                    type: integer
+                  type: array
+              required:
+                - type
+                - users
+              type: object
       responses:
         '200':
           content:
@@ -7829,14 +7969,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TaskAssignmentRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/TaskAssignmentRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/TaskAssignmentRequest'
-        required: true
+              properties:
+                type:
+                  description: Assignment type. Use AN for annotate or RE for review.
+                  enum:
+                    - AN
+                    - RE
+                  type: string
+                users:
+                  description: List of user IDs to assign
+                  items:
+                    type: integer
+                  type: array
+              required:
+                - type
+                - users
+              type: object
       responses:
         '200':
           content:
@@ -24173,24 +24321,6 @@ components:
           title: Max time (minutes) between activity
           type: integer
       type: object
-    PatchedTaskAssignmentRequest:
-      properties:
-        assignee:
-          description: Assigned user
-          type: integer
-        task:
-          description: Assigned task
-          type: integer
-        type:
-          allOf:
-            - $ref: '#/components/schemas/TypeEnum'
-          description: |-
-            Type of assignment: Annotate|Review
-
-            * `AN` - Annotate
-            * `RE` - Review
-          title: Assignment type
-      type: object
     PatchedThirdPartyModelVersionRequest:
       properties:
         model_provider_connection:
@@ -26388,27 +26518,6 @@ components:
         - assignee
         - created_at
         - id
-        - task
-      type: object
-    TaskAssignmentRequest:
-      properties:
-        assignee:
-          description: Assigned user
-          type: integer
-        task:
-          description: Assigned task
-          type: integer
-        type:
-          allOf:
-            - $ref: '#/components/schemas/TypeEnum'
-          description: |-
-            Type of assignment: Annotate|Review
-
-            * `AN` - Annotate
-            * `RE` - Review
-          title: Assignment type
-      required:
-        - assignee
         - task
       type: object
     TaskSimple:

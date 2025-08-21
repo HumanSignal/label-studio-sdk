@@ -3,34 +3,32 @@
 from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
 import typing
+from label_studio_sdk.projects.assignments import AssignmentsBulkAssignRequestSelectedItemsIncluded
 from ..utilities import validate_response
 
 
 async def test_bulk_assign(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"assignments": [{"key": "value"}]}
     expected_types: typing.Any = {"assignments": ("list", {0: ("dict", {0: (None, None)})})}
-    response = client.projects.assignments.bulk_assign(id=1, assignee=1, task=1)
+    response = client.projects.assignments.bulk_assign(
+        id=1, selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(all_=True), type="AN", users=[1]
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.assignments.bulk_assign(id=1, assignee=1, task=1)
+    async_response = await async_client.projects.assignments.bulk_assign(
+        id=1, selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(all_=True), type="AN", users=[1]
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_list_assignments(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {
-        "assignee": 1,
-        "created_at": "2024-01-15T09:30:00Z",
-        "id": 1,
-        "task": 1,
-        "type": "AN",
-    }
-    expected_types: typing.Any = {
-        "assignee": "integer",
-        "created_at": "datetime",
-        "id": "integer",
-        "task": "integer",
-        "type": None,
-    }
+    expected_response: typing.Any = [
+        {"assignee": 1, "created_at": "2024-01-15T09:30:00Z", "id": 1, "task": 1, "type": "AN"}
+    ]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {0: {"assignee": "integer", "created_at": "datetime", "id": "integer", "task": "integer", "type": None}},
+    )
     response = client.projects.assignments.list_assignments(id=1, task_pk=1)
     validate_response(response, expected_response, expected_types)
 
@@ -53,10 +51,10 @@ async def test_assign(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "task": "integer",
         "type": None,
     }
-    response = client.projects.assignments.assign(id=1, task_pk=1, assignee=1, task=1)
+    response = client.projects.assignments.assign(id=1, task_pk=1, type="AN", users=[1])
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.assignments.assign(id=1, task_pk=1, assignee=1, task=1)
+    async_response = await async_client.projects.assignments.assign(id=1, task_pk=1, type="AN", users=[1])
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -88,8 +86,8 @@ async def test_update_assignment(client: LabelStudio, async_client: AsyncLabelSt
         "task": "integer",
         "type": None,
     }
-    response = client.projects.assignments.update_assignment(id=1, task_pk=1)
+    response = client.projects.assignments.update_assignment(id=1, task_pk=1, type="AN", users=[1])
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.assignments.update_assignment(id=1, task_pk=1)
+    async_response = await async_client.projects.assignments.update_assignment(id=1, task_pk=1, type="AN", users=[1])
     validate_response(async_response, expected_response, expected_types)

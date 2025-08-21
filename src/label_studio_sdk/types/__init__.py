@@ -163,7 +163,6 @@ from .state_enum import StateEnum
 from .status7bf_enum import Status7BfEnum
 from .status_c5a_enum import StatusC5AEnum
 from .task_assignment import TaskAssignment
-from .task_assignment_request import TaskAssignmentRequest
 from .third_party_model_version import ThirdPartyModelVersion
 from .third_party_model_version_request import ThirdPartyModelVersionRequest
 from .token_refresh_response import TokenRefreshResponse
@@ -342,7 +341,6 @@ __all__ = [
     "Status7BfEnum",
     "StatusC5AEnum",
     "TaskAssignment",
-    "TaskAssignmentRequest",
     "ThirdPartyModelVersion",
     "ThirdPartyModelVersionRequest",
     "TokenRefreshResponse",
