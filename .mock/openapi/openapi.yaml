@@ -7697,6 +7697,7 @@ paths:
         - public
       x-fern-sdk-group-name:
         - projects
+        - assignments
       x-fern-sdk-method-name: bulk_assign
   /api/projects/{id}/tasks/{task_pk}/assignees:
     delete:
@@ -7727,6 +7728,7 @@ paths:
         - public
       x-fern-sdk-group-name:
         - projects
+        - assignments
       x-fern-sdk-method-name: delete_assignments
     get:
       description: Retrieve a list of tasks and assignees for those tasks for a specific project.
@@ -7760,6 +7762,7 @@ paths:
         - public
       x-fern-sdk-group-name:
         - projects
+        - assignments
       x-fern-sdk-method-name: list_assignments
     patch:
       description: Update the assignee for a task in a specific project.
@@ -7804,6 +7807,7 @@ paths:
         - public
       x-fern-sdk-group-name:
         - projects
+        - assignments
       x-fern-sdk-method-name: update_assignment
     post:
       description: Assign a user to a task in a specific project.
@@ -7849,6 +7853,7 @@ paths:
         - public
       x-fern-sdk-group-name:
         - projects
+        - assignments
       x-fern-sdk-method-name: assign
   /api/projects/{id}/update-stats:
     get:

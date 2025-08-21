@@ -5,22 +5,22 @@ from .types import (
     LseProjectCreateRequestSkipQueue,
     PatchedLseProjectUpdateRequestSampling,
     PatchedLseProjectUpdateRequestSkipQueue,
-    ProjectsBulkAssignResponse,
     ProjectsDuplicateResponse,
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
 )
-from . import exports, pauses, stats
+from . import assignments, exports, pauses, stats
+from .assignments import AssignmentsBulkAssignResponse
 from .exports import ExportsConvertResponse
 from .stats import StatsIaaResponse, StatsIaaResponseCommonTasks, StatsIaaResponseIaa, StatsIaaResponseStd
 
 __all__ = [
+    "AssignmentsBulkAssignResponse",
     "ExportsConvertResponse",
     "LseProjectCreateRequestSampling",
     "LseProjectCreateRequestSkipQueue",
     "PatchedLseProjectUpdateRequestSampling",
     "PatchedLseProjectUpdateRequestSkipQueue",
-    "ProjectsBulkAssignResponse",
     "ProjectsDuplicateResponse",
     "ProjectsImportTasksResponse",
     "ProjectsListRequestFilter",
@@ -28,6 +28,7 @@ __all__ = [
     "StatsIaaResponseCommonTasks",
     "StatsIaaResponseIaa",
     "StatsIaaResponseStd",
+    "assignments",
     "exports",
     "pauses",
     "stats",
