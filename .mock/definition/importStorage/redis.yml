@@ -27,27 +27,27 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                type: type
-                synchronizable: true
-                path: path
+              - created_at: '2024-01-15T09:30:00Z'
+                db: 1
+                description: description
                 host: host
-                port: port
-                password: password
-                regex_filter: regex_filter
-                use_blob_urls: true
+                id: 1
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
-                status: initialized
-                traceback: traceback
                 meta:
                   key: value
-                title: title
-                description: description
-                created_at: '2024-01-15T09:30:00Z'
-                db: 1
+                password: password
+                path: path
+                port: port
                 project: 1
+                regex_filter: regex_filter
+                status: initialized
+                synchronizable: true
+                title: title
+                traceback: traceback
+                type: type
+                use_blob_urls: true
       audiences:
         - public
     create:
@@ -62,11 +62,34 @@ service:
         name: RedisCreateRequest
         body:
           properties:
+            description:
+              type: optional<string>
+              docs: Storage description
+            host:
+              type: optional<string>
+              docs: Server Host IP (optional)
+            password:
+              type: optional<string>
+              docs: Server Password (optional)
+            path:
+              type: optional<string>
+              docs: Storage prefix (optional)
+            port:
+              type: optional<string>
+              docs: Server Port (optional)
+            project:
+              type: optional<integer>
+              docs: Project ID
             regex_filter:
               type: optional<string>
               docs: >-
                 Cloud storage regex for filtering objects. You must specify it
                 otherwise no objects will be imported.
+            title:
+              type: optional<string>
+              docs: Storage title
+              validation:
+                maxLength: 2048
             use_blob_urls:
               type: optional<boolean>
               docs: >-
@@ -75,29 +98,6 @@ service:
                 URLs for these images. If set to False, it will read the content
                 of the file and load it into Label Studio.
               default: false
-            title:
-              type: optional<string>
-              docs: Storage title
-              validation:
-                maxLength: 2048
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            path:
-              type: optional<string>
-              docs: Storage prefix (optional)
-            host:
-              type: optional<string>
-              docs: Server Host IP (optional)
-            port:
-              type: optional<string>
-              docs: Server Port (optional)
-            password:
-              type: optional<string>
-              docs: Server Password (optional)
         content-type: application/json
       response:
         docs: ''
@@ -106,27 +106,83 @@ service:
         - request: {}
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              path: path
+              created_at: '2024-01-15T09:30:00Z'
+              db: 1
+              description: description
               host: host
-              port: port
-              password: password
-              regex_filter: regex_filter
-              use_blob_urls: true
+              id: 1
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              db: 1
+              password: password
+              path: path
+              port: port
               project: 1
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
+      audiences:
+        - public
+    validate:
+      path: /api/storages/redis/validate
+      method: POST
+      auth: true
+      docs: Validate a specific Redis import storage connection.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Validate import storage
+      request:
+        name: RedisValidateRequest
+        body:
+          properties:
+            description:
+              type: optional<string>
+              docs: Storage description
+            host:
+              type: optional<string>
+              docs: Server Host IP (optional)
+            id:
+              type: optional<integer>
+              docs: Storage ID. If set, storage with specified ID will be updated
+            password:
+              type: optional<string>
+              docs: Server Password (optional)
+            path:
+              type: optional<string>
+              docs: Storage prefix (optional)
+            port:
+              type: optional<string>
+              docs: Server Port (optional)
+            project:
+              type: optional<integer>
+              docs: Project ID
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            title:
+              type: optional<string>
+              docs: Storage title
+              validation:
+                maxLength: 2048
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
+        content-type: application/json
+      examples:
+        - request: {}
       audiences:
         - public
     get:
@@ -147,27 +203,27 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              path: path
+              created_at: '2024-01-15T09:30:00Z'
+              db: 1
+              description: description
               host: host
-              port: port
-              password: password
-              regex_filter: regex_filter
-              use_blob_urls: true
+              id: 1
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              db: 1
+              password: password
+              path: path
+              port: port
               project: 1
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
     delete:
@@ -199,11 +255,34 @@ service:
         name: RedisUpdateRequest
         body:
           properties:
+            description:
+              type: optional<string>
+              docs: Storage description
+            host:
+              type: optional<string>
+              docs: Server Host IP (optional)
+            password:
+              type: optional<string>
+              docs: Server Password (optional)
+            path:
+              type: optional<string>
+              docs: Storage prefix (optional)
+            port:
+              type: optional<string>
+              docs: Server Port (optional)
+            project:
+              type: optional<integer>
+              docs: Project ID
             regex_filter:
               type: optional<string>
               docs: >-
                 Cloud storage regex for filtering objects. You must specify it
                 otherwise no objects will be imported.
+            title:
+              type: optional<string>
+              docs: Storage title
+              validation:
+                maxLength: 2048
             use_blob_urls:
               type: optional<boolean>
               docs: >-
@@ -212,29 +291,6 @@ service:
                 URLs for these images. If set to False, it will read the content
                 of the file and load it into Label Studio.
               default: false
-            title:
-              type: optional<string>
-              docs: Storage title
-              validation:
-                maxLength: 2048
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            path:
-              type: optional<string>
-              docs: Storage prefix (optional)
-            host:
-              type: optional<string>
-              docs: Server Host IP (optional)
-            port:
-              type: optional<string>
-              docs: Server Port (optional)
-            password:
-              type: optional<string>
-              docs: Server Password (optional)
         content-type: application/json
       response:
         docs: ''
@@ -245,27 +301,27 @@ service:
           request: {}
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              path: path
+              created_at: '2024-01-15T09:30:00Z'
+              db: 1
+              description: description
               host: host
-              port: port
-              password: password
-              regex_filter: regex_filter
-              use_blob_urls: true
+              id: 1
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              db: 1
+              password: password
+              path: path
+              port: port
               project: 1
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
     sync:
@@ -288,83 +344,27 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              path: path
+              created_at: '2024-01-15T09:30:00Z'
+              db: 1
+              description: description
               host: host
-              port: port
-              password: password
-              regex_filter: regex_filter
-              use_blob_urls: true
+              id: 1
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              db: 1
+              password: password
+              path: path
+              port: port
               project: 1
-      audiences:
-        - public
-    validate:
-      path: /api/storages/redis/validate
-      method: POST
-      auth: true
-      docs: Validate a specific Redis import storage connection.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Validate import storage
-      request:
-        name: RedisValidateRequest
-        body:
-          properties:
-            id:
-              type: optional<integer>
-              docs: Storage ID. If set, storage with specified ID will be updated
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
-              default: false
-            title:
-              type: optional<string>
-              docs: Storage title
-              validation:
-                maxLength: 2048
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            path:
-              type: optional<string>
-              docs: Storage prefix (optional)
-            host:
-              type: optional<string>
-              docs: Server Host IP (optional)
-            port:
-              type: optional<string>
-              docs: Server Port (optional)
-            password:
-              type: optional<string>
-              docs: Server Password (optional)
-        content-type: application/json
-      examples:
-        - request: {}
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
   source:

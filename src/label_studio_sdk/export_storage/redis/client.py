@@ -79,15 +79,15 @@ class RedisClient:
     def create(
         self,
         *,
-        db: typing.Optional[int] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisExportStorage:
         """
@@ -95,32 +95,32 @@ class RedisClient:
 
         Parameters
         ----------
-        db : typing.Optional[int]
-            Database ID of database to use
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled.
 
-        title : typing.Optional[str]
-            Storage title
+        db : typing.Optional[int]
+            Database ID of database to use
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
 
         path : typing.Optional[str]
             Storage prefix (optional)
 
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -143,15 +143,15 @@ class RedisClient:
             "api/storages/export/redis",
             method="POST",
             json={
-                "db": db,
                 "can_delete_objects": can_delete_objects,
-                "title": title,
+                "db": db,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -168,6 +168,101 @@ class RedisClient:
                         object_=_response.json(),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def validate(
+        self,
+        *,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        db: typing.Optional[int] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific Redis export storage connection.
+
+        Parameters
+        ----------
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        db : typing.Optional[int]
+            Database ID of database to use
+
+        description : typing.Optional[str]
+            Storage description
+
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        password : typing.Optional[str]
+            Server Password (optional)
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
+        port : typing.Optional[str]
+            Server Port (optional)
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.export_storage.redis.validate()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/storages/export/redis/validate",
+            method="POST",
+            json={
+                "can_delete_objects": can_delete_objects,
+                "db": db,
+                "description": description,
+                "host": host,
+                "id": id,
+                "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -262,15 +357,15 @@ class RedisClient:
         self,
         id: int,
         *,
-        db: typing.Optional[int] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisExportStorage:
         """
@@ -280,32 +375,32 @@ class RedisClient:
         ----------
         id : int
 
-        db : typing.Optional[int]
-            Database ID of database to use
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled.
 
-        title : typing.Optional[str]
-            Storage title
+        db : typing.Optional[int]
+            Database ID of database to use
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
 
         path : typing.Optional[str]
             Storage prefix (optional)
 
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -330,15 +425,15 @@ class RedisClient:
             f"api/storages/export/redis/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "db": db,
                 "can_delete_objects": can_delete_objects,
-                "title": title,
+                "db": db,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -401,101 +496,6 @@ class RedisClient:
                         object_=_response.json(),
                     ),
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        db: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
-        host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
-        password: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific Redis export storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        db : typing.Optional[int]
-            Database ID of database to use
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Storage prefix (optional)
-
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
-        port : typing.Optional[str]
-            Server Port (optional)
-
-        password : typing.Optional[str]
-            Server Password (optional)
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.export_storage.redis.validate()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/storages/export/redis/validate",
-            method="POST",
-            json={
-                "id": id,
-                "db": db,
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "path": path,
-                "host": host,
-                "port": port,
-                "password": password,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -575,15 +575,15 @@ class AsyncRedisClient:
     async def create(
         self,
         *,
-        db: typing.Optional[int] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisExportStorage:
         """
@@ -591,32 +591,32 @@ class AsyncRedisClient:
 
         Parameters
         ----------
-        db : typing.Optional[int]
-            Database ID of database to use
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled.
 
-        title : typing.Optional[str]
-            Storage title
+        db : typing.Optional[int]
+            Database ID of database to use
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
 
         path : typing.Optional[str]
             Storage prefix (optional)
 
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -647,15 +647,15 @@ class AsyncRedisClient:
             "api/storages/export/redis",
             method="POST",
             json={
-                "db": db,
                 "can_delete_objects": can_delete_objects,
-                "title": title,
+                "db": db,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -672,6 +672,109 @@ class AsyncRedisClient:
                         object_=_response.json(),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def validate(
+        self,
+        *,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        db: typing.Optional[int] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific Redis export storage connection.
+
+        Parameters
+        ----------
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        db : typing.Optional[int]
+            Database ID of database to use
+
+        description : typing.Optional[str]
+            Storage description
+
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        password : typing.Optional[str]
+            Server Password (optional)
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
+        port : typing.Optional[str]
+            Server Port (optional)
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.export_storage.redis.validate()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/storages/export/redis/validate",
+            method="POST",
+            json={
+                "can_delete_objects": can_delete_objects,
+                "db": db,
+                "description": description,
+                "host": host,
+                "id": id,
+                "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -782,15 +885,15 @@ class AsyncRedisClient:
         self,
         id: int,
         *,
-        db: typing.Optional[int] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RedisExportStorage:
         """
@@ -800,32 +903,32 @@ class AsyncRedisClient:
         ----------
         id : int
 
-        db : typing.Optional[int]
-            Database ID of database to use
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled.
 
-        title : typing.Optional[str]
-            Storage title
+        db : typing.Optional[int]
+            Database ID of database to use
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
 
         path : typing.Optional[str]
             Storage prefix (optional)
 
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -858,15 +961,15 @@ class AsyncRedisClient:
             f"api/storages/export/redis/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "db": db,
                 "can_delete_objects": can_delete_objects,
-                "title": title,
+                "db": db,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -937,109 +1040,6 @@ class AsyncRedisClient:
                         object_=_response.json(),
                     ),
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        db: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
-        host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
-        password: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific Redis export storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        db : typing.Optional[int]
-            Database ID of database to use
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Storage prefix (optional)
-
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
-        port : typing.Optional[str]
-            Server Port (optional)
-
-        password : typing.Optional[str]
-            Server Password (optional)
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.export_storage.redis.validate()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/export/redis/validate",
-            method="POST",
-            json={
-                "id": id,
-                "db": db,
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "path": path,
-                "host": host,
-                "port": port,
-                "password": password,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

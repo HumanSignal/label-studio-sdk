@@ -9,26 +9,26 @@ from .utilities import validate_response
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "id": 1,
-            "title": "title",
-            "description": "description",
             "color": "color",
-            "is_personal": True,
-            "is_archived": True,
             "created_by": 1,
+            "description": "description",
+            "id": 1,
+            "is_archived": True,
+            "is_personal": True,
+            "title": "title",
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
-                "id": "integer",
-                "title": None,
-                "description": None,
                 "color": None,
-                "is_personal": None,
-                "is_archived": None,
                 "created_by": "integer",
+                "description": None,
+                "id": "integer",
+                "is_archived": None,
+                "is_personal": None,
+                "title": None,
             }
         },
     )
@@ -41,22 +41,22 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "title": "title",
-        "description": "description",
         "color": "color",
-        "is_personal": True,
-        "is_archived": True,
         "created_by": 1,
+        "description": "description",
+        "id": 1,
+        "is_archived": True,
+        "is_personal": True,
+        "title": "title",
     }
     expected_types: typing.Any = {
-        "id": "integer",
-        "title": None,
-        "description": None,
         "color": None,
-        "is_personal": None,
-        "is_archived": None,
         "created_by": "integer",
+        "description": None,
+        "id": "integer",
+        "is_archived": None,
+        "is_personal": None,
+        "title": None,
     }
     response = client.workspaces.create(title="title")
     validate_response(response, expected_response, expected_types)
@@ -67,22 +67,22 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "title": "title",
-        "description": "description",
         "color": "color",
-        "is_personal": True,
-        "is_archived": True,
         "created_by": 1,
+        "description": "description",
+        "id": 1,
+        "is_archived": True,
+        "is_personal": True,
+        "title": "title",
     }
     expected_types: typing.Any = {
-        "id": "integer",
-        "title": None,
-        "description": None,
         "color": None,
-        "is_personal": None,
-        "is_archived": None,
         "created_by": "integer",
+        "description": None,
+        "id": "integer",
+        "is_archived": None,
+        "is_personal": None,
+        "title": None,
     }
     response = client.workspaces.get(id=1)
     validate_response(response, expected_response, expected_types)
@@ -106,22 +106,22 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "title": "title",
-        "description": "description",
         "color": "color",
-        "is_personal": True,
-        "is_archived": True,
         "created_by": 1,
+        "description": "description",
+        "id": 1,
+        "is_archived": True,
+        "is_personal": True,
+        "title": "title",
     }
     expected_types: typing.Any = {
-        "id": "integer",
-        "title": None,
-        "description": None,
         "color": None,
-        "is_personal": None,
-        "is_archived": None,
         "created_by": "integer",
+        "description": None,
+        "id": "integer",
+        "is_archived": None,
+        "is_personal": None,
+        "title": None,
     }
     response = client.workspaces.update(id=1)
     validate_response(response, expected_response, expected_types)
