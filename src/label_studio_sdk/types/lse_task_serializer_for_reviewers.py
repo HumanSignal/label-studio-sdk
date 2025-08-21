@@ -2,10 +2,14 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .lse_task_serializer_for_reviewers_predictions_item import (
+    LseTaskSerializerForReviewersPredictionsItem,
+)
 import pydantic
+from .lse_task_serializer_for_reviewers_drafts_item import (
+    LseTaskSerializerForReviewersDraftsItem,
+)
 import datetime as dt
-from .lse_task_serializer_for_reviewers_drafts_item import LseTaskSerializerForReviewersDraftsItem
-from .lse_task_serializer_for_reviewers_predictions_item import LseTaskSerializerForReviewersPredictionsItem
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -14,87 +18,66 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     Task Serializer with project scheme configs validation
     """
 
+    id: int
     agreement: str
+    predictions: typing.List[LseTaskSerializerForReviewersPredictionsItem] = (
+        pydantic.Field()
+    )
+    """
+    Predictions for this task
+    """
+
     annotations: str
-    annotations_ids: str
-    annotations_results: str
-    annotators: typing.List[int] = pydantic.Field()
-    """
-    Annotators IDs who annotated this task
-    """
-
-    annotators_count: int = pydantic.Field()
-    """
-    The annotators_count is calculated as the number of users with annotations (can be repeated, so same as the number of annotations) + the number of assignees without annotations.
-    """
-
-    avg_lead_time: typing.Optional[float] = None
-    cancelled_annotations: typing.Optional[int] = None
-    comment_authors: typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
-    comment_authors_count: int
-    comment_count: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of comments in the task including all annotations
-    """
-
-    comments: str
-    completed_at: typing.Optional[dt.datetime] = None
-    created_at: dt.datetime = pydantic.Field()
-    """
-    Time a task was created
-    """
-
-    data: typing.Optional[typing.Any] = None
-    draft_exists: typing.Optional[bool] = None
     drafts: typing.List[LseTaskSerializerForReviewersDraftsItem] = pydantic.Field()
     """
     Drafts for this task
     """
 
-    file_upload: str
-    ground_truth: typing.Optional[bool] = None
-    id: int
+    annotators: typing.List[int] = pydantic.Field()
+    """
+    Annotators IDs who annotated this task
+    """
+
     inner_id: typing.Optional[int] = None
-    is_labeled: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
-    """
-
-    last_comment_updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    When the last comment was updated
-    """
-
-    meta: typing.Optional[typing.Optional[typing.Any]] = None
-    overlap: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of distinct annotators that processed the current task
-    """
-
-    predictions: typing.List[LseTaskSerializerForReviewersPredictionsItem] = pydantic.Field()
-    """
-    Predictions for this task
-    """
-
-    predictions_model_versions: str
-    predictions_results: str
-    predictions_score: typing.Optional[float] = None
-    project: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Project ID for this task
-    """
-
-    reviewed: typing.Optional[bool] = None
-    reviewers: typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
-    reviewers_count: int
-    reviews_accepted: typing.Optional[int] = None
-    reviews_rejected: typing.Optional[int] = None
-    storage_filename: str
+    cancelled_annotations: typing.Optional[int] = None
     total_annotations: typing.Optional[int] = None
     total_predictions: typing.Optional[int] = None
-    unresolved_comment_count: typing.Optional[int] = pydantic.Field(default=None)
+    completed_at: typing.Optional[dt.datetime] = None
+    annotations_results: str
+    predictions_results: str
+    predictions_score: typing.Optional[float] = None
+    file_upload: str
+    storage_filename: str
+    annotations_ids: str
+    predictions_model_versions: str
+    avg_lead_time: typing.Optional[float] = None
+    draft_exists: typing.Optional[bool] = None
+    updated_by: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = (
+        pydantic.Field()
+    )
     """
-    Number of unresolved comments in the task including all annotations
+    User IDs who updated this task
+    """
+
+    reviewers: typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
+    comments: str
+    comment_authors: typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
+    reviewed: typing.Optional[bool] = None
+    reviews_accepted: typing.Optional[int] = None
+    reviews_rejected: typing.Optional[int] = None
+    ground_truth: typing.Optional[bool] = None
+    annotators_count: int = pydantic.Field()
+    """
+    The annotators_count is calculated as the number of users with annotations (can be repeated, so same as the number of annotations) + the number of assignees without annotations.
+    """
+
+    reviewers_count: int
+    comment_authors_count: int
+    data: typing.Optional[typing.Any] = None
+    meta: typing.Optional[typing.Optional[typing.Any]] = None
+    created_at: dt.datetime = pydantic.Field()
+    """
+    Time a task was created
     """
 
     updated_at: dt.datetime = pydantic.Field()
@@ -102,13 +85,40 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     Last time a task was updated
     """
 
-    updated_by: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
+    is_labeled: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    User IDs who updated this task
+    True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+    """
+
+    overlap: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of distinct annotators that processed the current task
+    """
+
+    comment_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of comments in the task including all annotations
+    """
+
+    unresolved_comment_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of unresolved comments in the task including all annotations
+    """
+
+    last_comment_updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    When the last comment was updated
+    """
+
+    project: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Project ID for this task
     """
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

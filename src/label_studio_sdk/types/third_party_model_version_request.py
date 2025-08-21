@@ -8,11 +8,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ThirdPartyModelVersionRequest(UncheckedBaseModel):
-    model_provider_connection: typing.Optional[int] = None
-    organization: typing.Optional[int] = None
     parent_model: typing.Optional[int] = pydantic.Field(default=None)
     """
     Parent model interface ID
+    """
+
+    title: str = pydantic.Field()
+    """
+    Model name
     """
 
     prompt: str = pydantic.Field()
@@ -38,13 +41,13 @@ class ThirdPartyModelVersionRequest(UncheckedBaseModel):
     The model ID to use within the given provider, e.g. gpt-3.5
     """
 
-    title: str = pydantic.Field()
-    """
-    Model name
-    """
+    model_provider_connection: typing.Optional[int] = None
+    organization: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

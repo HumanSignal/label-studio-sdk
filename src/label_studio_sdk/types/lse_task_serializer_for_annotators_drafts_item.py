@@ -8,12 +8,16 @@ import pydantic
 
 
 class LseTaskSerializerForAnnotatorsDraftsItem(UncheckedBaseModel):
+    result: typing.Optional[
+        typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
+    ] = None
     created_at: typing.Optional[dt.datetime] = None
-    result: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = None
     updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

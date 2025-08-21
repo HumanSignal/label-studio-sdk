@@ -3,5 +3,14 @@
 import typing
 
 ProviderEnum = typing.Union[
-    typing.Literal["OpenAI", "AzureOpenAI", "AzureAIFoundry", "VertexAI", "Gemini", "Anthropic", "Custom"], typing.Any
+    typing.Literal[
+        "OpenAI",
+        "AzureOpenAI",
+        "AzureAIFoundry",
+        "VertexAI",
+        "Gemini",
+        "Anthropic",
+        "Custom",
+    ],
+    typing.Any,
 ]

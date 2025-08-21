@@ -5,4 +5,7 @@ from .annotation_bulk_serializer_with_selected_items_request_last_action import 
 )
 from .annotations_create_bulk_response_item import AnnotationsCreateBulkResponseItem
 
-__all__ = ["AnnotationBulkSerializerWithSelectedItemsRequestLastAction", "AnnotationsCreateBulkResponseItem"]
+__all__ = [
+    "AnnotationBulkSerializerWithSelectedItemsRequestLastAction",
+    "AnnotationsCreateBulkResponseItem",
+]

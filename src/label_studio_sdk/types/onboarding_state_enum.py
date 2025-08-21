@@ -3,5 +3,13 @@
 import typing
 
 OnboardingStateEnum = typing.Union[
-    typing.Literal["not_started", "signup", "trial_signup", "first_tutorial", "in_app_guidance", "complete"], typing.Any
+    typing.Literal[
+        "not_started",
+        "signup",
+        "trial_signup",
+        "first_tutorial",
+        "in_app_guidance",
+        "complete",
+    ],
+    typing.Any,
 ]

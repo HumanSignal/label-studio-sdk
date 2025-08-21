@@ -29,7 +29,11 @@ class TasksClient:
         self._client_wrapper = client_wrapper
 
     def create_many_status(
-        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        import_pk: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectImport:
         """
         Return data related to async project import operation
@@ -80,7 +84,9 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete_all_tasks(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Delete all tasks from a specific project.
 
@@ -289,21 +295,21 @@ class TasksClient:
     def create(
         self,
         *,
-        cancelled_annotations: typing.Optional[int] = OMIT,
-        comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
-        comment_count: typing.Optional[int] = OMIT,
         data: typing.Optional[typing.Any] = OMIT,
-        file_upload: typing.Optional[int] = OMIT,
-        inner_id: typing.Optional[int] = OMIT,
-        is_labeled: typing.Optional[bool] = OMIT,
-        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
         overlap: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        inner_id: typing.Optional[int] = OMIT,
         total_annotations: typing.Optional[int] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
         total_predictions: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
         unresolved_comment_count: typing.Optional[int] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
+        project: typing.Optional[int] = OMIT,
         updated_by: typing.Optional[int] = OMIT,
+        file_upload: typing.Optional[int] = OMIT,
+        comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseTask:
         """
@@ -311,48 +317,48 @@ class TasksClient:
 
         Parameters
         ----------
-        cancelled_annotations : typing.Optional[int]
-            Number of total cancelled annotations for the current task
-
-        comment_authors : typing.Optional[typing.Sequence[int]]
-            Users who wrote comments
-
-        comment_count : typing.Optional[int]
-            Number of comments in the task including all annotations
-
         data : typing.Optional[typing.Any]
 
-        file_upload : typing.Optional[int]
-            Uploaded file used as data source for this task
-
-        inner_id : typing.Optional[int]
-            Internal task ID in the project, starts with 1
+        meta : typing.Optional[typing.Optional[typing.Any]]
 
         is_labeled : typing.Optional[bool]
             True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
 
-        last_comment_updated_at : typing.Optional[dt.datetime]
-            When the last comment was updated
-
-        meta : typing.Optional[typing.Optional[typing.Any]]
-
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
 
-        project : typing.Optional[int]
-            Project ID for this task
+        inner_id : typing.Optional[int]
+            Internal task ID in the project, starts with 1
 
         total_annotations : typing.Optional[int]
             Number of total annotations for the current task except cancelled annotations
 
+        cancelled_annotations : typing.Optional[int]
+            Number of total cancelled annotations for the current task
+
         total_predictions : typing.Optional[int]
             Number of total predictions for the current task
+
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
 
         unresolved_comment_count : typing.Optional[int]
             Number of unresolved comments in the task including all annotations
 
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
+
+        project : typing.Optional[int]
+            Project ID for this task
+
         updated_by : typing.Optional[int]
             Last annotator or reviewer who updated this task
+
+        file_upload : typing.Optional[int]
+            Uploaded file used as data source for this task
+
+        comment_authors : typing.Optional[typing.Sequence[int]]
+            Users who wrote comments
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -377,21 +383,21 @@ class TasksClient:
             "api/tasks/",
             method="POST",
             json={
-                "cancelled_annotations": cancelled_annotations,
-                "comment_authors": comment_authors,
-                "comment_count": comment_count,
                 "data": data,
-                "file_upload": file_upload,
-                "inner_id": inner_id,
-                "is_labeled": is_labeled,
-                "last_comment_updated_at": last_comment_updated_at,
                 "meta": meta,
+                "is_labeled": is_labeled,
                 "overlap": overlap,
-                "project": project,
+                "inner_id": inner_id,
                 "total_annotations": total_annotations,
+                "cancelled_annotations": cancelled_annotations,
                 "total_predictions": total_predictions,
+                "comment_count": comment_count,
                 "unresolved_comment_count": unresolved_comment_count,
+                "last_comment_updated_at": last_comment_updated_at,
+                "project": project,
                 "updated_by": updated_by,
+                "file_upload": file_upload,
+                "comment_authors": comment_authors,
             },
             headers={
                 "content-type": "application/json",
@@ -413,7 +419,9 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+    def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RoleBasedTask:
         """
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
 
@@ -460,7 +468,9 @@ class TasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Delete a task in Label Studio. This action cannot be undone!
 
@@ -504,26 +514,26 @@ class TasksClient:
         self,
         id: str,
         *,
-        avg_lead_time: typing.Optional[float] = OMIT,
-        cancelled_annotations: typing.Optional[int] = OMIT,
-        comment_count: typing.Optional[int] = OMIT,
-        completed_at: typing.Optional[dt.datetime] = OMIT,
-        data: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        draft_exists: typing.Optional[bool] = OMIT,
-        ground_truth: typing.Optional[bool] = OMIT,
         inner_id: typing.Optional[int] = OMIT,
-        is_labeled: typing.Optional[bool] = OMIT,
-        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
-        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        overlap: typing.Optional[int] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        completed_at: typing.Optional[dt.datetime] = OMIT,
         predictions_score: typing.Optional[float] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        avg_lead_time: typing.Optional[float] = OMIT,
+        draft_exists: typing.Optional[bool] = OMIT,
         reviewed: typing.Optional[bool] = OMIT,
         reviews_accepted: typing.Optional[int] = OMIT,
         reviews_rejected: typing.Optional[int] = OMIT,
-        total_annotations: typing.Optional[int] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        data: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
         unresolved_comment_count: typing.Optional[int] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
+        project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RoleBasedTask:
         """
@@ -534,38 +544,21 @@ class TasksClient:
         id : str
             Task ID
 
-        avg_lead_time : typing.Optional[float]
+        inner_id : typing.Optional[int]
 
         cancelled_annotations : typing.Optional[int]
 
-        comment_count : typing.Optional[int]
-            Number of comments in the task including all annotations
+        total_annotations : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
 
         completed_at : typing.Optional[dt.datetime]
 
-        data : typing.Optional[typing.Optional[typing.Any]]
-
-        draft_exists : typing.Optional[bool]
-
-        ground_truth : typing.Optional[bool]
-
-        inner_id : typing.Optional[int]
-
-        is_labeled : typing.Optional[bool]
-            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
-
-        last_comment_updated_at : typing.Optional[dt.datetime]
-            When the last comment was updated
-
-        meta : typing.Optional[typing.Optional[typing.Any]]
-
-        overlap : typing.Optional[int]
-            Number of distinct annotators that processed the current task
-
         predictions_score : typing.Optional[float]
 
-        project : typing.Optional[int]
-            Project ID for this task
+        avg_lead_time : typing.Optional[float]
+
+        draft_exists : typing.Optional[bool]
 
         reviewed : typing.Optional[bool]
 
@@ -573,12 +566,29 @@ class TasksClient:
 
         reviews_rejected : typing.Optional[int]
 
-        total_annotations : typing.Optional[int]
+        ground_truth : typing.Optional[bool]
 
-        total_predictions : typing.Optional[int]
+        data : typing.Optional[typing.Optional[typing.Any]]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        is_labeled : typing.Optional[bool]
+            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+
+        overlap : typing.Optional[int]
+            Number of distinct annotators that processed the current task
+
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
 
         unresolved_comment_count : typing.Optional[int]
             Number of unresolved comments in the task including all annotations
+
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
+
+        project : typing.Optional[int]
+            Project ID for this task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -603,26 +613,26 @@ class TasksClient:
             f"api/tasks/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "avg_lead_time": avg_lead_time,
-                "cancelled_annotations": cancelled_annotations,
-                "comment_count": comment_count,
-                "completed_at": completed_at,
-                "data": data,
-                "draft_exists": draft_exists,
-                "ground_truth": ground_truth,
                 "inner_id": inner_id,
-                "is_labeled": is_labeled,
-                "last_comment_updated_at": last_comment_updated_at,
-                "meta": meta,
-                "overlap": overlap,
+                "cancelled_annotations": cancelled_annotations,
+                "total_annotations": total_annotations,
+                "total_predictions": total_predictions,
+                "completed_at": completed_at,
                 "predictions_score": predictions_score,
-                "project": project,
+                "avg_lead_time": avg_lead_time,
+                "draft_exists": draft_exists,
                 "reviewed": reviewed,
                 "reviews_accepted": reviews_accepted,
                 "reviews_rejected": reviews_rejected,
-                "total_annotations": total_annotations,
-                "total_predictions": total_predictions,
+                "ground_truth": ground_truth,
+                "data": data,
+                "meta": meta,
+                "is_labeled": is_labeled,
+                "overlap": overlap,
+                "comment_count": comment_count,
                 "unresolved_comment_count": unresolved_comment_count,
+                "last_comment_updated_at": last_comment_updated_at,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",
@@ -650,7 +660,11 @@ class AsyncTasksClient:
         self._client_wrapper = client_wrapper
 
     async def create_many_status(
-        self, id: int, import_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        import_pk: int,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ProjectImport:
         """
         Return data related to async project import operation
@@ -709,7 +723,9 @@ class AsyncTasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_all_tasks(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete_all_tasks(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Delete all tasks from a specific project.
 
@@ -934,21 +950,21 @@ class AsyncTasksClient:
     async def create(
         self,
         *,
-        cancelled_annotations: typing.Optional[int] = OMIT,
-        comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
-        comment_count: typing.Optional[int] = OMIT,
         data: typing.Optional[typing.Any] = OMIT,
-        file_upload: typing.Optional[int] = OMIT,
-        inner_id: typing.Optional[int] = OMIT,
-        is_labeled: typing.Optional[bool] = OMIT,
-        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
         meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
         overlap: typing.Optional[int] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        inner_id: typing.Optional[int] = OMIT,
         total_annotations: typing.Optional[int] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
         total_predictions: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
         unresolved_comment_count: typing.Optional[int] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
+        project: typing.Optional[int] = OMIT,
         updated_by: typing.Optional[int] = OMIT,
+        file_upload: typing.Optional[int] = OMIT,
+        comment_authors: typing.Optional[typing.Sequence[int]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseTask:
         """
@@ -956,48 +972,48 @@ class AsyncTasksClient:
 
         Parameters
         ----------
-        cancelled_annotations : typing.Optional[int]
-            Number of total cancelled annotations for the current task
-
-        comment_authors : typing.Optional[typing.Sequence[int]]
-            Users who wrote comments
-
-        comment_count : typing.Optional[int]
-            Number of comments in the task including all annotations
-
         data : typing.Optional[typing.Any]
 
-        file_upload : typing.Optional[int]
-            Uploaded file used as data source for this task
-
-        inner_id : typing.Optional[int]
-            Internal task ID in the project, starts with 1
+        meta : typing.Optional[typing.Optional[typing.Any]]
 
         is_labeled : typing.Optional[bool]
             True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
 
-        last_comment_updated_at : typing.Optional[dt.datetime]
-            When the last comment was updated
-
-        meta : typing.Optional[typing.Optional[typing.Any]]
-
         overlap : typing.Optional[int]
             Number of distinct annotators that processed the current task
 
-        project : typing.Optional[int]
-            Project ID for this task
+        inner_id : typing.Optional[int]
+            Internal task ID in the project, starts with 1
 
         total_annotations : typing.Optional[int]
             Number of total annotations for the current task except cancelled annotations
 
+        cancelled_annotations : typing.Optional[int]
+            Number of total cancelled annotations for the current task
+
         total_predictions : typing.Optional[int]
             Number of total predictions for the current task
+
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
 
         unresolved_comment_count : typing.Optional[int]
             Number of unresolved comments in the task including all annotations
 
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
+
+        project : typing.Optional[int]
+            Project ID for this task
+
         updated_by : typing.Optional[int]
             Last annotator or reviewer who updated this task
+
+        file_upload : typing.Optional[int]
+            Uploaded file used as data source for this task
+
+        comment_authors : typing.Optional[typing.Sequence[int]]
+            Users who wrote comments
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1030,21 +1046,21 @@ class AsyncTasksClient:
             "api/tasks/",
             method="POST",
             json={
-                "cancelled_annotations": cancelled_annotations,
-                "comment_authors": comment_authors,
-                "comment_count": comment_count,
                 "data": data,
-                "file_upload": file_upload,
-                "inner_id": inner_id,
-                "is_labeled": is_labeled,
-                "last_comment_updated_at": last_comment_updated_at,
                 "meta": meta,
+                "is_labeled": is_labeled,
                 "overlap": overlap,
-                "project": project,
+                "inner_id": inner_id,
                 "total_annotations": total_annotations,
+                "cancelled_annotations": cancelled_annotations,
                 "total_predictions": total_predictions,
+                "comment_count": comment_count,
                 "unresolved_comment_count": unresolved_comment_count,
+                "last_comment_updated_at": last_comment_updated_at,
+                "project": project,
                 "updated_by": updated_by,
+                "file_upload": file_upload,
+                "comment_authors": comment_authors,
             },
             headers={
                 "content-type": "application/json",
@@ -1066,7 +1082,9 @@ class AsyncTasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> RoleBasedTask:
+    async def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> RoleBasedTask:
         """
         Get task data, metadata, annotations and other attributes for a specific labeling task by task ID.
 
@@ -1121,7 +1139,9 @@ class AsyncTasksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Delete a task in Label Studio. This action cannot be undone!
 
@@ -1173,26 +1193,26 @@ class AsyncTasksClient:
         self,
         id: str,
         *,
-        avg_lead_time: typing.Optional[float] = OMIT,
-        cancelled_annotations: typing.Optional[int] = OMIT,
-        comment_count: typing.Optional[int] = OMIT,
-        completed_at: typing.Optional[dt.datetime] = OMIT,
-        data: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        draft_exists: typing.Optional[bool] = OMIT,
-        ground_truth: typing.Optional[bool] = OMIT,
         inner_id: typing.Optional[int] = OMIT,
-        is_labeled: typing.Optional[bool] = OMIT,
-        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
-        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        overlap: typing.Optional[int] = OMIT,
+        cancelled_annotations: typing.Optional[int] = OMIT,
+        total_annotations: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        completed_at: typing.Optional[dt.datetime] = OMIT,
         predictions_score: typing.Optional[float] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        avg_lead_time: typing.Optional[float] = OMIT,
+        draft_exists: typing.Optional[bool] = OMIT,
         reviewed: typing.Optional[bool] = OMIT,
         reviews_accepted: typing.Optional[int] = OMIT,
         reviews_rejected: typing.Optional[int] = OMIT,
-        total_annotations: typing.Optional[int] = OMIT,
-        total_predictions: typing.Optional[int] = OMIT,
+        ground_truth: typing.Optional[bool] = OMIT,
+        data: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_labeled: typing.Optional[bool] = OMIT,
+        overlap: typing.Optional[int] = OMIT,
+        comment_count: typing.Optional[int] = OMIT,
         unresolved_comment_count: typing.Optional[int] = OMIT,
+        last_comment_updated_at: typing.Optional[dt.datetime] = OMIT,
+        project: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> RoleBasedTask:
         """
@@ -1203,38 +1223,21 @@ class AsyncTasksClient:
         id : str
             Task ID
 
-        avg_lead_time : typing.Optional[float]
+        inner_id : typing.Optional[int]
 
         cancelled_annotations : typing.Optional[int]
 
-        comment_count : typing.Optional[int]
-            Number of comments in the task including all annotations
+        total_annotations : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
 
         completed_at : typing.Optional[dt.datetime]
 
-        data : typing.Optional[typing.Optional[typing.Any]]
-
-        draft_exists : typing.Optional[bool]
-
-        ground_truth : typing.Optional[bool]
-
-        inner_id : typing.Optional[int]
-
-        is_labeled : typing.Optional[bool]
-            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
-
-        last_comment_updated_at : typing.Optional[dt.datetime]
-            When the last comment was updated
-
-        meta : typing.Optional[typing.Optional[typing.Any]]
-
-        overlap : typing.Optional[int]
-            Number of distinct annotators that processed the current task
-
         predictions_score : typing.Optional[float]
 
-        project : typing.Optional[int]
-            Project ID for this task
+        avg_lead_time : typing.Optional[float]
+
+        draft_exists : typing.Optional[bool]
 
         reviewed : typing.Optional[bool]
 
@@ -1242,12 +1245,29 @@ class AsyncTasksClient:
 
         reviews_rejected : typing.Optional[int]
 
-        total_annotations : typing.Optional[int]
+        ground_truth : typing.Optional[bool]
 
-        total_predictions : typing.Optional[int]
+        data : typing.Optional[typing.Optional[typing.Any]]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        is_labeled : typing.Optional[bool]
+            True if the number of annotations for this task is greater than or equal to the number of maximum_completions for the project
+
+        overlap : typing.Optional[int]
+            Number of distinct annotators that processed the current task
+
+        comment_count : typing.Optional[int]
+            Number of comments in the task including all annotations
 
         unresolved_comment_count : typing.Optional[int]
             Number of unresolved comments in the task including all annotations
+
+        last_comment_updated_at : typing.Optional[dt.datetime]
+            When the last comment was updated
+
+        project : typing.Optional[int]
+            Project ID for this task
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1280,26 +1300,26 @@ class AsyncTasksClient:
             f"api/tasks/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "avg_lead_time": avg_lead_time,
-                "cancelled_annotations": cancelled_annotations,
-                "comment_count": comment_count,
-                "completed_at": completed_at,
-                "data": data,
-                "draft_exists": draft_exists,
-                "ground_truth": ground_truth,
                 "inner_id": inner_id,
-                "is_labeled": is_labeled,
-                "last_comment_updated_at": last_comment_updated_at,
-                "meta": meta,
-                "overlap": overlap,
+                "cancelled_annotations": cancelled_annotations,
+                "total_annotations": total_annotations,
+                "total_predictions": total_predictions,
+                "completed_at": completed_at,
                 "predictions_score": predictions_score,
-                "project": project,
+                "avg_lead_time": avg_lead_time,
+                "draft_exists": draft_exists,
                 "reviewed": reviewed,
                 "reviews_accepted": reviews_accepted,
                 "reviews_rejected": reviews_rejected,
-                "total_annotations": total_annotations,
-                "total_predictions": total_predictions,
+                "ground_truth": ground_truth,
+                "data": data,
+                "meta": meta,
+                "is_labeled": is_labeled,
+                "overlap": overlap,
+                "comment_count": comment_count,
                 "unresolved_comment_count": unresolved_comment_count,
+                "last_comment_updated_at": last_comment_updated_at,
+                "project": project,
             },
             headers={
                 "content-type": "application/json",

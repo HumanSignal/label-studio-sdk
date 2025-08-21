@@ -9,9 +9,17 @@ from .types import (
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
 )
-from . import exports, pauses, stats
+from . import exports, metrics, pauses, stats
 from .exports import ExportsConvertResponse
-from .stats import StatsIaaResponse, StatsIaaResponseCommonTasks, StatsIaaResponseIaa, StatsIaaResponseStd
+from .stats import (
+    StatsIaaResponse,
+    StatsIaaResponseCommonTasks,
+    StatsIaaResponseIaa,
+    StatsIaaResponseStd,
+    StatsTotalAgreementResponse,
+    StatsTotalAgreementResponseOne,
+    StatsTotalAgreementResponseZero,
+)
 
 __all__ = [
     "ExportsConvertResponse",
@@ -26,7 +34,11 @@ __all__ = [
     "StatsIaaResponseCommonTasks",
     "StatsIaaResponseIaa",
     "StatsIaaResponseStd",
+    "StatsTotalAgreementResponse",
+    "StatsTotalAgreementResponseOne",
+    "StatsTotalAgreementResponseZero",
     "exports",
+    "metrics",
     "pauses",
     "stats",
 ]

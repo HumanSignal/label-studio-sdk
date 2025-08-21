@@ -4,4 +4,6 @@ import typing
 from .custom_scripts_editable_by_enum import CustomScriptsEditableByEnum
 from .null_enum import NullEnum
 
-LseOrganizationCustomScriptsEditableBy = typing.Union[CustomScriptsEditableByEnum, NullEnum]
+LseOrganizationCustomScriptsEditableBy = typing.Union[
+    CustomScriptsEditableByEnum, NullEnum
+]

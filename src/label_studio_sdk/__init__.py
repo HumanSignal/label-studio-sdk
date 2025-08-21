@@ -26,6 +26,7 @@ from .types import (
     BlankEnum,
     BlueprintList,
     BudgetResetPeriodEnum,
+    CheckMatchingFunctionRequestRequest,
     ChildFilter,
     Comment,
     CommentRequest,
@@ -98,6 +99,7 @@ from .types import (
     LseapiTokenList,
     LsejwtSettings,
     MaybeExpandedComment,
+    MetricParam,
     MlBackend,
     ModeEnum,
     ModelInterface,
@@ -223,12 +225,19 @@ from .actions import (
     ActionsListResponseItem,
     ActionsListResponseItemDialog,
 )
-from .annotations import AnnotationBulkSerializerWithSelectedItemsRequestLastAction, AnnotationsCreateBulkResponseItem
+from .annotations import (
+    AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
+    AnnotationsCreateBulkResponseItem,
+)
 from .client import AsyncLabelStudio, LabelStudio
 from .environment import LabelStudioEnvironment
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
-from .ml import MlCreateRequestAuthMethod, MlListModelVersionsResponse, MlUpdateRequestAuthMethod
+from .ml import (
+    MlCreateRequestAuthMethod,
+    MlListModelVersionsResponse,
+    MlUpdateRequestAuthMethod,
+)
 from .model_providers import ModelProvidersListModelProviderChoicesResponse
 from .projects import (
     LseProjectCreateRequestSampling,
@@ -242,7 +251,6 @@ from .projects import (
 from .prompts import PromptsCompatibleProjectsRequestProjectType
 from .tasks import TasksListRequestFields
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
-from .version import __version__
 from .views import (
     ViewsCreateRequestData,
     ViewsCreateRequestDataFilters,
@@ -323,6 +331,7 @@ __all__ = [
     "BlankEnum",
     "BlueprintList",
     "BudgetResetPeriodEnum",
+    "CheckMatchingFunctionRequestRequest",
     "ChildFilter",
     "Client",
     "Comment",
@@ -405,6 +414,7 @@ __all__ = [
     "LsejwtSettings",
     "MaybeExpandedComment",
     "MethodNotAllowedError",
+    "MetricParam",
     "MlBackend",
     "MlCreateRequestAuthMethod",
     "MlListModelVersionsResponse",
@@ -529,7 +539,6 @@ __all__ = [
     "Workspace",
     "WorkspaceMemberCreate",
     "WorkspaceMemberList",
-    "__version__",
     "actions",
     "annotations",
     "billing",

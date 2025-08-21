@@ -7,16 +7,17 @@ import typing
 
 
 class OrganizationMembership(UncheckedBaseModel):
+    role: str
     active: str
     organization_id: int = pydantic.Field()
     """
     Organization ID
     """
 
-    role: str
-
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

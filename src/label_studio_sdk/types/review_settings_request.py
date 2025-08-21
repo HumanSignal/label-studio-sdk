@@ -2,21 +2,28 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-import pydantic
-from .review_settings_request_requeue_rejected_tasks_mode import ReviewSettingsRequestRequeueRejectedTasksMode
 from .review_settings_request_review_criteria import ReviewSettingsRequestReviewCriteria
+import pydantic
+from .review_settings_request_requeue_rejected_tasks_mode import (
+    ReviewSettingsRequestRequeueRejectedTasksMode,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ReviewSettingsRequest(UncheckedBaseModel):
+    review_criteria: typing.Optional[ReviewSettingsRequestReviewCriteria] = (
+        pydantic.Field(default=None)
+    )
+    """
+    Criteria to mark task as reviewed
+    
+    * `all` - Task is reviewed if all annotations are reviewed
+    * `one` - Task is reviewed if at least one annotation is reviewed
+    """
+
     anonymize_annotations: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Hide annotator names from annotations while review
-    """
-
-    instruction: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Reviewer instructions in HTML format
     """
 
     only_finished_tasks: typing.Optional[bool] = pydantic.Field(default=None)
@@ -24,10 +31,34 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     Show only finished tasks in the review stream
     """
 
-    project: typing.Optional[int] = None
-    requeue_rejected_tasks_mode: typing.Optional[ReviewSettingsRequestRequeueRejectedTasksMode] = pydantic.Field(
-        default=None
-    )
+    instruction: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Reviewer instructions in HTML format
+    """
+
+    show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Show instructions to the reviewers before they start
+    """
+
+    show_data_manager_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Show the data manager to reviewers
+    """
+
+    show_agreement_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Show the agreement column to reviewers
+    """
+
+    require_comment_on_reject: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If set, the reviewer must leave a comment on reject
+    """
+
+    requeue_rejected_tasks_mode: typing.Optional[
+        ReviewSettingsRequestRequeueRejectedTasksMode
+    ] = pydantic.Field(default=None)
     """
     Requeue mode for rejected tasks
     
@@ -36,41 +67,17 @@ class ReviewSettingsRequest(UncheckedBaseModel):
     * `flexible` - Flexible
     """
 
-    require_comment_on_reject: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    If set, the reviewer must leave a comment on reject
-    """
-
-    review_criteria: typing.Optional[ReviewSettingsRequestReviewCriteria] = pydantic.Field(default=None)
-    """
-    Criteria to mark task as reviewed
-    
-    * `all` - Task is reviewed if all annotations are reviewed
-    * `one` - Task is reviewed if at least one annotation is reviewed
-    """
-
     review_only_manual_assignments: typing.Optional[bool] = pydantic.Field(default=None)
     """
     When set True, review queue is built only from manually assigned tasks
     """
 
-    show_agreement_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show the agreement column to reviewers
-    """
-
-    show_data_manager_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show the data manager to reviewers
-    """
-
-    show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show instructions to the reviewers before they start
-    """
+    project: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

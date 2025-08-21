@@ -2,8 +2,12 @@
 
 from .lse_project_create_request_sampling import LseProjectCreateRequestSampling
 from .lse_project_create_request_skip_queue import LseProjectCreateRequestSkipQueue
-from .patched_lse_project_update_request_sampling import PatchedLseProjectUpdateRequestSampling
-from .patched_lse_project_update_request_skip_queue import PatchedLseProjectUpdateRequestSkipQueue
+from .patched_lse_project_update_request_sampling import (
+    PatchedLseProjectUpdateRequestSampling,
+)
+from .patched_lse_project_update_request_skip_queue import (
+    PatchedLseProjectUpdateRequestSkipQueue,
+)
 from .projects_duplicate_response import ProjectsDuplicateResponse
 from .projects_import_tasks_response import ProjectsImportTasksResponse
 from .projects_list_request_filter import ProjectsListRequestFilter

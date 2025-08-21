@@ -2,4 +2,6 @@
 
 import typing
 
-ViewsCreateRequestDataFiltersConjunction = typing.Union[typing.Literal["or", "and"], typing.Any]
+ViewsCreateRequestDataFiltersConjunction = typing.Union[
+    typing.Literal["or", "and"], typing.Any
+]

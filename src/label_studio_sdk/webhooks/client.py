@@ -8,9 +8,9 @@ from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.actions_enum import ActionsEnum
-from .types.webhooks_info_response import WebhooksInfoResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.webhook_serializer_for_update import WebhookSerializerForUpdate
+from .types.webhooks_info_response import WebhooksInfoResponse
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -22,7 +22,10 @@ class WebhooksClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Webhook]:
         """
         List all webhooks set up for your organization.
@@ -75,12 +78,12 @@ class WebhooksClient:
         self,
         *,
         url: str,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
         headers: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
@@ -91,20 +94,20 @@ class WebhooksClient:
         url : str
             URL of webhook
 
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+        project : typing.Optional[int]
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
+
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
 
         headers : typing.Optional[typing.Optional[typing.Any]]
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        project : typing.Optional[int]
-
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -129,13 +132,13 @@ class WebhooksClient:
             "api/webhooks/",
             method="POST",
             json={
-                "actions": actions,
+                "project": project,
+                "url": url,
+                "send_payload": send_payload,
+                "send_for_all_actions": send_for_all_actions,
                 "headers": headers,
                 "is_active": is_active,
-                "project": project,
-                "send_for_all_actions": send_for_all_actions,
-                "send_payload": send_payload,
-                "url": url,
+                "actions": actions,
             },
             headers={
                 "content-type": "application/json",
@@ -149,6 +152,174 @@ class WebhooksClient:
                     Webhook,
                     construct_type(
                         type_=Webhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Webhook:
+        """
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Webhook
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.get(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/webhooks/{jsonable_encoder(id)}/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Webhook,
+                    construct_type(
+                        type_=Webhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.delete(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/webhooks/{jsonable_encoder(id)}/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update(
+        self,
+        id: int,
+        *,
+        url: typing.Optional[str] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
+        headers: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_active: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WebhookSerializerForUpdate:
+        """
+        Parameters
+        ----------
+        id : int
+
+        url : typing.Optional[str]
+            URL of webhook
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
+
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
+
+        headers : typing.Optional[typing.Optional[typing.Any]]
+
+        is_active : typing.Optional[bool]
+            If value is False the webhook is disabled
+
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookSerializerForUpdate
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.update(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/webhooks/{jsonable_encoder(id)}/",
+            method="PATCH",
+            json={
+                "url": url,
+                "send_payload": send_payload,
+                "send_for_all_actions": send_for_all_actions,
+                "headers": headers,
+                "is_active": is_active,
+                "actions": actions,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    WebhookSerializerForUpdate,
+                    construct_type(
+                        type_=WebhookSerializerForUpdate,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -210,177 +381,16 @@ class WebhooksClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
-        """
-        Parameters
-        ----------
-        id : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Webhook
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.webhooks.get(
-            id=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/webhooks/{jsonable_encoder(id)}/",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Webhook,
-                    construct_type(
-                        type_=Webhook,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Parameters
-        ----------
-        id : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.webhooks.delete(
-            id=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/webhooks/{jsonable_encoder(id)}/",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def update(
-        self,
-        id: int,
-        *,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
-        headers: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        is_active: typing.Optional[bool] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
-        url: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> WebhookSerializerForUpdate:
-        """
-        Parameters
-        ----------
-        id : int
-
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
-
-        headers : typing.Optional[typing.Optional[typing.Any]]
-
-        is_active : typing.Optional[bool]
-            If value is False the webhook is disabled
-
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
-
-        url : typing.Optional[str]
-            URL of webhook
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        WebhookSerializerForUpdate
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.webhooks.update(
-            id=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/webhooks/{jsonable_encoder(id)}/",
-            method="PATCH",
-            json={
-                "actions": actions,
-                "headers": headers,
-                "is_active": is_active,
-                "send_for_all_actions": send_for_all_actions,
-                "send_payload": send_payload,
-                "url": url,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    WebhookSerializerForUpdate,
-                    construct_type(
-                        type_=WebhookSerializerForUpdate,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
 
 class AsyncWebhooksClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        project: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Webhook]:
         """
         List all webhooks set up for your organization.
@@ -441,12 +451,12 @@ class AsyncWebhooksClient:
         self,
         *,
         url: str,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
         headers: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         is_active: typing.Optional[bool] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
@@ -457,20 +467,20 @@ class AsyncWebhooksClient:
         url : str
             URL of webhook
 
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+        project : typing.Optional[int]
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
+
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
 
         headers : typing.Optional[typing.Optional[typing.Any]]
 
         is_active : typing.Optional[bool]
             If value is False the webhook is disabled
 
-        project : typing.Optional[int]
-
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -503,13 +513,13 @@ class AsyncWebhooksClient:
             "api/webhooks/",
             method="POST",
             json={
-                "actions": actions,
+                "project": project,
+                "url": url,
+                "send_payload": send_payload,
+                "send_for_all_actions": send_for_all_actions,
                 "headers": headers,
                 "is_active": is_active,
-                "project": project,
-                "send_for_all_actions": send_for_all_actions,
-                "send_payload": send_payload,
-                "url": url,
+                "actions": actions,
             },
             headers={
                 "content-type": "application/json",
@@ -523,6 +533,198 @@ class AsyncWebhooksClient:
                     Webhook,
                     construct_type(
                         type_=Webhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Webhook:
+        """
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Webhook
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.get(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/webhooks/{jsonable_encoder(id)}/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    Webhook,
+                    construct_type(
+                        type_=Webhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.delete(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/webhooks/{jsonable_encoder(id)}/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update(
+        self,
+        id: int,
+        *,
+        url: typing.Optional[str] = OMIT,
+        send_payload: typing.Optional[bool] = OMIT,
+        send_for_all_actions: typing.Optional[bool] = OMIT,
+        headers: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        is_active: typing.Optional[bool] = OMIT,
+        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> WebhookSerializerForUpdate:
+        """
+        Parameters
+        ----------
+        id : int
+
+        url : typing.Optional[str]
+            URL of webhook
+
+        send_payload : typing.Optional[bool]
+            If value is False send only action
+
+        send_for_all_actions : typing.Optional[bool]
+            If value is False - used only for actions from WebhookAction
+
+        headers : typing.Optional[typing.Optional[typing.Any]]
+
+        is_active : typing.Optional[bool]
+            If value is False the webhook is disabled
+
+        actions : typing.Optional[typing.Sequence[ActionsEnum]]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookSerializerForUpdate
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.update(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/webhooks/{jsonable_encoder(id)}/",
+            method="PATCH",
+            json={
+                "url": url,
+                "send_payload": send_payload,
+                "send_for_all_actions": send_for_all_actions,
+                "headers": headers,
+                "is_active": is_active,
+                "actions": actions,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    WebhookSerializerForUpdate,
+                    construct_type(
+                        type_=WebhookSerializerForUpdate,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -584,194 +786,6 @@ class AsyncWebhooksClient:
                     WebhooksInfoResponse,
                     construct_type(
                         type_=WebhooksInfoResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
-        """
-        Parameters
-        ----------
-        id : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Webhook
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.webhooks.get(
-                id=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/webhooks/{jsonable_encoder(id)}/",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Webhook,
-                    construct_type(
-                        type_=Webhook,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Parameters
-        ----------
-        id : int
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.webhooks.delete(
-                id=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/webhooks/{jsonable_encoder(id)}/",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def update(
-        self,
-        id: int,
-        *,
-        actions: typing.Optional[typing.Sequence[ActionsEnum]] = OMIT,
-        headers: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        is_active: typing.Optional[bool] = OMIT,
-        send_for_all_actions: typing.Optional[bool] = OMIT,
-        send_payload: typing.Optional[bool] = OMIT,
-        url: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> WebhookSerializerForUpdate:
-        """
-        Parameters
-        ----------
-        id : int
-
-        actions : typing.Optional[typing.Sequence[ActionsEnum]]
-
-        headers : typing.Optional[typing.Optional[typing.Any]]
-
-        is_active : typing.Optional[bool]
-            If value is False the webhook is disabled
-
-        send_for_all_actions : typing.Optional[bool]
-            If value is False - used only for actions from WebhookAction
-
-        send_payload : typing.Optional[bool]
-            If value is False send only action
-
-        url : typing.Optional[str]
-            URL of webhook
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        WebhookSerializerForUpdate
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.webhooks.update(
-                id=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/webhooks/{jsonable_encoder(id)}/",
-            method="PATCH",
-            json={
-                "actions": actions,
-                "headers": headers,
-                "is_active": is_active,
-                "send_for_all_actions": send_for_all_actions,
-                "send_payload": send_payload,
-                "url": url,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    WebhookSerializerForUpdate,
-                    construct_type(
-                        type_=WebhookSerializerForUpdate,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

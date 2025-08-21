@@ -2,4 +2,6 @@
 
 import typing
 
-RequeueRejectedTasksModeEnum = typing.Union[typing.Literal["requeue", "remove", "flexible"], typing.Any]
+RequeueRejectedTasksModeEnum = typing.Union[
+    typing.Literal["requeue", "remove", "flexible"], typing.Any
+]

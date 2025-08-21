@@ -7,22 +7,25 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class CommentRequest(UncheckedBaseModel):
-    annotation: typing.Optional[int] = None
-    classifications: typing.Optional[typing.Optional[typing.Any]] = None
-    draft: typing.Optional[int] = None
-    is_resolved: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    True if the comment is resolved
-    """
-
     region_ref: typing.Optional[typing.Optional[typing.Any]] = None
+    classifications: typing.Optional[typing.Optional[typing.Any]] = None
     text: typing.Optional[str] = pydantic.Field(default=None)
     """
     Reviewer or annotator comment
     """
 
+    is_resolved: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    True if the comment is resolved
+    """
+
+    draft: typing.Optional[int] = None
+    annotation: typing.Optional[int] = None
+
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

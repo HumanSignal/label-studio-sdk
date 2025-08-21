@@ -9,22 +9,24 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LocalFilesExportStorage(UncheckedBaseModel):
-    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Deletion from storage enabled
-    """
-
-    created_at: dt.datetime = pydantic.Field()
-    """
-    Creation time
-    """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage description
-    """
-
     id: int
+    type: str
+    synchronizable: typing.Optional[bool] = None
+    path: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Local path
+    """
+
+    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Regex for filtering objects
+    """
+
+    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Interpret objects as BLOBs and generate URLs
+    """
+
     last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last sync finished time
@@ -40,10 +42,31 @@ class LocalFilesExportStorage(UncheckedBaseModel):
     Last sync job ID
     """
 
-    meta: typing.Optional[typing.Optional[typing.Any]] = None
-    path: typing.Optional[str] = pydantic.Field(default=None)
+    status: typing.Optional[StatusC5AEnum] = None
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Local path
+    Traceback report for the last failed sync
+    """
+
+    meta: typing.Optional[typing.Optional[typing.Any]] = None
+    title: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage title
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage description
+    """
+
+    created_at: dt.datetime = pydantic.Field()
+    """
+    Creation time
+    """
+
+    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Deletion from storage enabled
     """
 
     project: int = pydantic.Field()
@@ -51,31 +74,10 @@ class LocalFilesExportStorage(UncheckedBaseModel):
     A unique integer value identifying this project.
     """
 
-    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Regex for filtering objects
-    """
-
-    status: typing.Optional[StatusC5AEnum] = None
-    synchronizable: typing.Optional[bool] = None
-    title: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage title
-    """
-
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Traceback report for the last failed sync
-    """
-
-    type: str
-    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Interpret objects as BLOBs and generate URLs
-    """
-
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

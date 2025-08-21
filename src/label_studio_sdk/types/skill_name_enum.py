@@ -2,4 +2,6 @@
 
 import typing
 
-SkillNameEnum = typing.Union[typing.Literal["TextClassification", "NamedEntityRecognition"], typing.Any]
+SkillNameEnum = typing.Union[
+    typing.Literal["TextClassification", "NamedEntityRecognition"], typing.Any
+]

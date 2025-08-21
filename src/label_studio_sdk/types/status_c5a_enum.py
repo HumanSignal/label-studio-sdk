@@ -3,5 +3,13 @@
 import typing
 
 StatusC5AEnum = typing.Union[
-    typing.Literal["initialized", "queued", "in_progress", "failed", "completed", "completed_with_errors"], typing.Any
+    typing.Literal[
+        "initialized",
+        "queued",
+        "in_progress",
+        "failed",
+        "completed",
+        "completed_with_errors",
+    ],
+    typing.Any,
 ]

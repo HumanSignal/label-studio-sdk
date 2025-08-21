@@ -2,4 +2,6 @@
 
 import typing
 
-ProjectsListRequestFilter = typing.Union[typing.Literal["all", "exclude_pinned", "pinned_only"], typing.Any]
+ProjectsListRequestFilter = typing.Union[
+    typing.Literal["all", "exclude_pinned", "pinned_only"], typing.Any
+]

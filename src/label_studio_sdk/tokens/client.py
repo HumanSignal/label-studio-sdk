@@ -23,7 +23,10 @@ class TokensClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[LseapiTokenList]:
         """
         List all API tokens for the current user.
@@ -72,7 +75,9 @@ class TokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseapiTokenCreate:
+    def create(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LseapiTokenCreate:
         """
         Create a new API token for the current user.
 
@@ -179,7 +184,9 @@ class TokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def refresh(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> TokenRefreshResponse:
+    def refresh(
+        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TokenRefreshResponse:
         """
         Get a new access token, using a refresh token.
 
@@ -232,7 +239,9 @@ class TokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def rotate(self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None) -> TokenRotateResponse:
+    def rotate(
+        self, *, refresh: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> TokenRotateResponse:
         """
         Creates a new JWT refresh token and blacklists the current one.
 
@@ -301,7 +310,10 @@ class AsyncTokensClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[LseapiTokenList]:
         """
         List all API tokens for the current user.
@@ -358,7 +370,9 @@ class AsyncTokensClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseapiTokenCreate:
+    async def create(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LseapiTokenCreate:
         """
         Create a new API token for the current user.
 

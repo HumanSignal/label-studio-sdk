@@ -9,24 +9,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class RedisExportStorage(UncheckedBaseModel):
-    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
+    id: int
+    type: str
+    synchronizable: typing.Optional[bool] = None
+    path: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Deletion from storage enabled
-    """
-
-    created_at: dt.datetime = pydantic.Field()
-    """
-    Creation time
-    """
-
-    db: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Server Database
-    """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage description
+    Storage prefix (optional)
     """
 
     host: typing.Optional[str] = pydantic.Field(default=None)
@@ -34,7 +22,26 @@ class RedisExportStorage(UncheckedBaseModel):
     Server Host IP (optional)
     """
 
-    id: int
+    port: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Server Port (optional)
+    """
+
+    password: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Server Password (optional)
+    """
+
+    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage regex for filtering objects
+    """
+
+    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Interpret objects as BLOBs and generate URLs
+    """
+
     last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last sync finished time
@@ -50,20 +57,36 @@ class RedisExportStorage(UncheckedBaseModel):
     Last sync job ID
     """
 
+    status: typing.Optional[StatusC5AEnum] = None
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Traceback report for the last failed sync
+    """
+
     meta: typing.Optional[typing.Optional[typing.Any]] = None
-    password: typing.Optional[str] = pydantic.Field(default=None)
+    title: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Server Password (optional)
-    """
-
-    path: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Storage prefix (optional)
+    Cloud storage title
     """
 
-    port: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Server Port (optional)
+    Cloud storage description
+    """
+
+    created_at: dt.datetime = pydantic.Field()
+    """
+    Creation time
+    """
+
+    can_delete_objects: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Deletion from storage enabled
+    """
+
+    db: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Server Database
     """
 
     project: int = pydantic.Field()
@@ -71,31 +94,10 @@ class RedisExportStorage(UncheckedBaseModel):
     A unique integer value identifying this project.
     """
 
-    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage regex for filtering objects
-    """
-
-    status: typing.Optional[StatusC5AEnum] = None
-    synchronizable: typing.Optional[bool] = None
-    title: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage title
-    """
-
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Traceback report for the last failed sync
-    """
-
-    type: str
-    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Interpret objects as BLOBs and generate URLs
-    """
-
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

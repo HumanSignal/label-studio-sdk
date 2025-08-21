@@ -14,7 +14,9 @@ class BillingClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def info(self, *, request_options: typing.Optional[RequestOptions] = None) -> BillingInfoResponse:
+    def info(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> BillingInfoResponse:
         """
         Retrieve billing checks and feature flags for the active organization.
 
@@ -61,7 +63,9 @@ class AsyncBillingClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def info(self, *, request_options: typing.Optional[RequestOptions] = None) -> BillingInfoResponse:
+    async def info(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> BillingInfoResponse:
         """
         Retrieve billing checks and feature flags for the active organization.
 

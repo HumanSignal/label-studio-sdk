@@ -7,29 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class InferenceRunCostEstimate(UncheckedBaseModel):
-    completion_cost_usd: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cost of the completion (in USD)
-    """
-
-    error_message: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Error message details
-    """
-
-    error_type: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Type of error (e.g. "Timeout", "Rate Limit", etc)
-    """
-
-    is_error: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether an error occurred or not
-    """
-
     prompt_cost_usd: typing.Optional[str] = pydantic.Field(default=None)
     """
     Cost of the prompt (in USD)
+    """
+
+    completion_cost_usd: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cost of the completion (in USD)
     """
 
     total_cost_usd: typing.Optional[str] = pydantic.Field(default=None)
@@ -37,8 +22,25 @@ class InferenceRunCostEstimate(UncheckedBaseModel):
     Total cost of the inference (in USD)
     """
 
+    is_error: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether an error occurred or not
+    """
+
+    error_type: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Type of error (e.g. "Timeout", "Rate Limit", etc)
+    """
+
+    error_message: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Error message details
+    """
+
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

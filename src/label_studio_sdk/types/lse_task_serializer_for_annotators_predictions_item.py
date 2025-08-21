@@ -8,18 +8,22 @@ import pydantic
 
 
 class LseTaskSerializerForAnnotatorsPredictionsItem(UncheckedBaseModel):
-    created_at: typing.Optional[dt.datetime] = None
+    result: typing.Optional[
+        typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
+    ] = None
+    score: typing.Optional[float] = None
+    model_version: typing.Optional[str] = None
     model: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
     model_run: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = None
-    model_version: typing.Optional[str] = None
-    project: typing.Optional[int] = None
-    result: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = None
-    score: typing.Optional[float] = None
     task: typing.Optional[int] = None
+    project: typing.Optional[int] = None
+    created_at: typing.Optional[dt.datetime] = None
     updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

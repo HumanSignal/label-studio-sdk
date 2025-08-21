@@ -9,15 +9,18 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class AnnotationRequest(UncheckedBaseModel):
-    bulk_created: typing.Optional[bool] = pydantic.Field(default=None)
+    result: typing.Optional[
+        typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
+    ] = pydantic.Field(default=None)
     """
-    Annotation was created in bulk mode
+    List of annotation results for the task
     """
 
     completed_by: typing.Optional[int] = None
-    draft_created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    unique_id: typing.Optional[str] = None
+    was_cancelled: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Draft creation time
+    User skipped the task
     """
 
     ground_truth: typing.Optional[bool] = pydantic.Field(default=None)
@@ -25,12 +28,24 @@ class AnnotationRequest(UncheckedBaseModel):
     This annotation is a Ground Truth (ground_truth)
     """
 
+    draft_created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Draft creation time
+    """
+
+    lead_time: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    How much time it took to annotate the task
+    """
+
     import_id: typing.Optional[int] = pydantic.Field(default=None)
     """
     Original annotation ID that was at the import step or NULL if this annotation wasn't imported
     """
 
-    last_action: typing.Optional[AnnotationRequestLastAction] = pydantic.Field(default=None)
+    last_action: typing.Optional[AnnotationRequestLastAction] = pydantic.Field(
+        default=None
+    )
     """
     Action which was performed in the last annotation history item
     
@@ -46,34 +61,9 @@ class AnnotationRequest(UncheckedBaseModel):
     * `deleted_review` - Deleted review
     """
 
-    last_created_by: typing.Optional[int] = pydantic.Field(default=None)
+    bulk_created: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    User who created the last annotation history item
-    """
-
-    lead_time: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    How much time it took to annotate the task
-    """
-
-    parent_annotation: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Points to the parent annotation from which this annotation was created
-    """
-
-    parent_prediction: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Points to the prediction from which this annotation was created
-    """
-
-    project: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Project ID for this annotation
-    """
-
-    result: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(default=None)
-    """
-    List of annotation results for the task
+    Annotation was created in bulk mode
     """
 
     task: typing.Optional[int] = pydantic.Field(default=None)
@@ -81,19 +71,35 @@ class AnnotationRequest(UncheckedBaseModel):
     Corresponding task for this annotation
     """
 
-    unique_id: typing.Optional[str] = None
+    project: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Project ID for this annotation
+    """
+
     updated_by: typing.Optional[int] = pydantic.Field(default=None)
     """
     Last user who updated this annotation
     """
 
-    was_cancelled: typing.Optional[bool] = pydantic.Field(default=None)
+    parent_prediction: typing.Optional[int] = pydantic.Field(default=None)
     """
-    User skipped the task
+    Points to the prediction from which this annotation was created
+    """
+
+    parent_annotation: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Points to the parent annotation from which this annotation was created
+    """
+
+    last_created_by: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    User who created the last annotation history item
     """
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

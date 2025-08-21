@@ -9,7 +9,9 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ActionsCreateRequestSelectedItemsExcluded(UncheckedBaseModel):
-    all_: typing_extensions.Annotated[bool, FieldMetadata(alias="all")] = pydantic.Field()
+    all_: typing_extensions.Annotated[bool, FieldMetadata(alias="all")] = (
+        pydantic.Field()
+    )
     """
     All tasks are selected
     """
@@ -20,7 +22,9 @@ class ActionsCreateRequestSelectedItemsExcluded(UncheckedBaseModel):
     """
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -2,44 +2,29 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .lse_task_filter_options_request_annotated import LseTaskFilterOptionsRequestAnnotated
 import pydantic
-from .lse_task_filter_options_request_finished import LseTaskFilterOptionsRequestFinished
-from .lse_task_filter_options_request_reviewed import LseTaskFilterOptionsRequestReviewed
 from .lse_task_filter_options_request_skipped import LseTaskFilterOptionsRequestSkipped
+from .lse_task_filter_options_request_finished import (
+    LseTaskFilterOptionsRequestFinished,
+)
+from .lse_task_filter_options_request_annotated import (
+    LseTaskFilterOptionsRequestAnnotated,
+)
+from .lse_task_filter_options_request_reviewed import (
+    LseTaskFilterOptionsRequestReviewed,
+)
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LseTaskFilterOptionsRequest(UncheckedBaseModel):
-    annotated: typing.Optional[LseTaskFilterOptionsRequestAnnotated] = pydantic.Field(default=None)
+    view: typing.Optional[int] = pydantic.Field(default=None)
     """
-    `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
-    
-    * `only` - only
-    * `exclude` - exclude
-    * `None` - None
+    Apply filters from the view ID (a tab from the Data Manager)
     """
 
-    finished: typing.Optional[LseTaskFilterOptionsRequestFinished] = pydantic.Field(default=None)
-    """
-    `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
-    
-    * `only` - only
-    * `exclude` - exclude
-    * `None` - None
-    """
-
-    only_with_annotations: typing.Optional[bool] = None
-    reviewed: typing.Optional[LseTaskFilterOptionsRequestReviewed] = pydantic.Field(default=None)
-    """
-    `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed tasks
-    
-    * `only` - only
-    * `exclude` - exclude
-    * `None` - None
-    """
-
-    skipped: typing.Optional[LseTaskFilterOptionsRequestSkipped] = pydantic.Field(default=None)
+    skipped: typing.Optional[LseTaskFilterOptionsRequestSkipped] = pydantic.Field(
+        default=None
+    )
     """
     `only` - include all tasks with skipped annotations<br>`exclude` - exclude all tasks with skipped annotations
     
@@ -48,13 +33,44 @@ class LseTaskFilterOptionsRequest(UncheckedBaseModel):
     * `None` - None
     """
 
-    view: typing.Optional[int] = pydantic.Field(default=None)
+    finished: typing.Optional[LseTaskFilterOptionsRequestFinished] = pydantic.Field(
+        default=None
+    )
     """
-    Apply filters from the view ID (a tab from the Data Manager)
+    `only` - include all finished tasks (is_labeled = true)<br>`exclude` - exclude all finished tasks
+    
+    * `only` - only
+    * `exclude` - exclude
+    * `None` - None
+    """
+
+    annotated: typing.Optional[LseTaskFilterOptionsRequestAnnotated] = pydantic.Field(
+        default=None
+    )
+    """
+    `only` - include all tasks with at least one not skipped annotation<br>`exclude` - exclude all tasks with at least one not skipped annotation
+    
+    * `only` - only
+    * `exclude` - exclude
+    * `None` - None
+    """
+
+    only_with_annotations: typing.Optional[bool] = None
+    reviewed: typing.Optional[LseTaskFilterOptionsRequestReviewed] = pydantic.Field(
+        default=None
+    )
+    """
+    `only` - include all reviewed tasks<br>`exclude` - exclude all reviewed tasks
+    
+    * `only` - only
+    * `exclude` - exclude
+    * `None` - None
     """
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

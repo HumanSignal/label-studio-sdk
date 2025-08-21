@@ -2,4 +2,6 @@
 
 import typing
 
-MlCreateRequestAuthMethod = typing.Union[typing.Literal["NONE", "BASIC_AUTH"], typing.Any]
+MlCreateRequestAuthMethod = typing.Union[
+    typing.Literal["NONE", "BASIC_AUTH"], typing.Any
+]

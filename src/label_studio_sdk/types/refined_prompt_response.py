@@ -2,25 +2,25 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .third_party_model_version import ThirdPartyModelVersion
 import pydantic
+from .third_party_model_version import ThirdPartyModelVersion
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class RefinedPromptResponse(UncheckedBaseModel):
-    previous_version: typing.Optional[ThirdPartyModelVersion] = pydantic.Field(default=None)
+    title: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Previous version of the prompt
-    """
-
-    prompt: str = pydantic.Field()
-    """
-    The refined prompt text
+    Title of the refined prompt
     """
 
     reasoning: typing.Optional[str] = pydantic.Field(default=None)
     """
     Reasoning behind the refinement
+    """
+
+    prompt: str = pydantic.Field()
+    """
+    The refined prompt text
     """
 
     refinement_job_id: typing.Optional[str] = pydantic.Field(default=None)
@@ -33,18 +33,22 @@ class RefinedPromptResponse(UncheckedBaseModel):
     Status of the refinement job
     """
 
-    title: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Title of the refined prompt
-    """
-
     total_cost: typing.Optional[str] = pydantic.Field(default=None)
     """
     Total cost of the refinement job (in USD)
     """
 
+    previous_version: typing.Optional[ThirdPartyModelVersion] = pydantic.Field(
+        default=None
+    )
+    """
+    Previous version of the prompt
+    """
+
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -2,19 +2,24 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-import datetime as dt
 from .user_simple import UserSimple
 import pydantic
 from .skill_name_enum import SkillNameEnum
+import datetime as dt
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ModelInterface(UncheckedBaseModel):
-    associated_projects: typing.Optional[typing.List[int]] = None
-    created_at: dt.datetime
+    id: int
     created_by: typing.Optional[UserSimple] = pydantic.Field(default=None)
     """
     User who created Dataset
+    """
+
+    skill_name: typing.Optional[SkillNameEnum] = None
+    title: str = pydantic.Field()
+    """
+    Model name
     """
 
     description: typing.Optional[str] = pydantic.Field(default=None)
@@ -22,20 +27,17 @@ class ModelInterface(UncheckedBaseModel):
     Model description
     """
 
-    id: int
-    input_fields: typing.Optional[typing.Optional[typing.Any]] = None
-    organization: typing.Optional[int] = None
-    output_classes: typing.Optional[typing.Optional[typing.Any]] = None
-    skill_name: typing.Optional[SkillNameEnum] = None
-    title: str = pydantic.Field()
-    """
-    Model name
-    """
-
+    created_at: dt.datetime
     updated_at: dt.datetime
+    input_fields: typing.Optional[typing.Optional[typing.Any]] = None
+    output_classes: typing.Optional[typing.Optional[typing.Any]] = None
+    organization: typing.Optional[int] = None
+    associated_projects: typing.Optional[typing.List[int]] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:

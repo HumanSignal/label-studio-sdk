@@ -9,13 +9,17 @@ import pydantic
 
 
 class WebhooksInfoResponseTasksCreated(UncheckedBaseModel):
+    name: str
     description: str
     key: str
-    name: str
-    organization_only: typing_extensions.Annotated[bool, FieldMetadata(alias="organization-only")]
+    organization_only: typing_extensions.Annotated[
+        bool, FieldMetadata(alias="organization-only")
+    ]
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
+            extra="allow", frozen=True
+        )  # type: ignore # Pydantic v2
     else:
 
         class Config:
