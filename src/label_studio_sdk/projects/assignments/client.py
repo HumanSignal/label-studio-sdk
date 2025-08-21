@@ -15,7 +15,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.task_assignment import TaskAssignment
 from .types.assignments_assign_request_type import AssignmentsAssignRequestType
-from .types.assignments_update_assignment_request_type import AssignmentsUpdateAssignmentRequestType
+from .types.assignments_update_request_type import AssignmentsUpdateRequestType
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -125,7 +125,7 @@ class AssignmentsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def list_assignments(
+    def list(
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[TaskAssignment]:
         """
@@ -154,7 +154,7 @@ class AssignmentsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.assignments.list_assignments(
+        client.projects.assignments.list(
             id=1,
             task_pk=1,
         )
@@ -253,9 +253,7 @@ class AssignmentsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_assignments(
-        self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def delete(self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Remove the assignee for a task for a specific project.
 
@@ -281,7 +279,7 @@ class AssignmentsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.assignments.delete_assignments(
+        client.projects.assignments.delete(
             id=1,
             task_pk=1,
         )
@@ -299,12 +297,12 @@ class AssignmentsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def update_assignment(
+    def update(
         self,
         id: int,
         task_pk: int,
         *,
-        type: AssignmentsUpdateAssignmentRequestType,
+        type: AssignmentsUpdateRequestType,
         users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
@@ -319,7 +317,7 @@ class AssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : AssignmentsUpdateAssignmentRequestType
+        type : AssignmentsUpdateRequestType
             Assignment type. Use AN for annotate or RE for review.
 
         users : typing.Sequence[int]
@@ -340,7 +338,7 @@ class AssignmentsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.assignments.update_assignment(
+        client.projects.assignments.update(
             id=1,
             task_pk=1,
             type="AN",
@@ -486,7 +484,7 @@ class AsyncAssignmentsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def list_assignments(
+    async def list(
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[TaskAssignment]:
         """
@@ -520,7 +518,7 @@ class AsyncAssignmentsClient:
 
 
         async def main() -> None:
-            await client.projects.assignments.list_assignments(
+            await client.projects.assignments.list(
                 id=1,
                 task_pk=1,
             )
@@ -630,9 +628,7 @@ class AsyncAssignmentsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_assignments(
-        self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete(self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Remove the assignee for a task for a specific project.
 
@@ -663,7 +659,7 @@ class AsyncAssignmentsClient:
 
 
         async def main() -> None:
-            await client.projects.assignments.delete_assignments(
+            await client.projects.assignments.delete(
                 id=1,
                 task_pk=1,
             )
@@ -684,12 +680,12 @@ class AsyncAssignmentsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def update_assignment(
+    async def update(
         self,
         id: int,
         task_pk: int,
         *,
-        type: AssignmentsUpdateAssignmentRequestType,
+        type: AssignmentsUpdateRequestType,
         users: typing.Sequence[int],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TaskAssignment:
@@ -704,7 +700,7 @@ class AsyncAssignmentsClient:
         task_pk : int
             A unique integer value identifying this task.
 
-        type : AssignmentsUpdateAssignmentRequestType
+        type : AssignmentsUpdateRequestType
             Assignment type. Use AN for annotate or RE for review.
 
         users : typing.Sequence[int]
@@ -730,7 +726,7 @@ class AsyncAssignmentsClient:
 
 
         async def main() -> None:
-            await client.projects.assignments.update_assignment(
+            await client.projects.assignments.update(
                 id=1,
                 task_pk=1,
                 type="AN",

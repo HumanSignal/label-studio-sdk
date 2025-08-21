@@ -318,7 +318,7 @@ types:
     inline: true
     source:
       openapi: openapi/openapi.yaml
-  AssignmentsUpdateAssignmentRequestType:
+  AssignmentsUpdateRequestType:
     enum:
       - AN
       - RE
@@ -390,7 +390,7 @@ service:
                 - key: value
       audiences:
         - public
-    list_assignments:
+    list:
       path: /api/projects/{id}/tasks/{task_pk}/assignees
       method: GET
       auth: true
@@ -469,7 +469,7 @@ service:
               type: AN
       audiences:
         - public
-    delete_assignments:
+    delete:
       path: /api/projects/{id}/tasks/{task_pk}/assignees
       method: DELETE
       auth: true
@@ -490,7 +490,7 @@ service:
             task_pk: 1
       audiences:
         - public
-    update_assignment:
+    update:
       path: /api/projects/{id}/tasks/{task_pk}/assignees
       method: PATCH
       auth: true
@@ -506,11 +506,11 @@ service:
           docs: A unique integer value identifying this task.
       display-name: Update task assignee
       request:
-        name: AssignmentsUpdateAssignmentRequest
+        name: AssignmentsUpdateRequest
         body:
           properties:
             type:
-              type: AssignmentsUpdateAssignmentRequestType
+              type: AssignmentsUpdateRequestType
               docs: Assignment type. Use AN for annotate or RE for review.
             users:
               docs: List of user IDs to assign

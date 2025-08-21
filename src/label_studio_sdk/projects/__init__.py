@@ -23,7 +23,7 @@ from .assignments import (
     AssignmentsBulkAssignRequestSelectedItemsIncluded,
     AssignmentsBulkAssignRequestType,
     AssignmentsBulkAssignResponse,
-    AssignmentsUpdateAssignmentRequestType,
+    AssignmentsUpdateRequestType,
 )
 from .exports import ExportsConvertResponse
 from .stats import StatsIaaResponse, StatsIaaResponseCommonTasks, StatsIaaResponseIaa, StatsIaaResponseStd
@@ -41,7 +41,7 @@ __all__ = [
     "AssignmentsBulkAssignRequestSelectedItemsIncluded",
     "AssignmentsBulkAssignRequestType",
     "AssignmentsBulkAssignResponse",
-    "AssignmentsUpdateAssignmentRequestType",
+    "AssignmentsUpdateRequestType",
     "ExportsConvertResponse",
     "LseProjectCreateRequestSampling",
     "LseProjectCreateRequestSkipQueue",

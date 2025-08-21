@@ -20483,7 +20483,7 @@ client.projects.assignments.bulk_assign(
 </dl>
 </details>
 
-<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">list_assignments</a>(...)</code></summary>
+<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -20515,7 +20515,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.assignments.list_assignments(
+client.projects.assignments.list(
     id=1,
     task_pk=1,
 )
@@ -20659,7 +20659,7 @@ client.projects.assignments.assign(
 </dl>
 </details>
 
-<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">delete_assignments</a>(...)</code></summary>
+<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -20691,7 +20691,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.assignments.delete_assignments(
+client.projects.assignments.delete(
     id=1,
     task_pk=1,
 )
@@ -20738,7 +20738,7 @@ client.projects.assignments.delete_assignments(
 </dl>
 </details>
 
-<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">update_assignment</a>(...)</code></summary>
+<details><summary><code>client.projects.assignments.<a href="src/label_studio_sdk/projects/assignments/client.py">update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -20770,7 +20770,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.assignments.update_assignment(
+client.projects.assignments.update(
     id=1,
     task_pk=1,
     type="AN",
@@ -20807,7 +20807,7 @@ client.projects.assignments.update_assignment(
 <dl>
 <dd>
 
-**type:** `AssignmentsUpdateAssignmentRequestType` — Assignment type. Use AN for annotate or RE for review.
+**type:** `AssignmentsUpdateRequestType` — Assignment type. Use AN for annotate or RE for review.
     
 </dd>
 </dl>

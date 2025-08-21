@@ -21,7 +21,7 @@ async def test_bulk_assign(client: LabelStudio, async_client: AsyncLabelStudio) 
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_list_assignments(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {"assignee": 1, "created_at": "2024-01-15T09:30:00Z", "id": 1, "task": 1, "type": "AN"}
     ]
@@ -29,10 +29,10 @@ async def test_list_assignments(client: LabelStudio, async_client: AsyncLabelStu
         "list",
         {0: {"assignee": "integer", "created_at": "datetime", "id": "integer", "task": "integer", "type": None}},
     )
-    response = client.projects.assignments.list_assignments(id=1, task_pk=1)
+    response = client.projects.assignments.list(id=1, task_pk=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.assignments.list_assignments(id=1, task_pk=1)
+    async_response = await async_client.projects.assignments.list(id=1, task_pk=1)
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -58,20 +58,20 @@ async def test_assign(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_delete_assignments(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.projects.assignments.delete_assignments(id=1, task_pk=1)  # type: ignore[func-returns-value]
+        client.projects.assignments.delete(id=1, task_pk=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.projects.assignments.delete_assignments(id=1, task_pk=1)  # type: ignore[func-returns-value]
+        await async_client.projects.assignments.delete(id=1, task_pk=1)  # type: ignore[func-returns-value]
         is None
     )
 
 
-async def test_update_assignment(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "assignee": 1,
         "created_at": "2024-01-15T09:30:00Z",
@@ -86,8 +86,8 @@ async def test_update_assignment(client: LabelStudio, async_client: AsyncLabelSt
         "task": "integer",
         "type": None,
     }
-    response = client.projects.assignments.update_assignment(id=1, task_pk=1, type="AN", users=[1])
+    response = client.projects.assignments.update(id=1, task_pk=1, type="AN", users=[1])
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.assignments.update_assignment(id=1, task_pk=1, type="AN", users=[1])
+    async_response = await async_client.projects.assignments.update(id=1, task_pk=1, type="AN", users=[1])
     validate_response(async_response, expected_response, expected_types)

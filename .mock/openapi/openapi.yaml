@@ -7858,7 +7858,7 @@ paths:
       x-fern-sdk-group-name:
         - projects
         - assignments
-      x-fern-sdk-method-name: delete_assignments
+      x-fern-sdk-method-name: delete
     get:
       description: Retrieve a list of tasks and assignees for those tasks for a specific project.
       operationId: api_projects_tasks_assignees_retrieve
@@ -7894,7 +7894,7 @@ paths:
       x-fern-sdk-group-name:
         - projects
         - assignments
-      x-fern-sdk-method-name: list_assignments
+      x-fern-sdk-method-name: list
     patch:
       description: Update the assignee for a task in a specific project.
       operationId: api_projects_tasks_assignees_partial_update
@@ -7948,7 +7948,7 @@ paths:
       x-fern-sdk-group-name:
         - projects
         - assignments
-      x-fern-sdk-method-name: update_assignment
+      x-fern-sdk-method-name: update
     post:
       description: Assign a user to a task in a specific project.
       operationId: api_projects_tasks_assignees_create_2
