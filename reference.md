@@ -20385,7 +20385,7 @@ client.projects.stats.iaa(
 <dl>
 <dd>
 
-Assign multiple tasks to a specific user for a specific project.
+Assign multiple users to a collection of tasks within a specific project.
 </dd>
 </dl>
 </dd>
@@ -20671,7 +20671,7 @@ client.projects.assignments.assign(
 <dl>
 <dd>
 
-Remove the assignee for a task for a specific project.
+Remove assignees for a task within a specific project.
 </dd>
 </dl>
 </dd>
@@ -20719,6 +20719,22 @@ client.projects.assignments.delete(
 <dd>
 
 **task_pk:** `int` — A unique integer value identifying this task.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `typing.Optional[AssignmentsDeleteRequestType]` — Assignment type to delete (optional). If omitted, deletes all assignments for the task.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**users:** `typing.Optional[str]` — Comma separated list of user IDs to delete, as a string. If omitted, deletes all assignees for the given type.
     
 </dd>
 </dl>
