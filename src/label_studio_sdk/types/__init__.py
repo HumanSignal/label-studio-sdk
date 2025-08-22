@@ -162,11 +162,13 @@ from .skipped_enum import SkippedEnum
 from .state_enum import StateEnum
 from .status7bf_enum import Status7BfEnum
 from .status_c5a_enum import StatusC5AEnum
+from .task_assignment import TaskAssignment
 from .third_party_model_version import ThirdPartyModelVersion
 from .third_party_model_version_request import ThirdPartyModelVersionRequest
 from .token_refresh_response import TokenRefreshResponse
 from .token_rotate_response import TokenRotateResponse
 from .trial_role_enum import TrialRoleEnum
+from .type_enum import TypeEnum
 from .user_simple import UserSimple
 from .user_simple_request import UserSimpleRequest
 from .version_response import VersionResponse
@@ -338,11 +340,13 @@ __all__ = [
     "StateEnum",
     "Status7BfEnum",
     "StatusC5AEnum",
+    "TaskAssignment",
     "ThirdPartyModelVersion",
     "ThirdPartyModelVersionRequest",
     "TokenRefreshResponse",
     "TokenRotateResponse",
     "TrialRoleEnum",
+    "TypeEnum",
     "UserSimple",
     "UserSimpleRequest",
     "VersionResponse",
