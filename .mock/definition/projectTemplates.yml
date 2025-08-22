@@ -24,23 +24,23 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                name: name
-                description: description
-                tags:
+              - assignment_settings:
                   key: value
+                created_at: '2024-01-15T09:30:00Z'
+                created_by: 1
+                custom_script: custom_script
+                description: description
+                id: 1
+                name: name
+                organization: 1
                 project_settings:
                   key: value
+                require_comment_on_skip: true
                 review_settings:
                   key: value
-                assignment_settings:
+                tags:
                   key: value
-                require_comment_on_skip: true
-                custom_script: custom_script
-                created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
-                created_by: 1
-                organization: 1
     api_project_templates_create:
       path: /api/project-templates/
       method: POST
@@ -60,23 +60,23 @@ service:
             name: name
           response:
             body:
-              id: 1
-              name: name
-              description: description
-              tags:
-                key: value
-              project_settings:
-                key: value
-              review_settings:
-                key: value
               assignment_settings:
                 key: value
-              require_comment_on_skip: true
-              custom_script: custom_script
               created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
               created_by: 1
+              custom_script: custom_script
+              description: description
+              id: 1
+              name: name
               organization: 1
+              project_settings:
+                key: value
+              require_comment_on_skip: true
+              review_settings:
+                key: value
+              tags:
+                key: value
+              updated_at: '2024-01-15T09:30:00Z'
     api_project_templates_retrieve:
       path: /api/project-templates/{id}
       method: GET
@@ -95,23 +95,23 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              name: name
-              description: description
-              tags:
-                key: value
-              project_settings:
-                key: value
-              review_settings:
-                key: value
               assignment_settings:
                 key: value
-              require_comment_on_skip: true
-              custom_script: custom_script
               created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
               created_by: 1
+              custom_script: custom_script
+              description: description
+              id: 1
+              name: name
               organization: 1
+              project_settings:
+                key: value
+              require_comment_on_skip: true
+              review_settings:
+                key: value
+              tags:
+                key: value
+              updated_at: '2024-01-15T09:30:00Z'
     api_project_templates_update:
       path: /api/project-templates/{id}
       method: PUT
@@ -135,23 +135,23 @@ service:
             name: name
           response:
             body:
-              id: 1
-              name: name
-              description: description
-              tags:
-                key: value
-              project_settings:
-                key: value
-              review_settings:
-                key: value
               assignment_settings:
                 key: value
-              require_comment_on_skip: true
-              custom_script: custom_script
               created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
               created_by: 1
+              custom_script: custom_script
+              description: description
+              id: 1
+              name: name
               organization: 1
+              project_settings:
+                key: value
+              require_comment_on_skip: true
+              review_settings:
+                key: value
+              tags:
+                key: value
+              updated_at: '2024-01-15T09:30:00Z'
     api_project_templates_destroy:
       path: /api/project-templates/{id}
       method: DELETE
@@ -181,29 +181,29 @@ service:
         name: PatchedProjectTemplateRequest
         body:
           properties:
-            name:
-              type: optional<string>
-              validation:
-                minLength: 1
-                maxLength: 1000
-            description:
-              type: optional<string>
-              validation:
-                minLength: 1
-            tags: optional<unknown>
-            project_settings: optional<unknown>
-            review_settings: optional<unknown>
             assignment_settings: optional<unknown>
-            require_comment_on_skip:
-              type: optional<boolean>
-              docs: flag to require comment on skip
+            created_by: optional<integer>
             custom_script:
               type: optional<string>
               docs: custom script for projects created from this template
               validation:
                 minLength: 1
-            created_by: optional<integer>
+            description:
+              type: optional<string>
+              validation:
+                minLength: 1
+            name:
+              type: optional<string>
+              validation:
+                minLength: 1
+                maxLength: 1000
             organization: optional<integer>
+            project_settings: optional<unknown>
+            require_comment_on_skip:
+              type: optional<boolean>
+              docs: flag to require comment on skip
+            review_settings: optional<unknown>
+            tags: optional<unknown>
         content-type: application/json
       response:
         docs: ''
@@ -214,23 +214,23 @@ service:
           request: {}
           response:
             body:
-              id: 1
-              name: name
-              description: description
-              tags:
-                key: value
-              project_settings:
-                key: value
-              review_settings:
-                key: value
               assignment_settings:
                 key: value
-              require_comment_on_skip: true
-              custom_script: custom_script
               created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
               created_by: 1
+              custom_script: custom_script
+              description: description
+              id: 1
+              name: name
               organization: 1
+              project_settings:
+                key: value
+              require_comment_on_skip: true
+              review_settings:
+                key: value
+              tags:
+                key: value
+              updated_at: '2024-01-15T09:30:00Z'
     api_project_templates_create_project_create:
       path: /api/project-templates/{id}/create-project
       method: POST
@@ -247,12 +247,12 @@ service:
         name: ApiProjectTemplatesCreateProjectCreateRequest
         body:
           properties:
-            title:
-              type: string
-              docs: The title of the project to be created from the template.
             description:
               type: optional<string>
               docs: A description for the project.
+            title:
+              type: string
+              docs: The title of the project to be created from the template.
             workspace_id:
               type: integer
               docs: >-
@@ -270,94 +270,94 @@ service:
             workspace_id: 1
           response:
             body:
-              id: 1
-              title: title
-              description: description
-              label_config: label_config
-              expert_instruction: expert_instruction
-              show_instruction: true
-              show_skip_button: true
-              enable_empty_annotation: true
-              show_annotation_history: true
-              organization: 1
-              color: color
-              maximum_annotations: 1
-              is_published: true
-              model_version: model_version
-              is_draft: true
-              created_by:
-                id: 1
-                first_name: first_name
-                last_name: last_name
-                email: email
-                avatar: avatar
-              created_at: '2024-01-15T09:30:00Z'
-              min_annotations_to_start_training: 1
-              start_training_on_annotation_update: true
-              show_collab_predictions: true
-              num_tasks_with_annotations: 1
-              task_number: 1
-              useful_annotation_number: 1
-              ground_truth_number: 1
-              skipped_annotations_number: 1
-              total_annotations_number: 1
-              total_predictions_number: 1
-              sampling: Sequential sampling
-              show_ground_truth_first: true
-              show_overlap_first: true
-              overlap_cohort_percentage: 1
-              task_data_login: task_data_login
-              task_data_password: task_data_password
-              control_weights:
-                key: value
-              parsed_label_config:
-                key: value
-              evaluate_predictions_automatically: true
-              config_has_control_tags: true
-              skip_queue: REQUEUE_FOR_ME
-              reveal_preannotations_interactively: true
-              pinned_at: '2024-01-15T09:30:00Z'
-              finished_task_number: 1
-              queue_total: queue_total
-              queue_done: queue_done
-              config_suitable_for_bulk_annotation: true
-              workspace: workspace
-              review_settings:
-                id: 1
-                requeue_rejected_tasks_to_annotator: true
-                review_criteria: all
-                anonymize_annotations: true
-                only_finished_tasks: true
-                instruction: instruction
-                show_instruction: true
-                show_data_manager_to_reviewers: true
-                show_agreement_to_reviewers: true
-                require_comment_on_reject: true
-                requeue_rejected_tasks_mode: requeue
-                review_only_manual_assignments: true
-                project: 1
+              annotation_limit_count: 1
+              annotation_limit_percent: annotation_limit_percent
+              annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
+              annotator_evaluation_minimum_tasks: 1
               assignment_settings:
                 id: 1
                 label_stream_task_distribution: auto_distribution
                 project: 1
-              members: members
-              custom_script: custom_script
+              color: color
               comment_classification_config: comment_classification_config
-              duplication_done: true
-              duplication_status: duplication_status
-              require_comment_on_skip: true
+              config_has_control_tags: true
+              config_suitable_for_bulk_annotation: true
+              control_weights:
+                key: value
+              created_at: '2024-01-15T09:30:00Z'
+              created_by:
+                avatar: avatar
+                email: email
+                first_name: first_name
+                id: 1
+                last_name: last_name
+              custom_script: custom_script
+              custom_task_lock_ttl: 1
               data_types:
                 key: value
-              reviewer_queue_total: reviewer_queue_total
-              queue_left: queue_left
-              members_count: members_count
-              custom_task_lock_ttl: 1
-              prompts: prompts
-              annotation_limit_count: 1
-              annotation_limit_percent: annotation_limit_percent
+              description: description
+              duplication_done: true
+              duplication_status: duplication_status
+              enable_empty_annotation: true
+              evaluate_predictions_automatically: true
+              expert_instruction: expert_instruction
+              finished_task_number: 1
+              ground_truth_number: 1
+              id: 1
+              is_draft: true
+              is_published: true
+              label_config: label_config
+              maximum_annotations: 1
+              members: members
+              members_count: 1
+              min_annotations_to_start_training: 1
+              model_version: model_version
+              num_tasks_with_annotations: 1
+              organization: 1
+              overlap_cohort_percentage: 1
+              parsed_label_config:
+                key: value
               pause_on_failed_annotator_evaluation: true
-              annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
-              annotator_evaluation_minimum_tasks: 1
+              pinned_at: '2024-01-15T09:30:00Z'
+              prompts: prompts
+              queue_done: queue_done
+              queue_left: queue_left
+              queue_total: queue_total
+              require_comment_on_skip: true
+              reveal_preannotations_interactively: true
+              review_settings:
+                anonymize_annotations: true
+                id: 1
+                instruction: instruction
+                only_finished_tasks: true
+                project: 1
+                requeue_rejected_tasks_mode: requeue
+                requeue_rejected_tasks_to_annotator: true
+                require_comment_on_reject: true
+                review_criteria: all
+                review_only_manual_assignments: true
+                show_agreement_to_reviewers: true
+                show_data_manager_to_reviewers: true
+                show_instruction: true
+              reviewer_queue_total: reviewer_queue_total
+              sampling: Sequential sampling
+              show_annotation_history: true
+              show_collab_predictions: true
+              show_ground_truth_first: true
+              show_instruction: true
+              show_overlap_first: true
+              show_skip_button: true
+              skip_queue: REQUEUE_FOR_ME
+              skipped_annotations_number: 1
+              start_training_on_annotation_update: true
+              task_data_login: task_data_login
+              task_data_password: task_data_password
+              task_number: 1
+              title: title
+              total_annotations_number: 1
+              total_predictions_number: 1
+              useful_annotation_number: 1
+              workspace: workspace
               workspace_title: workspace_title
   source:
     openapi: openapi/openapi.yaml
