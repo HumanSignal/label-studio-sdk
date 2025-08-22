@@ -7647,10 +7647,29 @@ paths:
           required: true
           schema:
             type: integer
+<<<<<<< HEAD
+=======
+        - description: Selected items
+          in: query
+          name: selected_items
+          schema:
+            type: boolean
+        - description: Assignment type
+          in: query
+          name: type
+          schema:
+            type: string
+        - description: Assignees
+          in: query
+          name: users
+          schema:
+            type: string
+>>>>>>> master
       requestBody:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               properties:
                 filters:
                   description: 'Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`'
@@ -7803,6 +7822,16 @@ paths:
                 - users
                 - selectedItems
               type: object
+=======
+              $ref: '#/components/schemas/TaskAssignmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TaskAssignmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TaskAssignmentRequest'
+        required: true
+>>>>>>> master
       responses:
         '201':
           content:
@@ -7810,9 +7839,15 @@ paths:
               schema:
                 properties:
                   assignments:
+<<<<<<< HEAD
                     items:
                       type: object
                     type: array
+=======
+                    type: integer
+                  async:
+                    type: boolean
+>>>>>>> master
                 type: object
           description: Success
         '400':
@@ -7822,12 +7857,15 @@ paths:
       summary: Bulk assign tasks
       tags:
         - Tasks
+<<<<<<< HEAD
       x-fern-audiences:
         - public
       x-fern-sdk-group-name:
         - projects
         - assignments
       x-fern-sdk-method-name: bulk_assign
+=======
+>>>>>>> master
   /api/projects/{id}/tasks/{task_pk}/assignees:
     delete:
       description: Remove the assignee for a task for a specific project.
@@ -7853,12 +7891,15 @@ paths:
       summary: Delete task assignee
       tags:
         - Tasks
+<<<<<<< HEAD
       x-fern-audiences:
         - public
       x-fern-sdk-group-name:
         - projects
         - assignments
       x-fern-sdk-method-name: delete
+=======
+>>>>>>> master
     get:
       description: Retrieve a list of tasks and assignees for those tasks for a specific project.
       operationId: api_projects_tasks_assignees_retrieve
@@ -7880,21 +7921,29 @@ paths:
           content:
             application/json:
               schema:
+<<<<<<< HEAD
                 items:
                   $ref: '#/components/schemas/TaskAssignment'
                 type: array
           description: List of assignments for the task
+=======
+                $ref: '#/components/schemas/TaskAssignment'
+          description: ''
+>>>>>>> master
       security:
         - Token: []
       summary: Get assigned tasks and assignees
       tags:
         - Tasks
+<<<<<<< HEAD
       x-fern-audiences:
         - public
       x-fern-sdk-group-name:
         - projects
         - assignments
       x-fern-sdk-method-name: list
+=======
+>>>>>>> master
     patch:
       description: Update the assignee for a task in a specific project.
       operationId: api_projects_tasks_assignees_partial_update
@@ -7915,6 +7964,7 @@ paths:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               properties:
                 type:
                   description: Assignment type. Use AN for annotate or RE for review.
@@ -7931,6 +7981,15 @@ paths:
                 - type
                 - users
               type: object
+=======
+              $ref: '#/components/schemas/PatchedTaskAssignmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTaskAssignmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTaskAssignmentRequest'
+>>>>>>> master
       responses:
         '200':
           content:
@@ -7943,12 +8002,15 @@ paths:
       summary: Update task assignee
       tags:
         - Tasks
+<<<<<<< HEAD
       x-fern-audiences:
         - public
       x-fern-sdk-group-name:
         - projects
         - assignments
       x-fern-sdk-method-name: update
+=======
+>>>>>>> master
     post:
       description: Assign a user to a task in a specific project.
       operationId: api_projects_tasks_assignees_create_2
@@ -7969,6 +8031,7 @@ paths:
         content:
           application/json:
             schema:
+<<<<<<< HEAD
               properties:
                 type:
                   description: Assignment type. Use AN for annotate or RE for review.
@@ -7985,6 +8048,16 @@ paths:
                 - type
                 - users
               type: object
+=======
+              $ref: '#/components/schemas/TaskAssignmentRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TaskAssignmentRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TaskAssignmentRequest'
+        required: true
+>>>>>>> master
       responses:
         '200':
           content:
@@ -7997,12 +8070,15 @@ paths:
       summary: Create task assignee
       tags:
         - Tasks
+<<<<<<< HEAD
       x-fern-audiences:
         - public
       x-fern-sdk-group-name:
         - projects
         - assignments
       x-fern-sdk-method-name: assign
+=======
+>>>>>>> master
   /api/projects/{id}/update-stats:
     get:
       description: Start stats recalculation for given project
@@ -24321,6 +24397,27 @@ components:
           title: Max time (minutes) between activity
           type: integer
       type: object
+<<<<<<< HEAD
+=======
+    PatchedTaskAssignmentRequest:
+      properties:
+        assignee:
+          description: Assigned user
+          type: integer
+        task:
+          description: Assigned task
+          type: integer
+        type:
+          allOf:
+            - $ref: '#/components/schemas/TypeEnum'
+          description: |-
+            Type of assignment: Annotate|Review
+
+            * `AN` - Annotate
+            * `RE` - Review
+          title: Assignment type
+      type: object
+>>>>>>> master
     PatchedThirdPartyModelVersionRequest:
       properties:
         model_provider_connection:
@@ -26520,6 +26617,30 @@ components:
         - id
         - task
       type: object
+<<<<<<< HEAD
+=======
+    TaskAssignmentRequest:
+      properties:
+        assignee:
+          description: Assigned user
+          type: integer
+        task:
+          description: Assigned task
+          type: integer
+        type:
+          allOf:
+            - $ref: '#/components/schemas/TypeEnum'
+          description: |-
+            Type of assignment: Annotate|Review
+
+            * `AN` - Annotate
+            * `RE` - Review
+          title: Assignment type
+      required:
+        - assignee
+        - task
+      type: object
+>>>>>>> master
     TaskSimple:
       properties:
         annotations:

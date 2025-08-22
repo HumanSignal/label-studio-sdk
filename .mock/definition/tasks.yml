@@ -72,6 +72,181 @@ service:
             id: 1
       audiences:
         - public
+<<<<<<< HEAD
+=======
+    api_projects_tasks_assignees_create:
+      path: /api/projects/{id}/tasks/assignees
+      method: POST
+      auth: true
+      docs: Assign multiple tasks to a specific user for a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Bulk assign tasks
+      request:
+        body: root.TaskAssignmentRequest
+        query-parameters:
+          selected_items:
+            type: optional<boolean>
+            docs: Selected items
+          type:
+            type: optional<string>
+            docs: Assignment type
+          users:
+            type: optional<string>
+            docs: Assignees
+        name: ApiProjectsTasksAssigneesCreateRequest
+        content-type: application/json
+      response:
+        docs: Success
+        type: ApiProjectsTasksAssigneesCreateResponse
+      errors:
+        - root.BadRequestError
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            assignee: 1
+            task: 1
+          response:
+            body:
+              assignments: 1
+              async: true
+    api_projects_tasks_assignees_retrieve:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve a list of tasks and assignees for those tasks for a specific
+        project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Get assigned tasks and assignees
+      response:
+        docs: ''
+        type: root.TaskAssignment
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+          response:
+            body:
+              assignee: 1
+              created_at: '2024-01-15T09:30:00Z'
+              id: 1
+              task: 1
+              type: AN
+    api_projects_tasks_assignees_create_2:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: POST
+      auth: true
+      docs: Assign a user to a task in a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Create task assignee
+      request:
+        body: root.TaskAssignmentRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.TaskAssignment
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+          request:
+            assignee: 1
+            task: 1
+          response:
+            body:
+              assignee: 1
+              created_at: '2024-01-15T09:30:00Z'
+              id: 1
+              task: 1
+              type: AN
+    api_projects_tasks_assignees_destroy:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: DELETE
+      auth: true
+      docs: Remove the assignee for a task for a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Delete task assignee
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+    api_projects_tasks_assignees_partial_update:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: PATCH
+      auth: true
+      docs: Update the assignee for a task in a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Update task assignee
+      request:
+        name: PatchedTaskAssignmentRequest
+        body:
+          properties:
+            assignee:
+              type: optional<integer>
+              docs: Assigned user
+            task:
+              type: optional<integer>
+              docs: Assigned task
+            type:
+              type: optional<root.TypeEnum>
+              docs: |-
+                Type of assignment: Annotate|Review
+
+                * `AN` - Annotate
+                * `RE` - Review
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.TaskAssignment
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+          request: {}
+          response:
+            body:
+              assignee: 1
+              created_at: '2024-01-15T09:30:00Z'
+              id: 1
+              task: 1
+              type: AN
+>>>>>>> master
     list:
       path: /api/tasks/
       method: GET
@@ -549,6 +724,15 @@ service:
   source:
     openapi: openapi/openapi.yaml
 types:
+<<<<<<< HEAD
+=======
+  ApiProjectsTasksAssigneesCreateResponse:
+    properties:
+      assignments: optional<integer>
+      async: optional<boolean>
+    source:
+      openapi: openapi/openapi.yaml
+>>>>>>> master
   TasksListRequestFields:
     enum:
       - all
