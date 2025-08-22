@@ -4,6 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .exports.client import ExportsClient
 from .stats.client import StatsClient
+from .assignments.client import AssignmentsClient
 from .pauses.client import PausesClient
 from .types.projects_list_request_filter import ProjectsListRequestFilter
 from ..core.request_options import RequestOptions
@@ -35,6 +36,7 @@ from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
 from .exports.client import AsyncExportsClient
 from .stats.client import AsyncStatsClient
+from .assignments.client import AsyncAssignmentsClient
 from .pauses.client import AsyncPausesClient
 from ..core.pagination import AsyncPager
 
@@ -47,6 +49,7 @@ class ProjectsClient:
         self._client_wrapper = client_wrapper
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
         self.stats = StatsClient(client_wrapper=self._client_wrapper)
+        self.assignments = AssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = PausesClient(client_wrapper=self._client_wrapper)
 
     def list(
@@ -974,6 +977,7 @@ class AsyncProjectsClient:
         self._client_wrapper = client_wrapper
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
         self.stats = AsyncStatsClient(client_wrapper=self._client_wrapper)
+        self.assignments = AsyncAssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)
 
     async def list(
