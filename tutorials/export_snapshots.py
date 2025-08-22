@@ -49,7 +49,9 @@ def export_and_download_snapshot():
     project_id_str = os.getenv("LABEL_STUDIO_PROJECT_ID")
 
     if not base_url or not api_key or not project_id_str:
-        logger.error("set LABEL_STUDIO_URL, LABEL_STUDIO_API_KEY and LABEL_STUDIO_PROJECT_ID env vars")
+        logger.error(
+            "set LABEL_STUDIO_URL, LABEL_STUDIO_API_KEY and LABEL_STUDIO_PROJECT_ID env vars"
+        )
         sys.exit(1)
 
     try:
@@ -62,9 +64,9 @@ def export_and_download_snapshot():
     ls = LabelStudio(base_url=base_url, api_key=api_key)
 
     # Fetch project and optional first view id
-    project = ls.projects.get(id=project_id)
+    ls.projects.get(id=project_id)
     views = ls.views.list(project=project_id)
-    task_filter_options = {"view": views[0].id} if views else None
+    {"view": views[0].id} if views else None
 
     # Create export snapshot
     create_kwargs = {
@@ -90,7 +92,9 @@ def export_and_download_snapshot():
         if job.status in ("completed", "failed"):
             break
         if time.time() - start > timeout_sec:
-            raise TimeoutError(f"Export job timed out (id={export_id}, status={job.status})")
+            raise TimeoutError(
+                f"Export job timed out (id={export_id}, status={job.status})"
+            )
         time.sleep(1.0)
 
     if job.status == "failed":
@@ -102,7 +106,12 @@ def export_and_download_snapshot():
     out_path = out_dir / f"project_{project_id}_export_{export_id}.json"
 
     with open(out_path, "wb") as f:
-        for chunk in ls.projects.exports.download(id=project_id, export_pk=export_id, export_type="JSON", request_options={"chunk_size": 1024}):
+        for chunk in ls.projects.exports.download(
+            id=project_id,
+            export_pk=export_id,
+            export_type="JSON",
+            request_options={"chunk_size": 1024},
+        ):
             f.write(chunk)
 
     logger.info(f"Export completed. File saved to: {out_path}")
@@ -125,7 +134,9 @@ def convert_snapshot(export_type: str, export_id: str = None):
     project_id_str = os.getenv("LABEL_STUDIO_PROJECT_ID")
 
     if not base_url or not api_key or not project_id_str:
-        logger.error("set LABEL_STUDIO_URL, LABEL_STUDIO_API_KEY and LABEL_STUDIO_PROJECT_ID env vars")
+        logger.error(
+            "set LABEL_STUDIO_URL, LABEL_STUDIO_API_KEY and LABEL_STUDIO_PROJECT_ID env vars"
+        )
         sys.exit(1)
 
     try:
@@ -139,15 +150,21 @@ def convert_snapshot(export_type: str, export_id: str = None):
     # Get the latest export snapshot for the project
     exports = ls.projects.exports.list(id=project_id)
     if not exports:
-        raise ApiError(status_code=404, body="No export snapshots found for the project")
+        raise ApiError(
+            status_code=404, body="No export snapshots found for the project"
+        )
     exports = sorted(exports, key=lambda e: e.created_at, reverse=True)
     export = exports[0]
     export_id = export.id if not export_id else export_id
 
     # Start conversion
-    conv = ls.projects.exports.convert(export_pk=export_id, id=project_id, export_type=export_type)
+    conv = ls.projects.exports.convert(
+        export_pk=export_id, id=project_id, export_type=export_type
+    )
     converted_format_id = conv.converted_format
-    logger.info(f"Started conversion: export_id={export_id}, export_type={export_type}, converted_format_id={converted_format_id}")
+    logger.info(
+        f"Started conversion: export_id={export_id}, export_type={export_type}, converted_format_id={converted_format_id}"
+    )
 
     # Poll converted format status
     start = time.time()
@@ -157,18 +174,33 @@ def convert_snapshot(export_type: str, export_id: str = None):
         cur = ls.projects.exports.get(id=project_id, export_pk=export_id)
         cf = None
         if cur.converted_formats:
-            cf = next((c for c in cur.converted_formats if (converted_format_id and c.id == converted_format_id) or (c.export_type == export_type)), None)
+            cf = next(
+                (
+                    c
+                    for c in cur.converted_formats
+                    if (converted_format_id and c.id == converted_format_id)
+                    or (c.export_type == export_type)
+                ),
+                None,
+            )
         status = getattr(cf, "status", None)
         elapsed = int(time.time() - start)
-        logger.info(f"Conversion status: {status or 'pending'} (format {export_type}, elapsed {elapsed}s)")
+        logger.info(
+            f"Conversion status: {status or 'pending'} (format {export_type}, elapsed {elapsed}s)"
+        )
         if status in ("completed", "failed"):
             break
         if time.time() - start > timeout_sec:
-            raise TimeoutError(f"Conversion timed out (export_id={export_id}, format={export_type}, status={status})")
+            raise TimeoutError(
+                f"Conversion timed out (export_id={export_id}, format={export_type}, status={status})"
+            )
         time.sleep(1.0)
 
     if status == "failed":
-        raise ApiError(status_code=500, body=f"Conversion failed (export_id={export_id}, format={export_type})")
+        raise ApiError(
+            status_code=500,
+            body=f"Conversion failed (export_id={export_id}, format={export_type})",
+        )
 
     # Download converted file using export_type param
     ext = "json" if export_type.upper().startswith("JSON") else export_type.lower()
@@ -177,14 +209,19 @@ def convert_snapshot(export_type: str, export_id: str = None):
     out_path = out_dir / f"project_{project_id}_export_{export_id}.{ext}"
 
     with open(out_path, "wb") as f:
-        for chunk in ls.projects.exports.download(id=project_id, export_pk=export_id, export_type=export_type, request_options={"chunk_size": 1024}):
+        for chunk in ls.projects.exports.download(
+            id=project_id,
+            export_pk=export_id,
+            export_type=export_type,
+            request_options={"chunk_size": 1024},
+        ):
             f.write(chunk)
 
     logger.info(f"Converted export downloaded. File saved to: {out_path}")
 
 
 if __name__ == "__main__":
-    
+
     export_id = export_and_download_snapshot()
     logger.info(f"Export ID: {export_id}")
 
