@@ -343,12 +343,14 @@ service:
       path: /api/projects/{id}/tasks/assignees
       method: POST
       auth: true
-      docs: Assign multiple tasks to a specific user for a specific project.
+      docs: >-
+        Assign multiple users to a collection of tasks within a specific
+        project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: Bulk assign tasks
+      display-name: Bulk assign users to tasks
       request:
         name: AssignmentsBulkAssignRequest
         body:
@@ -480,7 +482,7 @@ service:
       path: /api/projects/{id}/tasks/{task_pk}/assignees
       method: DELETE
       auth: true
-      docs: Remove the assignee for a task for a specific project.
+      docs: Remove assignees for a task within a specific project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -490,7 +492,7 @@ service:
         task_pk:
           type: integer
           docs: A unique integer value identifying this task.
-      display-name: Delete task assignee
+      display-name: Delete task assignments
       request:
         name: AssignmentsDeleteRequest
         query-parameters:

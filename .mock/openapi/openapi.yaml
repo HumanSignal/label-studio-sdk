@@ -7639,7 +7639,7 @@ paths:
         - internal
   /api/projects/{id}/tasks/assignees:
     post:
-      description: Assign multiple tasks to a specific user for a specific project.
+      description: Assign multiple users to a collection of tasks within a specific project.
       operationId: api_projects_tasks_assignees_create
       parameters:
         - in: path
@@ -7819,7 +7819,7 @@ paths:
           description: Can't assign tasks
       security:
         - Token: []
-      summary: Bulk assign tasks
+      summary: Bulk assign users to tasks
       tags:
         - Tasks
       x-fern-audiences:
@@ -7830,7 +7830,7 @@ paths:
       x-fern-sdk-method-name: bulk_assign
   /api/projects/{id}/tasks/{task_pk}/assignees:
     delete:
-      description: Remove the assignee for a task for a specific project.
+      description: Remove assignees for a task within a specific project.
       operationId: api_projects_tasks_assignees_destroy
       parameters:
         - description: A unique integer value identifying this project.
@@ -7863,7 +7863,7 @@ paths:
           description: No response body
       security:
         - Token: []
-      summary: Delete task assignee
+      summary: Delete task assignments
       tags:
         - Tasks
       x-fern-audiences:

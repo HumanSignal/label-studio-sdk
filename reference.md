@@ -20385,7 +20385,7 @@ client.projects.stats.iaa(
 <dl>
 <dd>
 
-Assign multiple tasks to a specific user for a specific project.
+Assign multiple users to a collection of tasks within a specific project.
 </dd>
 </dl>
 </dd>
@@ -20671,7 +20671,7 @@ client.projects.assignments.assign(
 <dl>
 <dd>
 
-Remove the assignee for a task for a specific project.
+Remove assignees for a task within a specific project.
 </dd>
 </dl>
 </dd>

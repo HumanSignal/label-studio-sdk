@@ -38,7 +38,7 @@ class AssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AssignmentsBulkAssignResponse:
         """
-        Assign multiple tasks to a specific user for a specific project.
+        Assign multiple users to a collection of tasks within a specific project.
 
         Parameters
         ----------
@@ -264,7 +264,7 @@ class AssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Remove the assignee for a task for a specific project.
+        Remove assignees for a task within a specific project.
 
         Parameters
         ----------
@@ -407,7 +407,7 @@ class AsyncAssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AssignmentsBulkAssignResponse:
         """
-        Assign multiple tasks to a specific user for a specific project.
+        Assign multiple users to a collection of tasks within a specific project.
 
         Parameters
         ----------
@@ -657,7 +657,7 @@ class AsyncAssignmentsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Remove the assignee for a task for a specific project.
+        Remove assignees for a task within a specific project.
 
         Parameters
         ----------
