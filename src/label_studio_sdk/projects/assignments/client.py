@@ -15,6 +15,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...types.task_assignment import TaskAssignment
 from .types.assignments_assign_request_type import AssignmentsAssignRequestType
+from .types.assignments_delete_request_type import AssignmentsDeleteRequestType
 from .types.assignments_update_request_type import AssignmentsUpdateRequestType
 from ...core.client_wrapper import AsyncClientWrapper
 
@@ -253,7 +254,15 @@ class AssignmentsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(
+        self,
+        id: int,
+        task_pk: int,
+        *,
+        type: typing.Optional[AssignmentsDeleteRequestType] = None,
+        users: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Remove the assignee for a task for a specific project.
 
@@ -264,6 +273,12 @@ class AssignmentsClient:
 
         task_pk : int
             A unique integer value identifying this task.
+
+        type : typing.Optional[AssignmentsDeleteRequestType]
+            Assignment type to delete (optional). If omitted, deletes all assignments for the task.
+
+        users : typing.Optional[str]
+            Comma separated list of user IDs to delete, as a string. If omitted, deletes all assignees for the given type.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -287,6 +302,10 @@ class AssignmentsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
             method="DELETE",
+            params={
+                "type": type,
+                "users": users,
+            },
             request_options=request_options,
         )
         try:
@@ -628,7 +647,15 @@ class AsyncAssignmentsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(
+        self,
+        id: int,
+        task_pk: int,
+        *,
+        type: typing.Optional[AssignmentsDeleteRequestType] = None,
+        users: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Remove the assignee for a task for a specific project.
 
@@ -639,6 +666,12 @@ class AsyncAssignmentsClient:
 
         task_pk : int
             A unique integer value identifying this task.
+
+        type : typing.Optional[AssignmentsDeleteRequestType]
+            Assignment type to delete (optional). If omitted, deletes all assignments for the task.
+
+        users : typing.Optional[str]
+            Comma separated list of user IDs to delete, as a string. If omitted, deletes all assignees for the given type.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -670,6 +703,10 @@ class AsyncAssignmentsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/tasks/{jsonable_encoder(task_pk)}/assignees",
             method="DELETE",
+            params={
+                "type": type,
+                "users": users,
+            },
             request_options=request_options,
         )
         try:

@@ -20726,6 +20726,22 @@ client.projects.assignments.delete(
 <dl>
 <dd>
 
+**type:** `typing.Optional[AssignmentsDeleteRequestType]` — Assignment type to delete (optional). If omitted, deletes all assignments for the task.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**users:** `typing.Optional[str]` — Comma separated list of user IDs to delete, as a string. If omitted, deletes all assignees for the given type.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>

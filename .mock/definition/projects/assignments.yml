@@ -307,8 +307,7 @@ types:
       openapi: openapi/openapi.yaml
   AssignmentsBulkAssignResponse:
     properties:
-      assignments: optional<integer>
-      async: optional<boolean>
+      assignments: optional<list<map<string, unknown>>>
     source:
       openapi: openapi/openapi.yaml
   AssignmentsAssignRequestType:
@@ -317,6 +316,12 @@ types:
       - RE
     docs: Assignment type. Use AN for annotate or RE for review.
     inline: true
+    source:
+      openapi: openapi/openapi.yaml
+  AssignmentsDeleteRequestType:
+    enum:
+      - AN
+      - RE
     source:
       openapi: openapi/openapi.yaml
   AssignmentsUpdateRequestType:
@@ -387,8 +392,8 @@ service:
               - 1
           response:
             body:
-              assignments: 1
-              async: true
+              assignments:
+                - key: value
       audiences:
         - public
     list:
@@ -485,6 +490,19 @@ service:
           type: integer
           docs: A unique integer value identifying this task.
       display-name: Delete task assignee
+      request:
+        name: AssignmentsDeleteRequest
+        query-parameters:
+          type:
+            type: optional<AssignmentsDeleteRequestType>
+            docs: >-
+              Assignment type to delete (optional). If omitted, deletes all
+              assignments for the task.
+          users:
+            type: optional<string>
+            docs: >-
+              Comma separated list of user IDs to delete, as a string. If
+              omitted, deletes all assignees for the given type.
       examples:
         - path-parameters:
             id: 1

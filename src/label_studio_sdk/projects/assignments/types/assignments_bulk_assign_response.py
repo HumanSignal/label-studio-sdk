@@ -2,15 +2,12 @@
 
 from ....core.unchecked_base_model import UncheckedBaseModel
 import typing
-import typing_extensions
-from ....core.serialization import FieldMetadata
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class AssignmentsBulkAssignResponse(UncheckedBaseModel):
-    assignments: typing.Optional[int] = None
-    async_: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="async")] = None
+    assignments: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
