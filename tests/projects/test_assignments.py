@@ -3,17 +3,31 @@
 from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
 import typing
-from ..utilities import validate_response
 from label_studio_sdk.projects.assignments import AssignmentsBulkAssignRequestSelectedItemsIncluded
+from ..utilities import validate_response
+
+
+async def test_bulk_assign(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"assignments": 1, "async": True}
+    expected_types: typing.Any = {"assignments": "integer", "async": None}
+    response = client.projects.assignments.bulk_assign(
+        id=1, selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(all_=True), type="AN", users=[1]
+    )
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.assignments.bulk_assign(
+        id=1, selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(all_=True), type="AN", users=[1]
+    )
+    validate_response(async_response, expected_response, expected_types)
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
-        {"id": 1, "created_at": "2024-01-15T09:30:00Z", "type": "AN", "assignee": 1, "task": 1}
+        {"assignee": 1, "created_at": "2024-01-15T09:30:00Z", "id": 1, "task": 1, "type": "AN"}
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
-        {0: {"id": "integer", "created_at": "datetime", "type": None, "assignee": "integer", "task": "integer"}},
+        {0: {"assignee": "integer", "created_at": "datetime", "id": "integer", "task": "integer", "type": None}},
     )
     response = client.projects.assignments.list(id=1, task_pk=1)
     validate_response(response, expected_response, expected_types)
@@ -24,18 +38,18 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_assign(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "created_at": "2024-01-15T09:30:00Z",
-        "type": "AN",
         "assignee": 1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "id": 1,
         "task": 1,
+        "type": "AN",
     }
     expected_types: typing.Any = {
-        "id": "integer",
-        "created_at": "datetime",
-        "type": None,
         "assignee": "integer",
+        "created_at": "datetime",
+        "id": "integer",
         "task": "integer",
+        "type": None,
     }
     response = client.projects.assignments.assign(id=1, task_pk=1, type="AN", users=[1])
     validate_response(response, expected_response, expected_types)
@@ -59,35 +73,21 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "created_at": "2024-01-15T09:30:00Z",
-        "type": "AN",
         "assignee": 1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "id": 1,
         "task": 1,
+        "type": "AN",
     }
     expected_types: typing.Any = {
-        "id": "integer",
-        "created_at": "datetime",
-        "type": None,
         "assignee": "integer",
+        "created_at": "datetime",
+        "id": "integer",
         "task": "integer",
+        "type": None,
     }
     response = client.projects.assignments.update(id=1, task_pk=1, type="AN", users=[1])
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.projects.assignments.update(id=1, task_pk=1, type="AN", users=[1])
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_bulk_assign(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"assignments": 1, "async": True}
-    expected_types: typing.Any = {"assignments": "integer", "async": None}
-    response = client.projects.assignments.bulk_assign(
-        id=1, type="AN", users=[1], selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(all_=True)
-    )
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.assignments.bulk_assign(
-        id=1, type="AN", users=[1], selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(all_=True)
-    )
     validate_response(async_response, expected_response, expected_types)

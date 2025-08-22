@@ -7,8 +7,8 @@ from .utilities import validate_response
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"id": 1, "file": "file", "size": 1}
-    expected_types: typing.Any = {"id": "integer", "file": None, "size": "integer"}
+    expected_response: typing.Any = {"file": "file", "id": 1, "size": 1}
+    expected_types: typing.Any = {"file": None, "id": "integer", "size": "integer"}
     response = client.files.get(id=1)
     validate_response(response, expected_response, expected_types)
 
@@ -30,10 +30,10 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = [{"id": 1, "file": "file", "size": 1}]
+    expected_response: typing.Any = [{"file": "file", "id": 1, "size": 1}]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
-        {0: {"id": "integer", "file": None, "size": "integer"}},
+        {0: {"file": None, "id": "integer", "size": "integer"}},
     )
     response = client.files.list(id=1)
     validate_response(response, expected_response, expected_types)

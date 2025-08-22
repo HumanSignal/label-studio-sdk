@@ -8,18 +8,18 @@ from ..utilities import validate_response
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
+        "agreement_threshold": "agreement_threshold",
+        "allowed": "allowed",
+        "max_additional_annotators_assignable": 1,
         "metric_name": "metric_name",
         "metric_params": {"key": "value"},
-        "agreement_threshold": "agreement_threshold",
-        "max_additional_annotators_assignable": 1,
-        "allowed": "allowed",
     }
     expected_types: typing.Any = {
+        "agreement_threshold": None,
+        "allowed": None,
+        "max_additional_annotators_assignable": "integer",
         "metric_name": None,
         "metric_params": None,
-        "agreement_threshold": None,
-        "max_additional_annotators_assignable": "integer",
-        "allowed": None,
     }
     response = client.projects.metrics.get(id=1)
     validate_response(response, expected_response, expected_types)
@@ -30,18 +30,18 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
+        "agreement_threshold": "agreement_threshold",
+        "allowed": "allowed",
+        "max_additional_annotators_assignable": 1,
         "metric_name": "metric_name",
         "metric_params": {"key": "value"},
-        "agreement_threshold": "agreement_threshold",
-        "max_additional_annotators_assignable": 1,
-        "allowed": "allowed",
     }
     expected_types: typing.Any = {
+        "agreement_threshold": None,
+        "allowed": None,
+        "max_additional_annotators_assignable": "integer",
         "metric_name": None,
         "metric_params": None,
-        "agreement_threshold": None,
-        "max_additional_annotators_assignable": "integer",
-        "allowed": None,
     }
     response = client.projects.metrics.update(id=1)
     validate_response(response, expected_response, expected_types)

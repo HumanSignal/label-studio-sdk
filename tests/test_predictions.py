@@ -9,40 +9,40 @@ from .utilities import validate_response
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "id": 1,
-            "result": [{"key": "value"}],
-            "model_version": "model_version",
-            "created_ago": "created_ago",
-            "score": 1.1,
             "cluster": 1,
-            "neighbors": {"key": "value"},
-            "mislabeling": 1.1,
+            "created_ago": "created_ago",
             "created_at": "2024-01-15T09:30:00Z",
-            "updated_at": "2024-01-15T09:30:00Z",
+            "id": 1,
+            "mislabeling": 1.1,
             "model": 1,
             "model_run": 1,
-            "task": 1,
+            "model_version": "model_version",
+            "neighbors": {"key": "value"},
             "project": 1,
+            "result": [{"key": "value"}],
+            "score": 1.1,
+            "task": 1,
+            "updated_at": "2024-01-15T09:30:00Z",
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
-                "id": "integer",
-                "result": ("list", {0: ("dict", {0: (None, None)})}),
-                "model_version": None,
-                "created_ago": None,
-                "score": None,
                 "cluster": "integer",
-                "neighbors": None,
-                "mislabeling": None,
+                "created_ago": None,
                 "created_at": "datetime",
-                "updated_at": "datetime",
+                "id": "integer",
+                "mislabeling": None,
                 "model": "integer",
                 "model_run": "integer",
-                "task": "integer",
+                "model_version": None,
+                "neighbors": None,
                 "project": "integer",
+                "result": ("list", {0: ("dict", {0: (None, None)})}),
+                "score": None,
+                "task": "integer",
+                "updated_at": "datetime",
             }
         },
     )
@@ -55,40 +55,49 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
+        "cluster": 1,
+        "created_ago": "created_ago",
+        "created_at": "2024-01-15T09:30:00Z",
         "id": 1,
+        "mislabeling": 1.1,
+        "model": 1,
+        "model_run": 1,
+        "model_version": "yolo-v8",
+        "neighbors": {"key": "value"},
+        "project": 1,
         "result": [
             {
-                "original_width": 1920,
-                "original_height": 1080,
-                "image_rotation": 0,
                 "from_name": "bboxes",
+                "image_rotation": 0,
+                "original_height": 1080,
+                "original_width": 1920,
                 "to_name": "image",
                 "type": "rectanglelabels",
                 "value": {
-                    "x": 20,
-                    "y": 30,
-                    "width": 50,
                     "height": 60,
                     "rotation": 0,
                     "values": {"rectanglelabels": ["Person"]},
+                    "width": 50,
+                    "x": 20,
+                    "y": 30,
                 },
             }
         ],
-        "model_version": "yolo-v8",
-        "created_ago": "created_ago",
         "score": 0.95,
-        "cluster": 1,
-        "neighbors": {"key": "value"},
-        "mislabeling": 1.1,
-        "created_at": "2024-01-15T09:30:00Z",
-        "updated_at": "2024-01-15T09:30:00Z",
-        "model": 1,
-        "model_run": 1,
         "task": 1,
-        "project": 1,
+        "updated_at": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
+        "cluster": "integer",
+        "created_ago": None,
+        "created_at": "datetime",
         "id": "integer",
+        "mislabeling": None,
+        "model": "integer",
+        "model_run": "integer",
+        "model_version": None,
+        "neighbors": None,
+        "project": "integer",
         "result": (
             "list",
             {
@@ -106,104 +115,104 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                 )
             },
         ),
-        "model_version": None,
-        "created_ago": None,
         "score": None,
-        "cluster": "integer",
-        "neighbors": None,
-        "mislabeling": None,
-        "created_at": "datetime",
-        "updated_at": "datetime",
-        "model": "integer",
-        "model_run": "integer",
         "task": "integer",
-        "project": "integer",
+        "updated_at": "datetime",
     }
     response = client.predictions.create(
+        model_version="yolo-v8",
         result=[
             {
-                "original_width": 1920,
-                "original_height": 1080,
-                "image_rotation": 0,
                 "from_name": "bboxes",
+                "image_rotation": 0,
+                "original_height": 1080,
+                "original_width": 1920,
                 "to_name": "image",
                 "type": "rectanglelabels",
                 "value": {
-                    "x": 20,
-                    "y": 30,
-                    "width": 50,
                     "height": 60,
                     "rotation": 0,
                     "values": {"rectanglelabels": ["Person"]},
+                    "width": 50,
+                    "x": 20,
+                    "y": 30,
                 },
             }
         ],
         score=0.95,
-        model_version="yolo-v8",
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.predictions.create(
+        model_version="yolo-v8",
         result=[
             {
-                "original_width": 1920,
-                "original_height": 1080,
-                "image_rotation": 0,
                 "from_name": "bboxes",
+                "image_rotation": 0,
+                "original_height": 1080,
+                "original_width": 1920,
                 "to_name": "image",
                 "type": "rectanglelabels",
                 "value": {
-                    "x": 20,
-                    "y": 30,
-                    "width": 50,
                     "height": 60,
                     "rotation": 0,
                     "values": {"rectanglelabels": ["Person"]},
+                    "width": 50,
+                    "x": 20,
+                    "y": 30,
                 },
             }
         ],
         score=0.95,
-        model_version="yolo-v8",
     )
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
+        "cluster": 1,
+        "created_ago": "created_ago",
+        "created_at": "2024-01-15T09:30:00Z",
         "id": 1,
+        "mislabeling": 1.1,
+        "model": 1,
+        "model_run": 1,
+        "model_version": "yolo-v8",
+        "neighbors": {"key": "value"},
+        "project": 1,
         "result": [
             {
-                "original_width": 1920,
-                "original_height": 1080,
-                "image_rotation": 0,
                 "from_name": "bboxes",
+                "image_rotation": 0,
+                "original_height": 1080,
+                "original_width": 1920,
                 "to_name": "image",
                 "type": "rectanglelabels",
                 "value": {
-                    "x": 20,
-                    "y": 30,
-                    "width": 50,
                     "height": 60,
                     "rotation": 0,
                     "values": {"rectanglelabels": ["Person"]},
+                    "width": 50,
+                    "x": 20,
+                    "y": 30,
                 },
             }
         ],
-        "model_version": "yolo-v8",
-        "created_ago": "created_ago",
         "score": 0.95,
-        "cluster": 1,
-        "neighbors": {"key": "value"},
-        "mislabeling": 1.1,
-        "created_at": "2024-01-15T09:30:00Z",
-        "updated_at": "2024-01-15T09:30:00Z",
-        "model": 1,
-        "model_run": 1,
         "task": 1,
-        "project": 1,
+        "updated_at": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
+        "cluster": "integer",
+        "created_ago": None,
+        "created_at": "datetime",
         "id": "integer",
+        "mislabeling": None,
+        "model": "integer",
+        "model_run": "integer",
+        "model_version": None,
+        "neighbors": None,
+        "project": "integer",
         "result": (
             "list",
             {
@@ -221,18 +230,9 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
                 )
             },
         ),
-        "model_version": None,
-        "created_ago": None,
         "score": None,
-        "cluster": "integer",
-        "neighbors": None,
-        "mislabeling": None,
-        "created_at": "datetime",
-        "updated_at": "datetime",
-        "model": "integer",
-        "model_run": "integer",
         "task": "integer",
-        "project": "integer",
+        "updated_at": "datetime",
     }
     response = client.predictions.get(id=1)
     validate_response(response, expected_response, expected_types)
@@ -256,40 +256,49 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
+        "cluster": 1,
+        "created_ago": "created_ago",
+        "created_at": "2024-01-15T09:30:00Z",
         "id": 1,
+        "mislabeling": 1.1,
+        "model": 1,
+        "model_run": 1,
+        "model_version": "yolo-v8",
+        "neighbors": {"key": "value"},
+        "project": 1,
         "result": [
             {
-                "original_width": 1920,
-                "original_height": 1080,
-                "image_rotation": 0,
                 "from_name": "bboxes",
+                "image_rotation": 0,
+                "original_height": 1080,
+                "original_width": 1920,
                 "to_name": "image",
                 "type": "rectanglelabels",
                 "value": {
-                    "x": 20,
-                    "y": 30,
-                    "width": 50,
                     "height": 60,
                     "rotation": 0,
                     "values": {"rectanglelabels": ["Person"]},
+                    "width": 50,
+                    "x": 20,
+                    "y": 30,
                 },
             }
         ],
-        "model_version": "yolo-v8",
-        "created_ago": "created_ago",
         "score": 0.95,
-        "cluster": 1,
-        "neighbors": {"key": "value"},
-        "mislabeling": 1.1,
-        "created_at": "2024-01-15T09:30:00Z",
-        "updated_at": "2024-01-15T09:30:00Z",
-        "model": 1,
-        "model_run": 1,
         "task": 1,
-        "project": 1,
+        "updated_at": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
+        "cluster": "integer",
+        "created_ago": None,
+        "created_at": "datetime",
         "id": "integer",
+        "mislabeling": None,
+        "model": "integer",
+        "model_run": "integer",
+        "model_version": None,
+        "neighbors": None,
+        "project": "integer",
         "result": (
             "list",
             {
@@ -307,65 +316,56 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                 )
             },
         ),
-        "model_version": None,
-        "created_ago": None,
         "score": None,
-        "cluster": "integer",
-        "neighbors": None,
-        "mislabeling": None,
-        "created_at": "datetime",
-        "updated_at": "datetime",
-        "model": "integer",
-        "model_run": "integer",
         "task": "integer",
-        "project": "integer",
+        "updated_at": "datetime",
     }
     response = client.predictions.update(
         id=1,
+        model_version="yolo-v8",
         result=[
             {
-                "original_width": 1920,
-                "original_height": 1080,
-                "image_rotation": 0,
                 "from_name": "bboxes",
+                "image_rotation": 0,
+                "original_height": 1080,
+                "original_width": 1920,
                 "to_name": "image",
                 "type": "rectanglelabels",
                 "value": {
-                    "x": 20,
-                    "y": 30,
-                    "width": 50,
                     "height": 60,
                     "rotation": 0,
                     "values": {"rectanglelabels": ["Person"]},
+                    "width": 50,
+                    "x": 20,
+                    "y": 30,
                 },
             }
         ],
         score=0.95,
-        model_version="yolo-v8",
     )
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.predictions.update(
         id=1,
+        model_version="yolo-v8",
         result=[
             {
-                "original_width": 1920,
-                "original_height": 1080,
-                "image_rotation": 0,
                 "from_name": "bboxes",
+                "image_rotation": 0,
+                "original_height": 1080,
+                "original_width": 1920,
                 "to_name": "image",
                 "type": "rectanglelabels",
                 "value": {
-                    "x": 20,
-                    "y": 30,
-                    "width": 50,
                     "height": 60,
                     "rotation": 0,
                     "values": {"rectanglelabels": ["Person"]},
+                    "width": 50,
+                    "x": 20,
+                    "y": 30,
                 },
             }
         ],
         score=0.95,
-        model_version="yolo-v8",
     )
     validate_response(async_response, expected_response, expected_types)

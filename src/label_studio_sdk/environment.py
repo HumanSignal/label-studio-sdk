@@ -4,4 +4,4 @@ import enum
 
 
 class LabelStudioEnvironment(enum.Enum):
-    DEFAULT = ""
+    DEFAULT = "http://localhost:8000"

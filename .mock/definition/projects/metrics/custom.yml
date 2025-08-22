@@ -24,8 +24,8 @@ service:
               type: string
               validation:
                 minLength: 1
-            role: optional<string>
             region: optional<string>
+            role: optional<string>
         content-type: application/json
       errors:
         - root.InternalServerError

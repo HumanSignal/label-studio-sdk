@@ -71,9 +71,9 @@ class MetricsClient:
         self,
         id: int,
         *,
-        metric_name: typing.Optional[str] = OMIT,
         agreement_threshold: typing.Optional[int] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
+        metric_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MetricParam:
         """
@@ -83,11 +83,11 @@ class MetricsClient:
         ----------
         id : int
 
-        metric_name : typing.Optional[str]
-
         agreement_threshold : typing.Optional[int]
 
         max_additional_annotators_assignable : typing.Optional[int]
+
+        metric_name : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -112,9 +112,9 @@ class MetricsClient:
             f"api/projects/{jsonable_encoder(id)}/metricparam/",
             method="POST",
             json={
-                "metric_name": metric_name,
                 "agreement_threshold": agreement_threshold,
                 "max_additional_annotators_assignable": max_additional_annotators_assignable,
+                "metric_name": metric_name,
             },
             headers={
                 "content-type": "application/json",
@@ -200,9 +200,9 @@ class AsyncMetricsClient:
         self,
         id: int,
         *,
-        metric_name: typing.Optional[str] = OMIT,
         agreement_threshold: typing.Optional[int] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
+        metric_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MetricParam:
         """
@@ -212,11 +212,11 @@ class AsyncMetricsClient:
         ----------
         id : int
 
-        metric_name : typing.Optional[str]
-
         agreement_threshold : typing.Optional[int]
 
         max_additional_annotators_assignable : typing.Optional[int]
+
+        metric_name : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -249,9 +249,9 @@ class AsyncMetricsClient:
             f"api/projects/{jsonable_encoder(id)}/metricparam/",
             method="POST",
             json={
-                "metric_name": metric_name,
                 "agreement_threshold": agreement_threshold,
                 "max_additional_annotators_assignable": max_additional_annotators_assignable,
+                "metric_name": metric_name,
             },
             headers={
                 "content-type": "application/json",

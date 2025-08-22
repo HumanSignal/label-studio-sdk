@@ -18,22 +18,22 @@ service:
       examples:
         - response:
             body:
-              release: release
-              label-studio-os-package:
-                key: value
-              label-studio-os-backend:
-                key: value
-              label-studio-frontend:
+              backend:
                 key: value
               dm2:
                 key: value
+              edition: Community
               label-studio-converter:
                 key: value
-              edition: Community
+              label-studio-frontend:
+                key: value
+              label-studio-os-backend:
+                key: value
+              label-studio-os-package:
+                key: value
               lsf:
                 key: value
-              backend:
-                key: value
+              release: release
       audiences:
         - public
   source:

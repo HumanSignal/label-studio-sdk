@@ -24,19 +24,19 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                organization: 1
-                project: 1
-                url: url
-                send_payload: true
-                send_for_all_actions: true
-                headers:
-                  key: value
-                is_active: true
-                actions:
+              - actions:
                   - PROJECT_CREATED
                 created_at: '2024-01-15T09:30:00Z'
+                headers:
+                  key: value
+                id: 1
+                is_active: true
+                organization: 1
+                project: 1
+                send_for_all_actions: true
+                send_payload: true
                 updated_at: '2024-01-15T09:30:00Z'
+                url: url
       audiences:
         - public
     create:
@@ -51,7 +51,18 @@ service:
         name: WebhookRequest
         body:
           properties:
+            actions: optional<list<root.ActionsEnum>>
+            headers: optional<unknown>
+            is_active:
+              type: optional<boolean>
+              docs: If value is False the webhook is disabled
             project: optional<integer>
+            send_for_all_actions:
+              type: optional<boolean>
+              docs: If value is False - used only for actions from WebhookAction
+            send_payload:
+              type: optional<boolean>
+              docs: If value is False send only action
             url:
               type: string
               docs: URL of webhook
@@ -59,17 +70,6 @@ service:
                 format: uri
                 minLength: 1
                 maxLength: 2048
-            send_payload:
-              type: optional<boolean>
-              docs: If value is False send only action
-            send_for_all_actions:
-              type: optional<boolean>
-              docs: If value is False - used only for actions from WebhookAction
-            headers: optional<unknown>
-            is_active:
-              type: optional<boolean>
-              docs: If value is False the webhook is disabled
-            actions: optional<list<root.ActionsEnum>>
         content-type: application/json
       response:
         docs: ''
@@ -79,19 +79,116 @@ service:
             url: url
           response:
             body:
-              id: 1
-              organization: 1
-              project: 1
-              url: url
-              send_payload: true
-              send_for_all_actions: true
-              headers:
-                key: value
-              is_active: true
               actions:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
+              headers:
+                key: value
+              id: 1
+              is_active: true
+              organization: 1
+              project: 1
+              send_for_all_actions: true
+              send_payload: true
               updated_at: '2024-01-15T09:30:00Z'
+              url: url
+      audiences:
+        - public
+    info:
+      path: /api/webhooks/info/
+      method: GET
+      auth: true
+      docs: Get descriptions of all available webhook actions to set up webhooks.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Get all webhook actions
+      request:
+        name: WebhooksInfoRequest
+        query-parameters:
+          organization-only:
+            type: optional<boolean>
+            docs: organization-only or not
+      response:
+        docs: Object with webhook action descriptions.
+        type: WebhooksInfoResponse
+      examples:
+        - response:
+            body:
+              ANNOTATIONS_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              ANNOTATIONS_DELETED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              ANNOTATION_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              ANNOTATION_UPDATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              LABEL_LINK_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              LABEL_LINK_DELETED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              LABEL_LINK_UPDATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              PROJECT_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              PROJECT_DELETED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              PROJECT_UPDATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              REVIEWS_DELETED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              REVIEW_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              REVIEW_UPDATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              TASKS_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              TASKS_DELETED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
       audiences:
         - public
     get:
@@ -111,19 +208,19 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              organization: 1
-              project: 1
-              url: url
-              send_payload: true
-              send_for_all_actions: true
-              headers:
-                key: value
-              is_active: true
               actions:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
+              headers:
+                key: value
+              id: 1
+              is_active: true
+              organization: 1
+              project: 1
+              send_for_all_actions: true
+              send_payload: true
               updated_at: '2024-01-15T09:30:00Z'
+              url: url
       audiences:
         - public
     api_webhooks_update:
@@ -139,6 +236,17 @@ service:
         name: WebhookSerializerForUpdateRequest
         body:
           properties:
+            actions: optional<list<root.ActionsEnum>>
+            headers: optional<unknown>
+            is_active:
+              type: optional<boolean>
+              docs: If value is False the webhook is disabled
+            send_for_all_actions:
+              type: optional<boolean>
+              docs: If value is False - used only for actions from WebhookAction
+            send_payload:
+              type: optional<boolean>
+              docs: If value is False send only action
             url:
               type: string
               docs: URL of webhook
@@ -146,17 +254,6 @@ service:
                 format: uri
                 minLength: 1
                 maxLength: 2048
-            send_payload:
-              type: optional<boolean>
-              docs: If value is False send only action
-            send_for_all_actions:
-              type: optional<boolean>
-              docs: If value is False - used only for actions from WebhookAction
-            headers: optional<unknown>
-            is_active:
-              type: optional<boolean>
-              docs: If value is False the webhook is disabled
-            actions: optional<list<root.ActionsEnum>>
         content-type: application/json
       response:
         docs: ''
@@ -168,19 +265,19 @@ service:
             url: url
           response:
             body:
-              id: 1
-              organization: 1
-              project: 1
-              url: url
-              send_payload: true
-              send_for_all_actions: true
-              headers:
-                key: value
-              is_active: true
               actions:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
+              headers:
+                key: value
+              id: 1
+              is_active: true
+              organization: 1
+              project: 1
+              send_for_all_actions: true
+              send_payload: true
               updated_at: '2024-01-15T09:30:00Z'
+              url: url
       audiences:
         - internal
     delete:
@@ -210,6 +307,17 @@ service:
         name: PatchedWebhookSerializerForUpdateRequest
         body:
           properties:
+            actions: optional<list<root.ActionsEnum>>
+            headers: optional<unknown>
+            is_active:
+              type: optional<boolean>
+              docs: If value is False the webhook is disabled
+            send_for_all_actions:
+              type: optional<boolean>
+              docs: If value is False - used only for actions from WebhookAction
+            send_payload:
+              type: optional<boolean>
+              docs: If value is False send only action
             url:
               type: optional<string>
               docs: URL of webhook
@@ -217,17 +325,6 @@ service:
                 format: uri
                 minLength: 1
                 maxLength: 2048
-            send_payload:
-              type: optional<boolean>
-              docs: If value is False send only action
-            send_for_all_actions:
-              type: optional<boolean>
-              docs: If value is False - used only for actions from WebhookAction
-            headers: optional<unknown>
-            is_active:
-              type: optional<boolean>
-              docs: If value is False the webhook is disabled
-            actions: optional<list<root.ActionsEnum>>
         content-type: application/json
       response:
         docs: ''
@@ -238,272 +335,175 @@ service:
           request: {}
           response:
             body:
-              id: 1
-              organization: 1
-              project: 1
-              url: url
-              send_payload: true
-              send_for_all_actions: true
-              headers:
-                key: value
-              is_active: true
               actions:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
+              headers:
+                key: value
+              id: 1
+              is_active: true
+              organization: 1
+              project: 1
+              send_for_all_actions: true
+              send_payload: true
               updated_at: '2024-01-15T09:30:00Z'
-      audiences:
-        - public
-    info:
-      path: /api/webhooks/info/
-      method: GET
-      auth: true
-      docs: Get descriptions of all available webhook actions to set up webhooks.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Get all webhook actions
-      request:
-        name: WebhooksInfoRequest
-        query-parameters:
-          organization-only:
-            type: optional<boolean>
-            docs: organization-only or not
-      response:
-        docs: Object with webhook action descriptions.
-        type: WebhooksInfoResponse
-      examples:
-        - response:
-            body:
-              PROJECT_CREATED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              PROJECT_UPDATED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              PROJECT_DELETED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              TASKS_CREATED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              TASKS_DELETED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              ANNOTATION_CREATED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              ANNOTATIONS_CREATED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              ANNOTATION_UPDATED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              ANNOTATIONS_DELETED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              LABEL_LINK_CREATED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              LABEL_LINK_UPDATED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              LABEL_LINK_DELETED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              REVIEW_CREATED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              REVIEW_UPDATED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
-              REVIEWS_DELETED:
-                name: name
-                description: description
-                key: key
-                organization-only: true
+              url: url
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
 types:
-  WebhooksInfoResponseProjectCreated:
-    properties:
-      name: string
-      description: string
-      key: string
-      organization-only: boolean
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  WebhooksInfoResponseProjectUpdated:
-    properties:
-      name: string
-      description: string
-      key: string
-      organization-only: boolean
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  WebhooksInfoResponseProjectDeleted:
-    properties:
-      name: string
-      description: string
-      key: string
-      organization-only: boolean
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  WebhooksInfoResponseTasksCreated:
-    properties:
-      name: string
-      description: string
-      key: string
-      organization-only: boolean
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  WebhooksInfoResponseTasksDeleted:
-    properties:
-      name: string
-      description: string
-      key: string
-      organization-only: boolean
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  WebhooksInfoResponseAnnotationCreated:
-    properties:
-      name: string
-      description: string
-      key: string
-      organization-only: boolean
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   WebhooksInfoResponseAnnotationsCreated:
     properties:
-      name: string
       description: string
       key: string
-      organization-only: boolean
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  WebhooksInfoResponseAnnotationUpdated:
-    properties:
       name: string
-      description: string
-      key: string
       organization-only: boolean
     source:
       openapi: openapi/openapi.yaml
     inline: true
   WebhooksInfoResponseAnnotationsDeleted:
     properties:
-      name: string
       description: string
       key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseAnnotationCreated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseAnnotationUpdated:
+    properties:
+      description: string
+      key: string
+      name: string
       organization-only: boolean
     source:
       openapi: openapi/openapi.yaml
     inline: true
   WebhooksInfoResponseLabelLinkCreated:
     properties:
-      name: string
       description: string
       key: string
-      organization-only: boolean
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  WebhooksInfoResponseLabelLinkUpdated:
-    properties:
       name: string
-      description: string
-      key: string
       organization-only: boolean
     source:
       openapi: openapi/openapi.yaml
     inline: true
   WebhooksInfoResponseLabelLinkDeleted:
     properties:
-      name: string
       description: string
       key: string
+      name: string
       organization-only: boolean
     source:
       openapi: openapi/openapi.yaml
     inline: true
-  WebhooksInfoResponseReviewCreated:
+  WebhooksInfoResponseLabelLinkUpdated:
     properties:
-      name: string
       description: string
       key: string
+      name: string
       organization-only: boolean
     source:
       openapi: openapi/openapi.yaml
     inline: true
-  WebhooksInfoResponseReviewUpdated:
+  WebhooksInfoResponseProjectCreated:
     properties:
-      name: string
       description: string
       key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseProjectDeleted:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseProjectUpdated:
+    properties:
+      description: string
+      key: string
+      name: string
       organization-only: boolean
     source:
       openapi: openapi/openapi.yaml
     inline: true
   WebhooksInfoResponseReviewsDeleted:
     properties:
-      name: string
       description: string
       key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseReviewCreated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseReviewUpdated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseTasksCreated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseTasksDeleted:
+    properties:
+      description: string
+      key: string
+      name: string
       organization-only: boolean
     source:
       openapi: openapi/openapi.yaml
     inline: true
   WebhooksInfoResponse:
     properties:
-      PROJECT_CREATED: optional<WebhooksInfoResponseProjectCreated>
-      PROJECT_UPDATED: optional<WebhooksInfoResponseProjectUpdated>
-      PROJECT_DELETED: optional<WebhooksInfoResponseProjectDeleted>
-      TASKS_CREATED: optional<WebhooksInfoResponseTasksCreated>
-      TASKS_DELETED: optional<WebhooksInfoResponseTasksDeleted>
-      ANNOTATION_CREATED: optional<WebhooksInfoResponseAnnotationCreated>
       ANNOTATIONS_CREATED: optional<WebhooksInfoResponseAnnotationsCreated>
-      ANNOTATION_UPDATED: optional<WebhooksInfoResponseAnnotationUpdated>
       ANNOTATIONS_DELETED: optional<WebhooksInfoResponseAnnotationsDeleted>
+      ANNOTATION_CREATED: optional<WebhooksInfoResponseAnnotationCreated>
+      ANNOTATION_UPDATED: optional<WebhooksInfoResponseAnnotationUpdated>
       LABEL_LINK_CREATED: optional<WebhooksInfoResponseLabelLinkCreated>
-      LABEL_LINK_UPDATED: optional<WebhooksInfoResponseLabelLinkUpdated>
       LABEL_LINK_DELETED: optional<WebhooksInfoResponseLabelLinkDeleted>
+      LABEL_LINK_UPDATED: optional<WebhooksInfoResponseLabelLinkUpdated>
+      PROJECT_CREATED: optional<WebhooksInfoResponseProjectCreated>
+      PROJECT_DELETED: optional<WebhooksInfoResponseProjectDeleted>
+      PROJECT_UPDATED: optional<WebhooksInfoResponseProjectUpdated>
+      REVIEWS_DELETED: optional<WebhooksInfoResponseReviewsDeleted>
       REVIEW_CREATED: optional<WebhooksInfoResponseReviewCreated>
       REVIEW_UPDATED: optional<WebhooksInfoResponseReviewUpdated>
-      REVIEWS_DELETED: optional<WebhooksInfoResponseReviewsDeleted>
+      TASKS_CREATED: optional<WebhooksInfoResponseTasksCreated>
+      TASKS_DELETED: optional<WebhooksInfoResponseTasksDeleted>
     source:
       openapi: openapi/openapi.yaml
