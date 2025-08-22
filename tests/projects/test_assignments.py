@@ -8,8 +8,8 @@ from ..utilities import validate_response
 
 
 async def test_bulk_assign(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"assignments": [{"key": "value"}]}
-    expected_types: typing.Any = {"assignments": ("list", {0: ("dict", {0: (None, None)})})}
+    expected_response: typing.Any = {"assignments": 1, "async": True}
+    expected_types: typing.Any = {"assignments": "integer", "async": None}
     response = client.projects.assignments.bulk_assign(
         id=1, selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(all_=True), type="AN", users=[1]
     )
