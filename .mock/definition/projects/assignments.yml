@@ -307,7 +307,8 @@ types:
       openapi: openapi/openapi.yaml
   AssignmentsBulkAssignResponse:
     properties:
-      assignments: optional<list<map<string, unknown>>>
+      assignments: optional<integer>
+      async: optional<boolean>
     source:
       openapi: openapi/openapi.yaml
   AssignmentsAssignRequestType:
@@ -386,8 +387,8 @@ service:
               - 1
           response:
             body:
-              assignments:
-                - key: value
+              assignments: 1
+              async: true
       audiences:
         - public
     list:
