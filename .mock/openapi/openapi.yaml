@@ -7867,7 +7867,7 @@ paths:
         - internal
   /api/projects/{id}/tasks/assignees:
     post:
-      description: Assign multiple tasks to a specific user for a specific project.
+      description: Assign multiple users to a collection of tasks within a specific project.
       operationId: api_projects_tasks_assignees_create
       parameters:
         - in: path
@@ -8038,16 +8038,16 @@ paths:
               schema:
                 properties:
                   assignments:
-                    items:
-                      type: object
-                    type: array
+                    type: integer
+                  async:
+                    type: boolean
                 type: object
           description: Success
         '400':
           description: Can't assign tasks
       security:
         - Token: []
-      summary: Bulk assign tasks
+      summary: Bulk assign users to tasks
       tags:
         - Tasks
       x-fern-audiences:
@@ -8058,7 +8058,7 @@ paths:
       x-fern-sdk-method-name: bulk_assign
   /api/projects/{id}/tasks/{task_pk}/assignees:
     delete:
-      description: Remove the assignee for a task for a specific project.
+      description: Remove assignees for a task within a specific project.
       operationId: api_projects_tasks_assignees_destroy
       parameters:
         - description: A unique integer value identifying this project.
@@ -8073,12 +8073,25 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Assignment type to delete (optional). If omitted, deletes all assignments for the task.
+          in: query
+          name: type
+          schema:
+            enum:
+              - AN
+              - RE
+            type: string
+        - description: Comma separated list of user IDs to delete, as a string. If omitted, deletes all assignees for the given type.
+          in: query
+          name: users
+          schema:
+            type: string
       responses:
         '204':
           description: No response body
       security:
         - Token: []
-      summary: Delete task assignee
+      summary: Delete task assignments
       tags:
         - Tasks
       x-fern-audiences:
