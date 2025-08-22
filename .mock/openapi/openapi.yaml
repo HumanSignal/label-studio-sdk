@@ -7106,7 +7106,7 @@ paths:
       tags:
         - Projects
     get:
-      description: Retrieve the members for a specific project. Optionally filter by user IDs.
+      description: Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
       operationId: api_projects_members_retrieve
       parameters:
         - in: path
@@ -7114,7 +7114,7 @@ paths:
           required: true
           schema:
             type: integer
-        - description: 'Comma-separated list or JSON array of user IDs to include. Example: "1,2,3" or "[1,2,3]"'
+        - description: 'Comma-separated list of user IDs to include. Example: user_ids=1,2,3'
           in: query
           name: user_ids
           schema:
@@ -7131,6 +7131,12 @@ paths:
       summary: Get project members
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+      x-fern-sdk-method-name: get
     post:
       description: Add a member to a specific project.
       operationId: api_projects_members_create

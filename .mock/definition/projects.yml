@@ -969,35 +969,6 @@ service:
               task_count: 1
       audiences:
         - public
-    api_projects_members_retrieve:
-      path: /api/projects/{id}/members/
-      method: GET
-      auth: true
-      docs: >-
-        Retrieve the members for a specific project. Optionally filter by user
-        IDs.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: Get project members
-      request:
-        name: ApiProjectsMembersRetrieveRequest
-        query-parameters:
-          user_ids:
-            type: optional<string>
-            docs: >-
-              Comma-separated list or JSON array of user IDs to include.
-              Example: "1,2,3" or "[1,2,3]"
-      response:
-        docs: ''
-        type: root.ProjectMember
-      examples:
-        - path-parameters:
-            id: 1
-          response:
-            body:
-              user: 1
     api_projects_members_create:
       path: /api/projects/{id}/members/
       method: POST
