@@ -7,6 +7,7 @@
 # 4. Add your user to project's workspace
 # 5. Run the script: python assign_users_to_tasks.py <PROJECT_ID> <USER_EMAIL> [AN|RE]
 # (You can get project ID from the URL, e.g. https://app.humansignal.com/projects/<PROJECT_ID>)
+# (AN - annotator, RE - reviewergit)
 
 import os
 import sys
