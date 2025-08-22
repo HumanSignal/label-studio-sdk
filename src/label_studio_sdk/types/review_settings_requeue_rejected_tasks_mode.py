@@ -5,6 +5,4 @@ from .requeue_rejected_tasks_mode_enum import RequeueRejectedTasksModeEnum
 from .blank_enum import BlankEnum
 from .null_enum import NullEnum
 
-ReviewSettingsRequeueRejectedTasksMode = typing.Union[
-    RequeueRejectedTasksModeEnum, BlankEnum, NullEnum
-]
+ReviewSettingsRequeueRejectedTasksMode = typing.Union[RequeueRejectedTasksModeEnum, BlankEnum, NullEnum]

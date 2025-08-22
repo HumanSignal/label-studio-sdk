@@ -8,24 +8,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LseAnnotationFilterOptions(UncheckedBaseModel):
-    usual: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Include not skipped and not ground truth annotations
-    """
-
     ground_truth: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Include ground truth annotations
     """
 
-    skipped: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Include skipped annotations
-    """
-
-    reviewed: typing.Optional[LseAnnotationFilterOptionsReviewed] = pydantic.Field(
-        default=None
-    )
+    reviewed: typing.Optional[LseAnnotationFilterOptionsReviewed] = pydantic.Field(default=None)
     """
     `only` - include all tasks with at least one not reviewed annotation<br>`exclude` - exclude with at least one not reviewed annotation
     
@@ -34,10 +22,18 @@ class LseAnnotationFilterOptions(UncheckedBaseModel):
     * `None` - None
     """
 
+    skipped: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Include skipped annotations
+    """
+
+    usual: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Include not skipped and not ground truth annotations
+    """
+
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

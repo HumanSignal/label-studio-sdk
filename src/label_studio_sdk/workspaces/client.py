@@ -83,10 +83,10 @@ class WorkspacesClient:
         self,
         *,
         title: str,
-        description: typing.Optional[str] = OMIT,
         color: typing.Optional[str] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -97,16 +97,16 @@ class WorkspacesClient:
         title : str
             Workspace name
 
+        color : typing.Optional[str]
+
         description : typing.Optional[str]
             Workspace description
 
-        color : typing.Optional[str]
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
-
-        is_archived : typing.Optional[bool]
-            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -131,11 +131,11 @@ class WorkspacesClient:
             "api/workspaces/",
             method="POST",
             json={
-                "title": title,
-                "description": description,
                 "color": color,
-                "is_personal": is_personal,
+                "description": description,
                 "is_archived": is_archived,
+                "is_personal": is_personal,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -157,9 +157,7 @@ class WorkspacesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Workspace:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Workspace:
         """
         Retrieve details for a specific workspace by ID.
 
@@ -205,9 +203,7 @@ class WorkspacesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific workspace by ID.
 
@@ -250,11 +246,11 @@ class WorkspacesClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         color: typing.Optional[str] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -264,19 +260,19 @@ class WorkspacesClient:
         ----------
         id : int
 
-        title : typing.Optional[str]
-            Workspace name
+        color : typing.Optional[str]
 
         description : typing.Optional[str]
             Workspace description
 
-        color : typing.Optional[str]
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
 
-        is_archived : typing.Optional[bool]
-            Workspace is archived
+        title : typing.Optional[str]
+            Workspace name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -301,11 +297,11 @@ class WorkspacesClient:
             f"api/workspaces/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "title": title,
-                "description": description,
                 "color": color,
-                "is_personal": is_personal,
+                "description": description,
                 "is_archived": is_archived,
+                "is_personal": is_personal,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -403,10 +399,10 @@ class AsyncWorkspacesClient:
         self,
         *,
         title: str,
-        description: typing.Optional[str] = OMIT,
         color: typing.Optional[str] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -417,16 +413,16 @@ class AsyncWorkspacesClient:
         title : str
             Workspace name
 
+        color : typing.Optional[str]
+
         description : typing.Optional[str]
             Workspace description
 
-        color : typing.Optional[str]
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
-
-        is_archived : typing.Optional[bool]
-            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -459,11 +455,11 @@ class AsyncWorkspacesClient:
             "api/workspaces/",
             method="POST",
             json={
-                "title": title,
-                "description": description,
                 "color": color,
-                "is_personal": is_personal,
+                "description": description,
                 "is_archived": is_archived,
+                "is_personal": is_personal,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -485,9 +481,7 @@ class AsyncWorkspacesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Workspace:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Workspace:
         """
         Retrieve details for a specific workspace by ID.
 
@@ -541,9 +535,7 @@ class AsyncWorkspacesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific workspace by ID.
 
@@ -594,11 +586,11 @@ class AsyncWorkspacesClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         color: typing.Optional[str] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         is_archived: typing.Optional[bool] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -608,19 +600,19 @@ class AsyncWorkspacesClient:
         ----------
         id : int
 
-        title : typing.Optional[str]
-            Workspace name
+        color : typing.Optional[str]
 
         description : typing.Optional[str]
             Workspace description
 
-        color : typing.Optional[str]
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
 
-        is_archived : typing.Optional[bool]
-            Workspace is archived
+        title : typing.Optional[str]
+            Workspace name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -653,11 +645,11 @@ class AsyncWorkspacesClient:
             f"api/workspaces/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "title": title,
-                "description": description,
                 "color": color,
-                "is_personal": is_personal,
+                "description": description,
                 "is_archived": is_archived,
+                "is_personal": is_personal,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",

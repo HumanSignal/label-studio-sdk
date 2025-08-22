@@ -14,9 +14,7 @@ class VersionsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> VersionResponse:
+    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> VersionResponse:
         """
         Get version information about the Label Studio instance.
 
@@ -63,9 +61,7 @@ class AsyncVersionsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> VersionResponse:
+    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> VersionResponse:
         """
         Get version information about the Label Studio instance.
 

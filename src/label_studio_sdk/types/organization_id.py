@@ -13,15 +13,13 @@ class OrganizationId(UncheckedBaseModel):
     which fields should be displayed.
     """
 
-    id: int
-    title: str
     contact_info: typing.Optional[str] = None
     created_at: dt.datetime
+    id: int
+    title: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

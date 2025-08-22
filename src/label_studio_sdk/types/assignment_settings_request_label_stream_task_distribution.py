@@ -4,6 +4,4 @@ import typing
 from .label_stream_task_distribution_enum import LabelStreamTaskDistributionEnum
 from .null_enum import NullEnum
 
-AssignmentSettingsRequestLabelStreamTaskDistribution = typing.Union[
-    LabelStreamTaskDistributionEnum, NullEnum
-]
+AssignmentSettingsRequestLabelStreamTaskDistribution = typing.Union[LabelStreamTaskDistributionEnum, NullEnum]

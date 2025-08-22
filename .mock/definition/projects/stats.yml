@@ -61,6 +61,25 @@ types:
         docs: List of users in the matrix
     source:
       openapi: openapi/openapi.yaml
+  StatsTotalAgreementResponseZero:
+    properties:
+      total_agreement: optional<double>
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsTotalAgreementResponseOne:
+    properties:
+      total_agreement: optional<map<string, double>>
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsTotalAgreementResponse:
+    discriminated: false
+    union:
+      - StatsTotalAgreementResponseZero
+      - StatsTotalAgreementResponseOne
+    source:
+      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
@@ -154,6 +173,33 @@ service:
                   id: 1
                 - email: user2@example.com
                   id: 2
+      audiences:
+        - public
+    total_agreement:
+      path: /api/projects/{id}/stats/total_agreement
+      method: GET
+      auth: true
+      docs: Overall or per-label total agreement across the project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get total agreement for project
+      request:
+        name: StatsTotalAgreementRequest
+        query-parameters:
+          per_label:
+            type: optional<boolean>
+            docs: Return agreement per label
+      response:
+        docs: Total agreement
+        type: StatsTotalAgreementResponse
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              total_agreement: 1.1
       audiences:
         - public
   source:

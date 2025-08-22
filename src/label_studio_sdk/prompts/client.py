@@ -16,13 +16,9 @@ from ..types.user_simple_request import UserSimpleRequest
 from ..types.skill_name_enum import SkillNameEnum
 from ..types.model_interface import ModelInterface
 from ..core.serialization import convert_and_respect_annotation_metadata
+from .types.prompts_compatible_projects_request_project_type import PromptsCompatibleProjectsRequestProjectType
+from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.prompts_compatible_projects_request_project_type import (
-    PromptsCompatibleProjectsRequestProjectType,
-)
-from ..types.paginated_all_roles_project_list_list import (
-    PaginatedAllRolesProjectListList,
-)
 from ..core.client_wrapper import AsyncClientWrapper
 from .indicators.client import AsyncIndicatorsClient
 from .versions.client import AsyncVersionsClient
@@ -89,8 +85,8 @@ class PromptsClient:
                 "num_failed_predictions": num_failed_predictions,
             },
             json={
-                "job_id": job_id,
                 "failed_predictions": failed_predictions,
+                "job_id": job_id,
                 "modelrun_id": modelrun_id,
             },
             headers={
@@ -116,8 +112,8 @@ class PromptsClient:
     def batch_predictions(
         self,
         *,
-        results: typing.Sequence[typing.Optional[typing.Any]],
         modelrun_id: int,
+        results: typing.Sequence[typing.Optional[typing.Any]],
         num_predictions: typing.Optional[int] = None,
         job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -127,9 +123,9 @@ class PromptsClient:
 
         Parameters
         ----------
-        results : typing.Sequence[typing.Optional[typing.Any]]
-
         modelrun_id : int
+
+        results : typing.Sequence[typing.Optional[typing.Any]]
 
         num_predictions : typing.Optional[int]
             Number of predictions being sent (for telemetry only, has no effect)
@@ -152,8 +148,8 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.batch_predictions(
-            results=[],
             modelrun_id=1,
+            results=[],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -164,8 +160,8 @@ class PromptsClient:
             },
             json={
                 "job_id": job_id,
-                "results": results,
                 "modelrun_id": modelrun_id,
+                "results": results,
             },
             headers={
                 "content-type": "application/json",
@@ -188,10 +184,7 @@ class PromptsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ModelInterfaceSerializerGet]:
         """
         List all prompts.
@@ -244,13 +237,13 @@ class PromptsClient:
         self,
         *,
         title: str,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         description: typing.Optional[str] = OMIT,
         input_fields: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         organization: typing.Optional[int] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelInterface:
         """
@@ -261,21 +254,21 @@ class PromptsClient:
         title : str
             Model name
 
+        associated_projects : typing.Optional[typing.Sequence[int]]
+
         created_by : typing.Optional[UserSimpleRequest]
             User who created Dataset
-
-        skill_name : typing.Optional[SkillNameEnum]
 
         description : typing.Optional[str]
             Model description
 
         input_fields : typing.Optional[typing.Optional[typing.Any]]
 
-        output_classes : typing.Optional[typing.Optional[typing.Any]]
-
         organization : typing.Optional[int]
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
+        output_classes : typing.Optional[typing.Optional[typing.Any]]
+
+        skill_name : typing.Optional[SkillNameEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -300,199 +293,16 @@ class PromptsClient:
             "api/prompts/",
             method="POST",
             json={
+                "associated_projects": associated_projects,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "skill_name": skill_name,
-                "title": title,
                 "description": description,
                 "input_fields": input_fields,
-                "output_classes": output_classes,
                 "organization": organization,
-                "associated_projects": associated_projects,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ModelInterface,
-                    construct_type(
-                        type_=ModelInterface,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ModelInterfaceSerializerGet:
-        """
-        Retrieve a specific prompt.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ModelInterfaceSerializerGet
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.prompts.get(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ModelInterfaceSerializerGet,
-                    construct_type(
-                        type_=ModelInterfaceSerializerGet,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Delete a prompt by ID
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.prompts.delete(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def update(
-        self,
-        id: str,
-        *,
-        created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        skill_name: typing.Optional[SkillNameEnum] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        input_fields: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        organization: typing.Optional[int] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ModelInterface:
-        """
-        Update a specific prompt by ID.
-
-        Parameters
-        ----------
-        id : str
-
-        created_by : typing.Optional[UserSimpleRequest]
-            User who created Dataset
-
-        skill_name : typing.Optional[SkillNameEnum]
-
-        title : typing.Optional[str]
-            Model name
-
-        description : typing.Optional[str]
-            Model description
-
-        input_fields : typing.Optional[typing.Optional[typing.Any]]
-
-        output_classes : typing.Optional[typing.Optional[typing.Any]]
-
-        organization : typing.Optional[int]
-
-        associated_projects : typing.Optional[typing.Sequence[int]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ModelInterface
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.prompts.update(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/",
-            method="PATCH",
-            json={
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=UserSimpleRequest, direction="write"
-                ),
+                "output_classes": output_classes,
                 "skill_name": skill_name,
                 "title": title,
-                "description": description,
-                "input_fields": input_fields,
-                "output_classes": output_classes,
-                "organization": organization,
-                "associated_projects": associated_projects,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -517,9 +327,7 @@ class PromptsClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
-        project_type: typing.Optional[
-            PromptsCompatibleProjectsRequestProjectType
-        ] = None,
+        project_type: typing.Optional[PromptsCompatibleProjectsRequestProjectType] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedAllRolesProjectListList:
         """
@@ -573,6 +381,185 @@ class PromptsClient:
                     PaginatedAllRolesProjectListList,
                     construct_type(
                         type_=PaginatedAllRolesProjectListList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelInterfaceSerializerGet:
+        """
+        Retrieve a specific prompt.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelInterfaceSerializerGet
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.get(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ModelInterfaceSerializerGet,
+                    construct_type(
+                        type_=ModelInterfaceSerializerGet,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a prompt by ID
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.delete(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update(
+        self,
+        id: str,
+        *,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        input_fields: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ModelInterface:
+        """
+        Update a specific prompt by ID.
+
+        Parameters
+        ----------
+        id : str
+
+        associated_projects : typing.Optional[typing.Sequence[int]]
+
+        created_by : typing.Optional[UserSimpleRequest]
+            User who created Dataset
+
+        description : typing.Optional[str]
+            Model description
+
+        input_fields : typing.Optional[typing.Optional[typing.Any]]
+
+        organization : typing.Optional[int]
+
+        output_classes : typing.Optional[typing.Optional[typing.Any]]
+
+        skill_name : typing.Optional[SkillNameEnum]
+
+        title : typing.Optional[str]
+            Model name
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelInterface
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.update(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/prompts/{jsonable_encoder(id)}/",
+            method="PATCH",
+            json={
+                "associated_projects": associated_projects,
+                "created_by": convert_and_respect_annotation_metadata(
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
+                ),
+                "description": description,
+                "input_fields": input_fields,
+                "organization": organization,
+                "output_classes": output_classes,
+                "skill_name": skill_name,
+                "title": title,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ModelInterface,
+                    construct_type(
+                        type_=ModelInterface,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -647,8 +634,8 @@ class AsyncPromptsClient:
                 "num_failed_predictions": num_failed_predictions,
             },
             json={
-                "job_id": job_id,
                 "failed_predictions": failed_predictions,
+                "job_id": job_id,
                 "modelrun_id": modelrun_id,
             },
             headers={
@@ -674,8 +661,8 @@ class AsyncPromptsClient:
     async def batch_predictions(
         self,
         *,
-        results: typing.Sequence[typing.Optional[typing.Any]],
         modelrun_id: int,
+        results: typing.Sequence[typing.Optional[typing.Any]],
         num_predictions: typing.Optional[int] = None,
         job_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -685,9 +672,9 @@ class AsyncPromptsClient:
 
         Parameters
         ----------
-        results : typing.Sequence[typing.Optional[typing.Any]]
-
         modelrun_id : int
+
+        results : typing.Sequence[typing.Optional[typing.Any]]
 
         num_predictions : typing.Optional[int]
             Number of predictions being sent (for telemetry only, has no effect)
@@ -715,8 +702,8 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.batch_predictions(
-                results=[],
                 modelrun_id=1,
+                results=[],
             )
 
 
@@ -730,8 +717,8 @@ class AsyncPromptsClient:
             },
             json={
                 "job_id": job_id,
-                "results": results,
                 "modelrun_id": modelrun_id,
+                "results": results,
             },
             headers={
                 "content-type": "application/json",
@@ -754,10 +741,7 @@ class AsyncPromptsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ModelInterfaceSerializerGet]:
         """
         List all prompts.
@@ -818,13 +802,13 @@ class AsyncPromptsClient:
         self,
         *,
         title: str,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         description: typing.Optional[str] = OMIT,
         input_fields: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         organization: typing.Optional[int] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelInterface:
         """
@@ -835,21 +819,21 @@ class AsyncPromptsClient:
         title : str
             Model name
 
+        associated_projects : typing.Optional[typing.Sequence[int]]
+
         created_by : typing.Optional[UserSimpleRequest]
             User who created Dataset
-
-        skill_name : typing.Optional[SkillNameEnum]
 
         description : typing.Optional[str]
             Model description
 
         input_fields : typing.Optional[typing.Optional[typing.Any]]
 
-        output_classes : typing.Optional[typing.Optional[typing.Any]]
-
         organization : typing.Optional[int]
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
+        output_classes : typing.Optional[typing.Optional[typing.Any]]
+
+        skill_name : typing.Optional[SkillNameEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -882,16 +866,16 @@ class AsyncPromptsClient:
             "api/prompts/",
             method="POST",
             json={
+                "associated_projects": associated_projects,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "skill_name": skill_name,
-                "title": title,
                 "description": description,
                 "input_fields": input_fields,
-                "output_classes": output_classes,
                 "organization": organization,
-                "associated_projects": associated_projects,
+                "output_classes": output_classes,
+                "skill_name": skill_name,
+                "title": title,
             },
             request_options=request_options,
             omit=OMIT,
@@ -902,6 +886,82 @@ class AsyncPromptsClient:
                     ModelInterface,
                     construct_type(
                         type_=ModelInterface,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def compatible_projects(
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        project_type: typing.Optional[PromptsCompatibleProjectsRequestProjectType] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedAllRolesProjectListList:
+        """
+        Retrieve a list of compatible project for prompt.
+
+        Parameters
+        ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        project_type : typing.Optional[PromptsCompatibleProjectsRequestProjectType]
+            Skill to filter by
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedAllRolesProjectListList
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.compatible_projects()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/prompts/compatible-projects",
+            method="GET",
+            params={
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "project_type": project_type,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PaginatedAllRolesProjectListList,
+                    construct_type(
+                        type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -966,9 +1026,7 @@ class AsyncPromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a prompt by ID
 
@@ -1019,14 +1077,14 @@ class AsyncPromptsClient:
         self,
         id: str,
         *,
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
-        skill_name: typing.Optional[SkillNameEnum] = OMIT,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
         input_fields: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         organization: typing.Optional[int] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelInterface:
         """
@@ -1036,24 +1094,24 @@ class AsyncPromptsClient:
         ----------
         id : str
 
+        associated_projects : typing.Optional[typing.Sequence[int]]
+
         created_by : typing.Optional[UserSimpleRequest]
             User who created Dataset
-
-        skill_name : typing.Optional[SkillNameEnum]
-
-        title : typing.Optional[str]
-            Model name
 
         description : typing.Optional[str]
             Model description
 
         input_fields : typing.Optional[typing.Optional[typing.Any]]
 
-        output_classes : typing.Optional[typing.Optional[typing.Any]]
-
         organization : typing.Optional[int]
 
-        associated_projects : typing.Optional[typing.Sequence[int]]
+        output_classes : typing.Optional[typing.Optional[typing.Any]]
+
+        skill_name : typing.Optional[SkillNameEnum]
+
+        title : typing.Optional[str]
+            Model name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1086,16 +1144,16 @@ class AsyncPromptsClient:
             f"api/prompts/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
+                "associated_projects": associated_projects,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "skill_name": skill_name,
-                "title": title,
                 "description": description,
                 "input_fields": input_fields,
-                "output_classes": output_classes,
                 "organization": organization,
-                "associated_projects": associated_projects,
+                "output_classes": output_classes,
+                "skill_name": skill_name,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -1109,84 +1167,6 @@ class AsyncPromptsClient:
                     ModelInterface,
                     construct_type(
                         type_=ModelInterface,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def compatible_projects(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        page: typing.Optional[int] = None,
-        page_size: typing.Optional[int] = None,
-        project_type: typing.Optional[
-            PromptsCompatibleProjectsRequestProjectType
-        ] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> PaginatedAllRolesProjectListList:
-        """
-        Retrieve a list of compatible project for prompt.
-
-        Parameters
-        ----------
-        ordering : typing.Optional[str]
-            Which field to use when ordering the results.
-
-        page : typing.Optional[int]
-            A page number within the paginated result set.
-
-        page_size : typing.Optional[int]
-            Number of results to return per page.
-
-        project_type : typing.Optional[PromptsCompatibleProjectsRequestProjectType]
-            Skill to filter by
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PaginatedAllRolesProjectListList
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.prompts.compatible_projects()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/prompts/compatible-projects",
-            method="GET",
-            params={
-                "ordering": ordering,
-                "page": page,
-                "page_size": page_size,
-                "project_type": project_type,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    PaginatedAllRolesProjectListList,
-                    construct_type(
-                        type_=PaginatedAllRolesProjectListList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

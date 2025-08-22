@@ -2,6 +2,4 @@
 
 import typing
 
-RunsListRequestProjectSubset = typing.Union[
-    typing.Literal["All", "HasGT", "Sample"], typing.Any
-]
+RunsListRequestProjectSubset = typing.Union[typing.Literal["All", "HasGT", "Sample"], typing.Any]

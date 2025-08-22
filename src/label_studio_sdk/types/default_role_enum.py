@@ -2,6 +2,4 @@
 
 import typing
 
-DefaultRoleEnum = typing.Union[
-    typing.Literal["OW", "AD", "MA", "RE", "AN", "DI", "NO"], typing.Any
-]
+DefaultRoleEnum = typing.Union[typing.Literal["OW", "AD", "MA", "RE", "AN", "DI", "NO"], typing.Any]

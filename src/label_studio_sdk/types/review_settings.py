@@ -2,30 +2,22 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .review_settings_review_criteria import ReviewSettingsReviewCriteria
 import pydantic
-from .review_settings_requeue_rejected_tasks_mode import (
-    ReviewSettingsRequeueRejectedTasksMode,
-)
+from .review_settings_requeue_rejected_tasks_mode import ReviewSettingsRequeueRejectedTasksMode
+from .review_settings_review_criteria import ReviewSettingsReviewCriteria
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ReviewSettings(UncheckedBaseModel):
-    id: int
-    requeue_rejected_tasks_to_annotator: bool
-    review_criteria: typing.Optional[ReviewSettingsReviewCriteria] = pydantic.Field(
-        default=None
-    )
-    """
-    Criteria to mark task as reviewed
-    
-    * `all` - Task is reviewed if all annotations are reviewed
-    * `one` - Task is reviewed if at least one annotation is reviewed
-    """
-
     anonymize_annotations: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Hide annotator names from annotations while review
+    """
+
+    id: int
+    instruction: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Reviewer instructions in HTML format
     """
 
     only_finished_tasks: typing.Optional[bool] = pydantic.Field(default=None)
@@ -33,34 +25,8 @@ class ReviewSettings(UncheckedBaseModel):
     Show only finished tasks in the review stream
     """
 
-    instruction: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Reviewer instructions in HTML format
-    """
-
-    show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show instructions to the reviewers before they start
-    """
-
-    show_data_manager_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show the data manager to reviewers
-    """
-
-    show_agreement_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show the agreement column to reviewers
-    """
-
-    require_comment_on_reject: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    If set, the reviewer must leave a comment on reject
-    """
-
-    requeue_rejected_tasks_mode: typing.Optional[
-        ReviewSettingsRequeueRejectedTasksMode
-    ] = pydantic.Field(default=None)
+    project: typing.Optional[int] = None
+    requeue_rejected_tasks_mode: typing.Optional[ReviewSettingsRequeueRejectedTasksMode] = pydantic.Field(default=None)
     """
     Requeue mode for rejected tasks
     
@@ -69,17 +35,42 @@ class ReviewSettings(UncheckedBaseModel):
     * `flexible` - Flexible
     """
 
+    requeue_rejected_tasks_to_annotator: bool
+    require_comment_on_reject: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If set, the reviewer must leave a comment on reject
+    """
+
+    review_criteria: typing.Optional[ReviewSettingsReviewCriteria] = pydantic.Field(default=None)
+    """
+    Criteria to mark task as reviewed
+    
+    * `all` - Task is reviewed if all annotations are reviewed
+    * `one` - Task is reviewed if at least one annotation is reviewed
+    """
+
     review_only_manual_assignments: typing.Optional[bool] = pydantic.Field(default=None)
     """
     When set True, review queue is built only from manually assigned tasks
     """
 
-    project: typing.Optional[int] = None
+    show_agreement_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Show the agreement column to reviewers
+    """
+
+    show_data_manager_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Show the data manager to reviewers
+    """
+
+    show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Show instructions to the reviewers before they start
+    """
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

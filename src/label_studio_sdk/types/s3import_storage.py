@@ -2,76 +2,15 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-import datetime as dt
 import pydantic
-from .status_c5a_enum import StatusC5AEnum
+import datetime as dt
 import typing_extensions
 from ..core.serialization import FieldMetadata
+from .status_c5a_enum import StatusC5AEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class S3ImportStorage(UncheckedBaseModel):
-    id: int
-    type: str
-    synchronizable: typing.Optional[bool] = None
-    presign: typing.Optional[bool] = None
-    last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Last sync finished time
-    """
-
-    last_sync_count: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Count of tasks synced last time
-    """
-
-    last_sync_job: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Last sync job ID
-    """
-
-    status: typing.Optional[StatusC5AEnum] = None
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Traceback report for the last failed sync
-    """
-
-    meta: typing.Optional[typing.Optional[typing.Any]] = None
-    title: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage title
-    """
-
-    description: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage description
-    """
-
-    created_at: dt.datetime = pydantic.Field()
-    """
-    Creation time
-    """
-
-    bucket: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    S3 bucket name
-    """
-
-    prefix: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    S3 bucket prefix
-    """
-
-    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage regex for filtering objects
-    """
-
-    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Interpret objects as BLOBs and generate URLs
-    """
-
     aws_access_key_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     AWS_ACCESS_KEY_ID
@@ -92,26 +31,47 @@ class S3ImportStorage(UncheckedBaseModel):
     AWS SSE KMS Key ID
     """
 
-    region_name: typing.Optional[str] = pydantic.Field(default=None)
+    bucket: typing.Optional[str] = pydantic.Field(default=None)
     """
-    AWS Region
-    """
-
-    s3endpoint: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="s3_endpoint")
-    ] = pydantic.Field(default=None)
-    """
-    S3 Endpoint
+    S3 bucket name
     """
 
+    created_at: dt.datetime = pydantic.Field()
+    """
+    Creation time
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage description
+    """
+
+    id: int
+    last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Last sync finished time
+    """
+
+    last_sync_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Count of tasks synced last time
+    """
+
+    last_sync_job: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Last sync job ID
+    """
+
+    meta: typing.Optional[typing.Optional[typing.Any]] = None
+    prefix: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    S3 bucket prefix
+    """
+
+    presign: typing.Optional[bool] = None
     presign_ttl: typing.Optional[int] = pydantic.Field(default=None)
     """
     Presigned URLs TTL (in minutes)
-    """
-
-    recursive_scan: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Perform recursive scan over the bucket content
     """
 
     project: int = pydantic.Field()
@@ -119,10 +79,48 @@ class S3ImportStorage(UncheckedBaseModel):
     A unique integer value identifying this project.
     """
 
+    recursive_scan: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Perform recursive scan over the bucket content
+    """
+
+    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage regex for filtering objects
+    """
+
+    region_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    AWS Region
+    """
+
+    s3endpoint: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="s3_endpoint")] = pydantic.Field(
+        default=None
+    )
+    """
+    S3 Endpoint
+    """
+
+    status: typing.Optional[StatusC5AEnum] = None
+    synchronizable: typing.Optional[bool] = None
+    title: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage title
+    """
+
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Traceback report for the last failed sync
+    """
+
+    type: str
+    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Interpret objects as BLOBs and generate URLs
+    """
+
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

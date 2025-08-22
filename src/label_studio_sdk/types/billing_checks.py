@@ -9,30 +9,28 @@ import pydantic
 
 
 class BillingChecks(UncheckedBaseModel):
-    users: CountLimit
-    projects: CountLimit
-    results: CountLimit
-    trial_days: int
-    organization_is_active: bool
+    export_storages: CountLimit
+    import_storages: CountLimit
+    is_license_expired: bool
+    is_license_warning: bool
+    is_prompts_expire: bool
+    is_prompts_warning: bool
+    license_expires: typing.Optional[str] = None
     license_issued: typing.Optional[str] = None
     license_warning: typing.Optional[str] = None
-    is_license_warning: bool
-    license_expires: typing.Optional[str] = None
-    is_license_expired: bool
+    organization_is_active: bool
+    projects: CountLimit
+    prompts_api_keys_enabled: bool
     prompts_enabled: bool
+    prompts_expire: typing.Optional[str] = None
     prompts_status: PromptsStatusEnum
     prompts_warning: typing.Optional[str] = None
-    is_prompts_warning: bool
-    prompts_expire: typing.Optional[str] = None
-    is_prompts_expire: bool
-    prompts_api_keys_enabled: bool
-    import_storages: CountLimit
-    export_storages: CountLimit
+    results: CountLimit
+    trial_days: int
+    users: CountLimit
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

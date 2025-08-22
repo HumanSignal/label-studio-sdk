@@ -3,12 +3,5 @@
 import typing
 
 ReasonEnum = typing.Union[
-    typing.Literal[
-        "MANUAL",
-        "BEHAVIOR_BASED",
-        "ANNOTATOR_EVALUATION",
-        "ANNOTATION_LIMIT",
-        "CUSTOM_SCRIPT",
-    ],
-    typing.Any,
+    typing.Literal["MANUAL", "BEHAVIOR_BASED", "ANNOTATOR_EVALUATION", "ANNOTATION_LIMIT", "CUSTOM_SCRIPT"], typing.Any
 ]

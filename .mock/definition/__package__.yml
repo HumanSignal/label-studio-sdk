@@ -12,7 +12,7 @@ errors:
     docs: KPI depends on other KPIs - not implemented
   InternalServerError:
     status-code: 500
-    type: string
+    type: unknown
     docs: Predicting error
     examples:
       - value: Server responded with an error.
@@ -4984,6 +4984,24 @@ types:
       - CommentSerializerWithExpandedUser
     source:
       openapi: openapi/openapi.yaml
+  MetricParam:
+    properties:
+      agreement_threshold: string
+      allowed: string
+      max_additional_annotators_assignable:
+        type: optional<integer>
+        docs: >-
+          Maximum number of additional annotators that can be assigned to a low
+          agreement task
+        validation:
+          min: -2147483648
+          max: 2147483647
+      metric_name:
+        type: optional<string>
+        docs: Evaluation metric chosen for this project
+      metric_params: optional<unknown>
+    source:
+      openapi: openapi/openapi.yaml
   ModeEnum:
     enum:
       - settings
@@ -6954,23 +6972,6 @@ types:
         type: datetime
         docs: Time of assignment
       id: integer
-      task:
-        type: integer
-        docs: Assigned task
-      type:
-        type: optional<TypeEnum>
-        docs: |-
-          Type of assignment: Annotate|Review
-
-          * `AN` - Annotate
-          * `RE` - Review
-    source:
-      openapi: openapi/openapi.yaml
-  TaskAssignmentRequest:
-    properties:
-      assignee:
-        type: integer
-        docs: Assigned user
       task:
         type: integer
         docs: Assigned task

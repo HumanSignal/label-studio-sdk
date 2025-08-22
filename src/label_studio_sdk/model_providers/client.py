@@ -9,10 +9,8 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.provider_enum import ProviderEnum
 from ..types.scope_enum import ScopeEnum
+from .types.model_providers_list_model_provider_choices_response import ModelProvidersListModelProviderChoicesResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.model_providers_list_model_provider_choices_response import (
-    ModelProvidersListModelProviderChoicesResponse,
-)
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -24,10 +22,7 @@ class ModelProvidersClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ModelProviderConnection]:
         """
         List all model provider connections.
@@ -79,18 +74,18 @@ class ModelProvidersClient:
     def create(
         self,
         *,
-        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
         google_location: typing.Optional[str] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ScopeEnum] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
         is_internal: typing.Optional[bool] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -98,13 +93,17 @@ class ModelProvidersClient:
 
         Parameters
         ----------
-        provider : typing.Optional[ProviderEnum]
-
         api_key : typing.Optional[str]
             Model provider API key
 
         auth_token : typing.Optional[str]
             Model provider Auth token
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
+
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
 
         deployment_name : typing.Optional[str]
             Azure OpenAI deployment name
@@ -115,22 +114,18 @@ class ModelProvidersClient:
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
-        google_project_id : typing.Optional[str]
-            Google project ID
-
         google_location : typing.Optional[str]
             Google project location
 
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
-
-        scope : typing.Optional[ScopeEnum]
+        google_project_id : typing.Optional[str]
+            Google project ID
 
         is_internal : typing.Optional[bool]
             Whether the model provider connection is internal, not visible to the user
 
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
+        provider : typing.Optional[ProviderEnum]
+
+        scope : typing.Optional[ScopeEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -153,222 +148,18 @@ class ModelProvidersClient:
             "api/model-provider-connections/",
             method="POST",
             json={
-                "provider": provider,
                 "api_key": api_key,
                 "auth_token": auth_token,
+                "budget_alert_threshold": budget_alert_threshold,
+                "cached_available_models": cached_available_models,
                 "deployment_name": deployment_name,
                 "endpoint": endpoint,
                 "google_application_credentials": google_application_credentials,
-                "google_project_id": google_project_id,
                 "google_location": google_location,
-                "cached_available_models": cached_available_models,
-                "scope": scope,
+                "google_project_id": google_project_id,
                 "is_internal": is_internal,
-                "budget_alert_threshold": budget_alert_threshold,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ModelProviderConnection,
-                    construct_type(
-                        type_=ModelProviderConnection,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ModelProviderConnection:
-        """
-        Retrieve a specific model provider connection.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ModelProviderConnection
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.model_providers.get(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(id)}/",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ModelProviderConnection,
-                    construct_type(
-                        type_=ModelProviderConnection,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Delete a model provider connection by ID
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.model_providers.delete(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(id)}/",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def update(
-        self,
-        id: str,
-        *,
-        provider: typing.Optional[ProviderEnum] = OMIT,
-        api_key: typing.Optional[str] = OMIT,
-        auth_token: typing.Optional[str] = OMIT,
-        deployment_name: typing.Optional[str] = OMIT,
-        endpoint: typing.Optional[str] = OMIT,
-        google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
-        google_location: typing.Optional[str] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ScopeEnum] = OMIT,
-        is_internal: typing.Optional[bool] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ModelProviderConnection:
-        """
-        Update a specific model provider connection by ID.
-
-        Parameters
-        ----------
-        id : str
-
-        provider : typing.Optional[ProviderEnum]
-
-        api_key : typing.Optional[str]
-            Model provider API key
-
-        auth_token : typing.Optional[str]
-            Model provider Auth token
-
-        deployment_name : typing.Optional[str]
-            Azure OpenAI deployment name
-
-        endpoint : typing.Optional[str]
-            Azure OpenAI endpoint
-
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file
-
-        google_project_id : typing.Optional[str]
-            Google project ID
-
-        google_location : typing.Optional[str]
-            Google project location
-
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
-
-        scope : typing.Optional[ScopeEnum]
-
-        is_internal : typing.Optional[bool]
-            Whether the model provider connection is internal, not visible to the user
-
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ModelProviderConnection
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.model_providers.update(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(id)}/",
-            method="PATCH",
-            json={
                 "provider": provider,
-                "api_key": api_key,
-                "auth_token": auth_token,
-                "deployment_name": deployment_name,
-                "endpoint": endpoint,
-                "google_application_credentials": google_application_credentials,
-                "google_project_id": google_project_id,
-                "google_location": google_location,
-                "cached_available_models": cached_available_models,
                 "scope": scope,
-                "is_internal": is_internal,
-                "budget_alert_threshold": budget_alert_threshold,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -431,16 +222,213 @@ class ModelProvidersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
+        """
+        Retrieve a specific model provider connection.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProviderConnection
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.model_providers.get(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ModelProviderConnection,
+                    construct_type(
+                        type_=ModelProviderConnection,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a model provider connection by ID
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.model_providers.delete(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update(
+        self,
+        id: str,
+        *,
+        api_key: typing.Optional[str] = OMIT,
+        auth_token: typing.Optional[str] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
+        deployment_name: typing.Optional[str] = OMIT,
+        endpoint: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_location: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        is_internal: typing.Optional[bool] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ModelProviderConnection:
+        """
+        Update a specific model provider connection by ID.
+
+        Parameters
+        ----------
+        id : str
+
+        api_key : typing.Optional[str]
+            Model provider API key
+
+        auth_token : typing.Optional[str]
+            Model provider Auth token
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
+
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
+
+        deployment_name : typing.Optional[str]
+            Azure OpenAI deployment name
+
+        endpoint : typing.Optional[str]
+            Azure OpenAI endpoint
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
+
+        google_location : typing.Optional[str]
+            Google project location
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        is_internal : typing.Optional[bool]
+            Whether the model provider connection is internal, not visible to the user
+
+        provider : typing.Optional[ProviderEnum]
+
+        scope : typing.Optional[ScopeEnum]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProviderConnection
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.model_providers.update(
+            id="id",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
+            method="PATCH",
+            json={
+                "api_key": api_key,
+                "auth_token": auth_token,
+                "budget_alert_threshold": budget_alert_threshold,
+                "cached_available_models": cached_available_models,
+                "deployment_name": deployment_name,
+                "endpoint": endpoint,
+                "google_application_credentials": google_application_credentials,
+                "google_location": google_location,
+                "google_project_id": google_project_id,
+                "is_internal": is_internal,
+                "provider": provider,
+                "scope": scope,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ModelProviderConnection,
+                    construct_type(
+                        type_=ModelProviderConnection,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncModelProvidersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def list(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[ModelProviderConnection]:
         """
         List all model provider connections.
@@ -500,18 +488,18 @@ class AsyncModelProvidersClient:
     async def create(
         self,
         *,
-        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
         google_location: typing.Optional[str] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ScopeEnum] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
         is_internal: typing.Optional[bool] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -519,13 +507,17 @@ class AsyncModelProvidersClient:
 
         Parameters
         ----------
-        provider : typing.Optional[ProviderEnum]
-
         api_key : typing.Optional[str]
             Model provider API key
 
         auth_token : typing.Optional[str]
             Model provider Auth token
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
+
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
 
         deployment_name : typing.Optional[str]
             Azure OpenAI deployment name
@@ -536,22 +528,18 @@ class AsyncModelProvidersClient:
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
-        google_project_id : typing.Optional[str]
-            Google project ID
-
         google_location : typing.Optional[str]
             Google project location
 
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
-
-        scope : typing.Optional[ScopeEnum]
+        google_project_id : typing.Optional[str]
+            Google project ID
 
         is_internal : typing.Optional[bool]
             Whether the model provider connection is internal, not visible to the user
 
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
+        provider : typing.Optional[ProviderEnum]
+
+        scope : typing.Optional[ScopeEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -582,246 +570,18 @@ class AsyncModelProvidersClient:
             "api/model-provider-connections/",
             method="POST",
             json={
-                "provider": provider,
                 "api_key": api_key,
                 "auth_token": auth_token,
+                "budget_alert_threshold": budget_alert_threshold,
+                "cached_available_models": cached_available_models,
                 "deployment_name": deployment_name,
                 "endpoint": endpoint,
                 "google_application_credentials": google_application_credentials,
-                "google_project_id": google_project_id,
                 "google_location": google_location,
-                "cached_available_models": cached_available_models,
-                "scope": scope,
+                "google_project_id": google_project_id,
                 "is_internal": is_internal,
-                "budget_alert_threshold": budget_alert_threshold,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ModelProviderConnection,
-                    construct_type(
-                        type_=ModelProviderConnection,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def get(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ModelProviderConnection:
-        """
-        Retrieve a specific model provider connection.
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ModelProviderConnection
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.model_providers.get(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(id)}/",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ModelProviderConnection,
-                    construct_type(
-                        type_=ModelProviderConnection,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def delete(
-        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Delete a model provider connection by ID
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.model_providers.delete(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(id)}/",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def update(
-        self,
-        id: str,
-        *,
-        provider: typing.Optional[ProviderEnum] = OMIT,
-        api_key: typing.Optional[str] = OMIT,
-        auth_token: typing.Optional[str] = OMIT,
-        deployment_name: typing.Optional[str] = OMIT,
-        endpoint: typing.Optional[str] = OMIT,
-        google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
-        google_location: typing.Optional[str] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
-        scope: typing.Optional[ScopeEnum] = OMIT,
-        is_internal: typing.Optional[bool] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ModelProviderConnection:
-        """
-        Update a specific model provider connection by ID.
-
-        Parameters
-        ----------
-        id : str
-
-        provider : typing.Optional[ProviderEnum]
-
-        api_key : typing.Optional[str]
-            Model provider API key
-
-        auth_token : typing.Optional[str]
-            Model provider Auth token
-
-        deployment_name : typing.Optional[str]
-            Azure OpenAI deployment name
-
-        endpoint : typing.Optional[str]
-            Azure OpenAI endpoint
-
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file
-
-        google_project_id : typing.Optional[str]
-            Google project ID
-
-        google_location : typing.Optional[str]
-            Google project location
-
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
-
-        scope : typing.Optional[ScopeEnum]
-
-        is_internal : typing.Optional[bool]
-            Whether the model provider connection is internal, not visible to the user
-
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ModelProviderConnection
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.model_providers.update(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/model-provider-connections/{jsonable_encoder(id)}/",
-            method="PATCH",
-            json={
                 "provider": provider,
-                "api_key": api_key,
-                "auth_token": auth_token,
-                "deployment_name": deployment_name,
-                "endpoint": endpoint,
-                "google_application_credentials": google_application_credentials,
-                "google_project_id": google_project_id,
-                "google_location": google_location,
-                "cached_available_models": cached_available_models,
                 "scope": scope,
-                "is_internal": is_internal,
-                "budget_alert_threshold": budget_alert_threshold,
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -884,6 +644,230 @@ class AsyncModelProvidersClient:
                     ModelProvidersListModelProviderChoicesResponse,
                     construct_type(
                         type_=ModelProvidersListModelProviderChoicesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelProviderConnection:
+        """
+        Retrieve a specific model provider connection.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProviderConnection
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.model_providers.get(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ModelProviderConnection,
+                    construct_type(
+                        type_=ModelProviderConnection,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a model provider connection by ID
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.model_providers.delete(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update(
+        self,
+        id: str,
+        *,
+        api_key: typing.Optional[str] = OMIT,
+        auth_token: typing.Optional[str] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
+        deployment_name: typing.Optional[str] = OMIT,
+        endpoint: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_location: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        is_internal: typing.Optional[bool] = OMIT,
+        provider: typing.Optional[ProviderEnum] = OMIT,
+        scope: typing.Optional[ScopeEnum] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ModelProviderConnection:
+        """
+        Update a specific model provider connection by ID.
+
+        Parameters
+        ----------
+        id : str
+
+        api_key : typing.Optional[str]
+            Model provider API key
+
+        auth_token : typing.Optional[str]
+            Model provider Auth token
+
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
+
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
+
+        deployment_name : typing.Optional[str]
+            Azure OpenAI deployment name
+
+        endpoint : typing.Optional[str]
+            Azure OpenAI endpoint
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file
+
+        google_location : typing.Optional[str]
+            Google project location
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        is_internal : typing.Optional[bool]
+            Whether the model provider connection is internal, not visible to the user
+
+        provider : typing.Optional[ProviderEnum]
+
+        scope : typing.Optional[ScopeEnum]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProviderConnection
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.model_providers.update(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/model-provider-connections/{jsonable_encoder(id)}/",
+            method="PATCH",
+            json={
+                "api_key": api_key,
+                "auth_token": auth_token,
+                "budget_alert_threshold": budget_alert_threshold,
+                "cached_available_models": cached_available_models,
+                "deployment_name": deployment_name,
+                "endpoint": endpoint,
+                "google_application_credentials": google_application_credentials,
+                "google_location": google_location,
+                "google_project_id": google_project_id,
+                "is_internal": is_internal,
+                "provider": provider,
+                "scope": scope,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ModelProviderConnection,
+                    construct_type(
+                        type_=ModelProviderConnection,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -6,24 +6,22 @@ import typing
 from .stats_iaa_response_iaa import StatsIaaResponseIaa
 from ....core.serialization import FieldMetadata
 import pydantic
-from .stats_iaa_response_std import StatsIaaResponseStd
 from .stats_iaa_response_common_tasks import StatsIaaResponseCommonTasks
+from .stats_iaa_response_std import StatsIaaResponseStd
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class StatsIaaResponse(UncheckedBaseModel):
-    iaa: typing_extensions.Annotated[
-        typing.Optional[StatsIaaResponseIaa], FieldMetadata(alias="IAA")
-    ] = pydantic.Field(default=None)
+    iaa: typing_extensions.Annotated[typing.Optional[StatsIaaResponseIaa], FieldMetadata(alias="IAA")] = pydantic.Field(
+        default=None
+    )
     """
     Inter-Annotator Agreement matrix - 2D array when per_label=false, object with label keys when per_label=true
     """
 
-    users: typing.Optional[
-        typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
-    ] = pydantic.Field(default=None)
+    common_tasks: typing.Optional[StatsIaaResponseCommonTasks] = pydantic.Field(default=None)
     """
-    List of users in the matrix
+    Common tasks matrix - 2D array when per_label=false, object with label keys when per_label=true
     """
 
     std: typing.Optional[StatsIaaResponseStd] = pydantic.Field(default=None)
@@ -31,17 +29,13 @@ class StatsIaaResponse(UncheckedBaseModel):
     Standard deviation - number when per_label=false, object with label keys when per_label=true
     """
 
-    common_tasks: typing.Optional[StatsIaaResponseCommonTasks] = pydantic.Field(
-        default=None
-    )
+    users: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = pydantic.Field(default=None)
     """
-    Common tasks matrix - 2D array when per_label=false, object with label keys when per_label=true
+    List of users in the matrix
     """
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

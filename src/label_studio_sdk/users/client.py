@@ -23,9 +23,7 @@ class UsersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_current_user(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> LseUserApi:
+    def get_current_user(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUserApi:
         """
         Get info about the currently authenticated user.
 
@@ -70,20 +68,18 @@ class UsersClient:
     def update_current_user(
         self,
         *,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         active_organization: typing.Optional[int] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         date_joined: typing.Optional[dt.datetime] = OMIT,
-        password: typing.Optional[str] = OMIT,
-        onboarding_state: typing.Optional[str] = OMIT,
+        email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
         is_email_verified: typing.Optional[bool] = OMIT,
-        email_notification_settings: typing.Optional[
-            typing.Optional[typing.Any]
-        ] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        onboarding_state: typing.Optional[str] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUserApi:
         """
@@ -91,30 +87,30 @@ class UsersClient:
 
         Parameters
         ----------
-        first_name : typing.Optional[str]
-
-        last_name : typing.Optional[str]
-
-        username : typing.Optional[str]
-
-        custom_hotkeys : typing.Optional[typing.Optional[typing.Any]]
-
-        phone : typing.Optional[str]
-
         active_organization : typing.Optional[int]
 
         allow_newsletters : typing.Optional[bool]
             Allow sending newsletters to user
 
+        custom_hotkeys : typing.Optional[typing.Optional[typing.Any]]
+
         date_joined : typing.Optional[dt.datetime]
 
-        password : typing.Optional[str]
+        email_notification_settings : typing.Optional[typing.Optional[typing.Any]]
 
-        onboarding_state : typing.Optional[str]
+        first_name : typing.Optional[str]
 
         is_email_verified : typing.Optional[bool]
 
-        email_notification_settings : typing.Optional[typing.Optional[typing.Any]]
+        last_name : typing.Optional[str]
+
+        onboarding_state : typing.Optional[str]
+
+        password : typing.Optional[str]
+
+        phone : typing.Optional[str]
+
+        username : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -137,18 +133,18 @@ class UsersClient:
             "api/current-user",
             method="PATCH",
             json={
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "custom_hotkeys": custom_hotkeys,
-                "phone": phone,
                 "active_organization": active_organization,
                 "allow_newsletters": allow_newsletters,
+                "custom_hotkeys": custom_hotkeys,
                 "date_joined": date_joined,
-                "password": password,
-                "onboarding_state": onboarding_state,
-                "is_email_verified": is_email_verified,
                 "email_notification_settings": email_notification_settings,
+                "first_name": first_name,
+                "is_email_verified": is_email_verified,
+                "last_name": last_name,
+                "onboarding_state": onboarding_state,
+                "password": password,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",
@@ -170,9 +166,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_hotkeys(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Hotkeys:
+    def get_hotkeys(self, *, request_options: typing.Optional[RequestOptions] = None) -> Hotkeys:
         """
         Retrieve the custom hotkeys configuration for the current user.
 
@@ -217,9 +211,7 @@ class UsersClient:
     def update_hotkeys(
         self,
         *,
-        custom_hotkeys: typing.Optional[
-            typing.Dict[str, typing.Optional[typing.Any]]
-        ] = OMIT,
+        custom_hotkeys: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Hotkeys:
         """
@@ -272,9 +264,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def reset_token(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> UsersResetTokenResponse:
+    def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersResetTokenResponse:
         """
         Reset the user token for the current user.
 
@@ -316,9 +306,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_token(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> UsersGetTokenResponse:
+    def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersGetTokenResponse:
         """
         Get a user token to authenticate to the API as the current user.
 
@@ -360,9 +348,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def whoami(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> LseUser:
+    def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUser:
         """
         Retrieve details of the account that you are using to access the API.
 
@@ -405,10 +391,7 @@ class UsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[LseUserApi]:
         """
         List the users that exist on the Label Studio server.
@@ -460,15 +443,15 @@ class UsersClient:
     def create(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        initials: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUser:
         """
@@ -476,32 +459,32 @@ class UsersClient:
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            User ID
-
-        first_name : typing.Optional[str]
-            First name of the user
-
-        last_name : typing.Optional[str]
-            Last name of the user
-
-        username : typing.Optional[str]
-            Username of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         avatar : typing.Optional[str]
             Avatar URL of the user
 
+        email : typing.Optional[str]
+            Email of the user
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        id : typing.Optional[int]
+            User ID
+
         initials : typing.Optional[str]
             Initials of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
 
         phone : typing.Optional[str]
             Phone number of the user
 
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
+        username : typing.Optional[str]
+            Username of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -524,15 +507,15 @@ class UsersClient:
             "api/users/",
             method="POST",
             json={
-                "id": id,
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "email": email,
-                "avatar": avatar,
-                "initials": initials,
-                "phone": phone,
                 "allow_newsletters": allow_newsletters,
+                "avatar": avatar,
+                "email": email,
+                "first_name": first_name,
+                "id": id,
+                "initials": initials,
+                "last_name": last_name,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",
@@ -554,9 +537,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> LseUser:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseUser:
         """
         Get info about a specific Label Studio user, based on the user ID.
 
@@ -603,9 +584,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific Label Studio user. Only available in community edition.
 
@@ -651,15 +630,15 @@ class UsersClient:
         self,
         id: int,
         *,
-        users_update_request_id: typing.Optional[int] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        initials: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        users_update_request_id: typing.Optional[int] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUser:
         """
@@ -672,32 +651,32 @@ class UsersClient:
         id : int
             User ID
 
-        users_update_request_id : typing.Optional[int]
-            User ID
-
-        first_name : typing.Optional[str]
-            First name of the user
-
-        last_name : typing.Optional[str]
-            Last name of the user
-
-        username : typing.Optional[str]
-            Username of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         avatar : typing.Optional[str]
             Avatar URL of the user
 
+        email : typing.Optional[str]
+            Email of the user
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        users_update_request_id : typing.Optional[int]
+            User ID
+
         initials : typing.Optional[str]
             Initials of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
 
         phone : typing.Optional[str]
             Phone number of the user
 
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
+        username : typing.Optional[str]
+            Username of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -722,15 +701,15 @@ class UsersClient:
             f"api/users/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "id": users_update_request_id,
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "email": email,
-                "avatar": avatar,
-                "initials": initials,
-                "phone": phone,
                 "allow_newsletters": allow_newsletters,
+                "avatar": avatar,
+                "email": email,
+                "first_name": first_name,
+                "id": users_update_request_id,
+                "initials": initials,
+                "last_name": last_name,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",
@@ -757,9 +736,7 @@ class AsyncUsersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_current_user(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> LseUserApi:
+    async def get_current_user(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUserApi:
         """
         Get info about the currently authenticated user.
 
@@ -812,20 +789,18 @@ class AsyncUsersClient:
     async def update_current_user(
         self,
         *,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         active_organization: typing.Optional[int] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         date_joined: typing.Optional[dt.datetime] = OMIT,
-        password: typing.Optional[str] = OMIT,
-        onboarding_state: typing.Optional[str] = OMIT,
+        email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
         is_email_verified: typing.Optional[bool] = OMIT,
-        email_notification_settings: typing.Optional[
-            typing.Optional[typing.Any]
-        ] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        onboarding_state: typing.Optional[str] = OMIT,
+        password: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUserApi:
         """
@@ -833,30 +808,30 @@ class AsyncUsersClient:
 
         Parameters
         ----------
-        first_name : typing.Optional[str]
-
-        last_name : typing.Optional[str]
-
-        username : typing.Optional[str]
-
-        custom_hotkeys : typing.Optional[typing.Optional[typing.Any]]
-
-        phone : typing.Optional[str]
-
         active_organization : typing.Optional[int]
 
         allow_newsletters : typing.Optional[bool]
             Allow sending newsletters to user
 
+        custom_hotkeys : typing.Optional[typing.Optional[typing.Any]]
+
         date_joined : typing.Optional[dt.datetime]
 
-        password : typing.Optional[str]
+        email_notification_settings : typing.Optional[typing.Optional[typing.Any]]
 
-        onboarding_state : typing.Optional[str]
+        first_name : typing.Optional[str]
 
         is_email_verified : typing.Optional[bool]
 
-        email_notification_settings : typing.Optional[typing.Optional[typing.Any]]
+        last_name : typing.Optional[str]
+
+        onboarding_state : typing.Optional[str]
+
+        password : typing.Optional[str]
+
+        phone : typing.Optional[str]
+
+        username : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -887,18 +862,18 @@ class AsyncUsersClient:
             "api/current-user",
             method="PATCH",
             json={
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "custom_hotkeys": custom_hotkeys,
-                "phone": phone,
                 "active_organization": active_organization,
                 "allow_newsletters": allow_newsletters,
+                "custom_hotkeys": custom_hotkeys,
                 "date_joined": date_joined,
-                "password": password,
-                "onboarding_state": onboarding_state,
-                "is_email_verified": is_email_verified,
                 "email_notification_settings": email_notification_settings,
+                "first_name": first_name,
+                "is_email_verified": is_email_verified,
+                "last_name": last_name,
+                "onboarding_state": onboarding_state,
+                "password": password,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",
@@ -920,9 +895,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_hotkeys(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Hotkeys:
+    async def get_hotkeys(self, *, request_options: typing.Optional[RequestOptions] = None) -> Hotkeys:
         """
         Retrieve the custom hotkeys configuration for the current user.
 
@@ -975,9 +948,7 @@ class AsyncUsersClient:
     async def update_hotkeys(
         self,
         *,
-        custom_hotkeys: typing.Optional[
-            typing.Dict[str, typing.Optional[typing.Any]]
-        ] = OMIT,
+        custom_hotkeys: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Hotkeys:
         """
@@ -1038,9 +1009,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def reset_token(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> UsersResetTokenResponse:
+    async def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersResetTokenResponse:
         """
         Reset the user token for the current user.
 
@@ -1090,9 +1059,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_token(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> UsersGetTokenResponse:
+    async def get_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> UsersGetTokenResponse:
         """
         Get a user token to authenticate to the API as the current user.
 
@@ -1142,9 +1109,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def whoami(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> LseUser:
+    async def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUser:
         """
         Retrieve details of the account that you are using to access the API.
 
@@ -1195,10 +1160,7 @@ class AsyncUsersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[LseUserApi]:
         """
         List the users that exist on the Label Studio server.
@@ -1258,15 +1220,15 @@ class AsyncUsersClient:
     async def create(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        initials: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUser:
         """
@@ -1274,32 +1236,32 @@ class AsyncUsersClient:
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            User ID
-
-        first_name : typing.Optional[str]
-            First name of the user
-
-        last_name : typing.Optional[str]
-            Last name of the user
-
-        username : typing.Optional[str]
-            Username of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         avatar : typing.Optional[str]
             Avatar URL of the user
 
+        email : typing.Optional[str]
+            Email of the user
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        id : typing.Optional[int]
+            User ID
+
         initials : typing.Optional[str]
             Initials of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
 
         phone : typing.Optional[str]
             Phone number of the user
 
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
+        username : typing.Optional[str]
+            Username of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1330,15 +1292,15 @@ class AsyncUsersClient:
             "api/users/",
             method="POST",
             json={
-                "id": id,
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "email": email,
-                "avatar": avatar,
-                "initials": initials,
-                "phone": phone,
                 "allow_newsletters": allow_newsletters,
+                "avatar": avatar,
+                "email": email,
+                "first_name": first_name,
+                "id": id,
+                "initials": initials,
+                "last_name": last_name,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",
@@ -1360,9 +1322,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> LseUser:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseUser:
         """
         Get info about a specific Label Studio user, based on the user ID.
 
@@ -1417,9 +1377,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific Label Studio user. Only available in community edition.
 
@@ -1473,15 +1431,15 @@ class AsyncUsersClient:
         self,
         id: int,
         *,
-        users_update_request_id: typing.Optional[int] = OMIT,
-        first_name: typing.Optional[str] = OMIT,
-        last_name: typing.Optional[str] = OMIT,
-        username: typing.Optional[str] = OMIT,
-        email: typing.Optional[str] = OMIT,
-        avatar: typing.Optional[str] = OMIT,
-        initials: typing.Optional[str] = OMIT,
-        phone: typing.Optional[str] = OMIT,
         allow_newsletters: typing.Optional[bool] = OMIT,
+        avatar: typing.Optional[str] = OMIT,
+        email: typing.Optional[str] = OMIT,
+        first_name: typing.Optional[str] = OMIT,
+        users_update_request_id: typing.Optional[int] = OMIT,
+        initials: typing.Optional[str] = OMIT,
+        last_name: typing.Optional[str] = OMIT,
+        phone: typing.Optional[str] = OMIT,
+        username: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseUser:
         """
@@ -1494,32 +1452,32 @@ class AsyncUsersClient:
         id : int
             User ID
 
-        users_update_request_id : typing.Optional[int]
-            User ID
-
-        first_name : typing.Optional[str]
-            First name of the user
-
-        last_name : typing.Optional[str]
-            Last name of the user
-
-        username : typing.Optional[str]
-            Username of the user
-
-        email : typing.Optional[str]
-            Email of the user
+        allow_newsletters : typing.Optional[bool]
+            Whether the user allows newsletters
 
         avatar : typing.Optional[str]
             Avatar URL of the user
 
+        email : typing.Optional[str]
+            Email of the user
+
+        first_name : typing.Optional[str]
+            First name of the user
+
+        users_update_request_id : typing.Optional[int]
+            User ID
+
         initials : typing.Optional[str]
             Initials of the user
+
+        last_name : typing.Optional[str]
+            Last name of the user
 
         phone : typing.Optional[str]
             Phone number of the user
 
-        allow_newsletters : typing.Optional[bool]
-            Whether the user allows newsletters
+        username : typing.Optional[str]
+            Username of the user
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1552,15 +1510,15 @@ class AsyncUsersClient:
             f"api/users/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "id": users_update_request_id,
-                "first_name": first_name,
-                "last_name": last_name,
-                "username": username,
-                "email": email,
-                "avatar": avatar,
-                "initials": initials,
-                "phone": phone,
                 "allow_newsletters": allow_newsletters,
+                "avatar": avatar,
+                "email": email,
+                "first_name": first_name,
+                "id": users_update_request_id,
+                "initials": initials,
+                "last_name": last_name,
+                "phone": phone,
+                "username": username,
             },
             headers={
                 "content-type": "application/json",

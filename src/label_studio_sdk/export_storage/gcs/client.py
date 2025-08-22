@@ -79,14 +79,14 @@ class GcsClient:
     def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsExportStorage:
         """
@@ -94,29 +94,29 @@ class GcsClient:
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
         bucket : typing.Optional[str]
             GCS bucket name
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
 
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
 
         google_project_id : typing.Optional[str]
             Google project ID
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -139,14 +139,14 @@ class GcsClient:
             "api/storages/export/gcs",
             method="POST",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
                 "bucket": bucket,
-                "prefix": prefix,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "google_application_credentials": google_application_credentials,
                 "google_project_id": google_project_id,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -168,9 +168,97 @@ class GcsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+    def validate(
+        self,
+        *,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific GCS export storage connection.
+
+        Parameters
+        ----------
+        bucket : typing.Optional[str]
+            GCS bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.export_storage.gcs.validate()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/storages/export/gcs/validate",
+            method="POST",
+            json={
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "google_application_credentials": google_application_credentials,
+                "google_project_id": google_project_id,
+                "id": id,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
         Get a specific GCS export storage connection.
 
@@ -216,9 +304,7 @@ class GcsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific GCS export storage connection.
 
@@ -261,14 +347,14 @@ class GcsClient:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsExportStorage:
         """
@@ -278,29 +364,29 @@ class GcsClient:
         ----------
         id : int
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
         bucket : typing.Optional[str]
             GCS bucket name
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
 
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
 
         google_project_id : typing.Optional[str]
             Google project ID
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -325,14 +411,14 @@ class GcsClient:
             f"api/storages/export/gcs/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
                 "bucket": bucket,
-                "prefix": prefix,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "google_application_credentials": google_application_credentials,
                 "google_project_id": google_project_id,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -354,9 +440,7 @@ class GcsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
         Sync tasks from an GCS export storage connection.
 
@@ -397,96 +481,6 @@ class GcsClient:
                         object_=_response.json(),
                     ),
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific GCS export storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            GCS bucket name
-
-        prefix : typing.Optional[str]
-            GCS bucket prefix
-
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-
-        google_project_id : typing.Optional[str]
-            Google project ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.export_storage.gcs.validate()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/storages/export/gcs/validate",
-            method="POST",
-            json={
-                "id": id,
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "google_application_credentials": google_application_credentials,
-                "google_project_id": google_project_id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -566,14 +560,14 @@ class AsyncGcsClient:
     async def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsExportStorage:
         """
@@ -581,29 +575,29 @@ class AsyncGcsClient:
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
         bucket : typing.Optional[str]
             GCS bucket name
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
 
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
 
         google_project_id : typing.Optional[str]
             Google project ID
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -634,14 +628,14 @@ class AsyncGcsClient:
             "api/storages/export/gcs",
             method="POST",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
                 "bucket": bucket,
-                "prefix": prefix,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "google_application_credentials": google_application_credentials,
                 "google_project_id": google_project_id,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -663,9 +657,105 @@ class AsyncGcsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+    async def validate(
+        self,
+        *,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        google_application_credentials: typing.Optional[str] = OMIT,
+        google_project_id: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific GCS export storage connection.
+
+        Parameters
+        ----------
+        bucket : typing.Optional[str]
+            GCS bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
+
+        google_application_credentials : typing.Optional[str]
+            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
+
+        google_project_id : typing.Optional[str]
+            Google project ID
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.export_storage.gcs.validate()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/storages/export/gcs/validate",
+            method="POST",
+            json={
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "google_application_credentials": google_application_credentials,
+                "google_project_id": google_project_id,
+                "id": id,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
         Get a specific GCS export storage connection.
 
@@ -719,9 +809,7 @@ class AsyncGcsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific GCS export storage connection.
 
@@ -772,14 +860,14 @@ class AsyncGcsClient:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> GcsExportStorage:
         """
@@ -789,29 +877,29 @@ class AsyncGcsClient:
         ----------
         id : int
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
         bucket : typing.Optional[str]
             GCS bucket name
 
-        prefix : typing.Optional[str]
-            GCS bucket prefix
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
 
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
 
         google_project_id : typing.Optional[str]
             Google project ID
+
+        prefix : typing.Optional[str]
+            GCS bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -844,14 +932,14 @@ class AsyncGcsClient:
             f"api/storages/export/gcs/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
                 "bucket": bucket,
-                "prefix": prefix,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "google_application_credentials": google_application_credentials,
                 "google_project_id": google_project_id,
+                "prefix": prefix,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -873,9 +961,7 @@ class AsyncGcsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def sync(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> GcsExportStorage:
+    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> GcsExportStorage:
         """
         Sync tasks from an GCS export storage connection.
 
@@ -924,104 +1010,6 @@ class AsyncGcsClient:
                         object_=_response.json(),
                     ),
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        google_application_credentials: typing.Optional[str] = OMIT,
-        google_project_id: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific GCS export storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            GCS bucket name
-
-        prefix : typing.Optional[str]
-            GCS bucket prefix
-
-        google_application_credentials : typing.Optional[str]
-            The content of GOOGLE_APPLICATION_CREDENTIALS json file. Check official Google Cloud Authentication documentation for more details.
-
-        google_project_id : typing.Optional[str]
-            Google project ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.export_storage.gcs.validate()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/export/gcs/validate",
-            method="POST",
-            json={
-                "id": id,
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "google_application_credentials": google_application_credentials,
-                "google_project_id": google_project_id,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

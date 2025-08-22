@@ -7,13 +7,11 @@ import pydantic
 
 
 class OrganizationBilling(UncheckedBaseModel):
-    manual_workspace_management: str
     manual_role_management: str
+    manual_workspace_management: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

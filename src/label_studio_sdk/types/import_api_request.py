@@ -3,9 +3,9 @@
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 from .annotation_request import AnnotationRequest
-from .prediction_request import PredictionRequest
 import pydantic
 import datetime as dt
+from .prediction_request import PredictionRequest
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -15,57 +15,9 @@ class ImportApiRequest(UncheckedBaseModel):
     """
 
     annotations: typing.Optional[typing.List[AnnotationRequest]] = None
-    predictions: typing.Optional[typing.List[PredictionRequest]] = None
-    data: typing.Optional[typing.Any] = None
-    meta: typing.Optional[typing.Optional[typing.Any]] = None
-    overlap: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of distinct annotators that processed the current task
-    """
-
-    inner_id: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Internal task ID in the project, starts with 1
-    """
-
-    total_annotations: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of total annotations for the current task except cancelled annotations
-    """
-
     cancelled_annotations: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of total cancelled annotations for the current task
-    """
-
-    total_predictions: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of total predictions for the current task
-    """
-
-    comment_count: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of comments in the task including all annotations
-    """
-
-    unresolved_comment_count: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of unresolved comments in the task including all annotations
-    """
-
-    last_comment_updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    When the last comment was updated
-    """
-
-    updated_by: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Last annotator or reviewer who updated this task
-    """
-
-    file_upload: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Uploaded file used as data source for this task
     """
 
     comment_authors: typing.Optional[typing.List[int]] = pydantic.Field(default=None)
@@ -73,10 +25,56 @@ class ImportApiRequest(UncheckedBaseModel):
     Users who wrote comments
     """
 
+    comment_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of comments in the task including all annotations
+    """
+
+    data: typing.Optional[typing.Any] = None
+    file_upload: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Uploaded file used as data source for this task
+    """
+
+    inner_id: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Internal task ID in the project, starts with 1
+    """
+
+    last_comment_updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    When the last comment was updated
+    """
+
+    meta: typing.Optional[typing.Optional[typing.Any]] = None
+    overlap: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of distinct annotators that processed the current task
+    """
+
+    predictions: typing.Optional[typing.List[PredictionRequest]] = None
+    total_annotations: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of total annotations for the current task except cancelled annotations
+    """
+
+    total_predictions: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of total predictions for the current task
+    """
+
+    unresolved_comment_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of unresolved comments in the task including all annotations
+    """
+
+    updated_by: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Last annotator or reviewer who updated this task
+    """
+
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -8,13 +8,18 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class View(UncheckedBaseModel):
-    id: int
-    filter_group: typing.Optional[FilterGroup] = None
     data: typing.Optional[typing.Optional[typing.Any]] = None
-    ordering: typing.Optional[typing.Optional[typing.Any]] = None
+    filter_group: typing.Optional[FilterGroup] = None
+    id: int
     order: typing.Optional[int] = pydantic.Field(default=None)
     """
     Position of the tab, starting at the left in data manager and increasing as the tabs go left to right
+    """
+
+    ordering: typing.Optional[typing.Optional[typing.Any]] = None
+    project: int = pydantic.Field()
+    """
+    Project ID
     """
 
     selected_items: typing.Optional[typing.Optional[typing.Any]] = None
@@ -23,15 +28,8 @@ class View(UncheckedBaseModel):
     User who made this view
     """
 
-    project: int = pydantic.Field()
-    """
-    Project ID
-    """
-
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

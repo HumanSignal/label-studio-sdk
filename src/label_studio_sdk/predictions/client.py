@@ -79,12 +79,10 @@ class PredictionsClient:
     def create(
         self,
         *,
-        task: typing.Optional[int] = OMIT,
-        result: typing.Optional[
-            typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]
-        ] = OMIT,
-        score: typing.Optional[float] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
+        score: typing.Optional[float] = OMIT,
+        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
@@ -92,8 +90,8 @@ class PredictionsClient:
 
         Parameters
         ----------
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+        model_version : typing.Optional[str]
+            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
             Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
@@ -101,8 +99,8 @@ class PredictionsClient:
         score : typing.Optional[float]
             Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
 
-        model_version : typing.Optional[str]
-            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+        task : typing.Optional[int]
+            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -120,36 +118,36 @@ class PredictionsClient:
             api_key="YOUR_API_KEY",
         )
         client.predictions.create(
+            model_version="yolo-v8",
             result=[
                 {
-                    "original_width": 1920,
-                    "original_height": 1080,
-                    "image_rotation": 0,
                     "from_name": "bboxes",
+                    "image_rotation": 0,
+                    "original_height": 1080,
+                    "original_width": 1920,
                     "to_name": "image",
                     "type": "rectanglelabels",
                     "value": {
-                        "x": 20,
-                        "y": 30,
-                        "width": 50,
                         "height": 60,
                         "rotation": 0,
                         "values": {"rectanglelabels": ["Person"]},
+                        "width": 50,
+                        "x": 20,
+                        "y": 30,
                     },
                 }
             ],
             score=0.95,
-            model_version="yolo-v8",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/predictions/",
             method="POST",
             json={
-                "task": task,
+                "model_version": model_version,
                 "result": result,
                 "score": score,
-                "model_version": model_version,
+                "task": task,
             },
             headers={
                 "content-type": "application/json",
@@ -171,9 +169,7 @@ class PredictionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Prediction:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Prediction:
         """
         Get details about a specific prediction by its ID.
 
@@ -220,9 +216,7 @@ class PredictionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a prediction by prediction ID.
 
@@ -266,12 +260,10 @@ class PredictionsClient:
         self,
         id: int,
         *,
-        task: typing.Optional[int] = OMIT,
-        result: typing.Optional[
-            typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]
-        ] = OMIT,
-        score: typing.Optional[float] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
+        score: typing.Optional[float] = OMIT,
+        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
@@ -282,8 +274,8 @@ class PredictionsClient:
         id : int
             Prediction ID
 
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+        model_version : typing.Optional[str]
+            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
             Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
@@ -291,8 +283,8 @@ class PredictionsClient:
         score : typing.Optional[float]
             Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
 
-        model_version : typing.Optional[str]
-            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+        task : typing.Optional[int]
+            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -311,36 +303,36 @@ class PredictionsClient:
         )
         client.predictions.update(
             id=1,
+            model_version="yolo-v8",
             result=[
                 {
-                    "original_width": 1920,
-                    "original_height": 1080,
-                    "image_rotation": 0,
                     "from_name": "bboxes",
+                    "image_rotation": 0,
+                    "original_height": 1080,
+                    "original_width": 1920,
                     "to_name": "image",
                     "type": "rectanglelabels",
                     "value": {
-                        "x": 20,
-                        "y": 30,
-                        "width": 50,
                         "height": 60,
                         "rotation": 0,
                         "values": {"rectanglelabels": ["Person"]},
+                        "width": 50,
+                        "x": 20,
+                        "y": 30,
                     },
                 }
             ],
             score=0.95,
-            model_version="yolo-v8",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             f"api/predictions/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "task": task,
+                "model_version": model_version,
                 "result": result,
                 "score": score,
-                "model_version": model_version,
+                "task": task,
             },
             headers={
                 "content-type": "application/json",
@@ -436,12 +428,10 @@ class AsyncPredictionsClient:
     async def create(
         self,
         *,
-        task: typing.Optional[int] = OMIT,
-        result: typing.Optional[
-            typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]
-        ] = OMIT,
-        score: typing.Optional[float] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
+        score: typing.Optional[float] = OMIT,
+        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
@@ -449,8 +439,8 @@ class AsyncPredictionsClient:
 
         Parameters
         ----------
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+        model_version : typing.Optional[str]
+            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
             Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
@@ -458,8 +448,8 @@ class AsyncPredictionsClient:
         score : typing.Optional[float]
             Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
 
-        model_version : typing.Optional[str]
-            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+        task : typing.Optional[int]
+            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -482,26 +472,26 @@ class AsyncPredictionsClient:
 
         async def main() -> None:
             await client.predictions.create(
+                model_version="yolo-v8",
                 result=[
                     {
-                        "original_width": 1920,
-                        "original_height": 1080,
-                        "image_rotation": 0,
                         "from_name": "bboxes",
+                        "image_rotation": 0,
+                        "original_height": 1080,
+                        "original_width": 1920,
                         "to_name": "image",
                         "type": "rectanglelabels",
                         "value": {
-                            "x": 20,
-                            "y": 30,
-                            "width": 50,
                             "height": 60,
                             "rotation": 0,
                             "values": {"rectanglelabels": ["Person"]},
+                            "width": 50,
+                            "x": 20,
+                            "y": 30,
                         },
                     }
                 ],
                 score=0.95,
-                model_version="yolo-v8",
             )
 
 
@@ -511,10 +501,10 @@ class AsyncPredictionsClient:
             "api/predictions/",
             method="POST",
             json={
-                "task": task,
+                "model_version": model_version,
                 "result": result,
                 "score": score,
-                "model_version": model_version,
+                "task": task,
             },
             headers={
                 "content-type": "application/json",
@@ -536,9 +526,7 @@ class AsyncPredictionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Prediction:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Prediction:
         """
         Get details about a specific prediction by its ID.
 
@@ -593,9 +581,7 @@ class AsyncPredictionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a prediction by prediction ID.
 
@@ -647,12 +633,10 @@ class AsyncPredictionsClient:
         self,
         id: int,
         *,
-        task: typing.Optional[int] = OMIT,
-        result: typing.Optional[
-            typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]
-        ] = OMIT,
-        score: typing.Optional[float] = OMIT,
         model_version: typing.Optional[str] = OMIT,
+        result: typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]] = OMIT,
+        score: typing.Optional[float] = OMIT,
+        task: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Prediction:
         """
@@ -663,8 +647,8 @@ class AsyncPredictionsClient:
         id : int
             Prediction ID
 
-        task : typing.Optional[int]
-            Task ID for which the prediction is created
+        model_version : typing.Optional[str]
+            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
 
         result : typing.Optional[typing.Sequence[typing.Dict[str, typing.Optional[typing.Any]]]]
             Prediction result in JSON format. Read more about the format in [the Label Studio documentation.](https://labelstud.io/guide/predictions)
@@ -672,8 +656,8 @@ class AsyncPredictionsClient:
         score : typing.Optional[float]
             Prediction score. Can be used in Data Manager to sort task by model confidence. Task with the lowest score will be shown first.
 
-        model_version : typing.Optional[str]
-            Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
+        task : typing.Optional[int]
+            Task ID for which the prediction is created
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -697,26 +681,26 @@ class AsyncPredictionsClient:
         async def main() -> None:
             await client.predictions.update(
                 id=1,
+                model_version="yolo-v8",
                 result=[
                     {
-                        "original_width": 1920,
-                        "original_height": 1080,
-                        "image_rotation": 0,
                         "from_name": "bboxes",
+                        "image_rotation": 0,
+                        "original_height": 1080,
+                        "original_width": 1920,
                         "to_name": "image",
                         "type": "rectanglelabels",
                         "value": {
-                            "x": 20,
-                            "y": 30,
-                            "width": 50,
                             "height": 60,
                             "rotation": 0,
                             "values": {"rectanglelabels": ["Person"]},
+                            "width": 50,
+                            "x": 20,
+                            "y": 30,
                         },
                     }
                 ],
                 score=0.95,
-                model_version="yolo-v8",
             )
 
 
@@ -726,10 +710,10 @@ class AsyncPredictionsClient:
             f"api/predictions/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "task": task,
+                "model_version": model_version,
                 "result": result,
                 "score": score,
-                "model_version": model_version,
+                "task": task,
             },
             headers={
                 "content-type": "application/json",

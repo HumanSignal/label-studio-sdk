@@ -17,9 +17,7 @@ class JwtSettingsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> LsejwtSettings:
+    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> LsejwtSettings:
         """
         Retrieve JWT settings for the currently active organization.
 
@@ -64,9 +62,9 @@ class JwtSettingsClient:
     def update(
         self,
         *,
+        api_token_ttl_days: typing.Optional[int] = OMIT,
         api_tokens_enabled: typing.Optional[bool] = OMIT,
         legacy_api_tokens_enabled: typing.Optional[bool] = OMIT,
-        api_token_ttl_days: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LsejwtSettings:
         """
@@ -74,14 +72,14 @@ class JwtSettingsClient:
 
         Parameters
         ----------
+        api_token_ttl_days : typing.Optional[int]
+            Number of days before JWT API tokens expire
+
         api_tokens_enabled : typing.Optional[bool]
             Enable JWT API token authentication for this organization
 
         legacy_api_tokens_enabled : typing.Optional[bool]
             Enable legacy API token authentication for this organization
-
-        api_token_ttl_days : typing.Optional[int]
-            Number of days before JWT API tokens expire
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -104,9 +102,9 @@ class JwtSettingsClient:
             "api/jwt/settings",
             method="POST",
             json={
+                "api_token_ttl_days": api_token_ttl_days,
                 "api_tokens_enabled": api_tokens_enabled,
                 "legacy_api_tokens_enabled": legacy_api_tokens_enabled,
-                "api_token_ttl_days": api_token_ttl_days,
             },
             headers={
                 "content-type": "application/json",
@@ -133,9 +131,7 @@ class AsyncJwtSettingsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> LsejwtSettings:
+    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> LsejwtSettings:
         """
         Retrieve JWT settings for the currently active organization.
 
@@ -188,9 +184,9 @@ class AsyncJwtSettingsClient:
     async def update(
         self,
         *,
+        api_token_ttl_days: typing.Optional[int] = OMIT,
         api_tokens_enabled: typing.Optional[bool] = OMIT,
         legacy_api_tokens_enabled: typing.Optional[bool] = OMIT,
-        api_token_ttl_days: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LsejwtSettings:
         """
@@ -198,14 +194,14 @@ class AsyncJwtSettingsClient:
 
         Parameters
         ----------
+        api_token_ttl_days : typing.Optional[int]
+            Number of days before JWT API tokens expire
+
         api_tokens_enabled : typing.Optional[bool]
             Enable JWT API token authentication for this organization
 
         legacy_api_tokens_enabled : typing.Optional[bool]
             Enable legacy API token authentication for this organization
-
-        api_token_ttl_days : typing.Optional[int]
-            Number of days before JWT API tokens expire
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -236,9 +232,9 @@ class AsyncJwtSettingsClient:
             "api/jwt/settings",
             method="POST",
             json={
+                "api_token_ttl_days": api_token_ttl_days,
                 "api_tokens_enabled": api_tokens_enabled,
                 "legacy_api_tokens_enabled": legacy_api_tokens_enabled,
-                "api_token_ttl_days": api_token_ttl_days,
             },
             headers={
                 "content-type": "application/json",

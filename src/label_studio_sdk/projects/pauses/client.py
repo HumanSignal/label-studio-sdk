@@ -162,12 +162,7 @@ class PausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self,
-        id: str,
-        project_pk: int,
-        user_pk: int,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Pause:
         """
         Retrieve a specific pause by ID.
@@ -221,12 +216,7 @@ class PausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete(
-        self,
-        id: str,
-        project_pk: int,
-        user_pk: int,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Delete a specific pause by ID.
@@ -517,12 +507,7 @@ class AsyncPausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self,
-        id: str,
-        project_pk: int,
-        user_pk: int,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Pause:
         """
         Retrieve a specific pause by ID.
@@ -584,12 +569,7 @@ class AsyncPausesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete(
-        self,
-        id: str,
-        project_pk: int,
-        user_pk: int,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: str, project_pk: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Delete a specific pause by ID.

@@ -2,6 +2,4 @@
 
 import typing
 
-SkipQueueEnum = typing.Union[
-    typing.Literal["REQUEUE_FOR_ME", "REQUEUE_FOR_OTHERS", "IGNORE_SKIPPED"], typing.Any
-]
+SkipQueueEnum = typing.Union[typing.Literal["REQUEUE_FOR_ME", "REQUEUE_FOR_OTHERS", "IGNORE_SKIPPED"], typing.Any]

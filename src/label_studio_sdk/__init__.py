@@ -26,7 +26,6 @@ from .types import (
     BlankEnum,
     BlueprintList,
     BudgetResetPeriodEnum,
-    CheckMatchingFunctionRequestRequest,
     ChildFilter,
     Comment,
     CommentRequest,
@@ -163,11 +162,13 @@ from .types import (
     StateEnum,
     Status7BfEnum,
     StatusC5AEnum,
+    TaskAssignment,
     ThirdPartyModelVersion,
     ThirdPartyModelVersionRequest,
     TokenRefreshResponse,
     TokenRotateResponse,
     TrialRoleEnum,
+    TypeEnum,
     UserSimple,
     UserSimpleRequest,
     VersionResponse,
@@ -225,19 +226,12 @@ from .actions import (
     ActionsListResponseItem,
     ActionsListResponseItemDialog,
 )
-from .annotations import (
-    AnnotationBulkSerializerWithSelectedItemsRequestLastAction,
-    AnnotationsCreateBulkResponseItem,
-)
+from .annotations import AnnotationBulkSerializerWithSelectedItemsRequestLastAction, AnnotationsCreateBulkResponseItem
 from .client import AsyncLabelStudio, LabelStudio
 from .environment import LabelStudioEnvironment
 from .export_storage import ExportStorageListTypesResponseItem
 from .import_storage import ImportStorageListTypesResponseItem
-from .ml import (
-    MlCreateRequestAuthMethod,
-    MlListModelVersionsResponse,
-    MlUpdateRequestAuthMethod,
-)
+from .ml import MlCreateRequestAuthMethod, MlListModelVersionsResponse, MlUpdateRequestAuthMethod
 from .model_providers import ModelProvidersListModelProviderChoicesResponse
 from .projects import (
     LseProjectCreateRequestSampling,
@@ -251,6 +245,7 @@ from .projects import (
 from .prompts import PromptsCompatibleProjectsRequestProjectType
 from .tasks import TasksListRequestFields
 from .users import UsersGetTokenResponse, UsersResetTokenResponse
+from .version import __version__
 from .views import (
     ViewsCreateRequestData,
     ViewsCreateRequestDataFilters,
@@ -331,7 +326,6 @@ __all__ = [
     "BlankEnum",
     "BlueprintList",
     "BudgetResetPeriodEnum",
-    "CheckMatchingFunctionRequestRequest",
     "ChildFilter",
     "Client",
     "Comment",
@@ -489,12 +483,14 @@ __all__ = [
     "StateEnum",
     "Status7BfEnum",
     "StatusC5AEnum",
+    "TaskAssignment",
     "TasksListRequestFields",
     "ThirdPartyModelVersion",
     "ThirdPartyModelVersionRequest",
     "TokenRefreshResponse",
     "TokenRotateResponse",
     "TrialRoleEnum",
+    "TypeEnum",
     "UnauthorizedError",
     "UserSimple",
     "UserSimpleRequest",
@@ -539,6 +535,7 @@ __all__ = [
     "Workspace",
     "WorkspaceMemberCreate",
     "WorkspaceMemberList",
+    "__version__",
     "actions",
     "annotations",
     "billing",

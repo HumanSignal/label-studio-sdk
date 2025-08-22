@@ -1,0 +1,102 @@
+imports:
+  root: ../../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    update_lambda:
+      path: /api/projects/{id}/aws-custom-function
+      method: POST
+      auth: true
+      docs: >-
+        Create or update the AWS Lambda function used for custom metrics in this
+        project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Update AWS custom metric Lambda
+      request:
+        name: AwsCustomFunctionUpdateRequest
+        body:
+          properties:
+            code:
+              type: string
+              validation:
+                minLength: 1
+            region: optional<string>
+            role: optional<string>
+        content-type: application/json
+      errors:
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            code: code
+      audiences:
+        - public
+    logs:
+      path: /api/projects/{id}/aws-custom-function-logs
+      method: GET
+      auth: true
+      docs: >-
+        Get AWS lambda logs for project, including filtering by start and end
+        dates
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get AWS lambda logs for project
+      request:
+        name: CustomLogsRequest
+        query-parameters:
+          end_date:
+            type: optional<string>
+            docs: End date for AWS logs filtering
+          limit:
+            type: optional<integer>
+            default: 100
+            docs: Limit the number of logs to return
+          start_date:
+            type: optional<string>
+            docs: Start date for AWS logs filtering
+      response:
+        docs: Successful response returns list of AWS lambda logs
+        type: map<string, unknown>
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              key: value
+      audiences:
+        - public
+    check_function:
+      path: /api/projects/{id}/check-function
+      method: POST
+      auth: true
+      docs: Validate custom matching function code for the project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Check custom matching function code
+      request:
+        name: CheckMatchingFunctionRequestRequest
+        body:
+          properties:
+            code:
+              type: string
+              validation:
+                minLength: 1
+        content-type: application/json
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            code: code
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

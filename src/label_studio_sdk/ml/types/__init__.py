@@ -4,8 +4,4 @@ from .ml_create_request_auth_method import MlCreateRequestAuthMethod
 from .ml_list_model_versions_response import MlListModelVersionsResponse
 from .ml_update_request_auth_method import MlUpdateRequestAuthMethod
 
-__all__ = [
-    "MlCreateRequestAuthMethod",
-    "MlListModelVersionsResponse",
-    "MlUpdateRequestAuthMethod",
-]
+__all__ = ["MlCreateRequestAuthMethod", "MlListModelVersionsResponse", "MlUpdateRequestAuthMethod"]

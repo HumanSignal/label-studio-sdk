@@ -10,9 +10,9 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class AssignmentSettingsRequest(UncheckedBaseModel):
-    label_stream_task_distribution: typing.Optional[
-        AssignmentSettingsRequestLabelStreamTaskDistribution
-    ] = pydantic.Field(default=None)
+    label_stream_task_distribution: typing.Optional[AssignmentSettingsRequestLabelStreamTaskDistribution] = (
+        pydantic.Field(default=None)
+    )
     """
     Modes for distributing tasks to annotators
     
@@ -23,9 +23,7 @@ class AssignmentSettingsRequest(UncheckedBaseModel):
     project: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

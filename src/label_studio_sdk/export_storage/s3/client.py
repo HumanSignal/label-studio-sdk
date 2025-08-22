@@ -79,18 +79,18 @@ class S3Client:
     def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3ExportStorage:
         """
@@ -98,24 +98,6 @@ class S3Client:
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -128,11 +110,29 @@ class S3Client:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
         region_name : typing.Optional[str]
             AWS Region
 
         s3endpoint : typing.Optional[str]
             S3 Endpoint
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -155,18 +155,18 @@ class S3Client:
             "api/storages/export/s3",
             method="POST",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "prefix": prefix,
+                "project": project,
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -188,9 +188,117 @@ class S3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ExportStorage:
+    def validate(
+        self,
+        *,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific S3 export storage connection.
+
+        Parameters
+        ----------
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        title : typing.Optional[str]
+            Storage title
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.export_storage.s3.validate()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/storages/export/s3/validate",
+            method="POST",
+            json={
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "id": id,
+                "prefix": prefix,
+                "project": project,
+                "region_name": region_name,
+                "s3_endpoint": s3endpoint,
+                "title": title,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ExportStorage:
         """
         Get a specific S3 export storage connection.
 
@@ -236,9 +344,7 @@ class S3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific S3 export storage connection.
 
@@ -281,18 +387,18 @@ class S3Client:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3ExportStorage:
         """
@@ -301,24 +407,6 @@ class S3Client:
         Parameters
         ----------
         id : int
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
 
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
@@ -332,11 +420,29 @@ class S3Client:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
         region_name : typing.Optional[str]
             AWS Region
 
         s3endpoint : typing.Optional[str]
             S3 Endpoint
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -361,18 +467,18 @@ class S3Client:
             f"api/storages/export/s3/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "prefix": prefix,
+                "project": project,
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -394,9 +500,7 @@ class S3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ExportStorage:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ExportStorage:
         """
         Sync tasks from an S3 export storage connection.
 
@@ -437,116 +541,6 @@ class S3Client:
                         object_=_response.json(),
                     ),
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        aws_access_key_id: typing.Optional[str] = OMIT,
-        aws_secret_access_key: typing.Optional[str] = OMIT,
-        aws_session_token: typing.Optional[str] = OMIT,
-        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific S3 export storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        aws_access_key_id : typing.Optional[str]
-            AWS_ACCESS_KEY_ID
-
-        aws_secret_access_key : typing.Optional[str]
-            AWS_SECRET_ACCESS_KEY
-
-        aws_session_token : typing.Optional[str]
-            AWS_SESSION_TOKEN
-
-        aws_sse_kms_key_id : typing.Optional[str]
-            AWS SSE KMS Key ID
-
-        region_name : typing.Optional[str]
-            AWS Region
-
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.export_storage.s3.validate()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/storages/export/s3/validate",
-            method="POST",
-            json={
-                "id": id,
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "aws_access_key_id": aws_access_key_id,
-                "aws_secret_access_key": aws_secret_access_key,
-                "aws_session_token": aws_session_token,
-                "aws_sse_kms_key_id": aws_sse_kms_key_id,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -626,18 +620,18 @@ class AsyncS3Client:
     async def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3ExportStorage:
         """
@@ -645,24 +639,6 @@ class AsyncS3Client:
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
 
@@ -675,11 +651,29 @@ class AsyncS3Client:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
         region_name : typing.Optional[str]
             AWS Region
 
         s3endpoint : typing.Optional[str]
             S3 Endpoint
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -710,18 +704,18 @@ class AsyncS3Client:
             "api/storages/export/s3",
             method="POST",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "prefix": prefix,
+                "project": project,
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -743,9 +737,125 @@ class AsyncS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ExportStorage:
+    async def validate(
+        self,
+        *,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Validate a specific S3 export storage connection.
+
+        Parameters
+        ----------
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
+
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        title : typing.Optional[str]
+            Storage title
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.export_storage.s3.validate()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/storages/export/s3/validate",
+            method="POST",
+            json={
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "id": id,
+                "prefix": prefix,
+                "project": project,
+                "region_name": region_name,
+                "s3_endpoint": s3endpoint,
+                "title": title,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ExportStorage:
         """
         Get a specific S3 export storage connection.
 
@@ -799,9 +909,7 @@ class AsyncS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific S3 export storage connection.
 
@@ -852,18 +960,18 @@ class AsyncS3Client:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
         aws_access_key_id: typing.Optional[str] = OMIT,
         aws_secret_access_key: typing.Optional[str] = OMIT,
         aws_session_token: typing.Optional[str] = OMIT,
         aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> S3ExportStorage:
         """
@@ -872,24 +980,6 @@ class AsyncS3Client:
         Parameters
         ----------
         id : int
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
 
         aws_access_key_id : typing.Optional[str]
             AWS_ACCESS_KEY_ID
@@ -903,11 +993,29 @@ class AsyncS3Client:
         aws_sse_kms_key_id : typing.Optional[str]
             AWS SSE KMS Key ID
 
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
+
+        description : typing.Optional[str]
+            Storage description
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        project : typing.Optional[int]
+            Project ID
+
         region_name : typing.Optional[str]
             AWS Region
 
         s3endpoint : typing.Optional[str]
             S3 Endpoint
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -940,18 +1048,18 @@ class AsyncS3Client:
             f"api/storages/export/s3/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
                 "aws_access_key_id": aws_access_key_id,
                 "aws_secret_access_key": aws_secret_access_key,
                 "aws_session_token": aws_session_token,
                 "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "prefix": prefix,
+                "project": project,
                 "region_name": region_name,
                 "s3_endpoint": s3endpoint,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -973,9 +1081,7 @@ class AsyncS3Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def sync(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> S3ExportStorage:
+    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3ExportStorage:
         """
         Sync tasks from an S3 export storage connection.
 
@@ -1024,124 +1130,6 @@ class AsyncS3Client:
                         object_=_response.json(),
                     ),
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def validate(
-        self,
-        *,
-        id: typing.Optional[int] = OMIT,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        aws_access_key_id: typing.Optional[str] = OMIT,
-        aws_secret_access_key: typing.Optional[str] = OMIT,
-        aws_session_token: typing.Optional[str] = OMIT,
-        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
-        """
-        Validate a specific S3 export storage connection.
-
-        Parameters
-        ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        aws_access_key_id : typing.Optional[str]
-            AWS_ACCESS_KEY_ID
-
-        aws_secret_access_key : typing.Optional[str]
-            AWS_SECRET_ACCESS_KEY
-
-        aws_session_token : typing.Optional[str]
-            AWS_SESSION_TOKEN
-
-        aws_sse_kms_key_id : typing.Optional[str]
-            AWS SSE KMS Key ID
-
-        region_name : typing.Optional[str]
-            AWS Region
-
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.export_storage.s3.validate()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/export/s3/validate",
-            method="POST",
-            json={
-                "id": id,
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "aws_access_key_id": aws_access_key_id,
-                "aws_secret_access_key": aws_secret_access_key,
-                "aws_session_token": aws_session_token,
-                "aws_sse_kms_key_id": aws_sse_kms_key_id,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

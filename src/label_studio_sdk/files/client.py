@@ -19,9 +19,7 @@ class FilesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> FileUpload:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> FileUpload:
         """
         Retrieve details about a specific uploaded file.
 
@@ -67,9 +65,7 @@ class FilesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific uploaded file.
 
@@ -238,9 +234,7 @@ class FilesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_many(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def delete_many(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
 
                 Delete uploaded files for a specific project.
@@ -281,9 +275,7 @@ class FilesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def download(
-        self, filename: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    def download(self, filename: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Download a specific uploaded file.
 
@@ -327,9 +319,7 @@ class AsyncFilesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> FileUpload:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> FileUpload:
         """
         Retrieve details about a specific uploaded file.
 
@@ -383,9 +373,7 @@ class AsyncFilesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Delete a specific uploaded file.
 
@@ -578,9 +566,7 @@ class AsyncFilesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_many(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete_many(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
 
                 Delete uploaded files for a specific project.
@@ -629,9 +615,7 @@ class AsyncFilesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def download(
-        self, filename: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def download(self, filename: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Download a specific uploaded file.
 

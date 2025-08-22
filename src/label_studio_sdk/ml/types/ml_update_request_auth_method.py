@@ -2,6 +2,4 @@
 
 import typing
 
-MlUpdateRequestAuthMethod = typing.Union[
-    typing.Literal["NONE", "BASIC_AUTH"], typing.Any
-]
+MlUpdateRequestAuthMethod = typing.Union[typing.Literal["NONE", "BASIC_AUTH"], typing.Any]

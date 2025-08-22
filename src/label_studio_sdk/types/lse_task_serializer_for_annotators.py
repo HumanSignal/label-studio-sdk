@@ -4,12 +4,8 @@ from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
 import datetime as dt
 import pydantic
-from .lse_task_serializer_for_annotators_drafts_item import (
-    LseTaskSerializerForAnnotatorsDraftsItem,
-)
-from .lse_task_serializer_for_annotators_predictions_item import (
-    LseTaskSerializerForAnnotatorsPredictionsItem,
-)
+from .lse_task_serializer_for_annotators_drafts_item import LseTaskSerializerForAnnotatorsDraftsItem
+from .lse_task_serializer_for_annotators_predictions_item import LseTaskSerializerForAnnotatorsPredictionsItem
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -18,42 +14,38 @@ class LseTaskSerializerForAnnotators(UncheckedBaseModel):
     Task Serializer with project scheme configs validation
     """
 
-    id: int
-    data: typing.Optional[typing.Any] = None
+    annotations: str
+    annotations_results: str
+    cancelled_annotations: typing.Optional[int] = None
+    comment_count: str
+    comments: str
     created_at: dt.datetime = pydantic.Field()
     """
     Time a task was created
     """
 
-    annotations: str
+    data: typing.Optional[typing.Any] = None
+    draft_exists: typing.Optional[bool] = None
     drafts: typing.List[LseTaskSerializerForAnnotatorsDraftsItem] = pydantic.Field()
     """
     Drafts for this task
     """
 
-    total_annotations: typing.Optional[int] = None
-    cancelled_annotations: typing.Optional[int] = None
-    annotations_results: str
-    predictions: typing.List[LseTaskSerializerForAnnotatorsPredictionsItem] = (
-        pydantic.Field()
-    )
+    id: int
+    predictions: typing.List[LseTaskSerializerForAnnotatorsPredictionsItem] = pydantic.Field()
     """
     Predictions for this task
     """
 
-    total_predictions: typing.Optional[int] = None
-    predictions_score: typing.Optional[float] = None
     predictions_results: str
-    comments: str
-    comment_count: str
-    unresolved_comment_count: str
+    predictions_score: typing.Optional[float] = None
     reviews_rejected: typing.Optional[int] = None
-    draft_exists: typing.Optional[bool] = None
+    total_annotations: typing.Optional[int] = None
+    total_predictions: typing.Optional[int] = None
+    unresolved_comment_count: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

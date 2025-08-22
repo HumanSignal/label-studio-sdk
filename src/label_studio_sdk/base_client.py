@@ -98,9 +98,7 @@ class LabelStudioBase:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else None
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting LABEL_STUDIO_API_KEY"
@@ -110,9 +108,7 @@ class LabelStudioBase:
             api_key=api_key,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.Client(
-                timeout=_defaulted_timeout, follow_redirects=follow_redirects
-            )
+            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
@@ -187,9 +183,7 @@ class AsyncLabelStudioBase:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = (
-            timeout if timeout is not None else 60 if httpx_client is None else None
-        )
+        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting LABEL_STUDIO_API_KEY"
@@ -199,9 +193,7 @@ class AsyncLabelStudioBase:
             api_key=api_key,
             httpx_client=httpx_client
             if httpx_client is not None
-            else httpx.AsyncClient(
-                timeout=_defaulted_timeout, follow_redirects=follow_redirects
-            )
+            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
@@ -213,38 +205,26 @@ class AsyncLabelStudioBase:
         self.actions = AsyncActionsClient(client_wrapper=self._client_wrapper)
         self.views = AsyncViewsClient(client_wrapper=self._client_wrapper)
         self.files = AsyncFilesClient(client_wrapper=self._client_wrapper)
-        self.organizations = AsyncOrganizationsClient(
-            client_wrapper=self._client_wrapper
-        )
+        self.organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
         self.jwt_settings = AsyncJwtSettingsClient(client_wrapper=self._client_wrapper)
         self.ml = AsyncMlClient(client_wrapper=self._client_wrapper)
-        self.model_providers = AsyncModelProvidersClient(
-            client_wrapper=self._client_wrapper
-        )
+        self.model_providers = AsyncModelProvidersClient(client_wrapper=self._client_wrapper)
         self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
         self.predictions = AsyncPredictionsClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = AsyncTasksClient(client_wrapper=self._client_wrapper)
-        self.import_storage = AsyncImportStorageClient(
-            client_wrapper=self._client_wrapper
-        )
-        self.export_storage = AsyncExportStorageClient(
-            client_wrapper=self._client_wrapper
-        )
+        self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
+        self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)
         self.tokens = AsyncTokensClient(client_wrapper=self._client_wrapper)
         self.versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
 
 
-def _get_base_url(
-    *, base_url: typing.Optional[str] = None, environment: LabelStudioEnvironment
-) -> str:
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: LabelStudioEnvironment) -> str:
     if base_url is not None:
         return base_url
     elif environment is not None:
         return environment.value
     else:
-        raise Exception(
-            "Please pass in either base_url or environment to construct the client"
-        )
+        raise Exception("Please pass in either base_url or environment to construct the client")

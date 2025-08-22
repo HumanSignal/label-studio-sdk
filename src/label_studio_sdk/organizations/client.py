@@ -20,9 +20,7 @@ class OrganizationsClient:
         self._client_wrapper = client_wrapper
         self.members = MembersClient(client_wrapper=self._client_wrapper)
 
-    def reset_token(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> OrganizationInvite:
+    def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationInvite:
         """
         Reset the token used in the invitation link to invite someone to an organization.
 
@@ -65,10 +63,7 @@ class OrganizationsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[OrganizationId]:
         """
 
@@ -119,9 +114,7 @@ class OrganizationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> LseOrganization:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseOrganization:
         """
         Retrieve the settings for a specific organization by ID.
 
@@ -173,9 +166,7 @@ class AsyncOrganizationsClient:
         self._client_wrapper = client_wrapper
         self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
 
-    async def reset_token(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> OrganizationInvite:
+    async def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationInvite:
         """
         Reset the token used in the invitation link to invite someone to an organization.
 
@@ -226,10 +217,7 @@ class AsyncOrganizationsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def list(
-        self,
-        *,
-        ordering: typing.Optional[str] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[OrganizationId]:
         """
 
@@ -288,9 +276,7 @@ class AsyncOrganizationsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> LseOrganization:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseOrganization:
         """
         Retrieve the settings for a specific organization by ID.
 

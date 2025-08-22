@@ -2,8 +2,8 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-import datetime as dt
 import pydantic
+import datetime as dt
 from .organization_membership import OrganizationMembership
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -16,16 +16,6 @@ class LseUserApi(UncheckedBaseModel):
     values with complex, nested serializations
     """
 
-    id: int
-    first_name: typing.Optional[str] = None
-    last_name: typing.Optional[str] = None
-    username: str
-    email: typing.Optional[str] = None
-    last_activity: dt.datetime
-    custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = None
-    avatar: str
-    initials: str
-    phone: typing.Optional[str] = None
     active_organization: typing.Optional[int] = None
     active_organization_meta: str
     allow_newsletters: typing.Optional[bool] = pydantic.Field(default=None)
@@ -33,13 +23,21 @@ class LseUserApi(UncheckedBaseModel):
     Allow sending newsletters to user
     """
 
+    avatar: str
+    custom_hotkeys: typing.Optional[typing.Optional[typing.Any]] = None
     date_joined: typing.Optional[dt.datetime] = None
+    email: typing.Optional[str] = None
+    first_name: typing.Optional[str] = None
+    id: int
+    initials: str
+    last_activity: dt.datetime
+    last_name: typing.Optional[str] = None
     org_membership: typing.List[OrganizationMembership]
+    phone: typing.Optional[str] = None
+    username: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

@@ -3,9 +3,7 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.paginated_lse_organization_member_list_list import (
-    PaginatedLseOrganizationMemberListList,
-)
+from ...types.paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
@@ -114,8 +112,8 @@ class MembersClient:
         self,
         id: int,
         *,
-        user_id: typing.Optional[int] = OMIT,
         role: typing.Optional[Role9E7Enum] = OMIT,
+        user_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
         """
@@ -138,9 +136,9 @@ class MembersClient:
         id : int
             A unique integer value identifying this organization.
 
-        user_id : typing.Optional[int]
-
         role : typing.Optional[Role9E7Enum]
+
+        user_id : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -165,8 +163,8 @@ class MembersClient:
             f"api/organizations/{jsonable_encoder(id)}/memberships",
             method="PATCH",
             json={
-                "user_id": user_id,
                 "role": role,
+                "user_id": user_id,
             },
             headers={
                 "content-type": "application/json",
@@ -189,11 +187,7 @@ class MembersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> OrganizationMember:
         """
         Get organization member details by user ID.
@@ -244,13 +238,7 @@ class MembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    def delete(self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Soft delete a member from the organization.
 
@@ -424,8 +412,8 @@ class AsyncMembersClient:
         self,
         id: int,
         *,
-        user_id: typing.Optional[int] = OMIT,
         role: typing.Optional[Role9E7Enum] = OMIT,
+        user_id: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
         """
@@ -448,9 +436,9 @@ class AsyncMembersClient:
         id : int
             A unique integer value identifying this organization.
 
-        user_id : typing.Optional[int]
-
         role : typing.Optional[Role9E7Enum]
+
+        user_id : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -483,8 +471,8 @@ class AsyncMembersClient:
             f"api/organizations/{jsonable_encoder(id)}/memberships",
             method="PATCH",
             json={
-                "user_id": user_id,
                 "role": role,
+                "user_id": user_id,
             },
             headers={
                 "content-type": "application/json",
@@ -507,11 +495,7 @@ class AsyncMembersClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> OrganizationMember:
         """
         Get organization member details by user ID.
@@ -570,13 +554,7 @@ class AsyncMembersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self,
-        id: int,
-        user_pk: int,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    async def delete(self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Soft delete a member from the organization.
 

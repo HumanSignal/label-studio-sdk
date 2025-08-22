@@ -8,18 +8,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ConvertedFormat(UncheckedBaseModel):
+    export_type: str
     id: int
     status: typing.Optional[Status7BfEnum] = None
-    export_type: str
     traceback: typing.Optional[str] = pydantic.Field(default=None)
     """
     Traceback report in case of errors
     """
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow", frozen=True
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
 
         class Config:

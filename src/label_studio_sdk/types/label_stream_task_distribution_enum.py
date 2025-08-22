@@ -2,6 +2,4 @@
 
 import typing
 
-LabelStreamTaskDistributionEnum = typing.Union[
-    typing.Literal["auto_distribution", "assigned_only"], typing.Any
-]
+LabelStreamTaskDistributionEnum = typing.Union[typing.Literal["auto_distribution", "assigned_only"], typing.Any]

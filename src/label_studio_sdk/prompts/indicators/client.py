@@ -65,11 +65,7 @@ class IndicatorsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self,
-        id: int,
-        indicator_key: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LseKeyIndicatorValue:
         """
         Get a specific key indicator for the Prompt dashboard.
@@ -181,11 +177,7 @@ class AsyncIndicatorsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self,
-        id: int,
-        indicator_key: str,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LseKeyIndicatorValue:
         """
         Get a specific key indicator for the Prompt dashboard.

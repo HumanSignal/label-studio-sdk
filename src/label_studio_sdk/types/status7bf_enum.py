@@ -2,6 +2,4 @@
 
 import typing
 
-Status7BfEnum = typing.Union[
-    typing.Literal["created", "in_progress", "failed", "completed"], typing.Any
-]
+Status7BfEnum = typing.Union[typing.Literal["created", "in_progress", "failed", "completed"], typing.Any]

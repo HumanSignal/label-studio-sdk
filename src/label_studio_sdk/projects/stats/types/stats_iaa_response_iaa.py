@@ -2,6 +2,4 @@
 
 import typing
 
-StatsIaaResponseIaa = typing.Union[
-    typing.List[typing.List[float]], typing.Dict[str, typing.List[typing.List[float]]]
-]
+StatsIaaResponseIaa = typing.Union[typing.List[typing.List[float]], typing.Dict[str, typing.List[typing.List[float]]]]

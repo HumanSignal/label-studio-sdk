@@ -5,6 +5,4 @@ from .lse_task import LseTask
 from .lse_task_serializer_for_reviewers import LseTaskSerializerForReviewers
 from .lse_task_serializer_for_annotators import LseTaskSerializerForAnnotators
 
-RoleBasedTask = typing.Union[
-    LseTask, LseTaskSerializerForReviewers, LseTaskSerializerForAnnotators
-]
+RoleBasedTask = typing.Union[LseTask, LseTaskSerializerForReviewers, LseTaskSerializerForAnnotators]
