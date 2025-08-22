@@ -3,7 +3,7 @@
 from ...core.client_wrapper import SyncClientWrapper
 import typing
 from ...core.request_options import RequestOptions
-from ...types.project_member import ProjectMember
+from ...types.lse_user import LseUser
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
@@ -17,7 +17,7 @@ class MembersClient:
 
     def get(
         self, id: int, *, user_ids: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectMember:
+    ) -> typing.List[LseUser]:
         """
         Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
 
@@ -33,8 +33,8 @@ class MembersClient:
 
         Returns
         -------
-        ProjectMember
-
+        typing.List[LseUser]
+            List of users with membership information
 
         Examples
         --------
@@ -58,9 +58,9 @@ class MembersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectMember,
+                    typing.List[LseUser],
                     construct_type(
-                        type_=ProjectMember,  # type: ignore
+                        type_=typing.List[LseUser],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -76,7 +76,7 @@ class AsyncMembersClient:
 
     async def get(
         self, id: int, *, user_ids: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> ProjectMember:
+    ) -> typing.List[LseUser]:
         """
         Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
 
@@ -92,8 +92,8 @@ class AsyncMembersClient:
 
         Returns
         -------
-        ProjectMember
-
+        typing.List[LseUser]
+            List of users with membership information
 
         Examples
         --------
@@ -125,9 +125,9 @@ class AsyncMembersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    ProjectMember,
+                    typing.List[LseUser],
                     construct_type(
-                        type_=ProjectMember,  # type: ignore
+                        type_=typing.List[LseUser],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

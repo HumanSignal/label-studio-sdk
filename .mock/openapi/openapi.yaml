@@ -7124,8 +7124,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectMember'
-          description: ''
+                items:
+                  $ref: '#/components/schemas/LseUser'
+                type: array
+          description: List of users with membership information
       security:
         - Token: []
       summary: Get project members

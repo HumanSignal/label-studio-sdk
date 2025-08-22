@@ -25,14 +25,47 @@ service:
               Comma-separated list of user IDs to include. Example:
               user_ids=1,2,3
       response:
-        docs: ''
-        type: root.ProjectMember
+        docs: List of users with membership information
+        type: list<root.LseUser>
       examples:
         - path-parameters:
             id: 1
           response:
             body:
-              user: 1
+              - active_organization: 1
+                active_organization_meta: active_organization_meta
+                allow_newsletters: true
+                avatar: avatar
+                custom_hotkeys:
+                  key: value
+                date_joined: '2024-01-15T09:30:00Z'
+                email: email
+                first_name: first_name
+                id: 1
+                initials: initials
+                last_activity: '2024-01-15T09:30:00Z'
+                last_name: last_name
+                lse_fields:
+                  email_notification_settings: email_notification_settings
+                  invite_activated: true
+                  invite_expired: invite_expired
+                  invite_expired_at: invite_expired_at
+                  invited_at: '2024-01-15T09:30:00Z'
+                  invited_by: 1
+                  onboarding_state: not_started
+                  social_auth_finished: true
+                  trial_company: trial_company
+                  trial_experience_labeling: trial_experience_labeling
+                  trial_license_enterprise: true
+                  trial_models_in_production: trial_models_in_production
+                  trial_role: annotator
+                org_membership:
+                  - active: active
+                    organization_id: 1
+                    role: role
+                pause: pause
+                phone: phone
+                username: username
       audiences:
         - public
   source:
