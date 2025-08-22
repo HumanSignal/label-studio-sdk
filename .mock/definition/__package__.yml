@@ -6964,26 +6964,6 @@ types:
 
           * `AN` - Annotate
           * `RE` - Review
-<<<<<<< HEAD
-=======
-    source:
-      openapi: openapi/openapi.yaml
-  TaskAssignmentRequest:
-    properties:
-      assignee:
-        type: integer
-        docs: Assigned user
-      task:
-        type: integer
-        docs: Assigned task
-      type:
-        type: optional<TypeEnum>
-        docs: |-
-          Type of assignment: Annotate|Review
-
-          * `AN` - Annotate
-          * `RE` - Review
->>>>>>> master
     source:
       openapi: openapi/openapi.yaml
   TaskSimple:
