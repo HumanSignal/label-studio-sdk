@@ -2,46 +2,46 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .status7bf_enum import Status7BfEnum
 import datetime as dt
 import pydantic
-from .status7bf_enum import Status7BfEnum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ProjectImport(UncheckedBaseModel):
-    annotation_count: typing.Optional[int] = None
+    id: int
+    project: typing.Optional[int] = None
+    preannotated_from_fields: typing.Optional[typing.Optional[typing.Any]] = None
     commit_to_project: typing.Optional[bool] = None
-    could_be_tasks_list: typing.Optional[bool] = None
+    return_task_ids: typing.Optional[bool] = None
+    status: typing.Optional[Status7BfEnum] = None
+    url: typing.Optional[str] = None
+    error: typing.Optional[str] = None
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Creation time
     """
 
-    data_columns: typing.Optional[typing.Optional[typing.Any]] = None
-    duration: typing.Optional[int] = None
-    error: typing.Optional[str] = None
-    file_upload_ids: typing.Optional[typing.Optional[typing.Any]] = None
-    finished_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Complete or fail time
-    """
-
-    found_formats: typing.Optional[typing.Optional[typing.Any]] = None
-    id: int
-    preannotated_from_fields: typing.Optional[typing.Optional[typing.Any]] = None
-    prediction_count: typing.Optional[int] = None
-    project: typing.Optional[int] = None
-    return_task_ids: typing.Optional[bool] = None
-    status: typing.Optional[Status7BfEnum] = None
-    task_count: typing.Optional[int] = None
-    task_ids: typing.Optional[typing.Optional[typing.Any]] = None
-    tasks: typing.Optional[typing.Optional[typing.Any]] = None
     updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Updated time
     """
 
-    url: typing.Optional[str] = None
+    finished_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Complete or fail time
+    """
+
+    task_count: typing.Optional[int] = None
+    annotation_count: typing.Optional[int] = None
+    prediction_count: typing.Optional[int] = None
+    duration: typing.Optional[int] = None
+    file_upload_ids: typing.Optional[typing.Optional[typing.Any]] = None
+    could_be_tasks_list: typing.Optional[bool] = None
+    found_formats: typing.Optional[typing.Optional[typing.Any]] = None
+    data_columns: typing.Optional[typing.Optional[typing.Any]] = None
+    tasks: typing.Optional[typing.Optional[typing.Any]] = None
+    task_ids: typing.Optional[typing.Optional[typing.Any]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

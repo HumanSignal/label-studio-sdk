@@ -24,22 +24,22 @@ service:
       examples:
         - response:
             body:
-              - columns:
-                  key: value
-                created_at: '2024-01-15T09:30:00Z'
+              - id: 1
                 created_by:
-                  avatar: avatar
-                  email: email
-                  first_name: first_name
                   id: 1
+                  first_name: first_name
                   last_name: last_name
-                description: description
-                id: 1
-                organization: 1
-                title: title
-                total_entities: 1
+                  email: email
+                  avatar: avatar
+                created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
+                title: title
+                description: description
+                columns:
+                  key: value
+                total_entities: 1
                 vector_db_dataset_name: vector_db_dataset_name
+                organization: 1
     api_datasets_create:
       path: /api/datasets/
       method: POST
@@ -59,288 +59,22 @@ service:
             title: title
           response:
             body:
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              title: title
+              description: description
               columns:
                 key: value
-              created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                avatar: avatar
-                email: email
-                first_name: first_name
-                id: 1
-                last_name: last_name
-              description: description
-              id: 1
-              organization: 1
-              title: title
               total_entities: 1
-              updated_at: '2024-01-15T09:30:00Z'
               vector_db_dataset_name: vector_db_dataset_name
-    api_datasets_import_partial_update:
-      path: /api/datasets/import
-      method: PATCH
-      auth: true
-      docs: Export Candidate task for a specific dataset to project.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Export candidate tasks to project
-      request:
-        name: ApiDatasetsImportPartialUpdateRequest
-        query-parameters:
-          job_id:
-            type: optional<integer>
-            docs: Job ID to start or cancel
-          signal:
-            type: optional<string>
-            docs: 'Signal type: start or cancel'
-      examples:
-        - {}
-    api_datasets_views_list:
-      path: /api/datasets/views/
-      method: GET
-      auth: true
-      docs: List all views for a specific dataset.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: List dataset views
-      request:
-        name: ApiDatasetsViewsListRequest
-        query-parameters:
-          dataset:
-            type: optional<integer>
-            docs: Dataset ID
-      response:
-        docs: ''
-        type: list<root.DatasetView>
-      examples:
-        - response:
-            body:
-              - data:
-                  key: value
-                dataset: 1
-                filter_group:
-                  conjunction: conjunction
-                  filters:
-                    - column: column
-                      id: 1
-                      operator: operator
-                      type: type
-                  id: 1
-                id: 1
-                order: 1
-                ordering:
-                  key: value
-                selected_items:
-                  key: value
-                user: 1
-    api_datasets_views_create:
-      path: /api/datasets/views/
-      method: POST
-      auth: true
-      docs: Create a view for a specific dataset.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Create dataset view
-      request:
-        body: root.DatasetViewRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.DatasetView
-      examples:
-        - request:
-            dataset: 1
-          response:
-            body:
-              data:
-                key: value
-              dataset: 1
-              filter_group:
-                conjunction: conjunction
-                filters:
-                  - column: column
-                    id: 1
-                    operator: operator
-                    type: type
-                id: 1
-              id: 1
-              order: 1
-              ordering:
-                key: value
-              selected_items:
-                key: value
-              user: 1
-    api_datasets_views_reset_destroy:
-      path: /api/datasets/views/reset/
-      method: DELETE
-      auth: true
-      docs: Reset all views for a specific dataset.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Reset dataset views
-      examples:
-        - {}
-    api_datasets_views_retrieve:
-      path: /api/datasets/views/{id}/
-      method: GET
-      auth: true
-      docs: Get the details about a specific view in the data manager
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: string
-          docs: View ID
-      display-name: Get dataset view details
-      response:
-        docs: ''
-        type: root.DatasetView
-      examples:
-        - path-parameters:
-            id: id
-          response:
-            body:
-              data:
-                key: value
-              dataset: 1
-              filter_group:
-                conjunction: conjunction
-                filters:
-                  - column: column
-                    id: 1
-                    operator: operator
-                    type: type
-                id: 1
-              id: 1
-              order: 1
-              ordering:
-                key: value
-              selected_items:
-                key: value
-              user: 1
-    api_datasets_views_update:
-      path: /api/datasets/views/{id}/
-      method: PUT
-      auth: true
-      docs: >-
-        Overwrite view data with updated filters and other information for a
-        specific dataset.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: string
-          docs: View ID
-      display-name: Put dataset view
-      request:
-        body: root.DatasetViewRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.DatasetView
-      examples:
-        - path-parameters:
-            id: id
-          request:
-            dataset: 1
-          response:
-            body:
-              data:
-                key: value
-              dataset: 1
-              filter_group:
-                conjunction: conjunction
-                filters:
-                  - column: column
-                    id: 1
-                    operator: operator
-                    type: type
-                id: 1
-              id: 1
-              order: 1
-              ordering:
-                key: value
-              selected_items:
-                key: value
-              user: 1
-    api_datasets_views_destroy:
-      path: /api/datasets/views/{id}/
-      method: DELETE
-      auth: true
-      docs: Delete a specific view by ID.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: string
-          docs: View ID
-      display-name: Delete dataset view
-      examples:
-        - path-parameters:
-            id: id
-    api_datasets_views_partial_update:
-      path: /api/datasets/views/{id}/
-      method: PATCH
-      auth: true
-      docs: >-
-        Update view data with additional filters and other information for a
-        specific dataset.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: string
-          docs: View ID
-      display-name: Update dataset view
-      request:
-        name: PatchedDatasetViewRequest
-        body:
-          properties:
-            data: optional<unknown>
-            dataset:
-              type: optional<integer>
-              docs: Dataset ID
-            filter_group: optional<root.FilterGroupRequest>
-            order:
-              type: optional<integer>
-              docs: >-
-                Position of the tab, starting at the left in data manager and
-                increasing as the tabs go left to right
-              validation:
-                min: -2147483648
-                max: 2147483647
-            ordering: optional<unknown>
-            selected_items: optional<unknown>
-            user:
-              type: optional<integer>
-              docs: User who made this view
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.DatasetView
-      examples:
-        - path-parameters:
-            id: id
-          request: {}
-          response:
-            body:
-              data:
-                key: value
-              dataset: 1
-              filter_group:
-                conjunction: conjunction
-                filters:
-                  - column: column
-                    id: 1
-                    operator: operator
-                    type: type
-                id: 1
-              id: 1
-              order: 1
-              ordering:
-                key: value
-              selected_items:
-                key: value
-              user: 1
+              organization: 1
     api_datasets_retrieve:
       path: /api/datasets/{id}/
       method: GET
@@ -359,22 +93,22 @@ service:
             id: id
           response:
             body:
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              title: title
+              description: description
               columns:
                 key: value
-              created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                avatar: avatar
-                email: email
-                first_name: first_name
-                id: 1
-                last_name: last_name
-              description: description
-              id: 1
-              organization: 1
-              title: title
               total_entities: 1
-              updated_at: '2024-01-15T09:30:00Z'
               vector_db_dataset_name: vector_db_dataset_name
+              organization: 1
     api_datasets_update:
       path: /api/datasets/{id}/
       method: PUT
@@ -398,22 +132,22 @@ service:
             title: title
           response:
             body:
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              title: title
+              description: description
               columns:
                 key: value
-              created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                avatar: avatar
-                email: email
-                first_name: first_name
-                id: 1
-                last_name: last_name
-              description: description
-              id: 1
-              organization: 1
-              title: title
               total_entities: 1
-              updated_at: '2024-01-15T09:30:00Z'
               vector_db_dataset_name: vector_db_dataset_name
+              organization: 1
     api_datasets_destroy:
       path: /api/datasets/{id}/
       method: DELETE
@@ -441,20 +175,19 @@ service:
         name: PatchedDatasetRequest
         body:
           properties:
-            columns: optional<unknown>
             created_by:
               type: optional<root.UserSimpleRequest>
               docs: User who created Dataset
-            description:
-              type: optional<string>
-              docs: Dataset description
-            organization: optional<integer>
             title:
               type: optional<string>
               docs: Dataset title
               validation:
                 minLength: 1
                 maxLength: 1000
+            description:
+              type: optional<string>
+              docs: Dataset description
+            columns: optional<unknown>
             total_entities:
               type: optional<integer>
               validation:
@@ -466,6 +199,7 @@ service:
               validation:
                 minLength: 1
                 maxLength: 37
+            organization: optional<integer>
         content-type: application/json
       response:
         docs: ''
@@ -476,22 +210,22 @@ service:
           request: {}
           response:
             body:
+              id: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              created_at: '2024-01-15T09:30:00Z'
+              updated_at: '2024-01-15T09:30:00Z'
+              title: title
+              description: description
               columns:
                 key: value
-              created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                avatar: avatar
-                email: email
-                first_name: first_name
-                id: 1
-                last_name: last_name
-              description: description
-              id: 1
-              organization: 1
-              title: title
               total_entities: 1
-              updated_at: '2024-01-15T09:30:00Z'
               vector_db_dataset_name: vector_db_dataset_name
+              organization: 1
     api_datasets_members_list:
       path: /api/datasets/{id}/members
       method: GET
@@ -563,5 +297,271 @@ service:
       examples:
         - path-parameters:
             id: 1
+    api_datasets_import_partial_update:
+      path: /api/datasets/import
+      method: PATCH
+      auth: true
+      docs: Export Candidate task for a specific dataset to project.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Export candidate tasks to project
+      request:
+        name: ApiDatasetsImportPartialUpdateRequest
+        query-parameters:
+          job_id:
+            type: optional<integer>
+            docs: Job ID to start or cancel
+          signal:
+            type: optional<string>
+            docs: 'Signal type: start or cancel'
+      examples:
+        - {}
+    api_datasets_views_list:
+      path: /api/datasets/views/
+      method: GET
+      auth: true
+      docs: List all views for a specific dataset.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: List dataset views
+      request:
+        name: ApiDatasetsViewsListRequest
+        query-parameters:
+          dataset:
+            type: optional<integer>
+            docs: Dataset ID
+      response:
+        docs: ''
+        type: list<root.DatasetView>
+      examples:
+        - response:
+            body:
+              - id: 1
+                filter_group:
+                  id: 1
+                  filters:
+                    - id: 1
+                      column: column
+                      type: type
+                      operator: operator
+                  conjunction: conjunction
+                data:
+                  key: value
+                ordering:
+                  key: value
+                order: 1
+                selected_items:
+                  key: value
+                user: 1
+                dataset: 1
+    api_datasets_views_create:
+      path: /api/datasets/views/
+      method: POST
+      auth: true
+      docs: Create a view for a specific dataset.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create dataset view
+      request:
+        body: root.DatasetViewRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.DatasetView
+      examples:
+        - request:
+            dataset: 1
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - id: 1
+                    column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                key: value
+              ordering:
+                key: value
+              order: 1
+              selected_items:
+                key: value
+              user: 1
+              dataset: 1
+    api_datasets_views_retrieve:
+      path: /api/datasets/views/{id}/
+      method: GET
+      auth: true
+      docs: Get the details about a specific view in the data manager
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Get dataset view details
+      response:
+        docs: ''
+        type: root.DatasetView
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - id: 1
+                    column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                key: value
+              ordering:
+                key: value
+              order: 1
+              selected_items:
+                key: value
+              user: 1
+              dataset: 1
+    api_datasets_views_update:
+      path: /api/datasets/views/{id}/
+      method: PUT
+      auth: true
+      docs: >-
+        Overwrite view data with updated filters and other information for a
+        specific dataset.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Put dataset view
+      request:
+        body: root.DatasetViewRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.DatasetView
+      examples:
+        - path-parameters:
+            id: id
+          request:
+            dataset: 1
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - id: 1
+                    column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                key: value
+              ordering:
+                key: value
+              order: 1
+              selected_items:
+                key: value
+              user: 1
+              dataset: 1
+    api_datasets_views_destroy:
+      path: /api/datasets/views/{id}/
+      method: DELETE
+      auth: true
+      docs: Delete a specific view by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Delete dataset view
+      examples:
+        - path-parameters:
+            id: id
+    api_datasets_views_partial_update:
+      path: /api/datasets/views/{id}/
+      method: PATCH
+      auth: true
+      docs: >-
+        Update view data with additional filters and other information for a
+        specific dataset.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: string
+          docs: View ID
+      display-name: Update dataset view
+      request:
+        name: PatchedDatasetViewRequest
+        body:
+          properties:
+            filter_group: optional<root.FilterGroupRequest>
+            data: optional<unknown>
+            ordering: optional<unknown>
+            order:
+              type: optional<integer>
+              docs: >-
+                Position of the tab, starting at the left in data manager and
+                increasing as the tabs go left to right
+              validation:
+                min: -2147483648
+                max: 2147483647
+            selected_items: optional<unknown>
+            user:
+              type: optional<integer>
+              docs: User who made this view
+            dataset:
+              type: optional<integer>
+              docs: Dataset ID
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.DatasetView
+      examples:
+        - path-parameters:
+            id: id
+          request: {}
+          response:
+            body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - id: 1
+                    column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
+              data:
+                key: value
+              ordering:
+                key: value
+              order: 1
+              selected_items:
+                key: value
+              user: 1
+              dataset: 1
+    api_datasets_views_reset_destroy:
+      path: /api/datasets/views/reset/
+      method: DELETE
+      auth: true
+      docs: Reset all views for a specific dataset.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Reset dataset views
+      examples:
+        - {}
   source:
     openapi: openapi/openapi.yaml

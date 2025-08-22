@@ -8,14 +8,14 @@ from .utilities import validate_response
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "api_token_ttl_days": 1,
         "api_tokens_enabled": True,
         "legacy_api_tokens_enabled": True,
+        "api_token_ttl_days": 1,
     }
     expected_types: typing.Any = {
-        "api_token_ttl_days": "integer",
         "api_tokens_enabled": None,
         "legacy_api_tokens_enabled": None,
+        "api_token_ttl_days": "integer",
     }
     response = client.jwt_settings.get()
     validate_response(response, expected_response, expected_types)
@@ -26,14 +26,14 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "api_token_ttl_days": 1,
         "api_tokens_enabled": True,
         "legacy_api_tokens_enabled": True,
+        "api_token_ttl_days": 1,
     }
     expected_types: typing.Any = {
-        "api_token_ttl_days": "integer",
         "api_tokens_enabled": None,
         "legacy_api_tokens_enabled": None,
+        "api_token_ttl_days": "integer",
     }
     response = client.jwt_settings.update()
     validate_response(response, expected_response, expected_types)

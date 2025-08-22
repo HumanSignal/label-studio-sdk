@@ -12,6 +12,18 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
+  StatsIaaResponseStd:
+    discriminated: false
+    docs: >-
+      Standard deviation - number when per_label=false, object with label keys
+      when per_label=true
+    union:
+      - double
+      - type: map<string, double>
+        docs: Standard deviation per label when per_label=true
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   StatsIaaResponseCommonTasks:
     discriminated: false
     docs: >-
@@ -27,18 +39,6 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
-  StatsIaaResponseStd:
-    discriminated: false
-    docs: >-
-      Standard deviation - number when per_label=false, object with label keys
-      when per_label=true
-    union:
-      - double
-      - type: map<string, double>
-        docs: Standard deviation per label when per_label=true
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   StatsIaaResponse:
     properties:
       IAA:
@@ -46,19 +46,19 @@ types:
         docs: >-
           Inter-Annotator Agreement matrix - 2D array when per_label=false,
           object with label keys when per_label=true
-      common_tasks:
-        type: optional<StatsIaaResponseCommonTasks>
-        docs: >-
-          Common tasks matrix - 2D array when per_label=false, object with label
-          keys when per_label=true
+      users:
+        type: optional<list<map<string, unknown>>>
+        docs: List of users in the matrix
       std:
         type: optional<StatsIaaResponseStd>
         docs: >-
           Standard deviation - number when per_label=false, object with label
           keys when per_label=true
-      users:
-        type: optional<list<map<string, unknown>>>
-        docs: List of users in the matrix
+      common_tasks:
+        type: optional<StatsIaaResponseCommonTasks>
+        docs: >-
+          Common tasks matrix - 2D array when per_label=false, object with label
+          keys when per_label=true
     source:
       openapi: openapi/openapi.yaml
   StatsTotalAgreementResponseZero:
@@ -127,17 +127,17 @@ service:
                   - 0.5
                 - - 0.5
                   - 1
+              users:
+                - id: 1
+                  email: user1@example.com
+                - id: 2
+                  email: user2@example.com
+              std: 1.1
               common_tasks:
                 - - 0
                   - 1
                 - - 1
                   - 0
-              std: 1.1
-              users:
-                - email: user1@example.com
-                  id: 1
-                - email: user2@example.com
-                  id: 2
         - name: Inter-Annotator Agreement Matrix (per_label=true)
           path-parameters:
             id: 1
@@ -154,6 +154,14 @@ service:
                     - 0.5
                   - - 0.5
                     - 1.1
+              users:
+                - id: 1
+                  email: user1@example.com
+                - id: 2
+                  email: user2@example.com
+              std:
+                neg: 0.1
+                pos: 0.2
               common_tasks:
                 neg:
                   - - 0
@@ -165,14 +173,6 @@ service:
                     - 4
                   - - 4
                     - 0
-              std:
-                neg: 0.1
-                pos: 0.2
-              users:
-                - email: user1@example.com
-                  id: 1
-                - email: user2@example.com
-                  id: 2
       audiences:
         - public
     total_agreement:

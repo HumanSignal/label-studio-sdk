@@ -1,31 +1,31 @@
 types:
   ActionsListResponseItemDialog:
     properties:
-      form:
-        type: optional<list<map<string, unknown>>>
-      text:
-        type: optional<string>
       title:
+        type: optional<string>
+      text:
         type: optional<string>
       type:
         type: optional<string>
+      form:
+        type: optional<list<map<string, unknown>>>
     source:
       openapi: openapi/openapi.yaml
     inline: true
   ActionsListResponseItem:
     properties:
-      dialog:
-        type: optional<ActionsListResponseItemDialog>
-      experimental:
-        type: optional<boolean>
       id:
+        type: optional<string>
+      title:
         type: optional<string>
       order:
         type: optional<integer>
       permission:
         type: optional<string>
-      title:
-        type: optional<string>
+      experimental:
+        type: optional<boolean>
+      dialog:
+        type: optional<ActionsListResponseItemDialog>
     source:
       openapi: openapi/openapi.yaml
   ActionsCreateRequestId:
@@ -305,6 +305,41 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
+  ActionsCreateRequestSelectedItemsIncluded:
+    properties:
+      all:
+        type: boolean
+        docs: No tasks are selected
+      included:
+        type: optional<list<integer>>
+        docs: List of included task IDs
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  ActionsCreateRequestSelectedItemsExcluded:
+    properties:
+      all:
+        type: boolean
+        docs: All tasks are selected
+      excluded:
+        type: optional<list<integer>>
+        docs: List of excluded task IDs
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  ActionsCreateRequestSelectedItems:
+    discriminated: false
+    docs: >-
+      Task selection by IDs. If filters are applied, the selection will be
+      applied to the filtered tasks.If "all" is `false`, `"included"` must be
+      used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all":
+      false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+    union:
+      - type: ActionsCreateRequestSelectedItemsIncluded
+      - type: ActionsCreateRequestSelectedItemsExcluded
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   ActionsCreateRequestOrderingItem:
     enum:
       - value: tasks:agreement
@@ -354,41 +389,6 @@ types:
     inline: true
     source:
       openapi: openapi/openapi.yaml
-  ActionsCreateRequestSelectedItemsIncluded:
-    properties:
-      all:
-        type: boolean
-        docs: No tasks are selected
-      included:
-        type: optional<list<integer>>
-        docs: List of included task IDs
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ActionsCreateRequestSelectedItemsExcluded:
-    properties:
-      all:
-        type: boolean
-        docs: All tasks are selected
-      excluded:
-        type: optional<list<integer>>
-        docs: List of excluded task IDs
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  ActionsCreateRequestSelectedItems:
-    discriminated: false
-    docs: >-
-      Task selection by IDs. If filters are applied, the selection will be
-      applied to the filtered tasks.If "all" is `false`, `"included"` must be
-      used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all":
-      false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-    union:
-      - type: ActionsCreateRequestSelectedItemsIncluded
-      - type: ActionsCreateRequestSelectedItemsExcluded
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
 service:
   auth: false
   base-path: ''
@@ -418,20 +418,20 @@ service:
             project: 1
           response:
             body:
-              - dialog:
-                  form:
-                    - key: value
+              - id: predictions_to_annotations
+                title: Create Annotations From Predictions
+                order: 91
+                permission: tasks.change
+                experimental: false
+                dialog:
+                  title: Create Annotations From Predictions
                   text: >-
                     Create annotations from predictions using selected
                     predictions set for each selected task. Your account will be
                     assigned as an owner to those annotations.
-                  title: Create Annotations From Predictions
                   type: confirm
-                experimental: false
-                id: predictions_to_annotations
-                order: 91
-                permission: tasks.change
-                title: Create Annotations From Predictions
+                  form:
+                    - key: value
       audiences:
         - public
     create:
@@ -473,12 +473,6 @@ service:
                 Manager Filters.<br>Example: `{"conjunction": "or", "items":
                 [{"filter": "filter:tasks:completed_at", "operator": "greater",
                 "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-            ordering:
-              type: optional<list<ActionsCreateRequestOrderingItem>>
-              docs: >-
-                List of fields to order by. Fields are similar to filters but
-                without the `filter:` prefix. To reverse the order, add a minus
-                sign before the field name, e.g. `-tasks:created_at`.
             selectedItems:
               type: optional<ActionsCreateRequestSelectedItems>
               docs: >-
@@ -487,6 +481,12 @@ service:
                 `"included"` must be used. If "all" is `true`, `"excluded"` must
                 be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or
                 `{"all": true, "excluded": [4, 5]}`
+            ordering:
+              type: optional<list<ActionsCreateRequestOrderingItem>>
+              docs: >-
+                List of fields to order by. Fields are similar to filters but
+                without the `filter:` prefix. To reverse the order, add a minus
+                sign before the field name, e.g. `-tasks:created_at`.
         content-type: application/json
       examples:
         - query-parameters:
@@ -500,14 +500,14 @@ service:
                   operator: greater
                   type: Number
                   value: 123
-            ordering:
-              - tasks:total_annotations
             selectedItems:
               all: true
               excluded:
                 - 124
                 - 125
                 - 126
+            ordering:
+              - tasks:total_annotations
       audiences:
         - public
   source:

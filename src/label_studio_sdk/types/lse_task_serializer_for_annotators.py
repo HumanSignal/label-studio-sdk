@@ -14,35 +14,35 @@ class LseTaskSerializerForAnnotators(UncheckedBaseModel):
     Task Serializer with project scheme configs validation
     """
 
-    annotations: str
-    annotations_results: str
-    cancelled_annotations: typing.Optional[int] = None
-    comment_count: str
-    comments: str
+    id: int
+    data: typing.Optional[typing.Any] = None
     created_at: dt.datetime = pydantic.Field()
     """
     Time a task was created
     """
 
-    data: typing.Optional[typing.Any] = None
-    draft_exists: typing.Optional[bool] = None
+    annotations: str
     drafts: typing.List[LseTaskSerializerForAnnotatorsDraftsItem] = pydantic.Field()
     """
     Drafts for this task
     """
 
-    id: int
+    total_annotations: typing.Optional[int] = None
+    cancelled_annotations: typing.Optional[int] = None
+    annotations_results: str
     predictions: typing.List[LseTaskSerializerForAnnotatorsPredictionsItem] = pydantic.Field()
     """
     Predictions for this task
     """
 
-    predictions_results: str
-    predictions_score: typing.Optional[float] = None
-    reviews_rejected: typing.Optional[int] = None
-    total_annotations: typing.Optional[int] = None
     total_predictions: typing.Optional[int] = None
+    predictions_score: typing.Optional[float] = None
+    predictions_results: str
+    comments: str
+    comment_count: str
     unresolved_comment_count: str
+    reviews_rejected: typing.Optional[int] = None
+    draft_exists: typing.Optional[bool] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

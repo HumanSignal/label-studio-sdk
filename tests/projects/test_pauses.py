@@ -9,38 +9,38 @@ from ..utilities import validate_response
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "created_at": "2024-01-15T09:30:00Z",
-            "deleted_at": "2024-01-15T09:30:00Z",
-            "deleted_by": 1,
             "id": 1,
-            "paused_by": {
-                "avatar": "avatar",
-                "email": "email",
-                "first_name": "first_name",
-                "id": 1,
-                "last_name": "last_name",
-            },
             "project": 1,
-            "reason": "MANUAL",
-            "updated_at": "2024-01-15T09:30:00Z",
             "user": 1,
+            "paused_by": {
+                "id": 1,
+                "first_name": "first_name",
+                "last_name": "last_name",
+                "email": "email",
+                "avatar": "avatar",
+            },
+            "reason": "MANUAL",
             "verbose_reason": "verbose_reason",
+            "deleted_by": 1,
+            "deleted_at": "2024-01-15T09:30:00Z",
+            "created_at": "2024-01-15T09:30:00Z",
+            "updated_at": "2024-01-15T09:30:00Z",
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
-                "created_at": "datetime",
-                "deleted_at": "datetime",
-                "deleted_by": "integer",
                 "id": "integer",
-                "paused_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
                 "project": "integer",
-                "reason": None,
-                "updated_at": "datetime",
                 "user": "integer",
+                "paused_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+                "reason": None,
                 "verbose_reason": None,
+                "deleted_by": "integer",
+                "deleted_at": "datetime",
+                "created_at": "datetime",
+                "updated_at": "datetime",
             }
         },
     )
@@ -53,34 +53,34 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "created_at": "2024-01-15T09:30:00Z",
-        "deleted_at": "2024-01-15T09:30:00Z",
-        "deleted_by": 1,
         "id": 1,
-        "paused_by": {
-            "avatar": "avatar",
-            "email": "email",
-            "first_name": "first_name",
-            "id": 1,
-            "last_name": "last_name",
-        },
         "project": 1,
-        "reason": "MANUAL",
-        "updated_at": "2024-01-15T09:30:00Z",
         "user": 1,
+        "paused_by": {
+            "id": 1,
+            "first_name": "first_name",
+            "last_name": "last_name",
+            "email": "email",
+            "avatar": "avatar",
+        },
+        "reason": "MANUAL",
         "verbose_reason": "verbose_reason",
+        "deleted_by": 1,
+        "deleted_at": "2024-01-15T09:30:00Z",
+        "created_at": "2024-01-15T09:30:00Z",
+        "updated_at": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
-        "created_at": "datetime",
-        "deleted_at": "datetime",
-        "deleted_by": "integer",
         "id": "integer",
-        "paused_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
         "project": "integer",
-        "reason": None,
-        "updated_at": "datetime",
         "user": "integer",
+        "paused_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "reason": None,
         "verbose_reason": None,
+        "deleted_by": "integer",
+        "deleted_at": "datetime",
+        "created_at": "datetime",
+        "updated_at": "datetime",
     }
     response = client.projects.pauses.create(project_pk=1, user_pk=1, reason="MANUAL")
     validate_response(response, expected_response, expected_types)
@@ -91,34 +91,34 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "created_at": "2024-01-15T09:30:00Z",
-        "deleted_at": "2024-01-15T09:30:00Z",
-        "deleted_by": 1,
         "id": 1,
-        "paused_by": {
-            "avatar": "avatar",
-            "email": "email",
-            "first_name": "first_name",
-            "id": 1,
-            "last_name": "last_name",
-        },
         "project": 1,
-        "reason": "MANUAL",
-        "updated_at": "2024-01-15T09:30:00Z",
         "user": 1,
+        "paused_by": {
+            "id": 1,
+            "first_name": "first_name",
+            "last_name": "last_name",
+            "email": "email",
+            "avatar": "avatar",
+        },
+        "reason": "MANUAL",
         "verbose_reason": "verbose_reason",
+        "deleted_by": 1,
+        "deleted_at": "2024-01-15T09:30:00Z",
+        "created_at": "2024-01-15T09:30:00Z",
+        "updated_at": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
-        "created_at": "datetime",
-        "deleted_at": "datetime",
-        "deleted_by": "integer",
         "id": "integer",
-        "paused_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
         "project": "integer",
-        "reason": None,
-        "updated_at": "datetime",
         "user": "integer",
+        "paused_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "reason": None,
         "verbose_reason": None,
+        "deleted_by": "integer",
+        "deleted_at": "datetime",
+        "created_at": "datetime",
+        "updated_at": "datetime",
     }
     response = client.projects.pauses.get(id="id", project_pk=1, user_pk=1)
     validate_response(response, expected_response, expected_types)
@@ -142,34 +142,34 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "created_at": "2024-01-15T09:30:00Z",
-        "deleted_at": "2024-01-15T09:30:00Z",
-        "deleted_by": 1,
         "id": 1,
-        "paused_by": {
-            "avatar": "avatar",
-            "email": "email",
-            "first_name": "first_name",
-            "id": 1,
-            "last_name": "last_name",
-        },
         "project": 1,
-        "reason": "MANUAL",
-        "updated_at": "2024-01-15T09:30:00Z",
         "user": 1,
+        "paused_by": {
+            "id": 1,
+            "first_name": "first_name",
+            "last_name": "last_name",
+            "email": "email",
+            "avatar": "avatar",
+        },
+        "reason": "MANUAL",
         "verbose_reason": "verbose_reason",
+        "deleted_by": 1,
+        "deleted_at": "2024-01-15T09:30:00Z",
+        "created_at": "2024-01-15T09:30:00Z",
+        "updated_at": "2024-01-15T09:30:00Z",
     }
     expected_types: typing.Any = {
-        "created_at": "datetime",
-        "deleted_at": "datetime",
-        "deleted_by": "integer",
         "id": "integer",
-        "paused_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
         "project": "integer",
-        "reason": None,
-        "updated_at": "datetime",
         "user": "integer",
+        "paused_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "reason": None,
         "verbose_reason": None,
+        "deleted_by": "integer",
+        "deleted_at": "datetime",
+        "created_at": "datetime",
+        "updated_at": "datetime",
     }
     response = client.projects.pauses.update(id="id", project_pk=1, user_pk=1)
     validate_response(response, expected_response, expected_types)

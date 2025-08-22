@@ -22,8 +22,8 @@ service:
             id: 1
           response:
             body:
-              file: file
               id: 1
+              file: file
               size: 1
       audiences:
         - public
@@ -67,8 +67,8 @@ service:
           request: {}
           response:
             body:
-              file: file
               id: 1
+              file: file
               size: 1
       audiences:
         - public
@@ -106,8 +106,8 @@ service:
             id: 1
           response:
             body:
-              - file: file
-                id: 1
+              - id: 1
+                file: file
                 size: 1
       audiences:
         - public

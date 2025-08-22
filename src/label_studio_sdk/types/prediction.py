@@ -8,9 +8,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Prediction(UncheckedBaseModel):
-    cluster: typing.Optional[int] = pydantic.Field(default=None)
+    id: int
+    result: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
     """
-    Cluster for the current prediction
+    List of prediction results for the task
+    """
+
+    model_version: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
     """
 
     created_ago: str = pydantic.Field()
@@ -18,13 +24,24 @@ class Prediction(UncheckedBaseModel):
     Delta time from creation time
     """
 
-    created_at: dt.datetime
-    id: int
+    score: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Prediction score
+    """
+
+    cluster: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Cluster for the current prediction
+    """
+
+    neighbors: typing.Optional[typing.Optional[typing.Any]] = None
     mislabeling: typing.Optional[float] = pydantic.Field(default=None)
     """
     Related task mislabeling score
     """
 
+    created_at: dt.datetime
+    updated_at: dt.datetime
     model: typing.Optional[int] = pydantic.Field(default=None)
     """
     An ML Backend instance that created the prediction.
@@ -35,25 +52,8 @@ class Prediction(UncheckedBaseModel):
     A run of a ModelVersion that created the prediction.
     """
 
-    model_version: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Model version - tag for predictions that can be used to filter tasks in Data Manager, as well as select specific model version for showing preannotations in the labeling interface
-    """
-
-    neighbors: typing.Optional[typing.Optional[typing.Any]] = None
-    project: typing.Optional[int] = None
-    result: typing.List[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field()
-    """
-    List of prediction results for the task
-    """
-
-    score: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Prediction score
-    """
-
     task: int
-    updated_at: dt.datetime
+    project: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

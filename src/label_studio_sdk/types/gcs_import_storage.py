@@ -9,19 +9,28 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class GcsImportStorage(UncheckedBaseModel):
+    id: int
+    type: str
+    synchronizable: typing.Optional[bool] = None
+    presign: typing.Optional[bool] = None
     bucket: typing.Optional[str] = pydantic.Field(default=None)
     """
     GCS bucket name
     """
 
-    created_at: dt.datetime = pydantic.Field()
+    prefix: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Creation time
+    GCS bucket prefix
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Cloud storage description
+    Cloud storage regex for filtering objects
+    """
+
+    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Interpret objects as BLOBs and generate URLs
     """
 
     google_application_credentials: typing.Optional[str] = pydantic.Field(default=None)
@@ -34,7 +43,6 @@ class GcsImportStorage(UncheckedBaseModel):
     Google project ID
     """
 
-    id: int
     last_sync: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Last sync finished time
@@ -50,13 +58,28 @@ class GcsImportStorage(UncheckedBaseModel):
     Last sync job ID
     """
 
-    meta: typing.Optional[typing.Optional[typing.Any]] = None
-    prefix: typing.Optional[str] = pydantic.Field(default=None)
+    status: typing.Optional[StatusC5AEnum] = None
+    traceback: typing.Optional[str] = pydantic.Field(default=None)
     """
-    GCS bucket prefix
+    Traceback report for the last failed sync
     """
 
-    presign: typing.Optional[bool] = None
+    meta: typing.Optional[typing.Optional[typing.Any]] = None
+    title: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage title
+    """
+
+    description: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Cloud storage description
+    """
+
+    created_at: dt.datetime = pydantic.Field()
+    """
+    Creation time
+    """
+
     presign_ttl: typing.Optional[int] = pydantic.Field(default=None)
     """
     Presigned URLs TTL (in minutes)
@@ -65,29 +88,6 @@ class GcsImportStorage(UncheckedBaseModel):
     project: int = pydantic.Field()
     """
     A unique integer value identifying this project.
-    """
-
-    regex_filter: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage regex for filtering objects
-    """
-
-    status: typing.Optional[StatusC5AEnum] = None
-    synchronizable: typing.Optional[bool] = None
-    title: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Cloud storage title
-    """
-
-    traceback: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Traceback report for the last failed sync
-    """
-
-    type: str
-    use_blob_urls: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Interpret objects as BLOBs and generate URLs
     """
 
     if IS_PYDANTIC_V2:

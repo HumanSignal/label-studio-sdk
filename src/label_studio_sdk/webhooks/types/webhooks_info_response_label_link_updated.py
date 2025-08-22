@@ -9,9 +9,9 @@ import pydantic
 
 
 class WebhooksInfoResponseLabelLinkUpdated(UncheckedBaseModel):
+    name: str
     description: str
     key: str
-    name: str
     organization_only: typing_extensions.Annotated[bool, FieldMetadata(alias="organization-only")]
 
     if IS_PYDANTIC_V2:

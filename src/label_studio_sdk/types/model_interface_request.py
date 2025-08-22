@@ -9,10 +9,15 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ModelInterfaceRequest(UncheckedBaseModel):
-    associated_projects: typing.Optional[typing.List[int]] = None
     created_by: typing.Optional[UserSimpleRequest] = pydantic.Field(default=None)
     """
     User who created Dataset
+    """
+
+    skill_name: typing.Optional[SkillNameEnum] = None
+    title: str = pydantic.Field()
+    """
+    Model name
     """
 
     description: typing.Optional[str] = pydantic.Field(default=None)
@@ -21,13 +26,9 @@ class ModelInterfaceRequest(UncheckedBaseModel):
     """
 
     input_fields: typing.Optional[typing.Optional[typing.Any]] = None
-    organization: typing.Optional[int] = None
     output_classes: typing.Optional[typing.Optional[typing.Any]] = None
-    skill_name: typing.Optional[SkillNameEnum] = None
-    title: str = pydantic.Field()
-    """
-    Model name
-    """
+    organization: typing.Optional[int] = None
+    associated_projects: typing.Optional[typing.List[int]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

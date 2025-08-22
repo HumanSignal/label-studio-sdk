@@ -83,10 +83,10 @@ class WorkspacesClient:
         self,
         *,
         title: str,
-        color: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
+        color: typing.Optional[str] = OMIT,
         is_personal: typing.Optional[bool] = OMIT,
+        is_archived: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -97,16 +97,16 @@ class WorkspacesClient:
         title : str
             Workspace name
 
-        color : typing.Optional[str]
-
         description : typing.Optional[str]
             Workspace description
 
-        is_archived : typing.Optional[bool]
-            Workspace is archived
+        color : typing.Optional[str]
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
+
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -131,11 +131,11 @@ class WorkspacesClient:
             "api/workspaces/",
             method="POST",
             json={
-                "color": color,
-                "description": description,
-                "is_archived": is_archived,
-                "is_personal": is_personal,
                 "title": title,
+                "description": description,
+                "color": color,
+                "is_personal": is_personal,
+                "is_archived": is_archived,
             },
             headers={
                 "content-type": "application/json",
@@ -246,11 +246,11 @@ class WorkspacesClient:
         self,
         id: int,
         *,
-        color: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
+        is_archived: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -260,19 +260,19 @@ class WorkspacesClient:
         ----------
         id : int
 
-        color : typing.Optional[str]
+        title : typing.Optional[str]
+            Workspace name
 
         description : typing.Optional[str]
             Workspace description
 
-        is_archived : typing.Optional[bool]
-            Workspace is archived
+        color : typing.Optional[str]
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
 
-        title : typing.Optional[str]
-            Workspace name
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -297,11 +297,11 @@ class WorkspacesClient:
             f"api/workspaces/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "color": color,
-                "description": description,
-                "is_archived": is_archived,
-                "is_personal": is_personal,
                 "title": title,
+                "description": description,
+                "color": color,
+                "is_personal": is_personal,
+                "is_archived": is_archived,
             },
             headers={
                 "content-type": "application/json",
@@ -399,10 +399,10 @@ class AsyncWorkspacesClient:
         self,
         *,
         title: str,
-        color: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
+        color: typing.Optional[str] = OMIT,
         is_personal: typing.Optional[bool] = OMIT,
+        is_archived: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -413,16 +413,16 @@ class AsyncWorkspacesClient:
         title : str
             Workspace name
 
-        color : typing.Optional[str]
-
         description : typing.Optional[str]
             Workspace description
 
-        is_archived : typing.Optional[bool]
-            Workspace is archived
+        color : typing.Optional[str]
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
+
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -455,11 +455,11 @@ class AsyncWorkspacesClient:
             "api/workspaces/",
             method="POST",
             json={
-                "color": color,
-                "description": description,
-                "is_archived": is_archived,
-                "is_personal": is_personal,
                 "title": title,
+                "description": description,
+                "color": color,
+                "is_personal": is_personal,
+                "is_archived": is_archived,
             },
             headers={
                 "content-type": "application/json",
@@ -586,11 +586,11 @@ class AsyncWorkspacesClient:
         self,
         id: int,
         *,
-        color: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        is_archived: typing.Optional[bool] = OMIT,
-        is_personal: typing.Optional[bool] = OMIT,
         title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        color: typing.Optional[str] = OMIT,
+        is_personal: typing.Optional[bool] = OMIT,
+        is_archived: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
@@ -600,19 +600,19 @@ class AsyncWorkspacesClient:
         ----------
         id : int
 
-        color : typing.Optional[str]
+        title : typing.Optional[str]
+            Workspace name
 
         description : typing.Optional[str]
             Workspace description
 
-        is_archived : typing.Optional[bool]
-            Workspace is archived
+        color : typing.Optional[str]
 
         is_personal : typing.Optional[bool]
             Workspace is a personal user workspace
 
-        title : typing.Optional[str]
-            Workspace name
+        is_archived : typing.Optional[bool]
+            Workspace is archived
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -645,11 +645,11 @@ class AsyncWorkspacesClient:
             f"api/workspaces/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "color": color,
-                "description": description,
-                "is_archived": is_archived,
-                "is_personal": is_personal,
                 "title": title,
+                "description": description,
+                "color": color,
+                "is_personal": is_personal,
+                "is_archived": is_archived,
             },
             headers={
                 "content-type": "application/json",

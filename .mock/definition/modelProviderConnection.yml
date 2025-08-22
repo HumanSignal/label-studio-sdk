@@ -26,30 +26,30 @@ service:
           request: {}
           response:
             body:
-              budget_alert_threshold: 1.1
-              budget_last_reset_date: '2024-01-15T09:30:00Z'
-              budget_limit: 1.1
-              budget_reset_period: Monthly
-              budget_total_spent: 1.1
-              cached_available_models: cached_available_models
-              created_at: '2024-01-15T09:30:00Z'
+              id: 1
               created_by:
-                avatar: avatar
-                email: email
-                first_name: first_name
                 id: 1
+                first_name: first_name
                 last_name: last_name
+                email: email
+                avatar: avatar
+              model_params: model_params
+              provider: OpenAI
               deployment_name: deployment_name
               endpoint: endpoint
-              google_location: google_location
               google_project_id: google_project_id
-              id: 1
-              is_internal: true
-              model_params: model_params
-              organization: 1
-              provider: OpenAI
+              google_location: google_location
+              cached_available_models: cached_available_models
               scope: Organization
+              created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+              is_internal: true
+              budget_limit: 1.1
+              budget_last_reset_date: '2024-01-15T09:30:00Z'
+              budget_reset_period: Monthly
+              budget_total_spent: 1.1
+              budget_alert_threshold: 1.1
+              organization: 1
       audiences:
         - internal
   source:

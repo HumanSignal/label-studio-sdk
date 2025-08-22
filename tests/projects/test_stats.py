@@ -9,18 +9,18 @@ from ..utilities import validate_response
 async def test_iaa(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "IAA": [[1, 0.5], [0.5, 1]],
-        "common_tasks": [[0, 1], [1, 0]],
+        "users": [{"id": 1, "email": "user1@example.com"}, {"id": 2, "email": "user2@example.com"}],
         "std": 1.1,
-        "users": [{"email": "user1@example.com", "id": 1}, {"email": "user2@example.com", "id": 2}],
+        "common_tasks": [[0, 1], [1, 0]],
     }
     expected_types: typing.Any = {
         "IAA": ("list", {0: ("list", {0: None, 1: None}), 1: ("list", {0: None, 1: None})}),
-        "common_tasks": ("list", {0: ("list", {0: None, 1: None}), 1: ("list", {0: None, 1: None})}),
-        "std": None,
         "users": (
             "list",
             {0: ("dict", {0: (None, None), 1: (None, None)}), 1: ("dict", {0: (None, None), 1: (None, None)})},
         ),
+        "std": None,
+        "common_tasks": ("list", {0: ("list", {0: None, 1: None}), 1: ("list", {0: None, 1: None})}),
     }
     response = client.projects.stats.iaa(id=1)
     validate_response(response, expected_response, expected_types)

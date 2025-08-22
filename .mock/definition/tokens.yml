@@ -24,9 +24,9 @@ service:
       examples:
         - response:
             body:
-              - created_at: created_at
+              - token: token
+                created_at: created_at
                 expires_at: expires_at
-                token: token
       audiences:
         - public
     create:
@@ -43,9 +43,9 @@ service:
       examples:
         - response:
             body:
+              token: token
               created_at: created_at
               expires_at: expires_at
-              token: token
       audiences:
         - public
     blacklist:

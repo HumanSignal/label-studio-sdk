@@ -8,13 +8,13 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.unchecked_base_model import construct_type
 from ...types.export import Export
-from ...types.lse_annotation_filter_options_request import LseAnnotationFilterOptionsRequest
-from ...types.converted_format_request import ConvertedFormatRequest
 from ...types.user_simple_request import UserSimpleRequest
 import datetime as dt
-from ...types.serialization_options_request import SerializationOptionsRequest
 from ...types.status7bf_enum import Status7BfEnum
+from ...types.converted_format_request import ConvertedFormatRequest
 from ...types.lse_task_filter_options_request import LseTaskFilterOptionsRequest
+from ...types.lse_annotation_filter_options_request import LseAnnotationFilterOptionsRequest
+from ...types.serialization_options_request import SerializationOptionsRequest
 from ...types.lse_export_create import LseExportCreate
 from ...core.serialization import convert_and_respect_annotation_metadata
 from .types.exports_convert_response import ExportsConvertResponse
@@ -46,15 +46,15 @@ class ExportsClient:
                 For example, to export JSON annotations for a project to a file called `annotations.json`,
                 run the following from the command line:
                 ```bash
-                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
                 To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
                 ```bash
-                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
                 To export specific tasks with IDs of 123 and 345, run the following from the command line:
                 ```bash
-                curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET 'https://localhost:8080/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
 
 
@@ -212,16 +212,16 @@ class ExportsClient:
         self,
         id: int,
         *,
-        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
-        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
-        counters: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        title: typing.Optional[str] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         finished_at: typing.Optional[dt.datetime] = OMIT,
-        md5: typing.Optional[str] = OMIT,
-        serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
         status: typing.Optional[Status7BfEnum] = OMIT,
+        md5: typing.Optional[str] = OMIT,
+        counters: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
         task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
+        serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseExportCreate:
         """
@@ -232,26 +232,26 @@ class ExportsClient:
         id : int
             A unique integer value identifying this project.
 
-        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
-
-        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
-
-        counters : typing.Optional[typing.Optional[typing.Any]]
+        title : typing.Optional[str]
 
         created_by : typing.Optional[UserSimpleRequest]
 
         finished_at : typing.Optional[dt.datetime]
             Complete or fail time
 
+        status : typing.Optional[Status7BfEnum]
+
         md5 : typing.Optional[str]
 
-        serialization_options : typing.Optional[SerializationOptionsRequest]
+        counters : typing.Optional[typing.Optional[typing.Any]]
 
-        status : typing.Optional[Status7BfEnum]
+        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
 
         task_filter_options : typing.Optional[LseTaskFilterOptionsRequest]
 
-        title : typing.Optional[str]
+        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
+
+        serialization_options : typing.Optional[SerializationOptionsRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -276,26 +276,26 @@ class ExportsClient:
             f"api/projects/{jsonable_encoder(id)}/exports/",
             method="POST",
             json={
-                "annotation_filter_options": convert_and_respect_annotation_metadata(
-                    object_=annotation_filter_options, annotation=LseAnnotationFilterOptionsRequest, direction="write"
-                ),
-                "converted_formats": convert_and_respect_annotation_metadata(
-                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormatRequest], direction="write"
-                ),
-                "counters": counters,
+                "title": title,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
                 "finished_at": finished_at,
-                "md5": md5,
-                "serialization_options": convert_and_respect_annotation_metadata(
-                    object_=serialization_options, annotation=SerializationOptionsRequest, direction="write"
-                ),
                 "status": status,
+                "md5": md5,
+                "counters": counters,
+                "converted_formats": convert_and_respect_annotation_metadata(
+                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormatRequest], direction="write"
+                ),
                 "task_filter_options": convert_and_respect_annotation_metadata(
                     object_=task_filter_options, annotation=LseTaskFilterOptionsRequest, direction="write"
                 ),
-                "title": title,
+                "annotation_filter_options": convert_and_respect_annotation_metadata(
+                    object_=annotation_filter_options, annotation=LseAnnotationFilterOptionsRequest, direction="write"
+                ),
+                "serialization_options": convert_and_respect_annotation_metadata(
+                    object_=serialization_options, annotation=SerializationOptionsRequest, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -463,8 +463,8 @@ class ExportsClient:
             f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/convert",
             method="POST",
             json={
-                "download_resources": download_resources,
                 "export_type": export_type,
+                "download_resources": download_resources,
             },
             headers={
                 "content-type": "application/json",
@@ -566,15 +566,15 @@ class AsyncExportsClient:
                 For example, to export JSON annotations for a project to a file called `annotations.json`,
                 run the following from the command line:
                 ```bash
-                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
                 To export all tasks, including skipped tasks and others without annotations, run the following from the command line:
                 ```bash
-                curl -X GET http://localhost:8000/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET https://localhost:8080/api/projects/{id}/export?exportType=JSON&download_all_tasks=true -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
                 To export specific tasks with IDs of 123 and 345, run the following from the command line:
                 ```bash
-                curl -X GET 'http://localhost:8000/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
+                curl -X GET 'https://localhost:8080/api/projects/{id}/export?ids[]=123&ids[]=345' -H 'Authorization: Token abc123' --output 'annotations.json'
                 ```
 
 
@@ -750,16 +750,16 @@ class AsyncExportsClient:
         self,
         id: int,
         *,
-        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
-        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
-        counters: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        title: typing.Optional[str] = OMIT,
         created_by: typing.Optional[UserSimpleRequest] = OMIT,
         finished_at: typing.Optional[dt.datetime] = OMIT,
-        md5: typing.Optional[str] = OMIT,
-        serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
         status: typing.Optional[Status7BfEnum] = OMIT,
+        md5: typing.Optional[str] = OMIT,
+        counters: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        converted_formats: typing.Optional[typing.Sequence[ConvertedFormatRequest]] = OMIT,
         task_filter_options: typing.Optional[LseTaskFilterOptionsRequest] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        annotation_filter_options: typing.Optional[LseAnnotationFilterOptionsRequest] = OMIT,
+        serialization_options: typing.Optional[SerializationOptionsRequest] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseExportCreate:
         """
@@ -770,26 +770,26 @@ class AsyncExportsClient:
         id : int
             A unique integer value identifying this project.
 
-        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
-
-        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
-
-        counters : typing.Optional[typing.Optional[typing.Any]]
+        title : typing.Optional[str]
 
         created_by : typing.Optional[UserSimpleRequest]
 
         finished_at : typing.Optional[dt.datetime]
             Complete or fail time
 
+        status : typing.Optional[Status7BfEnum]
+
         md5 : typing.Optional[str]
 
-        serialization_options : typing.Optional[SerializationOptionsRequest]
+        counters : typing.Optional[typing.Optional[typing.Any]]
 
-        status : typing.Optional[Status7BfEnum]
+        converted_formats : typing.Optional[typing.Sequence[ConvertedFormatRequest]]
 
         task_filter_options : typing.Optional[LseTaskFilterOptionsRequest]
 
-        title : typing.Optional[str]
+        annotation_filter_options : typing.Optional[LseAnnotationFilterOptionsRequest]
+
+        serialization_options : typing.Optional[SerializationOptionsRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -822,26 +822,26 @@ class AsyncExportsClient:
             f"api/projects/{jsonable_encoder(id)}/exports/",
             method="POST",
             json={
-                "annotation_filter_options": convert_and_respect_annotation_metadata(
-                    object_=annotation_filter_options, annotation=LseAnnotationFilterOptionsRequest, direction="write"
-                ),
-                "converted_formats": convert_and_respect_annotation_metadata(
-                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormatRequest], direction="write"
-                ),
-                "counters": counters,
+                "title": title,
                 "created_by": convert_and_respect_annotation_metadata(
                     object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
                 "finished_at": finished_at,
-                "md5": md5,
-                "serialization_options": convert_and_respect_annotation_metadata(
-                    object_=serialization_options, annotation=SerializationOptionsRequest, direction="write"
-                ),
                 "status": status,
+                "md5": md5,
+                "counters": counters,
+                "converted_formats": convert_and_respect_annotation_metadata(
+                    object_=converted_formats, annotation=typing.Sequence[ConvertedFormatRequest], direction="write"
+                ),
                 "task_filter_options": convert_and_respect_annotation_metadata(
                     object_=task_filter_options, annotation=LseTaskFilterOptionsRequest, direction="write"
                 ),
-                "title": title,
+                "annotation_filter_options": convert_and_respect_annotation_metadata(
+                    object_=annotation_filter_options, annotation=LseAnnotationFilterOptionsRequest, direction="write"
+                ),
+                "serialization_options": convert_and_respect_annotation_metadata(
+                    object_=serialization_options, annotation=SerializationOptionsRequest, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -1033,8 +1033,8 @@ class AsyncExportsClient:
             f"api/projects/{jsonable_encoder(id)}/exports/{jsonable_encoder(export_pk)}/convert",
             method="POST",
             json={
-                "download_resources": download_resources,
                 "export_type": export_type,
+                "download_resources": download_resources,
             },
             headers={
                 "content-type": "application/json",

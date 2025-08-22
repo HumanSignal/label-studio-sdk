@@ -11,19 +11,19 @@ class ProjectsImportTasksResponse(UncheckedBaseModel):
     Task creation response
     """
 
+    task_count: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    Number of tasks added
+    """
+
     annotation_count: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of annotations added
     """
 
-    could_be_tasks_list: typing.Optional[bool] = pydantic.Field(default=None)
+    predictions_count: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Whether uploaded files can contain lists of tasks, like CSV/TSV files
-    """
-
-    data_columns: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    The list of found data columns
+    Number of predictions added
     """
 
     duration: typing.Optional[float] = pydantic.Field(default=None)
@@ -36,19 +36,19 @@ class ProjectsImportTasksResponse(UncheckedBaseModel):
     Database IDs of uploaded files
     """
 
+    could_be_tasks_list: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether uploaded files can contain lists of tasks, like CSV/TSV files
+    """
+
     found_formats: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     The list of found file formats
     """
 
-    predictions_count: typing.Optional[int] = pydantic.Field(default=None)
+    data_columns: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    Number of predictions added
-    """
-
-    task_count: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    Number of tasks added
+    The list of found data columns
     """
 
     if IS_PYDANTIC_V2:

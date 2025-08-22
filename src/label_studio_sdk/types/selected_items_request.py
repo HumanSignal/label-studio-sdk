@@ -10,8 +10,8 @@ import pydantic
 
 class SelectedItemsRequest(UncheckedBaseModel):
     all_: typing_extensions.Annotated[bool, FieldMetadata(alias="all")]
-    excluded: typing.Optional[typing.List[int]] = None
     included: typing.Optional[typing.List[int]] = None
+    excluded: typing.Optional[typing.List[int]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

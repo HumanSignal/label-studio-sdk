@@ -24,24 +24,24 @@ service:
       examples:
         - response:
             body:
-              - data:
-                  key: value
+              - id: 1
                 filter_group:
-                  conjunction: conjunction
-                  filters:
-                    - column: column
-                      id: 1
-                      operator: operator
-                      type: type
                   id: 1
-                id: 1
-                order: 1
+                  filters:
+                    - id: 1
+                      column: column
+                      type: type
+                      operator: operator
+                  conjunction: conjunction
+                data:
+                  key: value
                 ordering:
                   key: value
-                project: 1
+                order: 1
                 selected_items:
                   key: value
                 user: 1
+                project: 1
       audiences:
         - public
     create:
@@ -70,67 +70,24 @@ service:
         - request: {}
           response:
             body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - id: 1
+                    column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
               data:
                 key: value
-              filter_group:
-                conjunction: conjunction
-                filters:
-                  - column: column
-                    id: 1
-                    operator: operator
-                    type: type
-                id: 1
-              id: 1
-              order: 1
               ordering:
                 key: value
-              project: 1
+              order: 1
               selected_items:
                 key: value
               user: 1
-      audiences:
-        - public
-    update_order:
-      path: /api/dm/views/order/
-      method: POST
-      auth: true
-      docs: Update the order field of views based on the provided list of view IDs
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Update order of views
-      request:
-        name: ViewOrderRequest
-        body:
-          properties:
-            ids:
-              docs: A list of view IDs in the desired order.
-              type: list<integer>
-            project: integer
-        content-type: application/json
-      examples:
-        - request:
-            ids:
-              - 1
-            project: 1
-      audiences:
-        - public
-    delete_all:
-      path: /api/dm/views/reset/
-      method: DELETE
-      auth: true
-      docs: Delete all views for a specific project.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Delete all project views
-      request:
-        name: ViewsDeleteAllRequest
-        query-parameters:
-          project:
-            type: integer
-            docs: Project ID
-      examples:
-        - query-parameters:
-            project: 1
+              project: 1
       audiences:
         - public
     get:
@@ -153,24 +110,24 @@ service:
             id: id
           response:
             body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - id: 1
+                    column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
               data:
                 key: value
-              filter_group:
-                conjunction: conjunction
-                filters:
-                  - column: column
-                    id: 1
-                    operator: operator
-                    type: type
-                id: 1
-              id: 1
-              order: 1
               ordering:
                 key: value
-              project: 1
+              order: 1
               selected_items:
                 key: value
               user: 1
+              project: 1
       audiences:
         - public
     delete:
@@ -224,24 +181,67 @@ service:
           request: {}
           response:
             body:
+              id: 1
+              filter_group:
+                id: 1
+                filters:
+                  - id: 1
+                    column: column
+                    type: type
+                    operator: operator
+                conjunction: conjunction
               data:
                 key: value
-              filter_group:
-                conjunction: conjunction
-                filters:
-                  - column: column
-                    id: 1
-                    operator: operator
-                    type: type
-                id: 1
-              id: 1
-              order: 1
               ordering:
                 key: value
-              project: 1
+              order: 1
               selected_items:
                 key: value
               user: 1
+              project: 1
+      audiences:
+        - public
+    update_order:
+      path: /api/dm/views/order/
+      method: POST
+      auth: true
+      docs: Update the order field of views based on the provided list of view IDs
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Update order of views
+      request:
+        name: ViewOrderRequest
+        body:
+          properties:
+            project: integer
+            ids:
+              docs: A list of view IDs in the desired order.
+              type: list<integer>
+        content-type: application/json
+      examples:
+        - request:
+            project: 1
+            ids:
+              - 1
+      audiences:
+        - public
+    delete_all:
+      path: /api/dm/views/reset/
+      method: DELETE
+      auth: true
+      docs: Delete all views for a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Delete all project views
+      request:
+        name: ViewsDeleteAllRequest
+        query-parameters:
+          project:
+            type: integer
+            docs: Project ID
+      examples:
+        - query-parameters:
+            project: 1
       audiences:
         - public
   source:

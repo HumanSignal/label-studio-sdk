@@ -23,8 +23,8 @@ class CustomClient:
         id: int,
         *,
         code: str,
-        region: typing.Optional[str] = OMIT,
         role: typing.Optional[str] = OMIT,
+        region: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -36,9 +36,9 @@ class CustomClient:
 
         code : str
 
-        region : typing.Optional[str]
-
         role : typing.Optional[str]
+
+        region : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -64,8 +64,8 @@ class CustomClient:
             method="POST",
             json={
                 "code": code,
-                "region": region,
                 "role": role,
+                "region": region,
             },
             headers={
                 "content-type": "application/json",
@@ -218,8 +218,8 @@ class AsyncCustomClient:
         id: int,
         *,
         code: str,
-        region: typing.Optional[str] = OMIT,
         role: typing.Optional[str] = OMIT,
+        region: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
@@ -231,9 +231,9 @@ class AsyncCustomClient:
 
         code : str
 
-        region : typing.Optional[str]
-
         role : typing.Optional[str]
+
+        region : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -267,8 +267,8 @@ class AsyncCustomClient:
             method="POST",
             json={
                 "code": code,
-                "region": region,
                 "role": role,
+                "region": region,
             },
             headers={
                 "content-type": "application/json",

@@ -26,31 +26,31 @@ service:
       examples:
         - response:
             body:
-              - account_name: account_name
+              - id: 1
+                type: type
+                synchronizable: true
+                presign: true
+                prefix: prefix
+                regex_filter: regex_filter
+                use_blob_urls: true
+                account_name: account_name
+                container: container
+                tenant_id: tenant_id
                 client_id: client_id
                 client_secret: client_secret
-                container: container
-                created_at: '2024-01-15T09:30:00Z'
-                description: description
-                id: 1
+                user_delegation_key: user_delegation_key
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
+                status: initialized
+                traceback: traceback
                 meta:
                   key: value
-                prefix: prefix
-                presign: true
+                title: title
+                description: description
+                created_at: '2024-01-15T09:30:00Z'
                 presign_ttl: 1
                 project: 1
-                regex_filter: regex_filter
-                status: initialized
-                synchronizable: true
-                tenant_id: tenant_id
-                title: title
-                traceback: traceback
-                type: type
-                use_blob_urls: true
-                user_delegation_key: user_delegation_key
     api_storages_azure_spi_create:
       path: /api/storages/azure_spi/
       method: POST
@@ -70,77 +70,31 @@ service:
             project: 1
           response:
             body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               account_name: account_name
+              container: container
+              tenant_id: tenant_id
               client_id: client_id
               client_secret: client_secret
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              description: description
-              id: 1
+              user_delegation_key: user_delegation_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              presign: true
-              presign_ttl: 1
-              project: 1
-              regex_filter: regex_filter
-              status: initialized
-              synchronizable: true
-              tenant_id: tenant_id
               title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
-              user_delegation_key: user_delegation_key
-    api_storages_azure_spi_validate_create:
-      path: /api/storages/azure_spi/validate
-      method: POST
-      auth: true
-      docs: >-
-        Validate a specific Azure import storage connection that was set up with
-        Service Principal authentication.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Validate Azure SPI import storage
-      request:
-        body: root.AzureServicePrincipalImportStorageRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.AzureServicePrincipalImportStorage
-      examples:
-        - request:
-            project: 1
-          response:
-            body:
-              account_name: account_name
-              client_id: client_id
-              client_secret: client_secret
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
               description: description
-              id: 1
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              meta:
-                key: value
-              prefix: prefix
-              presign: true
+              created_at: '2024-01-15T09:30:00Z'
               presign_ttl: 1
               project: 1
-              regex_filter: regex_filter
-              status: initialized
-              synchronizable: true
-              tenant_id: tenant_id
-              title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
-              user_delegation_key: user_delegation_key
     api_storages_azure_spi_retrieve:
       path: /api/storages/azure_spi/{id}
       method: GET
@@ -161,31 +115,31 @@ service:
             id: 1
           response:
             body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               account_name: account_name
+              container: container
+              tenant_id: tenant_id
               client_id: client_id
               client_secret: client_secret
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              description: description
-              id: 1
+              user_delegation_key: user_delegation_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              presign: true
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
               presign_ttl: 1
               project: 1
-              regex_filter: regex_filter
-              status: initialized
-              synchronizable: true
-              tenant_id: tenant_id
-              title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
-              user_delegation_key: user_delegation_key
     api_storages_azure_spi_destroy:
       path: /api/storages/azure_spi/{id}
       method: DELETE
@@ -217,21 +171,39 @@ service:
         name: PatchedAzureServicePrincipalImportStorageRequest
         body:
           properties:
+            synchronizable:
+              type: optional<boolean>
+              default: true
+            presign:
+              type: optional<boolean>
+              default: true
+            prefix:
+              type: optional<string>
+              docs: Azure blob prefix name
+            regex_filter:
+              type: optional<string>
+              docs: Cloud storage regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
             account_name:
               type: optional<string>
               docs: Azure Blob account name
+            container:
+              type: optional<string>
+              docs: Azure blob container
+            tenant_id:
+              type: optional<string>
+              docs: Azure Tenant ID
             client_id:
               type: optional<string>
               docs: Azure Blob Service Principal Client ID
             client_secret:
               type: optional<string>
               docs: Azure Blob Service Principal Client Secret
-            container:
+            user_delegation_key:
               type: optional<string>
-              docs: Azure blob container
-            description:
-              type: optional<string>
-              docs: Cloud storage description
+              docs: User Delegation Key (Backend)
             last_sync:
               type: optional<datetime>
               docs: Last sync finished time
@@ -246,13 +218,19 @@ service:
               docs: Last sync job ID
               validation:
                 maxLength: 256
-            meta: optional<unknown>
-            prefix:
+            status: optional<root.StatusC5AEnum>
+            traceback:
               type: optional<string>
-              docs: Azure blob prefix name
-            presign:
-              type: optional<boolean>
-              default: true
+              docs: Traceback report for the last failed sync
+            meta: optional<unknown>
+            title:
+              type: optional<string>
+              docs: Cloud storage title
+              validation:
+                maxLength: 256
+            description:
+              type: optional<string>
+              docs: Cloud storage description
             presign_ttl:
               type: optional<integer>
               docs: Presigned URLs TTL (in minutes)
@@ -262,30 +240,6 @@ service:
             project:
               type: optional<integer>
               docs: A unique integer value identifying this project.
-            regex_filter:
-              type: optional<string>
-              docs: Cloud storage regex for filtering objects
-            status: optional<root.StatusC5AEnum>
-            synchronizable:
-              type: optional<boolean>
-              default: true
-            tenant_id:
-              type: optional<string>
-              docs: Azure Tenant ID
-            title:
-              type: optional<string>
-              docs: Cloud storage title
-              validation:
-                maxLength: 256
-            traceback:
-              type: optional<string>
-              docs: Traceback report for the last failed sync
-            use_blob_urls:
-              type: optional<boolean>
-              docs: Interpret objects as BLOBs and generate URLs
-            user_delegation_key:
-              type: optional<string>
-              docs: User Delegation Key (Backend)
         content-type: application/json
       response:
         docs: ''
@@ -296,31 +250,31 @@ service:
           request: {}
           response:
             body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               account_name: account_name
+              container: container
+              tenant_id: tenant_id
               client_id: client_id
               client_secret: client_secret
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              description: description
-              id: 1
+              user_delegation_key: user_delegation_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              presign: true
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
               presign_ttl: 1
               project: 1
-              regex_filter: regex_filter
-              status: initialized
-              synchronizable: true
-              tenant_id: tenant_id
-              title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
-              user_delegation_key: user_delegation_key
     api_storages_azure_spi_sync_create:
       path: /api/storages/azure_spi/{id}/sync
       method: POST
@@ -346,31 +300,77 @@ service:
             project: 1
           response:
             body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               account_name: account_name
+              container: container
+              tenant_id: tenant_id
               client_id: client_id
               client_secret: client_secret
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              description: description
-              id: 1
+              user_delegation_key: user_delegation_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              presign: true
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
               presign_ttl: 1
               project: 1
-              regex_filter: regex_filter
-              status: initialized
-              synchronizable: true
-              tenant_id: tenant_id
-              title: title
-              traceback: traceback
+    api_storages_azure_spi_validate_create:
+      path: /api/storages/azure_spi/validate
+      method: POST
+      auth: true
+      docs: >-
+        Validate a specific Azure import storage connection that was set up with
+        Service Principal authentication.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Validate Azure SPI import storage
+      request:
+        body: root.AzureServicePrincipalImportStorageRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.AzureServicePrincipalImportStorage
+      examples:
+        - request:
+            project: 1
+          response:
+            body:
+              id: 1
               type: type
+              synchronizable: true
+              presign: true
+              prefix: prefix
+              regex_filter: regex_filter
               use_blob_urls: true
+              account_name: account_name
+              container: container
+              tenant_id: tenant_id
+              client_id: client_id
+              client_secret: client_secret
               user_delegation_key: user_delegation_key
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              project: 1
     api_storages_export_azure_spi_list:
       path: /api/storages/export/azure_spi
       method: GET
@@ -393,30 +393,30 @@ service:
       examples:
         - response:
             body:
-              - account_name: account_name
-                can_delete_objects: true
+              - id: 1
+                type: type
+                synchronizable: true
+                prefix: prefix
+                regex_filter: regex_filter
+                use_blob_urls: true
+                account_name: account_name
+                container: container
+                tenant_id: tenant_id
                 client_id: client_id
                 client_secret: client_secret
-                container: container
-                created_at: '2024-01-15T09:30:00Z'
-                description: description
-                id: 1
+                user_delegation_key: user_delegation_key
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
+                status: initialized
+                traceback: traceback
                 meta:
                   key: value
-                prefix: prefix
-                project: 1
-                regex_filter: regex_filter
-                status: initialized
-                synchronizable: true
-                tenant_id: tenant_id
                 title: title
-                traceback: traceback
-                type: type
-                use_blob_urls: true
-                user_delegation_key: user_delegation_key
+                description: description
+                created_at: '2024-01-15T09:30:00Z'
+                can_delete_objects: true
+                project: 1
     api_storages_export_azure_spi_create:
       path: /api/storages/export/azure_spi
       method: POST
@@ -438,75 +438,30 @@ service:
             project: 1
           response:
             body:
+              id: 1
+              type: type
+              synchronizable: true
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               account_name: account_name
-              can_delete_objects: true
+              container: container
+              tenant_id: tenant_id
               client_id: client_id
               client_secret: client_secret
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              description: description
-              id: 1
+              user_delegation_key: user_delegation_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              project: 1
-              regex_filter: regex_filter
-              status: initialized
-              synchronizable: true
-              tenant_id: tenant_id
               title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
-              user_delegation_key: user_delegation_key
-    api_storages_export_azure_spi_validate_create:
-      path: /api/storages/export/azure_spi/validate
-      method: POST
-      auth: true
-      docs: >-
-        Validate a specific Azure export storage connection that was set up with
-        Service Principal authentication.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Validate Azure SPI export storage
-      request:
-        body: root.AzureServicePrincipalExportStorageRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.AzureServicePrincipalExportStorage
-      examples:
-        - request:
-            project: 1
-          response:
-            body:
-              account_name: account_name
-              can_delete_objects: true
-              client_id: client_id
-              client_secret: client_secret
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
               description: description
-              id: 1
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              meta:
-                key: value
-              prefix: prefix
+              created_at: '2024-01-15T09:30:00Z'
+              can_delete_objects: true
               project: 1
-              regex_filter: regex_filter
-              status: initialized
-              synchronizable: true
-              tenant_id: tenant_id
-              title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
-              user_delegation_key: user_delegation_key
     api_storages_export_azure_spi_retrieve:
       path: /api/storages/export/azure_spi/{id}
       method: GET
@@ -527,30 +482,30 @@ service:
             id: 1
           response:
             body:
+              id: 1
+              type: type
+              synchronizable: true
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               account_name: account_name
-              can_delete_objects: true
+              container: container
+              tenant_id: tenant_id
               client_id: client_id
               client_secret: client_secret
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              description: description
-              id: 1
+              user_delegation_key: user_delegation_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              project: 1
-              regex_filter: regex_filter
-              status: initialized
-              synchronizable: true
-              tenant_id: tenant_id
               title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
-              user_delegation_key: user_delegation_key
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              can_delete_objects: true
+              project: 1
     api_storages_export_azure_spi_destroy:
       path: /api/storages/export/azure_spi/{id}
       method: DELETE
@@ -582,24 +537,36 @@ service:
         name: PatchedAzureServicePrincipalExportStorageRequest
         body:
           properties:
+            synchronizable:
+              type: optional<boolean>
+              default: true
+            prefix:
+              type: optional<string>
+              docs: Azure blob prefix name
+            regex_filter:
+              type: optional<string>
+              docs: Cloud storage regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
             account_name:
               type: optional<string>
               docs: Azure Blob account name
-            can_delete_objects:
-              type: optional<boolean>
-              docs: Deletion from storage enabled
+            container:
+              type: optional<string>
+              docs: Azure blob container
+            tenant_id:
+              type: optional<string>
+              docs: Azure Tenant ID
             client_id:
               type: optional<string>
               docs: Azure Blob Service Principal Client ID
             client_secret:
               type: optional<string>
               docs: Azure Blob Service Principal Client Secret
-            container:
+            user_delegation_key:
               type: optional<string>
-              docs: Azure blob container
-            description:
-              type: optional<string>
-              docs: Cloud storage description
+              docs: User Delegation Key (Backend)
             last_sync:
               type: optional<datetime>
               docs: Last sync finished time
@@ -614,37 +581,25 @@ service:
               docs: Last sync job ID
               validation:
                 maxLength: 256
-            meta: optional<unknown>
-            prefix:
-              type: optional<string>
-              docs: Azure blob prefix name
-            project:
-              type: optional<integer>
-              docs: A unique integer value identifying this project.
-            regex_filter:
-              type: optional<string>
-              docs: Cloud storage regex for filtering objects
             status: optional<root.StatusC5AEnum>
-            synchronizable:
-              type: optional<boolean>
-              default: true
-            tenant_id:
+            traceback:
               type: optional<string>
-              docs: Azure Tenant ID
+              docs: Traceback report for the last failed sync
+            meta: optional<unknown>
             title:
               type: optional<string>
               docs: Cloud storage title
               validation:
                 maxLength: 256
-            traceback:
+            description:
               type: optional<string>
-              docs: Traceback report for the last failed sync
-            use_blob_urls:
+              docs: Cloud storage description
+            can_delete_objects:
               type: optional<boolean>
-              docs: Interpret objects as BLOBs and generate URLs
-            user_delegation_key:
-              type: optional<string>
-              docs: User Delegation Key (Backend)
+              docs: Deletion from storage enabled
+            project:
+              type: optional<integer>
+              docs: A unique integer value identifying this project.
         content-type: application/json
       response:
         docs: ''
@@ -655,30 +610,30 @@ service:
           request: {}
           response:
             body:
+              id: 1
+              type: type
+              synchronizable: true
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               account_name: account_name
-              can_delete_objects: true
+              container: container
+              tenant_id: tenant_id
               client_id: client_id
               client_secret: client_secret
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              description: description
-              id: 1
+              user_delegation_key: user_delegation_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              project: 1
-              regex_filter: regex_filter
-              status: initialized
-              synchronizable: true
-              tenant_id: tenant_id
               title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
-              user_delegation_key: user_delegation_key
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              can_delete_objects: true
+              project: 1
     api_storages_export_azure_spi_sync_create:
       path: /api/storages/export/azure_spi/{id}/sync
       method: POST
@@ -702,29 +657,74 @@ service:
             project: 1
           response:
             body:
+              id: 1
+              type: type
+              synchronizable: true
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
               account_name: account_name
-              can_delete_objects: true
+              container: container
+              tenant_id: tenant_id
               client_id: client_id
               client_secret: client_secret
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              description: description
-              id: 1
+              user_delegation_key: user_delegation_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              project: 1
-              regex_filter: regex_filter
-              status: initialized
-              synchronizable: true
-              tenant_id: tenant_id
               title: title
-              traceback: traceback
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              can_delete_objects: true
+              project: 1
+    api_storages_export_azure_spi_validate_create:
+      path: /api/storages/export/azure_spi/validate
+      method: POST
+      auth: true
+      docs: >-
+        Validate a specific Azure export storage connection that was set up with
+        Service Principal authentication.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Validate Azure SPI export storage
+      request:
+        body: root.AzureServicePrincipalExportStorageRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.AzureServicePrincipalExportStorage
+      examples:
+        - request:
+            project: 1
+          response:
+            body:
+              id: 1
               type: type
+              synchronizable: true
+              prefix: prefix
+              regex_filter: regex_filter
               use_blob_urls: true
+              account_name: account_name
+              container: container
+              tenant_id: tenant_id
+              client_id: client_id
+              client_secret: client_secret
               user_delegation_key: user_delegation_key
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              can_delete_objects: true
+              project: 1
   source:
     openapi: openapi/openapi.yaml

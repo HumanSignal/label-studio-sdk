@@ -9,44 +9,44 @@ from ..utilities import validate_response
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "created_at": "2024-01-15T09:30:00Z",
-            "description": "description",
             "id": 1,
+            "type": "type",
+            "synchronizable": True,
+            "path": "path",
+            "regex_filter": "regex_filter",
+            "use_blob_urls": True,
             "last_sync": "2024-01-15T09:30:00Z",
             "last_sync_count": 1,
             "last_sync_job": "last_sync_job",
-            "meta": {"key": "value"},
-            "path": "path",
-            "project": 1,
-            "regex_filter": "regex_filter",
             "status": "initialized",
-            "synchronizable": True,
-            "title": "title",
             "traceback": "traceback",
-            "type": "type",
-            "use_blob_urls": True,
+            "meta": {"key": "value"},
+            "title": "title",
+            "description": "description",
+            "created_at": "2024-01-15T09:30:00Z",
+            "project": 1,
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
-                "created_at": "datetime",
-                "description": None,
                 "id": "integer",
+                "type": None,
+                "synchronizable": None,
+                "path": None,
+                "regex_filter": None,
+                "use_blob_urls": None,
                 "last_sync": "datetime",
                 "last_sync_count": "integer",
                 "last_sync_job": None,
-                "meta": None,
-                "path": None,
-                "project": "integer",
-                "regex_filter": None,
                 "status": None,
-                "synchronizable": None,
-                "title": None,
                 "traceback": None,
-                "type": None,
-                "use_blob_urls": None,
+                "meta": None,
+                "title": None,
+                "description": None,
+                "created_at": "datetime",
+                "project": "integer",
             }
         },
     )
@@ -59,40 +59,40 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "created_at": "2024-01-15T09:30:00Z",
-        "description": "description",
         "id": 1,
+        "type": "type",
+        "synchronizable": True,
+        "path": "path",
+        "regex_filter": "regex_filter",
+        "use_blob_urls": True,
         "last_sync": "2024-01-15T09:30:00Z",
         "last_sync_count": 1,
         "last_sync_job": "last_sync_job",
-        "meta": {"key": "value"},
-        "path": "path",
-        "project": 1,
-        "regex_filter": "regex_filter",
         "status": "initialized",
-        "synchronizable": True,
-        "title": "title",
         "traceback": "traceback",
-        "type": "type",
-        "use_blob_urls": True,
+        "meta": {"key": "value"},
+        "title": "title",
+        "description": "description",
+        "created_at": "2024-01-15T09:30:00Z",
+        "project": 1,
     }
     expected_types: typing.Any = {
-        "created_at": "datetime",
-        "description": None,
         "id": "integer",
+        "type": None,
+        "synchronizable": None,
+        "path": None,
+        "regex_filter": None,
+        "use_blob_urls": None,
         "last_sync": "datetime",
         "last_sync_count": "integer",
         "last_sync_job": None,
-        "meta": None,
-        "path": None,
-        "project": "integer",
-        "regex_filter": None,
         "status": None,
-        "synchronizable": None,
-        "title": None,
         "traceback": None,
-        "type": None,
-        "use_blob_urls": None,
+        "meta": None,
+        "title": None,
+        "description": None,
+        "created_at": "datetime",
+        "project": "integer",
     }
     response = client.import_storage.local.create()
     validate_response(response, expected_response, expected_types)
@@ -101,55 +101,42 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_validate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.import_storage.local.validate()  # type: ignore[func-returns-value]
-        is None
-    )
-
-    assert (
-        await async_client.import_storage.local.validate()  # type: ignore[func-returns-value]
-        is None
-    )
-
-
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "created_at": "2024-01-15T09:30:00Z",
-        "description": "description",
         "id": 1,
+        "type": "type",
+        "synchronizable": True,
+        "path": "path",
+        "regex_filter": "regex_filter",
+        "use_blob_urls": True,
         "last_sync": "2024-01-15T09:30:00Z",
         "last_sync_count": 1,
         "last_sync_job": "last_sync_job",
-        "meta": {"key": "value"},
-        "path": "path",
-        "project": 1,
-        "regex_filter": "regex_filter",
         "status": "initialized",
-        "synchronizable": True,
-        "title": "title",
         "traceback": "traceback",
-        "type": "type",
-        "use_blob_urls": True,
+        "meta": {"key": "value"},
+        "title": "title",
+        "description": "description",
+        "created_at": "2024-01-15T09:30:00Z",
+        "project": 1,
     }
     expected_types: typing.Any = {
-        "created_at": "datetime",
-        "description": None,
         "id": "integer",
+        "type": None,
+        "synchronizable": None,
+        "path": None,
+        "regex_filter": None,
+        "use_blob_urls": None,
         "last_sync": "datetime",
         "last_sync_count": "integer",
         "last_sync_job": None,
-        "meta": None,
-        "path": None,
-        "project": "integer",
-        "regex_filter": None,
         "status": None,
-        "synchronizable": None,
-        "title": None,
         "traceback": None,
-        "type": None,
-        "use_blob_urls": None,
+        "meta": None,
+        "title": None,
+        "description": None,
+        "created_at": "datetime",
+        "project": "integer",
     }
     response = client.import_storage.local.get(id=1)
     validate_response(response, expected_response, expected_types)
@@ -173,40 +160,40 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "created_at": "2024-01-15T09:30:00Z",
-        "description": "description",
         "id": 1,
+        "type": "type",
+        "synchronizable": True,
+        "path": "path",
+        "regex_filter": "regex_filter",
+        "use_blob_urls": True,
         "last_sync": "2024-01-15T09:30:00Z",
         "last_sync_count": 1,
         "last_sync_job": "last_sync_job",
-        "meta": {"key": "value"},
-        "path": "path",
-        "project": 1,
-        "regex_filter": "regex_filter",
         "status": "initialized",
-        "synchronizable": True,
-        "title": "title",
         "traceback": "traceback",
-        "type": "type",
-        "use_blob_urls": True,
+        "meta": {"key": "value"},
+        "title": "title",
+        "description": "description",
+        "created_at": "2024-01-15T09:30:00Z",
+        "project": 1,
     }
     expected_types: typing.Any = {
-        "created_at": "datetime",
-        "description": None,
         "id": "integer",
+        "type": None,
+        "synchronizable": None,
+        "path": None,
+        "regex_filter": None,
+        "use_blob_urls": None,
         "last_sync": "datetime",
         "last_sync_count": "integer",
         "last_sync_job": None,
-        "meta": None,
-        "path": None,
-        "project": "integer",
-        "regex_filter": None,
         "status": None,
-        "synchronizable": None,
-        "title": None,
         "traceback": None,
-        "type": None,
-        "use_blob_urls": None,
+        "meta": None,
+        "title": None,
+        "description": None,
+        "created_at": "datetime",
+        "project": "integer",
     }
     response = client.import_storage.local.update(id=1)
     validate_response(response, expected_response, expected_types)
@@ -217,43 +204,56 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_sync(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "created_at": "2024-01-15T09:30:00Z",
-        "description": "description",
         "id": 1,
+        "type": "type",
+        "synchronizable": True,
+        "path": "path",
+        "regex_filter": "regex_filter",
+        "use_blob_urls": True,
         "last_sync": "2024-01-15T09:30:00Z",
         "last_sync_count": 1,
         "last_sync_job": "last_sync_job",
-        "meta": {"key": "value"},
-        "path": "path",
-        "project": 1,
-        "regex_filter": "regex_filter",
         "status": "initialized",
-        "synchronizable": True,
-        "title": "title",
         "traceback": "traceback",
-        "type": "type",
-        "use_blob_urls": True,
+        "meta": {"key": "value"},
+        "title": "title",
+        "description": "description",
+        "created_at": "2024-01-15T09:30:00Z",
+        "project": 1,
     }
     expected_types: typing.Any = {
-        "created_at": "datetime",
-        "description": None,
         "id": "integer",
+        "type": None,
+        "synchronizable": None,
+        "path": None,
+        "regex_filter": None,
+        "use_blob_urls": None,
         "last_sync": "datetime",
         "last_sync_count": "integer",
         "last_sync_job": None,
-        "meta": None,
-        "path": None,
-        "project": "integer",
-        "regex_filter": None,
         "status": None,
-        "synchronizable": None,
-        "title": None,
         "traceback": None,
-        "type": None,
-        "use_blob_urls": None,
+        "meta": None,
+        "title": None,
+        "description": None,
+        "created_at": "datetime",
+        "project": "integer",
     }
     response = client.import_storage.local.sync(id=1)
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.import_storage.local.sync(id=1)
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_validate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.import_storage.local.validate()  # type: ignore[func-returns-value]
+        is None
+    )
+
+    assert (
+        await async_client.import_storage.local.validate()  # type: ignore[func-returns-value]
+        is None
+    )

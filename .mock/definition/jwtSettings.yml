@@ -18,9 +18,9 @@ service:
       examples:
         - response:
             body:
-              api_token_ttl_days: 1
               api_tokens_enabled: true
               legacy_api_tokens_enabled: true
+              api_token_ttl_days: 1
       audiences:
         - public
     update:
@@ -35,18 +35,18 @@ service:
         name: LsejwtSettingsRequest
         body:
           properties:
-            api_token_ttl_days:
-              type: optional<integer>
-              docs: Number of days before JWT API tokens expire
-              validation:
-                min: -2147483648
-                max: 2147483647
             api_tokens_enabled:
               type: optional<boolean>
               docs: Enable JWT API token authentication for this organization
             legacy_api_tokens_enabled:
               type: optional<boolean>
               docs: Enable legacy API token authentication for this organization
+            api_token_ttl_days:
+              type: optional<integer>
+              docs: Number of days before JWT API tokens expire
+              validation:
+                min: -2147483648
+                max: 2147483647
         content-type: application/json
       response:
         docs: ''
@@ -55,9 +55,9 @@ service:
         - request: {}
           response:
             body:
-              api_token_ttl_days: 1
               api_tokens_enabled: true
               legacy_api_tokens_enabled: true
+              api_token_ttl_days: 1
       audiences:
         - public
   source:

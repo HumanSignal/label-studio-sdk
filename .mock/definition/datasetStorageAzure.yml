@@ -27,31 +27,31 @@ service:
       examples:
         - response:
             body:
-              - account_key: account_key
-                account_name: account_name
+              - id: 1
+                type: type
+                synchronizable: true
+                presign: true
                 container: container
-                created_at: '2024-01-15T09:30:00Z'
-                dataset: 1
-                description: description
-                glob_pattern: glob_pattern
-                id: 1
-                job_id: job_id
+                prefix: prefix
+                regex_filter: regex_filter
+                use_blob_urls: true
+                account_name: account_name
+                account_key: account_key
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
+                status: initialized
+                traceback: traceback
                 meta:
                   key: value
-                prefix: prefix
-                presign: true
-                presign_ttl: 1
-                regex_filter: regex_filter
-                status: initialized
-                synced: true
-                synchronizable: true
                 title: title
-                traceback: traceback
-                type: type
-                use_blob_urls: true
+                description: description
+                created_at: '2024-01-15T09:30:00Z'
+                presign_ttl: 1
+                glob_pattern: glob_pattern
+                synced: true
+                job_id: job_id
+                dataset: 1
     api_dataset_storages_azure_create:
       path: /api/dataset-storages/azure/
       method: POST
@@ -71,121 +71,31 @@ service:
             dataset: 1
           response:
             body:
-              account_key: account_key
-              account_name: account_name
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              dataset: 1
-              description: description
-              glob_pattern: glob_pattern
               id: 1
-              job_id: job_id
+              type: type
+              synchronizable: true
+              presign: true
+              container: container
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              presign: true
-              presign_ttl: 1
-              regex_filter: regex_filter
-              status: initialized
-              synced: true
-              synchronizable: true
               title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
-    api_dataset_storages_azure_check_for_records_create:
-      path: /api/dataset-storages/azure/check-for-records/
-      method: POST
-      auth: true
-      docs: >-
-        Checks for existence of records matching the file pattern in the
-        bucket/prefix
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Check for records given the file pattern
-      request:
-        body: root.AzureDatasetStorageRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.AzureDatasetStorage
-      examples:
-        - request:
-            dataset: 1
-          response:
-            body:
-              account_key: account_key
-              account_name: account_name
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              dataset: 1
               description: description
-              glob_pattern: glob_pattern
-              id: 1
-              job_id: job_id
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              meta:
-                key: value
-              prefix: prefix
-              presign: true
-              presign_ttl: 1
-              regex_filter: regex_filter
-              status: initialized
-              synced: true
-              synchronizable: true
-              title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
-    api_dataset_storages_azure_validate_create:
-      path: /api/dataset-storages/azure/validate/
-      method: POST
-      auth: true
-      docs: Validate a specific Azure import storage connection.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Validate import storage
-      request:
-        body: root.AzureDatasetStorageRequest
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.AzureDatasetStorage
-      examples:
-        - request:
-            dataset: 1
-          response:
-            body:
-              account_key: account_key
-              account_name: account_name
-              container: container
               created_at: '2024-01-15T09:30:00Z'
-              dataset: 1
-              description: description
-              glob_pattern: glob_pattern
-              id: 1
-              job_id: job_id
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              meta:
-                key: value
-              prefix: prefix
-              presign: true
               presign_ttl: 1
-              regex_filter: regex_filter
-              status: initialized
+              glob_pattern: glob_pattern
               synced: true
-              synchronizable: true
-              title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
+              job_id: job_id
+              dataset: 1
     api_dataset_storages_azure_retrieve:
       path: /api/dataset-storages/azure/{id}/
       method: GET
@@ -204,31 +114,31 @@ service:
             id: 1
           response:
             body:
-              account_key: account_key
-              account_name: account_name
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              dataset: 1
-              description: description
-              glob_pattern: glob_pattern
               id: 1
-              job_id: job_id
+              type: type
+              synchronizable: true
+              presign: true
+              container: container
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              presign: true
-              presign_ttl: 1
-              regex_filter: regex_filter
-              status: initialized
-              synced: true
-              synchronizable: true
               title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              glob_pattern: glob_pattern
+              synced: true
+              job_id: job_id
+              dataset: 1
     api_dataset_storages_azure_destroy:
       path: /api/dataset-storages/azure/{id}/
       method: DELETE
@@ -256,24 +166,30 @@ service:
         name: PatchedAzureDatasetStorageRequest
         body:
           properties:
-            account_key:
-              type: optional<string>
-              docs: Azure Blob account key
-            account_name:
-              type: optional<string>
-              docs: Azure Blob account name
+            synchronizable:
+              type: optional<boolean>
+              default: true
+            presign:
+              type: optional<boolean>
+              default: true
             container:
               type: optional<string>
               docs: Azure blob container
-            dataset:
-              type: optional<integer>
-              docs: A unique integer value identifying this dataset.
-            description:
+            prefix:
               type: optional<string>
-              docs: Cloud storage description
-            glob_pattern:
+              docs: Azure blob prefix name
+            regex_filter:
               type: optional<string>
-              docs: Glob pattern for syncing from bucket
+              docs: Cloud storage regex for filtering objects
+            use_blob_urls:
+              type: optional<boolean>
+              docs: Interpret objects as BLOBs and generate URLs
+            account_name:
+              type: optional<string>
+              docs: Azure Blob account name
+            account_key:
+              type: optional<string>
+              docs: Azure Blob account key
             last_sync:
               type: optional<datetime>
               docs: Last sync finished time
@@ -288,40 +204,34 @@ service:
               docs: Last sync job ID
               validation:
                 maxLength: 256
-            meta: optional<unknown>
-            prefix:
+            status: optional<root.StatusC5AEnum>
+            traceback:
               type: optional<string>
-              docs: Azure blob prefix name
-            presign:
-              type: optional<boolean>
-              default: true
+              docs: Traceback report for the last failed sync
+            meta: optional<unknown>
+            title:
+              type: optional<string>
+              docs: Cloud storage title
+              validation:
+                maxLength: 256
+            description:
+              type: optional<string>
+              docs: Cloud storage description
             presign_ttl:
               type: optional<integer>
               docs: Presigned URLs TTL (in minutes)
               validation:
                 min: 0
                 max: 32767
-            regex_filter:
+            glob_pattern:
               type: optional<string>
-              docs: Cloud storage regex for filtering objects
-            status: optional<root.StatusC5AEnum>
+              docs: Glob pattern for syncing from bucket
             synced:
               type: optional<boolean>
               docs: Flag if dataset has been previously synced or not
-            synchronizable:
-              type: optional<boolean>
-              default: true
-            title:
-              type: optional<string>
-              docs: Cloud storage title
-              validation:
-                maxLength: 256
-            traceback:
-              type: optional<string>
-              docs: Traceback report for the last failed sync
-            use_blob_urls:
-              type: optional<boolean>
-              docs: Interpret objects as BLOBs and generate URLs
+            dataset:
+              type: optional<integer>
+              docs: A unique integer value identifying this dataset.
         content-type: application/json
       response:
         docs: ''
@@ -332,31 +242,31 @@ service:
           request: {}
           response:
             body:
-              account_key: account_key
-              account_name: account_name
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              dataset: 1
-              description: description
-              glob_pattern: glob_pattern
               id: 1
-              job_id: job_id
+              type: type
+              synchronizable: true
+              presign: true
+              container: container
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              presign: true
-              presign_ttl: 1
-              regex_filter: regex_filter
-              status: initialized
-              synced: true
-              synchronizable: true
               title: title
-              traceback: traceback
-              type: type
-              use_blob_urls: true
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              glob_pattern: glob_pattern
+              synced: true
+              job_id: job_id
+              dataset: 1
     api_dataset_storages_azure_columns_retrieve:
       path: /api/dataset-storages/azure/{id}/columns/
       method: GET
@@ -393,30 +303,120 @@ service:
             dataset: 1
           response:
             body:
-              account_key: account_key
-              account_name: account_name
-              container: container
-              created_at: '2024-01-15T09:30:00Z'
-              dataset: 1
-              description: description
-              glob_pattern: glob_pattern
               id: 1
-              job_id: job_id
+              type: type
+              synchronizable: true
+              presign: true
+              container: container
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
               meta:
                 key: value
-              prefix: prefix
-              presign: true
-              presign_ttl: 1
-              regex_filter: regex_filter
-              status: initialized
-              synced: true
-              synchronizable: true
               title: title
-              traceback: traceback
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              glob_pattern: glob_pattern
+              synced: true
+              job_id: job_id
+              dataset: 1
+    api_dataset_storages_azure_check_for_records_create:
+      path: /api/dataset-storages/azure/check-for-records/
+      method: POST
+      auth: true
+      docs: >-
+        Checks for existence of records matching the file pattern in the
+        bucket/prefix
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Check for records given the file pattern
+      request:
+        body: root.AzureDatasetStorageRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.AzureDatasetStorage
+      examples:
+        - request:
+            dataset: 1
+          response:
+            body:
+              id: 1
               type: type
+              synchronizable: true
+              presign: true
+              container: container
+              prefix: prefix
+              regex_filter: regex_filter
               use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              glob_pattern: glob_pattern
+              synced: true
+              job_id: job_id
+              dataset: 1
+    api_dataset_storages_azure_validate_create:
+      path: /api/dataset-storages/azure/validate/
+      method: POST
+      auth: true
+      docs: Validate a specific Azure import storage connection.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Validate import storage
+      request:
+        body: root.AzureDatasetStorageRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.AzureDatasetStorage
+      examples:
+        - request:
+            dataset: 1
+          response:
+            body:
+              id: 1
+              type: type
+              synchronizable: true
+              presign: true
+              container: container
+              prefix: prefix
+              regex_filter: regex_filter
+              use_blob_urls: true
+              account_name: account_name
+              account_key: account_key
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              status: initialized
+              traceback: traceback
+              meta:
+                key: value
+              title: title
+              description: description
+              created_at: '2024-01-15T09:30:00Z'
+              presign_ttl: 1
+              glob_pattern: glob_pattern
+              synced: true
+              job_id: job_id
+              dataset: 1
   source:
     openapi: openapi/openapi.yaml

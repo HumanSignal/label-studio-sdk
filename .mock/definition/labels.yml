@@ -33,21 +33,21 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - approved: true
-                  approved_by: 1
-                  created_at: '2024-01-15T09:30:00Z'
-                  created_by: 1
-                  description: description
-                  id: 1
+                - id: 1
                   links:
                     - 1
-                  organization: 1
-                  projects:
-                    - 1
-                  title: title
+                  created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
                   value:
                     key: value
+                  title: title
+                  description: description
+                  approved: true
+                  created_by: 1
+                  approved_by: 1
+                  organization: 1
+                  projects:
+                    - 1
       audiences:
         - internal
     create:
@@ -80,21 +80,21 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - approved: true
-                  approved_by: 1
-                  created_at: '2024-01-15T09:30:00Z'
+                - id: 1
                   created_by: 1
-                  description: description
-                  from_name: from_name
-                  id: 1
                   organization: 1
                   project: 1
-                  projects:
-                    - 1
-                  title: title
+                  from_name: from_name
+                  created_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
                   value:
                     key: value
+                  title: title
+                  description: description
+                  approved: true
+                  approved_by: 1
+                  projects:
+                    - 1
       audiences:
         - internal
     get:
@@ -118,21 +118,21 @@ service:
             id: id
           response:
             body:
-              approved: true
-              approved_by: 1
-              created_at: '2024-01-15T09:30:00Z'
-              created_by: 1
-              description: description
               id: 1
               links:
                 - 1
-              organization: 1
-              projects:
-                - 1
-              title: title
+              created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               value:
                 key: value
+              title: title
+              description: description
+              approved: true
+              created_by: 1
+              approved_by: 1
+              organization: 1
+              projects:
+                - 1
       audiences:
         - internal
     delete:
@@ -168,26 +168,26 @@ service:
         name: PatchedLabelRequest
         body:
           properties:
-            approved:
-              type: optional<boolean>
-              docs: Status of label
-            approved_by:
-              type: optional<integer>
-              docs: User who approved this label
-            created_by:
-              type: optional<integer>
-              docs: User who made this label
-            description:
-              type: optional<string>
-              docs: Label description
-            organization: optional<integer>
+            value: optional<unknown>
             title:
               type: optional<string>
               docs: Label title
               validation:
                 minLength: 1
                 maxLength: 2048
-            value: optional<unknown>
+            description:
+              type: optional<string>
+              docs: Label description
+            approved:
+              type: optional<boolean>
+              docs: Status of label
+            created_by:
+              type: optional<integer>
+              docs: User who made this label
+            approved_by:
+              type: optional<integer>
+              docs: User who approved this label
+            organization: optional<integer>
         content-type: application/json
       response:
         docs: ''
@@ -198,21 +198,21 @@ service:
           request: {}
           response:
             body:
-              approved: true
-              approved_by: 1
-              created_at: '2024-01-15T09:30:00Z'
-              created_by: 1
-              description: description
               id: 1
               links:
                 - 1
-              organization: 1
-              projects:
-                - 1
-              title: title
+              created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
               value:
                 key: value
+              title: title
+              description: description
+              approved: true
+              created_by: 1
+              approved_by: 1
+              organization: 1
+              projects:
+                - 1
       audiences:
         - internal
   source:

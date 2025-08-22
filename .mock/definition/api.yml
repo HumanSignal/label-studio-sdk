@@ -3,7 +3,7 @@ error-discrimination:
   strategy: status-code
 display-name: Label Studio API
 environments:
-  Default: http://localhost:8000
+  Default: ''
 default-environment: Default
 auth-schemes:
   Token:

@@ -30,7 +30,7 @@ class MlClient:
             List all configured ML backends for a specific project by ID.
             Use the following cURL command:
             ```bash
-            curl http://localhost:8000/api/ml?project={project_id} -H 'Authorization: Token abc123'
+            curl https://localhost:8080/api/ml?project={project_id} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -80,16 +80,16 @@ class MlClient:
     def create(
         self,
         *,
-        auth_method: typing.Optional[MlCreateRequestAuthMethod] = OMIT,
-        basic_auth_pass: typing.Optional[str] = OMIT,
-        basic_auth_user: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        is_interactive: typing.Optional[bool] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        timeout: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
         url: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        auth_method: typing.Optional[MlCreateRequestAuthMethod] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        basic_auth_pass: typing.Optional[str] = OMIT,
+        extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
@@ -97,41 +97,41 @@ class MlClient:
             Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL 
             command:
             ```bash
-            curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml -H 'Authorization: Token abc123'\
+            curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml -H 'Authorization: Token abc123'\
             --data '{"url": "http://localhost:9090", "project": {project_id}}' 
             
         
         Parameters
         ----------
-        auth_method : typing.Optional[MlCreateRequestAuthMethod]
-            Auth method
-        
-        basic_auth_pass : typing.Optional[str]
-            Basic auth password
-        
-        basic_auth_user : typing.Optional[str]
-            Basic auth user
-        
-        description : typing.Optional[str]
-            Description
-        
-        extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Extra parameters
-        
-        is_interactive : typing.Optional[bool]
-            Is interactive
+        url : typing.Optional[str]
+            ML backend URL
         
         project : typing.Optional[int]
             Project ID
         
-        timeout : typing.Optional[int]
-            Response model timeout
+        is_interactive : typing.Optional[bool]
+            Is interactive
         
         title : typing.Optional[str]
             Title
         
-        url : typing.Optional[str]
-            ML backend URL
+        description : typing.Optional[str]
+            Description
+        
+        auth_method : typing.Optional[MlCreateRequestAuthMethod]
+            Auth method
+        
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        basic_auth_pass : typing.Optional[str]
+            Basic auth password
+        
+        extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Extra parameters
+        
+        timeout : typing.Optional[int]
+            Response model timeout
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -154,16 +154,16 @@ class MlClient:
             "api/ml/",
             method="POST",
             json={
-                "auth_method": auth_method,
-                "basic_auth_pass": basic_auth_pass,
-                "basic_auth_user": basic_auth_user,
-                "description": description,
-                "extra_params": extra_params,
-                "is_interactive": is_interactive,
-                "project": project,
-                "timeout": timeout,
-                "title": title,
                 "url": url,
+                "project": project,
+                "is_interactive": is_interactive,
+                "title": title,
+                "description": description,
+                "auth_method": auth_method,
+                "basic_auth_user": basic_auth_user,
+                "basic_auth_pass": basic_auth_pass,
+                "extra_params": extra_params,
+                "timeout": timeout,
             },
             headers={
                 "content-type": "application/json",
@@ -191,7 +191,7 @@ class MlClient:
             Get details about a specific ML backend connection by ID. For example, make a GET request using the
             following cURL command:
             ```bash
-            curl http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+            curl https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -242,7 +242,7 @@ class MlClient:
             Remove an existing ML backend connection by ID. For example, use the
             following cURL command:
             ```bash
-            curl -X DELETE http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+            curl -X DELETE https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -284,23 +284,23 @@ class MlClient:
         self,
         id: int,
         *,
-        auth_method: typing.Optional[MlUpdateRequestAuthMethod] = OMIT,
-        basic_auth_pass: typing.Optional[str] = OMIT,
-        basic_auth_user: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        is_interactive: typing.Optional[bool] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        timeout: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
         url: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        auth_method: typing.Optional[MlUpdateRequestAuthMethod] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        basic_auth_pass: typing.Optional[str] = OMIT,
+        extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
         
             Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
             ```bash
-            curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
+            curl -X PATCH -H 'Content-type: application/json' https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
             --data '{"url": "http://localhost:9091"}' 
             
         
@@ -308,35 +308,35 @@ class MlClient:
         ----------
         id : int
         
-        auth_method : typing.Optional[MlUpdateRequestAuthMethod]
-            Auth method
-        
-        basic_auth_pass : typing.Optional[str]
-            Basic auth password
-        
-        basic_auth_user : typing.Optional[str]
-            Basic auth user
-        
-        description : typing.Optional[str]
-            Description
-        
-        extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Extra parameters
-        
-        is_interactive : typing.Optional[bool]
-            Is interactive
+        url : typing.Optional[str]
+            ML backend URL
         
         project : typing.Optional[int]
             Project ID
         
-        timeout : typing.Optional[int]
-            Response model timeout
+        is_interactive : typing.Optional[bool]
+            Is interactive
         
         title : typing.Optional[str]
             Title
         
-        url : typing.Optional[str]
-            ML backend URL
+        description : typing.Optional[str]
+            Description
+        
+        auth_method : typing.Optional[MlUpdateRequestAuthMethod]
+            Auth method
+        
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        basic_auth_pass : typing.Optional[str]
+            Basic auth password
+        
+        extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Extra parameters
+        
+        timeout : typing.Optional[int]
+            Response model timeout
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -361,16 +361,16 @@ class MlClient:
             f"api/ml/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "auth_method": auth_method,
-                "basic_auth_pass": basic_auth_pass,
-                "basic_auth_user": basic_auth_user,
-                "description": description,
-                "extra_params": extra_params,
-                "is_interactive": is_interactive,
-                "project": project,
-                "timeout": timeout,
-                "title": title,
                 "url": url,
+                "project": project,
+                "is_interactive": is_interactive,
+                "title": title,
+                "description": description,
+                "auth_method": auth_method,
+                "basic_auth_user": basic_auth_user,
+                "basic_auth_pass": basic_auth_pass,
+                "extra_params": extra_params,
+                "timeout": timeout,
             },
             headers={
                 "content-type": "application/json",
@@ -440,8 +440,8 @@ class MlClient:
             f"api/ml/{jsonable_encoder(id)}/interactive-annotating",
             method="POST",
             json={
-                "context": context,
                 "task": task,
+                "context": context,
             },
             headers={
                 "content-type": "application/json",
@@ -589,7 +589,7 @@ class AsyncMlClient:
             List all configured ML backends for a specific project by ID.
             Use the following cURL command:
             ```bash
-            curl http://localhost:8000/api/ml?project={project_id} -H 'Authorization: Token abc123'
+            curl https://localhost:8080/api/ml?project={project_id} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -647,16 +647,16 @@ class AsyncMlClient:
     async def create(
         self,
         *,
-        auth_method: typing.Optional[MlCreateRequestAuthMethod] = OMIT,
-        basic_auth_pass: typing.Optional[str] = OMIT,
-        basic_auth_user: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        is_interactive: typing.Optional[bool] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        timeout: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
         url: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        auth_method: typing.Optional[MlCreateRequestAuthMethod] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        basic_auth_pass: typing.Optional[str] = OMIT,
+        extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
@@ -664,41 +664,41 @@ class AsyncMlClient:
             Add an ML backend to a project using the Label Studio UI or by sending a POST request using the following cURL 
             command:
             ```bash
-            curl -X POST -H 'Content-type: application/json' http://localhost:8000/api/ml -H 'Authorization: Token abc123'\
+            curl -X POST -H 'Content-type: application/json' https://localhost:8080/api/ml -H 'Authorization: Token abc123'\
             --data '{"url": "http://localhost:9090", "project": {project_id}}' 
             
         
         Parameters
         ----------
-        auth_method : typing.Optional[MlCreateRequestAuthMethod]
-            Auth method
-        
-        basic_auth_pass : typing.Optional[str]
-            Basic auth password
-        
-        basic_auth_user : typing.Optional[str]
-            Basic auth user
-        
-        description : typing.Optional[str]
-            Description
-        
-        extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Extra parameters
-        
-        is_interactive : typing.Optional[bool]
-            Is interactive
+        url : typing.Optional[str]
+            ML backend URL
         
         project : typing.Optional[int]
             Project ID
         
-        timeout : typing.Optional[int]
-            Response model timeout
+        is_interactive : typing.Optional[bool]
+            Is interactive
         
         title : typing.Optional[str]
             Title
         
-        url : typing.Optional[str]
-            ML backend URL
+        description : typing.Optional[str]
+            Description
+        
+        auth_method : typing.Optional[MlCreateRequestAuthMethod]
+            Auth method
+        
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        basic_auth_pass : typing.Optional[str]
+            Basic auth password
+        
+        extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Extra parameters
+        
+        timeout : typing.Optional[int]
+            Response model timeout
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -729,16 +729,16 @@ class AsyncMlClient:
             "api/ml/",
             method="POST",
             json={
-                "auth_method": auth_method,
-                "basic_auth_pass": basic_auth_pass,
-                "basic_auth_user": basic_auth_user,
-                "description": description,
-                "extra_params": extra_params,
-                "is_interactive": is_interactive,
-                "project": project,
-                "timeout": timeout,
-                "title": title,
                 "url": url,
+                "project": project,
+                "is_interactive": is_interactive,
+                "title": title,
+                "description": description,
+                "auth_method": auth_method,
+                "basic_auth_user": basic_auth_user,
+                "basic_auth_pass": basic_auth_pass,
+                "extra_params": extra_params,
+                "timeout": timeout,
             },
             headers={
                 "content-type": "application/json",
@@ -766,7 +766,7 @@ class AsyncMlClient:
             Get details about a specific ML backend connection by ID. For example, make a GET request using the
             following cURL command:
             ```bash
-            curl http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+            curl https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -825,7 +825,7 @@ class AsyncMlClient:
             Remove an existing ML backend connection by ID. For example, use the
             following cURL command:
             ```bash
-            curl -X DELETE http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
+            curl -X DELETE https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'
 
 
         Parameters
@@ -875,23 +875,23 @@ class AsyncMlClient:
         self,
         id: int,
         *,
-        auth_method: typing.Optional[MlUpdateRequestAuthMethod] = OMIT,
-        basic_auth_pass: typing.Optional[str] = OMIT,
-        basic_auth_user: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
-        is_interactive: typing.Optional[bool] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        timeout: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
         url: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        is_interactive: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        auth_method: typing.Optional[MlUpdateRequestAuthMethod] = OMIT,
+        basic_auth_user: typing.Optional[str] = OMIT,
+        basic_auth_pass: typing.Optional[str] = OMIT,
+        extra_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        timeout: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MlBackend:
         """
         
             Update ML backend parameters using the Label Studio UI or by sending a PATCH request using the following cURL command:
             ```bash
-            curl -X PATCH -H 'Content-type: application/json' http://localhost:8000/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
+            curl -X PATCH -H 'Content-type: application/json' https://localhost:8080/api/ml/{ml_backend_ID} -H 'Authorization: Token abc123'\
             --data '{"url": "http://localhost:9091"}' 
             
         
@@ -899,35 +899,35 @@ class AsyncMlClient:
         ----------
         id : int
         
-        auth_method : typing.Optional[MlUpdateRequestAuthMethod]
-            Auth method
-        
-        basic_auth_pass : typing.Optional[str]
-            Basic auth password
-        
-        basic_auth_user : typing.Optional[str]
-            Basic auth user
-        
-        description : typing.Optional[str]
-            Description
-        
-        extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
-            Extra parameters
-        
-        is_interactive : typing.Optional[bool]
-            Is interactive
+        url : typing.Optional[str]
+            ML backend URL
         
         project : typing.Optional[int]
             Project ID
         
-        timeout : typing.Optional[int]
-            Response model timeout
+        is_interactive : typing.Optional[bool]
+            Is interactive
         
         title : typing.Optional[str]
             Title
         
-        url : typing.Optional[str]
-            ML backend URL
+        description : typing.Optional[str]
+            Description
+        
+        auth_method : typing.Optional[MlUpdateRequestAuthMethod]
+            Auth method
+        
+        basic_auth_user : typing.Optional[str]
+            Basic auth user
+        
+        basic_auth_pass : typing.Optional[str]
+            Basic auth password
+        
+        extra_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+            Extra parameters
+        
+        timeout : typing.Optional[int]
+            Response model timeout
         
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -960,16 +960,16 @@ class AsyncMlClient:
             f"api/ml/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "auth_method": auth_method,
-                "basic_auth_pass": basic_auth_pass,
-                "basic_auth_user": basic_auth_user,
-                "description": description,
-                "extra_params": extra_params,
-                "is_interactive": is_interactive,
-                "project": project,
-                "timeout": timeout,
-                "title": title,
                 "url": url,
+                "project": project,
+                "is_interactive": is_interactive,
+                "title": title,
+                "description": description,
+                "auth_method": auth_method,
+                "basic_auth_user": basic_auth_user,
+                "basic_auth_pass": basic_auth_pass,
+                "extra_params": extra_params,
+                "timeout": timeout,
             },
             headers={
                 "content-type": "application/json",
@@ -1047,8 +1047,8 @@ class AsyncMlClient:
             f"api/ml/{jsonable_encoder(id)}/interactive-annotating",
             method="POST",
             json={
-                "context": context,
                 "task": task,
+                "context": context,
             },
             headers={
                 "content-type": "application/json",

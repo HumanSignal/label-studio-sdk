@@ -7,8 +7,8 @@ import pydantic
 
 
 class FileUpload(UncheckedBaseModel):
-    file: str
     id: int
+    file: str
     size: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:

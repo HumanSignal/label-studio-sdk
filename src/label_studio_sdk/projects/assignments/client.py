@@ -2,21 +2,21 @@
 
 import typing
 from ...core.client_wrapper import SyncClientWrapper
-from .types.assignments_bulk_assign_request_selected_items import AssignmentsBulkAssignRequestSelectedItems
-from .types.assignments_bulk_assign_request_type import AssignmentsBulkAssignRequestType
-from .types.assignments_bulk_assign_request_filters import AssignmentsBulkAssignRequestFilters
 from ...core.request_options import RequestOptions
-from .types.assignments_bulk_assign_response import AssignmentsBulkAssignResponse
+from ...types.task_assignment import TaskAssignment
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
-from ...errors.bad_request_error import BadRequestError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.task_assignment import TaskAssignment
 from .types.assignments_assign_request_type import AssignmentsAssignRequestType
 from .types.assignments_delete_request_type import AssignmentsDeleteRequestType
 from .types.assignments_update_request_type import AssignmentsUpdateRequestType
+from .types.assignments_bulk_assign_request_type import AssignmentsBulkAssignRequestType
+from .types.assignments_bulk_assign_request_selected_items import AssignmentsBulkAssignRequestSelectedItems
+from .types.assignments_bulk_assign_request_filters import AssignmentsBulkAssignRequestFilters
+from .types.assignments_bulk_assign_response import AssignmentsBulkAssignResponse
+from ...core.serialization import convert_and_respect_annotation_metadata
+from ...errors.bad_request_error import BadRequestError
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -26,105 +26,6 @@ OMIT = typing.cast(typing.Any, ...)
 class AssignmentsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    def bulk_assign(
-        self,
-        id: int,
-        *,
-        selected_items: AssignmentsBulkAssignRequestSelectedItems,
-        type: AssignmentsBulkAssignRequestType,
-        users: typing.Sequence[int],
-        filters: typing.Optional[AssignmentsBulkAssignRequestFilters] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AssignmentsBulkAssignResponse:
-        """
-        Assign multiple users to a collection of tasks within a specific project.
-
-        Parameters
-        ----------
-        id : int
-
-        selected_items : AssignmentsBulkAssignRequestSelectedItems
-            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-
-        type : AssignmentsBulkAssignRequestType
-            Assignment type. Use AN for annotate or RE for review.
-
-        users : typing.Sequence[int]
-            List of user IDs to assign
-
-        filters : typing.Optional[AssignmentsBulkAssignRequestFilters]
-            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AssignmentsBulkAssignResponse
-            Success
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-        from label_studio_sdk.projects.assignments import (
-            AssignmentsBulkAssignRequestSelectedItemsIncluded,
-        )
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.assignments.bulk_assign(
-            id=1,
-            selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(
-                all_=True,
-            ),
-            type="AN",
-            users=[1],
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/tasks/assignees",
-            method="POST",
-            json={
-                "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=AssignmentsBulkAssignRequestFilters, direction="write"
-                ),
-                "selectedItems": convert_and_respect_annotation_metadata(
-                    object_=selected_items, annotation=AssignmentsBulkAssignRequestSelectedItems, direction="write"
-                ),
-                "type": type,
-                "users": users,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    AssignmentsBulkAssignResponse,
-                    construct_type(
-                        type_=AssignmentsBulkAssignResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            if _response.status_code == 400:
-                raise BadRequestError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        construct_type(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def list(
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
@@ -391,18 +292,13 @@ class AssignmentsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-
-class AsyncAssignmentsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def bulk_assign(
+    def bulk_assign(
         self,
         id: int,
         *,
-        selected_items: AssignmentsBulkAssignRequestSelectedItems,
         type: AssignmentsBulkAssignRequestType,
         users: typing.Sequence[int],
+        selected_items: AssignmentsBulkAssignRequestSelectedItems,
         filters: typing.Optional[AssignmentsBulkAssignRequestFilters] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AssignmentsBulkAssignResponse:
@@ -413,14 +309,14 @@ class AsyncAssignmentsClient:
         ----------
         id : int
 
-        selected_items : AssignmentsBulkAssignRequestSelectedItems
-            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-
         type : AssignmentsBulkAssignRequestType
             Assignment type. Use AN for annotate or RE for review.
 
         users : typing.Sequence[int]
             List of user IDs to assign
+
+        selected_items : AssignmentsBulkAssignRequestSelectedItems
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
 
         filters : typing.Optional[AssignmentsBulkAssignRequestFilters]
             Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
@@ -435,43 +331,35 @@ class AsyncAssignmentsClient:
 
         Examples
         --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
+        from label_studio_sdk import LabelStudio
         from label_studio_sdk.projects.assignments import (
             AssignmentsBulkAssignRequestSelectedItemsIncluded,
         )
 
-        client = AsyncLabelStudio(
+        client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-
-
-        async def main() -> None:
-            await client.projects.assignments.bulk_assign(
-                id=1,
-                selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(
-                    all_=True,
-                ),
-                type="AN",
-                users=[1],
-            )
-
-
-        asyncio.run(main())
+        client.projects.assignments.bulk_assign(
+            id=1,
+            type="AN",
+            users=[1],
+            selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(
+                all_=True,
+            ),
+        )
         """
-        _response = await self._client_wrapper.httpx_client.request(
+        _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/tasks/assignees",
             method="POST",
             json={
-                "filters": convert_and_respect_annotation_metadata(
-                    object_=filters, annotation=AssignmentsBulkAssignRequestFilters, direction="write"
-                ),
+                "type": type,
+                "users": users,
                 "selectedItems": convert_and_respect_annotation_metadata(
                     object_=selected_items, annotation=AssignmentsBulkAssignRequestSelectedItems, direction="write"
                 ),
-                "type": type,
-                "users": users,
+                "filters": convert_and_respect_annotation_metadata(
+                    object_=filters, annotation=AssignmentsBulkAssignRequestFilters, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -502,6 +390,11 @@ class AsyncAssignmentsClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
+
+
+class AsyncAssignmentsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
 
     async def list(
         self, id: int, task_pk: int, *, request_options: typing.Optional[RequestOptions] = None
@@ -794,6 +687,113 @@ class AsyncAssignmentsClient:
                         type_=TaskAssignment,  # type: ignore
                         object_=_response.json(),
                     ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def bulk_assign(
+        self,
+        id: int,
+        *,
+        type: AssignmentsBulkAssignRequestType,
+        users: typing.Sequence[int],
+        selected_items: AssignmentsBulkAssignRequestSelectedItems,
+        filters: typing.Optional[AssignmentsBulkAssignRequestFilters] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AssignmentsBulkAssignResponse:
+        """
+        Assign multiple users to a collection of tasks within a specific project.
+
+        Parameters
+        ----------
+        id : int
+
+        type : AssignmentsBulkAssignRequestType
+            Assignment type. Use AN for annotate or RE for review.
+
+        users : typing.Sequence[int]
+            List of user IDs to assign
+
+        selected_items : AssignmentsBulkAssignRequestSelectedItems
+            Task selection by IDs. If filters are applied, the selection will be applied to the filtered tasks.If "all" is `false`, `"included"` must be used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+
+        filters : typing.Optional[AssignmentsBulkAssignRequestFilters]
+            Filters to apply on tasks. You can use [the helper class `Filters` from this page](https://labelstud.io/sdk/data_manager.html) to create Data Manager Filters.<br>Example: `{"conjunction": "or", "items": [{"filter": "filter:tasks:completed_at", "operator": "greater", "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AssignmentsBulkAssignResponse
+            Success
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+        from label_studio_sdk.projects.assignments import (
+            AssignmentsBulkAssignRequestSelectedItemsIncluded,
+        )
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.assignments.bulk_assign(
+                id=1,
+                type="AN",
+                users=[1],
+                selected_items=AssignmentsBulkAssignRequestSelectedItemsIncluded(
+                    all_=True,
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/tasks/assignees",
+            method="POST",
+            json={
+                "type": type,
+                "users": users,
+                "selectedItems": convert_and_respect_annotation_metadata(
+                    object_=selected_items, annotation=AssignmentsBulkAssignRequestSelectedItems, direction="write"
+                ),
+                "filters": convert_and_respect_annotation_metadata(
+                    object_=filters, annotation=AssignmentsBulkAssignRequestFilters, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    AssignmentsBulkAssignResponse,
+                    construct_type(
+                        type_=AssignmentsBulkAssignResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:

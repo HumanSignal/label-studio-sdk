@@ -9,8 +9,8 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.provider_enum import ProviderEnum
 from ..types.scope_enum import ScopeEnum
-from .types.model_providers_list_model_provider_choices_response import ModelProvidersListModelProviderChoicesResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from .types.model_providers_list_model_provider_choices_response import ModelProvidersListModelProviderChoicesResponse
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -74,18 +74,18 @@ class ModelProvidersClient:
     def create(
         self,
         *,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
-        google_location: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
-        is_internal: typing.Optional[bool] = OMIT,
-        provider: typing.Optional[ProviderEnum] = OMIT,
+        google_location: typing.Optional[str] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
         scope: typing.Optional[ScopeEnum] = OMIT,
+        is_internal: typing.Optional[bool] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -93,17 +93,13 @@ class ModelProvidersClient:
 
         Parameters
         ----------
+        provider : typing.Optional[ProviderEnum]
+
         api_key : typing.Optional[str]
             Model provider API key
 
         auth_token : typing.Optional[str]
             Model provider Auth token
-
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
-
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
 
         deployment_name : typing.Optional[str]
             Azure OpenAI deployment name
@@ -114,18 +110,22 @@ class ModelProvidersClient:
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
+        google_project_id : typing.Optional[str]
+            Google project ID
+
         google_location : typing.Optional[str]
             Google project location
 
-        google_project_id : typing.Optional[str]
-            Google project ID
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
+
+        scope : typing.Optional[ScopeEnum]
 
         is_internal : typing.Optional[bool]
             Whether the model provider connection is internal, not visible to the user
 
-        provider : typing.Optional[ProviderEnum]
-
-        scope : typing.Optional[ScopeEnum]
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -148,18 +148,18 @@ class ModelProvidersClient:
             "api/model-provider-connections/",
             method="POST",
             json={
+                "provider": provider,
                 "api_key": api_key,
                 "auth_token": auth_token,
-                "budget_alert_threshold": budget_alert_threshold,
-                "cached_available_models": cached_available_models,
                 "deployment_name": deployment_name,
                 "endpoint": endpoint,
                 "google_application_credentials": google_application_credentials,
-                "google_location": google_location,
                 "google_project_id": google_project_id,
-                "is_internal": is_internal,
-                "provider": provider,
+                "google_location": google_location,
+                "cached_available_models": cached_available_models,
                 "scope": scope,
+                "is_internal": is_internal,
+                "budget_alert_threshold": budget_alert_threshold,
             },
             request_options=request_options,
             omit=OMIT,
@@ -170,50 +170,6 @@ class ModelProvidersClient:
                     ModelProviderConnection,
                     construct_type(
                         type_=ModelProviderConnection,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def list_model_provider_choices(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ModelProvidersListModelProviderChoicesResponse:
-        """
-        List all possible model provider choices
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ModelProvidersListModelProviderChoicesResponse
-            List of model provider choices
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.model_providers.list_model_provider_choices()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/model-provider-connections/provider-choices",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ModelProvidersListModelProviderChoicesResponse,
-                    construct_type(
-                        type_=ModelProvidersListModelProviderChoicesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -311,18 +267,18 @@ class ModelProvidersClient:
         self,
         id: str,
         *,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
-        google_location: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
-        is_internal: typing.Optional[bool] = OMIT,
-        provider: typing.Optional[ProviderEnum] = OMIT,
+        google_location: typing.Optional[str] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
         scope: typing.Optional[ScopeEnum] = OMIT,
+        is_internal: typing.Optional[bool] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -332,17 +288,13 @@ class ModelProvidersClient:
         ----------
         id : str
 
+        provider : typing.Optional[ProviderEnum]
+
         api_key : typing.Optional[str]
             Model provider API key
 
         auth_token : typing.Optional[str]
             Model provider Auth token
-
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
-
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
 
         deployment_name : typing.Optional[str]
             Azure OpenAI deployment name
@@ -353,18 +305,22 @@ class ModelProvidersClient:
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
+        google_project_id : typing.Optional[str]
+            Google project ID
+
         google_location : typing.Optional[str]
             Google project location
 
-        google_project_id : typing.Optional[str]
-            Google project ID
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
+
+        scope : typing.Optional[ScopeEnum]
 
         is_internal : typing.Optional[bool]
             Whether the model provider connection is internal, not visible to the user
 
-        provider : typing.Optional[ProviderEnum]
-
-        scope : typing.Optional[ScopeEnum]
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -389,18 +345,18 @@ class ModelProvidersClient:
             f"api/model-provider-connections/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
+                "provider": provider,
                 "api_key": api_key,
                 "auth_token": auth_token,
-                "budget_alert_threshold": budget_alert_threshold,
-                "cached_available_models": cached_available_models,
                 "deployment_name": deployment_name,
                 "endpoint": endpoint,
                 "google_application_credentials": google_application_credentials,
-                "google_location": google_location,
                 "google_project_id": google_project_id,
-                "is_internal": is_internal,
-                "provider": provider,
+                "google_location": google_location,
+                "cached_available_models": cached_available_models,
                 "scope": scope,
+                "is_internal": is_internal,
+                "budget_alert_threshold": budget_alert_threshold,
             },
             headers={
                 "content-type": "application/json",
@@ -414,6 +370,50 @@ class ModelProvidersClient:
                     ModelProviderConnection,
                     construct_type(
                         type_=ModelProviderConnection,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list_model_provider_choices(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ModelProvidersListModelProviderChoicesResponse:
+        """
+        List all possible model provider choices
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProvidersListModelProviderChoicesResponse
+            List of model provider choices
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.model_providers.list_model_provider_choices()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/model-provider-connections/provider-choices",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ModelProvidersListModelProviderChoicesResponse,
+                    construct_type(
+                        type_=ModelProvidersListModelProviderChoicesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -488,18 +488,18 @@ class AsyncModelProvidersClient:
     async def create(
         self,
         *,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
-        google_location: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
-        is_internal: typing.Optional[bool] = OMIT,
-        provider: typing.Optional[ProviderEnum] = OMIT,
+        google_location: typing.Optional[str] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
         scope: typing.Optional[ScopeEnum] = OMIT,
+        is_internal: typing.Optional[bool] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -507,17 +507,13 @@ class AsyncModelProvidersClient:
 
         Parameters
         ----------
+        provider : typing.Optional[ProviderEnum]
+
         api_key : typing.Optional[str]
             Model provider API key
 
         auth_token : typing.Optional[str]
             Model provider Auth token
-
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
-
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
 
         deployment_name : typing.Optional[str]
             Azure OpenAI deployment name
@@ -528,18 +524,22 @@ class AsyncModelProvidersClient:
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
+        google_project_id : typing.Optional[str]
+            Google project ID
+
         google_location : typing.Optional[str]
             Google project location
 
-        google_project_id : typing.Optional[str]
-            Google project ID
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
+
+        scope : typing.Optional[ScopeEnum]
 
         is_internal : typing.Optional[bool]
             Whether the model provider connection is internal, not visible to the user
 
-        provider : typing.Optional[ProviderEnum]
-
-        scope : typing.Optional[ScopeEnum]
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -570,18 +570,18 @@ class AsyncModelProvidersClient:
             "api/model-provider-connections/",
             method="POST",
             json={
+                "provider": provider,
                 "api_key": api_key,
                 "auth_token": auth_token,
-                "budget_alert_threshold": budget_alert_threshold,
-                "cached_available_models": cached_available_models,
                 "deployment_name": deployment_name,
                 "endpoint": endpoint,
                 "google_application_credentials": google_application_credentials,
-                "google_location": google_location,
                 "google_project_id": google_project_id,
-                "is_internal": is_internal,
-                "provider": provider,
+                "google_location": google_location,
+                "cached_available_models": cached_available_models,
                 "scope": scope,
+                "is_internal": is_internal,
+                "budget_alert_threshold": budget_alert_threshold,
             },
             request_options=request_options,
             omit=OMIT,
@@ -592,58 +592,6 @@ class AsyncModelProvidersClient:
                     ModelProviderConnection,
                     construct_type(
                         type_=ModelProviderConnection,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def list_model_provider_choices(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> ModelProvidersListModelProviderChoicesResponse:
-        """
-        List all possible model provider choices
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ModelProvidersListModelProviderChoicesResponse
-            List of model provider choices
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.model_providers.list_model_provider_choices()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/model-provider-connections/provider-choices",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    ModelProvidersListModelProviderChoicesResponse,
-                    construct_type(
-                        type_=ModelProvidersListModelProviderChoicesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -757,18 +705,18 @@ class AsyncModelProvidersClient:
         self,
         id: str,
         *,
+        provider: typing.Optional[ProviderEnum] = OMIT,
         api_key: typing.Optional[str] = OMIT,
         auth_token: typing.Optional[str] = OMIT,
-        budget_alert_threshold: typing.Optional[float] = OMIT,
-        cached_available_models: typing.Optional[str] = OMIT,
         deployment_name: typing.Optional[str] = OMIT,
         endpoint: typing.Optional[str] = OMIT,
         google_application_credentials: typing.Optional[str] = OMIT,
-        google_location: typing.Optional[str] = OMIT,
         google_project_id: typing.Optional[str] = OMIT,
-        is_internal: typing.Optional[bool] = OMIT,
-        provider: typing.Optional[ProviderEnum] = OMIT,
+        google_location: typing.Optional[str] = OMIT,
+        cached_available_models: typing.Optional[str] = OMIT,
         scope: typing.Optional[ScopeEnum] = OMIT,
+        is_internal: typing.Optional[bool] = OMIT,
+        budget_alert_threshold: typing.Optional[float] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ModelProviderConnection:
         """
@@ -778,17 +726,13 @@ class AsyncModelProvidersClient:
         ----------
         id : str
 
+        provider : typing.Optional[ProviderEnum]
+
         api_key : typing.Optional[str]
             Model provider API key
 
         auth_token : typing.Optional[str]
             Model provider Auth token
-
-        budget_alert_threshold : typing.Optional[float]
-            Budget alert threshold for the given provider connection
-
-        cached_available_models : typing.Optional[str]
-            List of available models from the provider
 
         deployment_name : typing.Optional[str]
             Azure OpenAI deployment name
@@ -799,18 +743,22 @@ class AsyncModelProvidersClient:
         google_application_credentials : typing.Optional[str]
             The content of GOOGLE_APPLICATION_CREDENTIALS json file
 
+        google_project_id : typing.Optional[str]
+            Google project ID
+
         google_location : typing.Optional[str]
             Google project location
 
-        google_project_id : typing.Optional[str]
-            Google project ID
+        cached_available_models : typing.Optional[str]
+            List of available models from the provider
+
+        scope : typing.Optional[ScopeEnum]
 
         is_internal : typing.Optional[bool]
             Whether the model provider connection is internal, not visible to the user
 
-        provider : typing.Optional[ProviderEnum]
-
-        scope : typing.Optional[ScopeEnum]
+        budget_alert_threshold : typing.Optional[float]
+            Budget alert threshold for the given provider connection
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -843,18 +791,18 @@ class AsyncModelProvidersClient:
             f"api/model-provider-connections/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
+                "provider": provider,
                 "api_key": api_key,
                 "auth_token": auth_token,
-                "budget_alert_threshold": budget_alert_threshold,
-                "cached_available_models": cached_available_models,
                 "deployment_name": deployment_name,
                 "endpoint": endpoint,
                 "google_application_credentials": google_application_credentials,
-                "google_location": google_location,
                 "google_project_id": google_project_id,
-                "is_internal": is_internal,
-                "provider": provider,
+                "google_location": google_location,
+                "cached_available_models": cached_available_models,
                 "scope": scope,
+                "is_internal": is_internal,
+                "budget_alert_threshold": budget_alert_threshold,
             },
             headers={
                 "content-type": "application/json",
@@ -868,6 +816,58 @@ class AsyncModelProvidersClient:
                     ModelProviderConnection,
                     construct_type(
                         type_=ModelProviderConnection,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list_model_provider_choices(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ModelProvidersListModelProviderChoicesResponse:
+        """
+        List all possible model provider choices
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelProvidersListModelProviderChoicesResponse
+            List of model provider choices
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.model_providers.list_model_provider_choices()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/model-provider-connections/provider-choices",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ModelProvidersListModelProviderChoicesResponse,
+                    construct_type(
+                        type_=ModelProvidersListModelProviderChoicesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

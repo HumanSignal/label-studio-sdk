@@ -50,21 +50,21 @@ service:
             version_id: 1
           response:
             body:
-              - completed_at: '2024-01-15T09:30:00Z'
-                created_at: '2024-01-15T09:30:00Z'
-                created_by: 1
-                id: 1
-                job_id: job_id
-                organization: 1
+              - id: 1
                 parent_model: 1
-                predictions_updated_at: '2024-01-15T09:30:00Z'
-                project: 1
                 project_subset: All
                 status: Pending
-                total_correct_predictions: 1
+                job_id: job_id
                 total_predictions: 1
+                total_correct_predictions: 1
                 total_tasks: 1
+                created_at: '2024-01-15T09:30:00Z'
                 triggered_at: '2024-01-15T09:30:00Z'
+                predictions_updated_at: '2024-01-15T09:30:00Z'
+                completed_at: '2024-01-15T09:30:00Z'
+                organization: 1
+                project: 1
+                created_by: 1
       audiences:
         - public
     create:
@@ -82,21 +82,18 @@ service:
         name: ModelRunRequest
         body:
           properties:
+            project_subset: optional<root.ProjectSubsetEnum>
             job_id:
               type: optional<string>
               docs: Job ID for inference job for a ModelRun e.g. Adala job ID
               validation:
                 maxLength: 255
-            organization: optional<integer>
-            predictions_updated_at: optional<datetime>
-            project: integer
-            project_subset: optional<root.ProjectSubsetEnum>
-            total_correct_predictions:
+            total_predictions:
               type: optional<integer>
               validation:
                 min: -2147483648
                 max: 2147483647
-            total_predictions:
+            total_correct_predictions:
               type: optional<integer>
               validation:
                 min: -2147483648
@@ -106,6 +103,9 @@ service:
               validation:
                 min: -2147483648
                 max: 2147483647
+            predictions_updated_at: optional<datetime>
+            organization: optional<integer>
+            project: integer
         content-type: application/json
       response:
         docs: ''
@@ -118,21 +118,21 @@ service:
             project: 1
           response:
             body:
-              completed_at: '2024-01-15T09:30:00Z'
-              created_at: '2024-01-15T09:30:00Z'
-              created_by: 1
               id: 1
-              job_id: job_id
-              organization: 1
               parent_model: 1
-              predictions_updated_at: '2024-01-15T09:30:00Z'
-              project: 1
               project_subset: All
               status: Pending
-              total_correct_predictions: 1
+              job_id: job_id
               total_predictions: 1
+              total_correct_predictions: 1
               total_tasks: 1
+              created_at: '2024-01-15T09:30:00Z'
               triggered_at: '2024-01-15T09:30:00Z'
+              predictions_updated_at: '2024-01-15T09:30:00Z'
+              completed_at: '2024-01-15T09:30:00Z'
+              organization: 1
+              project: 1
+              created_by: 1
       audiences:
         - public
   source:

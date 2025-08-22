@@ -1,4 +1,296 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve a list of tasks and assignees for those tasks for a specific
+        project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Get assigned tasks and assignees
+      response:
+        docs: List of assignments for the task
+        type: list<root.TaskAssignment>
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+          response:
+            body:
+              - id: 1
+                created_at: '2024-01-15T09:30:00Z'
+                type: AN
+                assignee: 1
+                task: 1
+      audiences:
+        - public
+    assign:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: POST
+      auth: true
+      docs: Assign a user to a task in a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Create task assignee
+      request:
+        name: AssignmentsAssignRequest
+        body:
+          properties:
+            type:
+              type: AssignmentsAssignRequestType
+              docs: Assignment type. Use AN for annotate or RE for review.
+            users:
+              docs: List of user IDs to assign
+              type: list<integer>
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.TaskAssignment
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+          request:
+            type: AN
+            users:
+              - 1
+          response:
+            body:
+              id: 1
+              created_at: '2024-01-15T09:30:00Z'
+              type: AN
+              assignee: 1
+              task: 1
+      audiences:
+        - public
+    delete:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: DELETE
+      auth: true
+      docs: Remove assignees for a task within a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Delete task assignments
+      request:
+        name: AssignmentsDeleteRequest
+        query-parameters:
+          type:
+            type: optional<AssignmentsDeleteRequestType>
+            docs: >-
+              Assignment type to delete (optional). If omitted, deletes all
+              assignments for the task.
+          users:
+            type: optional<string>
+            docs: >-
+              Comma separated list of user IDs to delete, as a string. If
+              omitted, deletes all assignees for the given type.
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+      audiences:
+        - public
+    update:
+      path: /api/projects/{id}/tasks/{task_pk}/assignees
+      method: PATCH
+      auth: true
+      docs: Update the assignee for a task in a specific project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this project.
+        task_pk:
+          type: integer
+          docs: A unique integer value identifying this task.
+      display-name: Update task assignee
+      request:
+        name: AssignmentsUpdateRequest
+        body:
+          properties:
+            type:
+              type: AssignmentsUpdateRequestType
+              docs: Assignment type. Use AN for annotate or RE for review.
+            users:
+              docs: List of user IDs to assign
+              type: list<integer>
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.TaskAssignment
+      examples:
+        - path-parameters:
+            id: 1
+            task_pk: 1
+          request:
+            type: AN
+            users:
+              - 1
+          response:
+            body:
+              id: 1
+              created_at: '2024-01-15T09:30:00Z'
+              type: AN
+              assignee: 1
+              task: 1
+      audiences:
+        - public
+    bulk_assign:
+      path: /api/projects/{id}/tasks/assignees
+      method: POST
+      auth: true
+      docs: >-
+        Assign multiple users to a collection of tasks within a specific
+        project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Bulk assign users to tasks
+      request:
+        name: AssignmentsBulkAssignRequest
+        body:
+          properties:
+            type:
+              type: AssignmentsBulkAssignRequestType
+              docs: Assignment type. Use AN for annotate or RE for review.
+            users:
+              docs: List of user IDs to assign
+              type: list<integer>
+            selectedItems:
+              type: AssignmentsBulkAssignRequestSelectedItems
+              docs: >-
+                Task selection by IDs. If filters are applied, the selection
+                will be applied to the filtered tasks.If "all" is `false`,
+                `"included"` must be used. If "all" is `true`, `"excluded"` must
+                be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or
+                `{"all": true, "excluded": [4, 5]}`
+            filters:
+              type: optional<AssignmentsBulkAssignRequestFilters>
+              docs: >-
+                Filters to apply on tasks. You can use [the helper class
+                `Filters` from this
+                page](https://labelstud.io/sdk/data_manager.html) to create Data
+                Manager Filters.<br>Example: `{"conjunction": "or", "items":
+                [{"filter": "filter:tasks:completed_at", "operator": "greater",
+                "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
+        content-type: application/json
+      response:
+        docs: Success
+        type: AssignmentsBulkAssignResponse
+      errors:
+        - root.BadRequestError
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            type: AN
+            users:
+              - 1
+            selectedItems:
+              all: true
+          response:
+            body:
+              assignments: 1
+              async: true
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml
 types:
+  AssignmentsAssignRequestType:
+    enum:
+      - AN
+      - RE
+    docs: Assignment type. Use AN for annotate or RE for review.
+    inline: true
+    source:
+      openapi: openapi/openapi.yaml
+  AssignmentsDeleteRequestType:
+    enum:
+      - AN
+      - RE
+    source:
+      openapi: openapi/openapi.yaml
+  AssignmentsUpdateRequestType:
+    enum:
+      - AN
+      - RE
+    docs: Assignment type. Use AN for annotate or RE for review.
+    inline: true
+    source:
+      openapi: openapi/openapi.yaml
+  AssignmentsBulkAssignRequestType:
+    enum:
+      - AN
+      - RE
+    docs: Assignment type. Use AN for annotate or RE for review.
+    inline: true
+    source:
+      openapi: openapi/openapi.yaml
+  AssignmentsBulkAssignRequestSelectedItemsIncluded:
+    properties:
+      all:
+        type: boolean
+        docs: No tasks are selected
+      included:
+        type: optional<list<integer>>
+        docs: List of included task IDs
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  AssignmentsBulkAssignRequestSelectedItemsExcluded:
+    properties:
+      all:
+        type: boolean
+        docs: All tasks are selected
+      excluded:
+        type: optional<list<integer>>
+        docs: List of excluded task IDs
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  AssignmentsBulkAssignRequestSelectedItems:
+    discriminated: false
+    docs: >-
+      Task selection by IDs. If filters are applied, the selection will be
+      applied to the filtered tasks.If "all" is `false`, `"included"` must be
+      used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all":
+      false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
+    union:
+      - type: AssignmentsBulkAssignRequestSelectedItemsIncluded
+      - type: AssignmentsBulkAssignRequestSelectedItemsExcluded
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   AssignmentsBulkAssignRequestFiltersConjunction:
     enum:
       - or
@@ -262,301 +554,9 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
-  AssignmentsBulkAssignRequestSelectedItemsIncluded:
-    properties:
-      all:
-        type: boolean
-        docs: No tasks are selected
-      included:
-        type: optional<list<integer>>
-        docs: List of included task IDs
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  AssignmentsBulkAssignRequestSelectedItemsExcluded:
-    properties:
-      all:
-        type: boolean
-        docs: All tasks are selected
-      excluded:
-        type: optional<list<integer>>
-        docs: List of excluded task IDs
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  AssignmentsBulkAssignRequestSelectedItems:
-    discriminated: false
-    docs: >-
-      Task selection by IDs. If filters are applied, the selection will be
-      applied to the filtered tasks.If "all" is `false`, `"included"` must be
-      used. If "all" is `true`, `"excluded"` must be used.<br>Examples: `{"all":
-      false, "included": [1, 2, 3]}` or `{"all": true, "excluded": [4, 5]}`
-    union:
-      - type: AssignmentsBulkAssignRequestSelectedItemsIncluded
-      - type: AssignmentsBulkAssignRequestSelectedItemsExcluded
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  AssignmentsBulkAssignRequestType:
-    enum:
-      - AN
-      - RE
-    docs: Assignment type. Use AN for annotate or RE for review.
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
   AssignmentsBulkAssignResponse:
     properties:
       assignments: optional<integer>
       async: optional<boolean>
     source:
       openapi: openapi/openapi.yaml
-  AssignmentsAssignRequestType:
-    enum:
-      - AN
-      - RE
-    docs: Assignment type. Use AN for annotate or RE for review.
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
-  AssignmentsDeleteRequestType:
-    enum:
-      - AN
-      - RE
-    source:
-      openapi: openapi/openapi.yaml
-  AssignmentsUpdateRequestType:
-    enum:
-      - AN
-      - RE
-    docs: Assignment type. Use AN for annotate or RE for review.
-    inline: true
-    source:
-      openapi: openapi/openapi.yaml
-imports:
-  root: ../__package__.yml
-service:
-  auth: false
-  base-path: ''
-  endpoints:
-    bulk_assign:
-      path: /api/projects/{id}/tasks/assignees
-      method: POST
-      auth: true
-      docs: >-
-        Assign multiple users to a collection of tasks within a specific
-        project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: Bulk assign users to tasks
-      request:
-        name: AssignmentsBulkAssignRequest
-        body:
-          properties:
-            filters:
-              type: optional<AssignmentsBulkAssignRequestFilters>
-              docs: >-
-                Filters to apply on tasks. You can use [the helper class
-                `Filters` from this
-                page](https://labelstud.io/sdk/data_manager.html) to create Data
-                Manager Filters.<br>Example: `{"conjunction": "or", "items":
-                [{"filter": "filter:tasks:completed_at", "operator": "greater",
-                "type": "Datetime", "value": "2021-01-01T00:00:00.000Z"}]}`
-            selectedItems:
-              type: AssignmentsBulkAssignRequestSelectedItems
-              docs: >-
-                Task selection by IDs. If filters are applied, the selection
-                will be applied to the filtered tasks.If "all" is `false`,
-                `"included"` must be used. If "all" is `true`, `"excluded"` must
-                be used.<br>Examples: `{"all": false, "included": [1, 2, 3]}` or
-                `{"all": true, "excluded": [4, 5]}`
-            type:
-              type: AssignmentsBulkAssignRequestType
-              docs: Assignment type. Use AN for annotate or RE for review.
-            users:
-              docs: List of user IDs to assign
-              type: list<integer>
-        content-type: application/json
-      response:
-        docs: Success
-        type: AssignmentsBulkAssignResponse
-      errors:
-        - root.BadRequestError
-      examples:
-        - path-parameters:
-            id: 1
-          request:
-            selectedItems:
-              all: true
-            type: AN
-            users:
-              - 1
-          response:
-            body:
-              assignments: 1
-              async: true
-      audiences:
-        - public
-    list:
-      path: /api/projects/{id}/tasks/{task_pk}/assignees
-      method: GET
-      auth: true
-      docs: >-
-        Retrieve a list of tasks and assignees for those tasks for a specific
-        project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-        task_pk:
-          type: integer
-          docs: A unique integer value identifying this task.
-      display-name: Get assigned tasks and assignees
-      response:
-        docs: List of assignments for the task
-        type: list<root.TaskAssignment>
-      examples:
-        - path-parameters:
-            id: 1
-            task_pk: 1
-          response:
-            body:
-              - assignee: 1
-                created_at: '2024-01-15T09:30:00Z'
-                id: 1
-                task: 1
-                type: AN
-      audiences:
-        - public
-    assign:
-      path: /api/projects/{id}/tasks/{task_pk}/assignees
-      method: POST
-      auth: true
-      docs: Assign a user to a task in a specific project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-        task_pk:
-          type: integer
-          docs: A unique integer value identifying this task.
-      display-name: Create task assignee
-      request:
-        name: AssignmentsAssignRequest
-        body:
-          properties:
-            type:
-              type: AssignmentsAssignRequestType
-              docs: Assignment type. Use AN for annotate or RE for review.
-            users:
-              docs: List of user IDs to assign
-              type: list<integer>
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.TaskAssignment
-      examples:
-        - path-parameters:
-            id: 1
-            task_pk: 1
-          request:
-            type: AN
-            users:
-              - 1
-          response:
-            body:
-              assignee: 1
-              created_at: '2024-01-15T09:30:00Z'
-              id: 1
-              task: 1
-              type: AN
-      audiences:
-        - public
-    delete:
-      path: /api/projects/{id}/tasks/{task_pk}/assignees
-      method: DELETE
-      auth: true
-      docs: Remove assignees for a task within a specific project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-        task_pk:
-          type: integer
-          docs: A unique integer value identifying this task.
-      display-name: Delete task assignments
-      request:
-        name: AssignmentsDeleteRequest
-        query-parameters:
-          type:
-            type: optional<AssignmentsDeleteRequestType>
-            docs: >-
-              Assignment type to delete (optional). If omitted, deletes all
-              assignments for the task.
-          users:
-            type: optional<string>
-            docs: >-
-              Comma separated list of user IDs to delete, as a string. If
-              omitted, deletes all assignees for the given type.
-      examples:
-        - path-parameters:
-            id: 1
-            task_pk: 1
-      audiences:
-        - public
-    update:
-      path: /api/projects/{id}/tasks/{task_pk}/assignees
-      method: PATCH
-      auth: true
-      docs: Update the assignee for a task in a specific project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-        task_pk:
-          type: integer
-          docs: A unique integer value identifying this task.
-      display-name: Update task assignee
-      request:
-        name: AssignmentsUpdateRequest
-        body:
-          properties:
-            type:
-              type: AssignmentsUpdateRequestType
-              docs: Assignment type. Use AN for annotate or RE for review.
-            users:
-              docs: List of user IDs to assign
-              type: list<integer>
-        content-type: application/json
-      response:
-        docs: ''
-        type: root.TaskAssignment
-      examples:
-        - path-parameters:
-            id: 1
-            task_pk: 1
-          request:
-            type: AN
-            users:
-              - 1
-          response:
-            body:
-              assignee: 1
-              created_at: '2024-01-15T09:30:00Z'
-              id: 1
-              task: 1
-              type: AN
-      audiences:
-        - public
-  source:
-    openapi: openapi/openapi.yaml

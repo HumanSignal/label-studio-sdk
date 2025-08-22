@@ -2,38 +2,38 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .lse_annotation_filter_options import LseAnnotationFilterOptions
-from .converted_format import ConvertedFormat
+from .user_simple import UserSimple
 import datetime as dt
 import pydantic
-from .user_simple import UserSimple
-from .serialization_options import SerializationOptions
 from .status7bf_enum import Status7BfEnum
+from .converted_format import ConvertedFormat
 from .lse_task_filter_options import LseTaskFilterOptions
+from .lse_annotation_filter_options import LseAnnotationFilterOptions
+from .serialization_options import SerializationOptions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LseExportCreate(UncheckedBaseModel):
-    annotation_filter_options: typing.Optional[LseAnnotationFilterOptions] = None
-    converted_formats: typing.Optional[typing.List[ConvertedFormat]] = None
-    counters: typing.Optional[typing.Optional[typing.Any]] = None
+    title: typing.Optional[str] = None
+    id: int
+    created_by: typing.Optional[UserSimple] = None
     created_at: dt.datetime = pydantic.Field()
     """
     Creation time
     """
 
-    created_by: typing.Optional[UserSimple] = None
     finished_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Complete or fail time
     """
 
-    id: int
-    md5: typing.Optional[str] = None
-    serialization_options: typing.Optional[SerializationOptions] = None
     status: typing.Optional[Status7BfEnum] = None
+    md5: typing.Optional[str] = None
+    counters: typing.Optional[typing.Optional[typing.Any]] = None
+    converted_formats: typing.Optional[typing.List[ConvertedFormat]] = None
     task_filter_options: typing.Optional[LseTaskFilterOptions] = None
-    title: typing.Optional[str] = None
+    annotation_filter_options: typing.Optional[LseAnnotationFilterOptions] = None
+    serialization_options: typing.Optional[SerializationOptions] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

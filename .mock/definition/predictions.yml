@@ -28,22 +28,22 @@ service:
         - name: response
           response:
             body:
-              - cluster: 1
-                created_ago: created_ago
-                created_at: '2024-01-15T09:30:00Z'
-                id: 1
-                mislabeling: 1.1
-                model: 1
-                model_run: 1
-                model_version: model_version
-                neighbors:
-                  key: value
-                project: 1
+              - id: 1
                 result:
                   - key: value
+                model_version: model_version
+                created_ago: created_ago
                 score: 1.1
-                task: 1
+                cluster: 1
+                neighbors:
+                  key: value
+                mislabeling: 1.1
+                created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
+                model: 1
+                model_run: 1
+                task: 1
+                project: 1
       audiences:
         - public
     create:
@@ -58,12 +58,9 @@ service:
         name: PredictionsCreateRequest
         body:
           properties:
-            model_version:
-              type: optional<string>
-              docs: >-
-                Model version - tag for predictions that can be used to filter
-                tasks in Data Manager, as well as select specific model version
-                for showing preannotations in the labeling interface
+            task:
+              type: optional<integer>
+              docs: Task ID for which the prediction is created
             result:
               type: optional<list<map<string, unknown>>>
               docs: >-
@@ -76,9 +73,12 @@ service:
                 Prediction score. Can be used in Data Manager to sort task by
                 model confidence. Task with the lowest score will be shown
                 first.
-            task:
-              type: optional<integer>
-              docs: Task ID for which the prediction is created
+            model_version:
+              type: optional<string>
+              docs: >-
+                Model version - tag for predictions that can be used to filter
+                tasks in Data Manager, as well as select specific model version
+                for showing preannotations in the labeling interface
         content-type: application/json
       response:
         docs: Created prediction
@@ -86,56 +86,56 @@ service:
       examples:
         - name: response
           request:
-            model_version: yolo-v8
             result:
-              - from_name: bboxes
-                image_rotation: 0
+              - original_width: 1920
                 original_height: 1080
-                original_width: 1920
+                image_rotation: 0
+                from_name: bboxes
                 to_name: image
                 type: rectanglelabels
                 value:
+                  x: 20
+                  'y': 30
+                  width: 50
                   height: 60
                   rotation: 0
                   values:
                     rectanglelabels:
                       - Person
-                  width: 50
-                  x: 20
-                  'y': 30
             score: 0.95
+            model_version: yolo-v8
           response:
             body:
-              cluster: 1
-              created_ago: created_ago
-              created_at: '2024-01-15T09:30:00Z'
               id: 1
-              mislabeling: 1.1
-              model: 1
-              model_run: 1
-              model_version: yolo-v8
-              neighbors:
-                key: value
-              project: 1
               result:
-                - from_name: bboxes
-                  image_rotation: 0
+                - original_width: 1920
                   original_height: 1080
-                  original_width: 1920
+                  image_rotation: 0
+                  from_name: bboxes
                   to_name: image
                   type: rectanglelabels
                   value:
+                    x: 20
+                    'y': 30
+                    width: 50
                     height: 60
                     rotation: 0
                     values:
                       rectanglelabels:
                         - Person
-                    width: 50
-                    x: 20
-                    'y': 30
+              model_version: yolo-v8
+              created_ago: created_ago
               score: 0.95
-              task: 1
+              cluster: 1
+              neighbors:
+                key: value
+              mislabeling: 1.1
+              created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+              model: 1
+              model_run: 1
+              task: 1
+              project: 1
       audiences:
         - public
     get:
@@ -159,36 +159,36 @@ service:
             id: 1
           response:
             body:
-              cluster: 1
-              created_ago: created_ago
-              created_at: '2024-01-15T09:30:00Z'
               id: 1
-              mislabeling: 1.1
-              model: 1
-              model_run: 1
-              model_version: yolo-v8
-              neighbors:
-                key: value
-              project: 1
               result:
-                - from_name: bboxes
-                  image_rotation: 0
+                - original_width: 1920
                   original_height: 1080
-                  original_width: 1920
+                  image_rotation: 0
+                  from_name: bboxes
                   to_name: image
                   type: rectanglelabels
                   value:
+                    x: 20
+                    'y': 30
+                    width: 50
                     height: 60
                     rotation: 0
                     values:
                       rectanglelabels:
                         - Person
-                    width: 50
-                    x: 20
-                    'y': 30
+              model_version: yolo-v8
+              created_ago: created_ago
               score: 0.95
-              task: 1
+              cluster: 1
+              neighbors:
+                key: value
+              mislabeling: 1.1
+              created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+              model: 1
+              model_run: 1
+              task: 1
+              project: 1
       audiences:
         - public
     api_predictions_update:
@@ -207,12 +207,9 @@ service:
         name: ApiPredictionsUpdateRequest
         body:
           properties:
-            model_version:
-              type: optional<string>
-              docs: >-
-                Model version - tag for predictions that can be used to filter
-                tasks in Data Manager, as well as select specific model version
-                for showing preannotations in the labeling interface
+            task:
+              type: optional<integer>
+              docs: Task ID for which the prediction is created
             result:
               type: optional<list<map<string, unknown>>>
               docs: >-
@@ -225,9 +222,12 @@ service:
                 Prediction score. Can be used in Data Manager to sort task by
                 model confidence. Task with the lowest score will be shown
                 first.
-            task:
-              type: optional<integer>
-              docs: Task ID for which the prediction is created
+            model_version:
+              type: optional<string>
+              docs: >-
+                Model version - tag for predictions that can be used to filter
+                tasks in Data Manager, as well as select specific model version
+                for showing preannotations in the labeling interface
         content-type: application/json
       response:
         docs: Updated prediction
@@ -237,56 +237,56 @@ service:
           path-parameters:
             id: 1
           request:
-            model_version: yolo-v8
             result:
-              - from_name: bboxes
-                image_rotation: 0
+              - original_width: 1920
                 original_height: 1080
-                original_width: 1920
+                image_rotation: 0
+                from_name: bboxes
                 to_name: image
                 type: rectanglelabels
                 value:
+                  x: 20
+                  'y': 30
+                  width: 50
                   height: 60
                   rotation: 0
                   values:
                     rectanglelabels:
                       - Person
-                  width: 50
-                  x: 20
-                  'y': 30
             score: 0.95
+            model_version: yolo-v8
           response:
             body:
-              cluster: 1
-              created_ago: created_ago
-              created_at: '2024-01-15T09:30:00Z'
               id: 1
-              mislabeling: 1.1
-              model: 1
-              model_run: 1
-              model_version: yolo-v8
-              neighbors:
-                key: value
-              project: 1
               result:
-                - from_name: bboxes
-                  image_rotation: 0
+                - original_width: 1920
                   original_height: 1080
-                  original_width: 1920
+                  image_rotation: 0
+                  from_name: bboxes
                   to_name: image
                   type: rectanglelabels
                   value:
+                    x: 20
+                    'y': 30
+                    width: 50
                     height: 60
                     rotation: 0
                     values:
                       rectanglelabels:
                         - Person
-                    width: 50
-                    x: 20
-                    'y': 30
+              model_version: yolo-v8
+              created_ago: created_ago
               score: 0.95
-              task: 1
+              cluster: 1
+              neighbors:
+                key: value
+              mislabeling: 1.1
+              created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+              model: 1
+              model_run: 1
+              task: 1
+              project: 1
       audiences:
         - internal
     delete:
@@ -322,12 +322,9 @@ service:
         name: PredictionsUpdateRequest
         body:
           properties:
-            model_version:
-              type: optional<string>
-              docs: >-
-                Model version - tag for predictions that can be used to filter
-                tasks in Data Manager, as well as select specific model version
-                for showing preannotations in the labeling interface
+            task:
+              type: optional<integer>
+              docs: Task ID for which the prediction is created
             result:
               type: optional<list<map<string, unknown>>>
               docs: >-
@@ -340,9 +337,12 @@ service:
                 Prediction score. Can be used in Data Manager to sort task by
                 model confidence. Task with the lowest score will be shown
                 first.
-            task:
-              type: optional<integer>
-              docs: Task ID for which the prediction is created
+            model_version:
+              type: optional<string>
+              docs: >-
+                Model version - tag for predictions that can be used to filter
+                tasks in Data Manager, as well as select specific model version
+                for showing preannotations in the labeling interface
         content-type: application/json
       response:
         docs: Updated prediction
@@ -352,56 +352,56 @@ service:
           path-parameters:
             id: 1
           request:
-            model_version: yolo-v8
             result:
-              - from_name: bboxes
-                image_rotation: 0
+              - original_width: 1920
                 original_height: 1080
-                original_width: 1920
+                image_rotation: 0
+                from_name: bboxes
                 to_name: image
                 type: rectanglelabels
                 value:
+                  x: 20
+                  'y': 30
+                  width: 50
                   height: 60
                   rotation: 0
                   values:
                     rectanglelabels:
                       - Person
-                  width: 50
-                  x: 20
-                  'y': 30
             score: 0.95
+            model_version: yolo-v8
           response:
             body:
-              cluster: 1
-              created_ago: created_ago
-              created_at: '2024-01-15T09:30:00Z'
               id: 1
-              mislabeling: 1.1
-              model: 1
-              model_run: 1
-              model_version: yolo-v8
-              neighbors:
-                key: value
-              project: 1
               result:
-                - from_name: bboxes
-                  image_rotation: 0
+                - original_width: 1920
                   original_height: 1080
-                  original_width: 1920
+                  image_rotation: 0
+                  from_name: bboxes
                   to_name: image
                   type: rectanglelabels
                   value:
+                    x: 20
+                    'y': 30
+                    width: 50
                     height: 60
                     rotation: 0
                     values:
                       rectanglelabels:
                         - Person
-                    width: 50
-                    x: 20
-                    'y': 30
+              model_version: yolo-v8
+              created_ago: created_ago
               score: 0.95
-              task: 1
+              cluster: 1
+              neighbors:
+                key: value
+              mislabeling: 1.1
+              created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+              model: 1
+              model_run: 1
+              task: 1
+              project: 1
       audiences:
         - public
   source:

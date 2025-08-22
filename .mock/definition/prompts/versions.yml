@@ -48,23 +48,23 @@ service:
             prompt_id: 1
           response:
             body:
-              - created_at: '2024-01-15T09:30:00Z'
+              - id: 1
                 created_by:
-                  avatar: avatar
-                  email: email
-                  first_name: first_name
                   id: 1
+                  first_name: first_name
                   last_name: last_name
-                id: 1
-                model_provider_connection: 1
-                organization: 1
+                  email: email
+                  avatar: avatar
+                score: score
                 parent_model: 1
+                title: title
                 prompt: prompt
                 provider: OpenAI
                 provider_model_id: provider_model_id
-                score: score
-                title: title
+                created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
+                model_provider_connection: 1
+                organization: 1
       audiences:
         - public
     create:
@@ -87,28 +87,28 @@ service:
         - path-parameters:
             prompt_id: 1
           request:
+            title: title
             prompt: prompt
             provider_model_id: provider_model_id
-            title: title
           response:
             body:
-              created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                avatar: avatar
-                email: email
-                first_name: first_name
-                id: 1
-                last_name: last_name
               id: 1
-              model_provider_connection: 1
-              organization: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              score: score
               parent_model: 1
+              title: title
               prompt: prompt
               provider: OpenAI
               provider_model_id: provider_model_id
-              score: score
-              title: title
+              created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+              model_provider_connection: 1
+              organization: 1
       audiences:
         - public
     get:
@@ -131,23 +131,23 @@ service:
             version_id: 1
           response:
             body:
-              created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                avatar: avatar
-                email: email
-                first_name: first_name
-                id: 1
-                last_name: last_name
               id: 1
-              model_provider_connection: 1
-              organization: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              score: score
               parent_model: 1
+              title: title
               prompt: prompt
               provider: OpenAI
               provider_model_id: provider_model_id
-              score: score
-              title: title
+              created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+              model_provider_connection: 1
+              organization: 1
       audiences:
         - public
     delete:
@@ -182,11 +182,15 @@ service:
         name: PatchedThirdPartyModelVersionRequest
         body:
           properties:
-            model_provider_connection: optional<integer>
-            organization: optional<integer>
             parent_model:
               type: optional<integer>
               docs: Parent model interface ID
+            title:
+              type: optional<string>
+              docs: Model name
+              validation:
+                minLength: 1
+                maxLength: 500
             prompt:
               type: optional<string>
               docs: Prompt to execute
@@ -210,12 +214,8 @@ service:
               validation:
                 minLength: 1
                 maxLength: 255
-            title:
-              type: optional<string>
-              docs: Model name
-              validation:
-                minLength: 1
-                maxLength: 500
+            model_provider_connection: optional<integer>
+            organization: optional<integer>
         content-type: application/json
       response:
         docs: ''
@@ -227,23 +227,23 @@ service:
           request: {}
           response:
             body:
-              created_at: '2024-01-15T09:30:00Z'
-              created_by:
-                avatar: avatar
-                email: email
-                first_name: first_name
-                id: 1
-                last_name: last_name
               id: 1
-              model_provider_connection: 1
-              organization: 1
+              created_by:
+                id: 1
+                first_name: first_name
+                last_name: last_name
+                email: email
+                avatar: avatar
+              score: score
               parent_model: 1
+              title: title
               prompt: prompt
               provider: OpenAI
               provider_model_id: provider_model_id
-              score: score
-              title: title
+              created_at: '2024-01-15T09:30:00Z'
               updated_at: '2024-01-15T09:30:00Z'
+              model_provider_connection: 1
+              organization: 1
       audiences:
         - public
     cost_estimate:
@@ -270,12 +270,12 @@ service:
             version_id: 1
           response:
             body:
-              completion_cost_usd: completion_cost_usd
-              error_message: error_message
-              error_type: error_type
-              is_error: true
               prompt_cost_usd: prompt_cost_usd
+              completion_cost_usd: completion_cost_usd
               total_cost_usd: total_cost_usd
+              is_error: true
+              error_type: error_type
+              error_message: error_message
       audiences:
         - public
     get_refined_prompt:
@@ -306,30 +306,30 @@ service:
             version_id: 1
           response:
             body:
+              title: title
+              reasoning: reasoning
+              prompt: prompt
+              refinement_job_id: refinement_job_id
+              refinement_status: refinement_status
+              total_cost: total_cost
               previous_version:
-                created_at: '2024-01-15T09:30:00Z'
-                created_by:
-                  avatar: avatar
-                  email: email
-                  first_name: first_name
-                  id: 1
-                  last_name: last_name
                 id: 1
-                model_provider_connection: 1
-                organization: 1
+                created_by:
+                  id: 1
+                  first_name: first_name
+                  last_name: last_name
+                  email: email
+                  avatar: avatar
+                score: score
                 parent_model: 1
+                title: title
                 prompt: prompt
                 provider: OpenAI
                 provider_model_id: provider_model_id
-                score: score
-                title: title
+                created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
-              prompt: prompt
-              reasoning: reasoning
-              refinement_job_id: refinement_job_id
-              refinement_status: refinement_status
-              title: title
-              total_cost: total_cost
+                model_provider_connection: 1
+                organization: 1
       audiences:
         - public
     refine_prompt:
@@ -353,17 +353,17 @@ service:
             docs: Whether to run the refinement asynchronously
         body:
           properties:
-            project_id:
+            teacher_model_provider_connection_id:
               type: integer
-              docs: Project ID to target the refined prompt for
+              docs: Model Provider Connection ID to use to refine the prompt
             teacher_model_name:
               type: string
               docs: Name of the model to use to refine the prompt
               validation:
                 minLength: 1
-            teacher_model_provider_connection_id:
+            project_id:
               type: integer
-              docs: Model Provider Connection ID to use to refine the prompt
+              docs: Project ID to target the refined prompt for
         content-type: application/json
       response:
         docs: Refined prompt response
@@ -373,35 +373,35 @@ service:
             prompt_id: 1
             version_id: 1
           request:
-            project_id: 1
-            teacher_model_name: teacher_model_name
             teacher_model_provider_connection_id: 1
+            teacher_model_name: teacher_model_name
+            project_id: 1
           response:
             body:
+              title: title
+              reasoning: reasoning
+              prompt: prompt
+              refinement_job_id: refinement_job_id
+              refinement_status: refinement_status
+              total_cost: total_cost
               previous_version:
-                created_at: '2024-01-15T09:30:00Z'
-                created_by:
-                  avatar: avatar
-                  email: email
-                  first_name: first_name
-                  id: 1
-                  last_name: last_name
                 id: 1
-                model_provider_connection: 1
-                organization: 1
+                created_by:
+                  id: 1
+                  first_name: first_name
+                  last_name: last_name
+                  email: email
+                  avatar: avatar
+                score: score
                 parent_model: 1
+                title: title
                 prompt: prompt
                 provider: OpenAI
                 provider_model_id: provider_model_id
-                score: score
-                title: title
+                created_at: '2024-01-15T09:30:00Z'
                 updated_at: '2024-01-15T09:30:00Z'
-              prompt: prompt
-              reasoning: reasoning
-              refinement_job_id: refinement_job_id
-              refinement_status: refinement_status
-              title: title
-              total_cost: total_cost
+                model_provider_connection: 1
+                organization: 1
       audiences:
         - public
   source:
