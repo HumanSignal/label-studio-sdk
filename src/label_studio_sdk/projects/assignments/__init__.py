@@ -13,6 +13,7 @@ from .types import (
     AssignmentsBulkAssignRequestSelectedItemsIncluded,
     AssignmentsBulkAssignRequestType,
     AssignmentsBulkAssignResponse,
+    AssignmentsDeleteRequestType,
     AssignmentsUpdateRequestType,
 )
 
@@ -29,5 +30,6 @@ __all__ = [
     "AssignmentsBulkAssignRequestSelectedItemsIncluded",
     "AssignmentsBulkAssignRequestType",
     "AssignmentsBulkAssignResponse",
+    "AssignmentsDeleteRequestType",
     "AssignmentsUpdateRequestType",
 ]

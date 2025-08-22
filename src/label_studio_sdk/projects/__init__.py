@@ -23,6 +23,7 @@ from .assignments import (
     AssignmentsBulkAssignRequestSelectedItemsIncluded,
     AssignmentsBulkAssignRequestType,
     AssignmentsBulkAssignResponse,
+    AssignmentsDeleteRequestType,
     AssignmentsUpdateRequestType,
 )
 from .exports import ExportsConvertResponse
@@ -41,6 +42,7 @@ __all__ = [
     "AssignmentsBulkAssignRequestSelectedItemsIncluded",
     "AssignmentsBulkAssignRequestType",
     "AssignmentsBulkAssignResponse",
+    "AssignmentsDeleteRequestType",
     "AssignmentsUpdateRequestType",
     "ExportsConvertResponse",
     "LseProjectCreateRequestSampling",
