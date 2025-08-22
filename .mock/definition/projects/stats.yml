@@ -1,0 +1,160 @@
+types:
+  StatsIaaResponseIaa:
+    discriminated: false
+    docs: >-
+      Inter-Annotator Agreement matrix - 2D array when per_label=false, object
+      with label keys when per_label=true
+    union:
+      - docs: Inter-Annotator Agreement matrix (2D array) when per_label=false
+        type: list<list<double>>
+      - type: map<string, list<list<double>>>
+        docs: Inter-Annotator Agreement matrix per label when per_label=true
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsIaaResponseCommonTasks:
+    discriminated: false
+    docs: >-
+      Common tasks matrix - 2D array when per_label=false, object with label
+      keys when per_label=true
+    union:
+      - docs: >-
+          Number of common tasks between annotators (2D array) when
+          per_label=false
+        type: list<list<double>>
+      - type: map<string, list<list<double>>>
+        docs: Number of common tasks per label when per_label=true
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsIaaResponseStd:
+    discriminated: false
+    docs: >-
+      Standard deviation - number when per_label=false, object with label keys
+      when per_label=true
+    union:
+      - double
+      - type: map<string, double>
+        docs: Standard deviation per label when per_label=true
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsIaaResponse:
+    properties:
+      IAA:
+        type: optional<StatsIaaResponseIaa>
+        docs: >-
+          Inter-Annotator Agreement matrix - 2D array when per_label=false,
+          object with label keys when per_label=true
+      common_tasks:
+        type: optional<StatsIaaResponseCommonTasks>
+        docs: >-
+          Common tasks matrix - 2D array when per_label=false, object with label
+          keys when per_label=true
+      std:
+        type: optional<StatsIaaResponseStd>
+        docs: >-
+          Standard deviation - number when per_label=false, object with label
+          keys when per_label=true
+      users:
+        type: optional<list<map<string, unknown>>>
+        docs: List of users in the matrix
+    source:
+      openapi: openapi/openapi.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    iaa:
+      path: /api/projects/{id}/stats/IAA
+      method: GET
+      auth: true
+      docs: >-
+        Get Inter-Annotator Agreement (IAA) matrix for a project, showing
+        agreement between all annotators.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get Inter-Annotator Agreement matrix
+      request:
+        name: StatsIaaRequest
+        query-parameters:
+          expand:
+            type: optional<string>
+            docs: Comma-separated list of fields to expand
+          per_label:
+            type: optional<boolean>
+            default: false
+            docs: Calculate IAA per label
+          std:
+            type: optional<boolean>
+            default: false
+            docs: Include standard deviation in results
+          task:
+            type: optional<string>
+            docs: Comma-separated list of task IDs to filter by
+      response:
+        docs: Inter-Annotator Agreement matrix
+        type: StatsIaaResponse
+      examples:
+        - name: Inter-Annotator Agreement Matrix (per_label=false)
+          path-parameters:
+            id: 1
+          response:
+            body:
+              IAA:
+                - - 1
+                  - 0.5
+                - - 0.5
+                  - 1
+              common_tasks:
+                - - 0
+                  - 1
+                - - 1
+                  - 0
+              std: 1.1
+              users:
+                - email: user1@example.com
+                  id: 1
+                - email: user2@example.com
+                  id: 2
+        - name: Inter-Annotator Agreement Matrix (per_label=true)
+          path-parameters:
+            id: 1
+          response:
+            body:
+              IAA:
+                neg:
+                  - - 1.1
+                    - 0
+                  - - 0
+                    - 1.1
+                pos:
+                  - - 1.1
+                    - 0.5
+                  - - 0.5
+                    - 1.1
+              common_tasks:
+                neg:
+                  - - 0
+                    - 2
+                  - - 2
+                    - 0
+                pos:
+                  - - 0
+                    - 4
+                  - - 4
+                    - 0
+              std:
+                neg: 0.1
+                pos: 0.2
+              users:
+                - email: user1@example.com
+                  id: 1
+                - email: user2@example.com
+                  id: 2
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

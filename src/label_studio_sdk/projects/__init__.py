@@ -9,10 +9,41 @@ from .types import (
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
 )
-from . import exports, pauses
+from . import assignments, exports, pauses, stats
+from .assignments import (
+    AssignmentsAssignRequestType,
+    AssignmentsBulkAssignRequestFilters,
+    AssignmentsBulkAssignRequestFiltersConjunction,
+    AssignmentsBulkAssignRequestFiltersItemsItem,
+    AssignmentsBulkAssignRequestFiltersItemsItemFilter,
+    AssignmentsBulkAssignRequestFiltersItemsItemOperator,
+    AssignmentsBulkAssignRequestFiltersItemsItemValue,
+    AssignmentsBulkAssignRequestSelectedItems,
+    AssignmentsBulkAssignRequestSelectedItemsExcluded,
+    AssignmentsBulkAssignRequestSelectedItemsIncluded,
+    AssignmentsBulkAssignRequestType,
+    AssignmentsBulkAssignResponse,
+    AssignmentsDeleteRequestType,
+    AssignmentsUpdateRequestType,
+)
 from .exports import ExportsConvertResponse
+from .stats import StatsIaaResponse, StatsIaaResponseCommonTasks, StatsIaaResponseIaa, StatsIaaResponseStd
 
 __all__ = [
+    "AssignmentsAssignRequestType",
+    "AssignmentsBulkAssignRequestFilters",
+    "AssignmentsBulkAssignRequestFiltersConjunction",
+    "AssignmentsBulkAssignRequestFiltersItemsItem",
+    "AssignmentsBulkAssignRequestFiltersItemsItemFilter",
+    "AssignmentsBulkAssignRequestFiltersItemsItemOperator",
+    "AssignmentsBulkAssignRequestFiltersItemsItemValue",
+    "AssignmentsBulkAssignRequestSelectedItems",
+    "AssignmentsBulkAssignRequestSelectedItemsExcluded",
+    "AssignmentsBulkAssignRequestSelectedItemsIncluded",
+    "AssignmentsBulkAssignRequestType",
+    "AssignmentsBulkAssignResponse",
+    "AssignmentsDeleteRequestType",
+    "AssignmentsUpdateRequestType",
     "ExportsConvertResponse",
     "LseProjectCreateRequestSampling",
     "LseProjectCreateRequestSkipQueue",
@@ -21,6 +52,12 @@ __all__ = [
     "ProjectsDuplicateResponse",
     "ProjectsImportTasksResponse",
     "ProjectsListRequestFilter",
+    "StatsIaaResponse",
+    "StatsIaaResponseCommonTasks",
+    "StatsIaaResponseIaa",
+    "StatsIaaResponseStd",
+    "assignments",
     "exports",
     "pauses",
+    "stats",
 ]

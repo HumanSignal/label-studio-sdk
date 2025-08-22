@@ -27,28 +27,28 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                type: type
-                synchronizable: true
-                presign: true
-                container: container
-                prefix: prefix
-                regex_filter: regex_filter
-                use_blob_urls: true
+              - account_key: account_key
                 account_name: account_name
-                account_key: account_key
+                container: container
+                created_at: '2024-01-15T09:30:00Z'
+                description: description
+                id: 1
                 last_sync: '2024-01-15T09:30:00Z'
                 last_sync_count: 1
                 last_sync_job: last_sync_job
-                status: initialized
-                traceback: traceback
                 meta:
                   key: value
-                title: title
-                description: description
-                created_at: '2024-01-15T09:30:00Z'
+                prefix: prefix
+                presign: true
                 presign_ttl: 1
                 project: 1
+                regex_filter: regex_filter
+                status: initialized
+                synchronizable: true
+                title: title
+                traceback: traceback
+                type: type
+                use_blob_urls: true
       audiences:
         - public
     create:
@@ -63,19 +63,21 @@ service:
         name: AzureCreateRequest
         body:
           properties:
-            regex_filter:
+            account_key:
               type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
-              default: false
+              docs: Azure Blob account key
+            account_name:
+              type: optional<string>
+              docs: Azure Blob account name
+            container:
+              type: optional<string>
+              docs: Azure blob container
+            description:
+              type: optional<string>
+              docs: Storage description
+            prefix:
+              type: optional<string>
+              docs: Azure blob prefix name
             presign:
               type: optional<boolean>
               docs: Presign URLs for direct download
@@ -84,29 +86,27 @@ service:
               type: optional<integer>
               docs: Presign TTL in minutes
               default: 1
+            project:
+              type: optional<integer>
+              docs: Project ID
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
             title:
               type: optional<string>
               docs: Storage title
               validation:
                 maxLength: 2048
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            container:
-              type: optional<string>
-              docs: Azure blob container
-            prefix:
-              type: optional<string>
-              docs: Azure blob prefix name
-            account_name:
-              type: optional<string>
-              docs: Azure Blob account name
-            account_key:
-              type: optional<string>
-              docs: Azure Blob account key
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
         content-type: application/json
       response:
         docs: ''
@@ -115,28 +115,92 @@ service:
         - request: {}
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              container: container
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              account_name: account_name
               account_key: account_key
+              account_name: account_name
+              container: container
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
+              id: 1
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
+              prefix: prefix
+              presign: true
               presign_ttl: 1
               project: 1
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
+      audiences:
+        - public
+    validate:
+      path: /api/storages/azure/validate
+      method: POST
+      auth: true
+      docs: Validate a specific Azure import storage connection.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Validate import storage
+      request:
+        name: AzureValidateRequest
+        body:
+          properties:
+            account_key:
+              type: optional<string>
+              docs: Azure Blob account key
+            account_name:
+              type: optional<string>
+              docs: Azure Blob account name
+            container:
+              type: optional<string>
+              docs: Azure blob container
+            description:
+              type: optional<string>
+              docs: Storage description
+            id:
+              type: optional<integer>
+              docs: Storage ID. If set, storage with specified ID will be updated
+            prefix:
+              type: optional<string>
+              docs: Azure blob prefix name
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for direct download
+              default: true
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
+            project:
+              type: optional<integer>
+              docs: Project ID
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
+            title:
+              type: optional<string>
+              docs: Storage title
+              validation:
+                maxLength: 2048
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
+        content-type: application/json
+      examples:
+        - request: {}
       audiences:
         - public
     get:
@@ -157,28 +221,28 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              container: container
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              account_name: account_name
               account_key: account_key
+              account_name: account_name
+              container: container
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
+              id: 1
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
+              prefix: prefix
+              presign: true
               presign_ttl: 1
               project: 1
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
     delete:
@@ -210,19 +274,21 @@ service:
         name: AzureUpdateRequest
         body:
           properties:
-            regex_filter:
+            account_key:
               type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
-              default: false
+              docs: Azure Blob account key
+            account_name:
+              type: optional<string>
+              docs: Azure Blob account name
+            container:
+              type: optional<string>
+              docs: Azure blob container
+            description:
+              type: optional<string>
+              docs: Storage description
+            prefix:
+              type: optional<string>
+              docs: Azure blob prefix name
             presign:
               type: optional<boolean>
               docs: Presign URLs for direct download
@@ -231,29 +297,27 @@ service:
               type: optional<integer>
               docs: Presign TTL in minutes
               default: 1
+            project:
+              type: optional<integer>
+              docs: Project ID
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
             title:
               type: optional<string>
               docs: Storage title
               validation:
                 maxLength: 2048
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            container:
-              type: optional<string>
-              docs: Azure blob container
-            prefix:
-              type: optional<string>
-              docs: Azure blob prefix name
-            account_name:
-              type: optional<string>
-              docs: Azure Blob account name
-            account_key:
-              type: optional<string>
-              docs: Azure Blob account key
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
         content-type: application/json
       response:
         docs: ''
@@ -264,28 +328,28 @@ service:
           request: {}
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              container: container
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              account_name: account_name
               account_key: account_key
+              account_name: account_name
+              container: container
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
+              id: 1
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
+              prefix: prefix
+              presign: true
               presign_ttl: 1
               project: 1
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
     sync:
@@ -308,92 +372,28 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              container: container
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
-              account_name: account_name
               account_key: account_key
+              account_name: account_name
+              container: container
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
+              id: 1
               last_sync: '2024-01-15T09:30:00Z'
               last_sync_count: 1
               last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
               meta:
                 key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
+              prefix: prefix
+              presign: true
               presign_ttl: 1
               project: 1
-      audiences:
-        - public
-    validate:
-      path: /api/storages/azure/validate
-      method: POST
-      auth: true
-      docs: Validate a specific Azure import storage connection.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Validate import storage
-      request:
-        name: AzureValidateRequest
-        body:
-          properties:
-            id:
-              type: optional<integer>
-              docs: Storage ID. If set, storage with specified ID will be updated
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
-              default: false
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for direct download
-              default: true
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
-            title:
-              type: optional<string>
-              docs: Storage title
-              validation:
-                maxLength: 2048
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            container:
-              type: optional<string>
-              docs: Azure blob container
-            prefix:
-              type: optional<string>
-              docs: Azure blob prefix name
-            account_name:
-              type: optional<string>
-              docs: Azure Blob account name
-            account_key:
-              type: optional<string>
-              docs: Azure Blob account key
-        content-type: application/json
-      examples:
-        - request: {}
+              regex_filter: regex_filter
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
   source:

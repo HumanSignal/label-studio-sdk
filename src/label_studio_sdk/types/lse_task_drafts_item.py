@@ -8,8 +8,8 @@ import pydantic
 
 
 class LseTaskDraftsItem(UncheckedBaseModel):
-    result: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = None
     created_at: typing.Optional[dt.datetime] = None
+    result: typing.Optional[typing.List[typing.Dict[str, typing.Optional[typing.Any]]]] = None
     updated_at: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:

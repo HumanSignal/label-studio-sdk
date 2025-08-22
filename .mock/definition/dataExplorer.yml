@@ -90,24 +90,24 @@ service:
       examples:
         - response:
             body:
-              id: 1
-              filter_group:
-                id: 1
-                filters:
-                  - id: 1
-                    column: column
-                    type: type
-                    operator: operator
-                conjunction: conjunction
               data:
                 key: value
+              dataset: 1
+              filter_group:
+                conjunction: conjunction
+                filters:
+                  - column: column
+                    id: 1
+                    operator: operator
+                    type: type
+                id: 1
+              id: 1
+              order: 1
               ordering:
                 key: value
-              order: 1
               selected_items:
                 key: value
               user: 1
-              dataset: 1
     api_datasets_tasks_metadata_retrieve:
       path: /api/datasets/tasks/metadata
       method: GET
