@@ -27,6 +27,7 @@ from .assignments import (
     AssignmentsUpdateRequestType,
 )
 from .exports import ExportsConvertResponse
+from .stats import StatsIaaResponse, StatsIaaResponseCommonTasks, StatsIaaResponseIaa, StatsIaaResponseStd
 
 __all__ = [
     "AssignmentsAssignRequestType",
@@ -58,4 +59,5 @@ __all__ = [
     "assignments",
     "exports",
     "pauses",
+    "stats",
 ]

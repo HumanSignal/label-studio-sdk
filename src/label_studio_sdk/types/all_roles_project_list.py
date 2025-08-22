@@ -78,7 +78,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     finished_task_number: int
     ground_truth_number: int = pydantic.Field()
     """
-    Project description
+    Honeypot annotation number in project
     """
 
     has_blueprints: str
@@ -95,28 +95,7 @@ class AllRolesProjectList(UncheckedBaseModel):
 
     label_config: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Whether or not the project is published to annotators
-    """
-
-    pinned_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
-    """
-    Pinned date and time
-    """
-
-    config_has_control_tags: bool = pydantic.Field()
-    """
-    Flag to detect is project ready for labeling
-    """
-
-    show_instruction: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show instructions to the annotator before they start
-    """
-
-    data_types: typing.Optional[typing.Any] = None
-    show_skip_button: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Show a skip button in interface and allow annotators to skip the task
+    Label config in XML format. See more about it in documentation
     """
 
     maximum_annotations: typing.Optional[int] = pydantic.Field(default=None)

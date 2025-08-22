@@ -263,25 +263,7 @@ types:
         docs: Whether or not the project is published to annotators
       label_config:
         type: optional<string>
-        docs: Project description
-      finished_task_number: integer
-      description_short: string
-      is_published:
-        type: optional<boolean>
-        docs: Whether or not the project is published to annotators
-      pinned_at:
-        type: optional<datetime>
-        docs: Pinned date and time
-      config_has_control_tags:
-        type: boolean
-        docs: Flag to detect is project ready for labeling
-      show_instruction:
-        type: optional<boolean>
-        docs: Show instructions to the annotator before they start
-      data_types: unknown
-      show_skip_button:
-        type: optional<boolean>
-        docs: Show a skip button in interface and allow annotators to skip the task
+        docs: Label config in XML format. See more about it in documentation
       maximum_annotations:
         type: optional<integer>
         docs: >-
