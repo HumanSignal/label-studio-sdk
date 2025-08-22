@@ -37,7 +37,7 @@ logger = logging.getLogger("export_snapshots")
 
 
 def export_and_download_snapshot():
-    """Export project snapshot
+    """Export project JSON snapshot
 
     This example demonstrates how to:
     - Create an export snapshot
@@ -119,7 +119,7 @@ def export_and_download_snapshot():
 
 
 def convert_snapshot(export_type: str, export_id: str = None):
-    """Convert the latest project export snapshot to a specified format and download it.
+    """Convert the project export JSON snapshot to a specified format and download it.
 
     The conversion API is used to start a conversion on the Label Studio backend, then we poll export status
     until the specific converted format is completed, and finally download it.
