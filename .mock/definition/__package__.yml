@@ -5423,6 +5423,20 @@ types:
       results: list<LseProjectCounts>
     source:
       openapi: openapi/openapi.yaml
+  PaginatedLseUserList:
+    properties:
+      count: integer
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      previous:
+        type: optional<string>
+        validation:
+          format: uri
+      results: list<LseUser>
+    source:
+      openapi: openapi/openapi.yaml
   PaginatedRoleBasedTaskList:
     properties:
       tasks: list<RoleBasedTask>

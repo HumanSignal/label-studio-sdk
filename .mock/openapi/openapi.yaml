@@ -7172,6 +7172,54 @@ paths:
       summary: Add project member
       tags:
         - Projects
+  /api/projects/{id}/members/paginated/:
+    get:
+      description: Retrieve the members for a specific project.
+      operationId: api_projects_members_paginated_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Comma-separated list of user IDs to filter by
+          in: query
+          name: ids
+          schema:
+            type: string
+        - description: Exclude annotators from the results
+          in: query
+          name: no_annotators
+          schema:
+            type: boolean
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Search term for filtering members by name, email, or username
+          in: query
+          name: search
+          schema:
+            type: string
+        - description: Include deleted members in the results
+          in: query
+          name: with_deleted
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLseUserList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get project members paginated
+      tags:
+        - Projects
   /api/projects/{id}/project-extra-params/:
     get:
       description: Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project.
@@ -22790,6 +22838,29 @@ components:
         results:
           items:
             $ref: '#/components/schemas/LseProjectCounts'
+          type: array
+      required:
+        - count
+        - results
+      type: object
+    PaginatedLseUserList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/LseUser'
           type: array
       required:
         - count
