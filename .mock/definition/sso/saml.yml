@@ -16,14 +16,19 @@ service:
         docs: ''
         type: root.SamlSettings
       examples:
-        - response:
+        - name: get example
+          response:
             body:
               projects_groups:
-                key: value
+                - group: groups_test
+                  project_id: 42
+                  role: Inherit
               roles_groups:
-                key: value
+                - - Administrator
+                  - groups_test
               workspaces_groups:
-                key: value
+                - - Default workspace
+                  - groups_test
       audiences:
         - public
     update:
@@ -46,17 +51,30 @@ service:
         docs: ''
         type: root.SamlSettingsUpdate
       examples:
-        - request: {}
+        - name: update example
+          request:
+            projects_groups:
+              - group: groups_test
+                project_id: 42
+                role: Inherit
+            roles_groups:
+              - - Administrator
+                - groups_test
+            workspaces_groups:
+              - - Default workspace
+                - groups_test
           response:
             body:
               projects_groups:
-                - group: group
-                  project_id: 1
+                - group: groups_test
+                  project_id: 42
                   role: Inherit
               roles_groups:
-                - - roles_groups
+                - - Administrator
+                  - groups_test
               workspaces_groups:
-                - - workspaces_groups
+                - - Default workspace
+                  - groups_test
       audiences:
         - public
   source:

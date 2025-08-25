@@ -91,12 +91,22 @@ class ScimClient:
 
         Examples
         --------
-        from label_studio_sdk import LabelStudio
+        from label_studio_sdk import LabelStudio, ProjectGroupRequest
 
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.sso.scim.update()
+        client.sso.scim.update(
+            projects_groups=[
+                ProjectGroupRequest(
+                    group="groups_test",
+                    project_id=42,
+                    role="Inherit",
+                )
+            ],
+            roles_groups=[["Administrator", "groups_test"]],
+            workspaces_groups=[["Default workspace", "groups_test"]],
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/scim/settings",
@@ -214,7 +224,7 @@ class AsyncScimClient:
         --------
         import asyncio
 
-        from label_studio_sdk import AsyncLabelStudio
+        from label_studio_sdk import AsyncLabelStudio, ProjectGroupRequest
 
         client = AsyncLabelStudio(
             api_key="YOUR_API_KEY",
@@ -222,7 +232,17 @@ class AsyncScimClient:
 
 
         async def main() -> None:
-            await client.sso.scim.update()
+            await client.sso.scim.update(
+                projects_groups=[
+                    ProjectGroupRequest(
+                        group="groups_test",
+                        project_id=42,
+                        role="Inherit",
+                    )
+                ],
+                roles_groups=[["Administrator", "groups_test"]],
+                workspaces_groups=[["Default workspace", "groups_test"]],
+            )
 
 
         asyncio.run(main())

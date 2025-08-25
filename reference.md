@@ -22792,12 +22792,22 @@ Update SAML2 settings for the currently active organization.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk import LabelStudio, ProjectGroupRequest
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.sso.saml.update()
+client.sso.saml.update(
+    projects_groups=[
+        ProjectGroupRequest(
+            group="groups_test",
+            project_id=42,
+            role="Inherit",
+        )
+    ],
+    roles_groups=[["Administrator", "groups_test"]],
+    workspaces_groups=[["Default workspace", "groups_test"]],
+)
 
 ```
 </dd>
@@ -22937,12 +22947,22 @@ Update SCIM settings for the currently active organization.
 <dd>
 
 ```python
-from label_studio_sdk import LabelStudio
+from label_studio_sdk import LabelStudio, ProjectGroupRequest
 
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.sso.scim.update()
+client.sso.scim.update(
+    projects_groups=[
+        ProjectGroupRequest(
+            group="groups_test",
+            project_id=42,
+            role="Inherit",
+        )
+    ],
+    roles_groups=[["Administrator", "groups_test"]],
+    workspaces_groups=[["Default workspace", "groups_test"]],
+)
 
 ```
 </dd>

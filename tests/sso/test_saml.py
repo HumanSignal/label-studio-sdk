@@ -4,13 +4,14 @@ from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
 import typing
 from ..utilities import validate_response
+from label_studio_sdk import ProjectGroupRequest
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "projects_groups": {"key": "value"},
-        "roles_groups": {"key": "value"},
-        "workspaces_groups": {"key": "value"},
+        "projects_groups": [{"group": "groups_test", "project_id": 42, "role": "Inherit"}],
+        "roles_groups": [["Administrator", "groups_test"]],
+        "workspaces_groups": [["Default workspace", "groups_test"]],
     }
     expected_types: typing.Any = {"projects_groups": None, "roles_groups": None, "workspaces_groups": None}
     response = client.sso.saml.get()
@@ -22,17 +23,25 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "projects_groups": [{"group": "group", "project_id": 1, "role": "Inherit"}],
-        "roles_groups": [["roles_groups"]],
-        "workspaces_groups": [["workspaces_groups"]],
+        "projects_groups": [{"group": "groups_test", "project_id": 42, "role": "Inherit"}],
+        "roles_groups": [["Administrator", "groups_test"]],
+        "workspaces_groups": [["Default workspace", "groups_test"]],
     }
     expected_types: typing.Any = {
         "projects_groups": ("list", {0: {"group": None, "project_id": "integer", "role": None}}),
-        "roles_groups": ("list", {0: ("list", {0: None})}),
-        "workspaces_groups": ("list", {0: ("list", {0: None})}),
+        "roles_groups": ("list", {0: ("list", {0: None, 1: None})}),
+        "workspaces_groups": ("list", {0: ("list", {0: None, 1: None})}),
     }
-    response = client.sso.saml.update()
+    response = client.sso.saml.update(
+        projects_groups=[ProjectGroupRequest(group="groups_test", project_id=42, role="Inherit")],
+        roles_groups=[["Administrator", "groups_test"]],
+        workspaces_groups=[["Default workspace", "groups_test"]],
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.sso.saml.update()
+    async_response = await async_client.sso.saml.update(
+        projects_groups=[ProjectGroupRequest(group="groups_test", project_id=42, role="Inherit")],
+        roles_groups=[["Administrator", "groups_test"]],
+        workspaces_groups=[["Default workspace", "groups_test"]],
+    )
     validate_response(async_response, expected_response, expected_types)

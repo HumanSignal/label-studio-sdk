@@ -9299,6 +9299,20 @@ paths:
         '200':
           content:
             application/json:
+              examples:
+                GetExample:
+                  summary: get example
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/SamlSettings'
           description: ''
@@ -9319,6 +9333,20 @@ paths:
       requestBody:
         content:
           application/json:
+            examples:
+              UpdateExample:
+                summary: update example
+                value:
+                  projects_groups:
+                    - group: groups_test
+                      project_id: 42
+                      role: Inherit
+                  roles_groups:
+                    - - Administrator
+                      - groups_test
+                  workspaces_groups:
+                    - - Default workspace
+                      - groups_test
             schema:
               $ref: '#/components/schemas/SamlSettingsUpdateRequest'
           application/x-www-form-urlencoded:
@@ -9331,6 +9359,20 @@ paths:
         '201':
           content:
             application/json:
+              examples:
+                UpdateExample:
+                  summary: update example
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/SamlSettingsUpdate'
           description: ''
@@ -9353,6 +9395,20 @@ paths:
         '200':
           content:
             application/json:
+              examples:
+                GetExample:
+                  summary: get example
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/ScimSettings'
           description: ''
@@ -9373,6 +9429,20 @@ paths:
       requestBody:
         content:
           application/json:
+            examples:
+              UpdateExample:
+                summary: update example
+                value:
+                  projects_groups:
+                    - group: groups_test
+                      project_id: 42
+                      role: Inherit
+                  roles_groups:
+                    - - Administrator
+                      - groups_test
+                  workspaces_groups:
+                    - - Default workspace
+                      - groups_test
             schema:
               $ref: '#/components/schemas/ScimSettingsUpdateRequest'
           application/x-www-form-urlencoded:
@@ -9385,6 +9455,20 @@ paths:
         '201':
           content:
             application/json:
+              examples:
+                UpdateExample:
+                  summary: update example
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/ScimSettingsUpdate'
           description: ''
