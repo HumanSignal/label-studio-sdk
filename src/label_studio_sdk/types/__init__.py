@@ -124,6 +124,9 @@ from .pause_request import PauseRequest
 from .prediction import Prediction
 from .prediction_request import PredictionRequest
 from .project import Project
+from .project_group import ProjectGroup
+from .project_group_request import ProjectGroupRequest
+from .project_group_role_enum import ProjectGroupRoleEnum
 from .project_import import ProjectImport
 from .project_label_config import ProjectLabelConfig
 from .project_label_config_request import ProjectLabelConfigRequest
@@ -149,7 +152,11 @@ from .role9e7enum import Role9E7Enum
 from .role_based_task import RoleBasedTask
 from .s3export_storage import S3ExportStorage
 from .s3import_storage import S3ImportStorage
+from .saml_settings import SamlSettings
+from .saml_settings_update import SamlSettingsUpdate
 from .sampling_enum import SamplingEnum
+from .scim_settings import ScimSettings
+from .scim_settings_update import ScimSettingsUpdate
 from .scope_enum import ScopeEnum
 from .selected_items_request import SelectedItemsRequest
 from .serialization_option import SerializationOption
@@ -302,6 +309,9 @@ __all__ = [
     "Prediction",
     "PredictionRequest",
     "Project",
+    "ProjectGroup",
+    "ProjectGroupRequest",
+    "ProjectGroupRoleEnum",
     "ProjectImport",
     "ProjectLabelConfig",
     "ProjectLabelConfigRequest",
@@ -327,7 +337,11 @@ __all__ = [
     "RoleBasedTask",
     "S3ExportStorage",
     "S3ImportStorage",
+    "SamlSettings",
+    "SamlSettingsUpdate",
     "SamplingEnum",
+    "ScimSettings",
+    "ScimSettingsUpdate",
     "ScopeEnum",
     "SelectedItemsRequest",
     "SerializationOption",

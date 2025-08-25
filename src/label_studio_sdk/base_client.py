@@ -27,6 +27,7 @@ from .tokens.client import TokensClient
 from .versions.client import VersionsClient
 from .webhooks.client import WebhooksClient
 from .workspaces.client import WorkspacesClient
+from .sso.client import SsoClient
 from .core.client_wrapper import AsyncClientWrapper
 from .annotations.client import AsyncAnnotationsClient
 from .billing.client import AsyncBillingClient
@@ -49,6 +50,7 @@ from .tokens.client import AsyncTokensClient
 from .versions.client import AsyncVersionsClient
 from .webhooks.client import AsyncWebhooksClient
 from .workspaces.client import AsyncWorkspacesClient
+from .sso.client import AsyncSsoClient
 
 
 class LabelStudioBase:
@@ -134,6 +136,7 @@ class LabelStudioBase:
         self.versions = VersionsClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
+        self.sso = SsoClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncLabelStudioBase:
@@ -219,6 +222,7 @@ class AsyncLabelStudioBase:
         self.versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
+        self.sso = AsyncSsoClient(client_wrapper=self._client_wrapper)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: LabelStudioEnvironment) -> str:

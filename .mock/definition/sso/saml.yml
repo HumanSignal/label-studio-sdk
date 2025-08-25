@@ -1,0 +1,63 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /api/saml/settings
+      method: GET
+      auth: true
+      docs: Retrieve SAML2 settings for the currently active organization.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Retrieve SAML2 Settings
+      response:
+        docs: ''
+        type: root.SamlSettings
+      examples:
+        - response:
+            body:
+              projects_groups:
+                key: value
+              roles_groups:
+                key: value
+              workspaces_groups:
+                key: value
+      audiences:
+        - public
+    update:
+      path: /api/saml/settings
+      method: POST
+      auth: true
+      docs: Update SAML2 settings for the currently active organization.
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Update SAML2 Settings
+      request:
+        name: SamlSettingsUpdateRequest
+        body:
+          properties:
+            projects_groups: optional<list<root.ProjectGroupRequest>>
+            roles_groups: optional<list<list<string>>>
+            workspaces_groups: optional<list<list<string>>>
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.SamlSettingsUpdate
+      examples:
+        - request: {}
+          response:
+            body:
+              projects_groups:
+                - group: group
+                  project_id: 1
+                  role: Inherit
+              roles_groups:
+                - - roles_groups
+              workspaces_groups:
+                - - workspaces_groups
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml
