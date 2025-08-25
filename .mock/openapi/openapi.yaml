@@ -7106,7 +7106,7 @@ paths:
       tags:
         - Projects
     get:
-      description: Retrieve the members for a specific project.
+      description: Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
       operationId: api_projects_members_retrieve
       parameters:
         - in: path
@@ -7114,18 +7114,31 @@ paths:
           required: true
           schema:
             type: integer
+        - description: 'Comma-separated list of user IDs to include. Example: user_ids=1,2,3'
+          in: query
+          name: user_ids
+          schema:
+            type: string
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectMember'
-          description: ''
+                items:
+                  $ref: '#/components/schemas/LseUser'
+                type: array
+          description: List of users with membership information
       security:
         - Token: []
       summary: Get project members
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+      x-fern-sdk-method-name: get
     post:
       description: Add a member to a specific project.
       operationId: api_projects_members_create
