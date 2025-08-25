@@ -16,7 +16,7 @@ service:
         docs: ''
         type: root.SamlSettings
       examples:
-        - name: get example
+        - name: response
           response:
             body:
               projects_groups:
@@ -51,7 +51,7 @@ service:
         docs: ''
         type: root.SamlSettingsUpdate
       examples:
-        - name: update example
+        - name: response
           request:
             projects_groups:
               - group: groups_test

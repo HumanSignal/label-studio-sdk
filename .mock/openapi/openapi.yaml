@@ -9300,8 +9300,8 @@ paths:
           content:
             application/json:
               examples:
-                GetExample:
-                  summary: get example
+                Response:
+                  summary: response
                   value:
                     projects_groups:
                       - group: groups_test
@@ -9334,8 +9334,8 @@ paths:
         content:
           application/json:
             examples:
-              UpdateExample:
-                summary: update example
+              Response:
+                summary: response
                 value:
                   projects_groups:
                     - group: groups_test
@@ -9360,8 +9360,8 @@ paths:
           content:
             application/json:
               examples:
-                UpdateExample:
-                  summary: update example
+                Response:
+                  summary: response
                   value:
                     projects_groups:
                       - group: groups_test
@@ -9396,8 +9396,8 @@ paths:
           content:
             application/json:
               examples:
-                GetExample:
-                  summary: get example
+                Response:
+                  summary: response
                   value:
                     projects_groups:
                       - group: groups_test
@@ -9430,8 +9430,8 @@ paths:
         content:
           application/json:
             examples:
-              UpdateExample:
-                summary: update example
+              Response:
+                summary: response
                 value:
                   projects_groups:
                     - group: groups_test
@@ -9456,8 +9456,8 @@ paths:
           content:
             application/json:
               examples:
-                UpdateExample:
-                  summary: update example
+                Response:
+                  summary: response
                   value:
                     projects_groups:
                       - group: groups_test
