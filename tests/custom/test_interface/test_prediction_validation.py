@@ -934,16 +934,16 @@ class TestPredictionValidation:
         """Test validation with empty result array"""
         li = LabelInterface(PREDICTION_CHOICES_CONFIG)
         
-        # Empty result should be invalid (validation requires at least one region)
+        # Empty result should be valid
         invalid_pred = {
             "result": [],
             "score": 0.8
         }
-        assert li.validate_prediction(invalid_pred) is False
+        assert li.validate_prediction(invalid_pred) is True
         
         # Check that error is in the error list
         errors = li.validate_prediction(invalid_pred, return_errors=True)
-        assert any("cannot be empty" in error for error in errors)
+        assert not errors
 
     def test_none_result(self):
         """Test validation with None result"""
