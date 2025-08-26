@@ -762,10 +762,6 @@ class LabelInterface:
                 errors.append(f"'{RESULT_KEY}' must be a list")
                 return errors
 
-            if not result:
-                errors.append(f"'{RESULT_KEY}' cannot be empty")
-                return errors
-
             # Validate score if present
             if 'score' in obj:
                 score = obj['score']
