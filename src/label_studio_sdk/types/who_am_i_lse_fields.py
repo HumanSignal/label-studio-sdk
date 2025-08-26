@@ -10,10 +10,6 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class WhoAmILseFields(UncheckedBaseModel):
-    """
-    Add fields here to be serialized for whoami endpoint - often useful for active organization based fields
-    """
-
     active_organization_external_id: typing.Optional[str] = None
     email_notification_settings: str
     invite_activated: typing.Optional[bool] = None

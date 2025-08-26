@@ -7355,9 +7355,6 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   WhoAmILseFields:
-    docs: >-
-      Add fields here to be serialized for whoami endpoint - often useful for
-      active organization based fields
     properties:
       active_organization_external_id: optional<string>
       email_notification_settings: string
