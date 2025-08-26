@@ -9299,6 +9299,20 @@ paths:
         '200':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/SamlSettings'
           description: ''
@@ -9307,12 +9321,32 @@ paths:
       summary: Retrieve SAML2 Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - saml
+      x-fern-sdk-method-name: get
     post:
       description: Update SAML2 settings for the currently active organization.
       operationId: api_saml_settings_create
       requestBody:
         content:
           application/json:
+            examples:
+              Response:
+                summary: response
+                value:
+                  projects_groups:
+                    - group: groups_test
+                      project_id: 42
+                      role: Inherit
+                  roles_groups:
+                    - - Administrator
+                      - groups_test
+                  workspaces_groups:
+                    - - Default workspace
+                      - groups_test
             schema:
               $ref: '#/components/schemas/SamlSettingsUpdateRequest'
           application/x-www-form-urlencoded:
@@ -9325,6 +9359,20 @@ paths:
         '201':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/SamlSettingsUpdate'
           description: ''
@@ -9333,6 +9381,12 @@ paths:
       summary: Update SAML2 Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - saml
+      x-fern-sdk-method-name: update
   /api/scim/settings:
     get:
       description: Retrieve SCIM settings for the currently active organization.
@@ -9341,6 +9395,20 @@ paths:
         '200':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/ScimSettings'
           description: ''
@@ -9349,12 +9417,32 @@ paths:
       summary: Retrieve SCIM Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - scim
+      x-fern-sdk-method-name: get
     post:
       description: Update SCIM settings for the currently active organization.
       operationId: api_scim_settings_create
       requestBody:
         content:
           application/json:
+            examples:
+              Response:
+                summary: response
+                value:
+                  projects_groups:
+                    - group: groups_test
+                      project_id: 42
+                      role: Inherit
+                  roles_groups:
+                    - - Administrator
+                      - groups_test
+                  workspaces_groups:
+                    - - Default workspace
+                      - groups_test
             schema:
               $ref: '#/components/schemas/ScimSettingsUpdateRequest'
           application/x-www-form-urlencoded:
@@ -9367,6 +9455,20 @@ paths:
         '201':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/ScimSettingsUpdate'
           description: ''
@@ -9375,6 +9477,12 @@ paths:
       summary: Update SCIM Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - scim
+      x-fern-sdk-method-name: update
   /api/session-policy/:
     get:
       description: Retrieve session timeout policy for the currently active organization.
