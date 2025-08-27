@@ -4,7 +4,6 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .exports.client import ExportsClient
 from .members.client import MembersClient
-from .metrics.client import MetricsClient
 from .stats.client import StatsClient
 from .assignments.client import AssignmentsClient
 from .pauses.client import PausesClient
@@ -38,7 +37,6 @@ from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
 from .exports.client import AsyncExportsClient
 from .members.client import AsyncMembersClient
-from .metrics.client import AsyncMetricsClient
 from .stats.client import AsyncStatsClient
 from .assignments.client import AsyncAssignmentsClient
 from .pauses.client import AsyncPausesClient
@@ -53,7 +51,6 @@ class ProjectsClient:
         self._client_wrapper = client_wrapper
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
         self.members = MembersClient(client_wrapper=self._client_wrapper)
-        self.metrics = MetricsClient(client_wrapper=self._client_wrapper)
         self.stats = StatsClient(client_wrapper=self._client_wrapper)
         self.assignments = AssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = PausesClient(client_wrapper=self._client_wrapper)
@@ -983,7 +980,6 @@ class AsyncProjectsClient:
         self._client_wrapper = client_wrapper
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
         self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
-        self.metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         self.stats = AsyncStatsClient(client_wrapper=self._client_wrapper)
         self.assignments = AsyncAssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)

@@ -9,7 +9,7 @@ from .types import (
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
 )
-from . import assignments, exports, members, metrics, pauses, stats
+from . import assignments, exports, members, pauses, stats
 from .assignments import (
     AssignmentsAssignRequestType,
     AssignmentsBulkAssignRequestFilters,
@@ -64,13 +64,9 @@ __all__ = [
     "StatsIaaResponseCommonTasks",
     "StatsIaaResponseIaa",
     "StatsIaaResponseStd",
-    "StatsTotalAgreementResponse",
-    "StatsTotalAgreementResponseOne",
-    "StatsTotalAgreementResponseZero",
     "assignments",
     "exports",
     "members",
-    "metrics",
     "pauses",
     "stats",
 ]
