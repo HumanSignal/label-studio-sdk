@@ -9,7 +9,7 @@ from .types import (
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
 )
-from . import assignments, exports, metrics, pauses, stats
+from . import assignments, exports, members, metrics, pauses, stats
 from .assignments import (
     AssignmentsAssignRequestType,
     AssignmentsBulkAssignRequestFilters,
@@ -69,6 +69,7 @@ __all__ = [
     "StatsTotalAgreementResponseZero",
     "assignments",
     "exports",
+    "members",
     "metrics",
     "pauses",
     "stats",

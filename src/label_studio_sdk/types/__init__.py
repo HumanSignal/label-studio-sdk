@@ -125,6 +125,9 @@ from .pause_request import PauseRequest
 from .prediction import Prediction
 from .prediction_request import PredictionRequest
 from .project import Project
+from .project_group import ProjectGroup
+from .project_group_request import ProjectGroupRequest
+from .project_group_role_enum import ProjectGroupRoleEnum
 from .project_import import ProjectImport
 from .project_label_config import ProjectLabelConfig
 from .project_label_config_request import ProjectLabelConfigRequest
@@ -150,7 +153,11 @@ from .role9e7enum import Role9E7Enum
 from .role_based_task import RoleBasedTask
 from .s3export_storage import S3ExportStorage
 from .s3import_storage import S3ImportStorage
+from .saml_settings import SamlSettings
+from .saml_settings_update import SamlSettingsUpdate
 from .sampling_enum import SamplingEnum
+from .scim_settings import ScimSettings
+from .scim_settings_update import ScimSettingsUpdate
 from .scope_enum import ScopeEnum
 from .selected_items_request import SelectedItemsRequest
 from .serialization_option import SerializationOption
@@ -176,6 +183,10 @@ from .version_response import VersionResponse
 from .view import View
 from .webhook import Webhook
 from .webhook_serializer_for_update import WebhookSerializerForUpdate
+from .who_am_i_lse_fields import WhoAmILseFields
+from .who_am_i_lse_fields_onboarding_state import WhoAmILseFieldsOnboardingState
+from .who_am_i_lse_fields_trial_role import WhoAmILseFieldsTrialRole
+from .who_am_i_user import WhoAmIUser
 from .workspace import Workspace
 from .workspace_member_create import WorkspaceMemberCreate
 from .workspace_member_list import WorkspaceMemberList
@@ -304,6 +315,9 @@ __all__ = [
     "Prediction",
     "PredictionRequest",
     "Project",
+    "ProjectGroup",
+    "ProjectGroupRequest",
+    "ProjectGroupRoleEnum",
     "ProjectImport",
     "ProjectLabelConfig",
     "ProjectLabelConfigRequest",
@@ -329,7 +343,11 @@ __all__ = [
     "RoleBasedTask",
     "S3ExportStorage",
     "S3ImportStorage",
+    "SamlSettings",
+    "SamlSettingsUpdate",
     "SamplingEnum",
+    "ScimSettings",
+    "ScimSettingsUpdate",
     "ScopeEnum",
     "SelectedItemsRequest",
     "SerializationOption",
@@ -355,6 +373,10 @@ __all__ = [
     "View",
     "Webhook",
     "WebhookSerializerForUpdate",
+    "WhoAmILseFields",
+    "WhoAmILseFieldsOnboardingState",
+    "WhoAmILseFieldsTrialRole",
+    "WhoAmIUser",
     "Workspace",
     "WorkspaceMemberCreate",
     "WorkspaceMemberList",

@@ -1286,7 +1286,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LseUser'
+                $ref: '#/components/schemas/WhoAmIUser'
           description: ''
       security:
         - Token: []
@@ -7221,7 +7221,7 @@ paths:
       tags:
         - Projects
     get:
-      description: Retrieve the members for a specific project.
+      description: Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
       operationId: api_projects_members_retrieve
       parameters:
         - in: path
@@ -7229,18 +7229,31 @@ paths:
           required: true
           schema:
             type: integer
+        - description: 'Comma-separated list of user IDs to include. Example: user_ids=1,2,3'
+          in: query
+          name: user_ids
+          schema:
+            type: string
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectMember'
-          description: ''
+                items:
+                  $ref: '#/components/schemas/LseUser'
+                type: array
+          description: List of users with membership information
       security:
         - Token: []
       summary: Get project members
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+      x-fern-sdk-method-name: get
     post:
       description: Add a member to a specific project.
       operationId: api_projects_members_create
@@ -7272,6 +7285,54 @@ paths:
       security:
         - Token: []
       summary: Add project member
+      tags:
+        - Projects
+  /api/projects/{id}/members/paginated/:
+    get:
+      description: Retrieve the members for a specific project.
+      operationId: api_projects_members_paginated_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Comma-separated list of user IDs to filter by
+          in: query
+          name: ids
+          schema:
+            type: string
+        - description: Exclude annotators from the results
+          in: query
+          name: no_annotators
+          schema:
+            type: boolean
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Search term for filtering members by name, email, or username
+          in: query
+          name: search
+          schema:
+            type: string
+        - description: Include deleted members in the results
+          in: query
+          name: with_deleted
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLseUserList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get project members paginated
       tags:
         - Projects
   /api/projects/{id}/metricparam/:
@@ -9469,6 +9530,20 @@ paths:
         '200':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/SamlSettings'
           description: ''
@@ -9477,12 +9552,32 @@ paths:
       summary: Retrieve SAML2 Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - saml
+      x-fern-sdk-method-name: get
     post:
       description: Update SAML2 settings for the currently active organization.
       operationId: api_saml_settings_create
       requestBody:
         content:
           application/json:
+            examples:
+              Response:
+                summary: response
+                value:
+                  projects_groups:
+                    - group: groups_test
+                      project_id: 42
+                      role: Inherit
+                  roles_groups:
+                    - - Administrator
+                      - groups_test
+                  workspaces_groups:
+                    - - Default workspace
+                      - groups_test
             schema:
               $ref: '#/components/schemas/SamlSettingsUpdateRequest'
           application/x-www-form-urlencoded:
@@ -9495,6 +9590,20 @@ paths:
         '201':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/SamlSettingsUpdate'
           description: ''
@@ -9503,6 +9612,12 @@ paths:
       summary: Update SAML2 Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - saml
+      x-fern-sdk-method-name: update
   /api/scim/settings:
     get:
       description: Retrieve SCIM settings for the currently active organization.
@@ -9511,6 +9626,20 @@ paths:
         '200':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/ScimSettings'
           description: ''
@@ -9519,12 +9648,32 @@ paths:
       summary: Retrieve SCIM Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - scim
+      x-fern-sdk-method-name: get
     post:
       description: Update SCIM settings for the currently active organization.
       operationId: api_scim_settings_create
       requestBody:
         content:
           application/json:
+            examples:
+              Response:
+                summary: response
+                value:
+                  projects_groups:
+                    - group: groups_test
+                      project_id: 42
+                      role: Inherit
+                  roles_groups:
+                    - - Administrator
+                      - groups_test
+                  workspaces_groups:
+                    - - Default workspace
+                      - groups_test
             schema:
               $ref: '#/components/schemas/ScimSettingsUpdateRequest'
           application/x-www-form-urlencoded:
@@ -9537,6 +9686,20 @@ paths:
         '201':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/ScimSettingsUpdate'
           description: ''
@@ -9545,6 +9708,12 @@ paths:
       summary: Update SCIM Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - scim
+      x-fern-sdk-method-name: update
   /api/session-policy/:
     get:
       description: Retrieve session timeout policy for the currently active organization.
@@ -23060,6 +23229,29 @@ components:
         - count
         - results
       type: object
+    PaginatedLseUserList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/LseUser'
+          type: array
+      required:
+        - count
+        - results
+      type: object
     PaginatedRoleBasedTaskList:
       properties:
         tasks:
@@ -27397,6 +27589,154 @@ components:
           type: string
       required:
         - url
+      type: object
+    WhoAmILseFields:
+      properties:
+        active_organization_external_id:
+          nullable: true
+          readOnly: true
+          type: string
+        email_notification_settings:
+          readOnly: true
+          type: string
+        invite_activated:
+          nullable: true
+          type: boolean
+        invite_expired:
+          readOnly: true
+          type: string
+        invite_expired_at:
+          readOnly: true
+          type: string
+        invited_at:
+          format: date-time
+          nullable: true
+          type: string
+        invited_by:
+          nullable: true
+          type: integer
+        onboarding_state:
+          description: |-
+            The current stage of user onboarding
+
+            * `not_started` - Not Started
+            * `signup` - Signup
+            * `trial_signup` - Trial Signup
+            * `first_tutorial` - First Tutorial
+            * `in_app_guidance` - In App Guidance
+            * `complete` - Complete
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/OnboardingStateEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
+        social_auth_finished:
+          description: Is user finished social authentication
+          nullable: true
+          type: boolean
+        trial_company:
+          maxLength: 1000
+          nullable: true
+          type: string
+        trial_experience_labeling:
+          maxLength: 1000
+          nullable: true
+          type: string
+        trial_license_enterprise:
+          nullable: true
+          type: boolean
+        trial_models_in_production:
+          maxLength: 1000
+          nullable: true
+          type: string
+        trial_role:
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/TrialRoleEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
+      required:
+        - active_organization_external_id
+        - email_notification_settings
+        - invite_expired
+        - invite_expired_at
+      type: object
+    WhoAmIUser:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
+      properties:
+        active_organization:
+          nullable: true
+          type: integer
+        active_organization_meta:
+          readOnly: true
+          type: string
+        allow_newsletters:
+          description: Allow sending newsletters to user
+          nullable: true
+          type: boolean
+        avatar:
+          readOnly: true
+          type: string
+        custom_hotkeys:
+          description: Custom keyboard shortcuts configuration for the user interface
+          nullable: true
+        date_joined:
+          format: date-time
+          type: string
+        email:
+          format: email
+          maxLength: 254
+          title: Email address
+          type: string
+        first_name:
+          maxLength: 256
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        initials:
+          default: '?'
+          readOnly: true
+          type: string
+        last_activity:
+          format: date-time
+          readOnly: true
+          type: string
+        last_name:
+          maxLength: 256
+          type: string
+        lse_fields:
+          allOf:
+            - $ref: '#/components/schemas/WhoAmILseFields'
+          readOnly: true
+        org_membership:
+          items:
+            $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
+          type: array
+        pause:
+          readOnly: true
+          type: string
+        phone:
+          maxLength: 256
+          type: string
+        username:
+          maxLength: 256
+          type: string
+      required:
+        - active_organization_meta
+        - avatar
+        - id
+        - initials
+        - last_activity
+        - lse_fields
+        - org_membership
+        - pause
+        - username
       type: object
     Workspace:
       description: |-
