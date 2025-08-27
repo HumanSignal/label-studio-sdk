@@ -22,8 +22,8 @@ service:
             id: 1
           response:
             body:
-              agreement_threshold: 1
-              allowed: true
+              agreement_threshold: agreement_threshold
+              allowed: allowed
               max_additional_annotators_assignable: 1
               metric_name: metric_name
               metric_params:
@@ -68,8 +68,8 @@ service:
           request: {}
           response:
             body:
-              agreement_threshold: 1
-              allowed: true
+              agreement_threshold: agreement_threshold
+              allowed: allowed
               max_additional_annotators_assignable: 1
               metric_name: metric_name
               metric_params:

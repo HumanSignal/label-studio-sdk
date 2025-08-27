@@ -4986,8 +4986,8 @@ types:
       openapi: openapi/openapi.yaml
   MetricParam:
     properties:
-      agreement_threshold: optional<integer>
-      allowed: boolean
+      agreement_threshold: string
+      allowed: string
       max_additional_annotators_assignable:
         type: optional<integer>
         docs: >-
