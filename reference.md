@@ -20550,6 +20550,8 @@ client.projects.stats.iaa(
 <dd>
 
 Overall or per-label total agreement across the project.
+
+NOTE: due to an open issue in Fern, SDK clients will raise ApiError upon handling a 204 response. As a workaround, wrap call to this function in a try-except block.
 </dd>
 </dl>
 </dd>

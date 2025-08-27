@@ -7757,7 +7757,10 @@ paths:
         - Stats
   /api/projects/{id}/stats/total_agreement:
     get:
-      description: Overall or per-label total agreement across the project.
+      description: |-
+        Overall or per-label total agreement across the project.
+
+        NOTE: due to an open issue in Fern, SDK clients will raise ApiError upon handling a 204 response. As a workaround, wrap call to this function in a try-except block.
       operationId: api_projects_stats_total_agreement_retrieve
       parameters:
         - in: path
@@ -15430,8 +15433,10 @@ components:
           minLength: 1
           type: string
         region:
+          nullable: true
           type: string
         role:
+          nullable: true
           type: string
       required:
         - code
