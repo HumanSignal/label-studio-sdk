@@ -1286,7 +1286,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LseUser'
+                $ref: '#/components/schemas/WhoAmIUser'
           description: ''
       security:
         - Token: []
@@ -27390,6 +27390,154 @@ components:
           type: string
       required:
         - url
+      type: object
+    WhoAmILseFields:
+      properties:
+        active_organization_external_id:
+          nullable: true
+          readOnly: true
+          type: string
+        email_notification_settings:
+          readOnly: true
+          type: string
+        invite_activated:
+          nullable: true
+          type: boolean
+        invite_expired:
+          readOnly: true
+          type: string
+        invite_expired_at:
+          readOnly: true
+          type: string
+        invited_at:
+          format: date-time
+          nullable: true
+          type: string
+        invited_by:
+          nullable: true
+          type: integer
+        onboarding_state:
+          description: |-
+            The current stage of user onboarding
+
+            * `not_started` - Not Started
+            * `signup` - Signup
+            * `trial_signup` - Trial Signup
+            * `first_tutorial` - First Tutorial
+            * `in_app_guidance` - In App Guidance
+            * `complete` - Complete
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/OnboardingStateEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
+        social_auth_finished:
+          description: Is user finished social authentication
+          nullable: true
+          type: boolean
+        trial_company:
+          maxLength: 1000
+          nullable: true
+          type: string
+        trial_experience_labeling:
+          maxLength: 1000
+          nullable: true
+          type: string
+        trial_license_enterprise:
+          nullable: true
+          type: boolean
+        trial_models_in_production:
+          maxLength: 1000
+          nullable: true
+          type: string
+        trial_role:
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/TrialRoleEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
+      required:
+        - active_organization_external_id
+        - email_notification_settings
+        - invite_expired
+        - invite_expired_at
+      type: object
+    WhoAmIUser:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
+      properties:
+        active_organization:
+          nullable: true
+          type: integer
+        active_organization_meta:
+          readOnly: true
+          type: string
+        allow_newsletters:
+          description: Allow sending newsletters to user
+          nullable: true
+          type: boolean
+        avatar:
+          readOnly: true
+          type: string
+        custom_hotkeys:
+          description: Custom keyboard shortcuts configuration for the user interface
+          nullable: true
+        date_joined:
+          format: date-time
+          type: string
+        email:
+          format: email
+          maxLength: 254
+          title: Email address
+          type: string
+        first_name:
+          maxLength: 256
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        initials:
+          default: '?'
+          readOnly: true
+          type: string
+        last_activity:
+          format: date-time
+          readOnly: true
+          type: string
+        last_name:
+          maxLength: 256
+          type: string
+        lse_fields:
+          allOf:
+            - $ref: '#/components/schemas/WhoAmILseFields'
+          readOnly: true
+        org_membership:
+          items:
+            $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
+          type: array
+        pause:
+          readOnly: true
+          type: string
+        phone:
+          maxLength: 256
+          type: string
+        username:
+          maxLength: 256
+          type: string
+      required:
+        - active_organization_meta
+        - avatar
+        - id
+        - initials
+        - last_activity
+        - lse_fields
+        - org_membership
+        - pause
+        - username
       type: object
     Workspace:
       description: |-

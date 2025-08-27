@@ -145,6 +145,7 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "last_activity": "2024-01-15T09:30:00Z",
         "last_name": "last_name",
         "lse_fields": {
+            "active_organization_external_id": "active_organization_external_id",
             "email_notification_settings": "email_notification_settings",
             "invite_activated": True,
             "invite_expired": "invite_expired",
@@ -178,6 +179,7 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "last_activity": "datetime",
         "last_name": None,
         "lse_fields": {
+            "active_organization_external_id": None,
             "email_notification_settings": None,
             "invite_activated": None,
             "invite_expired": None,
