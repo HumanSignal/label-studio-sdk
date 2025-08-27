@@ -7172,6 +7172,81 @@ paths:
       summary: Add project member
       tags:
         - Projects
+  /api/projects/{id}/members/bulk/:
+    delete:
+      description: Unassign project members in bulk. Allows the same request body as bulk assign.
+      operationId: api_projects_members_bulk_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  unassignments:
+                    type: integer
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: Bulk unassign project members
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+        - bulk
+      x-fern-sdk-method-name: delete
+    post:
+      description: Assign project members in bulk.
+      operationId: api_projects_members_bulk_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectMemberBulkAssignRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProjectMemberBulkAssignRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProjectMemberBulkAssignRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  assignments:
+                    type: integer
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: Bulk assign project members
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+        - bulk
+      x-fern-sdk-method-name: post
   /api/projects/{id}/members/paginated/:
     get:
       description: Retrieve the members for a specific project.
@@ -25188,6 +25263,23 @@ components:
           type: integer
       required:
         - user
+      type: object
+    ProjectMemberBulkAssignRequest:
+      properties:
+        all:
+          type: boolean
+        excluded:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+        included:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+      required:
+        - all
       type: object
     ProjectMemberRequest:
       properties:
