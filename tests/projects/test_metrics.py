@@ -8,14 +8,14 @@ from ..utilities import validate_response
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "agreement_threshold": "agreement_threshold",
-        "allowed": "allowed",
+        "agreement_threshold": 1,
+        "allowed": True,
         "max_additional_annotators_assignable": 1,
         "metric_name": "metric_name",
         "metric_params": {"key": "value"},
     }
     expected_types: typing.Any = {
-        "agreement_threshold": None,
+        "agreement_threshold": "integer",
         "allowed": None,
         "max_additional_annotators_assignable": "integer",
         "metric_name": None,
@@ -30,14 +30,14 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "agreement_threshold": "agreement_threshold",
-        "allowed": "allowed",
+        "agreement_threshold": 1,
+        "allowed": True,
         "max_additional_annotators_assignable": 1,
         "metric_name": "metric_name",
         "metric_params": {"key": "value"},
     }
     expected_types: typing.Any = {
-        "agreement_threshold": None,
+        "agreement_threshold": "integer",
         "allowed": None,
         "max_additional_annotators_assignable": "integer",
         "metric_name": None,
