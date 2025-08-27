@@ -25476,6 +25476,10 @@ components:
       type: object
     ProjectMetricParamUpdateRequest:
       properties:
+        additional_params:
+          additionalProperties: {}
+          nullable: true
+          type: object
         agreement_threshold:
           maximum: 100
           minimum: 0

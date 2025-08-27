@@ -71,6 +71,7 @@ class MetricsClient:
         self,
         id: int,
         *,
+        additional_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         agreement_threshold: typing.Optional[int] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
         metric_name: typing.Optional[str] = OMIT,
@@ -82,6 +83,8 @@ class MetricsClient:
         Parameters
         ----------
         id : int
+
+        additional_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         agreement_threshold : typing.Optional[int]
 
@@ -112,6 +115,7 @@ class MetricsClient:
             f"api/projects/{jsonable_encoder(id)}/metricparam/",
             method="POST",
             json={
+                "additional_params": additional_params,
                 "agreement_threshold": agreement_threshold,
                 "max_additional_annotators_assignable": max_additional_annotators_assignable,
                 "metric_name": metric_name,
@@ -200,6 +204,7 @@ class AsyncMetricsClient:
         self,
         id: int,
         *,
+        additional_params: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
         agreement_threshold: typing.Optional[int] = OMIT,
         max_additional_annotators_assignable: typing.Optional[int] = OMIT,
         metric_name: typing.Optional[str] = OMIT,
@@ -211,6 +216,8 @@ class AsyncMetricsClient:
         Parameters
         ----------
         id : int
+
+        additional_params : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
 
         agreement_threshold : typing.Optional[int]
 
@@ -249,6 +256,7 @@ class AsyncMetricsClient:
             f"api/projects/{jsonable_encoder(id)}/metricparam/",
             method="POST",
             json={
+                "additional_params": additional_params,
                 "agreement_threshold": agreement_threshold,
                 "max_additional_annotators_assignable": max_additional_annotators_assignable,
                 "metric_name": metric_name,

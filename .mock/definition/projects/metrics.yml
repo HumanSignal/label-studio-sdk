@@ -44,6 +44,7 @@ service:
         name: ProjectMetricParamUpdateRequest
         body:
           properties:
+            additional_params: optional<map<string, unknown>>
             agreement_threshold:
               type: optional<integer>
               validation:

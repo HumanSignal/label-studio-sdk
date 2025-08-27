@@ -20477,6 +20477,14 @@ client.projects.metrics.update(
 <dl>
 <dd>
 
+**additional_params:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **agreement_threshold:** `typing.Optional[int]` 
     
 </dd>
