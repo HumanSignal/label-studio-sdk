@@ -182,10 +182,6 @@ from .version_response import VersionResponse
 from .view import View
 from .webhook import Webhook
 from .webhook_serializer_for_update import WebhookSerializerForUpdate
-from .who_am_i_lse_fields import WhoAmILseFields
-from .who_am_i_lse_fields_onboarding_state import WhoAmILseFieldsOnboardingState
-from .who_am_i_lse_fields_trial_role import WhoAmILseFieldsTrialRole
-from .who_am_i_user import WhoAmIUser
 from .workspace import Workspace
 from .workspace_member_create import WorkspaceMemberCreate
 from .workspace_member_list import WorkspaceMemberList
@@ -371,10 +367,6 @@ __all__ = [
     "View",
     "Webhook",
     "WebhookSerializerForUpdate",
-    "WhoAmILseFields",
-    "WhoAmILseFieldsOnboardingState",
-    "WhoAmILseFieldsTrialRole",
-    "WhoAmIUser",
     "Workspace",
     "WorkspaceMemberCreate",
     "WorkspaceMemberList",

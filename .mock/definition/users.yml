@@ -200,7 +200,7 @@ service:
       display-name: Retrieve my user
       response:
         docs: ''
-        type: root.WhoAmIUser
+        type: root.LseUser
       examples:
         - response:
             body:
@@ -218,7 +218,6 @@ service:
               last_activity: '2024-01-15T09:30:00Z'
               last_name: last_name
               lse_fields:
-                active_organization_external_id: active_organization_external_id
                 email_notification_settings: email_notification_settings
                 invite_activated: true
                 invite_expired: invite_expired

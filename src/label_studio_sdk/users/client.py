@@ -11,7 +11,6 @@ import datetime as dt
 from ..types.hotkeys import Hotkeys
 from .types.users_reset_token_response import UsersResetTokenResponse
 from .types.users_get_token_response import UsersGetTokenResponse
-from ..types.who_am_i_user import WhoAmIUser
 from ..types.lse_user import LseUser
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
@@ -349,7 +348,7 @@ class UsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> WhoAmIUser:
+    def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUser:
         """
         Retrieve details of the account that you are using to access the API.
 
@@ -360,7 +359,7 @@ class UsersClient:
 
         Returns
         -------
-        WhoAmIUser
+        LseUser
 
 
         Examples
@@ -380,9 +379,9 @@ class UsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    WhoAmIUser,
+                    LseUser,
                     construct_type(
-                        type_=WhoAmIUser,  # type: ignore
+                        type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1110,7 +1109,7 @@ class AsyncUsersClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> WhoAmIUser:
+    async def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> LseUser:
         """
         Retrieve details of the account that you are using to access the API.
 
@@ -1121,7 +1120,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        WhoAmIUser
+        LseUser
 
 
         Examples
@@ -1149,9 +1148,9 @@ class AsyncUsersClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    WhoAmIUser,
+                    LseUser,
                     construct_type(
-                        type_=WhoAmIUser,  # type: ignore
+                        type_=LseUser,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
