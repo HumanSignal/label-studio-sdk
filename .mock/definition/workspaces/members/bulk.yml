@@ -1,0 +1,71 @@
+types:
+  BulkPostResponse:
+    properties:
+      assignments: optional<integer>
+    source:
+      openapi: openapi/openapi.yaml
+  BulkDeleteResponse:
+    properties:
+      unassignments: optional<integer>
+    source:
+      openapi: openapi/openapi.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    post:
+      path: /api/workspaces/{id}/memberships/bulk/
+      method: POST
+      auth: true
+      docs: Assign workspace members in bulk.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Bulk assign workspace members
+      request:
+        name: WorkspaceMemberBulkAssignRequest
+        body:
+          properties:
+            all: boolean
+            excluded: optional<list<integer>>
+            included: optional<list<integer>>
+        content-type: application/json
+      response:
+        docs: ''
+        type: BulkPostResponse
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            all: true
+          response:
+            body:
+              assignments: 1
+      audiences:
+        - public
+    delete:
+      path: /api/workspaces/{id}/memberships/bulk/
+      method: DELETE
+      auth: true
+      docs: >-
+        Unassign workspace members in bulk. Allows the same request body as bulk
+        assign.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Bulk unassign workspace members
+      response:
+        docs: ''
+        type: BulkDeleteResponse
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              unassignments: 1
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml
