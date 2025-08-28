@@ -1031,12 +1031,20 @@ service:
           ids:
             type: optional<string>
             docs: Comma-separated list of user IDs to filter by
+          implicit:
+            type: optional<boolean>
+            docs: >-
+              Include/Exclude implicit project members in the results. If not
+              provided, explicit + implicit members are returned.
           no_annotators:
             type: optional<boolean>
             docs: Exclude annotators from the results
           page:
             type: optional<integer>
             docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
           search:
             type: optional<string>
             docs: Search term for filtering members by name, email, or username

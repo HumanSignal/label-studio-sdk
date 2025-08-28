@@ -7262,6 +7262,11 @@ paths:
           name: ids
           schema:
             type: string
+        - description: Include/Exclude implicit project members in the results. If not provided, explicit + implicit members are returned.
+          in: query
+          name: implicit
+          schema:
+            type: boolean
         - description: Exclude annotators from the results
           in: query
           name: no_annotators
@@ -7270,6 +7275,12 @@ paths:
         - description: A page number within the paginated result set.
           in: query
           name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
           required: false
           schema:
             type: integer
@@ -7295,6 +7306,118 @@ paths:
       summary: Get project members paginated
       tags:
         - Projects
+  /api/projects/{id}/model-stats/{model_version}/agreement:
+    get:
+      description: |-
+        Overall agreement between a given model version's predictions and all annotators on overlapping tasks.
+        Computed as the average of per-annotator agreement vs this model version over annotators who overlap on at least one task.
+        Mirrors IAA per annotator, but one side is the model.
+        :return: {"agreement": float[0..1]}
+      operationId: api_projects_model_stats_agreement_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: model_version
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  agreement:
+                    type: number
+                type: object
+          description: Model-version overall agreement vs annotators
+      security:
+        - Token: []
+      summary: Get model-version overall agreement vs annotators
+      tags:
+        - Stats
+  /api/projects/{id}/model-stats/{model_version}/agreement-groundtruth:
+    get:
+      description: |-
+        Ground truth agreement for annotations that match predictions of a specific model version.
+        This mirrors gt_per_user_agreement but filters stats by tasks where predictions have given model_version.
+        :return: {"agreement": float[0..1]}
+      operationId: api_projects_model_stats_agreement_groundtruth_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: model_version
+          required: true
+          schema:
+            type: string
+        - description: Calculate agreement per label
+          in: query
+          name: per_label
+          schema:
+            default: false
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  agreement:
+                    type: number
+                type: object
+          description: Model-version ground truth agreement
+      security:
+        - Token: []
+      summary: Get model-version ground truth agreement
+      tags:
+        - Stats
+  /api/projects/{id}/model-stats/{model_version}/prediction:
+    get:
+      description: |-
+        Mean agreement of annotator annotations vs predictions for a specific model version.
+        Mirrors prediction_per_user_agreement but filtered by prediction.model_version.
+        :return: {"average_prediction_agreement_per_model": float[0..1]}
+      operationId: api_projects_model_stats_prediction_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: model_version
+          required: true
+          schema:
+            type: string
+        - description: Calculate agreement per label
+          in: query
+          name: per_label
+          schema:
+            default: false
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  average_prediction_agreement_per_model:
+                    type: number
+                type: object
+          description: Model-version prediction agreement
+      security:
+        - Token: []
+      summary: Get model-version prediction agreement
+      tags:
+        - Stats
   /api/projects/{id}/project-extra-params/:
     get:
       description: Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project.
