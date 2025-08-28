@@ -7287,6 +7287,81 @@ paths:
       summary: Add project member
       tags:
         - Projects
+  /api/projects/{id}/members/bulk/:
+    delete:
+      description: Unassign project members in bulk. Allows the same request body as bulk assign.
+      operationId: api_projects_members_bulk_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  unassignments:
+                    type: integer
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: Bulk unassign project members
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+        - bulk
+      x-fern-sdk-method-name: delete
+    post:
+      description: Assign project members in bulk.
+      operationId: api_projects_members_bulk_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectMemberBulkAssignRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProjectMemberBulkAssignRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProjectMemberBulkAssignRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  assignments:
+                    type: integer
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: Bulk assign project members
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+        - bulk
+      x-fern-sdk-method-name: post
   /api/projects/{id}/members/paginated/:
     get:
       description: Retrieve the members for a specific project.
@@ -15500,6 +15575,81 @@ paths:
         - workspaces
         - members
       x-fern-sdk-method-name: create
+  /api/workspaces/{id}/memberships/bulk/:
+    delete:
+      description: Unassign workspace members in bulk. Allows the same request body as bulk assign.
+      operationId: api_workspaces_memberships_bulk_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  unassignments:
+                    type: integer
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: Bulk unassign workspace members
+      tags:
+        - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - workspaces
+        - members
+        - bulk
+      x-fern-sdk-method-name: delete
+    post:
+      description: Assign workspace members in bulk.
+      operationId: api_workspaces_memberships_bulk_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceMemberBulkAssignRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WorkspaceMemberBulkAssignRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WorkspaceMemberBulkAssignRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  assignments:
+                    type: integer
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: Bulk assign workspace members
+      tags:
+        - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - workspaces
+        - members
+        - bulk
+      x-fern-sdk-method-name: post
   /api/workspaces/{id}/projects/:
     delete:
       description: Delete projects from a specific workspace.
@@ -25467,6 +25617,23 @@ components:
       required:
         - user
       type: object
+    ProjectMemberBulkAssignRequest:
+      properties:
+        all:
+          type: boolean
+        excluded:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+        included:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+      required:
+        - all
+      type: object
     ProjectMemberRequest:
       properties:
         user:
@@ -27779,6 +27946,23 @@ components:
         - created_by
         - id
         - title
+      type: object
+    WorkspaceMemberBulkAssignRequest:
+      properties:
+        all:
+          type: boolean
+        excluded:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+        included:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+      required:
+        - all
       type: object
     WorkspaceMemberCreate:
       properties:

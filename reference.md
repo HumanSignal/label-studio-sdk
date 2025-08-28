@@ -21671,8 +21671,8 @@ Reason for pausing
 </dl>
 </details>
 
-## Projects Metrics Custom
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">update_lambda</a>(...)</code></summary>
+## Projects Members Bulk
+<details><summary><code>client.projects.members.bulk.<a href="src/label_studio_sdk/projects/members/bulk/client.py">post</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -21684,7 +21684,7 @@ Reason for pausing
 <dl>
 <dd>
 
-Create or update the AWS Lambda function used for custom metrics in this project.
+Assign project members in bulk.
 </dd>
 </dl>
 </dd>
@@ -21704,9 +21704,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.metrics.custom.update_lambda(
+client.projects.members.bulk.post(
     id=1,
-    code="code",
+    all_=True,
 )
 
 ```
@@ -21731,7 +21731,7 @@ client.projects.metrics.custom.update_lambda(
 <dl>
 <dd>
 
-**code:** `str` 
+**all_:** `bool` 
     
 </dd>
 </dl>
@@ -21739,7 +21739,7 @@ client.projects.metrics.custom.update_lambda(
 <dl>
 <dd>
 
-**region:** `typing.Optional[str]` 
+**excluded:** `typing.Optional[typing.Sequence[int]]` 
     
 </dd>
 </dl>
@@ -21747,7 +21747,7 @@ client.projects.metrics.custom.update_lambda(
 <dl>
 <dd>
 
-**role:** `typing.Optional[str]` 
+**included:** `typing.Optional[typing.Sequence[int]]` 
     
 </dd>
 </dl>
@@ -21767,7 +21767,7 @@ client.projects.metrics.custom.update_lambda(
 </dl>
 </details>
 
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">logs</a>(...)</code></summary>
+<details><summary><code>client.projects.members.bulk.<a href="src/label_studio_sdk/projects/members/bulk/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -21779,7 +21779,7 @@ client.projects.metrics.custom.update_lambda(
 <dl>
 <dd>
 
-Get AWS lambda logs for project, including filtering by start and end dates
+Unassign project members in bulk. Allows the same request body as bulk assign.
 </dd>
 </dl>
 </dd>
@@ -21799,7 +21799,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.metrics.custom.logs(
+client.projects.members.bulk.delete(
     id=1,
 )
 
@@ -21818,109 +21818,6 @@ client.projects.metrics.custom.logs(
 <dd>
 
 **id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_date:** `typing.Optional[str]` — End date for AWS logs filtering
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[int]` — Limit the number of logs to return
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**start_date:** `typing.Optional[str]` — Start date for AWS logs filtering
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.projects.metrics.custom.<a href="src/label_studio_sdk/projects/metrics/custom/client.py">check_function</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate custom matching function code for the project.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.projects.metrics.custom.check_function(
-    id=1,
-    code="code",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**code:** `str` 
     
 </dd>
 </dl>
@@ -23727,6 +23624,172 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.workspaces.members.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Workspaces Members Bulk
+<details><summary><code>client.workspaces.members.bulk.<a href="src/label_studio_sdk/workspaces/members/bulk/client.py">post</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Assign workspace members in bulk.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.members.bulk.post(
+    id=1,
+    all_=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**all_:** `bool` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**excluded:** `typing.Optional[typing.Sequence[int]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**included:** `typing.Optional[typing.Sequence[int]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspaces.members.bulk.<a href="src/label_studio_sdk/workspaces/members/bulk/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Unassign workspace members in bulk. Allows the same request body as bulk assign.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.workspaces.members.bulk.delete(
     id=1,
 )
 
