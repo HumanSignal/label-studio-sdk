@@ -7426,6 +7426,16 @@ paths:
       summary: Get project members paginated
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name:
+        - projects
+        - members
+        - paginated
+      x-fern-sdk-method-name: list
   /api/projects/{id}/metricparam/:
     get:
       description: Get the current metrics configuration for a project.
@@ -15778,6 +15788,56 @@ paths:
         - members
         - bulk
       x-fern-sdk-method-name: post
+  /api/workspaces/{id}/memberships/paginated/:
+    get:
+      description: Retrieve the members for a specific workspace.
+      operationId: api_workspaces_memberships_paginated_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLseUserList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get workspace members paginated
+      tags:
+        - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name:
+        - workspaces
+        - members
+        - paginated
+      x-fern-sdk-method-name: list
   /api/workspaces/{id}/projects/:
     delete:
       description: Delete projects from a specific workspace.
