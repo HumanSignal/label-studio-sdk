@@ -1031,6 +1031,11 @@ service:
           ids:
             type: optional<string>
             docs: Comma-separated list of user IDs to filter by
+          implicit:
+            type: optional<boolean>
+            docs: >-
+              Include/Exclude implicit project members in the results. If not
+              provided, explicit + implicit members are returned.
           no_annotators:
             type: optional<boolean>
             docs: Exclude annotators from the results

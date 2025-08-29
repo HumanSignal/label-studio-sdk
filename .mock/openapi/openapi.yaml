@@ -7382,6 +7382,11 @@ paths:
           name: ids
           schema:
             type: string
+        - description: Include/Exclude implicit project members in the results. If not provided, explicit + implicit members are returned.
+          in: query
+          name: implicit
+          schema:
+            type: boolean
         - description: Exclude annotators from the results
           in: query
           name: no_annotators
