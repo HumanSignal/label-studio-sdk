@@ -6301,12 +6301,88 @@ paths:
       summary: List annotation history items for project
       tags:
         - Annotation History
+  /api/projects/{id}/aws-custom-function:
+    get:
+      description: Get the AWS Lambda code for the custom metric configured for this project.
+      operationId: api_projects_aws_custom_function_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  code:
+                    type: string
+                required:
+                  - code
+                type: object
+          description: Lambda code
+      security:
+        - Token: []
+      summary: Get AWS custom metric code
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+        - custom
+      x-fern-sdk-method-name: get_lambda
+    post:
+      description: Create or update the AWS Lambda function used for custom metrics in this project.
+      operationId: api_projects_aws_custom_function_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AWSCustomFunctionUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AWSCustomFunctionUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AWSCustomFunctionUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Updated successfully
+        '202':
+          description: Accepted, activation pending
+        '204':
+          description: No changes applied
+        '500':
+          description: Error updating function
+      security:
+        - Token: []
+      summary: Update AWS custom metric Lambda
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+        - custom
+      x-fern-sdk-method-name: update_lambda
   /api/projects/{id}/aws-custom-function-logs:
     get:
       description: Get AWS lambda logs for project, including filtering by start and end dates
       operationId: api_projects_aws_custom_function_logs_retrieve
       parameters:
-        - description: End date for AWS logs filtering
+        - description: End date for AWS logs filtering in format %Y-%m-%d
           in: query
           name: end_date
           schema:
@@ -6322,7 +6398,7 @@ paths:
           schema:
             default: 100
             type: integer
-        - description: Start date for AWS logs filtering
+        - description: Start date for AWS logs filtering in format %Y-%m-%d
           in: query
           name: start_date
           schema:
@@ -6341,6 +6417,50 @@ paths:
       summary: Get AWS lambda logs for project
       tags:
         - AWS
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+        - custom
+      x-fern-sdk-method-name: logs
+  /api/projects/{id}/check-function:
+    post:
+      description: Validate custom matching function code for the project.
+      operationId: api_projects_check_function_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+        required: true
+      responses:
+        '200':
+          description: Code is valid
+      security:
+        - Token: []
+      summary: Check custom matching function code
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+        - custom
+      x-fern-sdk-method-name: check_function
   /api/projects/{id}/dashboard:
     get:
       deprecated: true
@@ -7310,6 +7430,74 @@ paths:
       summary: Get project members paginated
       tags:
         - Projects
+  /api/projects/{id}/metricparam/:
+    get:
+      description: Get the current metrics configuration for a project.
+      operationId: api_projects_metricparam_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricParam'
+          description: Current metrics configuration
+      security:
+        - Token: []
+      summary: Get project metrics configuration
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+      x-fern-sdk-method-name: get
+    post:
+      description: Update metrics strategy and parameters for a project.
+      operationId: api_projects_metricparam_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricParam'
+          description: Updated metrics configuration
+        '204':
+          description: No params provided to update
+      security:
+        - Token: []
+      summary: Update project metrics configuration
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+      x-fern-sdk-method-name: update
   /api/projects/{id}/model-stats/{model_version}/agreement:
     get:
       description: |-
@@ -7835,6 +8023,54 @@ paths:
       summary: Get lead time statistics
       tags:
         - Stats
+  /api/projects/{id}/stats/total_agreement:
+    get:
+      description: |-
+        Overall or per-label total agreement across the project.
+
+        NOTE: due to an open issue in Fern, SDK clients will raise ApiError upon handling a 204 response. As a workaround, wrap call to this function in a try-except block.
+      operationId: api_projects_stats_total_agreement_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Return agreement per label
+          in: query
+          name: per_label
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - properties:
+                      total_agreement:
+                        type: number
+                    type: object
+                  - properties:
+                      total_agreement:
+                        additionalProperties:
+                          type: number
+                        type: object
+                    type: object
+          description: Total agreement
+        '204':
+          description: No data to compute agreement
+      security:
+        - Token: []
+      summary: Get total agreement for project
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: total_agreement
   /api/projects/{id}/tasks/:
     delete:
       description: Delete all tasks from a specific project.
@@ -15642,6 +15878,20 @@ paths:
       x-fern-sdk-method-name: download
 components:
   schemas:
+    AWSCustomFunctionUpdateRequest:
+      properties:
+        code:
+          minLength: 1
+          type: string
+        region:
+          nullable: true
+          type: string
+        role:
+          nullable: true
+          type: string
+      required:
+        - code
+      type: object
     ActionEnum:
       description: |-
         * `prediction` - Created from prediction
@@ -17681,6 +17931,14 @@ components:
         - Monthly
         - Yearly
       type: string
+    CheckMatchingFunctionRequestRequest:
+      properties:
+        code:
+          minLength: 1
+          type: string
+      required:
+        - code
+      type: object
     ChildFilter:
       properties:
         column:
@@ -22548,6 +22806,31 @@ components:
       oneOf:
         - $ref: '#/components/schemas/Comment'
         - $ref: '#/components/schemas/CommentSerializerWithExpandedUser'
+    MetricParam:
+      properties:
+        agreement_threshold:
+          readOnly: true
+          type: string
+        allowed:
+          readOnly: true
+          type: string
+        max_additional_annotators_assignable:
+          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Maximum new annotators added
+          type: integer
+        metric_name:
+          description: Evaluation metric chosen for this project
+          nullable: true
+          type: string
+        metric_params:
+          nullable: true
+      required:
+        - agreement_threshold
+        - allowed
+      type: object
     ModeEnum:
       description: |-
         * `settings` - Only settings
@@ -25489,6 +25772,23 @@ components:
           type: integer
       required:
         - user
+      type: object
+    ProjectMetricParamUpdateRequest:
+      properties:
+        additional_params:
+          additionalProperties: {}
+          nullable: true
+          type: object
+        agreement_threshold:
+          maximum: 100
+          minimum: 0
+          type: integer
+        max_additional_annotators_assignable:
+          minimum: 0
+          type: integer
+        metric_name:
+          minLength: 1
+          type: string
       type: object
     ProjectReimport:
       properties:

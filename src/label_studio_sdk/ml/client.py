@@ -516,9 +516,9 @@ class MlClient:
             if _response.status_code == 500:
                 raise InternalServerError(
                     typing.cast(
-                        str,
+                        typing.Optional[typing.Any],
                         construct_type(
-                            type_=str,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
@@ -1131,9 +1131,9 @@ class AsyncMlClient:
             if _response.status_code == 500:
                 raise InternalServerError(
                     typing.cast(
-                        str,
+                        typing.Optional[typing.Any],
                         construct_type(
-                            type_=str,  # type: ignore
+                            type_=typing.Optional[typing.Any],  # type: ignore
                             object_=_response.json(),
                         ),
                     )
