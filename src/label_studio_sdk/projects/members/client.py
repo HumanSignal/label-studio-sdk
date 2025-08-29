@@ -2,6 +2,7 @@
 
 from ...core.client_wrapper import SyncClientWrapper
 from .bulk.client import BulkClient
+from .paginated.client import PaginatedClient
 import typing
 from ...core.request_options import RequestOptions
 from ...types.lse_user import LseUser
@@ -11,12 +12,14 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper
 from .bulk.client import AsyncBulkClient
+from .paginated.client import AsyncPaginatedClient
 
 
 class MembersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.bulk = BulkClient(client_wrapper=self._client_wrapper)
+        self.paginated = PaginatedClient(client_wrapper=self._client_wrapper)
 
     def get(
         self, id: int, *, user_ids: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
@@ -77,6 +80,7 @@ class AsyncMembersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.bulk = AsyncBulkClient(client_wrapper=self._client_wrapper)
+        self.paginated = AsyncPaginatedClient(client_wrapper=self._client_wrapper)
 
     async def get(
         self, id: int, *, user_ids: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
