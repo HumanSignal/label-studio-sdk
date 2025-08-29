@@ -99,6 +99,7 @@ from .lseapi_token_create import LseapiTokenCreate
 from .lseapi_token_list import LseapiTokenList
 from .lsejwt_settings import LsejwtSettings
 from .maybe_expanded_comment import MaybeExpandedComment
+from .metric_param import MetricParam
 from .ml_backend import MlBackend
 from .mode_enum import ModeEnum
 from .model_interface import ModelInterface
@@ -288,6 +289,7 @@ __all__ = [
     "LseapiTokenList",
     "LsejwtSettings",
     "MaybeExpandedComment",
+    "MetricParam",
     "MlBackend",
     "ModeEnum",
     "ModelInterface",

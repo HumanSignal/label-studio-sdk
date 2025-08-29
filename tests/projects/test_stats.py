@@ -27,3 +27,13 @@ async def test_iaa(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
 
     async_response = await async_client.projects.stats.iaa(id=1)
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_total_agreement(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"total_agreement": 1.1}
+    expected_types: typing.Any = {"total_agreement": None}
+    response = client.projects.stats.total_agreement(id=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.stats.total_agreement(id=1)
+    validate_response(async_response, expected_response, expected_types)
