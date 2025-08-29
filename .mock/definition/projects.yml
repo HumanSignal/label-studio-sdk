@@ -38,11 +38,6 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
-  ApiProjectsAwsCustomFunctionRetrieveResponse:
-    properties:
-      code: string
-    source:
-      openapi: openapi/openapi.yaml
   ProjectsDuplicateResponse:
     properties:
       id:
@@ -811,29 +806,6 @@ service:
               workspace_title: workspace_title
       audiences:
         - public
-    api_projects_aws_custom_function_retrieve:
-      path: /api/projects/{id}/aws-custom-function
-      method: GET
-      auth: true
-      docs: >-
-        Get the AWS Lambda code for the custom metric configured for this
-        project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: Get AWS custom metric code
-      response:
-        docs: Lambda code
-        type: ApiProjectsAwsCustomFunctionRetrieveResponse
-      examples:
-        - path-parameters:
-            id: 1
-          response:
-            body:
-              code: code
-      audiences:
-        - internal
     duplicate:
       path: /api/projects/{id}/duplicate/
       method: POST

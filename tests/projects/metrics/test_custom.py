@@ -6,6 +6,16 @@ import typing
 from ...utilities import validate_response
 
 
+async def test_get_lambda(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"code": "code"}
+    expected_types: typing.Any = {"code": None}
+    response = client.projects.metrics.custom.get_lambda(id=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.metrics.custom.get_lambda(id=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_update_lambda(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (

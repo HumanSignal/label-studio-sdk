@@ -1,9 +1,36 @@
-imports:
-  root: ../../__package__.yml
+types:
+  CustomGetLambdaResponse:
+    properties:
+      code: string
+    source:
+      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
   endpoints:
+    get_lambda:
+      path: /api/projects/{id}/aws-custom-function
+      method: GET
+      auth: true
+      docs: >-
+        Get the AWS Lambda code for the custom metric configured for this
+        project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get AWS custom metric code
+      response:
+        docs: Lambda code
+        type: CustomGetLambdaResponse
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              code: code
+      audiences:
+        - public
     update_lambda:
       path: /api/projects/{id}/aws-custom-function
       method: POST
@@ -53,14 +80,14 @@ service:
         query-parameters:
           end_date:
             type: optional<string>
-            docs: End date for AWS logs filtering
+            docs: End date for AWS logs filtering in format %Y-%m-%d
           limit:
             type: optional<integer>
             default: 100
             docs: Limit the number of logs to return
           start_date:
             type: optional<string>
-            docs: Start date for AWS logs filtering
+            docs: Start date for AWS logs filtering in format %Y-%m-%d
       response:
         docs: Successful response returns list of AWS lambda logs
         type: map<string, unknown>
@@ -100,3 +127,5 @@ service:
         - public
   source:
     openapi: openapi/openapi.yaml
+imports:
+  root: ../../__package__.yml

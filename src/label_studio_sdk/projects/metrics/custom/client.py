@@ -3,11 +3,12 @@
 import typing
 from ....core.client_wrapper import SyncClientWrapper
 from ....core.request_options import RequestOptions
+from .types.custom_get_lambda_response import CustomGetLambdaResponse
 from ....core.jsonable_encoder import jsonable_encoder
-from ....errors.internal_server_error import InternalServerError
 from ....core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
+from ....errors.internal_server_error import InternalServerError
 from ....core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -17,6 +18,54 @@ OMIT = typing.cast(typing.Any, ...)
 class CustomClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    def get_lambda(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> CustomGetLambdaResponse:
+        """
+        Get the AWS Lambda code for the custom metric configured for this project.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CustomGetLambdaResponse
+            Lambda code
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.metrics.custom.get_lambda(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/aws-custom-function",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    CustomGetLambdaResponse,
+                    construct_type(
+                        type_=CustomGetLambdaResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_lambda(
         self,
@@ -108,13 +157,13 @@ class CustomClient:
         id : int
 
         end_date : typing.Optional[str]
-            End date for AWS logs filtering
+            End date for AWS logs filtering in format %Y-%m-%d
 
         limit : typing.Optional[int]
             Limit the number of logs to return
 
         start_date : typing.Optional[str]
-            Start date for AWS logs filtering
+            Start date for AWS logs filtering in format %Y-%m-%d
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -212,6 +261,62 @@ class CustomClient:
 class AsyncCustomClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def get_lambda(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> CustomGetLambdaResponse:
+        """
+        Get the AWS Lambda code for the custom metric configured for this project.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CustomGetLambdaResponse
+            Lambda code
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.metrics.custom.get_lambda(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/aws-custom-function",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    CustomGetLambdaResponse,
+                    construct_type(
+                        type_=CustomGetLambdaResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update_lambda(
         self,
@@ -311,13 +416,13 @@ class AsyncCustomClient:
         id : int
 
         end_date : typing.Optional[str]
-            End date for AWS logs filtering
+            End date for AWS logs filtering in format %Y-%m-%d
 
         limit : typing.Optional[int]
             Limit the number of logs to return
 
         start_date : typing.Optional[str]
-            Start date for AWS logs filtering
+            Start date for AWS logs filtering in format %Y-%m-%d
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
