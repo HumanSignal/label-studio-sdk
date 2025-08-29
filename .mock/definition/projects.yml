@@ -1065,6 +1065,9 @@ service:
           page:
             type: optional<integer>
             docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
           search:
             type: optional<string>
             docs: Search term for filtering members by name, email, or username

@@ -7388,6 +7388,12 @@ paths:
           required: false
           schema:
             type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
         - description: Search term for filtering members by name, email, or username
           in: query
           name: search
