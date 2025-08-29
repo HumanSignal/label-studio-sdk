@@ -24362,6 +24362,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**ids:** `typing.Optional[str]` — Comma-separated list of user IDs to filter by
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **page:** `typing.Optional[int]` — A page number within the paginated result set.
     
 </dd>

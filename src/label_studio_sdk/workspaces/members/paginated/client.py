@@ -22,6 +22,7 @@ class PaginatedClient:
         self,
         id: int,
         *,
+        ids: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
@@ -33,6 +34,9 @@ class PaginatedClient:
         Parameters
         ----------
         id : int
+
+        ids : typing.Optional[str]
+            Comma-separated list of user IDs to filter by
 
         page : typing.Optional[int]
             A page number within the paginated result set.
@@ -72,6 +76,7 @@ class PaginatedClient:
             f"api/workspaces/{jsonable_encoder(id)}/memberships/paginated/",
             method="GET",
             params={
+                "ids": ids,
                 "page": page,
                 "page_size": page_size,
                 "search": search,
@@ -90,6 +95,7 @@ class PaginatedClient:
                 _has_next = True
                 _get_next = lambda: self.list(
                     id,
+                    ids=ids,
                     page=page + 1,
                     page_size=page_size,
                     search=search,
@@ -111,6 +117,7 @@ class AsyncPaginatedClient:
         self,
         id: int,
         *,
+        ids: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         search: typing.Optional[str] = None,
@@ -122,6 +129,9 @@ class AsyncPaginatedClient:
         Parameters
         ----------
         id : int
+
+        ids : typing.Optional[str]
+            Comma-separated list of user IDs to filter by
 
         page : typing.Optional[int]
             A page number within the paginated result set.
@@ -169,6 +179,7 @@ class AsyncPaginatedClient:
             f"api/workspaces/{jsonable_encoder(id)}/memberships/paginated/",
             method="GET",
             params={
+                "ids": ids,
                 "page": page,
                 "page_size": page_size,
                 "search": search,
@@ -187,6 +198,7 @@ class AsyncPaginatedClient:
                 _has_next = True
                 _get_next = lambda: self.list(
                     id,
+                    ids=ids,
                     page=page + 1,
                     page_size=page_size,
                     search=search,

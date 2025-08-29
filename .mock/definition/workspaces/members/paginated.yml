@@ -20,6 +20,9 @@ service:
       request:
         name: PaginatedListRequest
         query-parameters:
+          ids:
+            type: optional<string>
+            docs: Comma-separated list of user IDs to filter by
           page:
             type: optional<integer>
             docs: A page number within the paginated result set.
