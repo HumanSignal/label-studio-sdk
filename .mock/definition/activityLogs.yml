@@ -1,5 +1,5 @@
 types:
-  ApiActivityLogsListRequestMethod:
+  ActivityLogsListRequestMethod:
     enum:
       - DELETE
       - GET
@@ -16,7 +16,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_activity_logs_list:
+    list:
       path: /api/activity-logs/
       method: GET
       auth: true
@@ -27,13 +27,13 @@ service:
         openapi: openapi/openapi.yaml
       display-name: Get activity logs
       request:
-        name: ApiActivityLogsListRequest
+        name: ActivityLogsListRequest
         query-parameters:
           end_date:
             type: optional<string>
             docs: End date/time (ISO-8601) for log filtering.
           method:
-            type: optional<ApiActivityLogsListRequestMethod>
+            type: optional<ActivityLogsListRequestMethod>
             default: all
             docs: HTTP request method used in the log.
           ordering:
@@ -80,5 +80,7 @@ service:
                     user_id: 1
                 recordsFiltered: 1
                 recordsTotal: 1
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml

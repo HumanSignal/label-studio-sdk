@@ -85,7 +85,11 @@ paths:
         - Token: []
       summary: Get activity logs
       tags:
-        - Activity Log
+        - Activity Logs
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: activity_logs
+      x-fern-sdk-method-name: list
   /api/annotation-history/:
     delete:
       description: Delete all annotation history items for a specific annotation, task or project. This method is available only for users with administrator roles.
