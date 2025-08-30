@@ -1,4 +1,145 @@
 # Reference
+## ActivityLogs
+<details><summary><code>client.activity_logs.<a href="src/label_studio_sdk/activity_logs/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve activity logs filtered by workspace, project, user, HTTP method, date range or search query.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.activity_logs.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**end_date:** `typing.Optional[str]` — End date/time (ISO-8601) for log filtering.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**method:** `typing.Optional[ActivityLogsListRequestMethod]` — HTTP request method used in the log.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — [or "start"] Current page index.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — [or "length"] Logs per page, use -1 to obtain all logs (might be slow).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID to filter logs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search expression using "AND"/"OR" to filter by request URL.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_date:** `typing.Optional[str]` — Start date/time (ISO-8601) for log filtering.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user:** `typing.Optional[int]` — User ID to filter logs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspace:** `typing.Optional[int]` — Workspace owner ID to filter logs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Annotations
 <details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">create_bulk</a>(...)</code></summary>
 <dl>

@@ -2,6 +2,8 @@
 
 from .types import (
     ActionsEnum,
+    ActivityLog,
+    ActivityLogResponse,
     AllRolesProjectList,
     AllRolesProjectListSampling,
     AllRolesProjectListSkipQueue,
@@ -200,6 +202,7 @@ from .errors import (
 )
 from . import (
     actions,
+    activity_logs,
     annotations,
     billing,
     comments,
@@ -238,6 +241,7 @@ from .actions import (
     ActionsListResponseItem,
     ActionsListResponseItemDialog,
 )
+from .activity_logs import ActivityLogsListRequestMethod
 from .annotations import AnnotationBulkSerializerWithSelectedItemsRequestLastAction, AnnotationsCreateBulkResponseItem
 from .client import AsyncLabelStudio, LabelStudio
 from .environment import LabelStudioEnvironment
@@ -310,6 +314,9 @@ __all__ = [
     "ActionsEnum",
     "ActionsListResponseItem",
     "ActionsListResponseItemDialog",
+    "ActivityLog",
+    "ActivityLogResponse",
+    "ActivityLogsListRequestMethod",
     "AllRolesProjectList",
     "AllRolesProjectListSampling",
     "AllRolesProjectListSkipQueue",
@@ -560,6 +567,7 @@ __all__ = [
     "WorkspaceMemberList",
     "__version__",
     "actions",
+    "activity_logs",
     "annotations",
     "billing",
     "comments",
