@@ -4,6 +4,7 @@
 import xml.etree.ElementTree
 from typing import Type, Dict, Optional, List, Tuple, Any, Union
 from pydantic import BaseModel, confloat, Field, validator
+from uuid import uuid4
 
 from .base import LabelStudioTag, get_tag_class
 from .region import Region
@@ -361,7 +362,7 @@ class ControlTag(LabelStudioTag):
 
             return self.to_name[0]
 
-    def _label_simple(self, to_name: Optional[str] = None, *args, **kwargs) -> Region:
+    def _label_simple(self, to_name: Optional[str] = None, id: Optional[str] = None, parent_id: Optional[str] = None, score: Optional[float] = None, *args, **kwargs) -> Region:
         """
         This method creates a new Region object with the specified label applied.
         It first resolves the name of the object tag that the control tag maps to.
@@ -373,6 +374,8 @@ class ControlTag(LabelStudioTag):
         -----------
         to_name : Optional[str]
             The name of the object tag to resolve. If not provided, the method will return the name of the first object tag if there is only one.
+        id : Optional[str]
+            The id of the region to be used. If not provided, the method will generate a new id.
         *args : tuple
             Variable length argument list.
         **kwargs : dict
@@ -387,13 +390,22 @@ class ControlTag(LabelStudioTag):
         obj = self.find_object_by_name(to_name)
         cls = self._value_class
         value = cls(**kwargs)
+        if not id:
+            id = str(uuid4())[:8]
+            
+        additional_kwargs = {}
+        if parent_id:
+            additional_kwargs['parentID'] = parent_id
+        if score:
+            additional_kwargs['score'] = score
         
-        return Region(from_tag=self, to_tag=obj, value=value)
+        return Region(from_tag=self, to_tag=obj, value=value, id=id, **additional_kwargs)
 
     def _label_with_labels(
         self,
         label: Union[str, List[str]] = None,
         to_name: Optional[str] = None,
+        id: Optional[str] = None,
         *args,
         **kwargs,
     ) -> Region:
@@ -410,6 +422,8 @@ class ControlTag(LabelStudioTag):
             The label to be applied. If a string is provided, it is converted to a list.
         to_name : Optional[str], optional
             The name of the object tag to resolve. If not provided, the method will return the name of the first object tag if there is only one.
+        id : Optional[str], optional
+            The id of the region to be used. If not provided, the method will generate a new id.
         *args : tuple
             Variable length argument list.
         **kwargs : dict
@@ -435,12 +449,13 @@ class ControlTag(LabelStudioTag):
 
         kwargs[self._label_attr_name] = label
         
-        return self._label_simple(to_name=to_name, **kwargs)
+        return self._label_simple(to_name=to_name, id=id, **kwargs)
 
     def label(
         self,
         label: Optional[Union[str, List[str]]] = None,
         to_name: Optional[str] = None,
+        id: Optional[str] = None,
         *args,
         **kwargs,
     ) -> Region:
@@ -455,6 +470,8 @@ class ControlTag(LabelStudioTag):
             The label to be applied. If a string is provided, it is converted to a list.
         to_name : Optional[str]
             The name of the object tag to resolve. If not provided, the method will return the name of the first object tag if there is only one.
+        id : Optional[str]
+            The id of the region to be used. If not provided, the method will generate a new id.
         *args : tuple
             Variable length argument list.
         **kwargs : dict
@@ -467,10 +484,10 @@ class ControlTag(LabelStudioTag):
         """
         if hasattr(self, "_label_attr_name") and label is not None:
             return self._label_with_labels(
-                label=label, to_name=to_name, *args, **kwargs
+                label=label, to_name=to_name, id=id, *args, **kwargs
             )
         else:
-            return self._label_simple(to_name=to_name, *args, **kwargs)
+            return self._label_simple(to_name=to_name, id=id, *args, **kwargs)
         
     def get_labels(self, regions: List[Dict]):
         """
@@ -550,7 +567,8 @@ class ChoicesTag(ControlTag):
         }
 
 
-class LabelsValue(SpanSelection):
+# class LabelsValue(SpanSelection):
+class LabelsValue(BaseModel):
     labels: List[str]
 
 
