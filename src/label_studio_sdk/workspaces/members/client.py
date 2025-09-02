@@ -3,6 +3,7 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from .bulk.client import BulkClient
+from .paginated.client import PaginatedClient
 from ...core.request_options import RequestOptions
 from ...types.workspace_member_list import WorkspaceMemberList
 from ...core.jsonable_encoder import jsonable_encoder
@@ -12,6 +13,7 @@ from ...core.api_error import ApiError
 from ...types.workspace_member_create import WorkspaceMemberCreate
 from ...core.client_wrapper import AsyncClientWrapper
 from .bulk.client import AsyncBulkClient
+from .paginated.client import AsyncPaginatedClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -21,6 +23,7 @@ class MembersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.bulk = BulkClient(client_wrapper=self._client_wrapper)
+        self.paginated = PaginatedClient(client_wrapper=self._client_wrapper)
 
     def list(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
@@ -182,6 +185,7 @@ class AsyncMembersClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.bulk = AsyncBulkClient(client_wrapper=self._client_wrapper)
+        self.paginated = AsyncPaginatedClient(client_wrapper=self._client_wrapper)
 
     async def list(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
