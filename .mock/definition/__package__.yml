@@ -10,20 +10,20 @@ errors:
     status-code: 501
     type: unknown
     docs: KPI depends on other KPIs - not implemented
+  BadRequestError:
+    status-code: 400
+    type: unknown
+    docs: ''
+    examples:
+      - value:
+          key: value
+      - value: string
   InternalServerError:
     status-code: 500
     type: unknown
     docs: Predicting error
     examples:
       - value: Server responded with an error.
-  BadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad Request
-    examples:
-      - value: string
-      - value:
-          key: value
   ForbiddenError:
     status-code: 403
     type: unknown
@@ -5441,7 +5441,7 @@ types:
       results: list<LseProjectCounts>
     source:
       openapi: openapi/openapi.yaml
-  PaginatedLseUserList:
+  PaginatedPaginatedProjectMemberList:
     properties:
       count: integer
       next:
@@ -5452,7 +5452,54 @@ types:
         type: optional<string>
         validation:
           format: uri
-      results: list<LseUser>
+      results: list<PaginatedProjectMember>
+    source:
+      openapi: openapi/openapi.yaml
+  PaginatedProjectMember:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
+    properties:
+      active_organization: optional<integer>
+      active_organization_meta: string
+      allow_newsletters:
+        type: optional<boolean>
+        docs: Allow sending newsletters to user
+      avatar: string
+      custom_hotkeys: optional<unknown>
+      date_joined: optional<datetime>
+      email:
+        type: optional<string>
+        validation:
+          format: email
+          maxLength: 254
+      first_name:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      id: integer
+      initials:
+        type: string
+        default: '?'
+      last_activity: datetime
+      last_name:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      lse_fields: LseFields
+      org_membership: list<OrganizationMembership>
+      pause: string
+      phone:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      project_role: string
+      username:
+        type: string
+        validation:
+          maxLength: 256
     source:
       openapi: openapi/openapi.yaml
   PaginatedRoleBasedTaskList:
