@@ -272,6 +272,7 @@ service:
                   show_instruction: true
                   show_overlap_first: true
                   show_skip_button: true
+                  show_unused_data_columns_to_annotators: true
                   skip_queue: REQUEUE_FOR_ME
                   skipped_annotations_number: skipped_annotations_number
                   start_training_on_annotation_update: true

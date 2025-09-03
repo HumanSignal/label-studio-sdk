@@ -7664,9 +7664,14 @@ paths:
   /api/projects/{id}/model-stats/{model_version}/prediction:
     get:
       description: |-
-        Mean agreement of annotator annotations vs predictions for a specific model version.
-        Mirrors prediction_per_user_agreement but filtered by prediction.model_version.
-        :return: {"average_prediction_agreement_per_model": float[0..1]}
+        Mean agreement between the given model version and all other model versions in the project.
+
+        Computed as the average of pairwise model-to-model agreement scores from PredictionPairStats where either
+        prediction pair's model_version_from or model_version_to equals the provided model_version.
+
+        When per_label=true, returns a mapping of label -> average agreement across the same set of pairs.
+
+        :return: {"average_prediction_agreement_per_model": float[0..1] | {label: float[0..1]}}
       operationId: api_projects_model_stats_prediction_retrieve
       parameters:
         - in: path
@@ -16401,6 +16406,9 @@ components:
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         skip_queue:
           nullable: true
           oneOf:
@@ -20673,6 +20681,9 @@ components:
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         skip_queue:
           nullable: true
           oneOf:
@@ -21313,6 +21324,9 @@ components:
           type: boolean
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
+          type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
           type: boolean
         skip_queue:
           nullable: true
@@ -24734,6 +24748,9 @@ components:
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         skip_queue:
           nullable: true
           oneOf:
@@ -25218,6 +25235,9 @@ components:
           type: boolean
         review_settings:
           description: general dict serialized review settings
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         tags: {}
       type: object
     PatchedS3DatasetStorageRequest:
@@ -26287,6 +26307,9 @@ components:
           type: boolean
         review_settings:
           description: general dict serialized review settings
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         tags: {}
         updated_at:
           format: date-time
@@ -26328,6 +26351,9 @@ components:
           type: boolean
         review_settings:
           description: general dict serialized review settings
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         tags: {}
       required:
         - name
@@ -26696,6 +26722,10 @@ components:
         show_instruction:
           description: Show instructions to the reviewers before they start
           type: boolean
+        show_unused_data_columns_to_reviewers:
+          description: If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
+          nullable: true
+          type: boolean
       required:
         - id
         - requeue_rejected_tasks_to_annotator
@@ -26751,6 +26781,10 @@ components:
           type: boolean
         show_instruction:
           description: Show instructions to the reviewers before they start
+          type: boolean
+        show_unused_data_columns_to_reviewers:
+          description: If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
+          nullable: true
           type: boolean
       type: object
     ReviewedEnum:

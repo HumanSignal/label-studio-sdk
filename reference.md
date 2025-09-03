@@ -7477,6 +7477,14 @@ client.projects.update(
 <dl>
 <dd>
 
+**show_unused_data_columns_to_annotators:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **skip_queue:** `typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]` 
     
 </dd>
