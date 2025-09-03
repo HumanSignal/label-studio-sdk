@@ -122,6 +122,8 @@ from .organization_membership import OrganizationMembership
 from .paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from .paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
 from .paginated_lse_user_list import PaginatedLseUserList
+from .paginated_paginated_project_member_list import PaginatedPaginatedProjectMemberList
+from .paginated_project_member import PaginatedProjectMember
 from .paginated_role_based_task_list import PaginatedRoleBasedTaskList
 from .pause import Pause
 from .pause_request import PauseRequest
@@ -315,6 +317,8 @@ __all__ = [
     "PaginatedAllRolesProjectListList",
     "PaginatedLseOrganizationMemberListList",
     "PaginatedLseUserList",
+    "PaginatedPaginatedProjectMemberList",
+    "PaginatedProjectMember",
     "PaginatedRoleBasedTaskList",
     "Pause",
     "PauseRequest",

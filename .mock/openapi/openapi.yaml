@@ -4257,33 +4257,113 @@ paths:
       x-fern-sdk-method-name: update
   /api/llm/openai/chat/completions:
     post:
-      description: Proxy requests to OpenAI /chat/completions and return the full response payload.
+      description: 'Proxy requests to OpenAI-compatible chat completions APIs and return the full response payload. Supports multiple providers via model parameter format: "model_name" (defaults to OpenAI), "provider/model_name", or "provider:model_name". Works with providers that offer OpenAI-compatible endpoints.'
       operationId: api_llm_openai_chat_completions_create
       requestBody:
         content:
           application/json:
             schema:
-              additionalProperties: {}
-              type: object
-          application/x-www-form-urlencoded:
-            schema:
-              additionalProperties: {}
-              type: object
-          multipart/form-data:
-            schema:
-              additionalProperties: {}
+              properties:
+                messages:
+                  description: Array of message objects for the chat completion
+                  items:
+                    properties:
+                      content:
+                        description: The content of the message
+                        type: string
+                      role:
+                        description: The role of the message author
+                        enum:
+                          - system
+                          - user
+                          - assistant
+                        type: string
+                    required:
+                      - role
+                      - content
+                    type: object
+                  type: array
+                model:
+                  description: Model identifier. Can be "model_name" (defaults to OpenAI), "provider/model_name", or "provider:model_name"
+                  example: gpt-4
+                  type: string
+              required:
+                - model
+                - messages
               type: object
       responses:
         '200':
           content:
             application/json:
               schema:
-                additionalProperties: {}
-                type: object
+                content:
+                  application/json:
+                    properties:
+                      choices:
+                        description: Array of completion choices
+                        items:
+                          properties:
+                            finish_reason:
+                              description: The reason the completion finished
+                              type: string
+                            index:
+                              description: The index of the choice
+                              type: integer
+                            message:
+                              properties:
+                                content:
+                                  description: The content of the message
+                                  type: string
+                                role:
+                                  description: The role of the message author
+                                  type: string
+                              type: object
+                          type: object
+                        type: array
+                      created:
+                        description: Unix timestamp of when the completion was created
+                        type: integer
+                      id:
+                        description: Unique identifier for the chat completion
+                        type: string
+                      model:
+                        description: The model used for the completion
+                        type: string
+                      object:
+                        description: Object type, always "chat.completion"
+                        type: string
+                      usage:
+                        description: Token usage statistics
+                        properties:
+                          completion_tokens:
+                            description: Number of tokens in the completion
+                            type: integer
+                          prompt_tokens:
+                            description: Number of tokens in the prompt
+                            type: integer
+                          total_tokens:
+                            description: Total number of tokens used
+                            type: integer
+                        type: object
+                    type: object
+                description: Chat completion response
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                content:
+                  application/json:
+                    properties:
+                      detail:
+                        description: Error message describing the issue
+                        type: string
+                    type: object
+                description: Bad request - missing required fields or invalid provider
           description: ''
       security:
         - Token: []
-      summary: Proxy to OpenAI Chat Completions
+      summary: Proxy to OpenAI-Compatible Chat Completions
       tags:
         - LLM
       x-fern-audiences:
@@ -7423,7 +7503,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedLseUserList'
+                $ref: '#/components/schemas/PaginatedPaginatedProjectMemberList'
           description: ''
       security:
         - Token: []
@@ -23598,6 +23678,110 @@ components:
       required:
         - count
         - results
+      type: object
+    PaginatedPaginatedProjectMemberList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/PaginatedProjectMember'
+          type: array
+      required:
+        - count
+        - results
+      type: object
+    PaginatedProjectMember:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
+      properties:
+        active_organization:
+          nullable: true
+          type: integer
+        active_organization_meta:
+          readOnly: true
+          type: string
+        allow_newsletters:
+          description: Allow sending newsletters to user
+          nullable: true
+          type: boolean
+        avatar:
+          readOnly: true
+          type: string
+        custom_hotkeys:
+          description: Custom keyboard shortcuts configuration for the user interface
+          nullable: true
+        date_joined:
+          format: date-time
+          type: string
+        email:
+          format: email
+          maxLength: 254
+          title: Email address
+          type: string
+        first_name:
+          maxLength: 256
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        initials:
+          default: '?'
+          readOnly: true
+          type: string
+        last_activity:
+          format: date-time
+          readOnly: true
+          type: string
+        last_name:
+          maxLength: 256
+          type: string
+        lse_fields:
+          allOf:
+            - $ref: '#/components/schemas/LseFields'
+          readOnly: true
+        org_membership:
+          items:
+            $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
+          type: array
+        pause:
+          readOnly: true
+          type: string
+        phone:
+          maxLength: 256
+          type: string
+        project_role:
+          readOnly: true
+          type: string
+        username:
+          maxLength: 256
+          type: string
+      required:
+        - active_organization_meta
+        - avatar
+        - id
+        - initials
+        - last_activity
+        - lse_fields
+        - org_membership
+        - pause
+        - project_role
+        - username
       type: object
     PaginatedRoleBasedTaskList:
       properties:
