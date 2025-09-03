@@ -23656,6 +23656,29 @@ components:
         - count
         - results
       type: object
+    PaginatedLseUserList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/LseUser'
+          type: array
+      required:
+        - count
+        - results
+      type: object
     PaginatedPaginatedProjectMemberList:
       properties:
         count:

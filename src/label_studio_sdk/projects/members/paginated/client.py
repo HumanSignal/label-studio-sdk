@@ -4,9 +4,9 @@ from ....core.client_wrapper import SyncClientWrapper
 import typing
 from ....core.request_options import RequestOptions
 from ....core.pagination import SyncPager
-from ....types.lse_user import LseUser
+from ....types.paginated_project_member import PaginatedProjectMember
 from ....core.jsonable_encoder import jsonable_encoder
-from ....types.paginated_lse_user_list import PaginatedLseUserList
+from ....types.paginated_paginated_project_member_list import PaginatedPaginatedProjectMemberList
 from ....core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
@@ -30,7 +30,7 @@ class PaginatedClient:
         search: typing.Optional[str] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[LseUser]:
+    ) -> SyncPager[PaginatedProjectMember]:
         """
         Retrieve the members for a specific project.
 
@@ -64,7 +64,7 @@ class PaginatedClient:
 
         Returns
         -------
-        SyncPager[LseUser]
+        SyncPager[PaginatedProjectMember]
 
 
         Examples
@@ -101,9 +101,9 @@ class PaginatedClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    PaginatedLseUserList,
+                    PaginatedPaginatedProjectMemberList,
                     construct_type(
-                        type_=PaginatedLseUserList,  # type: ignore
+                        type_=PaginatedPaginatedProjectMemberList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -143,7 +143,7 @@ class AsyncPaginatedClient:
         search: typing.Optional[str] = None,
         with_deleted: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[LseUser]:
+    ) -> AsyncPager[PaginatedProjectMember]:
         """
         Retrieve the members for a specific project.
 
@@ -177,7 +177,7 @@ class AsyncPaginatedClient:
 
         Returns
         -------
-        AsyncPager[LseUser]
+        AsyncPager[PaginatedProjectMember]
 
 
         Examples
@@ -222,9 +222,9 @@ class AsyncPaginatedClient:
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    PaginatedLseUserList,
+                    PaginatedPaginatedProjectMemberList,
                     construct_type(
-                        type_=PaginatedLseUserList,  # type: ignore
+                        type_=PaginatedPaginatedProjectMemberList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

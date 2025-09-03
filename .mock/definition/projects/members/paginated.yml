@@ -45,7 +45,7 @@ service:
             docs: Include deleted members in the results
       response:
         docs: ''
-        type: root.PaginatedLseUserList
+        type: root.PaginatedPaginatedProjectMemberList
       examples:
         - path-parameters:
             id: 1
@@ -78,6 +78,7 @@ service:
                       role: role
                   pause: pause
                   phone: phone
+                  project_role: project_role
                   username: username
       audiences:
         - public
