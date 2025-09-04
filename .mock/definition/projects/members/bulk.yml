@@ -1,3 +1,5 @@
+imports:
+  root: ../../__package__.yml
 types:
   BulkPostResponse:
     properties:
@@ -25,11 +27,18 @@ service:
       display-name: Bulk assign project members
       request:
         name: ProjectMemberBulkAssignRequest
+        query-parameters:
+          search:
+            type: optional<string>
+            docs: >-
+              Search term for filtering members by name, email, or username.
+              Only when all=True.
         body:
           properties:
             all: boolean
             excluded: optional<list<integer>>
             included: optional<list<integer>>
+            roles: optional<list<root.ProjectMemberBulkAssignRolesRequest>>
         content-type: application/json
       response:
         docs: ''
@@ -56,6 +65,14 @@ service:
       path-parameters:
         id: integer
       display-name: Bulk unassign project members
+      request:
+        name: BulkDeleteRequest
+        query-parameters:
+          search:
+            type: optional<string>
+            docs: >-
+              Search term for filtering members by name, email, or username.
+              Only when all=True.
       response:
         docs: ''
         type: BulkDeleteResponse
