@@ -2,11 +2,9 @@
 
 import typing
 from ....core.client_wrapper import SyncClientWrapper
-from ....types.project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRolesRequest
 from ....core.request_options import RequestOptions
 from .types.bulk_post_response import BulkPostResponse
 from ....core.jsonable_encoder import jsonable_encoder
-from ....core.serialization import convert_and_respect_annotation_metadata
 from ....core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ....core.api_error import ApiError
@@ -26,10 +24,8 @@ class BulkClient:
         id: int,
         *,
         all_: bool,
-        search: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
-        roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkPostResponse:
         """
@@ -41,14 +37,9 @@ class BulkClient:
 
         all_ : bool
 
-        search : typing.Optional[str]
-            Search term for filtering members by name, email, or username. Only when all=True.
-
         excluded : typing.Optional[typing.Sequence[int]]
 
         included : typing.Optional[typing.Sequence[int]]
-
-        roles : typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -73,16 +64,10 @@ class BulkClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="POST",
-            params={
-                "search": search,
-            },
             json={
                 "all": all_,
                 "excluded": excluded,
                 "included": included,
-                "roles": convert_and_respect_annotation_metadata(
-                    object_=roles, annotation=typing.Sequence[ProjectMemberBulkAssignRolesRequest], direction="write"
-                ),
             },
             headers={
                 "content-type": "application/json",
@@ -104,18 +89,13 @@ class BulkClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(
-        self, id: int, *, search: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkDeleteResponse:
+    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BulkDeleteResponse:
         """
         Unassign project members in bulk. Allows the same request body as bulk assign.
 
         Parameters
         ----------
         id : int
-
-        search : typing.Optional[str]
-            Search term for filtering members by name, email, or username. Only when all=True.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -139,9 +119,6 @@ class BulkClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="DELETE",
-            params={
-                "search": search,
-            },
             request_options=request_options,
         )
         try:
@@ -168,10 +145,8 @@ class AsyncBulkClient:
         id: int,
         *,
         all_: bool,
-        search: typing.Optional[str] = None,
         excluded: typing.Optional[typing.Sequence[int]] = OMIT,
         included: typing.Optional[typing.Sequence[int]] = OMIT,
-        roles: typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkPostResponse:
         """
@@ -183,14 +158,9 @@ class AsyncBulkClient:
 
         all_ : bool
 
-        search : typing.Optional[str]
-            Search term for filtering members by name, email, or username. Only when all=True.
-
         excluded : typing.Optional[typing.Sequence[int]]
 
         included : typing.Optional[typing.Sequence[int]]
-
-        roles : typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -223,16 +193,10 @@ class AsyncBulkClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="POST",
-            params={
-                "search": search,
-            },
             json={
                 "all": all_,
                 "excluded": excluded,
                 "included": included,
-                "roles": convert_and_respect_annotation_metadata(
-                    object_=roles, annotation=typing.Sequence[ProjectMemberBulkAssignRolesRequest], direction="write"
-                ),
             },
             headers={
                 "content-type": "application/json",
@@ -254,18 +218,13 @@ class AsyncBulkClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(
-        self, id: int, *, search: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> BulkDeleteResponse:
+    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BulkDeleteResponse:
         """
         Unassign project members in bulk. Allows the same request body as bulk assign.
 
         Parameters
         ----------
         id : int
-
-        search : typing.Optional[str]
-            Search term for filtering members by name, email, or username. Only when all=True.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -297,9 +256,6 @@ class AsyncBulkClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/members/bulk/",
             method="DELETE",
-            params={
-                "search": search,
-            },
             request_options=request_options,
         )
         try:
