@@ -94,6 +94,22 @@ paths:
     delete:
       description: Delete all annotation history items for a specific annotation, task or project. This method is available only for users with administrator roles.
       operationId: api_annotation_history_destroy
+      parameters:
+        - description: Annotation ID to delete annotation history items for.
+          in: query
+          name: annotation
+          schema:
+            type: integer
+        - description: Project ID to delete annotation history items for.
+          in: query
+          name: project
+          schema:
+            type: integer
+        - description: Task ID to delete annotation history items for.
+          in: query
+          name: task
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -110,10 +126,19 @@ paths:
       summary: Delete annotation history items
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: delete
     get:
       description: 'List annotation history items for an annotation. Annotation history logs all actions performed with annotations, such as: imports, submits, updates, reviews, and more. Users can view annotation history items in the Annotation History panel during labeling.'
       operationId: api_annotation_history_list
       parameters:
+        - description: Annotation ID to get annotation history items for.
+          in: query
+          name: annotation
+          schema:
+            type: integer
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -134,6 +159,10 @@ paths:
       summary: List all annotation history items for annotation
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: list
   /api/annotation-reviews/:
     get:
       description: List all reviews for a specific annotation ID.
@@ -6409,6 +6438,10 @@ paths:
       summary: List annotation history items for project
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: list_for_project
   /api/projects/{id}/aws-custom-function:
     get:
       description: Get the AWS Lambda code for the custom metric configured for this project.
