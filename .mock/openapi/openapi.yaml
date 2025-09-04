@@ -16498,11 +16498,6 @@ components:
         - only
         - exclude
     Annotation:
-      description: |-
-        A ModelSerializer that takes additional arguments for
-        "fields", "omit" and "expand" in order to
-        control which fields are displayed, and whether to replace simple
-        values with complex, nested serializations
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
@@ -16614,11 +16609,6 @@ components:
         - updated_at
       type: object
     AnnotationBulkSerializerWithSelectedItemsRequest:
-      description: |-
-        A ModelSerializer that takes additional arguments for
-        "fields", "omit" and "expand" in order to
-        control which fields are displayed, and whether to replace simple
-        values with complex, nested serializations
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
@@ -16802,11 +16792,6 @@ components:
         - id
       type: object
     AnnotationRequest:
-      description: |-
-        A ModelSerializer that takes additional arguments for
-        "fields", "omit" and "expand" in order to
-        control which fields are displayed, and whether to replace simple
-        values with complex, nested serializations
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
