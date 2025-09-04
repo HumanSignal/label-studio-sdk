@@ -21880,6 +21880,14 @@ client.projects.members.bulk.post(
 <dl>
 <dd>
 
+**search:** `typing.Optional[str]` — Search term for filtering members by name, email, or username. Only when all=True.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **excluded:** `typing.Optional[typing.Sequence[int]]` 
     
 </dd>
@@ -21889,6 +21897,14 @@ client.projects.members.bulk.post(
 <dd>
 
 **included:** `typing.Optional[typing.Sequence[int]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**roles:** `typing.Optional[typing.Sequence[ProjectMemberBulkAssignRolesRequest]]` 
     
 </dd>
 </dl>
@@ -21959,6 +21975,14 @@ client.projects.members.bulk.delete(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**search:** `typing.Optional[str]` — Search term for filtering members by name, email, or username. Only when all=True.
     
 </dd>
 </dl>

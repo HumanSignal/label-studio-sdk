@@ -384,6 +384,11 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   Annotation:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
     properties:
       bulk_created:
         type: optional<boolean>
@@ -559,6 +564,11 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   AnnotationRequest:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
     properties:
       bulk_created:
         type: optional<boolean>
@@ -5932,6 +5942,15 @@ types:
   ProjectMember:
     properties:
       user: integer
+    source:
+      openapi: openapi/openapi.yaml
+  ProjectMemberBulkAssignRolesRequest:
+    properties:
+      role: Role9E7Enum
+      user_id:
+        type: integer
+        validation:
+          min: 1
     source:
       openapi: openapi/openapi.yaml
   ProjectReimport:
