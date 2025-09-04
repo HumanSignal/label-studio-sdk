@@ -11,6 +11,8 @@ from .annotation import Annotation
 from .annotation_last_action import AnnotationLastAction
 from .annotation_request import AnnotationRequest
 from .annotation_request_last_action import AnnotationRequestLastAction
+from .annotation_review import AnnotationReview
+from .annotation_review_request import AnnotationReviewRequest
 from .assignment_settings import AssignmentSettings
 from .assignment_settings_label_stream_task_distribution import AssignmentSettingsLabelStreamTaskDistribution
 from .assignment_settings_request import AssignmentSettingsRequest
@@ -209,6 +211,8 @@ __all__ = [
     "AnnotationLastAction",
     "AnnotationRequest",
     "AnnotationRequestLastAction",
+    "AnnotationReview",
+    "AnnotationReviewRequest",
     "AssignmentSettings",
     "AssignmentSettingsLabelStreamTaskDistribution",
     "AssignmentSettingsRequest",

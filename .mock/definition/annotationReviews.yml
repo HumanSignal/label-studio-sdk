@@ -4,7 +4,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_annotation_reviews_list:
+    list:
       path: /api/annotation-reviews/
       method: GET
       auth: true
@@ -13,7 +13,7 @@ service:
         openapi: openapi/openapi.yaml
       display-name: List reviews
       request:
-        name: ApiAnnotationReviewsListRequest
+        name: AnnotationReviewsListRequest
         query-parameters:
           annotation: optional<integer>
           annotation__task__project: optional<integer>
@@ -38,7 +38,9 @@ service:
                 result:
                   key: value
                 started_at: '2024-01-15T09:30:00Z'
-    api_annotation_reviews_create:
+      audiences:
+        - public
+    create:
       path: /api/annotation-reviews/
       method: POST
       auth: true
@@ -48,6 +50,11 @@ service:
       display-name: Create review
       request:
         body: root.AnnotationReviewRequest
+        query-parameters:
+          async_postprocess:
+            type: optional<boolean>
+            docs: Whether to postprocess the review asynchronously.
+        name: AnnotationReviewsCreateRequest
         content-type: application/json
       response:
         docs: ''
@@ -69,7 +76,9 @@ service:
               result:
                 key: value
               started_at: '2024-01-15T09:30:00Z'
-    api_annotation_reviews_retrieve:
+      audiences:
+        - public
+    get:
       path: /api/annotation-reviews/{id}/
       method: GET
       auth: true
@@ -101,6 +110,8 @@ service:
               result:
                 key: value
               started_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
     api_annotation_reviews_update:
       path: /api/annotation-reviews/{id}/
       method: PUT
@@ -138,7 +149,9 @@ service:
               result:
                 key: value
               started_at: '2024-01-15T09:30:00Z'
-    api_annotation_reviews_destroy:
+      audiences:
+        - internal
+    delete:
       path: /api/annotation-reviews/{id}/
       method: DELETE
       auth: true
@@ -153,7 +166,9 @@ service:
       examples:
         - path-parameters:
             id: 1
-    api_annotation_reviews_partial_update:
+      audiences:
+        - public
+    update:
       path: /api/annotation-reviews/{id}/
       method: PATCH
       auth: true
@@ -205,5 +220,7 @@ service:
               result:
                 key: value
               started_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml

@@ -7,6 +7,7 @@ import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import SyncClientWrapper
 from .activity_logs.client import ActivityLogsClient
+from .annotation_reviews.client import AnnotationReviewsClient
 from .annotations.client import AnnotationsClient
 from .billing.client import BillingClient
 from .comments.client import CommentsClient
@@ -31,6 +32,7 @@ from .workspaces.client import WorkspacesClient
 from .sso.client import SsoClient
 from .core.client_wrapper import AsyncClientWrapper
 from .activity_logs.client import AsyncActivityLogsClient
+from .annotation_reviews.client import AsyncAnnotationReviewsClient
 from .annotations.client import AsyncAnnotationsClient
 from .billing.client import AsyncBillingClient
 from .comments.client import AsyncCommentsClient
@@ -118,6 +120,7 @@ class LabelStudioBase:
             timeout=_defaulted_timeout,
         )
         self.activity_logs = ActivityLogsClient(client_wrapper=self._client_wrapper)
+        self.annotation_reviews = AnnotationReviewsClient(client_wrapper=self._client_wrapper)
         self.annotations = AnnotationsClient(client_wrapper=self._client_wrapper)
         self.billing = BillingClient(client_wrapper=self._client_wrapper)
         self.comments = CommentsClient(client_wrapper=self._client_wrapper)
@@ -205,6 +208,7 @@ class AsyncLabelStudioBase:
             timeout=_defaulted_timeout,
         )
         self.activity_logs = AsyncActivityLogsClient(client_wrapper=self._client_wrapper)
+        self.annotation_reviews = AsyncAnnotationReviewsClient(client_wrapper=self._client_wrapper)
         self.annotations = AsyncAnnotationsClient(client_wrapper=self._client_wrapper)
         self.billing = AsyncBillingClient(client_wrapper=self._client_wrapper)
         self.comments = AsyncCommentsClient(client_wrapper=self._client_wrapper)

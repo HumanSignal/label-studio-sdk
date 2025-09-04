@@ -167,9 +167,19 @@ paths:
       summary: List reviews
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: list
     post:
       description: Create a review for a specific annotation ID.
       operationId: api_annotation_reviews_create
+      parameters:
+        - description: Whether to postprocess the review asynchronously.
+          in: query
+          name: async_postprocess
+          schema:
+            type: boolean
       requestBody:
         content:
           application/json:
@@ -194,6 +204,10 @@ paths:
       summary: Create review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: create
   /api/annotation-reviews/{id}/:
     delete:
       description: Delete a review by ID
@@ -213,6 +227,10 @@ paths:
       summary: Delete review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: delete
     get:
       description: Retrieve a specific review by ID for an annotation.
       operationId: api_annotation_reviews_retrieve
@@ -235,6 +253,10 @@ paths:
       summary: Get review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific review by ID.
       operationId: api_annotation_reviews_partial_update
@@ -268,6 +290,10 @@ paths:
       summary: Update review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: update
     put:
       description: Overwrite a specific review by ID.
       operationId: api_annotation_reviews_update
@@ -302,6 +328,8 @@ paths:
       summary: Put review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - internal
   /api/annotations/bulk/:
     post:
       description: Create multiple annotations at once
