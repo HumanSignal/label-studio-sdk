@@ -136,6 +136,7 @@ from .project_group_role_enum import ProjectGroupRoleEnum
 from .project_import import ProjectImport
 from .project_label_config import ProjectLabelConfig
 from .project_label_config_request import ProjectLabelConfigRequest
+from .project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRolesRequest
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
 from .project_subset_enum import ProjectSubsetEnum
@@ -331,6 +332,7 @@ __all__ = [
     "ProjectImport",
     "ProjectLabelConfig",
     "ProjectLabelConfigRequest",
+    "ProjectMemberBulkAssignRolesRequest",
     "ProjectSampling",
     "ProjectSkipQueue",
     "ProjectSubsetEnum",
