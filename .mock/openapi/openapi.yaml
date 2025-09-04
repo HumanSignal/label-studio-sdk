@@ -7386,6 +7386,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Search term for filtering members by name, email, or username. Only when all=True.
+          in: query
+          name: search
+          schema:
+            type: string
       responses:
         '200':
           content:
@@ -7417,6 +7422,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Search term for filtering members by name, email, or username. Only when all=True.
+          in: query
+          name: search
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -7664,9 +7674,14 @@ paths:
   /api/projects/{id}/model-stats/{model_version}/prediction:
     get:
       description: |-
-        Mean agreement of annotator annotations vs predictions for a specific model version.
-        Mirrors prediction_per_user_agreement but filtered by prediction.model_version.
-        :return: {"average_prediction_agreement_per_model": float[0..1]}
+        Mean agreement between the given model version and all other model versions in the project.
+
+        Computed as the average of pairwise model-to-model agreement scores from PredictionPairStats where either
+        prediction pair's model_version_from or model_version_to equals the provided model_version.
+
+        When per_label=true, returns a mapping of label -> average agreement across the same set of pairs.
+
+        :return: {"average_prediction_agreement_per_model": float[0..1] | {label: float[0..1]}}
       operationId: api_projects_model_stats_prediction_retrieve
       parameters:
         - in: path
@@ -26012,8 +26027,23 @@ components:
             minimum: 1
             type: integer
           type: array
+        roles:
+          items:
+            $ref: '#/components/schemas/ProjectMemberBulkAssignRolesRequest'
+          type: array
       required:
         - all
+      type: object
+    ProjectMemberBulkAssignRolesRequest:
+      properties:
+        role:
+          $ref: '#/components/schemas/Role9e7Enum'
+        user_id:
+          minimum: 1
+          type: integer
+      required:
+        - role
+        - user_id
       type: object
     ProjectMemberRequest:
       properties:
