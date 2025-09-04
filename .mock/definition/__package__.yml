@@ -5934,15 +5934,6 @@ types:
       user: integer
     source:
       openapi: openapi/openapi.yaml
-  ProjectMemberBulkAssignRolesRequest:
-    properties:
-      role: Role9E7Enum
-      user_id:
-        type: integer
-        validation:
-          min: 1
-    source:
-      openapi: openapi/openapi.yaml
   ProjectReimport:
     properties:
       annotation_count:
