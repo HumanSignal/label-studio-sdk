@@ -156,6 +156,7 @@ class LseProjectUpdate(UncheckedBaseModel):
     Show a skip button in interface and allow annotators to skip the task
     """
 
+    show_unused_data_columns_to_annotators: typing.Optional[bool] = None
     skip_queue: typing.Optional[LseProjectUpdateSkipQueue] = None
     skipped_annotations_number: int = pydantic.Field()
     """

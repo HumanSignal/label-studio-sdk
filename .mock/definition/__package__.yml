@@ -331,6 +331,7 @@ types:
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
+      show_unused_data_columns_to_annotators: optional<boolean>
       skip_queue: optional<AllRolesProjectListSkipQueue>
       skipped_annotations_number: string
       start_training_on_annotation_update:
@@ -3451,6 +3452,7 @@ types:
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
+      show_unused_data_columns_to_annotators: optional<boolean>
       skip_queue: optional<LseProjectSkipQueue>
       skipped_annotations_number:
         type: integer
@@ -3839,6 +3841,7 @@ types:
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
+      show_unused_data_columns_to_annotators: optional<boolean>
       skip_queue: optional<LseProjectUpdateSkipQueue>
       skipped_annotations_number:
         type: integer
@@ -6025,6 +6028,7 @@ types:
         type: optional<boolean>
         docs: flag to require comment on skip
       review_settings: optional<unknown>
+      show_unused_data_columns_to_annotators: optional<boolean>
       tags: optional<unknown>
       updated_at: datetime
     source:
@@ -6053,6 +6057,7 @@ types:
         type: optional<boolean>
         docs: flag to require comment on skip
       review_settings: optional<unknown>
+      show_unused_data_columns_to_annotators: optional<boolean>
       tags: optional<unknown>
     source:
       openapi: openapi/openapi.yaml
@@ -6378,6 +6383,11 @@ types:
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the reviewers before they start
+      show_unused_data_columns_to_reviewers:
+        type: optional<boolean>
+        docs: >-
+          If true, Data Manager shows all task.data columns to reviewers; if
+          false, hides columns not referenced by the label interface
     source:
       openapi: openapi/openapi.yaml
   ReviewSettingsRequestRequeueRejectedTasksMode:
@@ -6450,6 +6460,11 @@ types:
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the reviewers before they start
+      show_unused_data_columns_to_reviewers:
+        type: optional<boolean>
+        docs: >-
+          If true, Data Manager shows all task.data columns to reviewers; if
+          false, hides columns not referenced by the label interface
     source:
       openapi: openapi/openapi.yaml
   ReviewedEnum:

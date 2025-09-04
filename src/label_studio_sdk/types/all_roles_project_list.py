@@ -164,6 +164,7 @@ class AllRolesProjectList(UncheckedBaseModel):
     Show a skip button in interface and allow annotators to skip the task
     """
 
+    show_unused_data_columns_to_annotators: typing.Optional[bool] = None
     skip_queue: typing.Optional[AllRolesProjectListSkipQueue] = None
     skipped_annotations_number: str
     start_training_on_annotation_update: bool = pydantic.Field()
