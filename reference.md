@@ -1684,6 +1684,239 @@ client.billing.info()
 </dl>
 </details>
 
+## Blueprints
+<details><summary><code>client.blueprints.<a href="src/label_studio_sdk/blueprints/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new blueprint
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.blueprints.create()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Project description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label_config:** `typing.Optional[str]` — Labeling configuration in XML format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Blueprint name. Must be between 3 and 50 characters long.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.blueprints.<a href="src/label_studio_sdk/blueprints/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a blueprint by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.blueprints.delete(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.blueprints.<a href="src/label_studio_sdk/blueprints/client.py">create_project_from_blueprint</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new project from an existing blueprint
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.blueprints.create_project_from_blueprint(
+    share_id="share_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**share_id:** `str` — Blueprint share ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Comments
 <details><summary><code>client.comments.<a href="src/label_studio_sdk/comments/client.py">list</a>(...)</code></summary>
 <dl>
@@ -8201,6 +8434,14 @@ client.projects.update(
 <dl>
 <dd>
 
+**show_unused_data_columns_to_annotators:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **skip_queue:** `typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]` 
     
 </dd>
@@ -9444,6 +9685,178 @@ client.tasks.update(
 <dd>
 
 **unresolved_comment_count:** `typing.Optional[int]` — Number of unresolved comments in the task including all annotations
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create_event</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+    Create a new task event to track user interactions and system events during annotation.
+    
+    This endpoint is designed to receive events from the frontend labeling interface to enable
+    accurate lead time calculation and detailed annotation analytics.
+    
+    ## Event Types
+    
+    **Core Annotation Events:**
+    - `annotation_loaded` - When annotation interface is loaded
+    - `annotation_submitted` - When annotation is submitted
+    - `annotation_updated` - When annotation is modified
+    - `annotation_reviewed` - When annotation is reviewed
+    
+    **User Activity Events:**
+    - `visibility_change` - When page visibility changes (tab switch, minimize)
+    - `idle_detected` - When user goes idle
+    - `idle_resumed` - When user returns from idle
+    
+    **Interaction Events:**
+    - `region_finished_drawing` - When annotation region is completed
+    - `region_deleted` - When annotation regions are removed
+    - `hotkey_pressed` - When keyboard shortcuts are used
+    
+    **Media Events:**
+    - `video_playback_start/end` - Video playback control
+    - `audio_playback_start/end` - Audio playback control
+    - `video_scrub` - Video timeline scrubbing
+    
+    ## Usage
+    
+    Events are automatically associated with the task specified in the URL path.
+    The current user is automatically set as the actor. Project and organization
+    are derived from the task context.
+    
+    ## Example Request
+    
+    ```json
+    {
+        "event_key": "annotation_loaded",
+        "event_time": "2024-01-15T10:30:00Z",
+        "annotation": 123,
+        "meta": {
+            "annotation_count": 5,
+            "estimated_time": 300
+        }
+    }
+    ```
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import datetime
+
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.tasks.create_event(
+    id=1,
+    event_key="event_key",
+    event_time=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Task ID to associate the event with
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_key:** `str` — Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_time:** `dt.datetime` — Timestamp when the event occurred (frontend time)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation:** `typing.Optional[int]` — Annotation ID associated with this event
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation_draft:** `typing.Optional[int]` — Draft annotation ID associated with this event
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**review:** `typing.Optional[int]` — Review ID associated with this event
     
 </dd>
 </dl>

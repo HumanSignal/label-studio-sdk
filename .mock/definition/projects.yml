@@ -237,6 +237,7 @@ service:
                   show_instruction: true
                   show_overlap_first: true
                   show_skip_button: true
+                  show_unused_data_columns_to_annotators: true
                   skip_queue: REQUEUE_FOR_ME
                   skipped_annotations_number: skipped_annotations_number
                   start_training_on_annotation_update: true
@@ -695,6 +696,7 @@ service:
               docs: >-
                 Show a skip button in interface and allow annotators to skip the
                 task
+            show_unused_data_columns_to_annotators: optional<boolean>
             skip_queue: optional<PatchedLseProjectUpdateRequestSkipQueue>
             task_data_login:
               type: optional<string>
@@ -785,6 +787,7 @@ service:
                 show_agreement_to_reviewers: true
                 show_data_manager_to_reviewers: true
                 show_instruction: true
+                show_unused_data_columns_to_reviewers: true
               sampling: Sequential sampling
               show_annotation_history: true
               show_collab_predictions: true
@@ -792,6 +795,7 @@ service:
               show_instruction: true
               show_overlap_first: true
               show_skip_button: true
+              show_unused_data_columns_to_annotators: true
               skip_queue: REQUEUE_FOR_ME
               skipped_annotations_number: 1
               start_training_on_annotation_update: true
