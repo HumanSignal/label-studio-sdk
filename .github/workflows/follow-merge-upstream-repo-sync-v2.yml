@@ -92,7 +92,7 @@ jobs:
           path: ./.github/actions-hub
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
 
       - name: Install Fern
         run: npm install -g fern-api@latest
