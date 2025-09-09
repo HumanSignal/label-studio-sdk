@@ -22,6 +22,7 @@ class BlueprintsClient:
     def create(
         self,
         *,
+        project: int,
         created_by: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
         label_config: typing.Optional[str] = OMIT,
@@ -33,6 +34,8 @@ class BlueprintsClient:
 
         Parameters
         ----------
+        project : int
+
         created_by : typing.Optional[int]
 
         description : typing.Optional[str]
@@ -59,7 +62,9 @@ class BlueprintsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.blueprints.create()
+        client.blueprints.create(
+            project=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/blueprints/",
@@ -68,6 +73,7 @@ class BlueprintsClient:
                 "created_by": created_by,
                 "description": description,
                 "label_config": label_config,
+                "project": project,
                 "title": title,
             },
             headers={
@@ -133,7 +139,7 @@ class BlueprintsClient:
         self, share_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        Create a new project from an existing blueprint
+        Create a new project from an existing blueprint. On success, user is redirected to the new project with a 302.
 
         Parameters
         ----------
@@ -189,6 +195,7 @@ class AsyncBlueprintsClient:
     async def create(
         self,
         *,
+        project: int,
         created_by: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
         label_config: typing.Optional[str] = OMIT,
@@ -200,6 +207,8 @@ class AsyncBlueprintsClient:
 
         Parameters
         ----------
+        project : int
+
         created_by : typing.Optional[int]
 
         description : typing.Optional[str]
@@ -231,7 +240,9 @@ class AsyncBlueprintsClient:
 
 
         async def main() -> None:
-            await client.blueprints.create()
+            await client.blueprints.create(
+                project=1,
+            )
 
 
         asyncio.run(main())
@@ -243,6 +254,7 @@ class AsyncBlueprintsClient:
                 "created_by": created_by,
                 "description": description,
                 "label_config": label_config,
+                "project": project,
                 "title": title,
             },
             headers={
@@ -316,7 +328,7 @@ class AsyncBlueprintsClient:
         self, share_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        Create a new project from an existing blueprint
+        Create a new project from an existing blueprint. On success, user is redirected to the new project with a 302.
 
         Parameters
         ----------

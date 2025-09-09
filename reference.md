@@ -1717,7 +1717,9 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.blueprints.create()
+client.blueprints.create(
+    project=1,
+)
 
 ```
 </dd>
@@ -1729,6 +1731,14 @@ client.blueprints.create()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**project:** `int` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -1859,7 +1869,7 @@ client.blueprints.delete(
 <dl>
 <dd>
 
-Create a new project from an existing blueprint
+Create a new project from an existing blueprint. On success, user is redirected to the new project with a 302.
 </dd>
 </dl>
 </dd>

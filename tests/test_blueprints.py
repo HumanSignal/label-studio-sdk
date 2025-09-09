@@ -31,10 +31,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "title": None,
         "updated_at": "datetime",
     }
-    response = client.blueprints.create()
+    response = client.blueprints.create(project=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.blueprints.create()
+    async_response = await async_client.blueprints.create(project=1)
     validate_response(async_response, expected_response, expected_types)
 
 

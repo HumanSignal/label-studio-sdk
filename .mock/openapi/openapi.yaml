@@ -862,6 +862,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/BlueprintRequest'
+        required: true
       responses:
         '201':
           content:
@@ -902,7 +903,7 @@ paths:
       x-fern-sdk-method-name: delete
   /api/blueprints/{share_id}/create-project:
     get:
-      description: Create a new project from an existing blueprint
+      description: Create a new project from an existing blueprint. On success, user is redirected to the new project with a 302.
       operationId: api_blueprints_create_project_retrieve
       parameters:
         - description: Blueprint share ID
@@ -18124,7 +18125,6 @@ components:
           nullable: true
           type: string
         project:
-          readOnly: true
           type: integer
         share_id:
           readOnly: true
@@ -18192,11 +18192,15 @@ components:
           description: Labeling configuration in XML format
           nullable: true
           type: string
+        project:
+          type: integer
         title:
           description: Blueprint name. Must be between 3 and 50 characters long.
           maxLength: 50
           nullable: true
           type: string
+      required:
+        - project
       type: object
     BudgetResetPeriodEnum:
       description: |-
