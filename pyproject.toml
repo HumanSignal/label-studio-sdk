@@ -34,7 +34,7 @@ packages = [
 Repository = 'https://github.com/HumanSignal/label-studio-sdk'
 
 [tool.poetry.dependencies]
-python = ">=3.9,<4"
+python = ">=3.11,<4"
 Pillow = ">=11.3.0"
 appdirs = ">=1.4.3"
 datamodel-code-generator = "0.26.1"
@@ -44,7 +44,7 @@ jsf = "^0.11.2"
 jsonschema = ">=4.23.0"
 lxml = ">=4.2.5"
 nltk = "^3.9.1"
-numpy = ">=1.26.4,<3.0.0"
+numpy = ">=2.3.2,<3.0.0"
 opencv-python = "^4.9.0"
 pandas = ">=0.24.0"
 pydantic = ">= 1.9.2"
