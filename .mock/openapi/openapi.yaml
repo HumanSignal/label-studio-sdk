@@ -14760,6 +14760,53 @@ paths:
         - public
       x-fern-sdk-group-name: annotations
       x-fern-sdk-method-name: create
+  /api/tasks/{id}/events/:
+    post:
+      description: "\n    Create a new task event to track user interactions and system events during annotation.\n    \n    This endpoint is designed to receive events from the frontend labeling interface to enable\n    accurate lead time calculation and detailed annotation analytics.\n    \n    ## Event Types\n    \n    **Core Annotation Events:**\n    - `annotation_loaded` - When annotation interface is loaded\n    - `annotation_submitted` - When annotation is submitted\n    - `annotation_updated` - When annotation is modified\n    - `annotation_reviewed` - When annotation is reviewed\n    \n    **User Activity Events:**\n    - `visibility_change` - When page visibility changes (tab switch, minimize)\n    - `idle_detected` - When user goes idle\n    - `idle_resumed` - When user returns from idle\n    \n    **Interaction Events:**\n    - `region_finished_drawing` - When annotation region is completed\n    - `region_deleted` - When annotation regions are removed\n    - `hotkey_pressed` - When keyboard shortcuts are used\n    \n    **Media Events:**\n    - `video_playback_start/end` - Video playback control\n    - `audio_playback_start/end` - Audio playback control\n    - `video_scrub` - Video timeline scrubbing\n    \n    ## Usage\n    \n    Events are automatically associated with the task specified in the URL path.\n    The current user is automatically set as the actor. Project and organization\n    are derived from the task context.\n    \n    ## Example Request\n    \n    ```json\n    {\n        \"event_key\": \"annotation_loaded\",\n        \"event_time\": \"2024-01-15T10:30:00Z\",\n        \"annotation\": 123,\n        \"meta\": {\n            \"annotation_count\": 5,\n            \"estimated_time\": 300\n        }\n    }\n    ```\n    "
+      operationId: api_tasks_events_create
+      parameters:
+        - description: Task ID to associate the event with
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskEventRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TaskEventRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TaskEventRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskEvent'
+          description: ''
+        '400':
+          description: Bad request - validation errors
+        '401':
+          description: Unauthorized - authentication required
+        '403':
+          description: Forbidden - insufficient permissions
+        '404':
+          description: Not found - task does not exist
+      security:
+        - Token: []
+      summary: Create task event
+      tags:
+        - Task Events
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: tasks
+      x-fern-sdk-method-name: create_event
   /api/token/:
     get:
       description: List all API tokens for the current user.
@@ -16299,9 +16346,6 @@ components:
           description: Honeypot annotation number in project
           readOnly: true
           type: integer
-        has_blueprints:
-          readOnly: true
-          type: string
         id:
           readOnly: true
           type: integer
@@ -16467,7 +16511,6 @@ components:
         - description_short
         - finished_task_number
         - ground_truth_number
-        - has_blueprints
         - id
         - members
         - members_count
@@ -27626,6 +27669,101 @@ components:
         - created_at
         - id
         - task
+      type: object
+    TaskEvent:
+      description: |-
+        Serializer for TaskEvent model to handle event creation from frontend.
+
+        This serializer validates and processes task events sent from the labeling interface,
+        ensuring proper data format and automatically setting required relationships.
+      properties:
+        actor:
+          readOnly: true
+          type: integer
+        annotation:
+          description: Annotation ID associated with this event
+          nullable: true
+          type: integer
+        annotation_draft:
+          description: Draft annotation ID associated with this event
+          nullable: true
+          type: integer
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        event_key:
+          description: Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
+          maxLength: 255
+          type: string
+        event_time:
+          description: Timestamp when the event occurred (frontend time)
+          format: date-time
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        meta:
+          description: Additional event metadata (region data, hotkey info, etc.)
+          nullable: true
+        organization:
+          readOnly: true
+          type: integer
+        project:
+          readOnly: true
+          type: integer
+        review:
+          description: Review ID associated with this event
+          nullable: true
+          type: integer
+        task:
+          description: Task this event is associated with
+          readOnly: true
+          type: integer
+      required:
+        - actor
+        - created_at
+        - event_key
+        - event_time
+        - id
+        - organization
+        - project
+        - task
+      type: object
+    TaskEventRequest:
+      description: |-
+        Serializer for TaskEvent model to handle event creation from frontend.
+
+        This serializer validates and processes task events sent from the labeling interface,
+        ensuring proper data format and automatically setting required relationships.
+      properties:
+        annotation:
+          description: Annotation ID associated with this event
+          nullable: true
+          type: integer
+        annotation_draft:
+          description: Draft annotation ID associated with this event
+          nullable: true
+          type: integer
+        event_key:
+          description: Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
+          maxLength: 255
+          minLength: 1
+          type: string
+        event_time:
+          description: Timestamp when the event occurred (frontend time)
+          format: date-time
+          type: string
+        meta:
+          description: Additional event metadata (region data, hotkey info, etc.)
+          nullable: true
+        review:
+          description: Review ID associated with this event
+          nullable: true
+          type: integer
+      required:
+        - event_key
+        - event_time
       type: object
     TaskSimple:
       properties:

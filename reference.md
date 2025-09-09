@@ -8747,6 +8747,178 @@ client.tasks.update(
 </dl>
 </details>
 
+<details><summary><code>client.tasks.<a href="src/label_studio_sdk/tasks/client.py">create_event</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+    Create a new task event to track user interactions and system events during annotation.
+    
+    This endpoint is designed to receive events from the frontend labeling interface to enable
+    accurate lead time calculation and detailed annotation analytics.
+    
+    ## Event Types
+    
+    **Core Annotation Events:**
+    - `annotation_loaded` - When annotation interface is loaded
+    - `annotation_submitted` - When annotation is submitted
+    - `annotation_updated` - When annotation is modified
+    - `annotation_reviewed` - When annotation is reviewed
+    
+    **User Activity Events:**
+    - `visibility_change` - When page visibility changes (tab switch, minimize)
+    - `idle_detected` - When user goes idle
+    - `idle_resumed` - When user returns from idle
+    
+    **Interaction Events:**
+    - `region_finished_drawing` - When annotation region is completed
+    - `region_deleted` - When annotation regions are removed
+    - `hotkey_pressed` - When keyboard shortcuts are used
+    
+    **Media Events:**
+    - `video_playback_start/end` - Video playback control
+    - `audio_playback_start/end` - Audio playback control
+    - `video_scrub` - Video timeline scrubbing
+    
+    ## Usage
+    
+    Events are automatically associated with the task specified in the URL path.
+    The current user is automatically set as the actor. Project and organization
+    are derived from the task context.
+    
+    ## Example Request
+    
+    ```json
+    {
+        "event_key": "annotation_loaded",
+        "event_time": "2024-01-15T10:30:00Z",
+        "annotation": 123,
+        "meta": {
+            "annotation_count": 5,
+            "estimated_time": 300
+        }
+    }
+    ```
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import datetime
+
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.tasks.create_event(
+    id=1,
+    event_key="event_key",
+    event_time=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — Task ID to associate the event with
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_key:** `str` — Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_time:** `dt.datetime` — Timestamp when the event occurred (frontend time)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation:** `typing.Optional[int]` — Annotation ID associated with this event
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation_draft:** `typing.Optional[int]` — Draft annotation ID associated with this event
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**review:** `typing.Optional[int]` — Review ID associated with this event
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ImportStorage
 <details><summary><code>client.import_storage.<a href="src/label_studio_sdk/import_storage/client.py">list_types</a>()</code></summary>
 <dl>

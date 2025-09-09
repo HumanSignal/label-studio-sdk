@@ -81,7 +81,6 @@ class AllRolesProjectList(UncheckedBaseModel):
     Honeypot annotation number in project
     """
 
-    has_blueprints: str
     id: int
     is_draft: typing.Optional[bool] = pydantic.Field(default=None)
     """

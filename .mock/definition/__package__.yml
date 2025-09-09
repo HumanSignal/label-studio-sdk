@@ -253,7 +253,6 @@ types:
       ground_truth_number:
         type: integer
         docs: Honeypot annotation number in project
-      has_blueprints: string
       id: integer
       is_draft:
         type: optional<boolean>
@@ -7081,6 +7080,47 @@ types:
 
           * `AN` - Annotate
           * `RE` - Review
+    source:
+      openapi: openapi/openapi.yaml
+  TaskEvent:
+    docs: >-
+      Serializer for TaskEvent model to handle event creation from frontend.
+
+
+      This serializer validates and processes task events sent from the labeling
+      interface,
+
+      ensuring proper data format and automatically setting required
+      relationships.
+    properties:
+      actor: integer
+      annotation:
+        type: optional<integer>
+        docs: Annotation ID associated with this event
+      annotation_draft:
+        type: optional<integer>
+        docs: Draft annotation ID associated with this event
+      created_at: datetime
+      event_key:
+        type: string
+        docs: >-
+          Event type identifier (e.g., "annotation_loaded",
+          "region_finished_drawing")
+        validation:
+          maxLength: 255
+      event_time:
+        type: datetime
+        docs: Timestamp when the event occurred (frontend time)
+      id: integer
+      meta: optional<unknown>
+      organization: integer
+      project: integer
+      review:
+        type: optional<integer>
+        docs: Review ID associated with this event
+      task:
+        type: integer
+        docs: Task this event is associated with
     source:
       openapi: openapi/openapi.yaml
   TaskSimple:
