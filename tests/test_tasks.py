@@ -4,6 +4,7 @@ from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
 import typing
 from .utilities import validate_response
+import datetime
 
 
 async def test_create_many_status(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
@@ -515,4 +516,44 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.tasks.update(id="id")
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_create_event(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "actor": 1,
+        "annotation": 1,
+        "annotation_draft": 1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "event_key": "event_key",
+        "event_time": "2024-01-15T09:30:00Z",
+        "id": 1,
+        "meta": {"key": "value"},
+        "organization": 1,
+        "project": 1,
+        "review": 1,
+        "task": 1,
+    }
+    expected_types: typing.Any = {
+        "actor": "integer",
+        "annotation": "integer",
+        "annotation_draft": "integer",
+        "created_at": "datetime",
+        "event_key": None,
+        "event_time": "datetime",
+        "id": "integer",
+        "meta": None,
+        "organization": "integer",
+        "project": "integer",
+        "review": "integer",
+        "task": "integer",
+    }
+    response = client.tasks.create_event(
+        id=1, event_key="event_key", event_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00")
+    )
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.tasks.create_event(
+        id=1, event_key="event_key", event_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00")
+    )
     validate_response(async_response, expected_response, expected_types)
