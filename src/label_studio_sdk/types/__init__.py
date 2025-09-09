@@ -21,6 +21,10 @@ from .associated_project import AssociatedProject
 from .auth_method_enum import AuthMethodEnum
 from .azure_blob_export_storage import AzureBlobExportStorage
 from .azure_blob_import_storage import AzureBlobImportStorage
+from .azure_service_principal_export_storage import AzureServicePrincipalExportStorage
+from .azure_service_principal_export_storage_request import AzureServicePrincipalExportStorageRequest
+from .azure_service_principal_import_storage import AzureServicePrincipalImportStorage
+from .azure_service_principal_import_storage_request import AzureServicePrincipalImportStorageRequest
 from .batch_failed_predictions import BatchFailedPredictions
 from .batch_predictions import BatchPredictions
 from .billing_checks import BillingChecks
@@ -46,6 +50,10 @@ from .filter_group import FilterGroup
 from .finished_enum import FinishedEnum
 from .gcs_export_storage import GcsExportStorage
 from .gcs_import_storage import GcsImportStorage
+from .gcswif_export_storage import GcswifExportStorage
+from .gcswif_export_storage_request import GcswifExportStorageRequest
+from .gcswif_import_storage import GcswifImportStorage
+from .gcswif_import_storage_request import GcswifImportStorageRequest
 from .hotkeys import Hotkeys
 from .import_api_request import ImportApiRequest
 from .inference_run_cost_estimate import InferenceRunCostEstimate
@@ -177,6 +185,7 @@ from .state_enum import StateEnum
 from .status7bf_enum import Status7BfEnum
 from .status_c5a_enum import StatusC5AEnum
 from .task_assignment import TaskAssignment
+from .task_event import TaskEvent
 from .third_party_model_version import ThirdPartyModelVersion
 from .third_party_model_version_request import ThirdPartyModelVersionRequest
 from .token_refresh_response import TokenRefreshResponse
@@ -217,6 +226,10 @@ __all__ = [
     "AuthMethodEnum",
     "AzureBlobExportStorage",
     "AzureBlobImportStorage",
+    "AzureServicePrincipalExportStorage",
+    "AzureServicePrincipalExportStorageRequest",
+    "AzureServicePrincipalImportStorage",
+    "AzureServicePrincipalImportStorageRequest",
     "BatchFailedPredictions",
     "BatchPredictions",
     "BillingChecks",
@@ -242,6 +255,10 @@ __all__ = [
     "FinishedEnum",
     "GcsExportStorage",
     "GcsImportStorage",
+    "GcswifExportStorage",
+    "GcswifExportStorageRequest",
+    "GcswifImportStorage",
+    "GcswifImportStorageRequest",
     "Hotkeys",
     "ImportApiRequest",
     "InferenceRunCostEstimate",
@@ -373,6 +390,7 @@ __all__ = [
     "Status7BfEnum",
     "StatusC5AEnum",
     "TaskAssignment",
+    "TaskEvent",
     "ThirdPartyModelVersion",
     "ThirdPartyModelVersionRequest",
     "TokenRefreshResponse",

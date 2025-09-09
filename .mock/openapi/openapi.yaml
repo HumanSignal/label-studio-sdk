@@ -10425,9 +10425,13 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
-          required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -10442,6 +10446,12 @@ paths:
       summary: Get Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: list
     post:
       description: Create Azure import storage with Service Principal authentication.
       operationId: api_storages_azure_spi_create
@@ -10469,6 +10479,12 @@ paths:
       summary: Create Azure import storage with SPI
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: create
   /api/storages/azure_spi/validate:
     post:
       description: Validate a specific Azure import storage connection that was set up with Service Principal authentication.
@@ -10486,17 +10502,19 @@ paths:
               $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AzureServicePrincipalImportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: validate
   /api/storages/azure_spi/{id}:
     delete:
       description: Delete a specific Azure import storage connection that was set up with Service Principal authentication.
@@ -10515,6 +10533,12 @@ paths:
       summary: Delete Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: delete
     get:
       description: Get a specific Azure import storage connection that was set up with Service Principal authentication.
       operationId: api_storages_azure_spi_retrieve
@@ -10536,6 +10560,12 @@ paths:
       summary: Get Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific Azure import storage connection that was set up with Service Principal authentication.
       operationId: api_storages_azure_spi_partial_update
@@ -10568,6 +10598,12 @@ paths:
       summary: Update Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: update
   /api/storages/azure_spi/{id}/sync:
     post:
       description: Sync tasks from an Azure import storage connection that was set up with Service Principal authentication.
@@ -10578,18 +10614,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -10602,6 +10626,12 @@ paths:
       summary: Sync Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: sync
   /api/storages/export:
     get:
       description: Retrieve a list of the export storages of all types with their IDs.
@@ -10925,9 +10955,13 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
-          required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -10942,6 +10976,12 @@ paths:
       summary: Get all Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: list
     post:
       description: Create an Azure export storage connection with Service Principal authentication to store annotations.
       operationId: api_storages_export_azure_spi_create
@@ -10969,6 +11009,12 @@ paths:
       summary: Create Azure export storage with SPI authentication
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: create
   /api/storages/export/azure_spi/validate:
     post:
       description: Validate a specific Azure export storage connection that was set up with Service Principal authentication.
@@ -10986,17 +11032,19 @@ paths:
               $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AzureServicePrincipalExportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: validate
   /api/storages/export/azure_spi/{id}:
     delete:
       description: Delete a specific Azure export storage connection that was set up with Service Principal authentication.
@@ -11015,6 +11063,12 @@ paths:
       summary: Delete Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: delete
     get:
       description: Get a specific Azure export storage connection that was set up with Service Principal authentication.
       operationId: api_storages_export_azure_spi_retrieve
@@ -11036,6 +11090,12 @@ paths:
       summary: Get Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific Azure export storage connection that was set up with Service Principal authentication.
       operationId: api_storages_export_azure_spi_partial_update
@@ -11068,6 +11128,12 @@ paths:
       summary: Update Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: update
   /api/storages/export/azure_spi/{id}/sync:
     post:
       description: Sync tasks from an Azure SPI export storage.
@@ -11078,18 +11144,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -11102,6 +11156,12 @@ paths:
       summary: Sync Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: sync
   /api/storages/export/gcs:
     get:
       description: Get a list of all GCS export storage connections.
@@ -11393,9 +11453,13 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
-          required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -11410,6 +11474,12 @@ paths:
       summary: Get all GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: list
     post:
       description: Create an GCS export storage connection with WIF authentication to store annotations.
       operationId: api_storages_export_gcswif_create
@@ -11437,6 +11507,12 @@ paths:
       summary: Create GCS export storage with WIF authentication
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: create
   /api/storages/export/gcswif/validate:
     post:
       description: Validate a specific GCS export storage connection that was set up with WIF authentication.
@@ -11454,17 +11530,19 @@ paths:
               $ref: '#/components/schemas/GCSWIFExportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GCSWIFExportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: validate
   /api/storages/export/gcswif/{id}:
     delete:
       description: Delete a specific GCS export storage connection that was set up with WIF authentication.
@@ -11483,6 +11561,12 @@ paths:
       summary: Delete GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: delete
     get:
       description: Get a specific GCS export storage connection that was set up with WIF authentication.
       operationId: api_storages_export_gcswif_retrieve
@@ -11504,6 +11588,12 @@ paths:
       summary: Get GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific GCS export storage connection that was set up with WIF authentication.
       operationId: api_storages_export_gcswif_partial_update
@@ -11536,6 +11626,12 @@ paths:
       summary: Update GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: update
   /api/storages/export/gcswif/{id}/sync:
     post:
       description: Sync tasks from an GCS WIF export storage.
@@ -11546,18 +11642,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GCSWIFExportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GCSWIFExportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GCSWIFExportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -11570,6 +11654,12 @@ paths:
       summary: Sync GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: sync
   /api/storages/export/localfiles:
     get:
       description: Get a list of all local file export storage connections.
@@ -13014,9 +13104,13 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
-          required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -13031,6 +13125,12 @@ paths:
       summary: Get GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: list
     post:
       description: Create GCS import storage with WIF.
       operationId: api_storages_gcswif_create
@@ -13058,6 +13158,12 @@ paths:
       summary: Create GCS import storage with WIF
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: create
   /api/storages/gcswif/validate:
     post:
       description: Validate a specific GCS import storage connection that was set up with WIF authentication.
@@ -13075,17 +13181,19 @@ paths:
               $ref: '#/components/schemas/GCSWIFImportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GCSWIFImportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: validate
   /api/storages/gcswif/{id}:
     delete:
       description: Delete a specific GCS import storage connection that was set up with WIF authentication.
@@ -13104,6 +13212,12 @@ paths:
       summary: Delete GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: delete
     get:
       description: Get a specific GCS import storage connection that was set up with WIF.
       operationId: api_storages_gcswif_retrieve
@@ -13125,6 +13239,12 @@ paths:
       summary: Get GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific GCS import storage connection that was set up with WIF authentication.
       operationId: api_storages_gcswif_partial_update
@@ -13157,6 +13277,12 @@ paths:
       summary: Update GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: update
   /api/storages/gcswif/{id}/sync:
     post:
       description: Sync tasks from an GCS import storage connection that was set up with WIF authentication.
@@ -13167,18 +13293,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GCSWIFImportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GCSWIFImportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GCSWIFImportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -13191,6 +13305,12 @@ paths:
       summary: Sync GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: sync
   /api/storages/localfiles/:
     get:
       description: Get a list of all local file import storage connections.
@@ -14760,6 +14880,53 @@ paths:
         - public
       x-fern-sdk-group-name: annotations
       x-fern-sdk-method-name: create
+  /api/tasks/{id}/events/:
+    post:
+      description: "\n    Create a new task event to track user interactions and system events during annotation.\n    \n    This endpoint is designed to receive events from the frontend labeling interface to enable\n    accurate lead time calculation and detailed annotation analytics.\n    \n    ## Event Types\n    \n    **Core Annotation Events:**\n    - `annotation_loaded` - When annotation interface is loaded\n    - `annotation_submitted` - When annotation is submitted\n    - `annotation_updated` - When annotation is modified\n    - `annotation_reviewed` - When annotation is reviewed\n    \n    **User Activity Events:**\n    - `visibility_change` - When page visibility changes (tab switch, minimize)\n    - `idle_detected` - When user goes idle\n    - `idle_resumed` - When user returns from idle\n    \n    **Interaction Events:**\n    - `region_finished_drawing` - When annotation region is completed\n    - `region_deleted` - When annotation regions are removed\n    - `hotkey_pressed` - When keyboard shortcuts are used\n    \n    **Media Events:**\n    - `video_playback_start/end` - Video playback control\n    - `audio_playback_start/end` - Audio playback control\n    - `video_scrub` - Video timeline scrubbing\n    \n    ## Usage\n    \n    Events are automatically associated with the task specified in the URL path.\n    The current user is automatically set as the actor. Project and organization\n    are derived from the task context.\n    \n    ## Example Request\n    \n    ```json\n    {\n        \"event_key\": \"annotation_loaded\",\n        \"event_time\": \"2024-01-15T10:30:00Z\",\n        \"annotation\": 123,\n        \"meta\": {\n            \"annotation_count\": 5,\n            \"estimated_time\": 300\n        }\n    }\n    ```\n    "
+      operationId: api_tasks_events_create
+      parameters:
+        - description: Task ID to associate the event with
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskEventRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TaskEventRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TaskEventRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskEvent'
+          description: ''
+        '400':
+          description: Bad request - validation errors
+        '401':
+          description: Unauthorized - authentication required
+        '403':
+          description: Forbidden - insufficient permissions
+        '404':
+          description: Not found - task does not exist
+      security:
+        - Token: []
+      summary: Create task event
+      tags:
+        - Task Events
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: tasks
+      x-fern-sdk-method-name: create_event
   /api/token/:
     get:
       description: List all API tokens for the current user.
@@ -27626,6 +27793,101 @@ components:
         - created_at
         - id
         - task
+      type: object
+    TaskEvent:
+      description: |-
+        Serializer for TaskEvent model to handle event creation from frontend.
+
+        This serializer validates and processes task events sent from the labeling interface,
+        ensuring proper data format and automatically setting required relationships.
+      properties:
+        actor:
+          readOnly: true
+          type: integer
+        annotation:
+          description: Annotation ID associated with this event
+          nullable: true
+          type: integer
+        annotation_draft:
+          description: Draft annotation ID associated with this event
+          nullable: true
+          type: integer
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        event_key:
+          description: Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
+          maxLength: 255
+          type: string
+        event_time:
+          description: Timestamp when the event occurred (frontend time)
+          format: date-time
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        meta:
+          description: Additional event metadata (region data, hotkey info, etc.)
+          nullable: true
+        organization:
+          readOnly: true
+          type: integer
+        project:
+          readOnly: true
+          type: integer
+        review:
+          description: Review ID associated with this event
+          nullable: true
+          type: integer
+        task:
+          description: Task this event is associated with
+          readOnly: true
+          type: integer
+      required:
+        - actor
+        - created_at
+        - event_key
+        - event_time
+        - id
+        - organization
+        - project
+        - task
+      type: object
+    TaskEventRequest:
+      description: |-
+        Serializer for TaskEvent model to handle event creation from frontend.
+
+        This serializer validates and processes task events sent from the labeling interface,
+        ensuring proper data format and automatically setting required relationships.
+      properties:
+        annotation:
+          description: Annotation ID associated with this event
+          nullable: true
+          type: integer
+        annotation_draft:
+          description: Draft annotation ID associated with this event
+          nullable: true
+          type: integer
+        event_key:
+          description: Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
+          maxLength: 255
+          minLength: 1
+          type: string
+        event_time:
+          description: Timestamp when the event occurred (frontend time)
+          format: date-time
+          type: string
+        meta:
+          description: Additional event metadata (region data, hotkey info, etc.)
+          nullable: true
+        review:
+          description: Review ID associated with this event
+          nullable: true
+          type: integer
+      required:
+        - event_key
+        - event_time
       type: object
     TaskSimple:
       properties:
