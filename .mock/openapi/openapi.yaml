@@ -913,14 +913,6 @@ paths:
             type: string
       responses:
         '302':
-          content:
-            application/json:
-              schema:
-                properties:
-                  redirect_url:
-                    description: URL to redirect to the new project
-                    type: string
-                type: object
           description: Redirect to new project
         '404':
           description: Blueprint not found
