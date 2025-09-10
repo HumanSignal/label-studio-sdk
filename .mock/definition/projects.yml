@@ -199,7 +199,6 @@ service:
                   expert_instruction: expert_instruction
                   finished_task_number: 1
                   ground_truth_number: 1
-                  has_blueprints: has_blueprints
                   id: 1
                   is_draft: true
                   is_published: true
