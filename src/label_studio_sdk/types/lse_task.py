@@ -15,6 +15,7 @@ class LseTask(UncheckedBaseModel):
     """
 
     agreement: str
+    agreement_filtered: str
     annotations: str
     annotations_ids: str
     annotations_results: str

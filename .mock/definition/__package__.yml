@@ -384,6 +384,11 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   Annotation:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
     properties:
       bulk_created:
         type: optional<boolean>
@@ -559,6 +564,11 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   AnnotationRequest:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
     properties:
       bulk_created:
         type: optional<boolean>
@@ -4270,6 +4280,7 @@ types:
     docs: Task Serializer with project scheme configs validation
     properties:
       agreement: string
+      agreement_filtered: string
       annotations: string
       annotations_ids: string
       annotations_results: string
@@ -4716,6 +4727,7 @@ types:
     docs: Task Serializer with project scheme configs validation
     properties:
       agreement: string
+      agreement_filtered: string
       annotations: string
       annotations_ids: string
       annotations_results: string

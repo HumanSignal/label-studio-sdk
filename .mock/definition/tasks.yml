@@ -170,6 +170,7 @@ service:
             body:
               tasks:
                 - agreement: agreement
+                  agreement_filtered: agreement_filtered
                   annotations: annotations
                   annotations_ids: annotations_ids
                   annotations_results: annotations_results
@@ -329,6 +330,7 @@ service:
           response:
             body:
               agreement: agreement
+              agreement_filtered: agreement_filtered
               annotations: annotations
               annotations_ids: annotations_ids
               annotations_results: annotations_results
@@ -482,6 +484,7 @@ service:
           response:
             body:
               agreement: agreement
+              agreement_filtered: agreement_filtered
               annotations: annotations
               annotations_ids: annotations_ids
               annotations_results: annotations_results
