@@ -170,6 +170,7 @@ service:
             body:
               tasks:
                 - agreement: agreement
+                  agreement_filtered: agreement_filtered
                   annotations: annotations
                   annotations_ids: annotations_ids
                   annotations_results: annotations_results
@@ -329,6 +330,7 @@ service:
           response:
             body:
               agreement: agreement
+              agreement_filtered: agreement_filtered
               annotations: annotations
               annotations_ids: annotations_ids
               annotations_results: annotations_results
@@ -482,6 +484,7 @@ service:
           response:
             body:
               agreement: agreement
+              agreement_filtered: agreement_filtered
               annotations: annotations
               annotations_ids: annotations_ids
               annotations_results: annotations_results
@@ -544,6 +547,124 @@ service:
               updated_at: '2024-01-15T09:30:00Z'
               updated_by:
                 - key: value
+      audiences:
+        - public
+    create_event:
+      path: /api/tasks/{id}/events/
+      method: POST
+      auth: true
+      docs: |2-
+
+            Create a new task event to track user interactions and system events during annotation.
+            
+            This endpoint is designed to receive events from the frontend labeling interface to enable
+            accurate lead time calculation and detailed annotation analytics.
+            
+            ## Event Types
+            
+            **Core Annotation Events:**
+            - `annotation_loaded` - When annotation interface is loaded
+            - `annotation_submitted` - When annotation is submitted
+            - `annotation_updated` - When annotation is modified
+            - `annotation_reviewed` - When annotation is reviewed
+            
+            **User Activity Events:**
+            - `visibility_change` - When page visibility changes (tab switch, minimize)
+            - `idle_detected` - When user goes idle
+            - `idle_resumed` - When user returns from idle
+            
+            **Interaction Events:**
+            - `region_finished_drawing` - When annotation region is completed
+            - `region_deleted` - When annotation regions are removed
+            - `hotkey_pressed` - When keyboard shortcuts are used
+            
+            **Media Events:**
+            - `video_playback_start/end` - Video playback control
+            - `audio_playback_start/end` - Audio playback control
+            - `video_scrub` - Video timeline scrubbing
+            
+            ## Usage
+            
+            Events are automatically associated with the task specified in the URL path.
+            The current user is automatically set as the actor. Project and organization
+            are derived from the task context.
+            
+            ## Example Request
+            
+            ```json
+            {
+                "event_key": "annotation_loaded",
+                "event_time": "2024-01-15T10:30:00Z",
+                "annotation": 123,
+                "meta": {
+                    "annotation_count": 5,
+                    "estimated_time": 300
+                }
+            }
+            ```
+            
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: Task ID to associate the event with
+      display-name: Create task event
+      request:
+        name: TaskEventRequest
+        body:
+          properties:
+            annotation:
+              type: optional<integer>
+              docs: Annotation ID associated with this event
+            annotation_draft:
+              type: optional<integer>
+              docs: Draft annotation ID associated with this event
+            event_key:
+              type: string
+              docs: >-
+                Event type identifier (e.g., "annotation_loaded",
+                "region_finished_drawing")
+              validation:
+                minLength: 1
+                maxLength: 255
+            event_time:
+              type: datetime
+              docs: Timestamp when the event occurred (frontend time)
+            meta: optional<unknown>
+            review:
+              type: optional<integer>
+              docs: Review ID associated with this event
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.TaskEvent
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            event_key: event_key
+            event_time: '2024-01-15T09:30:00Z'
+          response:
+            body:
+              actor: 1
+              annotation: 1
+              annotation_draft: 1
+              created_at: '2024-01-15T09:30:00Z'
+              event_key: event_key
+              event_time: '2024-01-15T09:30:00Z'
+              id: 1
+              meta:
+                key: value
+              organization: 1
+              project: 1
+              review: 1
+              task: 1
       audiences:
         - public
   source:

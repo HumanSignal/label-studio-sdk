@@ -9,6 +9,13 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Annotation(UncheckedBaseModel):
+    """
+    A ModelSerializer that takes additional arguments for
+    "fields", "omit" and "expand" in order to
+    control which fields are displayed, and whether to replace simple
+    values with complex, nested serializations
+    """
+
     bulk_created: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Annotation was created in bulk mode

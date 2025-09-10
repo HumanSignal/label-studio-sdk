@@ -69,6 +69,11 @@ class ReviewSettings(UncheckedBaseModel):
     Show instructions to the reviewers before they start
     """
 
+    show_unused_data_columns_to_reviewers: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

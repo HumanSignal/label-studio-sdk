@@ -253,7 +253,6 @@ types:
       ground_truth_number:
         type: integer
         docs: Honeypot annotation number in project
-      has_blueprints: string
       id: integer
       is_draft:
         type: optional<boolean>
@@ -331,6 +330,7 @@ types:
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
+      show_unused_data_columns_to_annotators: optional<boolean>
       skip_queue: optional<AllRolesProjectListSkipQueue>
       skipped_annotations_number: string
       start_training_on_annotation_update:
@@ -384,6 +384,11 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   Annotation:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
     properties:
       bulk_created:
         type: optional<boolean>
@@ -559,6 +564,11 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   AnnotationRequest:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
     properties:
       bulk_created:
         type: optional<boolean>
@@ -3451,6 +3461,7 @@ types:
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
+      show_unused_data_columns_to_annotators: optional<boolean>
       skip_queue: optional<LseProjectSkipQueue>
       skipped_annotations_number:
         type: integer
@@ -3839,6 +3850,7 @@ types:
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
+      show_unused_data_columns_to_annotators: optional<boolean>
       skip_queue: optional<LseProjectUpdateSkipQueue>
       skipped_annotations_number:
         type: integer
@@ -4268,6 +4280,7 @@ types:
     docs: Task Serializer with project scheme configs validation
     properties:
       agreement: string
+      agreement_filtered: string
       annotations: string
       annotations_ids: string
       annotations_results: string
@@ -4714,6 +4727,7 @@ types:
     docs: Task Serializer with project scheme configs validation
     properties:
       agreement: string
+      agreement_filtered: string
       annotations: string
       annotations_ids: string
       annotations_results: string
@@ -6016,6 +6030,7 @@ types:
         type: optional<boolean>
         docs: flag to require comment on skip
       review_settings: optional<unknown>
+      show_unused_data_columns_to_annotators: optional<boolean>
       tags: optional<unknown>
       updated_at: datetime
     source:
@@ -6044,6 +6059,7 @@ types:
         type: optional<boolean>
         docs: flag to require comment on skip
       review_settings: optional<unknown>
+      show_unused_data_columns_to_annotators: optional<boolean>
       tags: optional<unknown>
     source:
       openapi: openapi/openapi.yaml
@@ -6369,6 +6385,11 @@ types:
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the reviewers before they start
+      show_unused_data_columns_to_reviewers:
+        type: optional<boolean>
+        docs: >-
+          If true, Data Manager shows all task.data columns to reviewers; if
+          false, hides columns not referenced by the label interface
     source:
       openapi: openapi/openapi.yaml
   ReviewSettingsRequestRequeueRejectedTasksMode:
@@ -6441,6 +6462,11 @@ types:
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the reviewers before they start
+      show_unused_data_columns_to_reviewers:
+        type: optional<boolean>
+        docs: >-
+          If true, Data Manager shows all task.data columns to reviewers; if
+          false, hides columns not referenced by the label interface
     source:
       openapi: openapi/openapi.yaml
   ReviewedEnum:
@@ -7057,6 +7083,47 @@ types:
 
           * `AN` - Annotate
           * `RE` - Review
+    source:
+      openapi: openapi/openapi.yaml
+  TaskEvent:
+    docs: >-
+      Serializer for TaskEvent model to handle event creation from frontend.
+
+
+      This serializer validates and processes task events sent from the labeling
+      interface,
+
+      ensuring proper data format and automatically setting required
+      relationships.
+    properties:
+      actor: integer
+      annotation:
+        type: optional<integer>
+        docs: Annotation ID associated with this event
+      annotation_draft:
+        type: optional<integer>
+        docs: Draft annotation ID associated with this event
+      created_at: datetime
+      event_key:
+        type: string
+        docs: >-
+          Event type identifier (e.g., "annotation_loaded",
+          "region_finished_drawing")
+        validation:
+          maxLength: 255
+      event_time:
+        type: datetime
+        docs: Timestamp when the event occurred (frontend time)
+      id: integer
+      meta: optional<unknown>
+      organization: integer
+      project: integer
+      review:
+        type: optional<integer>
+        docs: Review ID associated with this event
+      task:
+        type: integer
+        docs: Task this event is associated with
     source:
       openapi: openapi/openapi.yaml
   TaskSimple:

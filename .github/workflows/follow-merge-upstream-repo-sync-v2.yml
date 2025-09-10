@@ -37,7 +37,7 @@ jobs:
             > [Workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
       - name: Checkout Actions Hub
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GIT_PAT }}
           repository: HumanSignal/actions-hub
@@ -77,7 +77,7 @@ jobs:
 
       - name: Checkout label-studio-client-generator
         if: fromJSON(steps.upstream-prs.outputs.shas).label-studio-client-generator
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GIT_PAT }}
           repository: HumanSignal/label-studio-client-generator
@@ -85,14 +85,14 @@ jobs:
           fetch-depth: 0
 
       - name: Checkout Actions Hub
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GIT_PAT }}
           repository: HumanSignal/actions-hub
           path: ./.github/actions-hub
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
 
       - name: Install Fern
         run: npm install -g fern-api@latest
