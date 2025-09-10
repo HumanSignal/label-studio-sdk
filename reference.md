@@ -140,6 +140,730 @@ client.activity_logs.list()
 </dl>
 </details>
 
+## AnnotationHistory
+<details><summary><code>client.annotation_history.<a href="src/label_studio_sdk/annotation_history/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List annotation history items for an annotation. Annotation history logs all actions performed with annotations, such as: imports, submits, updates, reviews, and more. Users can view annotation history items in the Annotation History panel during labeling.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.annotation_history.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**annotation:** `typing.Optional[int]` — Annotation ID to get annotation history items for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.annotation_history.<a href="src/label_studio_sdk/annotation_history/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete all annotation history items for a specific annotation, task or project. This method is available only for users with administrator roles.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.annotation_history.delete()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**annotation:** `typing.Optional[int]` — Annotation ID to delete annotation history items for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project:** `typing.Optional[int]` — Project ID to delete annotation history items for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task:** `typing.Optional[int]` — Task ID to delete annotation history items for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.annotation_history.<a href="src/label_studio_sdk/annotation_history/client.py">list_for_project</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all annotation history items for the project with pagination.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.annotation_history.list_for_project(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — A page number within the paginated result set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## AnnotationReviews
+<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List all reviews for a specific annotation ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.annotation_reviews.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**annotation:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation_task_project:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a review for a specific annotation ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.annotation_reviews.create(
+    annotation=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**annotation:** `int` — Corresponding annotation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**async_postprocess:** `typing.Optional[bool]` — Whether to postprocess the review asynchronously.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**accepted:** `typing.Optional[bool]` — Accepted or rejected (if false) flag
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_annotation_history:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_from_queue:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**result:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**started_at:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific review by ID for an annotation.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.annotation_reviews.get(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this annotation review.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a review by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.annotation_reviews.delete(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this annotation review.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.annotation_reviews.<a href="src/label_studio_sdk/annotation_reviews/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a specific review by ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.annotation_reviews.update(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` — A unique integer value identifying this annotation review.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**accepted:** `typing.Optional[bool]` — Accepted or rejected (if false) flag
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**annotation:** `typing.Optional[int]` — Corresponding annotation
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_annotation_history:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_from_queue:** `typing.Optional[bool]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**result:** `typing.Optional[typing.Optional[typing.Any]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**started_at:** `typing.Optional[dt.datetime]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Annotations
 <details><summary><code>client.annotations.<a href="src/label_studio_sdk/annotations/client.py">create_bulk</a>(...)</code></summary>
 <dl>
@@ -944,6 +1668,179 @@ client.billing.info()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Blueprints
+<details><summary><code>client.blueprints.<a href="src/label_studio_sdk/blueprints/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new blueprint
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.blueprints.create(
+    project=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**created_by:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Project description
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**label_config:** `typing.Optional[str]` — Labeling configuration in XML format
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` — Blueprint name. Must be between 3 and 50 characters long.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.blueprints.<a href="src/label_studio_sdk/blueprints/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a blueprint by ID
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.blueprints.delete(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -11018,967 +11915,6 @@ client.export_storage.azure.sync(
 </dl>
 </details>
 
-## ExportStorage AzureSpi
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a list of all Azure export storage connections that were set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure_spi.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create an Azure export storage connection with Service Principal authentication to store annotations.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure_spi.create(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">validate</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific Azure export storage connection that was set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure_spi.validate(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a specific Azure export storage connection that was set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure_spi.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a specific Azure export storage connection that was set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure_spi.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a specific Azure export storage connection that was set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure_spi.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.azure_spi.<a href="src/label_studio_sdk/export_storage/azure_spi/client.py">sync</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Sync tasks from an Azure SPI export storage.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.azure_spi.sync(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## ExportStorage Gcs
 <details><summary><code>client.export_storage.gcs.<a href="src/label_studio_sdk/export_storage/gcs/client.py">list</a>(...)</code></summary>
 <dl>
@@ -12619,991 +12555,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.export_storage.gcs.sync(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ExportStorage Gcswif
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a list of all GCS export storage connections that were set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcswif.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create an GCS export storage connection with WIF authentication to store annotations.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcswif.create(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">validate</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific GCS export storage connection that was set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcswif.validate(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a specific GCS export storage connection that was set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcswif.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a specific GCS export storage connection that was set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcswif.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a specific GCS export storage connection that was set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcswif.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**can_delete_objects:** `typing.Optional[bool]` — Deletion from storage enabled
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.export_storage.gcswif.<a href="src/label_studio_sdk/export_storage/gcswif/client.py">sync</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Sync tasks from an GCS WIF export storage.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.export_storage.gcswif.sync(
     id=1,
 )
 
@@ -17552,991 +16503,6 @@ client.import_storage.azure.sync(
 </dl>
 </details>
 
-## ImportStorage AzureSpi
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get list of all Azure import storage connections set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure_spi.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create Azure import storage with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure_spi.create(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">validate</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific Azure import storage connection that was set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure_spi.validate(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a specific Azure import storage connection that was set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure_spi.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a specific Azure import storage connection that was set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure_spi.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a specific Azure import storage connection that was set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure_spi.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**account_name:** `typing.Optional[str]` — Azure Blob account name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[str]` — Azure Blob Service Principal Client ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `typing.Optional[str]` — Azure Blob Service Principal Client Secret
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container:** `typing.Optional[str]` — Azure blob container
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — Azure blob prefix name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tenant_id:** `typing.Optional[str]` — Azure Tenant ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_delegation_key:** `typing.Optional[str]` — User Delegation Key (Backend)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.azure_spi.<a href="src/label_studio_sdk/import_storage/azure_spi/client.py">sync</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Sync tasks from an Azure import storage connection that was set up with Service Principal authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.azure_spi.sync(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## ImportStorage Gcs
 <details><summary><code>client.import_storage.gcs.<a href="src/label_studio_sdk/import_storage/gcs/client.py">list</a>(...)</code></summary>
 <dl>
@@ -19267,1015 +17233,6 @@ client.import_storage.gcs.sync(
 <dd>
 
 **id:** `int` — Storage ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## ImportStorage Gcswif
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get list of all GCS import storage connections set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcswif.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — Project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create GCS import storage with WIF.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcswif.create(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">validate</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Validate a specific GCS import storage connection that was set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcswif.validate(
-    project=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**project:** `int` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Get a specific GCS import storage connection that was set up with WIF.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcswif.get(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete a specific GCS import storage connection that was set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcswif.delete(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">update</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Update a specific GCS import storage connection that was set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcswif.update(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bucket:** `typing.Optional[str]` — GCS bucket name
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` — Cloud storage description
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_application_credentials:** `typing.Optional[str]` — The content of GOOGLE_APPLICATION_CREDENTIALS json file
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_id:** `typing.Optional[str]` — Google project ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_project_number:** `typing.Optional[str]` — Google project number
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_service_account_email:** `typing.Optional[str]` — Google service account email
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_pool_id:** `typing.Optional[str]` — Google WIF pool ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**google_wif_provider_id:** `typing.Optional[str]` — Google WIF provider ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync:** `typing.Optional[dt.datetime]` — Last sync finished time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_count:** `typing.Optional[int]` — Count of tasks synced last time
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_sync_job:** `typing.Optional[str]` — Last sync job ID
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**meta:** `typing.Optional[typing.Optional[typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prefix:** `typing.Optional[str]` — GCS bucket prefix
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**project:** `typing.Optional[int]` — A unique integer value identifying this project.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[StatusC5AEnum]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**synchronizable:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**title:** `typing.Optional[str]` — Cloud storage title
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**traceback:** `typing.Optional[str]` — Traceback report for the last failed sync
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**use_blob_urls:** `typing.Optional[bool]` — Interpret objects as BLOBs and generate URLs
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.import_storage.gcswif.<a href="src/label_studio_sdk/import_storage/gcswif/client.py">sync</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Sync tasks from an GCS import storage connection that was set up with WIF authentication.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from label_studio_sdk import LabelStudio
-
-client = LabelStudio(
-    api_key="YOUR_API_KEY",
-)
-client.import_storage.gcswif.sync(
-    id=1,
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `int` 
     
 </dd>
 </dl>
