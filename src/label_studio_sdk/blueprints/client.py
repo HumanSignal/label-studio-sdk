@@ -8,7 +8,6 @@ from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.jsonable_encoder import jsonable_encoder
-from ..errors.not_found_error import NotFoundError
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -130,58 +129,6 @@ class BlueprintsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def create_project_from_blueprint(
-        self, share_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Create a new project from an existing blueprint. On success, user is redirected to the new project with a 302.
-
-        Parameters
-        ----------
-        share_id : str
-            Blueprint share ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.blueprints.create_project_from_blueprint(
-            share_id="share_id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/blueprints/{jsonable_encoder(share_id)}/create-project",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        construct_type(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -319,66 +266,6 @@ class AsyncBlueprintsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def create_project_from_blueprint(
-        self, share_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Create a new project from an existing blueprint. On success, user is redirected to the new project with a 302.
-
-        Parameters
-        ----------
-        share_id : str
-            Blueprint share ID
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.blueprints.create_project_from_blueprint(
-                share_id="share_id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/blueprints/{jsonable_encoder(share_id)}/create-project",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        typing.Optional[typing.Any],
-                        construct_type(
-                            type_=typing.Optional[typing.Any],  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

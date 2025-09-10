@@ -923,9 +923,7 @@ paths:
       tags:
         - Blueprints
       x-fern-audiences:
-        - public
-      x-fern-sdk-group-name: blueprints
-      x-fern-sdk-method-name: create_project_from_blueprint
+        - internal
   /api/comments/:
     get:
       description: List all comments for a specific annotation ID.

@@ -49,16 +49,3 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         await async_client.blueprints.delete(id="id")  # type: ignore[func-returns-value]
         is None
     )
-
-
-async def test_create_project_from_blueprint(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.blueprints.create_project_from_blueprint(share_id="share_id")  # type: ignore[func-returns-value]
-        is None
-    )
-
-    assert (
-        await async_client.blueprints.create_project_from_blueprint(share_id="share_id")  # type: ignore[func-returns-value]
-        is None
-    )
