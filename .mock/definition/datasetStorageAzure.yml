@@ -52,6 +52,8 @@ service:
                 traceback: traceback
                 type: type
                 use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_azure_create:
       path: /api/dataset-storages/azure/
       method: POST
@@ -96,6 +98,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_azure_check_for_records_create:
       path: /api/dataset-storages/azure/check-for-records/
       method: POST
@@ -142,6 +146,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_azure_validate_create:
       path: /api/dataset-storages/azure/validate/
       method: POST
@@ -186,6 +192,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_azure_retrieve:
       path: /api/dataset-storages/azure/{id}/
       method: GET
@@ -229,6 +237,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_azure_destroy:
       path: /api/dataset-storages/azure/{id}/
       method: DELETE
@@ -242,6 +252,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - internal
     api_dataset_storages_azure_partial_update:
       path: /api/dataset-storages/azure/{id}/
       method: PATCH
@@ -357,6 +369,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_azure_columns_retrieve:
       path: /api/dataset-storages/azure/{id}/columns/
       method: GET
@@ -370,6 +384,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - internal
     api_dataset_storages_azure_sync_create:
       path: /api/dataset-storages/azure/{id}/sync/
       method: POST
@@ -418,5 +434,7 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
   source:
     openapi: openapi/openapi.yaml
