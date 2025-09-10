@@ -7550,6 +7550,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Search term for filtering members by name, email, or username. Only when all=True.
+          in: query
+          name: search
+          schema:
+            type: string
       responses:
         '200':
           content:
@@ -7581,6 +7586,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Search term for filtering members by name, email, or username. Only when all=True.
+          in: query
+          name: search
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -26385,8 +26395,23 @@ components:
             minimum: 1
             type: integer
           type: array
+        roles:
+          items:
+            $ref: '#/components/schemas/ProjectMemberBulkAssignRolesRequest'
+          type: array
       required:
         - all
+      type: object
+    ProjectMemberBulkAssignRolesRequest:
+      properties:
+        role:
+          $ref: '#/components/schemas/Role9e7Enum'
+        user_id:
+          minimum: 1
+          type: integer
+      required:
+        - role
+        - user_id
       type: object
     ProjectMemberRequest:
       properties:
