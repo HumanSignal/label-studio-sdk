@@ -7,8 +7,11 @@ import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import SyncClientWrapper
 from .activity_logs.client import ActivityLogsClient
+from .annotation_history.client import AnnotationHistoryClient
+from .annotation_reviews.client import AnnotationReviewsClient
 from .annotations.client import AnnotationsClient
 from .billing.client import BillingClient
+from .blueprints.client import BlueprintsClient
 from .comments.client import CommentsClient
 from .users.client import UsersClient
 from .actions.client import ActionsClient
@@ -31,8 +34,11 @@ from .workspaces.client import WorkspacesClient
 from .sso.client import SsoClient
 from .core.client_wrapper import AsyncClientWrapper
 from .activity_logs.client import AsyncActivityLogsClient
+from .annotation_history.client import AsyncAnnotationHistoryClient
+from .annotation_reviews.client import AsyncAnnotationReviewsClient
 from .annotations.client import AsyncAnnotationsClient
 from .billing.client import AsyncBillingClient
+from .blueprints.client import AsyncBlueprintsClient
 from .comments.client import AsyncCommentsClient
 from .users.client import AsyncUsersClient
 from .actions.client import AsyncActionsClient
@@ -118,8 +124,11 @@ class LabelStudioBase:
             timeout=_defaulted_timeout,
         )
         self.activity_logs = ActivityLogsClient(client_wrapper=self._client_wrapper)
+        self.annotation_history = AnnotationHistoryClient(client_wrapper=self._client_wrapper)
+        self.annotation_reviews = AnnotationReviewsClient(client_wrapper=self._client_wrapper)
         self.annotations = AnnotationsClient(client_wrapper=self._client_wrapper)
         self.billing = BillingClient(client_wrapper=self._client_wrapper)
+        self.blueprints = BlueprintsClient(client_wrapper=self._client_wrapper)
         self.comments = CommentsClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
         self.actions = ActionsClient(client_wrapper=self._client_wrapper)
@@ -205,8 +214,11 @@ class AsyncLabelStudioBase:
             timeout=_defaulted_timeout,
         )
         self.activity_logs = AsyncActivityLogsClient(client_wrapper=self._client_wrapper)
+        self.annotation_history = AsyncAnnotationHistoryClient(client_wrapper=self._client_wrapper)
+        self.annotation_reviews = AsyncAnnotationReviewsClient(client_wrapper=self._client_wrapper)
         self.annotations = AsyncAnnotationsClient(client_wrapper=self._client_wrapper)
         self.billing = AsyncBillingClient(client_wrapper=self._client_wrapper)
+        self.blueprints = AsyncBlueprintsClient(client_wrapper=self._client_wrapper)
         self.comments = AsyncCommentsClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
         self.actions = AsyncActionsClient(client_wrapper=self._client_wrapper)

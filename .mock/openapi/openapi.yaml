@@ -94,6 +94,22 @@ paths:
     delete:
       description: Delete all annotation history items for a specific annotation, task or project. This method is available only for users with administrator roles.
       operationId: api_annotation_history_destroy
+      parameters:
+        - description: Annotation ID to delete annotation history items for.
+          in: query
+          name: annotation
+          schema:
+            type: integer
+        - description: Project ID to delete annotation history items for.
+          in: query
+          name: project
+          schema:
+            type: integer
+        - description: Task ID to delete annotation history items for.
+          in: query
+          name: task
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -110,10 +126,19 @@ paths:
       summary: Delete annotation history items
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: delete
     get:
       description: 'List annotation history items for an annotation. Annotation history logs all actions performed with annotations, such as: imports, submits, updates, reviews, and more. Users can view annotation history items in the Annotation History panel during labeling.'
       operationId: api_annotation_history_list
       parameters:
+        - description: Annotation ID to get annotation history items for.
+          in: query
+          name: annotation
+          schema:
+            type: integer
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -134,6 +159,10 @@ paths:
       summary: List all annotation history items for annotation
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: list
   /api/annotation-reviews/:
     get:
       description: List all reviews for a specific annotation ID.
@@ -167,9 +196,19 @@ paths:
       summary: List reviews
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: list
     post:
       description: Create a review for a specific annotation ID.
       operationId: api_annotation_reviews_create
+      parameters:
+        - description: Whether to postprocess the review asynchronously.
+          in: query
+          name: async_postprocess
+          schema:
+            type: boolean
       requestBody:
         content:
           application/json:
@@ -194,6 +233,10 @@ paths:
       summary: Create review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: create
   /api/annotation-reviews/{id}/:
     delete:
       description: Delete a review by ID
@@ -213,6 +256,10 @@ paths:
       summary: Delete review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: delete
     get:
       description: Retrieve a specific review by ID for an annotation.
       operationId: api_annotation_reviews_retrieve
@@ -235,6 +282,10 @@ paths:
       summary: Get review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific review by ID.
       operationId: api_annotation_reviews_partial_update
@@ -268,6 +319,10 @@ paths:
       summary: Update review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: update
     put:
       description: Overwrite a specific review by ID.
       operationId: api_annotation_reviews_update
@@ -302,6 +357,8 @@ paths:
       summary: Put review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - internal
   /api/annotations/bulk/:
     post:
       description: Create multiple annotations at once
@@ -805,6 +862,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/BlueprintRequest'
+        required: true
       responses:
         '201':
           content:
@@ -817,6 +875,10 @@ paths:
       summary: Create blueprint
       tags:
         - Blueprints
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: blueprints
+      x-fern-sdk-method-name: create
   /api/blueprints/{id}/:
     delete:
       description: Delete a blueprint by ID
@@ -835,9 +897,13 @@ paths:
       summary: Delete blueprint
       tags:
         - Blueprints
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: blueprints
+      x-fern-sdk-method-name: delete
   /api/blueprints/{share_id}/create-project:
     get:
-      description: Create a new project from an existing blueprint
+      description: Create a new project from an existing blueprint. On success, user is redirected to the new project with a 302.
       operationId: api_blueprints_create_project_retrieve
       parameters:
         - description: Blueprint share ID
@@ -848,14 +914,6 @@ paths:
             type: string
       responses:
         '302':
-          content:
-            application/json:
-              schema:
-                properties:
-                  redirect_url:
-                    description: URL to redirect to the new project
-                    type: string
-                type: object
           description: Redirect to new project
         '404':
           description: Blueprint not found
@@ -864,6 +922,8 @@ paths:
       summary: Create project from blueprint
       tags:
         - Blueprints
+      x-fern-audiences:
+        - internal
   /api/comments/:
     get:
       description: List all comments for a specific annotation ID.
@@ -6381,6 +6441,10 @@ paths:
       summary: List annotation history items for project
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: list_for_project
   /api/projects/{id}/aws-custom-function:
     get:
       description: Get the AWS Lambda code for the custom metric configured for this project.
@@ -10425,13 +10489,9 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
-        - description: Project ID
-          in: query
-          name: project
-          schema:
-            type: integer
       responses:
         '200':
           content:
@@ -10446,12 +10506,6 @@ paths:
       summary: Get Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - azure_spi
-      x-fern-sdk-method-name: list
     post:
       description: Create Azure import storage with Service Principal authentication.
       operationId: api_storages_azure_spi_create
@@ -10479,12 +10533,6 @@ paths:
       summary: Create Azure import storage with SPI
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - azure_spi
-      x-fern-sdk-method-name: create
   /api/storages/azure_spi/validate:
     post:
       description: Validate a specific Azure import storage connection that was set up with Service Principal authentication.
@@ -10502,19 +10550,17 @@ paths:
               $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
         required: true
       responses:
-        '200':
-          description: Validation successful
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalImportStorage'
+          description: ''
       security:
         - Token: []
       summary: Validate Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - azure_spi
-      x-fern-sdk-method-name: validate
   /api/storages/azure_spi/{id}:
     delete:
       description: Delete a specific Azure import storage connection that was set up with Service Principal authentication.
@@ -10533,12 +10579,6 @@ paths:
       summary: Delete Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - azure_spi
-      x-fern-sdk-method-name: delete
     get:
       description: Get a specific Azure import storage connection that was set up with Service Principal authentication.
       operationId: api_storages_azure_spi_retrieve
@@ -10560,12 +10600,6 @@ paths:
       summary: Get Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - azure_spi
-      x-fern-sdk-method-name: get
     patch:
       description: Update a specific Azure import storage connection that was set up with Service Principal authentication.
       operationId: api_storages_azure_spi_partial_update
@@ -10598,12 +10632,6 @@ paths:
       summary: Update Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - azure_spi
-      x-fern-sdk-method-name: update
   /api/storages/azure_spi/{id}/sync:
     post:
       description: Sync tasks from an Azure import storage connection that was set up with Service Principal authentication.
@@ -10614,6 +10642,18 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
+        required: true
       responses:
         '200':
           content:
@@ -10626,12 +10666,6 @@ paths:
       summary: Sync Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - azure_spi
-      x-fern-sdk-method-name: sync
   /api/storages/export:
     get:
       description: Retrieve a list of the export storages of all types with their IDs.
@@ -10955,13 +10989,9 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
-        - description: Project ID
-          in: query
-          name: project
-          schema:
-            type: integer
       responses:
         '200':
           content:
@@ -10976,12 +11006,6 @@ paths:
       summary: Get all Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - azure_spi
-      x-fern-sdk-method-name: list
     post:
       description: Create an Azure export storage connection with Service Principal authentication to store annotations.
       operationId: api_storages_export_azure_spi_create
@@ -11009,12 +11033,6 @@ paths:
       summary: Create Azure export storage with SPI authentication
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - azure_spi
-      x-fern-sdk-method-name: create
   /api/storages/export/azure_spi/validate:
     post:
       description: Validate a specific Azure export storage connection that was set up with Service Principal authentication.
@@ -11032,19 +11050,17 @@ paths:
               $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
         required: true
       responses:
-        '200':
-          description: Validation successful
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AzureServicePrincipalExportStorage'
+          description: ''
       security:
         - Token: []
       summary: Validate Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - azure_spi
-      x-fern-sdk-method-name: validate
   /api/storages/export/azure_spi/{id}:
     delete:
       description: Delete a specific Azure export storage connection that was set up with Service Principal authentication.
@@ -11063,12 +11079,6 @@ paths:
       summary: Delete Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - azure_spi
-      x-fern-sdk-method-name: delete
     get:
       description: Get a specific Azure export storage connection that was set up with Service Principal authentication.
       operationId: api_storages_export_azure_spi_retrieve
@@ -11090,12 +11100,6 @@ paths:
       summary: Get Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - azure_spi
-      x-fern-sdk-method-name: get
     patch:
       description: Update a specific Azure export storage connection that was set up with Service Principal authentication.
       operationId: api_storages_export_azure_spi_partial_update
@@ -11128,12 +11132,6 @@ paths:
       summary: Update Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - azure_spi
-      x-fern-sdk-method-name: update
   /api/storages/export/azure_spi/{id}/sync:
     post:
       description: Sync tasks from an Azure SPI export storage.
@@ -11144,6 +11142,18 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
+        required: true
       responses:
         '200':
           content:
@@ -11156,12 +11166,6 @@ paths:
       summary: Sync Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - azure_spi
-      x-fern-sdk-method-name: sync
   /api/storages/export/gcs:
     get:
       description: Get a list of all GCS export storage connections.
@@ -11453,13 +11457,9 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
-        - description: Project ID
-          in: query
-          name: project
-          schema:
-            type: integer
       responses:
         '200':
           content:
@@ -11474,12 +11474,6 @@ paths:
       summary: Get all GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - gcswif
-      x-fern-sdk-method-name: list
     post:
       description: Create an GCS export storage connection with WIF authentication to store annotations.
       operationId: api_storages_export_gcswif_create
@@ -11507,12 +11501,6 @@ paths:
       summary: Create GCS export storage with WIF authentication
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - gcswif
-      x-fern-sdk-method-name: create
   /api/storages/export/gcswif/validate:
     post:
       description: Validate a specific GCS export storage connection that was set up with WIF authentication.
@@ -11530,19 +11518,17 @@ paths:
               $ref: '#/components/schemas/GCSWIFExportStorageRequest'
         required: true
       responses:
-        '200':
-          description: Validation successful
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GCSWIFExportStorage'
+          description: ''
       security:
         - Token: []
       summary: Validate GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - gcswif
-      x-fern-sdk-method-name: validate
   /api/storages/export/gcswif/{id}:
     delete:
       description: Delete a specific GCS export storage connection that was set up with WIF authentication.
@@ -11561,12 +11547,6 @@ paths:
       summary: Delete GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - gcswif
-      x-fern-sdk-method-name: delete
     get:
       description: Get a specific GCS export storage connection that was set up with WIF authentication.
       operationId: api_storages_export_gcswif_retrieve
@@ -11588,12 +11568,6 @@ paths:
       summary: Get GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - gcswif
-      x-fern-sdk-method-name: get
     patch:
       description: Update a specific GCS export storage connection that was set up with WIF authentication.
       operationId: api_storages_export_gcswif_partial_update
@@ -11626,12 +11600,6 @@ paths:
       summary: Update GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - gcswif
-      x-fern-sdk-method-name: update
   /api/storages/export/gcswif/{id}/sync:
     post:
       description: Sync tasks from an GCS WIF export storage.
@@ -11642,6 +11610,18 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GCSWIFExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GCSWIFExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GCSWIFExportStorageRequest'
+        required: true
       responses:
         '200':
           content:
@@ -11654,12 +11634,6 @@ paths:
       summary: Sync GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - export_storage
-        - gcswif
-      x-fern-sdk-method-name: sync
   /api/storages/export/localfiles:
     get:
       description: Get a list of all local file export storage connections.
@@ -13104,13 +13078,9 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
-        - description: Project ID
-          in: query
-          name: project
-          schema:
-            type: integer
       responses:
         '200':
           content:
@@ -13125,12 +13095,6 @@ paths:
       summary: Get GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - gcswif
-      x-fern-sdk-method-name: list
     post:
       description: Create GCS import storage with WIF.
       operationId: api_storages_gcswif_create
@@ -13158,12 +13122,6 @@ paths:
       summary: Create GCS import storage with WIF
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - gcswif
-      x-fern-sdk-method-name: create
   /api/storages/gcswif/validate:
     post:
       description: Validate a specific GCS import storage connection that was set up with WIF authentication.
@@ -13181,19 +13139,17 @@ paths:
               $ref: '#/components/schemas/GCSWIFImportStorageRequest'
         required: true
       responses:
-        '200':
-          description: Validation successful
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GCSWIFImportStorage'
+          description: ''
       security:
         - Token: []
       summary: Validate GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - gcswif
-      x-fern-sdk-method-name: validate
   /api/storages/gcswif/{id}:
     delete:
       description: Delete a specific GCS import storage connection that was set up with WIF authentication.
@@ -13212,12 +13168,6 @@ paths:
       summary: Delete GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - gcswif
-      x-fern-sdk-method-name: delete
     get:
       description: Get a specific GCS import storage connection that was set up with WIF.
       operationId: api_storages_gcswif_retrieve
@@ -13239,12 +13189,6 @@ paths:
       summary: Get GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - gcswif
-      x-fern-sdk-method-name: get
     patch:
       description: Update a specific GCS import storage connection that was set up with WIF authentication.
       operationId: api_storages_gcswif_partial_update
@@ -13277,12 +13221,6 @@ paths:
       summary: Update GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - gcswif
-      x-fern-sdk-method-name: update
   /api/storages/gcswif/{id}/sync:
     post:
       description: Sync tasks from an GCS import storage connection that was set up with WIF authentication.
@@ -13293,6 +13231,18 @@ paths:
           required: true
           schema:
             type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GCSWIFImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GCSWIFImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GCSWIFImportStorageRequest'
+        required: true
       responses:
         '200':
           content:
@@ -13305,12 +13255,6 @@ paths:
       summary: Sync GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - import_storage
-        - gcswif
-      x-fern-sdk-method-name: sync
   /api/storages/localfiles/:
     get:
       description: Get a list of all local file import storage connections.
@@ -18190,7 +18134,6 @@ components:
           nullable: true
           type: string
         project:
-          readOnly: true
           type: integer
         share_id:
           readOnly: true
@@ -18258,11 +18201,15 @@ components:
           description: Labeling configuration in XML format
           nullable: true
           type: string
+        project:
+          type: integer
         title:
           description: Blueprint name. Must be between 3 and 50 characters long.
           maxLength: 50
           nullable: true
           type: string
+      required:
+        - project
       type: object
     BudgetResetPeriodEnum:
       description: |-
