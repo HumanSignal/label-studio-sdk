@@ -16410,9 +16410,6 @@ components:
           description: Honeypot annotation number in project
           readOnly: true
           type: integer
-        has_blueprints:
-          readOnly: true
-          type: string
         id:
           readOnly: true
           type: integer
@@ -16578,7 +16575,6 @@ components:
         - description_short
         - finished_task_number
         - ground_truth_number
-        - has_blueprints
         - id
         - members
         - members_count
@@ -16612,6 +16608,11 @@ components:
         - only
         - exclude
     Annotation:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
@@ -16723,6 +16724,11 @@ components:
         - updated_at
       type: object
     AnnotationBulkSerializerWithSelectedItemsRequest:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
@@ -16906,6 +16912,11 @@ components:
         - id
       type: object
     AnnotationRequest:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
@@ -21977,6 +21988,9 @@ components:
         agreement:
           readOnly: true
           type: string
+        agreement_filtered:
+          readOnly: true
+          type: string
         annotations:
           readOnly: true
           type: string
@@ -22177,6 +22191,7 @@ components:
           type: array
       required:
         - agreement
+        - agreement_filtered
         - annotations
         - annotations_ids
         - annotations_results
@@ -22506,6 +22521,9 @@ components:
         agreement:
           readOnly: true
           type: string
+        agreement_filtered:
+          readOnly: true
+          type: string
         annotations:
           readOnly: true
           type: string
@@ -22706,6 +22724,7 @@ components:
           type: array
       required:
         - agreement
+        - agreement_filtered
         - annotations
         - annotations_ids
         - annotations_results
