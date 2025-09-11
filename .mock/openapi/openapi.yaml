@@ -4064,6 +4064,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/LSEJWTSettingsRequest'
+        required: true
       responses:
         '201':
           content:
@@ -10206,6 +10207,10 @@ paths:
       summary: Retrieve Session Policy
       tags:
         - Session Policy
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: session_policy
+      x-fern-sdk-method-name: get
     patch:
       description: Update session timeout policy for the currently active organization.
       operationId: api_session_policy_partial_update
@@ -10232,6 +10237,10 @@ paths:
       summary: Update Session Policy
       tags:
         - Session Policy
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: session_policy
+      x-fern-sdk-method-name: update
   /api/storages/:
     get:
       description: Retrieve a list of the import storages of all types with their IDs.
@@ -20072,10 +20081,8 @@ components:
     LSEJWTSettings:
       properties:
         api_token_ttl_days:
-          description: Number of days before JWT API tokens expire
-          maximum: 2147483647
-          minimum: -2147483648
-          title: JWT API token time to live (days)
+          maximum: 365
+          minimum: 1
           type: integer
         api_tokens_enabled:
           description: Enable JWT API token authentication for this organization
@@ -20084,14 +20091,14 @@ components:
         legacy_api_tokens_enabled:
           description: Enable legacy API token authentication for this organization
           type: boolean
+      required:
+        - api_token_ttl_days
       type: object
     LSEJWTSettingsRequest:
       properties:
         api_token_ttl_days:
-          description: Number of days before JWT API tokens expire
-          maximum: 2147483647
-          minimum: -2147483648
-          title: JWT API token time to live (days)
+          maximum: 365
+          minimum: 1
           type: integer
         api_tokens_enabled:
           description: Enable JWT API token authentication for this organization
@@ -20100,6 +20107,8 @@ components:
         legacy_api_tokens_enabled:
           description: Enable legacy API token authentication for this organization
           type: boolean
+      required:
+        - api_token_ttl_days
       type: object
     LSEKeyIndicatorValue:
       description: |-

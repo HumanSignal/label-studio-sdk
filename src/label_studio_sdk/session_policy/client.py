@@ -3,7 +3,7 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.lsejwt_settings import LsejwtSettings
+from ..types.session_timeout_policy import SessionTimeoutPolicy
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
@@ -13,13 +13,13 @@ from ..core.client_wrapper import AsyncClientWrapper
 OMIT = typing.cast(typing.Any, ...)
 
 
-class JwtSettingsClient:
+class SessionPolicyClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> LsejwtSettings:
+    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> SessionTimeoutPolicy:
         """
-        Retrieve JWT settings for the currently active organization.
+        Retrieve session timeout policy for the currently active organization.
 
         Parameters
         ----------
@@ -28,7 +28,7 @@ class JwtSettingsClient:
 
         Returns
         -------
-        LsejwtSettings
+        SessionTimeoutPolicy
 
 
         Examples
@@ -38,19 +38,19 @@ class JwtSettingsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.jwt_settings.get()
+        client.session_policy.get()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/jwt/settings",
+            "api/session-policy/",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    LsejwtSettings,
+                    SessionTimeoutPolicy,
                     construct_type(
-                        type_=LsejwtSettings,  # type: ignore
+                        type_=SessionTimeoutPolicy,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -62,30 +62,27 @@ class JwtSettingsClient:
     def update(
         self,
         *,
-        api_token_ttl_days: int,
-        api_tokens_enabled: typing.Optional[bool] = OMIT,
-        legacy_api_tokens_enabled: typing.Optional[bool] = OMIT,
+        max_session_age: typing.Optional[int] = OMIT,
+        max_time_between_activity: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LsejwtSettings:
+    ) -> SessionTimeoutPolicy:
         """
-        Update JWT settings for the currently active organization.
+        Update session timeout policy for the currently active organization.
 
         Parameters
         ----------
-        api_token_ttl_days : int
+        max_session_age : typing.Optional[int]
+            Number of minutes that a session can be active before needing to re-login
 
-        api_tokens_enabled : typing.Optional[bool]
-            Enable JWT API token authentication for this organization
-
-        legacy_api_tokens_enabled : typing.Optional[bool]
-            Enable legacy API token authentication for this organization
+        max_time_between_activity : typing.Optional[int]
+            Number of minutes that a session stays active without any activity
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        LsejwtSettings
+        SessionTimeoutPolicy
 
 
         Examples
@@ -95,17 +92,14 @@ class JwtSettingsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.jwt_settings.update(
-            api_token_ttl_days=1,
-        )
+        client.session_policy.update()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/jwt/settings",
-            method="POST",
+            "api/session-policy/",
+            method="PATCH",
             json={
-                "api_token_ttl_days": api_token_ttl_days,
-                "api_tokens_enabled": api_tokens_enabled,
-                "legacy_api_tokens_enabled": legacy_api_tokens_enabled,
+                "max_session_age": max_session_age,
+                "max_time_between_activity": max_time_between_activity,
             },
             headers={
                 "content-type": "application/json",
@@ -116,9 +110,9 @@ class JwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    LsejwtSettings,
+                    SessionTimeoutPolicy,
                     construct_type(
-                        type_=LsejwtSettings,  # type: ignore
+                        type_=SessionTimeoutPolicy,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -128,13 +122,13 @@ class JwtSettingsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncJwtSettingsClient:
+class AsyncSessionPolicyClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> LsejwtSettings:
+    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> SessionTimeoutPolicy:
         """
-        Retrieve JWT settings for the currently active organization.
+        Retrieve session timeout policy for the currently active organization.
 
         Parameters
         ----------
@@ -143,7 +137,7 @@ class AsyncJwtSettingsClient:
 
         Returns
         -------
-        LsejwtSettings
+        SessionTimeoutPolicy
 
 
         Examples
@@ -158,22 +152,22 @@ class AsyncJwtSettingsClient:
 
 
         async def main() -> None:
-            await client.jwt_settings.get()
+            await client.session_policy.get()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/jwt/settings",
+            "api/session-policy/",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    LsejwtSettings,
+                    SessionTimeoutPolicy,
                     construct_type(
-                        type_=LsejwtSettings,  # type: ignore
+                        type_=SessionTimeoutPolicy,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -185,30 +179,27 @@ class AsyncJwtSettingsClient:
     async def update(
         self,
         *,
-        api_token_ttl_days: int,
-        api_tokens_enabled: typing.Optional[bool] = OMIT,
-        legacy_api_tokens_enabled: typing.Optional[bool] = OMIT,
+        max_session_age: typing.Optional[int] = OMIT,
+        max_time_between_activity: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LsejwtSettings:
+    ) -> SessionTimeoutPolicy:
         """
-        Update JWT settings for the currently active organization.
+        Update session timeout policy for the currently active organization.
 
         Parameters
         ----------
-        api_token_ttl_days : int
+        max_session_age : typing.Optional[int]
+            Number of minutes that a session can be active before needing to re-login
 
-        api_tokens_enabled : typing.Optional[bool]
-            Enable JWT API token authentication for this organization
-
-        legacy_api_tokens_enabled : typing.Optional[bool]
-            Enable legacy API token authentication for this organization
+        max_time_between_activity : typing.Optional[int]
+            Number of minutes that a session stays active without any activity
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        LsejwtSettings
+        SessionTimeoutPolicy
 
 
         Examples
@@ -223,20 +214,17 @@ class AsyncJwtSettingsClient:
 
 
         async def main() -> None:
-            await client.jwt_settings.update(
-                api_token_ttl_days=1,
-            )
+            await client.session_policy.update()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/jwt/settings",
-            method="POST",
+            "api/session-policy/",
+            method="PATCH",
             json={
-                "api_token_ttl_days": api_token_ttl_days,
-                "api_tokens_enabled": api_tokens_enabled,
-                "legacy_api_tokens_enabled": legacy_api_tokens_enabled,
+                "max_session_age": max_session_age,
+                "max_time_between_activity": max_time_between_activity,
             },
             headers={
                 "content-type": "application/json",
@@ -247,9 +235,9 @@ class AsyncJwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    LsejwtSettings,
+                    SessionTimeoutPolicy,
                     construct_type(
-                        type_=LsejwtSettings,  # type: ignore
+                        type_=SessionTimeoutPolicy,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

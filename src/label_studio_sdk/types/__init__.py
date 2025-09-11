@@ -185,6 +185,7 @@ from .serialization_option import SerializationOption
 from .serialization_option_request import SerializationOptionRequest
 from .serialization_options import SerializationOptions
 from .serialization_options_request import SerializationOptionsRequest
+from .session_timeout_policy import SessionTimeoutPolicy
 from .skill_name_enum import SkillNameEnum
 from .skip_queue_enum import SkipQueueEnum
 from .skipped_enum import SkippedEnum
@@ -397,6 +398,7 @@ __all__ = [
     "SerializationOptionRequest",
     "SerializationOptions",
     "SerializationOptionsRequest",
+    "SessionTimeoutPolicy",
     "SkillNameEnum",
     "SkipQueueEnum",
     "SkippedEnum",
