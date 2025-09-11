@@ -135,5 +135,25 @@ service:
               triggered_at: '2024-01-15T09:30:00Z'
       audiences:
         - public
+    cancel:
+      path: >-
+        /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{inference_run_id}/cancel
+      method: POST
+      auth: true
+      docs: Cancel the inference run for the given api
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        inference_run_id: integer
+        prompt_id: integer
+        version_id: integer
+      display-name: Cancel Inference Run API
+      examples:
+        - path-parameters:
+            inference_run_id: 1
+            prompt_id: 1
+            version_id: 1
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml

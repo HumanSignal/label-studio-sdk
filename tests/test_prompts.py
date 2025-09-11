@@ -26,6 +26,32 @@ async def test_batch_predictions(client: LabelStudio, async_client: AsyncLabelSt
     validate_response(async_response, expected_response, expected_types)
 
 
+async def test_subset_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.prompts.subset_tasks(project_pk=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+    assert (
+        await async_client.prompts.subset_tasks(project_pk=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+
+async def test_subsets(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.prompts.subsets(project_pk=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+    assert (
+        await async_client.prompts.subsets(project_pk=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {

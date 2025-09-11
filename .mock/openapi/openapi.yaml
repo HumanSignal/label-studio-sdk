@@ -9248,6 +9248,10 @@ paths:
       summary: Get Project Subset Task List with Predictions and Accuracy details
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: subset_tasks
   /api/projects/{project_pk}/subsets:
     get:
       description: "\n        Provides list of available subsets for a project along with count of tasks in each subset\n        "
@@ -9266,6 +9270,10 @@ paths:
       summary: Get available subsets of a project (for prompts usage)
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: subsets
   /api/prompts/:
     get:
       description: List all prompts.
@@ -9906,6 +9914,12 @@ paths:
       summary: Cancel Inference Run API
       tags:
         - Prompts
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - prompts
+        - runs
+      x-fern-sdk-method-name: cancel
   /api/prompts/{prompt_id}/versions/{version_id}/refine:
     get:
       description: Get the refined prompt based on the `refinement_job_id`.
