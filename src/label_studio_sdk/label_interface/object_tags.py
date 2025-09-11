@@ -20,6 +20,7 @@ _TAG_TO_CLASS = {
     "list": "ListTag",
     "paragraphs": "ParagraphsTag",
     "timeseries": "TimeSeriesTag",
+    "chat": "ChatTag",
 }
 
 _DATA_EXAMPLES = None
@@ -306,3 +307,11 @@ class TimeSeriesTag(ObjectTag):
         else:
             # data is JSON
             return generate_time_series_json(time_column, value_columns, time_format)
+
+class ChatTag(ObjectTag):
+    """ """
+    tag: str = "Chat"
+
+    def _generate_example(self, examples, only_urls=False):
+        """ """
+        return examples.get("Chat")
