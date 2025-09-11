@@ -94,6 +94,22 @@ paths:
     delete:
       description: Delete all annotation history items for a specific annotation, task or project. This method is available only for users with administrator roles.
       operationId: api_annotation_history_destroy
+      parameters:
+        - description: Annotation ID to delete annotation history items for.
+          in: query
+          name: annotation
+          schema:
+            type: integer
+        - description: Project ID to delete annotation history items for.
+          in: query
+          name: project
+          schema:
+            type: integer
+        - description: Task ID to delete annotation history items for.
+          in: query
+          name: task
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -110,10 +126,19 @@ paths:
       summary: Delete annotation history items
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: delete
     get:
       description: 'List annotation history items for an annotation. Annotation history logs all actions performed with annotations, such as: imports, submits, updates, reviews, and more. Users can view annotation history items in the Annotation History panel during labeling.'
       operationId: api_annotation_history_list
       parameters:
+        - description: Annotation ID to get annotation history items for.
+          in: query
+          name: annotation
+          schema:
+            type: integer
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -134,6 +159,10 @@ paths:
       summary: List all annotation history items for annotation
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: list
   /api/annotation-reviews/:
     get:
       description: List all reviews for a specific annotation ID.
@@ -167,9 +196,19 @@ paths:
       summary: List reviews
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: list
     post:
       description: Create a review for a specific annotation ID.
       operationId: api_annotation_reviews_create
+      parameters:
+        - description: Whether to postprocess the review asynchronously.
+          in: query
+          name: async_postprocess
+          schema:
+            type: boolean
       requestBody:
         content:
           application/json:
@@ -194,6 +233,10 @@ paths:
       summary: Create review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: create
   /api/annotation-reviews/{id}/:
     delete:
       description: Delete a review by ID
@@ -213,6 +256,10 @@ paths:
       summary: Delete review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: delete
     get:
       description: Retrieve a specific review by ID for an annotation.
       operationId: api_annotation_reviews_retrieve
@@ -235,6 +282,10 @@ paths:
       summary: Get review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific review by ID.
       operationId: api_annotation_reviews_partial_update
@@ -268,6 +319,10 @@ paths:
       summary: Update review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: update
     put:
       description: Overwrite a specific review by ID.
       operationId: api_annotation_reviews_update
@@ -302,6 +357,8 @@ paths:
       summary: Put review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - internal
   /api/annotations/bulk/:
     post:
       description: Create multiple annotations at once
@@ -805,6 +862,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/BlueprintRequest'
+        required: true
       responses:
         '201':
           content:
@@ -817,6 +875,10 @@ paths:
       summary: Create blueprint
       tags:
         - Blueprints
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: blueprints
+      x-fern-sdk-method-name: create
   /api/blueprints/{id}/:
     delete:
       description: Delete a blueprint by ID
@@ -835,9 +897,13 @@ paths:
       summary: Delete blueprint
       tags:
         - Blueprints
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: blueprints
+      x-fern-sdk-method-name: delete
   /api/blueprints/{share_id}/create-project:
     get:
-      description: Create a new project from an existing blueprint
+      description: Create a new project from an existing blueprint. On success, user is redirected to the new project with a 302.
       operationId: api_blueprints_create_project_retrieve
       parameters:
         - description: Blueprint share ID
@@ -848,14 +914,6 @@ paths:
             type: string
       responses:
         '302':
-          content:
-            application/json:
-              schema:
-                properties:
-                  redirect_url:
-                    description: URL to redirect to the new project
-                    type: string
-                type: object
           description: Redirect to new project
         '404':
           description: Blueprint not found
@@ -864,6 +922,8 @@ paths:
       summary: Create project from blueprint
       tags:
         - Blueprints
+      x-fern-audiences:
+        - internal
   /api/comments/:
     get:
       description: List all comments for a specific annotation ID.
@@ -1369,6 +1429,8 @@ paths:
       summary: List all dataset storages from the project
       tags:
         - Storage
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/:
     get:
       description: Get a list of all Azure import storage connections.
@@ -1399,6 +1461,8 @@ paths:
       summary: Get all import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
     post:
       description: Create a new Azure import storage connection.
       operationId: api_dataset_storages_azure_create
@@ -1426,6 +1490,8 @@ paths:
       summary: Create import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/check-for-records/:
     post:
       description: Checks for existence of records matching the file pattern in the bucket/prefix
@@ -1454,6 +1520,8 @@ paths:
       summary: Check for records given the file pattern
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/validate/:
     post:
       description: Validate a specific Azure import storage connection.
@@ -1482,6 +1550,8 @@ paths:
       summary: Validate import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/{id}/:
     delete:
       description: Delete a specific Azure import storage connection.
@@ -1500,6 +1570,8 @@ paths:
       summary: Delete import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
     get:
       description: Get a specific Azure import storage connection.
       operationId: api_dataset_storages_azure_retrieve
@@ -1521,6 +1593,8 @@ paths:
       summary: Get import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
     patch:
       description: Update a specific Azure import storage connection.
       operationId: api_dataset_storages_azure_partial_update
@@ -1553,6 +1627,8 @@ paths:
       summary: Update import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/{id}/columns/:
     get:
       description: Retrieves column names from users JSON/blob data in bucket
@@ -1571,6 +1647,8 @@ paths:
       summary: Get data column names from storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/{id}/sync/:
     post:
       description: Sync tasks from an Azure import storage connection.
@@ -1605,6 +1683,8 @@ paths:
       summary: Sync import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/:
     get:
       description: Get a list of all GCS import storage connections.
@@ -1635,6 +1715,8 @@ paths:
       summary: Get all import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
     post:
       description: Create a new GCS import storage connection.
       operationId: api_dataset_storages_gcs_create
@@ -1662,6 +1744,8 @@ paths:
       summary: Create import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/check-for-records/:
     post:
       description: Checks for existence of records matching the file pattern in the bucket/prefix
@@ -1690,6 +1774,8 @@ paths:
       summary: Check for records given the file pattern
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/validate/:
     post:
       description: Validate a specific GCS import storage connection.
@@ -1718,6 +1804,8 @@ paths:
       summary: Validate import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/{id}/:
     delete:
       description: Delete a specific GCS import storage connection.
@@ -1736,6 +1824,8 @@ paths:
       summary: Delete import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
     get:
       description: Get a specific GCS import storage connection.
       operationId: api_dataset_storages_gcs_retrieve
@@ -1757,6 +1847,8 @@ paths:
       summary: Get import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
     patch:
       description: Update a specific GCS import storage connection.
       operationId: api_dataset_storages_gcs_partial_update
@@ -1789,6 +1881,8 @@ paths:
       summary: Update import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/{id}/columns/:
     get:
       description: Retrieves column names from users JSON/blob data in bucket
@@ -1807,6 +1901,8 @@ paths:
       summary: Get data column names from storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/{id}/sync/:
     post:
       description: Sync tasks from an GCS import storage connection.
@@ -1841,6 +1937,8 @@ paths:
       summary: Sync import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/:
     get:
       description: Get a list of all S3 import storage connections.
@@ -1871,6 +1969,8 @@ paths:
       summary: Get all import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
     post:
       description: Create a new S3 import storage connection.
       operationId: api_dataset_storages_s3_create
@@ -1898,6 +1998,8 @@ paths:
       summary: Create import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/check-for-records/:
     post:
       description: Checks for existence of records matching the file pattern in the bucket/prefix
@@ -1926,6 +2028,8 @@ paths:
       summary: Check for records given the file pattern
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/validate/:
     post:
       description: Validate a specific S3 import storage connection.
@@ -1954,6 +2058,8 @@ paths:
       summary: Validate import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/{id}/:
     delete:
       description: Delete a specific S3 import storage connection.
@@ -1972,6 +2078,8 @@ paths:
       summary: Delete import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
     get:
       description: Get a specific S3 import storage connection.
       operationId: api_dataset_storages_s3_retrieve
@@ -1993,6 +2101,8 @@ paths:
       summary: Get import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
     patch:
       description: Update a specific S3 import storage connection.
       operationId: api_dataset_storages_s3_partial_update
@@ -2025,6 +2135,8 @@ paths:
       summary: Update import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/{id}/columns/:
     get:
       description: Retrieves column names from users JSON/blob data in bucket
@@ -2043,6 +2155,8 @@ paths:
       summary: Get data column names from storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/{id}/sync/:
     post:
       description: Sync tasks from an S3 import storage connection.
@@ -2077,6 +2191,8 @@ paths:
       summary: Sync import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/types/:
     get:
       description: Retrieve a list of the dataset storages types.
@@ -2089,6 +2205,8 @@ paths:
       summary: List all dataset storages types
       tags:
         - Storage
+      x-fern-audiences:
+        - internal
   /api/datasets/:
     get:
       description: List all datasets.
@@ -2114,6 +2232,8 @@ paths:
       summary: List datasets
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     post:
       description: Create a new dataset.
       operationId: api_datasets_create
@@ -2141,6 +2261,8 @@ paths:
       summary: Create dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/datasets/columns:
     get:
       description: Retrieve the data explorer columns available for a specific Dataset.
@@ -2159,6 +2281,8 @@ paths:
       summary: Get data explorer columns
       tags:
         - Data Explorer
+      x-fern-audiences:
+        - internal
   /api/datasets/import:
     patch:
       description: Export Candidate task for a specific dataset to project.
@@ -2182,6 +2306,8 @@ paths:
       summary: Export candidate tasks to project
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     post:
       description: "\n    Export Candidate task for a specific dataset to project.\n    "
       operationId: api_datasets_import_create
@@ -2227,6 +2353,8 @@ paths:
       summary: Export candidate tasks to project
       tags:
         - Data Explorer
+      x-fern-audiences:
+        - internal
   /api/datasets/tasks:
     get:
       description: "\n    Retrieve a list of Data Explorer tasks with pagination for a specific view or dataset, by using filters and ordering.\n    "
@@ -2274,6 +2402,8 @@ paths:
       summary: Get Data Explorer tasks list
       tags:
         - Data Explorer
+      x-fern-audiences:
+        - internal
   /api/datasets/tasks/metadata:
     get:
       description: "\n    Retrieve Candidate task metadata for a specific dataset, by using candidate_task_id or weaviate_id.\n    "
@@ -2302,6 +2432,8 @@ paths:
       summary: Get Candidate task metadata
       tags:
         - Data Explorer
+      x-fern-audiences:
+        - internal
   /api/datasets/views/:
     get:
       description: List all views for a specific dataset.
@@ -2326,6 +2458,8 @@ paths:
       summary: List dataset views
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     post:
       description: Create a view for a specific dataset.
       operationId: api_datasets_views_create
@@ -2353,6 +2487,8 @@ paths:
       summary: Create dataset view
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/datasets/views/reset/:
     delete:
       description: Reset all views for a specific dataset.
@@ -2365,6 +2501,8 @@ paths:
       summary: Reset dataset views
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/datasets/views/{id}/:
     delete:
       description: Delete a specific view by ID.
@@ -2384,6 +2522,8 @@ paths:
       summary: Delete dataset view
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     get:
       description: Get the details about a specific view in the data manager
       operationId: api_datasets_views_retrieve
@@ -2406,6 +2546,8 @@ paths:
       summary: Get dataset view details
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     patch:
       description: Update view data with additional filters and other information for a specific dataset.
       operationId: api_datasets_views_partial_update
@@ -2439,6 +2581,8 @@ paths:
       summary: Update dataset view
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     put:
       description: Overwrite view data with updated filters and other information for a specific dataset.
       operationId: api_datasets_views_update
@@ -2473,6 +2617,8 @@ paths:
       summary: Put dataset view
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/datasets/{id}/:
     delete:
       description: Delete a dataset by ID
@@ -2491,6 +2637,8 @@ paths:
       summary: Delete dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     get:
       description: Retrieve a specific dataset.
       operationId: api_datasets_retrieve
@@ -2512,6 +2660,8 @@ paths:
       summary: Get dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     patch:
       description: Update a specific dataset by ID.
       operationId: api_datasets_partial_update
@@ -2544,6 +2694,8 @@ paths:
       summary: Update dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     put:
       description: Overwrite a specific dataset by ID.
       operationId: api_datasets_update
@@ -2577,6 +2729,8 @@ paths:
       summary: Put dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/datasets/{id}/members:
     delete:
       description: Remove a member from a specific dataset.
@@ -2600,6 +2754,8 @@ paths:
       summary: Remove member from dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     get:
       description: Retrieve the members for a specific dataset.
       operationId: api_datasets_members_list
@@ -2629,6 +2785,8 @@ paths:
       summary: Get datasets members
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     post:
       description: Add a member to a specific dataset.
       operationId: api_datasets_members_create
@@ -2662,6 +2820,8 @@ paths:
       summary: Add dataset member
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/dm/actions/:
     get:
       description: Retrieve all the registered actions with descriptions that data manager can use.
@@ -3904,6 +4064,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/LSEJWTSettingsRequest'
+        required: true
       responses:
         '201':
           content:
@@ -6381,6 +6542,10 @@ paths:
       summary: List annotation history items for project
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: list_for_project
   /api/projects/{id}/aws-custom-function:
     get:
       description: Get the AWS Lambda code for the custom metric configured for this project.
@@ -18198,7 +18363,6 @@ components:
           nullable: true
           type: string
         project:
-          readOnly: true
           type: integer
         share_id:
           readOnly: true
@@ -18266,11 +18430,15 @@ components:
           description: Labeling configuration in XML format
           nullable: true
           type: string
+        project:
+          type: integer
         title:
           description: Blueprint name. Must be between 3 and 50 characters long.
           maxLength: 50
           nullable: true
           type: string
+      required:
+        - project
       type: object
     BudgetResetPeriodEnum:
       description: |-
@@ -19913,10 +20081,8 @@ components:
     LSEJWTSettings:
       properties:
         api_token_ttl_days:
-          description: Number of days before JWT API tokens expire
-          maximum: 2147483647
-          minimum: -2147483648
-          title: JWT API token time to live (days)
+          maximum: 365
+          minimum: 1
           type: integer
         api_tokens_enabled:
           description: Enable JWT API token authentication for this organization
@@ -19925,14 +20091,14 @@ components:
         legacy_api_tokens_enabled:
           description: Enable legacy API token authentication for this organization
           type: boolean
+      required:
+        - api_token_ttl_days
       type: object
     LSEJWTSettingsRequest:
       properties:
         api_token_ttl_days:
-          description: Number of days before JWT API tokens expire
-          maximum: 2147483647
-          minimum: -2147483648
-          title: JWT API token time to live (days)
+          maximum: 365
+          minimum: 1
           type: integer
         api_tokens_enabled:
           description: Enable JWT API token authentication for this organization
@@ -19941,6 +20107,8 @@ components:
         legacy_api_tokens_enabled:
           description: Enable legacy API token authentication for this organization
           type: boolean
+      required:
+        - api_token_ttl_days
       type: object
     LSEKeyIndicatorValue:
       description: |-

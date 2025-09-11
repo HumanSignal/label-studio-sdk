@@ -3,89 +3,55 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.lsejwt_settings import LsejwtSettings
+from ..types.blueprint import Blueprint
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
+from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class JwtSettingsClient:
+class BlueprintsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> LsejwtSettings:
-        """
-        Retrieve JWT settings for the currently active organization.
-
-        Parameters
-        ----------
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        LsejwtSettings
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.jwt_settings.get()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/jwt/settings",
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    LsejwtSettings,
-                    construct_type(
-                        type_=LsejwtSettings,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def update(
+    def create(
         self,
         *,
-        api_token_ttl_days: int,
-        api_tokens_enabled: typing.Optional[bool] = OMIT,
-        legacy_api_tokens_enabled: typing.Optional[bool] = OMIT,
+        project: int,
+        created_by: typing.Optional[int] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        label_config: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LsejwtSettings:
+    ) -> Blueprint:
         """
-        Update JWT settings for the currently active organization.
+        Create a new blueprint
 
         Parameters
         ----------
-        api_token_ttl_days : int
+        project : int
 
-        api_tokens_enabled : typing.Optional[bool]
-            Enable JWT API token authentication for this organization
+        created_by : typing.Optional[int]
 
-        legacy_api_tokens_enabled : typing.Optional[bool]
-            Enable legacy API token authentication for this organization
+        description : typing.Optional[str]
+            Project description
+
+        label_config : typing.Optional[str]
+            Labeling configuration in XML format
+
+        title : typing.Optional[str]
+            Blueprint name. Must be between 3 and 50 characters long.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        LsejwtSettings
+        Blueprint
 
 
         Examples
@@ -95,17 +61,19 @@ class JwtSettingsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.jwt_settings.update(
-            api_token_ttl_days=1,
+        client.blueprints.create(
+            project=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/jwt/settings",
+            "api/blueprints/",
             method="POST",
             json={
-                "api_token_ttl_days": api_token_ttl_days,
-                "api_tokens_enabled": api_tokens_enabled,
-                "legacy_api_tokens_enabled": legacy_api_tokens_enabled,
+                "created_by": created_by,
+                "description": description,
+                "label_config": label_config,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -116,9 +84,9 @@ class JwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    LsejwtSettings,
+                    Blueprint,
                     construct_type(
-                        type_=LsejwtSettings,  # type: ignore
+                        type_=Blueprint,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -127,88 +95,84 @@ class JwtSettingsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-
-class AsyncJwtSettingsClient:
-    def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._client_wrapper = client_wrapper
-
-    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> LsejwtSettings:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Retrieve JWT settings for the currently active organization.
+        Delete a blueprint by ID
 
         Parameters
         ----------
+        id : str
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        LsejwtSettings
-
+        None
 
         Examples
         --------
-        import asyncio
+        from label_studio_sdk import LabelStudio
 
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
+        client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-
-
-        async def main() -> None:
-            await client.jwt_settings.get()
-
-
-        asyncio.run(main())
+        client.blueprints.delete(
+            id="id",
+        )
         """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/jwt/settings",
-            method="GET",
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/blueprints/{jsonable_encoder(id)}/",
+            method="DELETE",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    LsejwtSettings,
-                    construct_type(
-                        type_=LsejwtSettings,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def update(
+
+class AsyncBlueprintsClient:
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
+        self._client_wrapper = client_wrapper
+
+    async def create(
         self,
         *,
-        api_token_ttl_days: int,
-        api_tokens_enabled: typing.Optional[bool] = OMIT,
-        legacy_api_tokens_enabled: typing.Optional[bool] = OMIT,
+        project: int,
+        created_by: typing.Optional[int] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        label_config: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LsejwtSettings:
+    ) -> Blueprint:
         """
-        Update JWT settings for the currently active organization.
+        Create a new blueprint
 
         Parameters
         ----------
-        api_token_ttl_days : int
+        project : int
 
-        api_tokens_enabled : typing.Optional[bool]
-            Enable JWT API token authentication for this organization
+        created_by : typing.Optional[int]
 
-        legacy_api_tokens_enabled : typing.Optional[bool]
-            Enable legacy API token authentication for this organization
+        description : typing.Optional[str]
+            Project description
+
+        label_config : typing.Optional[str]
+            Labeling configuration in XML format
+
+        title : typing.Optional[str]
+            Blueprint name. Must be between 3 and 50 characters long.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        LsejwtSettings
+        Blueprint
 
 
         Examples
@@ -223,20 +187,22 @@ class AsyncJwtSettingsClient:
 
 
         async def main() -> None:
-            await client.jwt_settings.update(
-                api_token_ttl_days=1,
+            await client.blueprints.create(
+                project=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/jwt/settings",
+            "api/blueprints/",
             method="POST",
             json={
-                "api_token_ttl_days": api_token_ttl_days,
-                "api_tokens_enabled": api_tokens_enabled,
-                "legacy_api_tokens_enabled": legacy_api_tokens_enabled,
+                "created_by": created_by,
+                "description": description,
+                "label_config": label_config,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -247,12 +213,59 @@ class AsyncJwtSettingsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    LsejwtSettings,
+                    Blueprint,
                     construct_type(
-                        type_=LsejwtSettings,  # type: ignore
+                        type_=Blueprint,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Delete a blueprint by ID
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.blueprints.delete(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/blueprints/{jsonable_encoder(id)}/",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

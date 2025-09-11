@@ -40,6 +40,8 @@ service:
                 total_entities: 1
                 updated_at: '2024-01-15T09:30:00Z'
                 vector_db_dataset_name: vector_db_dataset_name
+      audiences:
+        - internal
     api_datasets_create:
       path: /api/datasets/
       method: POST
@@ -75,6 +77,8 @@ service:
               total_entities: 1
               updated_at: '2024-01-15T09:30:00Z'
               vector_db_dataset_name: vector_db_dataset_name
+      audiences:
+        - internal
     api_datasets_import_partial_update:
       path: /api/datasets/import
       method: PATCH
@@ -94,6 +98,8 @@ service:
             docs: 'Signal type: start or cancel'
       examples:
         - {}
+      audiences:
+        - internal
     api_datasets_views_list:
       path: /api/datasets/views/
       method: GET
@@ -132,6 +138,8 @@ service:
                 selected_items:
                   key: value
                 user: 1
+      audiences:
+        - internal
     api_datasets_views_create:
       path: /api/datasets/views/
       method: POST
@@ -169,6 +177,8 @@ service:
               selected_items:
                 key: value
               user: 1
+      audiences:
+        - internal
     api_datasets_views_reset_destroy:
       path: /api/datasets/views/reset/
       method: DELETE
@@ -179,6 +189,8 @@ service:
       display-name: Reset dataset views
       examples:
         - {}
+      audiences:
+        - internal
     api_datasets_views_retrieve:
       path: /api/datasets/views/{id}/
       method: GET
@@ -217,6 +229,8 @@ service:
               selected_items:
                 key: value
               user: 1
+      audiences:
+        - internal
     api_datasets_views_update:
       path: /api/datasets/views/{id}/
       method: PUT
@@ -262,6 +276,8 @@ service:
               selected_items:
                 key: value
               user: 1
+      audiences:
+        - internal
     api_datasets_views_destroy:
       path: /api/datasets/views/{id}/
       method: DELETE
@@ -277,6 +293,8 @@ service:
       examples:
         - path-parameters:
             id: id
+      audiences:
+        - internal
     api_datasets_views_partial_update:
       path: /api/datasets/views/{id}/
       method: PATCH
@@ -341,6 +359,8 @@ service:
               selected_items:
                 key: value
               user: 1
+      audiences:
+        - internal
     api_datasets_retrieve:
       path: /api/datasets/{id}/
       method: GET
@@ -375,6 +395,8 @@ service:
               total_entities: 1
               updated_at: '2024-01-15T09:30:00Z'
               vector_db_dataset_name: vector_db_dataset_name
+      audiences:
+        - internal
     api_datasets_update:
       path: /api/datasets/{id}/
       method: PUT
@@ -414,6 +436,8 @@ service:
               total_entities: 1
               updated_at: '2024-01-15T09:30:00Z'
               vector_db_dataset_name: vector_db_dataset_name
+      audiences:
+        - internal
     api_datasets_destroy:
       path: /api/datasets/{id}/
       method: DELETE
@@ -427,6 +451,8 @@ service:
       examples:
         - path-parameters:
             id: id
+      audiences:
+        - internal
     api_datasets_partial_update:
       path: /api/datasets/{id}/
       method: PATCH
@@ -492,6 +518,8 @@ service:
               total_entities: 1
               updated_at: '2024-01-15T09:30:00Z'
               vector_db_dataset_name: vector_db_dataset_name
+      audiences:
+        - internal
     api_datasets_members_list:
       path: /api/datasets/{id}/members
       method: GET
@@ -517,6 +545,8 @@ service:
           response:
             body:
               - user: 1
+      audiences:
+        - internal
     api_datasets_members_create:
       path: /api/datasets/{id}/members
       method: POST
@@ -544,6 +574,8 @@ service:
           response:
             body:
               user: 1
+      audiences:
+        - internal
     api_datasets_members_destroy:
       path: /api/datasets/{id}/members
       method: DELETE
@@ -563,5 +595,7 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - internal
   source:
     openapi: openapi/openapi.yaml
