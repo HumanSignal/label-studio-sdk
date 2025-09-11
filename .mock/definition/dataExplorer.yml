@@ -18,8 +18,6 @@ service:
             docs: Dataset ID
       examples:
         - {}
-      audiences:
-        - internal
     api_datasets_import_create:
       path: /api/datasets/import
       method: POST
@@ -54,8 +52,6 @@ service:
             docs: View ID
       examples:
         - {}
-      audiences:
-        - internal
     api_datasets_tasks_retrieve:
       path: /api/datasets/tasks
       method: GET
@@ -112,8 +108,6 @@ service:
               selected_items:
                 key: value
               user: 1
-      audiences:
-        - internal
     api_datasets_tasks_metadata_retrieve:
       path: /api/datasets/tasks/metadata
       method: GET
@@ -139,8 +133,6 @@ service:
             docs: Task ID from vectordb database
       examples:
         - {}
-      audiences:
-        - internal
   source:
     openapi: openapi/openapi.yaml
 imports:

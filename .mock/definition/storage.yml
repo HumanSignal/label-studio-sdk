@@ -18,8 +18,6 @@ service:
             docs: Which field to use when ordering the results.
       examples:
         - {}
-      audiences:
-        - internal
     api_dataset_storages_types_retrieve:
       path: /api/dataset-storages/types/
       method: GET
@@ -30,7 +28,5 @@ service:
       display-name: List all dataset storages types
       examples:
         - {}
-      audiences:
-        - internal
   source:
     openapi: openapi/openapi.yaml

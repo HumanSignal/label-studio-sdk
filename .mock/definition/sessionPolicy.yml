@@ -4,7 +4,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_session_policy_retrieve:
+    get:
       path: /api/session-policy/
       method: GET
       auth: true
@@ -22,7 +22,9 @@ service:
               max_session_age: 1
               max_time_between_activity: 1
               updated_at: '2024-01-15T09:30:00Z'
-    api_session_policy_partial_update:
+      audiences:
+        - public
+    update:
       path: /api/session-policy/
       method: PATCH
       auth: true
@@ -62,5 +64,7 @@ service:
               max_session_age: 1
               max_time_between_activity: 1
               updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml

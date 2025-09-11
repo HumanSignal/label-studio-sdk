@@ -4,7 +4,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    list:
+    api_annotation_history_list:
       path: /api/annotation-history/
       method: GET
       auth: true
@@ -17,11 +17,8 @@ service:
         openapi: openapi/openapi.yaml
       display-name: List all annotation history items for annotation
       request:
-        name: AnnotationHistoryListRequest
+        name: ApiAnnotationHistoryListRequest
         query-parameters:
-          annotation:
-            type: optional<integer>
-            docs: Annotation ID to get annotation history items for.
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
@@ -47,9 +44,7 @@ service:
                 review_id: 1
                 started_at: '2024-01-15T09:30:00Z'
                 task_id: 1
-      audiences:
-        - public
-    delete:
+    api_annotation_history_destroy:
       path: /api/annotation-history/
       method: DELETE
       auth: true
@@ -60,28 +55,14 @@ service:
       source:
         openapi: openapi/openapi.yaml
       display-name: Delete annotation history items
-      request:
-        name: AnnotationHistoryDeleteRequest
-        query-parameters:
-          annotation:
-            type: optional<integer>
-            docs: Annotation ID to delete annotation history items for.
-          project:
-            type: optional<integer>
-            docs: Project ID to delete annotation history items for.
-          task:
-            type: optional<integer>
-            docs: Task ID to delete annotation history items for.
       response:
         docs: Returns a dict containing the count of removed items.
-        type: AnnotationHistoryDeleteResponse
+        type: ApiAnnotationHistoryDestroyResponse
       examples:
         - response:
             body:
               removed: 1
-      audiences:
-        - public
-    list_for_project:
+    api_projects_annotation_history_list:
       path: /api/projects/{id}/annotation-history/
       method: GET
       auth: true
@@ -92,7 +73,7 @@ service:
         id: integer
       display-name: List annotation history items for project
       request:
-        name: AnnotationHistoryListForProjectRequest
+        name: ApiProjectsAnnotationHistoryListRequest
         query-parameters:
           page:
             type: optional<integer>
@@ -128,12 +109,10 @@ service:
                   review_id: 1
                   started_at: '2024-01-15T09:30:00Z'
                   task_id: 1
-      audiences:
-        - public
   source:
     openapi: openapi/openapi.yaml
 types:
-  AnnotationHistoryDeleteResponse:
+  ApiAnnotationHistoryDestroyResponse:
     properties:
       removed:
         type: optional<integer>

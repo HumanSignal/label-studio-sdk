@@ -4,7 +4,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    create:
+    api_blueprints_create:
       path: /api/blueprints/
       method: POST
       auth: true
@@ -23,7 +23,6 @@ service:
             label_config:
               type: optional<string>
               docs: Labeling configuration in XML format
-            project: integer
             title:
               type: optional<string>
               docs: Blueprint name. Must be between 3 and 50 characters long.
@@ -34,8 +33,7 @@ service:
         docs: ''
         type: root.Blueprint
       examples:
-        - request:
-            project: 1
+        - request: {}
           response:
             body:
               created_at: '2024-01-15T09:30:00Z'
@@ -48,9 +46,7 @@ service:
               short_url: short_url
               title: title
               updated_at: '2024-01-15T09:30:00Z'
-      audiences:
-        - public
-    delete:
+    api_blueprints_destroy:
       path: /api/blueprints/{id}/
       method: DELETE
       auth: true
@@ -63,15 +59,11 @@ service:
       examples:
         - path-parameters:
             id: id
-      audiences:
-        - public
     api_blueprints_create_project_retrieve:
       path: /api/blueprints/{share_id}/create-project
       method: GET
       auth: true
-      docs: >-
-        Create a new project from an existing blueprint. On success, user is
-        redirected to the new project with a 302.
+      docs: Create a new project from an existing blueprint
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -84,7 +76,5 @@ service:
       examples:
         - path-parameters:
             share_id: share_id
-      audiences:
-        - internal
   source:
     openapi: openapi/openapi.yaml

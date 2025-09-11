@@ -3,55 +3,32 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.blueprint import Blueprint
+from ..types.session_timeout_policy import SessionTimeoutPolicy
 from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class BlueprintsClient:
+class SessionPolicyClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create(
-        self,
-        *,
-        project: int,
-        created_by: typing.Optional[int] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        label_config: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Blueprint:
+    def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> SessionTimeoutPolicy:
         """
-        Create a new blueprint
+        Retrieve session timeout policy for the currently active organization.
 
         Parameters
         ----------
-        project : int
-
-        created_by : typing.Optional[int]
-
-        description : typing.Optional[str]
-            Project description
-
-        label_config : typing.Optional[str]
-            Labeling configuration in XML format
-
-        title : typing.Optional[str]
-            Blueprint name. Must be between 3 and 50 characters long.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Blueprint
+        SessionTimeoutPolicy
 
 
         Examples
@@ -61,19 +38,68 @@ class BlueprintsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.blueprints.create(
-            project=1,
-        )
+        client.session_policy.get()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/blueprints/",
-            method="POST",
+            "api/session-policy/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    SessionTimeoutPolicy,
+                    construct_type(
+                        type_=SessionTimeoutPolicy,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def update(
+        self,
+        *,
+        max_session_age: typing.Optional[int] = OMIT,
+        max_time_between_activity: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SessionTimeoutPolicy:
+        """
+        Update session timeout policy for the currently active organization.
+
+        Parameters
+        ----------
+        max_session_age : typing.Optional[int]
+            Number of minutes that a session can be active before needing to re-login
+
+        max_time_between_activity : typing.Optional[int]
+            Number of minutes that a session stays active without any activity
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SessionTimeoutPolicy
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.session_policy.update()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/session-policy/",
+            method="PATCH",
             json={
-                "created_by": created_by,
-                "description": description,
-                "label_config": label_config,
-                "project": project,
-                "title": title,
+                "max_session_age": max_session_age,
+                "max_time_between_activity": max_time_between_activity,
             },
             headers={
                 "content-type": "application/json",
@@ -84,9 +110,9 @@ class BlueprintsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Blueprint,
+                    SessionTimeoutPolicy,
                     construct_type(
-                        type_=Blueprint,  # type: ignore
+                        type_=SessionTimeoutPolicy,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -95,84 +121,23 @@ class BlueprintsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Delete a blueprint by ID
 
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.blueprints.delete(
-            id="id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/blueprints/{jsonable_encoder(id)}/",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-
-class AsyncBlueprintsClient:
+class AsyncSessionPolicyClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create(
-        self,
-        *,
-        project: int,
-        created_by: typing.Optional[int] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        label_config: typing.Optional[str] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Blueprint:
+    async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> SessionTimeoutPolicy:
         """
-        Create a new blueprint
+        Retrieve session timeout policy for the currently active organization.
 
         Parameters
         ----------
-        project : int
-
-        created_by : typing.Optional[int]
-
-        description : typing.Optional[str]
-            Project description
-
-        label_config : typing.Optional[str]
-            Labeling configuration in XML format
-
-        title : typing.Optional[str]
-            Blueprint name. Must be between 3 and 50 characters long.
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Blueprint
+        SessionTimeoutPolicy
 
 
         Examples
@@ -187,22 +152,79 @@ class AsyncBlueprintsClient:
 
 
         async def main() -> None:
-            await client.blueprints.create(
-                project=1,
-            )
+            await client.session_policy.get()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/blueprints/",
-            method="POST",
+            "api/session-policy/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    SessionTimeoutPolicy,
+                    construct_type(
+                        type_=SessionTimeoutPolicy,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def update(
+        self,
+        *,
+        max_session_age: typing.Optional[int] = OMIT,
+        max_time_between_activity: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SessionTimeoutPolicy:
+        """
+        Update session timeout policy for the currently active organization.
+
+        Parameters
+        ----------
+        max_session_age : typing.Optional[int]
+            Number of minutes that a session can be active before needing to re-login
+
+        max_time_between_activity : typing.Optional[int]
+            Number of minutes that a session stays active without any activity
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SessionTimeoutPolicy
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.session_policy.update()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/session-policy/",
+            method="PATCH",
             json={
-                "created_by": created_by,
-                "description": description,
-                "label_config": label_config,
-                "project": project,
-                "title": title,
+                "max_session_age": max_session_age,
+                "max_time_between_activity": max_time_between_activity,
             },
             headers={
                 "content-type": "application/json",
@@ -213,59 +235,12 @@ class AsyncBlueprintsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Blueprint,
+                    SessionTimeoutPolicy,
                     construct_type(
-                        type_=Blueprint,  # type: ignore
+                        type_=SessionTimeoutPolicy,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
-        """
-        Delete a blueprint by ID
-
-        Parameters
-        ----------
-        id : str
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.blueprints.delete(
-                id="id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/blueprints/{jsonable_encoder(id)}/",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -7,26 +7,16 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class Blueprint(UncheckedBaseModel):
+class SessionTimeoutPolicy(UncheckedBaseModel):
     created_at: dt.datetime
-    created_by: typing.Optional[int] = None
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    max_session_age: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Project description
-    """
-
-    id: int
-    label_config: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Labeling configuration in XML format
+    Number of minutes that a session can be active before needing to re-login
     """
 
-    project: int
-    share_id: str
-    short_url: str
-    title: typing.Optional[str] = pydantic.Field(default=None)
+    max_time_between_activity: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Blueprint name. Must be between 3 and 50 characters long.
+    Number of minutes that a session stays active without any activity
     """
 
     updated_at: dt.datetime
