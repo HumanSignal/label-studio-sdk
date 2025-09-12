@@ -5259,6 +5259,11 @@ paths:
       summary: Update organization
       tags:
         - Organizations
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+      x-fern-sdk-method-name: update
   /api/organizations/{id}/memberships:
     get:
       description: Retrieve a list of all users and roles in a specific organization.
@@ -5477,6 +5482,11 @@ paths:
       summary: Update default role
       tags:
         - Organizations
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+      x-fern-sdk-method-name: update_default_role
   /api/predictions/:
     get:
       description: List all predictions and their IDs.
@@ -5944,6 +5954,11 @@ paths:
       summary: Get project templates
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: list
     post:
       description: Create a project template for an organization.
       operationId: api_project_templates_create
@@ -5971,6 +5986,11 @@ paths:
       summary: Create project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: create
   /api/project-templates/{id}:
     delete:
       description: Delete a specific project template by ID for an organization.
@@ -5989,6 +6009,11 @@ paths:
       summary: Delete a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: delete
     get:
       description: Get a specific project template by ID for an organization.
       operationId: api_project_templates_retrieve
@@ -6010,6 +6035,11 @@ paths:
       summary: Get a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: get
     patch:
       description: Update the details of a specific project template by ID for an organization.
       operationId: api_project_templates_partial_update
@@ -6042,6 +6072,11 @@ paths:
       summary: Update a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: update
     put:
       description: Overwrite a specific project template by ID for an organization.
       operationId: api_project_templates_update
@@ -6075,6 +6110,8 @@ paths:
       summary: Overwrite a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - internal
   /api/project-templates/{id}/create-project:
     post:
       description: Create a project from a specific project template by ID for an organization.
@@ -6115,6 +6152,11 @@ paths:
       summary: Create project from template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: create_project_from_template
   /api/projects/:
     get:
       description: Retrieve a list of projects.

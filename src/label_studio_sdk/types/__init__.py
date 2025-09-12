@@ -47,6 +47,8 @@ from .converted_format import ConvertedFormat
 from .converted_format_request import ConvertedFormatRequest
 from .count_limit import CountLimit
 from .custom_scripts_editable_by_enum import CustomScriptsEditableByEnum
+from .default_role import DefaultRole
+from .default_role_custom_scripts_editable_by import DefaultRoleCustomScriptsEditableBy
 from .default_role_enum import DefaultRoleEnum
 from .edition_enum import EditionEnum
 from .export import Export
@@ -79,9 +81,12 @@ from .lse_key_indicator_value import LseKeyIndicatorValue
 from .lse_organization import LseOrganization
 from .lse_organization_custom_scripts_editable_by import LseOrganizationCustomScriptsEditableBy
 from .lse_organization_member_list import LseOrganizationMemberList
+from .lse_project import LseProject
 from .lse_project_create import LseProjectCreate
 from .lse_project_create_sampling import LseProjectCreateSampling
 from .lse_project_create_skip_queue import LseProjectCreateSkipQueue
+from .lse_project_sampling import LseProjectSampling
+from .lse_project_skip_queue import LseProjectSkipQueue
 from .lse_project_update import LseProjectUpdate
 from .lse_project_update_sampling import LseProjectUpdateSampling
 from .lse_project_update_skip_queue import LseProjectUpdateSkipQueue
@@ -155,6 +160,8 @@ from .project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRol
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
 from .project_subset_enum import ProjectSubsetEnum
+from .project_template import ProjectTemplate
+from .project_template_request import ProjectTemplateRequest
 from .prompts_status_enum import PromptsStatusEnum
 from .provider_enum import ProviderEnum
 from .reason_enum import ReasonEnum
@@ -260,6 +267,8 @@ __all__ = [
     "ConvertedFormatRequest",
     "CountLimit",
     "CustomScriptsEditableByEnum",
+    "DefaultRole",
+    "DefaultRoleCustomScriptsEditableBy",
     "DefaultRoleEnum",
     "EditionEnum",
     "Export",
@@ -292,9 +301,12 @@ __all__ = [
     "LseOrganization",
     "LseOrganizationCustomScriptsEditableBy",
     "LseOrganizationMemberList",
+    "LseProject",
     "LseProjectCreate",
     "LseProjectCreateSampling",
     "LseProjectCreateSkipQueue",
+    "LseProjectSampling",
+    "LseProjectSkipQueue",
     "LseProjectUpdate",
     "LseProjectUpdateSampling",
     "LseProjectUpdateSkipQueue",
@@ -368,6 +380,8 @@ __all__ = [
     "ProjectSampling",
     "ProjectSkipQueue",
     "ProjectSubsetEnum",
+    "ProjectTemplate",
+    "ProjectTemplateRequest",
     "PromptsStatusEnum",
     "ProviderEnum",
     "ReasonEnum",

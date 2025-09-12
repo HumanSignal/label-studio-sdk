@@ -4,7 +4,7 @@ service:
   auth: false
   base-path: ''
   endpoints:
-    api_project_templates_list:
+    list:
       path: /api/project-templates/
       method: GET
       auth: true
@@ -13,7 +13,7 @@ service:
         openapi: openapi/openapi.yaml
       display-name: Get project templates
       request:
-        name: ApiProjectTemplatesListRequest
+        name: ProjectTemplatesListRequest
         query-parameters:
           ordering:
             type: optional<string>
@@ -42,7 +42,9 @@ service:
                 tags:
                   key: value
                 updated_at: '2024-01-15T09:30:00Z'
-    api_project_templates_create:
+      audiences:
+        - public
+    create:
       path: /api/project-templates/
       method: POST
       auth: true
@@ -79,7 +81,9 @@ service:
               tags:
                 key: value
               updated_at: '2024-01-15T09:30:00Z'
-    api_project_templates_retrieve:
+      audiences:
+        - public
+    get:
       path: /api/project-templates/{id}
       method: GET
       auth: true
@@ -115,6 +119,8 @@ service:
               tags:
                 key: value
               updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
     api_project_templates_update:
       path: /api/project-templates/{id}
       method: PUT
@@ -156,7 +162,9 @@ service:
               tags:
                 key: value
               updated_at: '2024-01-15T09:30:00Z'
-    api_project_templates_destroy:
+      audiences:
+        - internal
+    delete:
       path: /api/project-templates/{id}
       method: DELETE
       auth: true
@@ -169,7 +177,9 @@ service:
       examples:
         - path-parameters:
             id: 1
-    api_project_templates_partial_update:
+      audiences:
+        - public
+    update:
       path: /api/project-templates/{id}
       method: PATCH
       auth: true
@@ -237,7 +247,9 @@ service:
               tags:
                 key: value
               updated_at: '2024-01-15T09:30:00Z'
-    api_project_templates_create_project_create:
+      audiences:
+        - public
+    create_project_from_template:
       path: /api/project-templates/{id}/create-project
       method: POST
       auth: true
@@ -250,7 +262,7 @@ service:
         id: integer
       display-name: Create project from template
       request:
-        name: ApiProjectTemplatesCreateProjectCreateRequest
+        name: ProjectTemplatesCreateProjectFromTemplateRequest
         body:
           properties:
             description:
@@ -367,5 +379,7 @@ service:
               useful_annotation_number: 1
               workspace: workspace
               workspace_title: workspace_title
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml
