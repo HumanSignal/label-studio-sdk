@@ -3116,6 +3116,8 @@ paths:
       summary: Get action form
       tags:
         - Data Manager
+      x-fern-audiences:
+        - internal
   /api/dm/project/:
     get:
       description: Retrieve the project state for the data manager.
@@ -4745,7 +4747,7 @@ paths:
       x-fern-sdk-method-name: predict_interactive
   /api/ml/{id}/predict:
     post:
-      description: "\n        Create predictions for all tasks using a specific ML backend so that you can set up an active learning strategy\n        based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires \n        a Label Studio ML backend set up and configured for your project. \n\n        See [Set up machine learning](https://labelstud.io/guide/ml.html) for more details \n        about a Label Studio ML backend.\n\n        Reference the ML backend ID in the path of this API call. Get the ML backend ID by \n        [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).\n        "
+      description: "Note: not available in the community edition of Label Studio. \n\nCreate predictions for all tasks using a specific ML backend so that you can set up an active learning strategy based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires a Label Studio ML backend set up and configured for your project. \n\nSee [Set up machine learning](https://labelstud.io/guide/ml.html) for more details about a Label Studio ML backend. \n\nReference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list)."
       operationId: api_ml_predict_create
       parameters:
         - description: Computed number of tasks without predictions that the ML backend needs to predict.
@@ -4764,9 +4766,13 @@ paths:
           description: Predictions have successfully started.
       security:
         - Token: []
-      summary: Create predictions
+      summary: Create predictions for all tasks
       tags:
         - Machine Learning
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: ml
+      x-fern-sdk-method-name: predict_all_tasks
   /api/ml/{id}/predict/test:
     post:
       description: "\n        After you add an ML backend, call this API with the ML backend ID to run a test prediction on specific task data               \n        "
