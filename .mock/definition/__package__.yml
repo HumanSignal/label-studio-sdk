@@ -6,10 +6,10 @@ errors:
     examples:
       - value:
           key: value
-  NotImplementedError:
-    status-code: 501
+  ForbiddenError:
+    status-code: 403
     type: unknown
-    docs: KPI depends on other KPIs - not implemented
+    docs: Organization does not allow to invite people
   BadRequestError:
     status-code: 400
     type: unknown
@@ -24,10 +24,6 @@ errors:
     docs: Predicting error
     examples:
       - value: Server responded with an error.
-  ForbiddenError:
-    status-code: 403
-    type: unknown
-    docs: Permission Denied
   MethodNotAllowedError:
     status-code: 405
     type: unknown

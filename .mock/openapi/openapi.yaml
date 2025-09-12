@@ -1361,55 +1361,6 @@ paths:
         - public
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: whoami
-  /api/dashboards/{id}/kpis/{kpi_key}:
-    get:
-      description: 'Get Key Performance Indicator (KPI) data for a dashboard. Supports various KPIs including: skipped_annotations, accepted_annotations, rejected_annotations, average_time_per_task_min, total_annotations, regions_created, and more.'
-      operationId: api_dashboards_kpis_retrieve
-      parameters:
-        - description: End date for filtering (ISO format)
-          in: query
-          name: end
-          schema:
-            type: string
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-        - in: path
-          name: kpi_key
-          required: true
-          schema:
-            type: string
-        - description: Array of user IDs to filter by
-          in: query
-          name: members
-          schema:
-            items:
-              type: integer
-            type: array
-        - description: Start date for filtering (ISO format)
-          in: query
-          name: start
-          schema:
-            type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                description: KPI data with the requested key and its value
-                type: object
-          description: KPI data
-        '404':
-          description: KPI not found
-        '501':
-          description: KPI depends on other KPIs - not implemented
-      security:
-        - Token: []
-      summary: Get KPI data
-      tags:
-        - Dashboard
   /api/dataset-storages/:
     get:
       description: Retrieve a list of the dataset storages of all types with their IDs.
@@ -3956,12 +3907,25 @@ paths:
       operationId: api_invite_retrieve
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationInvite'
+          description: ''
+        '403':
+          description: Organization does not allow to invite people
       security:
         - Token: []
       summary: Invite people
       tags:
+        - Organizations
         - Invites
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - invites
+      x-fern-sdk-method-name: get_invite_link
   /api/invite/reset-token:
     post:
       description: Reset the token used in the invitation link to invite someone to an organization.
@@ -3984,7 +3948,7 @@ paths:
       x-fern-sdk-method-name: reset_token
   /api/invite/revoke:
     post:
-      description: Revoke invite
+      description: Revoke invite to organization
       operationId: api_invite_revoke_create
       requestBody:
         content:
@@ -4000,12 +3964,19 @@ paths:
         required: true
       responses:
         '200':
-          description: No response body
+          description: Invite revoked
       security:
         - Token: []
       summary: Revoke invite
       tags:
+        - Organizations
         - Invites
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - invites
+      x-fern-sdk-method-name: revoke_invite
   /api/invite/send-email:
     post:
       description: Send email with invite to organization
@@ -4024,12 +3995,21 @@ paths:
         required: true
       responses:
         '200':
-          description: No response body
+          description: Invite sent
+        '403':
+          description: Organization does not allow to invite people
       security:
         - Token: []
       summary: Send email with invite
       tags:
+        - Organizations
         - Invites
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - invites
+      x-fern-sdk-method-name: send_email
   /api/jwt/settings:
     get:
       description: Retrieve JWT settings for the currently active organization.
@@ -6754,6 +6734,8 @@ paths:
       summary: Get dashboard data for project
       tags:
         - Dashboard
+      x-fern-audiences:
+        - internal
   /api/projects/{id}/dashboard-members:
     get:
       deprecated: true
@@ -6868,6 +6850,8 @@ paths:
       summary: Get dashboard data for members
       tags:
         - Dashboard
+      x-fern-audiences:
+        - internal
   /api/projects/{id}/duplicate/:
     post:
       description: Make a copy of project.
