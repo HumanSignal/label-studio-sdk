@@ -7978,6 +7978,7 @@ client = LabelStudio(
 )
 client.project_templates.create(
     name="name",
+    project_id=1,
 )
 
 ```
@@ -7995,6 +7996,14 @@ client.project_templates.create(
 <dd>
 
 **name:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_id:** `int` 
     
 </dd>
 </dl>
@@ -8333,6 +8342,14 @@ client.project_templates.update(
 <dd>
 
 **organization:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_id:** `typing.Optional[int]` 
     
 </dd>
 </dl>

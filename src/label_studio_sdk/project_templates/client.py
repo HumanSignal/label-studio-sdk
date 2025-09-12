@@ -73,6 +73,7 @@ class ProjectTemplatesClient:
         self,
         *,
         name: str,
+        project_id: int,
         assignment_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         created_by: typing.Optional[int] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
@@ -91,6 +92,8 @@ class ProjectTemplatesClient:
         Parameters
         ----------
         name : str
+
+        project_id : int
 
         assignment_settings : typing.Optional[typing.Optional[typing.Any]]
 
@@ -131,6 +134,7 @@ class ProjectTemplatesClient:
         )
         client.project_templates.create(
             name="name",
+            project_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -143,6 +147,7 @@ class ProjectTemplatesClient:
                 "description": description,
                 "name": name,
                 "organization": organization,
+                "project_id": project_id,
                 "project_settings": project_settings,
                 "require_comment_on_skip": require_comment_on_skip,
                 "review_settings": review_settings,
@@ -261,6 +266,7 @@ class ProjectTemplatesClient:
         description: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        project_id: typing.Optional[int] = OMIT,
         project_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         review_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
@@ -287,6 +293,8 @@ class ProjectTemplatesClient:
         name : typing.Optional[str]
 
         organization : typing.Optional[int]
+
+        project_id : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Optional[typing.Any]]
 
@@ -328,6 +336,7 @@ class ProjectTemplatesClient:
                 "description": description,
                 "name": name,
                 "organization": organization,
+                "project_id": project_id,
                 "project_settings": project_settings,
                 "require_comment_on_skip": require_comment_on_skip,
                 "review_settings": review_settings,
@@ -495,6 +504,7 @@ class AsyncProjectTemplatesClient:
         self,
         *,
         name: str,
+        project_id: int,
         assignment_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         created_by: typing.Optional[int] = OMIT,
         custom_script: typing.Optional[str] = OMIT,
@@ -513,6 +523,8 @@ class AsyncProjectTemplatesClient:
         Parameters
         ----------
         name : str
+
+        project_id : int
 
         assignment_settings : typing.Optional[typing.Optional[typing.Any]]
 
@@ -558,6 +570,7 @@ class AsyncProjectTemplatesClient:
         async def main() -> None:
             await client.project_templates.create(
                 name="name",
+                project_id=1,
             )
 
 
@@ -573,6 +586,7 @@ class AsyncProjectTemplatesClient:
                 "description": description,
                 "name": name,
                 "organization": organization,
+                "project_id": project_id,
                 "project_settings": project_settings,
                 "require_comment_on_skip": require_comment_on_skip,
                 "review_settings": review_settings,
@@ -707,6 +721,7 @@ class AsyncProjectTemplatesClient:
         description: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
         organization: typing.Optional[int] = OMIT,
+        project_id: typing.Optional[int] = OMIT,
         project_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         require_comment_on_skip: typing.Optional[bool] = OMIT,
         review_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
@@ -733,6 +748,8 @@ class AsyncProjectTemplatesClient:
         name : typing.Optional[str]
 
         organization : typing.Optional[int]
+
+        project_id : typing.Optional[int]
 
         project_settings : typing.Optional[typing.Optional[typing.Any]]
 
@@ -782,6 +799,7 @@ class AsyncProjectTemplatesClient:
                 "description": description,
                 "name": name,
                 "organization": organization,
+                "project_id": project_id,
                 "project_settings": project_settings,
                 "require_comment_on_skip": require_comment_on_skip,
                 "review_settings": review_settings,

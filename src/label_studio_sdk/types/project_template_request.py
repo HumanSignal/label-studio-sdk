@@ -17,6 +17,7 @@ class ProjectTemplateRequest(UncheckedBaseModel):
     description: typing.Optional[str] = None
     name: str
     organization: typing.Optional[int] = None
+    project_id: int
     project_settings: typing.Optional[typing.Optional[typing.Any]] = None
     require_comment_on_skip: typing.Optional[bool] = pydantic.Field(default=None)
     """

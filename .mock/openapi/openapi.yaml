@@ -25632,6 +25632,9 @@ components:
         organization:
           nullable: true
           type: integer
+        project_id:
+          type: integer
+          writeOnly: true
         project_settings:
           description: general dict serialized project settings
         require_comment_on_skip:
@@ -26763,6 +26766,9 @@ components:
         organization:
           nullable: true
           type: integer
+        project_id:
+          type: integer
+          writeOnly: true
         project_settings:
           description: general dict serialized project settings
         require_comment_on_skip:
@@ -26776,6 +26782,7 @@ components:
         tags: {}
       required:
         - name
+        - project_id
       type: object
     PromptsStatusEnum:
       description: |-

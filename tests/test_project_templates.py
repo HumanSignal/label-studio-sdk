@@ -86,10 +86,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "tags": None,
         "updated_at": "datetime",
     }
-    response = client.project_templates.create(name="name")
+    response = client.project_templates.create(name="name", project_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.project_templates.create(name="name")
+    async_response = await async_client.project_templates.create(name="name", project_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 

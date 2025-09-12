@@ -61,6 +61,7 @@ service:
       examples:
         - request:
             name: name
+            project_id: 1
           response:
             body:
               assignment_settings:
@@ -142,6 +143,7 @@ service:
             id: 1
           request:
             name: name
+            project_id: 1
           response:
             body:
               assignment_settings:
@@ -212,6 +214,7 @@ service:
                 minLength: 1
                 maxLength: 1000
             organization: optional<integer>
+            project_id: optional<integer>
             project_settings: optional<unknown>
             require_comment_on_skip:
               type: optional<boolean>
