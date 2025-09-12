@@ -3916,7 +3916,7 @@ paths:
           description: Organization does not allow to invite people
       security:
         - Token: []
-      summary: Invite people
+      summary: Get invite link
       tags:
         - Organizations
         - Invites

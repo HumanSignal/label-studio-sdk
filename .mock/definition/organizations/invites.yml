@@ -11,7 +11,7 @@ service:
       docs: Get invite link for organization
       source:
         openapi: openapi/openapi.yaml
-      display-name: Invite people
+      display-name: Get invite link
       response:
         docs: ''
         type: root.OrganizationInvite
