@@ -11,8 +11,10 @@ from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..types.batch_predictions import BatchPredictions
+from ..types.paginated_project_subset_tasks_response_list import PaginatedProjectSubsetTasksResponseList
 from ..core.jsonable_encoder import jsonable_encoder
 from ..errors.bad_request_error import BadRequestError
+from ..types.project_subset_item import ProjectSubsetItem
 from ..types.model_interface_serializer_get import ModelInterfaceSerializerGet
 from ..types.user_simple_request import UserSimpleRequest
 from ..types.skill_name_enum import SkillNameEnum
@@ -188,13 +190,14 @@ class PromptsClient:
         self,
         project_pk: int,
         *,
+        include_total: typing.Optional[bool] = None,
         model_run: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         project_subset: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> PaginatedProjectSubsetTasksResponseList:
         """
 
                 Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
@@ -203,6 +206,9 @@ class PromptsClient:
         Parameters
         ----------
         project_pk : int
+
+        include_total : typing.Optional[bool]
+            If true (default), includes task_count in response; if false, omits it.
 
         model_run : typing.Optional[int]
             A unique ID of a ModelRun
@@ -224,7 +230,8 @@ class PromptsClient:
 
         Returns
         -------
-        None
+        PaginatedProjectSubsetTasksResponseList
+
 
         Examples
         --------
@@ -241,6 +248,7 @@ class PromptsClient:
             f"api/projects/{jsonable_encoder(project_pk)}/subset-tasks",
             method="GET",
             params={
+                "include_total": include_total,
                 "model_run": model_run,
                 "ordering": ordering,
                 "page": page,
@@ -251,7 +259,13 @@ class PromptsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    PaginatedProjectSubsetTasksResponseList,
+                    construct_type(
+                        type_=PaginatedProjectSubsetTasksResponseList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
@@ -267,7 +281,13 @@ class PromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def subsets(self, project_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def subsets(
+        self,
+        project_pk: int,
+        *,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[ProjectSubsetItem]:
         """
 
                 Provides list of available subsets for a project along with count of tasks in each subset
@@ -277,12 +297,16 @@ class PromptsClient:
         ----------
         project_pk : int
 
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        typing.List[ProjectSubsetItem]
+
 
         Examples
         --------
@@ -298,11 +322,20 @@ class PromptsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(project_pk)}/subsets",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    typing.List[ProjectSubsetItem],
+                    construct_type(
+                        type_=typing.List[ProjectSubsetItem],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -869,13 +902,14 @@ class AsyncPromptsClient:
         self,
         project_pk: int,
         *,
+        include_total: typing.Optional[bool] = None,
         model_run: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
         project_subset: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> PaginatedProjectSubsetTasksResponseList:
         """
 
                 Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
@@ -884,6 +918,9 @@ class AsyncPromptsClient:
         Parameters
         ----------
         project_pk : int
+
+        include_total : typing.Optional[bool]
+            If true (default), includes task_count in response; if false, omits it.
 
         model_run : typing.Optional[int]
             A unique ID of a ModelRun
@@ -905,7 +942,8 @@ class AsyncPromptsClient:
 
         Returns
         -------
-        None
+        PaginatedProjectSubsetTasksResponseList
+
 
         Examples
         --------
@@ -930,6 +968,7 @@ class AsyncPromptsClient:
             f"api/projects/{jsonable_encoder(project_pk)}/subset-tasks",
             method="GET",
             params={
+                "include_total": include_total,
                 "model_run": model_run,
                 "ordering": ordering,
                 "page": page,
@@ -940,7 +979,13 @@ class AsyncPromptsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    PaginatedProjectSubsetTasksResponseList,
+                    construct_type(
+                        type_=PaginatedProjectSubsetTasksResponseList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             if _response.status_code == 400:
                 raise BadRequestError(
                     typing.cast(
@@ -956,7 +1001,13 @@ class AsyncPromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def subsets(self, project_pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def subsets(
+        self,
+        project_pk: int,
+        *,
+        ordering: typing.Optional[str] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[ProjectSubsetItem]:
         """
 
                 Provides list of available subsets for a project along with count of tasks in each subset
@@ -966,12 +1017,16 @@ class AsyncPromptsClient:
         ----------
         project_pk : int
 
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        typing.List[ProjectSubsetItem]
+
 
         Examples
         --------
@@ -995,11 +1050,20 @@ class AsyncPromptsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(project_pk)}/subsets",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    typing.List[ProjectSubsetItem],
+                    construct_type(
+                        type_=typing.List[ProjectSubsetItem],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

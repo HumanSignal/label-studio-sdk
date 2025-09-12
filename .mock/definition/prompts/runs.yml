@@ -148,11 +148,17 @@ service:
         prompt_id: integer
         version_id: integer
       display-name: Cancel Inference Run API
+      response:
+        docs: ''
+        type: root.CancelModelRunResponse
       examples:
         - path-parameters:
             inference_run_id: 1
             prompt_id: 1
             version_id: 1
+          response:
+            body:
+              detail: detail
       audiences:
         - public
   source:

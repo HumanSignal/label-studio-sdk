@@ -98,13 +98,10 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 
 async def test_cancel(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert (
-        client.prompts.runs.cancel(inference_run_id=1, prompt_id=1, version_id=1)  # type: ignore[func-returns-value]
-        is None
-    )
+    expected_response: typing.Any = {"detail": "detail"}
+    expected_types: typing.Any = {"detail": None}
+    response = client.prompts.runs.cancel(inference_run_id=1, prompt_id=1, version_id=1)
+    validate_response(response, expected_response, expected_types)
 
-    assert (
-        await async_client.prompts.runs.cancel(inference_run_id=1, prompt_id=1, version_id=1)  # type: ignore[func-returns-value]
-        is None
-    )
+    async_response = await async_client.prompts.runs.cancel(inference_run_id=1, prompt_id=1, version_id=1)
+    validate_response(async_response, expected_response, expected_types)

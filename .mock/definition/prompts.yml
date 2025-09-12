@@ -100,6 +100,11 @@ service:
       request:
         name: PromptsSubsetTasksRequest
         query-parameters:
+          include_total:
+            type: optional<boolean>
+            docs: >-
+              If true (default), includes task_count in response; if false,
+              omits it.
           model_run:
             type: optional<integer>
             docs: A unique ID of a ModelRun
@@ -115,11 +120,26 @@ service:
           project_subset:
             type: optional<string>
             docs: The project subset to retrieve tasks for
+      response:
+        docs: ''
+        type: root.PaginatedProjectSubsetTasksResponseList
       errors:
         - root.BadRequestError
       examples:
         - path-parameters:
             project_pk: 1
+          response:
+            body:
+              count: 123
+              next: http://api.example.org/accounts/?page=4
+              previous: http://api.example.org/accounts/?page=2
+              results:
+                - next_cursor: next_cursor
+                  previous_cursor: previous_cursor
+                  task_count: 1
+                  task_result_list:
+                    - data:
+                        key: value
       audiences:
         - public
     subsets:
@@ -135,9 +155,24 @@ service:
       path-parameters:
         project_pk: integer
       display-name: Get available subsets of a project (for prompts usage)
+      request:
+        name: PromptsSubsetsRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.ProjectSubsetItem>
       examples:
         - path-parameters:
             project_pk: 1
+          response:
+            body:
+              - columns_schema:
+                  - key: value
+                count: 1
+                subset: subset
       audiences:
         - public
     list:

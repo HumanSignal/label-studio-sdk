@@ -11,6 +11,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 import datetime as dt
 from ...types.project_subset_enum import ProjectSubsetEnum
+from ...types.cancel_model_run_response import CancelModelRunResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -200,7 +201,7 @@ class RunsClient:
         version_id: int,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> CancelModelRunResponse:
         """
         Cancel the inference run for the given api
 
@@ -217,7 +218,8 @@ class RunsClient:
 
         Returns
         -------
-        None
+        CancelModelRunResponse
+
 
         Examples
         --------
@@ -239,7 +241,13 @@ class RunsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    CancelModelRunResponse,
+                    construct_type(
+                        type_=CancelModelRunResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -445,7 +453,7 @@ class AsyncRunsClient:
         version_id: int,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    ) -> CancelModelRunResponse:
         """
         Cancel the inference run for the given api
 
@@ -462,7 +470,8 @@ class AsyncRunsClient:
 
         Returns
         -------
-        None
+        CancelModelRunResponse
+
 
         Examples
         --------
@@ -492,7 +501,13 @@ class AsyncRunsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    CancelModelRunResponse,
+                    construct_type(
+                        type_=CancelModelRunResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
