@@ -8191,6 +8191,12 @@ paths:
       summary: Get individual annotator agreement stats
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: agreement_annotator
   /api/projects/{id}/stats/data_filter:
     get:
       description: Get statistics about user data filters and their usage within a project.
@@ -8217,6 +8223,12 @@ paths:
       summary: Get user data filter statistics
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: data_filters
   /api/projects/{id}/stats/finished:
     get:
       description: Get statistics about finished tasks for a project.
@@ -8251,6 +8263,12 @@ paths:
       summary: Get finished tasks statistics
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: finished_tasks
   /api/projects/{id}/stats/lead_time:
     get:
       description: Get lead time statistics across the project, including average annotation time.
@@ -8277,6 +8295,12 @@ paths:
       summary: Get lead time statistics
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: lead_time
   /api/projects/{id}/stats/total_agreement:
     get:
       description: |-
@@ -8798,6 +8822,12 @@ paths:
       summary: Start stats recalculation
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: update_stats
   /api/projects/{id}/user-stats/{user_pk}/prediction:
     get:
       description: Get prediction agreement statistics for a specific user within a project.
@@ -8829,6 +8859,12 @@ paths:
       summary: Get individual user prediction agreement
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: user_prediction_agreement
   /api/projects/{id}/user-stats/{user_pk}/review_score:
     get:
       description: Get review score statistics for a specific user within a project.
@@ -8860,6 +8896,12 @@ paths:
       summary: Get individual user review scores
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: user_review_score
   /api/projects/{id}/users/{user_pk}/stats/agreement-groundtruth:
     get:
       description: Get ground truth agreement statistics for a specific user within a project.
@@ -8891,6 +8933,12 @@ paths:
       summary: Get individual user ground truth agreement
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: user_ground_truth_agreement
   /api/projects/{id}/validate/:
     post:
       description: Determine whether the label configuration for a specific project is valid.
