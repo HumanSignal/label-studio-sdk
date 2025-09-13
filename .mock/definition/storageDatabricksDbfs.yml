@@ -38,6 +38,7 @@ service:
                 presign: true
                 presign_ttl: 1
                 project: 1
+                recursive_scan: true
                 regex_filter: regex_filter
                 request_timeout_s: 1
                 schema: schema
@@ -87,6 +88,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               request_timeout_s: 1
               schema: schema
@@ -136,6 +138,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               request_timeout_s: 1
               schema: schema
@@ -180,6 +183,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               request_timeout_s: 1
               schema: schema
@@ -262,6 +266,9 @@ service:
             project:
               type: optional<integer>
               docs: A unique integer value identifying this project.
+            recursive_scan:
+              type: optional<boolean>
+              docs: Perform recursive scan
             regex_filter:
               type: optional<string>
               docs: Regex for filtering objects
@@ -328,6 +335,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               request_timeout_s: 1
               schema: schema
@@ -381,6 +389,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               request_timeout_s: 1
               schema: schema

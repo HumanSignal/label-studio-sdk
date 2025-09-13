@@ -1872,6 +1872,9 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan
       regex_filter:
         type: optional<string>
         docs: Regex for filtering objects
@@ -1959,6 +1962,9 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan
       regex_filter:
         type: optional<string>
         docs: Regex for filtering objects

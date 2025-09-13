@@ -19329,6 +19329,9 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          type: boolean
         regex_filter:
           description: Regex for filtering objects
           nullable: true
@@ -19429,6 +19432,9 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          type: boolean
         regex_filter:
           description: Regex for filtering objects
           nullable: true
@@ -25385,6 +25391,9 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          type: boolean
         regex_filter:
           description: Regex for filtering objects
           nullable: true
