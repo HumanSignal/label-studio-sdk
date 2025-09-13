@@ -4745,7 +4745,7 @@ paths:
       x-fern-sdk-method-name: predict_interactive
   /api/ml/{id}/predict:
     post:
-      description: "\n        Create predictions for all tasks using a specific ML backend so that you can set up an active learning strategy\n        based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires \n        a Label Studio ML backend set up and configured for your project. \n\n        See [Set up machine learning](https://labelstud.io/guide/ml.html) for more details \n        about a Label Studio ML backend.\n\n        Reference the ML backend ID in the path of this API call. Get the ML backend ID by \n        [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).\n        "
+      description: "Note: not available in the community edition of Label Studio. \n\nCreate predictions for all tasks using a specific ML backend so that you can set up an active learning strategy based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires a Label Studio ML backend set up and configured for your project. \n\nSee [Set up machine learning](https://labelstud.io/guide/ml.html) for more details about a Label Studio ML backend. \n\nReference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list)."
       operationId: api_ml_predict_create
       parameters:
         - description: Computed number of tasks without predictions that the ML backend needs to predict.
@@ -4764,9 +4764,13 @@ paths:
           description: Predictions have successfully started.
       security:
         - Token: []
-      summary: Create predictions
+      summary: Create predictions for all tasks
       tags:
         - Machine Learning
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: ml
+      x-fern-sdk-method-name: predict_all_tasks
   /api/ml/{id}/predict/test:
     post:
       description: "\n        After you add an ML backend, call this API with the ML backend ID to run a test prediction on specific task data               \n        "
@@ -5253,6 +5257,11 @@ paths:
       summary: Update organization
       tags:
         - Organizations
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+      x-fern-sdk-method-name: update
   /api/organizations/{id}/memberships:
     get:
       description: Retrieve a list of all users and roles in a specific organization.
@@ -5471,6 +5480,11 @@ paths:
       summary: Update default role
       tags:
         - Organizations
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+      x-fern-sdk-method-name: update_default_role
   /api/predictions/:
     get:
       description: List all predictions and their IDs.
@@ -5938,6 +5952,11 @@ paths:
       summary: Get project templates
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: list
     post:
       description: Create a project template for an organization.
       operationId: api_project_templates_create
@@ -5965,6 +5984,11 @@ paths:
       summary: Create project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: create
   /api/project-templates/{id}:
     delete:
       description: Delete a specific project template by ID for an organization.
@@ -5983,6 +6007,11 @@ paths:
       summary: Delete a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: delete
     get:
       description: Get a specific project template by ID for an organization.
       operationId: api_project_templates_retrieve
@@ -6004,6 +6033,11 @@ paths:
       summary: Get a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: get
     patch:
       description: Update the details of a specific project template by ID for an organization.
       operationId: api_project_templates_partial_update
@@ -6036,6 +6070,11 @@ paths:
       summary: Update a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: update
     put:
       description: Overwrite a specific project template by ID for an organization.
       operationId: api_project_templates_update
@@ -6069,6 +6108,8 @@ paths:
       summary: Overwrite a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - internal
   /api/project-templates/{id}/create-project:
     post:
       description: Create a project from a specific project template by ID for an organization.
@@ -6109,6 +6150,11 @@ paths:
       summary: Create project from template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: create_project_from_template
   /api/projects/:
     get:
       description: Retrieve a list of projects.
@@ -26543,6 +26589,9 @@ components:
         organization:
           nullable: true
           type: integer
+        project_id:
+          type: integer
+          writeOnly: true
         project_settings:
           description: general dict serialized project settings
         require_comment_on_skip:
@@ -27674,6 +27723,9 @@ components:
         organization:
           nullable: true
           type: integer
+        project_id:
+          type: integer
+          writeOnly: true
         project_settings:
           description: general dict serialized project settings
         require_comment_on_skip:
@@ -27687,6 +27739,7 @@ components:
         tags: {}
       required:
         - name
+        - project_id
       type: object
     PromptsStatusEnum:
       description: |-
