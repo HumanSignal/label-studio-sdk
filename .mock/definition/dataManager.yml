@@ -29,6 +29,8 @@ service:
           response:
             body:
               key: value
+      audiences:
+        - internal
     api_dm_project_retrieve:
       path: /api/dm/project/
       method: GET
