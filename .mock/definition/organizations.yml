@@ -89,7 +89,7 @@ service:
               token: token
       audiences:
         - public
-    api_organizations_partial_update:
+    update:
       path: /api/organizations/{id}
       method: PATCH
       auth: true
@@ -157,7 +157,9 @@ service:
               id: 1
               title: title
               token: token
-    api_organizations_set_default_role_partial_update:
+      audiences:
+        - public
+    update_default_role:
       path: /api/organizations/{id}/set-default-role
       method: PATCH
       auth: true
@@ -255,6 +257,8 @@ service:
               label_stream_navigation_disabled_at: '2024-01-15T09:30:00Z'
               organization: 1
               read_only_quick_view_enabled_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
   source:
     openapi: openapi/openapi.yaml
 types:

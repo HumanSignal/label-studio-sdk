@@ -231,6 +231,19 @@ async def test_predict_interactive(client: LabelStudio, async_client: AsyncLabel
     )
 
 
+async def test_predict_all_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.ml.predict_all_tasks(id=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+    assert (
+        await async_client.ml.predict_all_tasks(id=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+
 async def test_train(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (

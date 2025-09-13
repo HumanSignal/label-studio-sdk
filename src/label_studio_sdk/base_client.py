@@ -23,6 +23,7 @@ from .ml.client import MlClient
 from .model_providers.client import ModelProvidersClient
 from .prompts.client import PromptsClient
 from .predictions.client import PredictionsClient
+from .project_templates.client import ProjectTemplatesClient
 from .projects.client import ProjectsClient
 from .tasks.client import TasksClient
 from .session_policy.client import SessionPolicyClient
@@ -51,6 +52,7 @@ from .ml.client import AsyncMlClient
 from .model_providers.client import AsyncModelProvidersClient
 from .prompts.client import AsyncPromptsClient
 from .predictions.client import AsyncPredictionsClient
+from .project_templates.client import AsyncProjectTemplatesClient
 from .projects.client import AsyncProjectsClient
 from .tasks.client import AsyncTasksClient
 from .session_policy.client import AsyncSessionPolicyClient
@@ -142,6 +144,7 @@ class LabelStudioBase:
         self.model_providers = ModelProvidersClient(client_wrapper=self._client_wrapper)
         self.prompts = PromptsClient(client_wrapper=self._client_wrapper)
         self.predictions = PredictionsClient(client_wrapper=self._client_wrapper)
+        self.project_templates = ProjectTemplatesClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = TasksClient(client_wrapper=self._client_wrapper)
         self.session_policy = SessionPolicyClient(client_wrapper=self._client_wrapper)
@@ -233,6 +236,7 @@ class AsyncLabelStudioBase:
         self.model_providers = AsyncModelProvidersClient(client_wrapper=self._client_wrapper)
         self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
         self.predictions = AsyncPredictionsClient(client_wrapper=self._client_wrapper)
+        self.project_templates = AsyncProjectTemplatesClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = AsyncTasksClient(client_wrapper=self._client_wrapper)
         self.session_policy = AsyncSessionPolicyClient(client_wrapper=self._client_wrapper)
