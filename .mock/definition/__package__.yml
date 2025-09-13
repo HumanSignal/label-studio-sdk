@@ -4275,7 +4275,7 @@ types:
     docs: Task Serializer with project scheme configs validation
     properties:
       agreement: string
-      agreement_filtered: string
+      agreement_selected: string
       annotations: string
       annotations_ids: string
       annotations_results: string
@@ -4722,7 +4722,7 @@ types:
     docs: Task Serializer with project scheme configs validation
     properties:
       agreement: string
-      agreement_filtered: string
+      agreement_selected: string
       annotations: string
       annotations_ids: string
       annotations_results: string

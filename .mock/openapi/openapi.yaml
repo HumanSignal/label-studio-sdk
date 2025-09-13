@@ -22249,7 +22249,7 @@ components:
         agreement:
           readOnly: true
           type: string
-        agreement_filtered:
+        agreement_selected:
           readOnly: true
           type: string
         annotations:
@@ -22452,7 +22452,7 @@ components:
           type: array
       required:
         - agreement
-        - agreement_filtered
+        - agreement_selected
         - annotations
         - annotations_ids
         - annotations_results
@@ -22782,7 +22782,7 @@ components:
         agreement:
           readOnly: true
           type: string
-        agreement_filtered:
+        agreement_selected:
           readOnly: true
           type: string
         annotations:
@@ -22985,7 +22985,7 @@ components:
           type: array
       required:
         - agreement
-        - agreement_filtered
+        - agreement_selected
         - annotations
         - annotations_ids
         - annotations_results
