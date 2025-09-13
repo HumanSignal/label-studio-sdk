@@ -57,6 +57,8 @@ service:
                 traceback: traceback
                 type: type
                 use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_s3_create:
       path: /api/dataset-storages/s3/
       method: POST
@@ -106,6 +108,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_s3_check_for_records_create:
       path: /api/dataset-storages/s3/check-for-records/
       method: POST
@@ -157,6 +161,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_s3_validate_create:
       path: /api/dataset-storages/s3/validate/
       method: POST
@@ -206,6 +212,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_s3_retrieve:
       path: /api/dataset-storages/s3/{id}/
       method: GET
@@ -254,6 +262,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_s3_destroy:
       path: /api/dataset-storages/s3/{id}/
       method: DELETE
@@ -267,6 +277,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - internal
     api_dataset_storages_s3_partial_update:
       path: /api/dataset-storages/s3/{id}/
       method: PATCH
@@ -402,6 +414,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_s3_columns_retrieve:
       path: /api/dataset-storages/s3/{id}/columns/
       method: GET
@@ -415,6 +429,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - internal
     api_dataset_storages_s3_sync_create:
       path: /api/dataset-storages/s3/{id}/sync/
       method: POST
@@ -468,5 +484,7 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
   source:
     openapi: openapi/openapi.yaml

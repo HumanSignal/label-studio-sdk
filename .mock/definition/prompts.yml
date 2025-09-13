@@ -234,7 +234,6 @@ service:
                   expert_instruction: expert_instruction
                   finished_task_number: 1
                   ground_truth_number: 1
-                  has_blueprints: has_blueprints
                   id: 1
                   is_draft: true
                   is_published: true
@@ -272,6 +271,7 @@ service:
                   show_instruction: true
                   show_overlap_first: true
                   show_skip_button: true
+                  show_unused_data_columns_to_annotators: true
                   skip_queue: REQUEUE_FOR_ME
                   skipped_annotations_number: skipped_annotations_number
                   start_training_on_annotation_update: true

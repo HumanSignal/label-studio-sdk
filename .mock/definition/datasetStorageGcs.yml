@@ -52,6 +52,8 @@ service:
                 traceback: traceback
                 type: type
                 use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_create:
       path: /api/dataset-storages/gcs/
       method: POST
@@ -96,6 +98,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_check_for_records_create:
       path: /api/dataset-storages/gcs/check-for-records/
       method: POST
@@ -142,6 +146,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_validate_create:
       path: /api/dataset-storages/gcs/validate/
       method: POST
@@ -186,6 +192,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_retrieve:
       path: /api/dataset-storages/gcs/{id}/
       method: GET
@@ -229,6 +237,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_destroy:
       path: /api/dataset-storages/gcs/{id}/
       method: DELETE
@@ -242,6 +252,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - internal
     api_dataset_storages_gcs_partial_update:
       path: /api/dataset-storages/gcs/{id}/
       method: PATCH
@@ -357,6 +369,8 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
     api_dataset_storages_gcs_columns_retrieve:
       path: /api/dataset-storages/gcs/{id}/columns/
       method: GET
@@ -370,6 +384,8 @@ service:
       examples:
         - path-parameters:
             id: 1
+      audiences:
+        - internal
     api_dataset_storages_gcs_sync_create:
       path: /api/dataset-storages/gcs/{id}/sync/
       method: POST
@@ -418,5 +434,7 @@ service:
               traceback: traceback
               type: type
               use_blob_urls: true
+      audiences:
+        - internal
   source:
     openapi: openapi/openapi.yaml

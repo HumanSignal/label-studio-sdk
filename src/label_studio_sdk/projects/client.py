@@ -3,6 +3,8 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .exports.client import ExportsClient
+from .members.client import MembersClient
+from .metrics.client import MetricsClient
 from .stats.client import StatsClient
 from .assignments.client import AssignmentsClient
 from .pauses.client import PausesClient
@@ -35,6 +37,8 @@ from ..errors.bad_request_error import BadRequestError
 from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
 from .exports.client import AsyncExportsClient
+from .members.client import AsyncMembersClient
+from .metrics.client import AsyncMetricsClient
 from .stats.client import AsyncStatsClient
 from .assignments.client import AsyncAssignmentsClient
 from .pauses.client import AsyncPausesClient
@@ -48,6 +52,8 @@ class ProjectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.exports = ExportsClient(client_wrapper=self._client_wrapper)
+        self.members = MembersClient(client_wrapper=self._client_wrapper)
+        self.metrics = MetricsClient(client_wrapper=self._client_wrapper)
         self.stats = StatsClient(client_wrapper=self._client_wrapper)
         self.assignments = AssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = PausesClient(client_wrapper=self._client_wrapper)
@@ -484,6 +490,7 @@ class ProjectsClient:
         show_instruction: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
+        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[PatchedLseProjectUpdateRequestSkipQueue] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
@@ -586,6 +593,8 @@ class ProjectsClient:
         show_skip_button : typing.Optional[bool]
             Show a skip button in interface and allow annotators to skip the task
 
+        show_unused_data_columns_to_annotators : typing.Optional[bool]
+
         skip_queue : typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]
 
         task_data_login : typing.Optional[str]
@@ -665,6 +674,7 @@ class ProjectsClient:
                 "show_instruction": show_instruction,
                 "show_overlap_first": show_overlap_first,
                 "show_skip_button": show_skip_button,
+                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "skip_queue": convert_and_respect_annotation_metadata(
                     object_=skip_queue, annotation=PatchedLseProjectUpdateRequestSkipQueue, direction="write"
                 ),
@@ -976,6 +986,8 @@ class AsyncProjectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.exports = AsyncExportsClient(client_wrapper=self._client_wrapper)
+        self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
+        self.metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         self.stats = AsyncStatsClient(client_wrapper=self._client_wrapper)
         self.assignments = AsyncAssignmentsClient(client_wrapper=self._client_wrapper)
         self.pauses = AsyncPausesClient(client_wrapper=self._client_wrapper)
@@ -1444,6 +1456,7 @@ class AsyncProjectsClient:
         show_instruction: typing.Optional[bool] = OMIT,
         show_overlap_first: typing.Optional[bool] = OMIT,
         show_skip_button: typing.Optional[bool] = OMIT,
+        show_unused_data_columns_to_annotators: typing.Optional[bool] = OMIT,
         skip_queue: typing.Optional[PatchedLseProjectUpdateRequestSkipQueue] = OMIT,
         task_data_login: typing.Optional[str] = OMIT,
         task_data_password: typing.Optional[str] = OMIT,
@@ -1546,6 +1559,8 @@ class AsyncProjectsClient:
         show_skip_button : typing.Optional[bool]
             Show a skip button in interface and allow annotators to skip the task
 
+        show_unused_data_columns_to_annotators : typing.Optional[bool]
+
         skip_queue : typing.Optional[PatchedLseProjectUpdateRequestSkipQueue]
 
         task_data_login : typing.Optional[str]
@@ -1633,6 +1648,7 @@ class AsyncProjectsClient:
                 "show_instruction": show_instruction,
                 "show_overlap_first": show_overlap_first,
                 "show_skip_button": show_skip_button,
+                "show_unused_data_columns_to_annotators": show_unused_data_columns_to_annotators,
                 "skip_queue": convert_and_respect_annotation_metadata(
                     object_=skip_queue, annotation=PatchedLseProjectUpdateRequestSkipQueue, direction="write"
                 ),

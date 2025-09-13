@@ -85,11 +85,31 @@ paths:
         - Token: []
       summary: Get activity logs
       tags:
-        - Activity Log
+        - Activity Logs
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: activity_logs
+      x-fern-sdk-method-name: list
   /api/annotation-history/:
     delete:
       description: Delete all annotation history items for a specific annotation, task or project. This method is available only for users with administrator roles.
       operationId: api_annotation_history_destroy
+      parameters:
+        - description: Annotation ID to delete annotation history items for.
+          in: query
+          name: annotation
+          schema:
+            type: integer
+        - description: Project ID to delete annotation history items for.
+          in: query
+          name: project
+          schema:
+            type: integer
+        - description: Task ID to delete annotation history items for.
+          in: query
+          name: task
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -106,10 +126,19 @@ paths:
       summary: Delete annotation history items
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: delete
     get:
       description: 'List annotation history items for an annotation. Annotation history logs all actions performed with annotations, such as: imports, submits, updates, reviews, and more. Users can view annotation history items in the Annotation History panel during labeling.'
       operationId: api_annotation_history_list
       parameters:
+        - description: Annotation ID to get annotation history items for.
+          in: query
+          name: annotation
+          schema:
+            type: integer
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -130,6 +159,10 @@ paths:
       summary: List all annotation history items for annotation
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: list
   /api/annotation-reviews/:
     get:
       description: List all reviews for a specific annotation ID.
@@ -163,9 +196,19 @@ paths:
       summary: List reviews
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: list
     post:
       description: Create a review for a specific annotation ID.
       operationId: api_annotation_reviews_create
+      parameters:
+        - description: Whether to postprocess the review asynchronously.
+          in: query
+          name: async_postprocess
+          schema:
+            type: boolean
       requestBody:
         content:
           application/json:
@@ -190,6 +233,10 @@ paths:
       summary: Create review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: create
   /api/annotation-reviews/{id}/:
     delete:
       description: Delete a review by ID
@@ -209,6 +256,10 @@ paths:
       summary: Delete review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: delete
     get:
       description: Retrieve a specific review by ID for an annotation.
       operationId: api_annotation_reviews_retrieve
@@ -231,6 +282,10 @@ paths:
       summary: Get review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific review by ID.
       operationId: api_annotation_reviews_partial_update
@@ -264,6 +319,10 @@ paths:
       summary: Update review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_reviews
+      x-fern-sdk-method-name: update
     put:
       description: Overwrite a specific review by ID.
       operationId: api_annotation_reviews_update
@@ -298,6 +357,8 @@ paths:
       summary: Put review
       tags:
         - Annotation Reviews
+      x-fern-audiences:
+        - internal
   /api/annotations/bulk/:
     post:
       description: Create multiple annotations at once
@@ -801,6 +862,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/BlueprintRequest'
+        required: true
       responses:
         '201':
           content:
@@ -813,6 +875,10 @@ paths:
       summary: Create blueprint
       tags:
         - Blueprints
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: blueprints
+      x-fern-sdk-method-name: create
   /api/blueprints/{id}/:
     delete:
       description: Delete a blueprint by ID
@@ -831,9 +897,13 @@ paths:
       summary: Delete blueprint
       tags:
         - Blueprints
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: blueprints
+      x-fern-sdk-method-name: delete
   /api/blueprints/{share_id}/create-project:
     get:
-      description: Create a new project from an existing blueprint
+      description: Create a new project from an existing blueprint. On success, user is redirected to the new project with a 302.
       operationId: api_blueprints_create_project_retrieve
       parameters:
         - description: Blueprint share ID
@@ -844,14 +914,6 @@ paths:
             type: string
       responses:
         '302':
-          content:
-            application/json:
-              schema:
-                properties:
-                  redirect_url:
-                    description: URL to redirect to the new project
-                    type: string
-                type: object
           description: Redirect to new project
         '404':
           description: Blueprint not found
@@ -860,6 +922,8 @@ paths:
       summary: Create project from blueprint
       tags:
         - Blueprints
+      x-fern-audiences:
+        - internal
   /api/comments/:
     get:
       description: List all comments for a specific annotation ID.
@@ -1286,7 +1350,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LseUser'
+                $ref: '#/components/schemas/WhoAmIUser'
           description: ''
       security:
         - Token: []
@@ -1297,55 +1361,6 @@ paths:
         - public
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: whoami
-  /api/dashboards/{id}/kpis/{kpi_key}:
-    get:
-      description: 'Get Key Performance Indicator (KPI) data for a dashboard. Supports various KPIs including: skipped_annotations, accepted_annotations, rejected_annotations, average_time_per_task_min, total_annotations, regions_created, and more.'
-      operationId: api_dashboards_kpis_retrieve
-      parameters:
-        - description: End date for filtering (ISO format)
-          in: query
-          name: end
-          schema:
-            type: string
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-        - in: path
-          name: kpi_key
-          required: true
-          schema:
-            type: string
-        - description: Array of user IDs to filter by
-          in: query
-          name: members
-          schema:
-            items:
-              type: integer
-            type: array
-        - description: Start date for filtering (ISO format)
-          in: query
-          name: start
-          schema:
-            type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                description: KPI data with the requested key and its value
-                type: object
-          description: KPI data
-        '404':
-          description: KPI not found
-        '501':
-          description: KPI depends on other KPIs - not implemented
-      security:
-        - Token: []
-      summary: Get KPI data
-      tags:
-        - Dashboard
   /api/dataset-storages/:
     get:
       description: Retrieve a list of the dataset storages of all types with their IDs.
@@ -1365,6 +1380,8 @@ paths:
       summary: List all dataset storages from the project
       tags:
         - Storage
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/:
     get:
       description: Get a list of all Azure import storage connections.
@@ -1395,6 +1412,8 @@ paths:
       summary: Get all import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
     post:
       description: Create a new Azure import storage connection.
       operationId: api_dataset_storages_azure_create
@@ -1422,6 +1441,8 @@ paths:
       summary: Create import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/check-for-records/:
     post:
       description: Checks for existence of records matching the file pattern in the bucket/prefix
@@ -1450,6 +1471,8 @@ paths:
       summary: Check for records given the file pattern
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/validate/:
     post:
       description: Validate a specific Azure import storage connection.
@@ -1478,6 +1501,8 @@ paths:
       summary: Validate import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/{id}/:
     delete:
       description: Delete a specific Azure import storage connection.
@@ -1496,6 +1521,8 @@ paths:
       summary: Delete import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
     get:
       description: Get a specific Azure import storage connection.
       operationId: api_dataset_storages_azure_retrieve
@@ -1517,6 +1544,8 @@ paths:
       summary: Get import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
     patch:
       description: Update a specific Azure import storage connection.
       operationId: api_dataset_storages_azure_partial_update
@@ -1549,6 +1578,8 @@ paths:
       summary: Update import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/{id}/columns/:
     get:
       description: Retrieves column names from users JSON/blob data in bucket
@@ -1567,6 +1598,8 @@ paths:
       summary: Get data column names from storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/azure/{id}/sync/:
     post:
       description: Sync tasks from an Azure import storage connection.
@@ -1601,6 +1634,8 @@ paths:
       summary: Sync import storage
       tags:
         - 'Dataset Storage: Azure'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/:
     get:
       description: Get a list of all GCS import storage connections.
@@ -1631,6 +1666,8 @@ paths:
       summary: Get all import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
     post:
       description: Create a new GCS import storage connection.
       operationId: api_dataset_storages_gcs_create
@@ -1658,6 +1695,8 @@ paths:
       summary: Create import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/check-for-records/:
     post:
       description: Checks for existence of records matching the file pattern in the bucket/prefix
@@ -1686,6 +1725,8 @@ paths:
       summary: Check for records given the file pattern
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/validate/:
     post:
       description: Validate a specific GCS import storage connection.
@@ -1714,6 +1755,8 @@ paths:
       summary: Validate import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/{id}/:
     delete:
       description: Delete a specific GCS import storage connection.
@@ -1732,6 +1775,8 @@ paths:
       summary: Delete import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
     get:
       description: Get a specific GCS import storage connection.
       operationId: api_dataset_storages_gcs_retrieve
@@ -1753,6 +1798,8 @@ paths:
       summary: Get import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
     patch:
       description: Update a specific GCS import storage connection.
       operationId: api_dataset_storages_gcs_partial_update
@@ -1785,6 +1832,8 @@ paths:
       summary: Update import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/{id}/columns/:
     get:
       description: Retrieves column names from users JSON/blob data in bucket
@@ -1803,6 +1852,8 @@ paths:
       summary: Get data column names from storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/gcs/{id}/sync/:
     post:
       description: Sync tasks from an GCS import storage connection.
@@ -1837,6 +1888,8 @@ paths:
       summary: Sync import storage
       tags:
         - 'Dataset Storage: GCS'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/:
     get:
       description: Get a list of all S3 import storage connections.
@@ -1867,6 +1920,8 @@ paths:
       summary: Get all import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
     post:
       description: Create a new S3 import storage connection.
       operationId: api_dataset_storages_s3_create
@@ -1894,6 +1949,8 @@ paths:
       summary: Create import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/check-for-records/:
     post:
       description: Checks for existence of records matching the file pattern in the bucket/prefix
@@ -1922,6 +1979,8 @@ paths:
       summary: Check for records given the file pattern
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/validate/:
     post:
       description: Validate a specific S3 import storage connection.
@@ -1950,6 +2009,8 @@ paths:
       summary: Validate import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/{id}/:
     delete:
       description: Delete a specific S3 import storage connection.
@@ -1968,6 +2029,8 @@ paths:
       summary: Delete import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
     get:
       description: Get a specific S3 import storage connection.
       operationId: api_dataset_storages_s3_retrieve
@@ -1989,6 +2052,8 @@ paths:
       summary: Get import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
     patch:
       description: Update a specific S3 import storage connection.
       operationId: api_dataset_storages_s3_partial_update
@@ -2021,6 +2086,8 @@ paths:
       summary: Update import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/{id}/columns/:
     get:
       description: Retrieves column names from users JSON/blob data in bucket
@@ -2039,6 +2106,8 @@ paths:
       summary: Get data column names from storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/s3/{id}/sync/:
     post:
       description: Sync tasks from an S3 import storage connection.
@@ -2073,6 +2142,8 @@ paths:
       summary: Sync import storage
       tags:
         - 'Dataset Storage: S3'
+      x-fern-audiences:
+        - internal
   /api/dataset-storages/types/:
     get:
       description: Retrieve a list of the dataset storages types.
@@ -2085,6 +2156,8 @@ paths:
       summary: List all dataset storages types
       tags:
         - Storage
+      x-fern-audiences:
+        - internal
   /api/datasets/:
     get:
       description: List all datasets.
@@ -2110,6 +2183,8 @@ paths:
       summary: List datasets
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     post:
       description: Create a new dataset.
       operationId: api_datasets_create
@@ -2137,6 +2212,8 @@ paths:
       summary: Create dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/datasets/columns:
     get:
       description: Retrieve the data explorer columns available for a specific Dataset.
@@ -2155,6 +2232,8 @@ paths:
       summary: Get data explorer columns
       tags:
         - Data Explorer
+      x-fern-audiences:
+        - internal
   /api/datasets/import:
     patch:
       description: Export Candidate task for a specific dataset to project.
@@ -2178,6 +2257,8 @@ paths:
       summary: Export candidate tasks to project
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     post:
       description: "\n    Export Candidate task for a specific dataset to project.\n    "
       operationId: api_datasets_import_create
@@ -2223,6 +2304,8 @@ paths:
       summary: Export candidate tasks to project
       tags:
         - Data Explorer
+      x-fern-audiences:
+        - internal
   /api/datasets/tasks:
     get:
       description: "\n    Retrieve a list of Data Explorer tasks with pagination for a specific view or dataset, by using filters and ordering.\n    "
@@ -2270,6 +2353,8 @@ paths:
       summary: Get Data Explorer tasks list
       tags:
         - Data Explorer
+      x-fern-audiences:
+        - internal
   /api/datasets/tasks/metadata:
     get:
       description: "\n    Retrieve Candidate task metadata for a specific dataset, by using candidate_task_id or weaviate_id.\n    "
@@ -2298,6 +2383,8 @@ paths:
       summary: Get Candidate task metadata
       tags:
         - Data Explorer
+      x-fern-audiences:
+        - internal
   /api/datasets/views/:
     get:
       description: List all views for a specific dataset.
@@ -2322,6 +2409,8 @@ paths:
       summary: List dataset views
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     post:
       description: Create a view for a specific dataset.
       operationId: api_datasets_views_create
@@ -2349,6 +2438,8 @@ paths:
       summary: Create dataset view
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/datasets/views/reset/:
     delete:
       description: Reset all views for a specific dataset.
@@ -2361,6 +2452,8 @@ paths:
       summary: Reset dataset views
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/datasets/views/{id}/:
     delete:
       description: Delete a specific view by ID.
@@ -2380,6 +2473,8 @@ paths:
       summary: Delete dataset view
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     get:
       description: Get the details about a specific view in the data manager
       operationId: api_datasets_views_retrieve
@@ -2402,6 +2497,8 @@ paths:
       summary: Get dataset view details
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     patch:
       description: Update view data with additional filters and other information for a specific dataset.
       operationId: api_datasets_views_partial_update
@@ -2435,6 +2532,8 @@ paths:
       summary: Update dataset view
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     put:
       description: Overwrite view data with updated filters and other information for a specific dataset.
       operationId: api_datasets_views_update
@@ -2469,6 +2568,8 @@ paths:
       summary: Put dataset view
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/datasets/{id}/:
     delete:
       description: Delete a dataset by ID
@@ -2487,6 +2588,8 @@ paths:
       summary: Delete dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     get:
       description: Retrieve a specific dataset.
       operationId: api_datasets_retrieve
@@ -2508,6 +2611,8 @@ paths:
       summary: Get dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     patch:
       description: Update a specific dataset by ID.
       operationId: api_datasets_partial_update
@@ -2540,6 +2645,8 @@ paths:
       summary: Update dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     put:
       description: Overwrite a specific dataset by ID.
       operationId: api_datasets_update
@@ -2573,6 +2680,8 @@ paths:
       summary: Put dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/datasets/{id}/members:
     delete:
       description: Remove a member from a specific dataset.
@@ -2596,6 +2705,8 @@ paths:
       summary: Remove member from dataset
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     get:
       description: Retrieve the members for a specific dataset.
       operationId: api_datasets_members_list
@@ -2625,6 +2736,8 @@ paths:
       summary: Get datasets members
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
     post:
       description: Add a member to a specific dataset.
       operationId: api_datasets_members_create
@@ -2658,6 +2771,8 @@ paths:
       summary: Add dataset member
       tags:
         - Datasets
+      x-fern-audiences:
+        - internal
   /api/dm/actions/:
     get:
       description: Retrieve all the registered actions with descriptions that data manager can use.
@@ -3792,12 +3907,25 @@ paths:
       operationId: api_invite_retrieve
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationInvite'
+          description: ''
+        '403':
+          description: Organization does not allow to invite people
       security:
         - Token: []
-      summary: Invite people
+      summary: Get invite link
       tags:
+        - Organizations
         - Invites
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - invites
+      x-fern-sdk-method-name: get_invite_link
   /api/invite/reset-token:
     post:
       description: Reset the token used in the invitation link to invite someone to an organization.
@@ -3820,7 +3948,7 @@ paths:
       x-fern-sdk-method-name: reset_token
   /api/invite/revoke:
     post:
-      description: Revoke invite
+      description: Revoke invite to organization
       operationId: api_invite_revoke_create
       requestBody:
         content:
@@ -3836,12 +3964,19 @@ paths:
         required: true
       responses:
         '200':
-          description: No response body
+          description: Invite revoked
       security:
         - Token: []
       summary: Revoke invite
       tags:
+        - Organizations
         - Invites
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - invites
+      x-fern-sdk-method-name: revoke_invite
   /api/invite/send-email:
     post:
       description: Send email with invite to organization
@@ -3860,12 +3995,21 @@ paths:
         required: true
       responses:
         '200':
-          description: No response body
+          description: Invite sent
+        '403':
+          description: Organization does not allow to invite people
       security:
         - Token: []
       summary: Send email with invite
       tags:
+        - Organizations
         - Invites
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - invites
+      x-fern-sdk-method-name: send_email
   /api/jwt/settings:
     get:
       description: Retrieve JWT settings for the currently active organization.
@@ -3900,6 +4044,7 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/LSEJWTSettingsRequest'
+        required: true
       responses:
         '201':
           content:
@@ -4253,33 +4398,113 @@ paths:
       x-fern-sdk-method-name: update
   /api/llm/openai/chat/completions:
     post:
-      description: Proxy requests to OpenAI /chat/completions and return the full response payload.
+      description: 'Proxy requests to OpenAI-compatible chat completions APIs and return the full response payload. Supports multiple providers via model parameter format: "model_name" (defaults to OpenAI), "provider/model_name", or "provider:model_name". Works with providers that offer OpenAI-compatible endpoints.'
       operationId: api_llm_openai_chat_completions_create
       requestBody:
         content:
           application/json:
             schema:
-              additionalProperties: {}
-              type: object
-          application/x-www-form-urlencoded:
-            schema:
-              additionalProperties: {}
-              type: object
-          multipart/form-data:
-            schema:
-              additionalProperties: {}
+              properties:
+                messages:
+                  description: Array of message objects for the chat completion
+                  items:
+                    properties:
+                      content:
+                        description: The content of the message
+                        type: string
+                      role:
+                        description: The role of the message author
+                        enum:
+                          - system
+                          - user
+                          - assistant
+                        type: string
+                    required:
+                      - role
+                      - content
+                    type: object
+                  type: array
+                model:
+                  description: Model identifier. Can be "model_name" (defaults to OpenAI), "provider/model_name", or "provider:model_name"
+                  example: gpt-4
+                  type: string
+              required:
+                - model
+                - messages
               type: object
       responses:
         '200':
           content:
             application/json:
               schema:
-                additionalProperties: {}
-                type: object
+                content:
+                  application/json:
+                    properties:
+                      choices:
+                        description: Array of completion choices
+                        items:
+                          properties:
+                            finish_reason:
+                              description: The reason the completion finished
+                              type: string
+                            index:
+                              description: The index of the choice
+                              type: integer
+                            message:
+                              properties:
+                                content:
+                                  description: The content of the message
+                                  type: string
+                                role:
+                                  description: The role of the message author
+                                  type: string
+                              type: object
+                          type: object
+                        type: array
+                      created:
+                        description: Unix timestamp of when the completion was created
+                        type: integer
+                      id:
+                        description: Unique identifier for the chat completion
+                        type: string
+                      model:
+                        description: The model used for the completion
+                        type: string
+                      object:
+                        description: Object type, always "chat.completion"
+                        type: string
+                      usage:
+                        description: Token usage statistics
+                        properties:
+                          completion_tokens:
+                            description: Number of tokens in the completion
+                            type: integer
+                          prompt_tokens:
+                            description: Number of tokens in the prompt
+                            type: integer
+                          total_tokens:
+                            description: Total number of tokens used
+                            type: integer
+                        type: object
+                    type: object
+                description: Chat completion response
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                content:
+                  application/json:
+                    properties:
+                      detail:
+                        description: Error message describing the issue
+                        type: string
+                    type: object
+                description: Bad request - missing required fields or invalid provider
           description: ''
       security:
         - Token: []
-      summary: Proxy to OpenAI Chat Completions
+      summary: Proxy to OpenAI-Compatible Chat Completions
       tags:
         - LLM
       x-fern-audiences:
@@ -6297,12 +6522,92 @@ paths:
       summary: List annotation history items for project
       tags:
         - Annotation History
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: annotation_history
+      x-fern-sdk-method-name: list_for_project
+  /api/projects/{id}/aws-custom-function:
+    get:
+      description: Get the AWS Lambda code for the custom metric configured for this project.
+      operationId: api_projects_aws_custom_function_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  code:
+                    type: string
+                required:
+                  - code
+                type: object
+          description: Lambda code
+      security:
+        - Token: []
+      summary: Get AWS custom metric code
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+        - custom
+      x-fern-sdk-method-name: get_lambda
+    post:
+      description: Create or update the AWS Lambda function used for custom metrics in this project.
+      operationId: api_projects_aws_custom_function_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AWSCustomFunctionUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AWSCustomFunctionUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AWSCustomFunctionUpdateRequest'
+        required: true
+      responses:
+        '200':
+          description: Updated successfully
+        '202':
+          description: Accepted, activation pending
+        '204':
+          description: No changes applied
+        '500':
+          description: Error updating function
+      security:
+        - Token: []
+      summary: Update AWS custom metric Lambda
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+        - custom
+      x-fern-sdk-method-name: update_lambda
   /api/projects/{id}/aws-custom-function-logs:
     get:
       description: Get AWS lambda logs for project, including filtering by start and end dates
       operationId: api_projects_aws_custom_function_logs_retrieve
       parameters:
-        - description: End date for AWS logs filtering
+        - description: End date for AWS logs filtering in format %Y-%m-%d
           in: query
           name: end_date
           schema:
@@ -6318,7 +6623,7 @@ paths:
           schema:
             default: 100
             type: integer
-        - description: Start date for AWS logs filtering
+        - description: Start date for AWS logs filtering in format %Y-%m-%d
           in: query
           name: start_date
           schema:
@@ -6337,6 +6642,50 @@ paths:
       summary: Get AWS lambda logs for project
       tags:
         - AWS
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+        - custom
+      x-fern-sdk-method-name: logs
+  /api/projects/{id}/check-function:
+    post:
+      description: Validate custom matching function code for the project.
+      operationId: api_projects_check_function_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CheckMatchingFunctionRequestRequest'
+        required: true
+      responses:
+        '200':
+          description: Code is valid
+      security:
+        - Token: []
+      summary: Check custom matching function code
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+        - custom
+      x-fern-sdk-method-name: check_function
   /api/projects/{id}/dashboard:
     get:
       deprecated: true
@@ -6385,6 +6734,8 @@ paths:
       summary: Get dashboard data for project
       tags:
         - Dashboard
+      x-fern-audiences:
+        - internal
   /api/projects/{id}/dashboard-members:
     get:
       deprecated: true
@@ -6499,6 +6850,8 @@ paths:
       summary: Get dashboard data for members
       tags:
         - Dashboard
+      x-fern-audiences:
+        - internal
   /api/projects/{id}/duplicate/:
     post:
       description: Make a copy of project.
@@ -7106,7 +7459,7 @@ paths:
       tags:
         - Projects
     get:
-      description: Retrieve the members for a specific project.
+      description: Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
       operationId: api_projects_members_retrieve
       parameters:
         - in: path
@@ -7114,18 +7467,31 @@ paths:
           required: true
           schema:
             type: integer
+        - description: 'Comma-separated list of user IDs to include. Example: user_ids=1,2,3'
+          in: query
+          name: user_ids
+          schema:
+            type: string
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProjectMember'
-          description: ''
+                items:
+                  $ref: '#/components/schemas/LseUser'
+                type: array
+          description: List of users with membership information
       security:
         - Token: []
       summary: Get project members
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+      x-fern-sdk-method-name: get
     post:
       description: Add a member to a specific project.
       operationId: api_projects_members_create
@@ -7159,6 +7525,345 @@ paths:
       summary: Add project member
       tags:
         - Projects
+  /api/projects/{id}/members/bulk/:
+    delete:
+      description: Unassign project members in bulk. Allows the same request body as bulk assign.
+      operationId: api_projects_members_bulk_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Search term for filtering members by name, email, or username. Only when all=True.
+          in: query
+          name: search
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  unassignments:
+                    type: integer
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: Bulk unassign project members
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+        - bulk
+      x-fern-sdk-method-name: delete
+    post:
+      description: Assign project members in bulk.
+      operationId: api_projects_members_bulk_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Search term for filtering members by name, email, or username. Only when all=True.
+          in: query
+          name: search
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectMemberBulkAssignRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProjectMemberBulkAssignRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProjectMemberBulkAssignRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  assignments:
+                    type: integer
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: Bulk assign project members
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - members
+        - bulk
+      x-fern-sdk-method-name: post
+  /api/projects/{id}/members/paginated/:
+    get:
+      description: Retrieve the members for a specific project.
+      operationId: api_projects_members_paginated_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Comma-separated list of user IDs to filter by
+          in: query
+          name: ids
+          schema:
+            type: string
+        - description: Include/Exclude implicit project members in the results. If not provided, explicit + implicit members are returned.
+          in: query
+          name: implicit
+          schema:
+            type: boolean
+        - description: Exclude annotators from the results
+          in: query
+          name: no_annotators
+          schema:
+            type: boolean
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: Search term for filtering members by name, email, or username
+          in: query
+          name: search
+          schema:
+            type: string
+        - description: Include deleted members in the results
+          in: query
+          name: with_deleted
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPaginatedProjectMemberList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get project members paginated
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name:
+        - projects
+        - members
+        - paginated
+      x-fern-sdk-method-name: list
+  /api/projects/{id}/metricparam/:
+    get:
+      description: Get the current metrics configuration for a project.
+      operationId: api_projects_metricparam_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricParam'
+          description: Current metrics configuration
+      security:
+        - Token: []
+      summary: Get project metrics configuration
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+      x-fern-sdk-method-name: get
+    post:
+      description: Update metrics strategy and parameters for a project.
+      operationId: api_projects_metricparam_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ProjectMetricParamUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricParam'
+          description: Updated metrics configuration
+        '204':
+          description: No params provided to update
+      security:
+        - Token: []
+      summary: Update project metrics configuration
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - metrics
+      x-fern-sdk-method-name: update
+  /api/projects/{id}/model-stats/{model_version}/agreement:
+    get:
+      description: |-
+        Overall agreement between a given model version's predictions and all annotators on overlapping tasks.
+        Computed as the average of per-annotator agreement vs this model version over annotators who overlap on at least one task.
+        Mirrors IAA per annotator, but one side is the model.
+        :return: {"agreement": float[0..1]}
+      operationId: api_projects_model_stats_agreement_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: model_version
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  agreement:
+                    type: number
+                type: object
+          description: Model-version overall agreement vs annotators
+      security:
+        - Token: []
+      summary: Get model-version overall agreement vs annotators
+      tags:
+        - Stats
+  /api/projects/{id}/model-stats/{model_version}/agreement-groundtruth:
+    get:
+      description: |-
+        Ground truth agreement for annotations that match predictions of a specific model version.
+        This mirrors gt_per_user_agreement but filters stats by tasks where predictions have given model_version.
+        :return: {"agreement": float[0..1]}
+      operationId: api_projects_model_stats_agreement_groundtruth_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: model_version
+          required: true
+          schema:
+            type: string
+        - description: Calculate agreement per label
+          in: query
+          name: per_label
+          schema:
+            default: false
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  agreement:
+                    type: number
+                type: object
+          description: Model-version ground truth agreement
+      security:
+        - Token: []
+      summary: Get model-version ground truth agreement
+      tags:
+        - Stats
+  /api/projects/{id}/model-stats/{model_version}/prediction:
+    get:
+      description: |-
+        Mean agreement between the given model version and all other model versions in the project.
+
+        Computed as the average of pairwise model-to-model agreement scores from PredictionPairStats where either
+        prediction pair's model_version_from or model_version_to equals the provided model_version.
+
+        When per_label=true, returns a mapping of label -> average agreement across the same set of pairs.
+
+        :return: {"average_prediction_agreement_per_model": float[0..1] | {label: float[0..1]}}
+      operationId: api_projects_model_stats_prediction_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: model_version
+          required: true
+          schema:
+            type: string
+        - description: Calculate agreement per label
+          in: query
+          name: per_label
+          schema:
+            default: false
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  average_prediction_agreement_per_model:
+                    type: number
+                type: object
+          description: Model-version prediction agreement
+      security:
+        - Token: []
+      summary: Get model-version prediction agreement
+      tags:
+        - Stats
   /api/projects/{id}/project-extra-params/:
     get:
       description: Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project.
@@ -7572,6 +8277,54 @@ paths:
       summary: Get lead time statistics
       tags:
         - Stats
+  /api/projects/{id}/stats/total_agreement:
+    get:
+      description: |-
+        Overall or per-label total agreement across the project.
+
+        NOTE: due to an open issue in Fern, SDK clients will raise ApiError upon handling a 204 response. As a workaround, wrap call to this function in a try-except block.
+      operationId: api_projects_stats_total_agreement_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Return agreement per label
+          in: query
+          name: per_label
+          schema:
+            type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - properties:
+                      total_agreement:
+                        type: number
+                    type: object
+                  - properties:
+                      total_agreement:
+                        additionalProperties:
+                          type: number
+                        type: object
+                    type: object
+          description: Total agreement
+        '204':
+          description: No data to compute agreement
+      security:
+        - Token: []
+      summary: Get total agreement for project
+      tags:
+        - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: total_agreement
   /api/projects/{id}/tasks/:
     delete:
       description: Delete all tasks from a specific project.
@@ -9238,6 +9991,20 @@ paths:
         '200':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/SamlSettings'
           description: ''
@@ -9246,12 +10013,32 @@ paths:
       summary: Retrieve SAML2 Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - saml
+      x-fern-sdk-method-name: get
     post:
       description: Update SAML2 settings for the currently active organization.
       operationId: api_saml_settings_create
       requestBody:
         content:
           application/json:
+            examples:
+              Response:
+                summary: response
+                value:
+                  projects_groups:
+                    - group: groups_test
+                      project_id: 42
+                      role: Inherit
+                  roles_groups:
+                    - - Administrator
+                      - groups_test
+                  workspaces_groups:
+                    - - Default workspace
+                      - groups_test
             schema:
               $ref: '#/components/schemas/SamlSettingsUpdateRequest'
           application/x-www-form-urlencoded:
@@ -9264,6 +10051,20 @@ paths:
         '201':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/SamlSettingsUpdate'
           description: ''
@@ -9272,6 +10073,12 @@ paths:
       summary: Update SAML2 Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - saml
+      x-fern-sdk-method-name: update
   /api/scim/settings:
     get:
       description: Retrieve SCIM settings for the currently active organization.
@@ -9280,6 +10087,20 @@ paths:
         '200':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/ScimSettings'
           description: ''
@@ -9288,12 +10109,32 @@ paths:
       summary: Retrieve SCIM Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - scim
+      x-fern-sdk-method-name: get
     post:
       description: Update SCIM settings for the currently active organization.
       operationId: api_scim_settings_create
       requestBody:
         content:
           application/json:
+            examples:
+              Response:
+                summary: response
+                value:
+                  projects_groups:
+                    - group: groups_test
+                      project_id: 42
+                      role: Inherit
+                  roles_groups:
+                    - - Administrator
+                      - groups_test
+                  workspaces_groups:
+                    - - Default workspace
+                      - groups_test
             schema:
               $ref: '#/components/schemas/ScimSettingsUpdateRequest'
           application/x-www-form-urlencoded:
@@ -9306,6 +10147,20 @@ paths:
         '201':
           content:
             application/json:
+              examples:
+                Response:
+                  summary: response
+                  value:
+                    projects_groups:
+                      - group: groups_test
+                        project_id: 42
+                        role: Inherit
+                    roles_groups:
+                      - - Administrator
+                        - groups_test
+                    workspaces_groups:
+                      - - Default workspace
+                        - groups_test
               schema:
                 $ref: '#/components/schemas/ScimSettingsUpdate'
           description: ''
@@ -9314,6 +10169,12 @@ paths:
       summary: Update SCIM Settings
       tags:
         - SSO
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - sso
+        - scim
+      x-fern-sdk-method-name: update
   /api/session-policy/:
     get:
       description: Retrieve session timeout policy for the currently active organization.
@@ -9330,6 +10191,10 @@ paths:
       summary: Retrieve Session Policy
       tags:
         - Session Policy
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: session_policy
+      x-fern-sdk-method-name: get
     patch:
       description: Update session timeout policy for the currently active organization.
       operationId: api_session_policy_partial_update
@@ -9356,6 +10221,10 @@ paths:
       summary: Update Session Policy
       tags:
         - Session Policy
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: session_policy
+      x-fern-sdk-method-name: update
   /api/storages/:
     get:
       description: Retrieve a list of the import storages of all types with their IDs.
@@ -9713,9 +10582,13 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
-          required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -9730,6 +10603,12 @@ paths:
       summary: Get Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: list
     post:
       description: Create Azure import storage with Service Principal authentication.
       operationId: api_storages_azure_spi_create
@@ -9757,6 +10636,12 @@ paths:
       summary: Create Azure import storage with SPI
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: create
   /api/storages/azure_spi/validate:
     post:
       description: Validate a specific Azure import storage connection that was set up with Service Principal authentication.
@@ -9774,17 +10659,19 @@ paths:
               $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AzureServicePrincipalImportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: validate
   /api/storages/azure_spi/{id}:
     delete:
       description: Delete a specific Azure import storage connection that was set up with Service Principal authentication.
@@ -9803,6 +10690,12 @@ paths:
       summary: Delete Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: delete
     get:
       description: Get a specific Azure import storage connection that was set up with Service Principal authentication.
       operationId: api_storages_azure_spi_retrieve
@@ -9824,6 +10717,12 @@ paths:
       summary: Get Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific Azure import storage connection that was set up with Service Principal authentication.
       operationId: api_storages_azure_spi_partial_update
@@ -9856,6 +10755,12 @@ paths:
       summary: Update Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: update
   /api/storages/azure_spi/{id}/sync:
     post:
       description: Sync tasks from an Azure import storage connection that was set up with Service Principal authentication.
@@ -9866,18 +10771,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalImportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -9890,6 +10783,12 @@ paths:
       summary: Sync Azure SPI import storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - azure_spi
+      x-fern-sdk-method-name: sync
   /api/storages/databricks/:
     get:
       description: List Databricks DBFS import storage connections.
@@ -10398,9 +11297,13 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
-          required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -10415,6 +11318,12 @@ paths:
       summary: Get all Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: list
     post:
       description: Create an Azure export storage connection with Service Principal authentication to store annotations.
       operationId: api_storages_export_azure_spi_create
@@ -10442,6 +11351,12 @@ paths:
       summary: Create Azure export storage with SPI authentication
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: create
   /api/storages/export/azure_spi/validate:
     post:
       description: Validate a specific Azure export storage connection that was set up with Service Principal authentication.
@@ -10459,17 +11374,19 @@ paths:
               $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AzureServicePrincipalExportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: validate
   /api/storages/export/azure_spi/{id}:
     delete:
       description: Delete a specific Azure export storage connection that was set up with Service Principal authentication.
@@ -10488,6 +11405,12 @@ paths:
       summary: Delete Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: delete
     get:
       description: Get a specific Azure export storage connection that was set up with Service Principal authentication.
       operationId: api_storages_export_azure_spi_retrieve
@@ -10509,6 +11432,12 @@ paths:
       summary: Get Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific Azure export storage connection that was set up with Service Principal authentication.
       operationId: api_storages_export_azure_spi_partial_update
@@ -10541,6 +11470,12 @@ paths:
       summary: Update Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: update
   /api/storages/export/azure_spi/{id}/sync:
     post:
       description: Sync tasks from an Azure SPI export storage.
@@ -10551,18 +11486,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/AzureServicePrincipalExportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -10575,6 +11498,12 @@ paths:
       summary: Sync Azure SPI export storage
       tags:
         - 'Storage: Azure SPI'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - azure_spi
+      x-fern-sdk-method-name: sync
   /api/storages/export/databricks:
     get:
       description: List Databricks DBFS export storage connections.
@@ -11051,9 +11980,13 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
-          required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -11068,6 +12001,12 @@ paths:
       summary: Get all GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: list
     post:
       description: Create an GCS export storage connection with WIF authentication to store annotations.
       operationId: api_storages_export_gcswif_create
@@ -11095,6 +12034,12 @@ paths:
       summary: Create GCS export storage with WIF authentication
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: create
   /api/storages/export/gcswif/validate:
     post:
       description: Validate a specific GCS export storage connection that was set up with WIF authentication.
@@ -11112,17 +12057,19 @@ paths:
               $ref: '#/components/schemas/GCSWIFExportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GCSWIFExportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: validate
   /api/storages/export/gcswif/{id}:
     delete:
       description: Delete a specific GCS export storage connection that was set up with WIF authentication.
@@ -11141,6 +12088,12 @@ paths:
       summary: Delete GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: delete
     get:
       description: Get a specific GCS export storage connection that was set up with WIF authentication.
       operationId: api_storages_export_gcswif_retrieve
@@ -11162,6 +12115,12 @@ paths:
       summary: Get GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific GCS export storage connection that was set up with WIF authentication.
       operationId: api_storages_export_gcswif_partial_update
@@ -11194,6 +12153,12 @@ paths:
       summary: Update GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: update
   /api/storages/export/gcswif/{id}/sync:
     post:
       description: Sync tasks from an GCS WIF export storage.
@@ -11204,18 +12169,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GCSWIFExportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GCSWIFExportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GCSWIFExportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -11228,6 +12181,12 @@ paths:
       summary: Sync GCS WIF export storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - gcswif
+      x-fern-sdk-method-name: sync
   /api/storages/export/localfiles:
     get:
       description: Get a list of all local file export storage connections.
@@ -12672,9 +13631,13 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
-          required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -12689,6 +13652,12 @@ paths:
       summary: Get GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: list
     post:
       description: Create GCS import storage with WIF.
       operationId: api_storages_gcswif_create
@@ -12716,6 +13685,12 @@ paths:
       summary: Create GCS import storage with WIF
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: create
   /api/storages/gcswif/validate:
     post:
       description: Validate a specific GCS import storage connection that was set up with WIF authentication.
@@ -12733,17 +13708,19 @@ paths:
               $ref: '#/components/schemas/GCSWIFImportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GCSWIFImportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: validate
   /api/storages/gcswif/{id}:
     delete:
       description: Delete a specific GCS import storage connection that was set up with WIF authentication.
@@ -12762,6 +13739,12 @@ paths:
       summary: Delete GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: delete
     get:
       description: Get a specific GCS import storage connection that was set up with WIF.
       operationId: api_storages_gcswif_retrieve
@@ -12783,6 +13766,12 @@ paths:
       summary: Get GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific GCS import storage connection that was set up with WIF authentication.
       operationId: api_storages_gcswif_partial_update
@@ -12815,6 +13804,12 @@ paths:
       summary: Update GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: update
   /api/storages/gcswif/{id}/sync:
     post:
       description: Sync tasks from an GCS import storage connection that was set up with WIF authentication.
@@ -12825,18 +13820,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GCSWIFImportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/GCSWIFImportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/GCSWIFImportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -12849,6 +13832,12 @@ paths:
       summary: Sync GCS WIF import storage
       tags:
         - 'Storage: GCS WIF'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - gcswif
+      x-fern-sdk-method-name: sync
   /api/storages/localfiles/:
     get:
       description: Get a list of all local file import storage connections.
@@ -14418,6 +15407,53 @@ paths:
         - public
       x-fern-sdk-group-name: annotations
       x-fern-sdk-method-name: create
+  /api/tasks/{id}/events/:
+    post:
+      description: "\n    Create a new task event to track user interactions and system events during annotation.\n    \n    This endpoint is designed to receive events from the frontend labeling interface to enable\n    accurate lead time calculation and detailed annotation analytics.\n    \n    ## Event Types\n    \n    **Core Annotation Events:**\n    - `annotation_loaded` - When annotation interface is loaded\n    - `annotation_submitted` - When annotation is submitted\n    - `annotation_updated` - When annotation is modified\n    - `annotation_reviewed` - When annotation is reviewed\n    \n    **User Activity Events:**\n    - `visibility_change` - When page visibility changes (tab switch, minimize)\n    - `idle_detected` - When user goes idle\n    - `idle_resumed` - When user returns from idle\n    \n    **Interaction Events:**\n    - `region_finished_drawing` - When annotation region is completed\n    - `region_deleted` - When annotation regions are removed\n    - `hotkey_pressed` - When keyboard shortcuts are used\n    \n    **Media Events:**\n    - `video_playback_start/end` - Video playback control\n    - `audio_playback_start/end` - Audio playback control\n    - `video_scrub` - Video timeline scrubbing\n    \n    ## Usage\n    \n    Events are automatically associated with the task specified in the URL path.\n    The current user is automatically set as the actor. Project and organization\n    are derived from the task context.\n    \n    ## Example Request\n    \n    ```json\n    {\n        \"event_key\": \"annotation_loaded\",\n        \"event_time\": \"2024-01-15T10:30:00Z\",\n        \"annotation\": 123,\n        \"meta\": {\n            \"annotation_count\": 5,\n            \"estimated_time\": 300\n        }\n    }\n    ```\n    "
+      operationId: api_tasks_events_create
+      parameters:
+        - description: Task ID to associate the event with
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskEventRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TaskEventRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TaskEventRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskEvent'
+          description: ''
+        '400':
+          description: Bad request - validation errors
+        '401':
+          description: Unauthorized - authentication required
+        '403':
+          description: Forbidden - insufficient permissions
+        '404':
+          description: Not found - task does not exist
+      security:
+        - Token: []
+      summary: Create task event
+      tags:
+        - Task Events
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: tasks
+      x-fern-sdk-method-name: create_event
   /api/token/:
     get:
       description: List all API tokens for the current user.
@@ -15470,6 +16506,136 @@ paths:
         - workspaces
         - members
       x-fern-sdk-method-name: create
+  /api/workspaces/{id}/memberships/bulk/:
+    delete:
+      description: Unassign workspace members in bulk. Allows the same request body as bulk assign.
+      operationId: api_workspaces_memberships_bulk_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  unassignments:
+                    type: integer
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: Bulk unassign workspace members
+      tags:
+        - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - workspaces
+        - members
+        - bulk
+      x-fern-sdk-method-name: delete
+    post:
+      description: Assign workspace members in bulk.
+      operationId: api_workspaces_memberships_bulk_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceMemberBulkAssignRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WorkspaceMemberBulkAssignRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WorkspaceMemberBulkAssignRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  assignments:
+                    type: integer
+                type: object
+          description: ''
+      security:
+        - Token: []
+      summary: Bulk assign workspace members
+      tags:
+        - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - workspaces
+        - members
+        - bulk
+      x-fern-sdk-method-name: post
+  /api/workspaces/{id}/memberships/paginated/:
+    get:
+      description: Retrieve the members for a specific workspace.
+      operationId: api_workspaces_memberships_paginated_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Comma-separated list of user IDs to filter by
+          in: query
+          name: ids
+          schema:
+            type: string
+        - description: A page number within the paginated result set.
+          in: query
+          name: page
+          required: false
+          schema:
+            type: integer
+        - description: Number of results to return per page.
+          in: query
+          name: page_size
+          required: false
+          schema:
+            type: integer
+        - description: A search term.
+          in: query
+          name: search
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLseUserList'
+          description: ''
+      security:
+        - Token: []
+      summary: Get workspace members paginated
+      tags:
+        - Workspaces
+      x-fern-audiences:
+        - public
+      x-fern-pagination:
+        offset: $request.page
+        results: $response.results
+      x-fern-sdk-group-name:
+        - workspaces
+        - members
+        - paginated
+      x-fern-sdk-method-name: list
   /api/workspaces/{id}/projects/:
     delete:
       description: Delete projects from a specific workspace.
@@ -15566,6 +16732,20 @@ paths:
       x-fern-sdk-method-name: download
 components:
   schemas:
+    AWSCustomFunctionUpdateRequest:
+      properties:
+        code:
+          minLength: 1
+          type: string
+        region:
+          nullable: true
+          type: string
+        role:
+          nullable: true
+          type: string
+      required:
+        - code
+      type: object
     ActionEnum:
       description: |-
         * `prediction` - Created from prediction
@@ -15813,9 +16993,6 @@ components:
           description: Honeypot annotation number in project
           readOnly: true
           type: integer
-        has_blueprints:
-          readOnly: true
-          type: string
         id:
           readOnly: true
           type: integer
@@ -15930,6 +17107,9 @@ components:
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         skip_queue:
           nullable: true
           oneOf:
@@ -15978,7 +17158,6 @@ components:
         - description_short
         - finished_task_number
         - ground_truth_number
-        - has_blueprints
         - id
         - members
         - members_count
@@ -16012,6 +17191,11 @@ components:
         - only
         - exclude
     Annotation:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
@@ -16123,6 +17307,11 @@ components:
         - updated_at
       type: object
     AnnotationBulkSerializerWithSelectedItemsRequest:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
@@ -16306,6 +17495,11 @@ components:
         - id
       type: object
     AnnotationRequest:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
       properties:
         bulk_created:
           description: Annotation was created in bulk mode
@@ -17523,7 +18717,6 @@ components:
           nullable: true
           type: string
         project:
-          readOnly: true
           type: integer
         share_id:
           readOnly: true
@@ -17591,11 +18784,15 @@ components:
           description: Labeling configuration in XML format
           nullable: true
           type: string
+        project:
+          type: integer
         title:
           description: Blueprint name. Must be between 3 and 50 characters long.
           maxLength: 50
           nullable: true
           type: string
+      required:
+        - project
       type: object
     BudgetResetPeriodEnum:
       description: |-
@@ -17605,6 +18802,14 @@ components:
         - Monthly
         - Yearly
       type: string
+    CheckMatchingFunctionRequestRequest:
+      properties:
+        code:
+          minLength: 1
+          type: string
+      required:
+        - code
+      type: object
     ChildFilter:
       properties:
         column:
@@ -17876,13 +19081,17 @@ components:
       type: string
     DatabricksExportStorage:
       properties:
-        bucket:
-          description: DBFS top-level directory name, e.g. "mnt" or "FileStore"
+        base_prefix:
+          description: Base path under the volume
+          nullable: true
           type: string
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
           type: boolean
+        catalog:
+          description: UC catalog name
+          type: string
         created_at:
           description: Creation time
           format: date-time
@@ -17891,6 +19100,9 @@ components:
         description:
           description: Cloud storage description
           nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
           type: string
         id:
           readOnly: true
@@ -17914,19 +19126,26 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
-        prefix:
-          description: DBFS path prefix under bucket
-          nullable: true
-          type: string
         project:
           description: A unique integer value identifying this project.
           type: integer
         regex_filter:
-          description: Cloud storage regex for filtering objects
+          description: Regex for filtering objects
           nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
           type: string
         status:
           $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
         synchronizable:
           default: true
           type: boolean
@@ -17947,33 +19166,46 @@ components:
           readOnly: true
           type: string
         use_blob_urls:
-          description: Interpret objects as BLOBs and generate URLs
+          description: Generate blob URLs in tasks
           type: boolean
-        workspace_url:
-          description: Databricks workspace base URL (https://... )
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
           type: string
       required:
-        - bucket
+        - catalog
         - created_at
+        - host
         - id
         - project
+        - schema
         - token
         - type
-        - workspace_url
+        - volume
       type: object
     DatabricksExportStorageRequest:
       properties:
-        bucket:
-          description: DBFS top-level directory name, e.g. "mnt" or "FileStore"
-          minLength: 1
+        base_prefix:
+          description: Base path under the volume
+          nullable: true
           type: string
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
           type: boolean
+        catalog:
+          description: UC catalog name
+          minLength: 1
+          type: string
         description:
           description: Cloud storage description
           nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
+          minLength: 1
           type: string
         last_sync:
           description: Last sync finished time
@@ -17994,19 +19226,27 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
-        prefix:
-          description: DBFS path prefix under bucket
-          nullable: true
-          type: string
         project:
           description: A unique integer value identifying this project.
           type: integer
         regex_filter:
-          description: Cloud storage regex for filtering objects
+          description: Regex for filtering objects
           nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
+          minLength: 1
           type: string
         status:
           $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
         synchronizable:
           default: true
           type: boolean
@@ -18024,22 +19264,31 @@ components:
           nullable: true
           type: string
         use_blob_urls:
-          description: Interpret objects as BLOBs and generate URLs
+          description: Generate blob URLs in tasks
           type: boolean
-        workspace_url:
-          description: Databricks workspace base URL (https://... )
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
           minLength: 1
           type: string
       required:
-        - bucket
+        - catalog
+        - host
         - project
+        - schema
         - token
-        - workspace_url
+        - volume
       type: object
     DatabricksImportStorage:
       properties:
-        bucket:
-          description: DBFS top-level directory name, e.g. "mnt" or "FileStore"
+        base_prefix:
+          description: Base path under the volume
+          nullable: true
+          type: string
+        catalog:
+          description: UC catalog name
           type: string
         created_at:
           description: Creation time
@@ -18049,6 +19298,9 @@ components:
         description:
           description: Cloud storage description
           nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
           type: string
         id:
           readOnly: true
@@ -18072,15 +19324,11 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
-        prefix:
-          description: DBFS path prefix under bucket
-          nullable: true
-          type: string
         presign:
-          default: true
+          description: Presign not supported; always proxied
           type: boolean
         presign_ttl:
-          description: Temporary URL TTL (in minutes)
+          description: Unused for Databricks; kept for compatibility
           maximum: 32767
           minimum: 0
           type: integer
@@ -18088,11 +19336,22 @@ components:
           description: A unique integer value identifying this project.
           type: integer
         regex_filter:
-          description: Cloud storage regex for filtering objects
+          description: Regex for filtering objects
           nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
           type: string
         status:
           $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
         synchronizable:
           default: true
           type: boolean
@@ -18113,29 +19372,42 @@ components:
           readOnly: true
           type: string
         use_blob_urls:
-          description: Interpret objects as BLOBs and generate URLs
+          description: Generate blob URLs in tasks
           type: boolean
-        workspace_url:
-          description: Databricks workspace base URL (https://... )
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
           type: string
       required:
-        - bucket
+        - catalog
         - created_at
+        - host
         - id
         - project
+        - schema
         - token
         - type
-        - workspace_url
+        - volume
       type: object
     DatabricksImportStorageRequest:
       properties:
-        bucket:
-          description: DBFS top-level directory name, e.g. "mnt" or "FileStore"
+        base_prefix:
+          description: Base path under the volume
+          nullable: true
+          type: string
+        catalog:
+          description: UC catalog name
           minLength: 1
           type: string
         description:
           description: Cloud storage description
           nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
+          minLength: 1
           type: string
         last_sync:
           description: Last sync finished time
@@ -18156,15 +19428,11 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
-        prefix:
-          description: DBFS path prefix under bucket
-          nullable: true
-          type: string
         presign:
-          default: true
+          description: Presign not supported; always proxied
           type: boolean
         presign_ttl:
-          description: Temporary URL TTL (in minutes)
+          description: Unused for Databricks; kept for compatibility
           maximum: 32767
           minimum: 0
           type: integer
@@ -18172,11 +19440,23 @@ components:
           description: A unique integer value identifying this project.
           type: integer
         regex_filter:
-          description: Cloud storage regex for filtering objects
+          description: Regex for filtering objects
           nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
+          minLength: 1
           type: string
         status:
           $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
         synchronizable:
           default: true
           type: boolean
@@ -18194,17 +19474,22 @@ components:
           nullable: true
           type: string
         use_blob_urls:
-          description: Interpret objects as BLOBs and generate URLs
+          description: Generate blob URLs in tasks
           type: boolean
-        workspace_url:
-          description: Databricks workspace base URL (https://... )
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
           minLength: 1
           type: string
       required:
-        - bucket
+        - catalog
+        - host
         - project
+        - schema
         - token
-        - workspace_url
+        - volume
       type: object
     Dataset:
       properties:
@@ -19562,10 +20847,8 @@ components:
     LSEJWTSettings:
       properties:
         api_token_ttl_days:
-          description: Number of days before JWT API tokens expire
-          maximum: 2147483647
-          minimum: -2147483648
-          title: JWT API token time to live (days)
+          maximum: 365
+          minimum: 1
           type: integer
         api_tokens_enabled:
           description: Enable JWT API token authentication for this organization
@@ -19574,14 +20857,14 @@ components:
         legacy_api_tokens_enabled:
           description: Enable legacy API token authentication for this organization
           type: boolean
+      required:
+        - api_token_ttl_days
       type: object
     LSEJWTSettingsRequest:
       properties:
         api_token_ttl_days:
-          description: Number of days before JWT API tokens expire
-          maximum: 2147483647
-          minimum: -2147483648
-          title: JWT API token time to live (days)
+          maximum: 365
+          minimum: 1
           type: integer
         api_tokens_enabled:
           description: Enable JWT API token authentication for this organization
@@ -19590,6 +20873,8 @@ components:
         legacy_api_tokens_enabled:
           description: Enable legacy API token authentication for this organization
           type: boolean
+      required:
+        - api_token_ttl_days
       type: object
     LSEKeyIndicatorValue:
       description: |-
@@ -20526,6 +21811,9 @@ components:
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         skip_queue:
           nullable: true
           oneOf:
@@ -21167,6 +22455,9 @@ components:
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         skip_queue:
           nullable: true
           oneOf:
@@ -21692,6 +22983,9 @@ components:
         agreement:
           readOnly: true
           type: string
+        agreement_filtered:
+          readOnly: true
+          type: string
         annotations:
           readOnly: true
           type: string
@@ -21892,6 +23186,7 @@ components:
           type: array
       required:
         - agreement
+        - agreement_filtered
         - annotations
         - annotations_ids
         - annotations_results
@@ -22221,6 +23516,9 @@ components:
         agreement:
           readOnly: true
           type: string
+        agreement_filtered:
+          readOnly: true
+          type: string
         annotations:
           readOnly: true
           type: string
@@ -22421,6 +23719,7 @@ components:
           type: array
       required:
         - agreement
+        - agreement_filtered
         - annotations
         - annotations_ids
         - annotations_results
@@ -22804,6 +24103,31 @@ components:
       oneOf:
         - $ref: '#/components/schemas/Comment'
         - $ref: '#/components/schemas/CommentSerializerWithExpandedUser'
+    MetricParam:
+      properties:
+        agreement_threshold:
+          readOnly: true
+          type: string
+        allowed:
+          readOnly: true
+          type: string
+        max_additional_annotators_assignable:
+          description: Maximum number of additional annotators that can be assigned to a low agreement task
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Maximum new annotators added
+          type: integer
+        metric_name:
+          description: Evaluation metric chosen for this project
+          nullable: true
+          type: string
+        metric_params:
+          nullable: true
+      required:
+        - agreement_threshold
+        - allowed
+      type: object
     ModeEnum:
       description: |-
         * `settings` - Only settings
@@ -23484,6 +24808,133 @@ components:
         - count
         - results
       type: object
+    PaginatedLseUserList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/LseUser'
+          type: array
+      required:
+        - count
+        - results
+      type: object
+    PaginatedPaginatedProjectMemberList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/PaginatedProjectMember'
+          type: array
+      required:
+        - count
+        - results
+      type: object
+    PaginatedProjectMember:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
+      properties:
+        active_organization:
+          nullable: true
+          type: integer
+        active_organization_meta:
+          readOnly: true
+          type: string
+        allow_newsletters:
+          description: Allow sending newsletters to user
+          nullable: true
+          type: boolean
+        avatar:
+          readOnly: true
+          type: string
+        custom_hotkeys:
+          description: Custom keyboard shortcuts configuration for the user interface
+          nullable: true
+        date_joined:
+          format: date-time
+          type: string
+        email:
+          format: email
+          maxLength: 254
+          title: Email address
+          type: string
+        first_name:
+          maxLength: 256
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        initials:
+          default: '?'
+          readOnly: true
+          type: string
+        last_activity:
+          format: date-time
+          readOnly: true
+          type: string
+        last_name:
+          maxLength: 256
+          type: string
+        lse_fields:
+          allOf:
+            - $ref: '#/components/schemas/LseFields'
+          readOnly: true
+        org_membership:
+          items:
+            $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
+          type: array
+        pause:
+          readOnly: true
+          type: string
+        phone:
+          maxLength: 256
+          type: string
+        project_role:
+          readOnly: true
+          type: string
+        username:
+          maxLength: 256
+          type: string
+      required:
+        - active_organization_meta
+        - avatar
+        - id
+        - initials
+        - last_activity
+        - lse_fields
+        - org_membership
+        - pause
+        - project_role
+        - username
+      type: object
     PaginatedRoleBasedTaskList:
       properties:
         tasks:
@@ -23812,17 +25263,25 @@ components:
       type: object
     PatchedDatabricksExportStorageRequest:
       properties:
-        bucket:
-          description: DBFS top-level directory name, e.g. "mnt" or "FileStore"
-          minLength: 1
+        base_prefix:
+          description: Base path under the volume
+          nullable: true
           type: string
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
           type: boolean
+        catalog:
+          description: UC catalog name
+          minLength: 1
+          type: string
         description:
           description: Cloud storage description
           nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
+          minLength: 1
           type: string
         last_sync:
           description: Last sync finished time
@@ -23843,19 +25302,27 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
-        prefix:
-          description: DBFS path prefix under bucket
-          nullable: true
-          type: string
         project:
           description: A unique integer value identifying this project.
           type: integer
         regex_filter:
-          description: Cloud storage regex for filtering objects
+          description: Regex for filtering objects
           nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
+          minLength: 1
           type: string
         status:
           $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
         synchronizable:
           default: true
           type: boolean
@@ -23873,22 +25340,33 @@ components:
           nullable: true
           type: string
         use_blob_urls:
-          description: Interpret objects as BLOBs and generate URLs
+          description: Generate blob URLs in tasks
           type: boolean
-        workspace_url:
-          description: Databricks workspace base URL (https://... )
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
           minLength: 1
           type: string
       type: object
     PatchedDatabricksImportStorageRequest:
       properties:
-        bucket:
-          description: DBFS top-level directory name, e.g. "mnt" or "FileStore"
+        base_prefix:
+          description: Base path under the volume
+          nullable: true
+          type: string
+        catalog:
+          description: UC catalog name
           minLength: 1
           type: string
         description:
           description: Cloud storage description
           nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
+          minLength: 1
           type: string
         last_sync:
           description: Last sync finished time
@@ -23909,15 +25387,11 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
-        prefix:
-          description: DBFS path prefix under bucket
-          nullable: true
-          type: string
         presign:
-          default: true
+          description: Presign not supported; always proxied
           type: boolean
         presign_ttl:
-          description: Temporary URL TTL (in minutes)
+          description: Unused for Databricks; kept for compatibility
           maximum: 32767
           minimum: 0
           type: integer
@@ -23925,11 +25399,23 @@ components:
           description: A unique integer value identifying this project.
           type: integer
         regex_filter:
-          description: Cloud storage regex for filtering objects
+          description: Regex for filtering objects
           nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
+          minLength: 1
           type: string
         status:
           $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
         synchronizable:
           default: true
           type: boolean
@@ -23947,10 +25433,13 @@ components:
           nullable: true
           type: string
         use_blob_urls:
-          description: Interpret objects as BLOBs and generate URLs
+          description: Generate blob URLs in tasks
           type: boolean
-        workspace_url:
-          description: Databricks workspace base URL (https://... )
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
           minLength: 1
           type: string
       type: object
@@ -24579,6 +26068,9 @@ components:
         show_skip_button:
           description: Show a skip button in interface and allow annotators to skip the task
           type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         skip_queue:
           nullable: true
           oneOf:
@@ -25063,6 +26555,9 @@ components:
           type: boolean
         review_settings:
           description: general dict serialized review settings
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         tags: {}
       type: object
     PatchedS3DatasetStorageRequest:
@@ -25843,12 +27338,61 @@ components:
       required:
         - user
       type: object
+    ProjectMemberBulkAssignRequest:
+      properties:
+        all:
+          type: boolean
+        excluded:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+        included:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+        roles:
+          items:
+            $ref: '#/components/schemas/ProjectMemberBulkAssignRolesRequest'
+          type: array
+      required:
+        - all
+      type: object
+    ProjectMemberBulkAssignRolesRequest:
+      properties:
+        role:
+          $ref: '#/components/schemas/Role9e7Enum'
+        user_id:
+          minimum: 1
+          type: integer
+      required:
+        - role
+        - user_id
+      type: object
     ProjectMemberRequest:
       properties:
         user:
           type: integer
       required:
         - user
+      type: object
+    ProjectMetricParamUpdateRequest:
+      properties:
+        additional_params:
+          additionalProperties: {}
+          nullable: true
+          type: object
+        agreement_threshold:
+          maximum: 100
+          minimum: 0
+          type: integer
+        max_additional_annotators_assignable:
+          minimum: 0
+          type: integer
+        metric_name:
+          minLength: 1
+          type: string
       type: object
     ProjectReimport:
       properties:
@@ -26098,6 +27642,9 @@ components:
           type: boolean
         review_settings:
           description: general dict serialized review settings
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         tags: {}
         updated_at:
           format: date-time
@@ -26139,6 +27686,9 @@ components:
           type: boolean
         review_settings:
           description: general dict serialized review settings
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
         tags: {}
       required:
         - name
@@ -26507,6 +28057,10 @@ components:
         show_instruction:
           description: Show instructions to the reviewers before they start
           type: boolean
+        show_unused_data_columns_to_reviewers:
+          description: If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
+          nullable: true
+          type: boolean
       required:
         - id
         - requeue_rejected_tasks_to_annotator
@@ -26562,6 +28116,10 @@ components:
           type: boolean
         show_instruction:
           description: Show instructions to the reviewers before they start
+          type: boolean
+        show_unused_data_columns_to_reviewers:
+          description: If true, Data Manager shows all task.data columns to reviewers; if false, hides columns not referenced by the label interface
+          nullable: true
           type: boolean
       type: object
     ReviewedEnum:
@@ -27379,6 +28937,101 @@ components:
         - id
         - task
       type: object
+    TaskEvent:
+      description: |-
+        Serializer for TaskEvent model to handle event creation from frontend.
+
+        This serializer validates and processes task events sent from the labeling interface,
+        ensuring proper data format and automatically setting required relationships.
+      properties:
+        actor:
+          readOnly: true
+          type: integer
+        annotation:
+          description: Annotation ID associated with this event
+          nullable: true
+          type: integer
+        annotation_draft:
+          description: Draft annotation ID associated with this event
+          nullable: true
+          type: integer
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        event_key:
+          description: Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
+          maxLength: 255
+          type: string
+        event_time:
+          description: Timestamp when the event occurred (frontend time)
+          format: date-time
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        meta:
+          description: Additional event metadata (region data, hotkey info, etc.)
+          nullable: true
+        organization:
+          readOnly: true
+          type: integer
+        project:
+          readOnly: true
+          type: integer
+        review:
+          description: Review ID associated with this event
+          nullable: true
+          type: integer
+        task:
+          description: Task this event is associated with
+          readOnly: true
+          type: integer
+      required:
+        - actor
+        - created_at
+        - event_key
+        - event_time
+        - id
+        - organization
+        - project
+        - task
+      type: object
+    TaskEventRequest:
+      description: |-
+        Serializer for TaskEvent model to handle event creation from frontend.
+
+        This serializer validates and processes task events sent from the labeling interface,
+        ensuring proper data format and automatically setting required relationships.
+      properties:
+        annotation:
+          description: Annotation ID associated with this event
+          nullable: true
+          type: integer
+        annotation_draft:
+          description: Draft annotation ID associated with this event
+          nullable: true
+          type: integer
+        event_key:
+          description: Event type identifier (e.g., "annotation_loaded", "region_finished_drawing")
+          maxLength: 255
+          minLength: 1
+          type: string
+        event_time:
+          description: Timestamp when the event occurred (frontend time)
+          format: date-time
+          type: string
+        meta:
+          description: Additional event metadata (region data, hotkey info, etc.)
+          nullable: true
+        review:
+          description: Review ID associated with this event
+          nullable: true
+          type: integer
+      required:
+        - event_key
+        - event_time
+      type: object
     TaskSimple:
       properties:
         annotations:
@@ -27953,6 +29606,154 @@ components:
       required:
         - url
       type: object
+    WhoAmILseFields:
+      properties:
+        active_organization_external_id:
+          nullable: true
+          readOnly: true
+          type: string
+        email_notification_settings:
+          readOnly: true
+          type: string
+        invite_activated:
+          nullable: true
+          type: boolean
+        invite_expired:
+          readOnly: true
+          type: string
+        invite_expired_at:
+          readOnly: true
+          type: string
+        invited_at:
+          format: date-time
+          nullable: true
+          type: string
+        invited_by:
+          nullable: true
+          type: integer
+        onboarding_state:
+          description: |-
+            The current stage of user onboarding
+
+            * `not_started` - Not Started
+            * `signup` - Signup
+            * `trial_signup` - Trial Signup
+            * `first_tutorial` - First Tutorial
+            * `in_app_guidance` - In App Guidance
+            * `complete` - Complete
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/OnboardingStateEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
+        social_auth_finished:
+          description: Is user finished social authentication
+          nullable: true
+          type: boolean
+        trial_company:
+          maxLength: 1000
+          nullable: true
+          type: string
+        trial_experience_labeling:
+          maxLength: 1000
+          nullable: true
+          type: string
+        trial_license_enterprise:
+          nullable: true
+          type: boolean
+        trial_models_in_production:
+          maxLength: 1000
+          nullable: true
+          type: string
+        trial_role:
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/TrialRoleEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
+      required:
+        - active_organization_external_id
+        - email_notification_settings
+        - invite_expired
+        - invite_expired_at
+      type: object
+    WhoAmIUser:
+      description: |-
+        A ModelSerializer that takes additional arguments for
+        "fields", "omit" and "expand" in order to
+        control which fields are displayed, and whether to replace simple
+        values with complex, nested serializations
+      properties:
+        active_organization:
+          nullable: true
+          type: integer
+        active_organization_meta:
+          readOnly: true
+          type: string
+        allow_newsletters:
+          description: Allow sending newsletters to user
+          nullable: true
+          type: boolean
+        avatar:
+          readOnly: true
+          type: string
+        custom_hotkeys:
+          description: Custom keyboard shortcuts configuration for the user interface
+          nullable: true
+        date_joined:
+          format: date-time
+          type: string
+        email:
+          format: email
+          maxLength: 254
+          title: Email address
+          type: string
+        first_name:
+          maxLength: 256
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        initials:
+          default: '?'
+          readOnly: true
+          type: string
+        last_activity:
+          format: date-time
+          readOnly: true
+          type: string
+        last_name:
+          maxLength: 256
+          type: string
+        lse_fields:
+          allOf:
+            - $ref: '#/components/schemas/WhoAmILseFields'
+          readOnly: true
+        org_membership:
+          items:
+            $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
+          type: array
+        pause:
+          readOnly: true
+          type: string
+        phone:
+          maxLength: 256
+          type: string
+        username:
+          maxLength: 256
+          type: string
+      required:
+        - active_organization_meta
+        - avatar
+        - id
+        - initials
+        - last_activity
+        - lse_fields
+        - org_membership
+        - pause
+        - username
+      type: object
     Workspace:
       description: |-
         A ModelSerializer that takes additional arguments for
@@ -27990,6 +29791,23 @@ components:
         - created_by
         - id
         - title
+      type: object
+    WorkspaceMemberBulkAssignRequest:
+      properties:
+        all:
+          type: boolean
+        excluded:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+        included:
+          items:
+            minimum: 1
+            type: integer
+          type: array
+      required:
+        - all
       type: object
     WorkspaceMemberCreate:
       properties:

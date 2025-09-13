@@ -38,6 +38,7 @@ service:
                 require_comment_on_skip: true
                 review_settings:
                   key: value
+                show_unused_data_columns_to_annotators: true
                 tags:
                   key: value
                 updated_at: '2024-01-15T09:30:00Z'
@@ -74,6 +75,7 @@ service:
               require_comment_on_skip: true
               review_settings:
                 key: value
+              show_unused_data_columns_to_annotators: true
               tags:
                 key: value
               updated_at: '2024-01-15T09:30:00Z'
@@ -109,6 +111,7 @@ service:
               require_comment_on_skip: true
               review_settings:
                 key: value
+              show_unused_data_columns_to_annotators: true
               tags:
                 key: value
               updated_at: '2024-01-15T09:30:00Z'
@@ -149,6 +152,7 @@ service:
               require_comment_on_skip: true
               review_settings:
                 key: value
+              show_unused_data_columns_to_annotators: true
               tags:
                 key: value
               updated_at: '2024-01-15T09:30:00Z'
@@ -203,6 +207,7 @@ service:
               type: optional<boolean>
               docs: flag to require comment on skip
             review_settings: optional<unknown>
+            show_unused_data_columns_to_annotators: optional<boolean>
             tags: optional<unknown>
         content-type: application/json
       response:
@@ -228,6 +233,7 @@ service:
               require_comment_on_skip: true
               review_settings:
                 key: value
+              show_unused_data_columns_to_annotators: true
               tags:
                 key: value
               updated_at: '2024-01-15T09:30:00Z'
@@ -339,6 +345,7 @@ service:
                 show_agreement_to_reviewers: true
                 show_data_manager_to_reviewers: true
                 show_instruction: true
+                show_unused_data_columns_to_reviewers: true
               reviewer_queue_total: reviewer_queue_total
               sampling: Sequential sampling
               show_annotation_history: true
@@ -347,6 +354,7 @@ service:
               show_instruction: true
               show_overlap_first: true
               show_skip_button: true
+              show_unused_data_columns_to_annotators: true
               skip_queue: REQUEUE_FOR_ME
               skipped_annotations_number: 1
               start_training_on_annotation_update: true

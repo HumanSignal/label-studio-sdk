@@ -6,28 +6,24 @@ errors:
     examples:
       - value:
           key: value
-  NotImplementedError:
-    status-code: 501
-    type: unknown
-    docs: KPI depends on other KPIs - not implemented
-  InternalServerError:
-    status-code: 500
-    type: string
-    docs: Predicting error
-    examples:
-      - value: Server responded with an error.
-  BadRequestError:
-    status-code: 400
-    type: unknown
-    docs: Bad Request
-    examples:
-      - value: string
-      - value:
-          key: value
   ForbiddenError:
     status-code: 403
     type: unknown
-    docs: Permission Denied
+    docs: Organization does not allow to invite people
+  BadRequestError:
+    status-code: 400
+    type: unknown
+    docs: ''
+    examples:
+      - value:
+          key: value
+      - value: string
+  InternalServerError:
+    status-code: 500
+    type: unknown
+    docs: Predicting error
+    examples:
+      - value: Server responded with an error.
   MethodNotAllowedError:
     status-code: 405
     type: unknown
@@ -253,7 +249,6 @@ types:
       ground_truth_number:
         type: integer
         docs: Honeypot annotation number in project
-      has_blueprints: string
       id: integer
       is_draft:
         type: optional<boolean>
@@ -331,6 +326,7 @@ types:
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
+      show_unused_data_columns_to_annotators: optional<boolean>
       skip_queue: optional<AllRolesProjectListSkipQueue>
       skipped_annotations_number: string
       start_training_on_annotation_update:
@@ -384,6 +380,11 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   Annotation:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
     properties:
       bulk_created:
         type: optional<boolean>
@@ -559,6 +560,11 @@ types:
       openapi: openapi/openapi.yaml
     inline: true
   AnnotationRequest:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
     properties:
       bulk_created:
         type: optional<boolean>
@@ -1659,18 +1665,24 @@ types:
       openapi: openapi/openapi.yaml
   DatabricksExportStorage:
     properties:
-      bucket:
-        type: string
-        docs: DBFS top-level directory name, e.g. "mnt" or "FileStore"
+      base_prefix:
+        type: optional<string>
+        docs: Base path under the volume
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled
+      catalog:
+        type: string
+        docs: UC catalog name
       created_at:
         type: datetime
         docs: Creation time
       description:
         type: optional<string>
         docs: Cloud storage description
+      host:
+        type: string
+        docs: Databricks workspace base URL (https://...)
       id: integer
       last_sync:
         type: optional<datetime>
@@ -1687,16 +1699,26 @@ types:
         validation:
           maxLength: 256
       meta: optional<unknown>
-      prefix:
-        type: optional<string>
-        docs: DBFS path prefix under bucket
       project:
         type: integer
         docs: A unique integer value identifying this project.
       regex_filter:
         type: optional<string>
-        docs: Cloud storage regex for filtering objects
+        docs: Regex for filtering objects
+      request_timeout_s:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 2147483647
+      schema:
+        type: string
+        docs: UC schema name
       status: optional<StatusC5AEnum>
+      stream_chunk_bytes:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 2147483647
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1716,25 +1738,36 @@ types:
         default: databricks
       use_blob_urls:
         type: optional<boolean>
-        docs: Interpret objects as BLOBs and generate URLs
-      workspace_url:
+        docs: Generate blob URLs in tasks
+      verify_tls:
+        type: optional<boolean>
+        docs: Verify TLS certificates
+      volume:
         type: string
-        docs: Databricks workspace base URL (https://... )
+        docs: UC volume name
     source:
       openapi: openapi/openapi.yaml
   DatabricksExportStorageRequest:
     properties:
-      bucket:
-        type: string
-        docs: DBFS top-level directory name, e.g. "mnt" or "FileStore"
-        validation:
-          minLength: 1
+      base_prefix:
+        type: optional<string>
+        docs: Base path under the volume
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled
+      catalog:
+        type: string
+        docs: UC catalog name
+        validation:
+          minLength: 1
       description:
         type: optional<string>
         docs: Cloud storage description
+      host:
+        type: string
+        docs: Databricks workspace base URL (https://...)
+        validation:
+          minLength: 1
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -1750,16 +1783,28 @@ types:
         validation:
           maxLength: 256
       meta: optional<unknown>
-      prefix:
-        type: optional<string>
-        docs: DBFS path prefix under bucket
       project:
         type: integer
         docs: A unique integer value identifying this project.
       regex_filter:
         type: optional<string>
-        docs: Cloud storage regex for filtering objects
+        docs: Regex for filtering objects
+      request_timeout_s:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 2147483647
+      schema:
+        type: string
+        docs: UC schema name
+        validation:
+          minLength: 1
       status: optional<StatusC5AEnum>
+      stream_chunk_bytes:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 2147483647
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1778,25 +1823,34 @@ types:
         docs: Traceback report for the last failed sync
       use_blob_urls:
         type: optional<boolean>
-        docs: Interpret objects as BLOBs and generate URLs
-      workspace_url:
+        docs: Generate blob URLs in tasks
+      verify_tls:
+        type: optional<boolean>
+        docs: Verify TLS certificates
+      volume:
         type: string
-        docs: Databricks workspace base URL (https://... )
+        docs: UC volume name
         validation:
           minLength: 1
     source:
       openapi: openapi/openapi.yaml
   DatabricksImportStorage:
     properties:
-      bucket:
+      base_prefix:
+        type: optional<string>
+        docs: Base path under the volume
+      catalog:
         type: string
-        docs: DBFS top-level directory name, e.g. "mnt" or "FileStore"
+        docs: UC catalog name
       created_at:
         type: datetime
         docs: Creation time
       description:
         type: optional<string>
         docs: Cloud storage description
+      host:
+        type: string
+        docs: Databricks workspace base URL (https://...)
       id: integer
       last_sync:
         type: optional<datetime>
@@ -1813,15 +1867,12 @@ types:
         validation:
           maxLength: 256
       meta: optional<unknown>
-      prefix:
-        type: optional<string>
-        docs: DBFS path prefix under bucket
       presign:
         type: optional<boolean>
-        default: true
+        docs: Presign not supported; always proxied
       presign_ttl:
         type: optional<integer>
-        docs: Temporary URL TTL (in minutes)
+        docs: Unused for Databricks; kept for compatibility
         validation:
           min: 0
           max: 32767
@@ -1830,8 +1881,21 @@ types:
         docs: A unique integer value identifying this project.
       regex_filter:
         type: optional<string>
-        docs: Cloud storage regex for filtering objects
+        docs: Regex for filtering objects
+      request_timeout_s:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 2147483647
+      schema:
+        type: string
+        docs: UC schema name
       status: optional<StatusC5AEnum>
+      stream_chunk_bytes:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 2147483647
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1851,22 +1915,33 @@ types:
         default: databricks
       use_blob_urls:
         type: optional<boolean>
-        docs: Interpret objects as BLOBs and generate URLs
-      workspace_url:
+        docs: Generate blob URLs in tasks
+      verify_tls:
+        type: optional<boolean>
+        docs: Verify TLS certificates
+      volume:
         type: string
-        docs: Databricks workspace base URL (https://... )
+        docs: UC volume name
     source:
       openapi: openapi/openapi.yaml
   DatabricksImportStorageRequest:
     properties:
-      bucket:
+      base_prefix:
+        type: optional<string>
+        docs: Base path under the volume
+      catalog:
         type: string
-        docs: DBFS top-level directory name, e.g. "mnt" or "FileStore"
+        docs: UC catalog name
         validation:
           minLength: 1
       description:
         type: optional<string>
         docs: Cloud storage description
+      host:
+        type: string
+        docs: Databricks workspace base URL (https://...)
+        validation:
+          minLength: 1
       last_sync:
         type: optional<datetime>
         docs: Last sync finished time
@@ -1882,15 +1957,12 @@ types:
         validation:
           maxLength: 256
       meta: optional<unknown>
-      prefix:
-        type: optional<string>
-        docs: DBFS path prefix under bucket
       presign:
         type: optional<boolean>
-        default: true
+        docs: Presign not supported; always proxied
       presign_ttl:
         type: optional<integer>
-        docs: Temporary URL TTL (in minutes)
+        docs: Unused for Databricks; kept for compatibility
         validation:
           min: 0
           max: 32767
@@ -1899,8 +1971,23 @@ types:
         docs: A unique integer value identifying this project.
       regex_filter:
         type: optional<string>
-        docs: Cloud storage regex for filtering objects
+        docs: Regex for filtering objects
+      request_timeout_s:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 2147483647
+      schema:
+        type: string
+        docs: UC schema name
+        validation:
+          minLength: 1
       status: optional<StatusC5AEnum>
+      stream_chunk_bytes:
+        type: optional<integer>
+        validation:
+          min: 0
+          max: 2147483647
       synchronizable:
         type: optional<boolean>
         default: true
@@ -1919,10 +2006,13 @@ types:
         docs: Traceback report for the last failed sync
       use_blob_urls:
         type: optional<boolean>
-        docs: Interpret objects as BLOBs and generate URLs
-      workspace_url:
+        docs: Generate blob URLs in tasks
+      verify_tls:
+        type: optional<boolean>
+        docs: Verify TLS certificates
+      volume:
         type: string
-        docs: Databricks workspace base URL (https://... )
+        docs: UC volume name
         validation:
           minLength: 1
     source:
@@ -2967,11 +3057,10 @@ types:
   LsejwtSettings:
     properties:
       api_token_ttl_days:
-        type: optional<integer>
-        docs: Number of days before JWT API tokens expire
+        type: integer
         validation:
-          min: -2147483648
-          max: 2147483647
+          min: 1
+          max: 365
       api_tokens_enabled:
         type: optional<boolean>
         docs: Enable JWT API token authentication for this organization
@@ -3721,6 +3810,7 @@ types:
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
+      show_unused_data_columns_to_annotators: optional<boolean>
       skip_queue: optional<LseProjectSkipQueue>
       skipped_annotations_number:
         type: integer
@@ -4109,6 +4199,7 @@ types:
       show_skip_button:
         type: optional<boolean>
         docs: Show a skip button in interface and allow annotators to skip the task
+      show_unused_data_columns_to_annotators: optional<boolean>
       skip_queue: optional<LseProjectUpdateSkipQueue>
       skipped_annotations_number:
         type: integer
@@ -4538,6 +4629,7 @@ types:
     docs: Task Serializer with project scheme configs validation
     properties:
       agreement: string
+      agreement_filtered: string
       annotations: string
       annotations_ids: string
       annotations_results: string
@@ -4984,6 +5076,7 @@ types:
     docs: Task Serializer with project scheme configs validation
     properties:
       agreement: string
+      agreement_filtered: string
       annotations: string
       annotations_ids: string
       annotations_results: string
@@ -5252,6 +5345,24 @@ types:
     union:
       - Comment
       - CommentSerializerWithExpandedUser
+    source:
+      openapi: openapi/openapi.yaml
+  MetricParam:
+    properties:
+      agreement_threshold: string
+      allowed: string
+      max_additional_annotators_assignable:
+        type: optional<integer>
+        docs: >-
+          Maximum number of additional annotators that can be assigned to a low
+          agreement task
+        validation:
+          min: -2147483648
+          max: 2147483647
+      metric_name:
+        type: optional<string>
+        docs: Evaluation metric chosen for this project
+      metric_params: optional<unknown>
     source:
       openapi: openapi/openapi.yaml
   ModeEnum:
@@ -5693,6 +5804,81 @@ types:
       results: list<LseProjectCounts>
     source:
       openapi: openapi/openapi.yaml
+  PaginatedLseUserList:
+    properties:
+      count: integer
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      previous:
+        type: optional<string>
+        validation:
+          format: uri
+      results: list<LseUser>
+    source:
+      openapi: openapi/openapi.yaml
+  PaginatedPaginatedProjectMemberList:
+    properties:
+      count: integer
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      previous:
+        type: optional<string>
+        validation:
+          format: uri
+      results: list<PaginatedProjectMember>
+    source:
+      openapi: openapi/openapi.yaml
+  PaginatedProjectMember:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
+    properties:
+      active_organization: optional<integer>
+      active_organization_meta: string
+      allow_newsletters:
+        type: optional<boolean>
+        docs: Allow sending newsletters to user
+      avatar: string
+      custom_hotkeys: optional<unknown>
+      date_joined: optional<datetime>
+      email:
+        type: optional<string>
+        validation:
+          format: email
+          maxLength: 254
+      first_name:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      id: integer
+      initials:
+        type: string
+        default: '?'
+      last_activity: datetime
+      last_name:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      lse_fields: LseFields
+      org_membership: list<OrganizationMembership>
+      pause: string
+      phone:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      project_role: string
+      username:
+        type: string
+        validation:
+          maxLength: 256
+    source:
+      openapi: openapi/openapi.yaml
   PaginatedRoleBasedTaskList:
     properties:
       tasks: list<RoleBasedTask>
@@ -6111,6 +6297,15 @@ types:
       user: integer
     source:
       openapi: openapi/openapi.yaml
+  ProjectMemberBulkAssignRolesRequest:
+    properties:
+      role: Role9E7Enum
+      user_id:
+        type: integer
+        validation:
+          min: 1
+    source:
+      openapi: openapi/openapi.yaml
   ProjectReimport:
     properties:
       annotation_count:
@@ -6193,6 +6388,7 @@ types:
         type: optional<boolean>
         docs: flag to require comment on skip
       review_settings: optional<unknown>
+      show_unused_data_columns_to_annotators: optional<boolean>
       tags: optional<unknown>
       updated_at: datetime
     source:
@@ -6221,6 +6417,7 @@ types:
         type: optional<boolean>
         docs: flag to require comment on skip
       review_settings: optional<unknown>
+      show_unused_data_columns_to_annotators: optional<boolean>
       tags: optional<unknown>
     source:
       openapi: openapi/openapi.yaml
@@ -6546,6 +6743,11 @@ types:
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the reviewers before they start
+      show_unused_data_columns_to_reviewers:
+        type: optional<boolean>
+        docs: >-
+          If true, Data Manager shows all task.data columns to reviewers; if
+          false, hides columns not referenced by the label interface
     source:
       openapi: openapi/openapi.yaml
   ReviewSettingsRequestRequeueRejectedTasksMode:
@@ -6618,6 +6820,11 @@ types:
       show_instruction:
         type: optional<boolean>
         docs: Show instructions to the reviewers before they start
+      show_unused_data_columns_to_reviewers:
+        type: optional<boolean>
+        docs: >-
+          If true, Data Manager shows all task.data columns to reviewers; if
+          false, hides columns not referenced by the label interface
     source:
       openapi: openapi/openapi.yaml
   ReviewedEnum:
@@ -7236,6 +7443,47 @@ types:
           * `RE` - Review
     source:
       openapi: openapi/openapi.yaml
+  TaskEvent:
+    docs: >-
+      Serializer for TaskEvent model to handle event creation from frontend.
+
+
+      This serializer validates and processes task events sent from the labeling
+      interface,
+
+      ensuring proper data format and automatically setting required
+      relationships.
+    properties:
+      actor: integer
+      annotation:
+        type: optional<integer>
+        docs: Annotation ID associated with this event
+      annotation_draft:
+        type: optional<integer>
+        docs: Draft annotation ID associated with this event
+      created_at: datetime
+      event_key:
+        type: string
+        docs: >-
+          Event type identifier (e.g., "annotation_loaded",
+          "region_finished_drawing")
+        validation:
+          maxLength: 255
+      event_time:
+        type: datetime
+        docs: Timestamp when the event occurred (frontend time)
+      id: integer
+      meta: optional<unknown>
+      organization: integer
+      project: integer
+      review:
+        type: optional<integer>
+        docs: Review ID associated with this event
+      task:
+        type: integer
+        docs: Task this event is associated with
+    source:
+      openapi: openapi/openapi.yaml
   TaskSimple:
     properties:
       annotations: list<Annotation>
@@ -7581,6 +7829,118 @@ types:
         validation:
           format: uri
           maxLength: 2048
+    source:
+      openapi: openapi/openapi.yaml
+  WhoAmILseFieldsOnboardingState:
+    discriminated: false
+    docs: |-
+      The current stage of user onboarding
+
+      * `not_started` - Not Started
+      * `signup` - Signup
+      * `trial_signup` - Trial Signup
+      * `first_tutorial` - First Tutorial
+      * `in_app_guidance` - In App Guidance
+      * `complete` - Complete
+    union:
+      - OnboardingStateEnum
+      - BlankEnum
+      - NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WhoAmILseFieldsTrialRole:
+    discriminated: false
+    union:
+      - TrialRoleEnum
+      - BlankEnum
+      - NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WhoAmILseFields:
+    properties:
+      active_organization_external_id: optional<string>
+      email_notification_settings: string
+      invite_activated: optional<boolean>
+      invite_expired: string
+      invite_expired_at: string
+      invited_at: optional<datetime>
+      invited_by: optional<integer>
+      onboarding_state:
+        type: optional<WhoAmILseFieldsOnboardingState>
+        docs: |-
+          The current stage of user onboarding
+
+          * `not_started` - Not Started
+          * `signup` - Signup
+          * `trial_signup` - Trial Signup
+          * `first_tutorial` - First Tutorial
+          * `in_app_guidance` - In App Guidance
+          * `complete` - Complete
+      social_auth_finished:
+        type: optional<boolean>
+        docs: Is user finished social authentication
+      trial_company:
+        type: optional<string>
+        validation:
+          maxLength: 1000
+      trial_experience_labeling:
+        type: optional<string>
+        validation:
+          maxLength: 1000
+      trial_license_enterprise: optional<boolean>
+      trial_models_in_production:
+        type: optional<string>
+        validation:
+          maxLength: 1000
+      trial_role: optional<WhoAmILseFieldsTrialRole>
+    source:
+      openapi: openapi/openapi.yaml
+  WhoAmIUser:
+    docs: |-
+      A ModelSerializer that takes additional arguments for
+      "fields", "omit" and "expand" in order to
+      control which fields are displayed, and whether to replace simple
+      values with complex, nested serializations
+    properties:
+      active_organization: optional<integer>
+      active_organization_meta: string
+      allow_newsletters:
+        type: optional<boolean>
+        docs: Allow sending newsletters to user
+      avatar: string
+      custom_hotkeys: optional<unknown>
+      date_joined: optional<datetime>
+      email:
+        type: optional<string>
+        validation:
+          format: email
+          maxLength: 254
+      first_name:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      id: integer
+      initials:
+        type: string
+        default: '?'
+      last_activity: datetime
+      last_name:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      lse_fields: WhoAmILseFields
+      org_membership: list<OrganizationMembership>
+      pause: string
+      phone:
+        type: optional<string>
+        validation:
+          maxLength: 256
+      username:
+        type: string
+        validation:
+          maxLength: 256
     source:
       openapi: openapi/openapi.yaml
   Workspace:

@@ -1,142 +1,3 @@
-imports:
-  root: __package__.yml
-service:
-  auth: false
-  base-path: ''
-  endpoints:
-    api_dashboards_kpis_retrieve:
-      path: /api/dashboards/{id}/kpis/{kpi_key}
-      method: GET
-      auth: true
-      docs: >-
-        Get Key Performance Indicator (KPI) data for a dashboard. Supports
-        various KPIs including: skipped_annotations, accepted_annotations,
-        rejected_annotations, average_time_per_task_min, total_annotations,
-        regions_created, and more.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-        kpi_key: string
-      display-name: Get KPI data
-      request:
-        name: ApiDashboardsKpisRetrieveRequest
-        query-parameters:
-          end:
-            type: optional<string>
-            docs: End date for filtering (ISO format)
-          members:
-            type: optional<integer>
-            allow-multiple: true
-            docs: Array of user IDs to filter by
-          start:
-            type: optional<string>
-            docs: Start date for filtering (ISO format)
-      response:
-        docs: KPI data
-        type: map<string, unknown>
-      errors:
-        - root.NotFoundError
-        - root.NotImplementedError
-      examples:
-        - path-parameters:
-            id: 1
-            kpi_key: kpi_key
-          response:
-            body:
-              key: value
-    api_projects_dashboard_retrieve:
-      path: /api/projects/{id}/dashboard
-      method: GET
-      auth: true
-      docs: Get dashboard data for project, including annotations and tasks stats.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: Get dashboard data for project
-      response:
-        docs: Successful response returns project-related annotation statistics
-        type: ApiProjectsDashboardRetrieveResponse
-      availability: deprecated
-      examples:
-        - path-parameters:
-            id: 1
-          response:
-            body:
-              annotated_tasks: 1
-              annotations: 1
-              remaining_tasks: 1
-              reviewed_tasks: 1
-              skipped_tasks: 1
-              tasks: 1
-    api_projects_dashboard_members_retrieve:
-      path: /api/projects/{id}/dashboard-members
-      method: GET
-      auth: true
-      docs: >-
-        Get dashboard for members, including similarity matrix, user statistics
-        and users list.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id: integer
-      display-name: Get dashboard data for members
-      request:
-        name: ApiProjectsDashboardMembersRetrieveRequest
-        query-parameters:
-          action:
-            type: optional<string>
-            docs: >-
-              All data objects will be filtered by updated_at or created_at
-              field
-          end_date:
-            type: optional<string>
-            docs: >-
-              End date for dashboard stats calculation. UTC timezone by default.
-              Use iso format (yyyy-mm-dd-hh-mm) to specify timezone.
-          per_label:
-            type: optional<boolean>
-            docs: Per label calculation
-          start_date:
-            type: optional<string>
-            docs: >-
-              Start date for dashboard stats calculation. UTC timezone by
-              default. Use iso format (yyyy-mm-dd-hh-mm) to specify timezone.
-          updated_by:
-            type: optional<string>
-            docs: >-
-              All task objects will be filtered by updated_by field. Only tasks
-              that were updated by concrete user will be taken in account.
-          use_kappa:
-            type: optional<boolean>
-            docs: Use kappa statistics for calculation
-      response:
-        docs: Successful response returns project-related annotation statistics
-        type: ApiProjectsDashboardMembersRetrieveResponse
-      availability: deprecated
-      examples:
-        - path-parameters:
-            id: 1
-          response:
-            body:
-              similarity:
-                - key: value
-              stats:
-                - accepted: 1
-                  finished: 1
-                  gt: 1.1
-                  mean_time: 1.1
-                  median_time: 1.1
-                  predictions: 1.1
-                  progress: 1
-                  rejected: 1
-                  review_score: 1.1
-                  skipped: 1
-              users:
-                - key: value
-  source:
-    openapi: openapi/openapi.yaml
 types:
   ApiProjectsDashboardRetrieveResponse:
     properties:
@@ -210,3 +71,103 @@ types:
         docs: List of users
     source:
       openapi: openapi/openapi.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_projects_dashboard_retrieve:
+      path: /api/projects/{id}/dashboard
+      method: GET
+      auth: true
+      docs: Get dashboard data for project, including annotations and tasks stats.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get dashboard data for project
+      response:
+        docs: Successful response returns project-related annotation statistics
+        type: ApiProjectsDashboardRetrieveResponse
+      availability: deprecated
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              annotated_tasks: 1
+              annotations: 1
+              remaining_tasks: 1
+              reviewed_tasks: 1
+              skipped_tasks: 1
+              tasks: 1
+      audiences:
+        - internal
+    api_projects_dashboard_members_retrieve:
+      path: /api/projects/{id}/dashboard-members
+      method: GET
+      auth: true
+      docs: >-
+        Get dashboard for members, including similarity matrix, user statistics
+        and users list.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get dashboard data for members
+      request:
+        name: ApiProjectsDashboardMembersRetrieveRequest
+        query-parameters:
+          action:
+            type: optional<string>
+            docs: >-
+              All data objects will be filtered by updated_at or created_at
+              field
+          end_date:
+            type: optional<string>
+            docs: >-
+              End date for dashboard stats calculation. UTC timezone by default.
+              Use iso format (yyyy-mm-dd-hh-mm) to specify timezone.
+          per_label:
+            type: optional<boolean>
+            docs: Per label calculation
+          start_date:
+            type: optional<string>
+            docs: >-
+              Start date for dashboard stats calculation. UTC timezone by
+              default. Use iso format (yyyy-mm-dd-hh-mm) to specify timezone.
+          updated_by:
+            type: optional<string>
+            docs: >-
+              All task objects will be filtered by updated_by field. Only tasks
+              that were updated by concrete user will be taken in account.
+          use_kappa:
+            type: optional<boolean>
+            docs: Use kappa statistics for calculation
+      response:
+        docs: Successful response returns project-related annotation statistics
+        type: ApiProjectsDashboardMembersRetrieveResponse
+      availability: deprecated
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              similarity:
+                - key: value
+              stats:
+                - accepted: 1
+                  finished: 1
+                  gt: 1.1
+                  mean_time: 1.1
+                  median_time: 1.1
+                  predictions: 1.1
+                  progress: 1
+                  rejected: 1
+                  review_score: 1.1
+                  skipped: 1
+              users:
+                - key: value
+      audiences:
+        - internal
+  source:
+    openapi: openapi/openapi.yaml

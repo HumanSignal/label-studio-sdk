@@ -1,0 +1,88 @@
+imports:
+  root: ../../__package__.yml
+types:
+  BulkPostResponse:
+    properties:
+      assignments: optional<integer>
+    source:
+      openapi: openapi/openapi.yaml
+  BulkDeleteResponse:
+    properties:
+      unassignments: optional<integer>
+    source:
+      openapi: openapi/openapi.yaml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    post:
+      path: /api/projects/{id}/members/bulk/
+      method: POST
+      auth: true
+      docs: Assign project members in bulk.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Bulk assign project members
+      request:
+        name: ProjectMemberBulkAssignRequest
+        query-parameters:
+          search:
+            type: optional<string>
+            docs: >-
+              Search term for filtering members by name, email, or username.
+              Only when all=True.
+        body:
+          properties:
+            all: boolean
+            excluded: optional<list<integer>>
+            included: optional<list<integer>>
+            roles: optional<list<root.ProjectMemberBulkAssignRolesRequest>>
+        content-type: application/json
+      response:
+        docs: ''
+        type: BulkPostResponse
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            all: true
+          response:
+            body:
+              assignments: 1
+      audiences:
+        - public
+    delete:
+      path: /api/projects/{id}/members/bulk/
+      method: DELETE
+      auth: true
+      docs: >-
+        Unassign project members in bulk. Allows the same request body as bulk
+        assign.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Bulk unassign project members
+      request:
+        name: BulkDeleteRequest
+        query-parameters:
+          search:
+            type: optional<string>
+            docs: >-
+              Search term for filtering members by name, email, or username.
+              Only when all=True.
+      response:
+        docs: ''
+        type: BulkDeleteResponse
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              unassignments: 1
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

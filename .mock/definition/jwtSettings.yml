@@ -36,11 +36,10 @@ service:
         body:
           properties:
             api_token_ttl_days:
-              type: optional<integer>
-              docs: Number of days before JWT API tokens expire
+              type: integer
               validation:
-                min: -2147483648
-                max: 2147483647
+                min: 1
+                max: 365
             api_tokens_enabled:
               type: optional<boolean>
               docs: Enable JWT API token authentication for this organization
@@ -52,7 +51,8 @@ service:
         docs: ''
         type: root.LsejwtSettings
       examples:
-        - request: {}
+        - request:
+            api_token_ttl_days: 1
           response:
             body:
               api_token_ttl_days: 1
