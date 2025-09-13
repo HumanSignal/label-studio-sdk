@@ -24,8 +24,7 @@ service:
       examples:
         - response:
             body:
-              - base_prefix: base_prefix
-                catalog: catalog
+              - catalog: catalog
                 created_at: '2024-01-15T09:30:00Z'
                 description: description
                 host: host
@@ -35,6 +34,7 @@ service:
                 last_sync_job: last_sync_job
                 meta:
                   key: value
+                prefix: prefix
                 presign: true
                 presign_ttl: 1
                 project: 1
@@ -45,7 +45,6 @@ service:
                 stream_chunk_bytes: 1
                 synchronizable: true
                 title: title
-                token: token
                 traceback: traceback
                 type: type
                 use_blob_urls: true
@@ -71,11 +70,9 @@ service:
             host: host
             project: 1
             schema: schema
-            token: token
             volume: volume
           response:
             body:
-              base_prefix: base_prefix
               catalog: catalog
               created_at: '2024-01-15T09:30:00Z'
               description: description
@@ -86,6 +83,7 @@ service:
               last_sync_job: last_sync_job
               meta:
                 key: value
+              prefix: prefix
               presign: true
               presign_ttl: 1
               project: 1
@@ -96,7 +94,6 @@ service:
               stream_chunk_bytes: 1
               synchronizable: true
               title: title
-              token: token
               traceback: traceback
               type: type
               use_blob_urls: true
@@ -122,11 +119,9 @@ service:
             host: host
             project: 1
             schema: schema
-            token: token
             volume: volume
           response:
             body:
-              base_prefix: base_prefix
               catalog: catalog
               created_at: '2024-01-15T09:30:00Z'
               description: description
@@ -137,6 +132,7 @@ service:
               last_sync_job: last_sync_job
               meta:
                 key: value
+              prefix: prefix
               presign: true
               presign_ttl: 1
               project: 1
@@ -147,7 +143,6 @@ service:
               stream_chunk_bytes: 1
               synchronizable: true
               title: title
-              token: token
               traceback: traceback
               type: type
               use_blob_urls: true
@@ -171,7 +166,6 @@ service:
             id: 1
           response:
             body:
-              base_prefix: base_prefix
               catalog: catalog
               created_at: '2024-01-15T09:30:00Z'
               description: description
@@ -182,6 +176,7 @@ service:
               last_sync_job: last_sync_job
               meta:
                 key: value
+              prefix: prefix
               presign: true
               presign_ttl: 1
               project: 1
@@ -192,7 +187,6 @@ service:
               stream_chunk_bytes: 1
               synchronizable: true
               title: title
-              token: token
               traceback: traceback
               type: type
               use_blob_urls: true
@@ -225,9 +219,6 @@ service:
         name: PatchedDatabricksImportStorageRequest
         body:
           properties:
-            base_prefix:
-              type: optional<string>
-              docs: Base path under the volume
             catalog:
               type: optional<string>
               docs: UC catalog name
@@ -256,6 +247,9 @@ service:
               validation:
                 maxLength: 256
             meta: optional<unknown>
+            prefix:
+              type: optional<string>
+              docs: Path under the volume
             presign:
               type: optional<boolean>
               docs: Presign not supported; always proxied
@@ -295,11 +289,7 @@ service:
               docs: Cloud storage title
               validation:
                 maxLength: 256
-            token:
-              type: optional<string>
-              docs: Databricks personal access token
-              validation:
-                minLength: 1
+            token: optional<string>
             traceback:
               type: optional<string>
               docs: Traceback report for the last failed sync
@@ -324,7 +314,6 @@ service:
           request: {}
           response:
             body:
-              base_prefix: base_prefix
               catalog: catalog
               created_at: '2024-01-15T09:30:00Z'
               description: description
@@ -335,6 +324,7 @@ service:
               last_sync_job: last_sync_job
               meta:
                 key: value
+              prefix: prefix
               presign: true
               presign_ttl: 1
               project: 1
@@ -345,7 +335,6 @@ service:
               stream_chunk_bytes: 1
               synchronizable: true
               title: title
-              token: token
               traceback: traceback
               type: type
               use_blob_urls: true
@@ -375,11 +364,9 @@ service:
             host: host
             project: 1
             schema: schema
-            token: token
             volume: volume
           response:
             body:
-              base_prefix: base_prefix
               catalog: catalog
               created_at: '2024-01-15T09:30:00Z'
               description: description
@@ -390,6 +377,7 @@ service:
               last_sync_job: last_sync_job
               meta:
                 key: value
+              prefix: prefix
               presign: true
               presign_ttl: 1
               project: 1
@@ -400,7 +388,6 @@ service:
               stream_chunk_bytes: 1
               synchronizable: true
               title: title
-              token: token
               traceback: traceback
               type: type
               use_blob_urls: true
@@ -426,8 +413,7 @@ service:
       examples:
         - response:
             body:
-              - base_prefix: base_prefix
-                can_delete_objects: true
+              - can_delete_objects: true
                 catalog: catalog
                 created_at: '2024-01-15T09:30:00Z'
                 description: description
@@ -438,6 +424,7 @@ service:
                 last_sync_job: last_sync_job
                 meta:
                   key: value
+                prefix: prefix
                 project: 1
                 regex_filter: regex_filter
                 request_timeout_s: 1
@@ -446,7 +433,6 @@ service:
                 stream_chunk_bytes: 1
                 synchronizable: true
                 title: title
-                token: token
                 traceback: traceback
                 type: type
                 use_blob_urls: true
@@ -472,11 +458,9 @@ service:
             host: host
             project: 1
             schema: schema
-            token: token
             volume: volume
           response:
             body:
-              base_prefix: base_prefix
               can_delete_objects: true
               catalog: catalog
               created_at: '2024-01-15T09:30:00Z'
@@ -488,6 +472,7 @@ service:
               last_sync_job: last_sync_job
               meta:
                 key: value
+              prefix: prefix
               project: 1
               regex_filter: regex_filter
               request_timeout_s: 1
@@ -496,7 +481,6 @@ service:
               stream_chunk_bytes: 1
               synchronizable: true
               title: title
-              token: token
               traceback: traceback
               type: type
               use_blob_urls: true
@@ -522,11 +506,9 @@ service:
             host: host
             project: 1
             schema: schema
-            token: token
             volume: volume
           response:
             body:
-              base_prefix: base_prefix
               can_delete_objects: true
               catalog: catalog
               created_at: '2024-01-15T09:30:00Z'
@@ -538,6 +520,7 @@ service:
               last_sync_job: last_sync_job
               meta:
                 key: value
+              prefix: prefix
               project: 1
               regex_filter: regex_filter
               request_timeout_s: 1
@@ -546,7 +529,6 @@ service:
               stream_chunk_bytes: 1
               synchronizable: true
               title: title
-              token: token
               traceback: traceback
               type: type
               use_blob_urls: true
@@ -570,7 +552,6 @@ service:
             id: 1
           response:
             body:
-              base_prefix: base_prefix
               can_delete_objects: true
               catalog: catalog
               created_at: '2024-01-15T09:30:00Z'
@@ -582,6 +563,7 @@ service:
               last_sync_job: last_sync_job
               meta:
                 key: value
+              prefix: prefix
               project: 1
               regex_filter: regex_filter
               request_timeout_s: 1
@@ -590,7 +572,6 @@ service:
               stream_chunk_bytes: 1
               synchronizable: true
               title: title
-              token: token
               traceback: traceback
               type: type
               use_blob_urls: true
@@ -623,9 +604,6 @@ service:
         name: PatchedDatabricksExportStorageRequest
         body:
           properties:
-            base_prefix:
-              type: optional<string>
-              docs: Base path under the volume
             can_delete_objects:
               type: optional<boolean>
               docs: Deletion from storage enabled
@@ -657,6 +635,9 @@ service:
               validation:
                 maxLength: 256
             meta: optional<unknown>
+            prefix:
+              type: optional<string>
+              docs: Export path prefix under the volume
             project:
               type: optional<integer>
               docs: A unique integer value identifying this project.
@@ -687,11 +668,7 @@ service:
               docs: Cloud storage title
               validation:
                 maxLength: 256
-            token:
-              type: optional<string>
-              docs: Databricks personal access token
-              validation:
-                minLength: 1
+            token: optional<string>
             traceback:
               type: optional<string>
               docs: Traceback report for the last failed sync
@@ -716,7 +693,6 @@ service:
           request: {}
           response:
             body:
-              base_prefix: base_prefix
               can_delete_objects: true
               catalog: catalog
               created_at: '2024-01-15T09:30:00Z'
@@ -728,6 +704,7 @@ service:
               last_sync_job: last_sync_job
               meta:
                 key: value
+              prefix: prefix
               project: 1
               regex_filter: regex_filter
               request_timeout_s: 1
@@ -736,7 +713,6 @@ service:
               stream_chunk_bytes: 1
               synchronizable: true
               title: title
-              token: token
               traceback: traceback
               type: type
               use_blob_urls: true
@@ -766,11 +742,9 @@ service:
             host: host
             project: 1
             schema: schema
-            token: token
             volume: volume
           response:
             body:
-              base_prefix: base_prefix
               can_delete_objects: true
               catalog: catalog
               created_at: '2024-01-15T09:30:00Z'
@@ -782,6 +756,7 @@ service:
               last_sync_job: last_sync_job
               meta:
                 key: value
+              prefix: prefix
               project: 1
               regex_filter: regex_filter
               request_timeout_s: 1
@@ -790,7 +765,6 @@ service:
               stream_chunk_bytes: 1
               synchronizable: true
               title: title
-              token: token
               traceback: traceback
               type: type
               use_blob_urls: true

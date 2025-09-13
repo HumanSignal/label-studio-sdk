@@ -19081,10 +19081,6 @@ components:
       type: string
     DatabricksExportStorage:
       properties:
-        base_prefix:
-          description: Base path under the volume
-          nullable: true
-          type: string
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
@@ -19126,6 +19122,10 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
+        prefix:
+          description: Export path prefix under the volume
+          nullable: true
+          type: string
         project:
           description: A unique integer value identifying this project.
           type: integer
@@ -19154,9 +19154,6 @@ components:
           maxLength: 256
           nullable: true
           type: string
-        token:
-          description: Databricks personal access token
-          type: string
         traceback:
           description: Traceback report for the last failed sync
           nullable: true
@@ -19181,16 +19178,11 @@ components:
         - id
         - project
         - schema
-        - token
         - type
         - volume
       type: object
     DatabricksExportStorageRequest:
       properties:
-        base_prefix:
-          description: Base path under the volume
-          nullable: true
-          type: string
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
@@ -19226,6 +19218,10 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
+        prefix:
+          description: Export path prefix under the volume
+          nullable: true
+          type: string
         project:
           description: A unique integer value identifying this project.
           type: integer
@@ -19256,9 +19252,8 @@ components:
           nullable: true
           type: string
         token:
-          description: Databricks personal access token
-          minLength: 1
           type: string
+          writeOnly: true
         traceback:
           description: Traceback report for the last failed sync
           nullable: true
@@ -19278,15 +19273,10 @@ components:
         - host
         - project
         - schema
-        - token
         - volume
       type: object
     DatabricksImportStorage:
       properties:
-        base_prefix:
-          description: Base path under the volume
-          nullable: true
-          type: string
         catalog:
           description: UC catalog name
           type: string
@@ -19324,6 +19314,10 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
+        prefix:
+          description: Path under the volume
+          nullable: true
+          type: string
         presign:
           description: Presign not supported; always proxied
           type: boolean
@@ -19360,9 +19354,6 @@ components:
           maxLength: 256
           nullable: true
           type: string
-        token:
-          description: Databricks personal access token
-          type: string
         traceback:
           description: Traceback report for the last failed sync
           nullable: true
@@ -19387,16 +19378,11 @@ components:
         - id
         - project
         - schema
-        - token
         - type
         - volume
       type: object
     DatabricksImportStorageRequest:
       properties:
-        base_prefix:
-          description: Base path under the volume
-          nullable: true
-          type: string
         catalog:
           description: UC catalog name
           minLength: 1
@@ -19428,6 +19414,10 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
+        prefix:
+          description: Path under the volume
+          nullable: true
+          type: string
         presign:
           description: Presign not supported; always proxied
           type: boolean
@@ -19466,9 +19456,8 @@ components:
           nullable: true
           type: string
         token:
-          description: Databricks personal access token
-          minLength: 1
           type: string
+          writeOnly: true
         traceback:
           description: Traceback report for the last failed sync
           nullable: true
@@ -19488,7 +19477,6 @@ components:
         - host
         - project
         - schema
-        - token
         - volume
       type: object
     Dataset:
@@ -25263,10 +25251,6 @@ components:
       type: object
     PatchedDatabricksExportStorageRequest:
       properties:
-        base_prefix:
-          description: Base path under the volume
-          nullable: true
-          type: string
         can_delete_objects:
           description: Deletion from storage enabled
           nullable: true
@@ -25302,6 +25286,10 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
+        prefix:
+          description: Export path prefix under the volume
+          nullable: true
+          type: string
         project:
           description: A unique integer value identifying this project.
           type: integer
@@ -25332,9 +25320,8 @@ components:
           nullable: true
           type: string
         token:
-          description: Databricks personal access token
-          minLength: 1
           type: string
+          writeOnly: true
         traceback:
           description: Traceback report for the last failed sync
           nullable: true
@@ -25352,10 +25339,6 @@ components:
       type: object
     PatchedDatabricksImportStorageRequest:
       properties:
-        base_prefix:
-          description: Base path under the volume
-          nullable: true
-          type: string
         catalog:
           description: UC catalog name
           minLength: 1
@@ -25387,6 +25370,10 @@ components:
         meta:
           description: Meta and debug information about storage processes
           nullable: true
+        prefix:
+          description: Path under the volume
+          nullable: true
+          type: string
         presign:
           description: Presign not supported; always proxied
           type: boolean
@@ -25425,9 +25412,8 @@ components:
           nullable: true
           type: string
         token:
-          description: Databricks personal access token
-          minLength: 1
           type: string
+          writeOnly: true
         traceback:
           description: Traceback report for the last failed sync
           nullable: true

@@ -1665,9 +1665,6 @@ types:
       openapi: openapi/openapi.yaml
   DatabricksExportStorage:
     properties:
-      base_prefix:
-        type: optional<string>
-        docs: Base path under the volume
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled
@@ -1699,6 +1696,9 @@ types:
         validation:
           maxLength: 256
       meta: optional<unknown>
+      prefix:
+        type: optional<string>
+        docs: Export path prefix under the volume
       project:
         type: integer
         docs: A unique integer value identifying this project.
@@ -1727,9 +1727,6 @@ types:
         docs: Cloud storage title
         validation:
           maxLength: 256
-      token:
-        type: string
-        docs: Databricks personal access token
       traceback:
         type: optional<string>
         docs: Traceback report for the last failed sync
@@ -1749,9 +1746,6 @@ types:
       openapi: openapi/openapi.yaml
   DatabricksExportStorageRequest:
     properties:
-      base_prefix:
-        type: optional<string>
-        docs: Base path under the volume
       can_delete_objects:
         type: optional<boolean>
         docs: Deletion from storage enabled
@@ -1783,6 +1777,9 @@ types:
         validation:
           maxLength: 256
       meta: optional<unknown>
+      prefix:
+        type: optional<string>
+        docs: Export path prefix under the volume
       project:
         type: integer
         docs: A unique integer value identifying this project.
@@ -1813,11 +1810,7 @@ types:
         docs: Cloud storage title
         validation:
           maxLength: 256
-      token:
-        type: string
-        docs: Databricks personal access token
-        validation:
-          minLength: 1
+      token: optional<string>
       traceback:
         type: optional<string>
         docs: Traceback report for the last failed sync
@@ -1836,9 +1829,6 @@ types:
       openapi: openapi/openapi.yaml
   DatabricksImportStorage:
     properties:
-      base_prefix:
-        type: optional<string>
-        docs: Base path under the volume
       catalog:
         type: string
         docs: UC catalog name
@@ -1867,6 +1857,9 @@ types:
         validation:
           maxLength: 256
       meta: optional<unknown>
+      prefix:
+        type: optional<string>
+        docs: Path under the volume
       presign:
         type: optional<boolean>
         docs: Presign not supported; always proxied
@@ -1904,9 +1897,6 @@ types:
         docs: Cloud storage title
         validation:
           maxLength: 256
-      token:
-        type: string
-        docs: Databricks personal access token
       traceback:
         type: optional<string>
         docs: Traceback report for the last failed sync
@@ -1926,9 +1916,6 @@ types:
       openapi: openapi/openapi.yaml
   DatabricksImportStorageRequest:
     properties:
-      base_prefix:
-        type: optional<string>
-        docs: Base path under the volume
       catalog:
         type: string
         docs: UC catalog name
@@ -1957,6 +1944,9 @@ types:
         validation:
           maxLength: 256
       meta: optional<unknown>
+      prefix:
+        type: optional<string>
+        docs: Path under the volume
       presign:
         type: optional<boolean>
         docs: Presign not supported; always proxied
@@ -1996,11 +1986,7 @@ types:
         docs: Cloud storage title
         validation:
           maxLength: 256
-      token:
-        type: string
-        docs: Databricks personal access token
-        validation:
-          minLength: 1
+      token: optional<string>
       traceback:
         type: optional<string>
         docs: Traceback report for the last failed sync
