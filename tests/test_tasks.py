@@ -77,7 +77,7 @@ async def test_delete_all_tasks(client: LabelStudio, async_client: AsyncLabelStu
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "agreement": "agreement",
-        "agreement_filtered": "agreement_filtered",
+        "agreement_selected": "agreement_selected",
         "annotations": "annotations",
         "annotations_ids": "annotations_ids",
         "annotations_results": "annotations_results",
@@ -155,7 +155,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     }
     expected_types: typing.Any = {
         "agreement": None,
-        "agreement_filtered": None,
+        "agreement_selected": None,
         "annotations": None,
         "annotations_ids": None,
         "annotations_results": None,
@@ -247,7 +247,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "agreement": "agreement",
-        "agreement_filtered": "agreement_filtered",
+        "agreement_selected": "agreement_selected",
         "annotations": "annotations",
         "annotations_ids": "annotations_ids",
         "annotations_results": "annotations_results",
@@ -305,7 +305,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     }
     expected_types: typing.Any = {
         "agreement": None,
-        "agreement_filtered": None,
+        "agreement_selected": None,
         "annotations": None,
         "annotations_ids": None,
         "annotations_results": None,
@@ -394,7 +394,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "agreement": "agreement",
-        "agreement_filtered": "agreement_filtered",
+        "agreement_selected": "agreement_selected",
         "annotations": "annotations",
         "annotations_ids": "annotations_ids",
         "annotations_results": "annotations_results",
@@ -452,7 +452,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     }
     expected_types: typing.Any = {
         "agreement": None,
-        "agreement_filtered": None,
+        "agreement_selected": None,
         "annotations": None,
         "annotations_ids": None,
         "annotations_results": None,
