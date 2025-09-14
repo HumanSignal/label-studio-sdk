@@ -27,6 +27,7 @@ from label_studio_sdk._legacy.exceptions import (
 
 from .base import LabelStudioTag
 from .control_tags import (
+    ChatMessageTag,
     ControlTag,
     ChoicesTag,
     LabelsTag,
@@ -623,6 +624,18 @@ class LabelInterface:
                 if lb:
                     labels[lb.parent_name][lb.value] = lb
 
+        # Special handling: auto-create ChatMessage control for each Chat object
+        chat_object_names = [name for name, obj in objects.items() if getattr(obj, 'tag', '').lower() == 'chat']
+        for name in chat_object_names:
+            if name not in controls:
+                controls[name] = ChatMessageTag(
+                    tag='ChatMessage',
+                    name=name,
+                    to_name=[name],
+                    attr={"name": name, "toName": name}
+                )
+
+
         return controls, objects, labels, xml_tree
 
     @classmethod
@@ -760,10 +773,6 @@ class LabelInterface:
             result = obj.get(RESULT_KEY)
             if not isinstance(result, list):
                 errors.append(f"'{RESULT_KEY}' must be a list")
-                return errors
-
-            if not result:
-                errors.append(f"'{RESULT_KEY}' cannot be empty")
                 return errors
 
             # Validate score if present
