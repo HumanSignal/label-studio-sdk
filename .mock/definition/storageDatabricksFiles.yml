@@ -8,7 +8,7 @@ service:
       path: /api/storages/databricks/
       method: GET
       auth: true
-      docs: List Databricks DBFS import storage connections.
+      docs: List Databricks Files import storage connections.
       source:
         openapi: openapi/openapi.yaml
       display-name: Get Databricks import storages
@@ -55,7 +55,7 @@ service:
       path: /api/storages/databricks/
       method: POST
       auth: true
-      docs: Create a Databricks DBFS import storage connection.
+      docs: Create a Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create Databricks import storage
@@ -105,7 +105,7 @@ service:
       path: /api/storages/databricks/validate
       method: POST
       auth: true
-      docs: Validate a specific Databricks DBFS import storage connection.
+      docs: Validate a specific Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
       display-name: Validate Databricks import storage
@@ -155,7 +155,7 @@ service:
       path: /api/storages/databricks/{id}
       method: GET
       auth: true
-      docs: Retrieve a specific Databricks DBFS import storage connection.
+      docs: Retrieve a specific Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -200,7 +200,7 @@ service:
       path: /api/storages/databricks/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific Databricks DBFS import storage connection.
+      docs: Delete a specific Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -213,7 +213,7 @@ service:
       path: /api/storages/databricks/{id}
       method: PATCH
       auth: true
-      docs: Update a specific Databricks DBFS import storage connection.
+      docs: Update a specific Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -352,7 +352,7 @@ service:
       path: /api/storages/databricks/{id}/sync
       method: POST
       auth: true
-      docs: Sync tasks from a Databricks DBFS import storage.
+      docs: Sync tasks from a Databricks Files import storage.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -406,7 +406,7 @@ service:
       path: /api/storages/export/databricks
       method: GET
       auth: true
-      docs: List Databricks DBFS export storage connections.
+      docs: List Databricks Files export storage connections.
       source:
         openapi: openapi/openapi.yaml
       display-name: Get Databricks export storages
@@ -451,7 +451,7 @@ service:
       path: /api/storages/export/databricks
       method: POST
       auth: true
-      docs: Create a Databricks DBFS export storage connection.
+      docs: Create a Databricks Files export storage connection.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create Databricks export storage
@@ -499,7 +499,7 @@ service:
       path: /api/storages/export/databricks/validate
       method: POST
       auth: true
-      docs: Validate a specific Databricks DBFS export storage connection.
+      docs: Validate a specific Databricks Files export storage connection.
       source:
         openapi: openapi/openapi.yaml
       display-name: Validate Databricks export storage
@@ -547,7 +547,7 @@ service:
       path: /api/storages/export/databricks/{id}
       method: GET
       auth: true
-      docs: Retrieve a specific Databricks DBFS export storage connection.
+      docs: Retrieve a specific Databricks Files export storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -590,7 +590,7 @@ service:
       path: /api/storages/export/databricks/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific Databricks DBFS export storage connection.
+      docs: Delete a specific Databricks Files export storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -603,7 +603,7 @@ service:
       path: /api/storages/export/databricks/{id}
       method: PATCH
       auth: true
-      docs: Update a specific Databricks DBFS export storage connection.
+      docs: Update a specific Databricks Files export storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -731,7 +731,7 @@ service:
       path: /api/storages/export/databricks/{id}/sync
       method: POST
       auth: true
-      docs: Export annotations to a Databricks DBFS storage.
+      docs: Export annotations to a Databricks Files storage.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
