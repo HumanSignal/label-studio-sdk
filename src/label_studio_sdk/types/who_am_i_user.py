@@ -18,7 +18,11 @@ class WhoAmIUser(UncheckedBaseModel):
     """
 
     active_organization: typing.Optional[int] = None
-    active_organization_meta: str
+    active_organization_meta: str = pydantic.Field()
+    """
+    Active organization metadata
+    """
+
     allow_newsletters: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Allow sending newsletters to user

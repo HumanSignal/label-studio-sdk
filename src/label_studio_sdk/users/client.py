@@ -351,7 +351,7 @@ class UsersClient:
 
     def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> WhoAmIUser:
         """
-        Retrieve details of the account that you are using to access the API.
+        Make the whoami call on behalf of the user you are using to access the API.
 
         Parameters
         ----------
@@ -1112,7 +1112,7 @@ class AsyncUsersClient:
 
     async def whoami(self, *, request_options: typing.Optional[RequestOptions] = None) -> WhoAmIUser:
         """
-        Retrieve details of the account that you are using to access the API.
+        Make the whoami call on behalf of the user you are using to access the API.
 
         Parameters
         ----------

@@ -5159,7 +5159,9 @@ types:
       values with complex, nested serializations
     properties:
       active_organization: optional<integer>
-      active_organization_meta: string
+      active_organization_meta:
+        type: string
+        docs: Active organization metadata
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
@@ -5205,7 +5207,9 @@ types:
       values with complex, nested serializations
     properties:
       active_organization: optional<integer>
-      active_organization_meta: string
+      active_organization_meta:
+        type: string
+        docs: Active organization metadata
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
@@ -5832,7 +5836,9 @@ types:
       values with complex, nested serializations
     properties:
       active_organization: optional<integer>
-      active_organization_meta: string
+      active_organization_meta:
+        type: string
+        docs: Active organization metadata
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
@@ -7898,7 +7904,9 @@ types:
       values with complex, nested serializations
     properties:
       active_organization: optional<integer>
-      active_organization_meta: string
+      active_organization_meta:
+        type: string
+        docs: Active organization metadata
       allow_newsletters:
         type: optional<boolean>
         docs: Allow sending newsletters to user
