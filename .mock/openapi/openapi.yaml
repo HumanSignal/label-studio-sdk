@@ -4745,7 +4745,7 @@ paths:
       x-fern-sdk-method-name: predict_interactive
   /api/ml/{id}/predict:
     post:
-      description: "\n        Create predictions for all tasks using a specific ML backend so that you can set up an active learning strategy\n        based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires \n        a Label Studio ML backend set up and configured for your project. \n\n        See [Set up machine learning](https://labelstud.io/guide/ml.html) for more details \n        about a Label Studio ML backend.\n\n        Reference the ML backend ID in the path of this API call. Get the ML backend ID by \n        [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).\n        "
+      description: "Note: not available in the community edition of Label Studio. \n\nCreate predictions for all tasks using a specific ML backend so that you can set up an active learning strategy based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires a Label Studio ML backend set up and configured for your project. \n\nSee [Set up machine learning](https://labelstud.io/guide/ml.html) for more details about a Label Studio ML backend. \n\nReference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list)."
       operationId: api_ml_predict_create
       parameters:
         - description: Computed number of tasks without predictions that the ML backend needs to predict.
@@ -4764,9 +4764,13 @@ paths:
           description: Predictions have successfully started.
       security:
         - Token: []
-      summary: Create predictions
+      summary: Create predictions for all tasks
       tags:
         - Machine Learning
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: ml
+      x-fern-sdk-method-name: predict_all_tasks
   /api/ml/{id}/predict/test:
     post:
       description: "\n        After you add an ML backend, call this API with the ML backend ID to run a test prediction on specific task data               \n        "
@@ -5253,6 +5257,11 @@ paths:
       summary: Update organization
       tags:
         - Organizations
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+      x-fern-sdk-method-name: update
   /api/organizations/{id}/memberships:
     get:
       description: Retrieve a list of all users and roles in a specific organization.
@@ -5471,6 +5480,11 @@ paths:
       summary: Update default role
       tags:
         - Organizations
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+      x-fern-sdk-method-name: update_default_role
   /api/predictions/:
     get:
       description: List all predictions and their IDs.
@@ -5938,6 +5952,11 @@ paths:
       summary: Get project templates
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: list
     post:
       description: Create a project template for an organization.
       operationId: api_project_templates_create
@@ -5965,6 +5984,11 @@ paths:
       summary: Create project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: create
   /api/project-templates/{id}:
     delete:
       description: Delete a specific project template by ID for an organization.
@@ -5983,6 +6007,11 @@ paths:
       summary: Delete a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: delete
     get:
       description: Get a specific project template by ID for an organization.
       operationId: api_project_templates_retrieve
@@ -6004,6 +6033,11 @@ paths:
       summary: Get a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: get
     patch:
       description: Update the details of a specific project template by ID for an organization.
       operationId: api_project_templates_partial_update
@@ -6036,6 +6070,11 @@ paths:
       summary: Update a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: update
     put:
       description: Overwrite a specific project template by ID for an organization.
       operationId: api_project_templates_update
@@ -6069,6 +6108,8 @@ paths:
       summary: Overwrite a project template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - internal
   /api/project-templates/{id}/create-project:
     post:
       description: Create a project from a specific project template by ID for an organization.
@@ -6109,6 +6150,11 @@ paths:
       summary: Create project from template
       tags:
         - Project Templates
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - project-templates
+      x-fern-sdk-method-name: create_project_from_template
   /api/projects/:
     get:
       description: Retrieve a list of projects.
@@ -10837,6 +10883,191 @@ paths:
         - import_storage
         - azure_spi
       x-fern-sdk-method-name: sync
+  /api/storages/databricks/:
+    get:
+      description: List Databricks Files import storage connections.
+      operationId: api_storages_databricks_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DatabricksImportStorage'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: Get Databricks import storages
+      tags:
+        - 'Storage: Databricks Files'
+    post:
+      description: Create a Databricks Files import storage connection.
+      operationId: api_storages_databricks_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatabricksImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DatabricksImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DatabricksImportStorageRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabricksImportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: Create Databricks import storage
+      tags:
+        - 'Storage: Databricks Files'
+  /api/storages/databricks/validate:
+    post:
+      description: Validate a specific Databricks Files import storage connection.
+      operationId: api_storages_databricks_validate_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatabricksImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DatabricksImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DatabricksImportStorageRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabricksImportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: Validate Databricks import storage
+      tags:
+        - 'Storage: Databricks Files'
+  /api/storages/databricks/{id}:
+    delete:
+      description: Delete a specific Databricks Files import storage connection.
+      operationId: api_storages_databricks_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: Delete Databricks import storage
+      tags:
+        - 'Storage: Databricks Files'
+    get:
+      description: Retrieve a specific Databricks Files import storage connection.
+      operationId: api_storages_databricks_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabricksImportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: Get Databricks import storage
+      tags:
+        - 'Storage: Databricks Files'
+    patch:
+      description: Update a specific Databricks Files import storage connection.
+      operationId: api_storages_databricks_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDatabricksImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDatabricksImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDatabricksImportStorageRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabricksImportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: Update Databricks import storage
+      tags:
+        - 'Storage: Databricks Files'
+  /api/storages/databricks/{id}/sync:
+    post:
+      description: Sync tasks from a Databricks Files import storage.
+      operationId: api_storages_databricks_sync_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatabricksImportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DatabricksImportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DatabricksImportStorageRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabricksImportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: Sync Databricks import storage
+      tags:
+        - 'Storage: Databricks Files'
   /api/storages/export:
     get:
       description: Retrieve a list of the export storages of all types with their IDs.
@@ -11367,6 +11598,191 @@ paths:
         - export_storage
         - azure_spi
       x-fern-sdk-method-name: sync
+  /api/storages/export/databricks:
+    get:
+      description: List Databricks Files export storage connections.
+      operationId: api_storages_export_databricks_list
+      parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DatabricksExportStorage'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: Get Databricks export storages
+      tags:
+        - 'Storage: Databricks Files'
+    post:
+      description: Create a Databricks Files export storage connection.
+      operationId: api_storages_export_databricks_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatabricksExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DatabricksExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DatabricksExportStorageRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabricksExportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: Create Databricks export storage
+      tags:
+        - 'Storage: Databricks Files'
+  /api/storages/export/databricks/validate:
+    post:
+      description: Validate a specific Databricks Files export storage connection.
+      operationId: api_storages_export_databricks_validate_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatabricksExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DatabricksExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DatabricksExportStorageRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabricksExportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: Validate Databricks export storage
+      tags:
+        - 'Storage: Databricks Files'
+  /api/storages/export/databricks/{id}:
+    delete:
+      description: Delete a specific Databricks Files export storage connection.
+      operationId: api_storages_export_databricks_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No response body
+      security:
+        - Token: []
+      summary: Delete Databricks export storage
+      tags:
+        - 'Storage: Databricks Files'
+    get:
+      description: Retrieve a specific Databricks Files export storage connection.
+      operationId: api_storages_export_databricks_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabricksExportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: Get Databricks export storage
+      tags:
+        - 'Storage: Databricks Files'
+    patch:
+      description: Update a specific Databricks Files export storage connection.
+      operationId: api_storages_export_databricks_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedDatabricksExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedDatabricksExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedDatabricksExportStorageRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabricksExportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: Update Databricks export storage
+      tags:
+        - 'Storage: Databricks Files'
+  /api/storages/export/databricks/{id}/sync:
+    post:
+      description: Export annotations to a Databricks Files storage.
+      operationId: api_storages_export_databricks_sync_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatabricksExportStorageRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/DatabricksExportStorageRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/DatabricksExportStorageRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatabricksExportStorage'
+          description: ''
+      security:
+        - Token: []
+      summary: Sync Databricks export storage
+      tags:
+        - 'Storage: Databricks Files'
   /api/storages/export/gcs:
     get:
       description: Get a list of all GCS export storage connections.
@@ -18757,6 +19173,412 @@ components:
         - AD
         - MA
       type: string
+    DatabricksExportStorage:
+      properties:
+        can_delete_objects:
+          description: Deletion from storage enabled
+          nullable: true
+          type: boolean
+        catalog:
+          description: UC catalog name
+          type: string
+        created_at:
+          description: Creation time
+          format: date-time
+          readOnly: true
+          type: string
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: Export path prefix under the volume
+          nullable: true
+          type: string
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        regex_filter:
+          description: Regex for filtering objects
+          nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        synchronizable:
+          default: true
+          type: boolean
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        type:
+          default: databricks
+          readOnly: true
+          type: string
+        use_blob_urls:
+          description: Generate blob URLs in tasks
+          type: boolean
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
+          type: string
+      required:
+        - catalog
+        - created_at
+        - host
+        - id
+        - project
+        - schema
+        - type
+        - volume
+      type: object
+    DatabricksExportStorageRequest:
+      properties:
+        can_delete_objects:
+          description: Deletion from storage enabled
+          nullable: true
+          type: boolean
+        catalog:
+          description: UC catalog name
+          minLength: 1
+          type: string
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
+          minLength: 1
+          type: string
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: Export path prefix under the volume
+          nullable: true
+          type: string
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        regex_filter:
+          description: Regex for filtering objects
+          nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
+          minLength: 1
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        synchronizable:
+          default: true
+          type: boolean
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        token:
+          type: string
+          writeOnly: true
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        use_blob_urls:
+          description: Generate blob URLs in tasks
+          type: boolean
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
+          minLength: 1
+          type: string
+      required:
+        - catalog
+        - host
+        - project
+        - schema
+        - volume
+      type: object
+    DatabricksImportStorage:
+      properties:
+        catalog:
+          description: UC catalog name
+          type: string
+        created_at:
+          description: Creation time
+          format: date-time
+          readOnly: true
+          type: string
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: Path under the volume
+          nullable: true
+          type: string
+        presign:
+          description: Presign not supported; always proxied
+          type: boolean
+        presign_ttl:
+          description: Unused for Databricks; kept for compatibility
+          maximum: 32767
+          minimum: 0
+          type: integer
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          type: boolean
+        regex_filter:
+          description: Regex for filtering objects
+          nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        synchronizable:
+          default: true
+          type: boolean
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        type:
+          default: databricks
+          readOnly: true
+          type: string
+        use_blob_urls:
+          description: Generate blob URLs in tasks
+          type: boolean
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
+          type: string
+      required:
+        - catalog
+        - created_at
+        - host
+        - id
+        - project
+        - schema
+        - type
+        - volume
+      type: object
+    DatabricksImportStorageRequest:
+      properties:
+        catalog:
+          description: UC catalog name
+          minLength: 1
+          type: string
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
+          minLength: 1
+          type: string
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: Path under the volume
+          nullable: true
+          type: string
+        presign:
+          description: Presign not supported; always proxied
+          type: boolean
+        presign_ttl:
+          description: Unused for Databricks; kept for compatibility
+          maximum: 32767
+          minimum: 0
+          type: integer
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          type: boolean
+        regex_filter:
+          description: Regex for filtering objects
+          nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
+          minLength: 1
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        synchronizable:
+          default: true
+          type: boolean
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        token:
+          type: string
+          writeOnly: true
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        use_blob_urls:
+          description: Generate blob URLs in tasks
+          type: boolean
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
+          minLength: 1
+          type: string
+      required:
+        - catalog
+        - host
+        - project
+        - schema
+        - volume
+      type: object
     Dataset:
       properties:
         columns:
@@ -22249,7 +23071,7 @@ components:
         agreement:
           readOnly: true
           type: string
-        agreement_filtered:
+        agreement_selected:
           readOnly: true
           type: string
         annotations:
@@ -22452,7 +23274,7 @@ components:
           type: array
       required:
         - agreement
-        - agreement_filtered
+        - agreement_selected
         - annotations
         - annotations_ids
         - annotations_results
@@ -22782,7 +23604,7 @@ components:
         agreement:
           readOnly: true
           type: string
-        agreement_filtered:
+        agreement_selected:
           readOnly: true
           type: string
         annotations:
@@ -22985,7 +23807,7 @@ components:
           type: array
       required:
         - agreement
-        - agreement_filtered
+        - agreement_selected
         - annotations
         - annotations_ids
         - annotations_results
@@ -24527,6 +25349,189 @@ components:
           nullable: true
           type: string
       type: object
+    PatchedDatabricksExportStorageRequest:
+      properties:
+        can_delete_objects:
+          description: Deletion from storage enabled
+          nullable: true
+          type: boolean
+        catalog:
+          description: UC catalog name
+          minLength: 1
+          type: string
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
+          minLength: 1
+          type: string
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: Export path prefix under the volume
+          nullable: true
+          type: string
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        regex_filter:
+          description: Regex for filtering objects
+          nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
+          minLength: 1
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        synchronizable:
+          default: true
+          type: boolean
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        token:
+          type: string
+          writeOnly: true
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        use_blob_urls:
+          description: Generate blob URLs in tasks
+          type: boolean
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
+          minLength: 1
+          type: string
+      type: object
+    PatchedDatabricksImportStorageRequest:
+      properties:
+        catalog:
+          description: UC catalog name
+          minLength: 1
+          type: string
+        description:
+          description: Cloud storage description
+          nullable: true
+          type: string
+        host:
+          description: Databricks workspace base URL (https://...)
+          minLength: 1
+          type: string
+        last_sync:
+          description: Last sync finished time
+          format: date-time
+          nullable: true
+          type: string
+        last_sync_count:
+          description: Count of tasks synced last time
+          maximum: 2147483647
+          minimum: 0
+          nullable: true
+          type: integer
+        last_sync_job:
+          description: Last sync job ID
+          maxLength: 256
+          nullable: true
+          type: string
+        meta:
+          description: Meta and debug information about storage processes
+          nullable: true
+        prefix:
+          description: Path under the volume
+          nullable: true
+          type: string
+        presign:
+          description: Presign not supported; always proxied
+          type: boolean
+        presign_ttl:
+          description: Unused for Databricks; kept for compatibility
+          maximum: 32767
+          minimum: 0
+          type: integer
+        project:
+          description: A unique integer value identifying this project.
+          type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          type: boolean
+        regex_filter:
+          description: Regex for filtering objects
+          nullable: true
+          type: string
+        request_timeout_s:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        schema:
+          description: UC schema name
+          minLength: 1
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusC5aEnum'
+        stream_chunk_bytes:
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        synchronizable:
+          default: true
+          type: boolean
+        title:
+          description: Cloud storage title
+          maxLength: 256
+          nullable: true
+          type: string
+        token:
+          type: string
+          writeOnly: true
+        traceback:
+          description: Traceback report for the last failed sync
+          nullable: true
+          type: string
+        use_blob_urls:
+          description: Generate blob URLs in tasks
+          type: boolean
+        verify_tls:
+          description: Verify TLS certificates
+          type: boolean
+        volume:
+          description: UC volume name
+          minLength: 1
+          type: string
+      type: object
     PatchedDatasetRequest:
       properties:
         columns:
@@ -25632,6 +26637,9 @@ components:
         organization:
           nullable: true
           type: integer
+        project_id:
+          type: integer
+          writeOnly: true
         project_settings:
           description: general dict serialized project settings
         require_comment_on_skip:
@@ -26763,6 +27771,9 @@ components:
         organization:
           nullable: true
           type: integer
+        project_id:
+          type: integer
+          writeOnly: true
         project_settings:
           description: general dict serialized project settings
         require_comment_on_skip:
@@ -26776,6 +27787,7 @@ components:
         tags: {}
       required:
         - name
+        - project_id
       type: object
     PromptsStatusEnum:
       description: |-
