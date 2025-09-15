@@ -457,6 +457,64 @@ class MlClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def predict_all_tasks(
+        self,
+        id: int,
+        *,
+        batch_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Note: not available in the community edition of Label Studio.
+
+        Create predictions for all tasks using a specific ML backend so that you can set up an active learning strategy based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires a Label Studio ML backend set up and configured for your project.
+
+        See [Set up machine learning](https://labelstud.io/guide/ml.html) for more details about a Label Studio ML backend.
+
+        Reference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this ML backend.
+
+        batch_size : typing.Optional[int]
+            Computed number of tasks without predictions that the ML backend needs to predict.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.ml.predict_all_tasks(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/ml/{jsonable_encoder(id)}/predict",
+            method="POST",
+            params={
+                "batch_size": batch_size,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def train(
         self,
         id: int,
@@ -1055,6 +1113,72 @@ class AsyncMlClient:
             },
             request_options=request_options,
             omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def predict_all_tasks(
+        self,
+        id: int,
+        *,
+        batch_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Note: not available in the community edition of Label Studio.
+
+        Create predictions for all tasks using a specific ML backend so that you can set up an active learning strategy based on the confidence or uncertainty scores associated with the predictions. Creating predictions requires a Label Studio ML backend set up and configured for your project.
+
+        See [Set up machine learning](https://labelstud.io/guide/ml.html) for more details about a Label Studio ML backend.
+
+        Reference the ML backend ID in the path of this API call. Get the ML backend ID by [listing the ML backends for a project](https://labelstud.io/api/#operation/api_ml_list).
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this ML backend.
+
+        batch_size : typing.Optional[int]
+            Computed number of tasks without predictions that the ML backend needs to predict.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.ml.predict_all_tasks(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/ml/{jsonable_encoder(id)}/predict",
+            method="POST",
+            params={
+                "batch_size": batch_size,
+            },
+            request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:

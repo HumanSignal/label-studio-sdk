@@ -15,7 +15,7 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     """
 
     agreement: str
-    agreement_filtered: str
+    agreement_selected: str
     annotations: str
     annotations_ids: str
     annotations_results: str
