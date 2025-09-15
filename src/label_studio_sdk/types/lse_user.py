@@ -2,6 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .lse_user_active_organization_meta import LseUserActiveOrganizationMeta
 import pydantic
 import datetime as dt
 from .lse_fields import LseFields
@@ -18,7 +19,7 @@ class LseUser(UncheckedBaseModel):
     """
 
     active_organization: typing.Optional[int] = None
-    active_organization_meta: str = pydantic.Field()
+    active_organization_meta: LseUserActiveOrganizationMeta = pydantic.Field()
     """
     Active organization metadata
     """

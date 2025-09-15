@@ -10,7 +10,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
             "active_organization": 1,
-            "active_organization_meta": "active_organization_meta",
+            "active_organization_meta": {"email": "email", "title": "title"},
             "allow_newsletters": True,
             "avatar": "avatar",
             "custom_hotkeys": {"key": "value"},
@@ -47,7 +47,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         {
             0: {
                 "active_organization": "integer",
-                "active_organization_meta": None,
+                "active_organization_meta": {"email": None, "title": None},
                 "allow_newsletters": None,
                 "avatar": None,
                 "custom_hotkeys": None,

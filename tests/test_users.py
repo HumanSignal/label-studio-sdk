@@ -9,7 +9,7 @@ from .utilities import validate_response
 async def test_get_current_user(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": "active_organization_meta",
+        "active_organization_meta": {"email": "email", "title": "title"},
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -26,7 +26,7 @@ async def test_get_current_user(client: LabelStudio, async_client: AsyncLabelStu
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": None,
+        "active_organization_meta": {"email": None, "title": None},
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,
@@ -51,7 +51,7 @@ async def test_get_current_user(client: LabelStudio, async_client: AsyncLabelStu
 async def test_update_current_user(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": "active_organization_meta",
+        "active_organization_meta": {"email": "email", "title": "title"},
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -68,7 +68,7 @@ async def test_update_current_user(client: LabelStudio, async_client: AsyncLabel
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": None,
+        "active_organization_meta": {"email": None, "title": None},
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,
@@ -133,7 +133,7 @@ async def test_get_token(client: LabelStudio, async_client: AsyncLabelStudio) ->
 async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": "active_organization_meta",
+        "active_organization_meta": {"email": "email", "title": "title"},
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -167,7 +167,7 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": None,
+        "active_organization_meta": {"email": None, "title": None},
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,
@@ -210,7 +210,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
     expected_response: typing.Any = [
         {
             "active_organization": 1,
-            "active_organization_meta": "active_organization_meta",
+            "active_organization_meta": {"email": "email", "title": "title"},
             "allow_newsletters": True,
             "avatar": "avatar",
             "custom_hotkeys": {"key": "value"},
@@ -231,7 +231,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         {
             0: {
                 "active_organization": "integer",
-                "active_organization_meta": None,
+                "active_organization_meta": {"email": None, "title": None},
                 "allow_newsletters": None,
                 "avatar": None,
                 "custom_hotkeys": None,
@@ -258,7 +258,7 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": "active_organization_meta",
+        "active_organization_meta": {"email": "email", "title": "title"},
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -291,7 +291,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": None,
+        "active_organization_meta": {"email": None, "title": None},
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,
@@ -332,7 +332,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": "active_organization_meta",
+        "active_organization_meta": {"email": "email", "title": "title"},
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -365,7 +365,7 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": None,
+        "active_organization_meta": {"email": None, "title": None},
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,
@@ -419,7 +419,7 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "active_organization": 1,
-        "active_organization_meta": "active_organization_meta",
+        "active_organization_meta": {"email": "email", "title": "title"},
         "allow_newsletters": True,
         "avatar": "avatar",
         "custom_hotkeys": {"key": "value"},
@@ -452,7 +452,7 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     }
     expected_types: typing.Any = {
         "active_organization": "integer",
-        "active_organization_meta": None,
+        "active_organization_meta": {"email": None, "title": None},
         "allow_newsletters": None,
         "avatar": None,
         "custom_hotkeys": None,

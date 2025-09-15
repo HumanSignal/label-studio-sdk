@@ -23796,8 +23796,16 @@ components:
           type: integer
         active_organization_meta:
           description: Active organization metadata
+          properties:
+            email:
+              type: string
+            title:
+              type: string
           readOnly: true
-          type: string
+          required:
+            - email
+            - title
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true
@@ -23874,8 +23882,16 @@ components:
           type: integer
         active_organization_meta:
           description: Active organization metadata
+          properties:
+            email:
+              type: string
+            title:
+              type: string
           readOnly: true
-          type: string
+          required:
+            - email
+            - title
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true
@@ -24910,8 +24926,16 @@ components:
           type: integer
         active_organization_meta:
           description: Active organization metadata
+          properties:
+            email:
+              type: string
+            title:
+              type: string
           readOnly: true
-          type: string
+          required:
+            - email
+            - title
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true
@@ -29742,8 +29766,16 @@ components:
           type: integer
         active_organization_meta:
           description: Active organization metadata
+          properties:
+            email:
+              type: string
+            title:
+              type: string
           readOnly: true
-          type: string
+          required:
+            - email
+            - title
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true

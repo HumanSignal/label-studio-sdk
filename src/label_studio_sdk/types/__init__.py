@@ -114,7 +114,9 @@ from .lse_task_serializer_for_reviewers import LseTaskSerializerForReviewers
 from .lse_task_serializer_for_reviewers_drafts_item import LseTaskSerializerForReviewersDraftsItem
 from .lse_task_serializer_for_reviewers_predictions_item import LseTaskSerializerForReviewersPredictionsItem
 from .lse_user import LseUser
+from .lse_user_active_organization_meta import LseUserActiveOrganizationMeta
 from .lse_user_api import LseUserApi
+from .lse_user_api_active_organization_meta import LseUserApiActiveOrganizationMeta
 from .lse_user_organization_member_list import LseUserOrganizationMemberList
 from .lseapi_token_create import LseapiTokenCreate
 from .lseapi_token_list import LseapiTokenList
@@ -144,6 +146,7 @@ from .paginated_lse_organization_member_list_list import PaginatedLseOrganizatio
 from .paginated_lse_user_list import PaginatedLseUserList
 from .paginated_paginated_project_member_list import PaginatedPaginatedProjectMemberList
 from .paginated_project_member import PaginatedProjectMember
+from .paginated_project_member_active_organization_meta import PaginatedProjectMemberActiveOrganizationMeta
 from .paginated_role_based_task_list import PaginatedRoleBasedTaskList
 from .pause import Pause
 from .pause_request import PauseRequest
@@ -217,6 +220,7 @@ from .who_am_i_lse_fields import WhoAmILseFields
 from .who_am_i_lse_fields_onboarding_state import WhoAmILseFieldsOnboardingState
 from .who_am_i_lse_fields_trial_role import WhoAmILseFieldsTrialRole
 from .who_am_i_user import WhoAmIUser
+from .who_am_i_user_active_organization_meta import WhoAmIUserActiveOrganizationMeta
 from .workspace import Workspace
 from .workspace_member_create import WorkspaceMemberCreate
 from .workspace_member_list import WorkspaceMemberList
@@ -334,7 +338,9 @@ __all__ = [
     "LseTaskSerializerForReviewersDraftsItem",
     "LseTaskSerializerForReviewersPredictionsItem",
     "LseUser",
+    "LseUserActiveOrganizationMeta",
     "LseUserApi",
+    "LseUserApiActiveOrganizationMeta",
     "LseUserOrganizationMemberList",
     "LseapiTokenCreate",
     "LseapiTokenList",
@@ -364,6 +370,7 @@ __all__ = [
     "PaginatedLseUserList",
     "PaginatedPaginatedProjectMemberList",
     "PaginatedProjectMember",
+    "PaginatedProjectMemberActiveOrganizationMeta",
     "PaginatedRoleBasedTaskList",
     "Pause",
     "PauseRequest",
@@ -437,6 +444,7 @@ __all__ = [
     "WhoAmILseFieldsOnboardingState",
     "WhoAmILseFieldsTrialRole",
     "WhoAmIUser",
+    "WhoAmIUserActiveOrganizationMeta",
     "Workspace",
     "WorkspaceMemberCreate",
     "WorkspaceMemberList",

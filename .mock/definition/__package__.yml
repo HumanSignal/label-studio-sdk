@@ -5151,6 +5151,14 @@ types:
         type: list<map<string, unknown>>
     source:
       openapi: openapi/openapi.yaml
+  LseUserActiveOrganizationMeta:
+    docs: Active organization metadata
+    properties:
+      email: string
+      title: string
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   LseUser:
     docs: |-
       A ModelSerializer that takes additional arguments for
@@ -5160,7 +5168,7 @@ types:
     properties:
       active_organization: optional<integer>
       active_organization_meta:
-        type: string
+        type: LseUserActiveOrganizationMeta
         docs: Active organization metadata
       allow_newsletters:
         type: optional<boolean>
@@ -5199,6 +5207,14 @@ types:
           maxLength: 256
     source:
       openapi: openapi/openapi.yaml
+  LseUserApiActiveOrganizationMeta:
+    docs: Active organization metadata
+    properties:
+      email: string
+      title: string
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   LseUserApi:
     docs: |-
       A ModelSerializer that takes additional arguments for
@@ -5208,7 +5224,7 @@ types:
     properties:
       active_organization: optional<integer>
       active_organization_meta:
-        type: string
+        type: LseUserApiActiveOrganizationMeta
         docs: Active organization metadata
       allow_newsletters:
         type: optional<boolean>
@@ -5828,6 +5844,14 @@ types:
       results: list<PaginatedProjectMember>
     source:
       openapi: openapi/openapi.yaml
+  PaginatedProjectMemberActiveOrganizationMeta:
+    docs: Active organization metadata
+    properties:
+      email: string
+      title: string
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   PaginatedProjectMember:
     docs: |-
       A ModelSerializer that takes additional arguments for
@@ -5837,7 +5861,7 @@ types:
     properties:
       active_organization: optional<integer>
       active_organization_meta:
-        type: string
+        type: PaginatedProjectMemberActiveOrganizationMeta
         docs: Active organization metadata
       allow_newsletters:
         type: optional<boolean>
@@ -7896,6 +7920,14 @@ types:
       trial_role: optional<WhoAmILseFieldsTrialRole>
     source:
       openapi: openapi/openapi.yaml
+  WhoAmIUserActiveOrganizationMeta:
+    docs: Active organization metadata
+    properties:
+      email: string
+      title: string
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   WhoAmIUser:
     docs: |-
       A ModelSerializer that takes additional arguments for
@@ -7905,7 +7937,7 @@ types:
     properties:
       active_organization: optional<integer>
       active_organization_meta:
-        type: string
+        type: WhoAmIUserActiveOrganizationMeta
         docs: Active organization metadata
       allow_newsletters:
         type: optional<boolean>
