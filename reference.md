@@ -2841,7 +2841,7 @@ client.users.get_token()
 <dl>
 <dd>
 
-Retrieve details of the account that you are using to access the API.
+Make the whoami call on behalf of the user you are using to access the API.
 </dd>
 </dl>
 </dd>

@@ -2,6 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .paginated_project_member_active_organization_meta import PaginatedProjectMemberActiveOrganizationMeta
 import pydantic
 import datetime as dt
 from .lse_fields import LseFields
@@ -18,7 +19,11 @@ class PaginatedProjectMember(UncheckedBaseModel):
     """
 
     active_organization: typing.Optional[int] = None
-    active_organization_meta: str
+    active_organization_meta: PaginatedProjectMemberActiveOrganizationMeta = pydantic.Field()
+    """
+    Active organization metadata
+    """
+
     allow_newsletters: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Allow sending newsletters to user

@@ -19,7 +19,9 @@ service:
         - response:
             body:
               active_organization: 1
-              active_organization_meta: active_organization_meta
+              active_organization_meta:
+                email: email
+                title: title
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:
@@ -93,7 +95,9 @@ service:
           response:
             body:
               active_organization: 1
-              active_organization_meta: active_organization_meta
+              active_organization_meta:
+                email: email
+                title: title
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:
@@ -194,10 +198,12 @@ service:
       path: /api/current-user/whoami
       method: GET
       auth: true
-      docs: Retrieve details of the account that you are using to access the API.
+      docs: >-
+        Make the whoami call on behalf of the user you are using to access the
+        API.
       source:
         openapi: openapi/openapi.yaml
-      display-name: Retrieve my user
+      display-name: Whoami for current user
       response:
         docs: ''
         type: root.WhoAmIUser
@@ -205,7 +211,9 @@ service:
         - response:
             body:
               active_organization: 1
-              active_organization_meta: active_organization_meta
+              active_organization_meta:
+                email: email
+                title: title
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:
@@ -262,7 +270,9 @@ service:
         - response:
             body:
               - active_organization: 1
-                active_organization_meta: active_organization_meta
+                active_organization_meta:
+                  email: email
+                  title: title
                 allow_newsletters: true
                 avatar: avatar
                 custom_hotkeys:
@@ -330,7 +340,9 @@ service:
           response:
             body:
               active_organization: 1
-              active_organization_meta: active_organization_meta
+              active_organization_meta:
+                email: email
+                title: title
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:
@@ -386,7 +398,9 @@ service:
           response:
             body:
               active_organization: 1
-              active_organization_meta: active_organization_meta
+              active_organization_meta:
+                email: email
+                title: title
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:
@@ -503,7 +517,9 @@ service:
           response:
             body:
               active_organization: 1
-              active_organization_meta: active_organization_meta
+              active_organization_meta:
+                email: email
+                title: title
               allow_newsletters: true
               avatar: avatar
               custom_hotkeys:

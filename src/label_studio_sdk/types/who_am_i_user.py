@@ -2,6 +2,7 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .who_am_i_user_active_organization_meta import WhoAmIUserActiveOrganizationMeta
 import pydantic
 import datetime as dt
 from .who_am_i_lse_fields import WhoAmILseFields
@@ -18,7 +19,11 @@ class WhoAmIUser(UncheckedBaseModel):
     """
 
     active_organization: typing.Optional[int] = None
-    active_organization_meta: str
+    active_organization_meta: WhoAmIUserActiveOrganizationMeta = pydantic.Field()
+    """
+    Active organization metadata
+    """
+
     allow_newsletters: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Allow sending newsletters to user

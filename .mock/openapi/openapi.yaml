@@ -1343,7 +1343,7 @@ paths:
       x-fern-sdk-method-name: get_token
   /api/current-user/whoami:
     get:
-      description: Retrieve details of the account that you are using to access the API.
+      description: Make the whoami call on behalf of the user you are using to access the API.
       operationId: api_current_user_whoami_retrieve
       responses:
         '200':
@@ -1354,7 +1354,7 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Retrieve my user
+      summary: Whoami for current user
       tags:
         - Users
       x-fern-audiences:
@@ -23795,8 +23795,17 @@ components:
           nullable: true
           type: integer
         active_organization_meta:
+          description: Active organization metadata
+          properties:
+            email:
+              type: string
+            title:
+              type: string
           readOnly: true
-          type: string
+          required:
+            - email
+            - title
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true
@@ -23872,8 +23881,17 @@ components:
           nullable: true
           type: integer
         active_organization_meta:
+          description: Active organization metadata
+          properties:
+            email:
+              type: string
+            title:
+              type: string
           readOnly: true
-          type: string
+          required:
+            - email
+            - title
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true
@@ -24907,8 +24925,17 @@ components:
           nullable: true
           type: integer
         active_organization_meta:
+          description: Active organization metadata
+          properties:
+            email:
+              type: string
+            title:
+              type: string
           readOnly: true
-          type: string
+          required:
+            - email
+            - title
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true
@@ -29738,8 +29765,17 @@ components:
           nullable: true
           type: integer
         active_organization_meta:
+          description: Active organization metadata
+          properties:
+            email:
+              type: string
+            title:
+              type: string
           readOnly: true
-          type: string
+          required:
+            - email
+            - title
+          type: object
         allow_newsletters:
           description: Allow sending newsletters to user
           nullable: true

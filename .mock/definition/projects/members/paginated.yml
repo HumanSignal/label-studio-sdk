@@ -56,7 +56,9 @@ service:
               previous: http://api.example.org/accounts/?page=2
               results:
                 - active_organization: 1
-                  active_organization_meta: active_organization_meta
+                  active_organization_meta:
+                    email: email
+                    title: title
                   allow_newsletters: true
                   avatar: avatar
                   custom_hotkeys:
