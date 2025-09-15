@@ -39,6 +39,7 @@ _TAG_TO_CLASS = {
     "taxonomy": "TaxonomyTag",
     "textarea": "TextAreaTag",
     "timeserieslabels": "TimeSeriesLabelsTag",
+    "chatmessage": "ChatMessageTag",
 }
 
 
@@ -947,6 +948,43 @@ class RatingTag(ControlTag):
             "minimum": 0,
             "maximum": max_rating,
             "description": f"Rating for {self.to_name[0]} (0 to {max_rating})"
+        }
+
+
+class ChatMessageContent(BaseModel):
+    role: str
+    content: str
+    createdAt: Optional[int] = None
+
+
+class ChatMessageValue(BaseModel):
+    chatmessage: ChatMessageContent
+
+
+class ChatMessageTag(ControlTag):
+    """Control tag for chat messages targeting a `<Chat>` object.
+
+    This tag is a hybrid where `from_name == to_name` and `type == 'chatmessage'`.
+    """
+    tag: str = "ChatMessage"
+    _value_class: Type[ChatMessageValue] = ChatMessageValue
+
+    def to_json_schema(self):
+        return {
+            "type": "object",
+            "required": ["chatmessage"],
+            "properties": {
+                "chatmessage": {
+                    "type": "object",
+                    "required": ["role", "content"],
+                    "properties": {
+                        "role": {"type": "string"},
+                        "content": {"type": "string"},
+                        "createdAt": {"type": "number"}
+                    }
+                }
+            },
+            "description": f"Chat message for {self.to_name[0]}"
         }
 
 

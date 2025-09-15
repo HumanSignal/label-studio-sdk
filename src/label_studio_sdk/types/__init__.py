@@ -162,9 +162,6 @@ from .project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRol
 from .project_sampling import ProjectSampling
 from .project_skip_queue import ProjectSkipQueue
 from .project_subset_enum import ProjectSubsetEnum
-from .project_subset_item import ProjectSubsetItem
-from .project_subset_task_item import ProjectSubsetTaskItem
-from .project_subset_tasks_response import ProjectSubsetTasksResponse
 from .project_template import ProjectTemplate
 from .project_template_request import ProjectTemplateRequest
 from .prompts_status_enum import PromptsStatusEnum
@@ -387,9 +384,6 @@ __all__ = [
     "ProjectSampling",
     "ProjectSkipQueue",
     "ProjectSubsetEnum",
-    "ProjectSubsetItem",
-    "ProjectSubsetTaskItem",
-    "ProjectSubsetTasksResponse",
     "ProjectTemplate",
     "ProjectTemplateRequest",
     "PromptsStatusEnum",

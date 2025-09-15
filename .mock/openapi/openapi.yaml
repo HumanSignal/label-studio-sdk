@@ -3116,6 +3116,8 @@ paths:
       summary: Get action form
       tags:
         - Data Manager
+      x-fern-audiences:
+        - internal
   /api/dm/project/:
     get:
       description: Retrieve the project state for the data manager.
