@@ -35,6 +35,8 @@ from .types.projects_duplicate_response import ProjectsDuplicateResponse
 from ..types.import_api_request import ImportApiRequest
 from .types.projects_import_tasks_response import ProjectsImportTasksResponse
 from ..errors.bad_request_error import BadRequestError
+from ..types.prediction_request import PredictionRequest
+from .types.projects_import_predictions_response import ProjectsImportPredictionsResponse
 from ..types.project_label_config import ProjectLabelConfig
 from ..core.client_wrapper import AsyncClientWrapper
 from .exports.client import AsyncExportsClient
@@ -1000,6 +1002,81 @@ class ProjectsClient:
                     ProjectsImportTasksResponse,
                     construct_type(
                         type_=ProjectsImportTasksResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def import_predictions(
+        self,
+        id: int,
+        *,
+        request: typing.Sequence[PredictionRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsImportPredictionsResponse:
+        """
+        Import model predictions for tasks in the specified project.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        request : typing.Sequence[PredictionRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectsImportPredictionsResponse
+            Predictions successfully imported
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio, PredictionRequest
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.import_predictions(
+            id=1,
+            request=[
+                PredictionRequest(
+                    result=[{"key": "value"}],
+                    task=1,
+                )
+            ],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/import/predictions",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[PredictionRequest], direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ProjectsImportPredictionsResponse,
+                    construct_type(
+                        type_=ProjectsImportPredictionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -2091,6 +2168,89 @@ class AsyncProjectsClient:
                     ProjectsImportTasksResponse,
                     construct_type(
                         type_=ProjectsImportTasksResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def import_predictions(
+        self,
+        id: int,
+        *,
+        request: typing.Sequence[PredictionRequest],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ProjectsImportPredictionsResponse:
+        """
+        Import model predictions for tasks in the specified project.
+
+        Parameters
+        ----------
+        id : int
+            A unique integer value identifying this project.
+
+        request : typing.Sequence[PredictionRequest]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ProjectsImportPredictionsResponse
+            Predictions successfully imported
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio, PredictionRequest
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.import_predictions(
+                id=1,
+                request=[
+                    PredictionRequest(
+                        result=[{"key": "value"}],
+                        task=1,
+                    )
+                ],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/import/predictions",
+            method="POST",
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=typing.Sequence[PredictionRequest], direction="write"
+            ),
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    ProjectsImportPredictionsResponse,
+                    construct_type(
+                        type_=ProjectsImportPredictionsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

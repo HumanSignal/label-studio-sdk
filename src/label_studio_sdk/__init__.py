@@ -292,6 +292,7 @@ from .projects import (
     PatchedLseProjectUpdateRequestSampling,
     PatchedLseProjectUpdateRequestSkipQueue,
     ProjectsDuplicateResponse,
+    ProjectsImportPredictionsResponse,
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
 )
@@ -537,6 +538,7 @@ __all__ = [
     "ProjectTemplate",
     "ProjectTemplateRequest",
     "ProjectsDuplicateResponse",
+    "ProjectsImportPredictionsResponse",
     "ProjectsImportTasksResponse",
     "ProjectsListRequestFilter",
     "PromptsCompatibleProjectsRequestProjectType",
