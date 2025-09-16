@@ -1,4 +1,5 @@
 import logging
+import os
 from label_studio_sdk.converter.utils import convert_annotation_to_yolo, convert_annotation_to_yolo_obb
 from label_studio_sdk.converter.keypoints import build_kp_order
 
@@ -69,81 +70,95 @@ def process_and_save_yolo_annotations(labels, label_path, category_name_to_id, c
         process_keypoints_for_yolo(labels, label_path, category_name_to_id, categories, is_obb, kp_order)
         return categories, category_name_to_id
 
-    annotations = []
-    for label in labels:
-        category_name = None
-        category_names = []  # considering multi-label
-        for key in ["rectanglelabels", "polygonlabels", "labels"]:
-            if key in label and len(label[key]) > 0:
-                # change to save multi-label
-                for category_name in label[key]:
-                    category_names.append(category_name)
+    # Stream annotations directly to a temporary file to avoid
+    # accumulating them in memory and to preserve atomic writes.
+    tmp_path = f"{label_path}.tmp"
 
-        if len(category_names) == 0:
-            logger.debug(
-                "Unknown label type or labels are empty: " + str(label)
-            )
-            continue
+    try:
+        with open(tmp_path, "w") as f:
+            for label in labels:
+                category_name = None
+                category_names = []  # considering multi-label
+                for key in ["rectanglelabels", "polygonlabels", "labels"]:
+                    if key in label and len(label[key]) > 0:
+                        # change to save multi-label
+                        for category_name in label[key]:
+                            category_names.append(category_name)
 
-        for category_name in category_names:
-            if category_name not in category_name_to_id:
-                category_id = len(categories)
-                category_name_to_id[category_name] = category_id
-                categories.append({"id": category_id, "name": category_name})
-            category_id = category_name_to_id[category_name]
-
-            if (
-                "rectanglelabels" in label
-                or "rectangle" in label
-                or "labels" in label
-            ):
-                # yolo obb
-                if is_obb:
-                    obb_annotation = convert_annotation_to_yolo_obb(label)
-                    if obb_annotation is None:
-                        continue
-
-                    top_left, top_right, bottom_right, bottom_left = (
-                        obb_annotation
+                if len(category_names) == 0:
+                    logger.debug(
+                        "Unknown label type or labels are empty: " + str(label)
                     )
-                    x1, y1 = top_left
-                    x2, y2 = top_right
-                    x3, y3 = bottom_right
-                    x4, y4 = bottom_left
-                    annotations.append(
-                        [category_id, x1, y1, x2, y2, x3, y3, x4, y4]
-                    )
-
-                # simple yolo
-                else:
-                    annotation = convert_annotation_to_yolo(label)
-                    if annotation is None:
-                        continue
-
-                    (
-                        x,
-                        y,
-                        w,
-                        h,
-                    ) = annotation
-                    annotations.append([category_id, x, y, w, h])
-
-            elif "polygonlabels" in label or "polygon" in label:
-                if not ('points' in label):
                     continue
-                points_abs = [(x / 100, y / 100) for x, y in label["points"]]
-                annotations.append(
-                    [category_id]
-                    + [coord for point in points_abs for coord in point]
-                )
-            else:
-                raise ValueError(f"Unknown label type {label}")
-    with open(label_path, "w") as f:
-        for annotation in annotations:
-            for idx, l in enumerate(annotation):
-                if idx == len(annotation) - 1:
-                    f.write(f"{l}\n")
-                else:
-                    f.write(f"{l} ")
+
+                for category_name in category_names:
+                    if category_name not in category_name_to_id:
+                        category_id = len(categories)
+                        category_name_to_id[category_name] = category_id
+                        categories.append({"id": category_id, "name": category_name})
+                    category_id = category_name_to_id[category_name]
+
+                    if (
+                        "rectanglelabels" in label
+                        or "rectangle" in label
+                        or "labels" in label
+                    ):
+                        # yolo obb
+                        if is_obb:
+                            obb_annotation = convert_annotation_to_yolo_obb(label)
+                            if obb_annotation is None:
+                                continue
+
+                            top_left, top_right, bottom_right, bottom_left = (
+                                obb_annotation
+                            )
+                            x1, y1 = top_left
+                            x2, y2 = top_right
+                            x3, y3 = bottom_right
+                            x4, y4 = bottom_left
+                            annotation_values = [category_id, x1, y1, x2, y2, x3, y3, x4, y4]
+
+                        # simple yolo
+                        else:
+                            annotation = convert_annotation_to_yolo(label)
+                            if annotation is None:
+                                continue
+
+                            (
+                                x,
+                                y,
+                                w,
+                                h,
+                            ) = annotation
+                            annotation_values = [category_id, x, y, w, h]
+
+                    elif "polygonlabels" in label or "polygon" in label:
+                        if not ('points' in label):
+                            continue
+                        points_abs = [(x / 100, y / 100) for x, y in label["points"]]
+                        annotation_values = (
+                            [category_id]
+                            + [coord for point in points_abs for coord in point]
+                        )
+                    else:
+                        raise ValueError(f"Unknown label type {label}")
+
+                    # Write the annotation line immediately
+                    for idx, val in enumerate(annotation_values):
+                        if idx == len(annotation_values) - 1:
+                            f.write(f"{val}\n")
+                        else:
+                            f.write(f"{val} ")
+
+        # Replace the target file atomically after successful write
+        os.replace(tmp_path, label_path)
+
+    finally:
+        # Clean up the temp file in case of exceptions before replace
+        try:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+        except Exception:
+            pass
 
     return categories, category_name_to_id
