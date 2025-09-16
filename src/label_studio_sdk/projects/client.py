@@ -22,6 +22,7 @@ from .types.lse_project_create_request_sampling import LseProjectCreateRequestSa
 from .types.lse_project_create_request_skip_queue import LseProjectCreateRequestSkipQueue
 from ..types.lse_project_create import LseProjectCreate
 from ..core.serialization import convert_and_respect_annotation_metadata
+from ..types.paginated_lse_project_counts_list import PaginatedLseProjectCountsList
 from ..types.project import Project
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.assignment_settings_request import AssignmentSettingsRequest
@@ -358,6 +359,99 @@ class ProjectsClient:
                     LseProjectCreate,
                     construct_type(
                         type_=LseProjectCreate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list_counts(
+        self,
+        *,
+        filter: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        include: typing.Optional[str] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        workspaces: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedLseProjectCountsList:
+        """
+        Returns a list of projects with their counts. For example, task_number which is the total task number in project
+
+        Parameters
+        ----------
+        filter : typing.Optional[str]
+            Project filter setting. One of 'all', 'pinned_only', 'exclude_pinned'.
+
+        ids : typing.Optional[str]
+            Filter id by in list
+
+        include : typing.Optional[str]
+            Comma-separated list of fields to include
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        search : typing.Optional[str]
+            Search term for project title and description
+
+        title : typing.Optional[str]
+            Filter title by contains (case-insensitive)
+
+        workspaces : typing.Optional[float]
+            Filter workspaces by exact match
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedLseProjectCountsList
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.list_counts()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/projects/counts/",
+            method="GET",
+            params={
+                "filter": filter,
+                "ids": ids,
+                "include": include,
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "search": search,
+                "title": title,
+                "workspaces": workspaces,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PaginatedLseProjectCountsList,
+                    construct_type(
+                        type_=PaginatedLseProjectCountsList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1308,6 +1402,107 @@ class AsyncProjectsClient:
                     LseProjectCreate,
                     construct_type(
                         type_=LseProjectCreate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list_counts(
+        self,
+        *,
+        filter: typing.Optional[str] = None,
+        ids: typing.Optional[str] = None,
+        include: typing.Optional[str] = None,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
+        title: typing.Optional[str] = None,
+        workspaces: typing.Optional[float] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedLseProjectCountsList:
+        """
+        Returns a list of projects with their counts. For example, task_number which is the total task number in project
+
+        Parameters
+        ----------
+        filter : typing.Optional[str]
+            Project filter setting. One of 'all', 'pinned_only', 'exclude_pinned'.
+
+        ids : typing.Optional[str]
+            Filter id by in list
+
+        include : typing.Optional[str]
+            Comma-separated list of fields to include
+
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        search : typing.Optional[str]
+            Search term for project title and description
+
+        title : typing.Optional[str]
+            Filter title by contains (case-insensitive)
+
+        workspaces : typing.Optional[float]
+            Filter workspaces by exact match
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PaginatedLseProjectCountsList
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.list_counts()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/projects/counts/",
+            method="GET",
+            params={
+                "filter": filter,
+                "ids": ids,
+                "include": include,
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "search": search,
+                "title": title,
+                "workspaces": workspaces,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PaginatedLseProjectCountsList,
+                    construct_type(
+                        type_=PaginatedLseProjectCountsList,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -6268,6 +6268,22 @@ paths:
       description: Returns a list of projects with their counts. For example, task_number which is the total task number in project
       operationId: api_projects_counts_list
       parameters:
+        - description: Project filter setting. One of 'all', 'pinned_only', 'exclude_pinned'.
+          in: query
+          name: filter
+          schema:
+            default: all
+            type: string
+        - description: Filter id by in list
+          in: query
+          name: ids
+          schema:
+            type: string
+        - description: Comma-separated list of fields to include
+          in: query
+          name: include
+          schema:
+            type: string
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -6286,6 +6302,21 @@ paths:
           required: false
           schema:
             type: integer
+        - description: Search term for project title and description
+          in: query
+          name: search
+          schema:
+            type: string
+        - description: Filter title by contains (case-insensitive)
+          in: query
+          name: title
+          schema:
+            type: string
+        - description: Filter workspaces by exact match
+          in: query
+          name: workspaces
+          schema:
+            type: number
       responses:
         '200':
           content:
@@ -6295,9 +6326,13 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List project's counts
+      summary: List projects' counts
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: projects
+      x-fern-sdk-method-name: list_counts
   /api/projects/roles/:
     get:
       description: "\n        List project roles for requested IDs for the current user\n        "

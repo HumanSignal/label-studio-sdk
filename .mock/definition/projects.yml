@@ -419,7 +419,7 @@ service:
               workspace: 1
       audiences:
         - public
-    api_projects_counts_list:
+    list_counts:
       path: /api/projects/counts/
       method: GET
       auth: true
@@ -428,10 +428,22 @@ service:
         which is the total task number in project
       source:
         openapi: openapi/openapi.yaml
-      display-name: List project's counts
+      display-name: List projects' counts
       request:
-        name: ApiProjectsCountsListRequest
+        name: ProjectsListCountsRequest
         query-parameters:
+          filter:
+            type: optional<string>
+            default: all
+            docs: >-
+              Project filter setting. One of 'all', 'pinned_only',
+              'exclude_pinned'.
+          ids:
+            type: optional<string>
+            docs: Filter id by in list
+          include:
+            type: optional<string>
+            docs: Comma-separated list of fields to include
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
@@ -441,6 +453,15 @@ service:
           page_size:
             type: optional<integer>
             docs: Number of results to return per page.
+          search:
+            type: optional<string>
+            docs: Search term for project title and description
+          title:
+            type: optional<string>
+            docs: Filter title by contains (case-insensitive)
+          workspaces:
+            type: optional<double>
+            docs: Filter workspaces by exact match
       response:
         docs: ''
         type: root.PaginatedLseProjectCountsList
@@ -466,6 +487,8 @@ service:
                   total_annotations_number: total_annotations_number
                   total_predictions_number: 1
                   useful_annotation_number: useful_annotation_number
+      audiences:
+        - public
     api_projects_validate_create:
       path: /api/projects/validate/
       method: POST
