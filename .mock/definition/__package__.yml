@@ -7926,6 +7926,7 @@ types:
       lse_fields: WhoAmILseFields
       org_membership: list<OrganizationMembership>
       pause: string
+      permissions: list<string>
       phone:
         type: optional<string>
         validation:

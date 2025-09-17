@@ -29876,6 +29876,11 @@ components:
         pause:
           readOnly: true
           type: string
+        permissions:
+          items:
+            type: string
+          readOnly: true
+          type: array
         phone:
           maxLength: 256
           type: string
@@ -29891,6 +29896,7 @@ components:
         - lse_fields
         - org_membership
         - pause
+        - permissions
         - username
       type: object
     Workspace:
