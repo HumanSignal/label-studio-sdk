@@ -36,7 +36,7 @@ class WhoAmIUser(UncheckedBaseModel):
     lse_fields: WhoAmILseFields
     org_membership: typing.List[OrganizationMembership]
     pause: str
-    permissions: str
+    permissions: typing.List[str]
     phone: typing.Optional[str] = None
     username: str
 

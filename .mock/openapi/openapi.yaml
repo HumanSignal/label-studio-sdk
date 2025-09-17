@@ -29877,8 +29877,10 @@ components:
           readOnly: true
           type: string
         permissions:
+          items:
+            type: string
           readOnly: true
-          type: string
+          type: array
         phone:
           maxLength: 256
           type: string
