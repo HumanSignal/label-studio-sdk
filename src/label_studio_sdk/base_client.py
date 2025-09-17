@@ -6,45 +6,63 @@ import os
 import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import SyncClientWrapper
+from .activity_logs.client import ActivityLogsClient
+from .annotation_history.client import AnnotationHistoryClient
+from .annotation_reviews.client import AnnotationReviewsClient
 from .annotations.client import AnnotationsClient
+from .billing.client import BillingClient
+from .blueprints.client import BlueprintsClient
+from .comments.client import CommentsClient
 from .users.client import UsersClient
 from .actions.client import ActionsClient
 from .views.client import ViewsClient
 from .files.client import FilesClient
+from .organizations.client import OrganizationsClient
+from .jwt_settings.client import JwtSettingsClient
 from .ml.client import MlClient
+from .model_providers.client import ModelProvidersClient
+from .prompts.client import PromptsClient
 from .predictions.client import PredictionsClient
+from .project_templates.client import ProjectTemplatesClient
 from .projects.client import ProjectsClient
 from .tasks.client import TasksClient
+from .session_policy.client import SessionPolicyClient
 from .import_storage.client import ImportStorageClient
 from .export_storage.client import ExportStorageClient
-from .webhooks.client import WebhooksClient
-from .versions.client import VersionsClient
-from .prompts.client import PromptsClient
-from .model_providers.client import ModelProvidersClient
-from .comments.client import CommentsClient
-from .workspaces.client import WorkspacesClient
 from .tokens.client import TokensClient
-from .jwt_settings.client import JwtSettingsClient
+from .versions.client import VersionsClient
+from .webhooks.client import WebhooksClient
+from .workspaces.client import WorkspacesClient
+from .sso.client import SsoClient
 from .core.client_wrapper import AsyncClientWrapper
+from .activity_logs.client import AsyncActivityLogsClient
+from .annotation_history.client import AsyncAnnotationHistoryClient
+from .annotation_reviews.client import AsyncAnnotationReviewsClient
 from .annotations.client import AsyncAnnotationsClient
+from .billing.client import AsyncBillingClient
+from .blueprints.client import AsyncBlueprintsClient
+from .comments.client import AsyncCommentsClient
 from .users.client import AsyncUsersClient
 from .actions.client import AsyncActionsClient
 from .views.client import AsyncViewsClient
 from .files.client import AsyncFilesClient
+from .organizations.client import AsyncOrganizationsClient
+from .jwt_settings.client import AsyncJwtSettingsClient
 from .ml.client import AsyncMlClient
+from .model_providers.client import AsyncModelProvidersClient
+from .prompts.client import AsyncPromptsClient
 from .predictions.client import AsyncPredictionsClient
+from .project_templates.client import AsyncProjectTemplatesClient
 from .projects.client import AsyncProjectsClient
 from .tasks.client import AsyncTasksClient
+from .session_policy.client import AsyncSessionPolicyClient
 from .import_storage.client import AsyncImportStorageClient
 from .export_storage.client import AsyncExportStorageClient
-from .webhooks.client import AsyncWebhooksClient
-from .versions.client import AsyncVersionsClient
-from .prompts.client import AsyncPromptsClient
-from .model_providers.client import AsyncModelProvidersClient
-from .comments.client import AsyncCommentsClient
-from .workspaces.client import AsyncWorkspacesClient
 from .tokens.client import AsyncTokensClient
-from .jwt_settings.client import AsyncJwtSettingsClient
+from .versions.client import AsyncVersionsClient
+from .webhooks.client import AsyncWebhooksClient
+from .workspaces.client import AsyncWorkspacesClient
+from .sso.client import AsyncSsoClient
 
 
 class LabelStudioBase:
@@ -109,25 +127,34 @@ class LabelStudioBase:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.activity_logs = ActivityLogsClient(client_wrapper=self._client_wrapper)
+        self.annotation_history = AnnotationHistoryClient(client_wrapper=self._client_wrapper)
+        self.annotation_reviews = AnnotationReviewsClient(client_wrapper=self._client_wrapper)
         self.annotations = AnnotationsClient(client_wrapper=self._client_wrapper)
+        self.billing = BillingClient(client_wrapper=self._client_wrapper)
+        self.blueprints = BlueprintsClient(client_wrapper=self._client_wrapper)
+        self.comments = CommentsClient(client_wrapper=self._client_wrapper)
         self.users = UsersClient(client_wrapper=self._client_wrapper)
         self.actions = ActionsClient(client_wrapper=self._client_wrapper)
         self.views = ViewsClient(client_wrapper=self._client_wrapper)
         self.files = FilesClient(client_wrapper=self._client_wrapper)
+        self.organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
+        self.jwt_settings = JwtSettingsClient(client_wrapper=self._client_wrapper)
         self.ml = MlClient(client_wrapper=self._client_wrapper)
+        self.model_providers = ModelProvidersClient(client_wrapper=self._client_wrapper)
+        self.prompts = PromptsClient(client_wrapper=self._client_wrapper)
         self.predictions = PredictionsClient(client_wrapper=self._client_wrapper)
+        self.project_templates = ProjectTemplatesClient(client_wrapper=self._client_wrapper)
         self.projects = ProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = TasksClient(client_wrapper=self._client_wrapper)
+        self.session_policy = SessionPolicyClient(client_wrapper=self._client_wrapper)
         self.import_storage = ImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = ExportStorageClient(client_wrapper=self._client_wrapper)
-        self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
-        self.versions = VersionsClient(client_wrapper=self._client_wrapper)
-        self.prompts = PromptsClient(client_wrapper=self._client_wrapper)
-        self.model_providers = ModelProvidersClient(client_wrapper=self._client_wrapper)
-        self.comments = CommentsClient(client_wrapper=self._client_wrapper)
-        self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
         self.tokens = TokensClient(client_wrapper=self._client_wrapper)
-        self.jwt_settings = JwtSettingsClient(client_wrapper=self._client_wrapper)
+        self.versions = VersionsClient(client_wrapper=self._client_wrapper)
+        self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
+        self.workspaces = WorkspacesClient(client_wrapper=self._client_wrapper)
+        self.sso = SsoClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncLabelStudioBase:
@@ -192,25 +219,34 @@ class AsyncLabelStudioBase:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
+        self.activity_logs = AsyncActivityLogsClient(client_wrapper=self._client_wrapper)
+        self.annotation_history = AsyncAnnotationHistoryClient(client_wrapper=self._client_wrapper)
+        self.annotation_reviews = AsyncAnnotationReviewsClient(client_wrapper=self._client_wrapper)
         self.annotations = AsyncAnnotationsClient(client_wrapper=self._client_wrapper)
+        self.billing = AsyncBillingClient(client_wrapper=self._client_wrapper)
+        self.blueprints = AsyncBlueprintsClient(client_wrapper=self._client_wrapper)
+        self.comments = AsyncCommentsClient(client_wrapper=self._client_wrapper)
         self.users = AsyncUsersClient(client_wrapper=self._client_wrapper)
         self.actions = AsyncActionsClient(client_wrapper=self._client_wrapper)
         self.views = AsyncViewsClient(client_wrapper=self._client_wrapper)
         self.files = AsyncFilesClient(client_wrapper=self._client_wrapper)
+        self.organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
+        self.jwt_settings = AsyncJwtSettingsClient(client_wrapper=self._client_wrapper)
         self.ml = AsyncMlClient(client_wrapper=self._client_wrapper)
+        self.model_providers = AsyncModelProvidersClient(client_wrapper=self._client_wrapper)
+        self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
         self.predictions = AsyncPredictionsClient(client_wrapper=self._client_wrapper)
+        self.project_templates = AsyncProjectTemplatesClient(client_wrapper=self._client_wrapper)
         self.projects = AsyncProjectsClient(client_wrapper=self._client_wrapper)
         self.tasks = AsyncTasksClient(client_wrapper=self._client_wrapper)
+        self.session_policy = AsyncSessionPolicyClient(client_wrapper=self._client_wrapper)
         self.import_storage = AsyncImportStorageClient(client_wrapper=self._client_wrapper)
         self.export_storage = AsyncExportStorageClient(client_wrapper=self._client_wrapper)
-        self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
-        self.versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
-        self.prompts = AsyncPromptsClient(client_wrapper=self._client_wrapper)
-        self.model_providers = AsyncModelProvidersClient(client_wrapper=self._client_wrapper)
-        self.comments = AsyncCommentsClient(client_wrapper=self._client_wrapper)
-        self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
         self.tokens = AsyncTokensClient(client_wrapper=self._client_wrapper)
-        self.jwt_settings = AsyncJwtSettingsClient(client_wrapper=self._client_wrapper)
+        self.versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
+        self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
+        self.workspaces = AsyncWorkspacesClient(client_wrapper=self._client_wrapper)
+        self.sso = AsyncSsoClient(client_wrapper=self._client_wrapper)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: LabelStudioEnvironment) -> str:

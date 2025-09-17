@@ -8,19 +8,7 @@ service:
       path: /api/webhooks/
       method: GET
       auth: true
-      docs: >
-
-        List all webhooks set up for your organization. 
-
-
-        Webhooks in Label Studio let you set up integrations that subscribe to
-        certain events that occur inside Label Studio. When an event is
-        triggered, Label Studio sends an HTTP POST request to the configured
-        webhook URL. 
-
-
-        For more information, see [Set up webhooks in Label
-        Studio](https://labelstud.io/guide/webhooks). 
+      docs: List all webhooks set up for your organization.
       source:
         openapi: openapi/openapi.yaml
       display-name: List all webhooks
@@ -36,48 +24,52 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                organization: 1
-                project: 1
-                url: url
-                send_payload: true
-                send_for_all_actions: true
-                headers:
-                  key: value
-                is_active: true
-                actions:
+              - actions:
                   - PROJECT_CREATED
                 created_at: '2024-01-15T09:30:00Z'
+                headers:
+                  key: value
+                id: 1
+                is_active: true
+                organization: 1
+                project: 1
+                send_for_all_actions: true
+                send_payload: true
                 updated_at: '2024-01-15T09:30:00Z'
+                url: url
       audiences:
         - public
     create:
       path: /api/webhooks/
       method: POST
       auth: true
-      docs: >
-
-        Create a webhook. 
-
-        Label Studio provides several out-of-the box webhook events, which you
-        can find listed here: [Available Label Studio
-        webhooks](https://labelstud.io/guide/webhooks#Available-Label-Studio-webhooks). 
-
-
-        If you want to create your own custom webhook, refer to [Create custom
-        events for webhooks in Label
-        Studio](https://labelstud.io/guide/webhook_create).
-
-
-        <Note>Label Studio makes two main types of events available to integrate
-        with webhooks: project-level task events and organization events. If you
-        want to use organization-level webhook events, you will need to set
-        `LABEL_STUDIO_ALLOW_ORGANIZATION_WEBHOOKS=true`. </Note>
+      docs: Create a webhook for your organization.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create a webhook
       request:
-        body: root.Webhook
+        name: WebhookRequest
+        body:
+          properties:
+            actions: optional<list<root.ActionsEnum>>
+            headers: optional<unknown>
+            is_active:
+              type: optional<boolean>
+              docs: If value is False the webhook is disabled
+            project: optional<integer>
+            send_for_all_actions:
+              type: optional<boolean>
+              docs: If value is False - used only for actions from WebhookAction
+            send_payload:
+              type: optional<boolean>
+              docs: If value is False send only action
+            url:
+              type: string
+              docs: URL of webhook
+              validation:
+                format: uri
+                minLength: 1
+                maxLength: 2048
         content-type: application/json
       response:
         docs: ''
@@ -87,30 +79,26 @@ service:
             url: url
           response:
             body:
-              id: 1
-              organization: 1
-              project: 1
-              url: url
-              send_payload: true
-              send_for_all_actions: true
-              headers:
-                key: value
-              is_active: true
               actions:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
+              headers:
+                key: value
+              id: 1
+              is_active: true
+              organization: 1
+              project: 1
+              send_for_all_actions: true
+              send_payload: true
               updated_at: '2024-01-15T09:30:00Z'
+              url: url
       audiences:
         - public
     info:
       path: /api/webhooks/info/
       method: GET
       auth: true
-      docs: >
-
-        Get descriptions of all available webhook actions to set up webhooks.
-        For more information, see the [Webhook event
-        reference](https://labelstud.io/guide/webhook_reference).
+      docs: Get descriptions of all available webhook actions to set up webhooks.
       source:
         openapi: openapi/openapi.yaml
       display-name: Get all webhook actions
@@ -120,29 +108,97 @@ service:
           organization-only:
             type: optional<boolean>
             docs: organization-only or not
+      response:
+        docs: Object with webhook action descriptions.
+        type: WebhooksInfoResponse
       examples:
-        - {}
+        - response:
+            body:
+              ANNOTATIONS_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              ANNOTATIONS_DELETED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              ANNOTATION_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              ANNOTATION_UPDATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              LABEL_LINK_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              LABEL_LINK_DELETED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              LABEL_LINK_UPDATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              PROJECT_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              PROJECT_DELETED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              PROJECT_UPDATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              REVIEWS_DELETED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              REVIEW_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              REVIEW_UPDATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              TASKS_CREATED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
+              TASKS_DELETED:
+                description: description
+                key: key
+                name: name
+                organization-only: true
       audiences:
         - public
     get:
       path: /api/webhooks/{id}/
       method: GET
       auth: true
-      docs: >
-
-        Get information about a specific webhook. You will need to provide the
-        webhook ID. You can get this from [List all webhooks](list).
-
-
-        For more information about webhooks, see [Set up webhooks in Label
-        Studio](https://labelstud.io/guide/webhooks) and the [Webhook event
-        reference](https://labelstud.io/guide/webhook_reference).
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this webhook.
+        id: integer
       display-name: Get webhook info
       response:
         docs: ''
@@ -152,59 +208,52 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              organization: 1
-              project: 1
-              url: url
-              send_payload: true
-              send_for_all_actions: true
-              headers:
-                key: value
-              is_active: true
               actions:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
+              headers:
+                key: value
+              id: 1
+              is_active: true
+              organization: 1
+              project: 1
+              send_for_all_actions: true
+              send_payload: true
               updated_at: '2024-01-15T09:30:00Z'
+              url: url
       audiences:
         - public
     api_webhooks_update:
       path: /api/webhooks/{id}/
       method: PUT
       auth: true
-      docs: ''
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this webhook.
+        id: integer
       display-name: Save webhook info
       request:
-        body: root.WebhookSerializerForUpdate
-        query-parameters:
-          url:
-            type: string
-            docs: URL of webhook
-            validation:
-              format: uri
-              minLength: 1
-              maxLength: 2048
-          send_payload:
-            type: optional<boolean>
-            docs: If value is False send only action
-          send_for_all_actions:
-            type: optional<boolean>
-            docs: If value is False - used only for actions from WebhookAction
-          headers:
-            type: optional<string>
-            docs: Key Value Json of headers
-          is_active:
-            type: optional<boolean>
-            docs: If value is False the webhook is disabled
-          actions:
-            type: optional<ApiWebhooksUpdateRequestActionsItem>
-            allow-multiple: true
-        name: ApiWebhooksUpdateRequest
+        name: WebhookSerializerForUpdateRequest
+        body:
+          properties:
+            actions: optional<list<root.ActionsEnum>>
+            headers: optional<unknown>
+            is_active:
+              type: optional<boolean>
+              docs: If value is False the webhook is disabled
+            send_for_all_actions:
+              type: optional<boolean>
+              docs: If value is False - used only for actions from WebhookAction
+            send_payload:
+              type: optional<boolean>
+              docs: If value is False send only action
+            url:
+              type: string
+              docs: URL of webhook
+              validation:
+                format: uri
+                minLength: 1
+                maxLength: 2048
         content-type: application/json
       response:
         docs: ''
@@ -212,47 +261,34 @@ service:
       examples:
         - path-parameters:
             id: 1
-          query-parameters:
-            url: url
           request:
             url: url
           response:
             body:
-              id: 1
-              organization: 1
-              project: 1
-              url: url
-              send_payload: true
-              send_for_all_actions: true
-              headers:
-                key: value
-              is_active: true
               actions:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
+              headers:
+                key: value
+              id: 1
+              is_active: true
+              organization: 1
+              project: 1
+              send_for_all_actions: true
+              send_payload: true
               updated_at: '2024-01-15T09:30:00Z'
+              url: url
       audiences:
         - internal
     delete:
       path: /api/webhooks/{id}/
       method: DELETE
       auth: true
-      docs: >
-
-        Delete a webhook. You will need to provide the webhook ID. You can get
-        this from [List all webhooks](list).
-
-
-        For more information about webhooks, see [Set up webhooks in Label
-        Studio](https://labelstud.io/guide/webhooks) and the [Webhook event
-        reference](https://labelstud.io/guide/webhook_reference).
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this webhook.
-      display-name: Delete webhook
+        id: integer
+      display-name: Delete webhook info
       examples:
         - path-parameters:
             id: 1
@@ -262,48 +298,33 @@ service:
       path: /api/webhooks/{id}/
       method: PATCH
       auth: true
-      docs: >
-
-        Update a webhook. You will need to provide the webhook ID. You can get
-        this from [List all webhooks](list).
-
-
-        For more information about webhooks, see [Set up webhooks in Label
-        Studio](https://labelstud.io/guide/webhooks) and the [Webhook event
-        reference](https://labelstud.io/guide/webhook_reference).
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this webhook.
+        id: integer
       display-name: Update webhook info
       request:
-        body: root.WebhookSerializerForUpdate
-        query-parameters:
-          url:
-            type: string
-            docs: URL of webhook
-            validation:
-              format: uri
-              minLength: 1
-              maxLength: 2048
-          send_payload:
-            type: optional<boolean>
-            docs: If value is False send only action
-          send_for_all_actions:
-            type: optional<boolean>
-            docs: If value is False - used only for actions from WebhookAction
-          headers:
-            type: optional<string>
-            docs: Key Value Json of headers
-          is_active:
-            type: optional<boolean>
-            docs: If value is False the webhook is disabled
-          actions:
-            type: optional<WebhooksUpdateRequestActionsItem>
-            allow-multiple: true
-        name: WebhooksUpdateRequest
+        name: PatchedWebhookSerializerForUpdateRequest
+        body:
+          properties:
+            actions: optional<list<root.ActionsEnum>>
+            headers: optional<unknown>
+            is_active:
+              type: optional<boolean>
+              docs: If value is False the webhook is disabled
+            send_for_all_actions:
+              type: optional<boolean>
+              docs: If value is False - used only for actions from WebhookAction
+            send_payload:
+              type: optional<boolean>
+              docs: If value is False send only action
+            url:
+              type: optional<string>
+              docs: URL of webhook
+              validation:
+                format: uri
+                minLength: 1
+                maxLength: 2048
         content-type: application/json
       response:
         docs: ''
@@ -311,59 +332,178 @@ service:
       examples:
         - path-parameters:
             id: 1
-          query-parameters:
-            url: url
-          request:
-            url: url
+          request: {}
           response:
             body:
-              id: 1
-              organization: 1
-              project: 1
-              url: url
-              send_payload: true
-              send_for_all_actions: true
-              headers:
-                key: value
-              is_active: true
               actions:
                 - PROJECT_CREATED
               created_at: '2024-01-15T09:30:00Z'
+              headers:
+                key: value
+              id: 1
+              is_active: true
+              organization: 1
+              project: 1
+              send_for_all_actions: true
+              send_payload: true
               updated_at: '2024-01-15T09:30:00Z'
+              url: url
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
 types:
-  ApiWebhooksUpdateRequestActionsItem:
-    enum:
-      - PROJECT_CREATED
-      - PROJECT_UPDATED
-      - PROJECT_DELETED
-      - TASKS_CREATED
-      - TASKS_DELETED
-      - ANNOTATION_CREATED
-      - ANNOTATIONS_CREATED
-      - ANNOTATION_UPDATED
-      - ANNOTATIONS_DELETED
-      - LABEL_LINK_CREATED
-      - LABEL_LINK_UPDATED
-      - LABEL_LINK_DELETED
+  WebhooksInfoResponseAnnotationsCreated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
     source:
       openapi: openapi/openapi.yaml
-  WebhooksUpdateRequestActionsItem:
-    enum:
-      - PROJECT_CREATED
-      - PROJECT_UPDATED
-      - PROJECT_DELETED
-      - TASKS_CREATED
-      - TASKS_DELETED
-      - ANNOTATION_CREATED
-      - ANNOTATIONS_CREATED
-      - ANNOTATION_UPDATED
-      - ANNOTATIONS_DELETED
-      - LABEL_LINK_CREATED
-      - LABEL_LINK_UPDATED
-      - LABEL_LINK_DELETED
+    inline: true
+  WebhooksInfoResponseAnnotationsDeleted:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseAnnotationCreated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseAnnotationUpdated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseLabelLinkCreated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseLabelLinkDeleted:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseLabelLinkUpdated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseProjectCreated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseProjectDeleted:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseProjectUpdated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseReviewsDeleted:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseReviewCreated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseReviewUpdated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseTasksCreated:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponseTasksDeleted:
+    properties:
+      description: string
+      key: string
+      name: string
+      organization-only: boolean
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  WebhooksInfoResponse:
+    properties:
+      ANNOTATIONS_CREATED: optional<WebhooksInfoResponseAnnotationsCreated>
+      ANNOTATIONS_DELETED: optional<WebhooksInfoResponseAnnotationsDeleted>
+      ANNOTATION_CREATED: optional<WebhooksInfoResponseAnnotationCreated>
+      ANNOTATION_UPDATED: optional<WebhooksInfoResponseAnnotationUpdated>
+      LABEL_LINK_CREATED: optional<WebhooksInfoResponseLabelLinkCreated>
+      LABEL_LINK_DELETED: optional<WebhooksInfoResponseLabelLinkDeleted>
+      LABEL_LINK_UPDATED: optional<WebhooksInfoResponseLabelLinkUpdated>
+      PROJECT_CREATED: optional<WebhooksInfoResponseProjectCreated>
+      PROJECT_DELETED: optional<WebhooksInfoResponseProjectDeleted>
+      PROJECT_UPDATED: optional<WebhooksInfoResponseProjectUpdated>
+      REVIEWS_DELETED: optional<WebhooksInfoResponseReviewsDeleted>
+      REVIEW_CREATED: optional<WebhooksInfoResponseReviewCreated>
+      REVIEW_UPDATED: optional<WebhooksInfoResponseReviewUpdated>
+      TASKS_CREATED: optional<WebhooksInfoResponseTasksCreated>
+      TASKS_DELETED: optional<WebhooksInfoResponseTasksDeleted>
     source:
       openapi: openapi/openapi.yaml

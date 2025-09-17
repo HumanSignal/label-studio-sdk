@@ -1,0 +1,74 @@
+imports:
+  root: ../../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/workspaces/{id}/memberships/paginated/
+      method: GET
+      auth: true
+      docs: Retrieve the members for a specific workspace.
+      pagination:
+        offset: $request.page
+        results: $response.results
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get workspace members paginated
+      request:
+        name: PaginatedListRequest
+        query-parameters:
+          ids:
+            type: optional<string>
+            docs: Comma-separated list of user IDs to filter by
+          page:
+            type: optional<integer>
+            docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
+          search:
+            type: optional<string>
+            docs: A search term.
+      response:
+        docs: ''
+        type: root.PaginatedLseUserList
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              count: 123
+              next: http://api.example.org/accounts/?page=4
+              previous: http://api.example.org/accounts/?page=2
+              results:
+                - active_organization: 1
+                  active_organization_meta: active_organization_meta
+                  allow_newsletters: true
+                  avatar: avatar
+                  custom_hotkeys:
+                    key: value
+                  date_joined: '2024-01-15T09:30:00Z'
+                  email: email
+                  first_name: first_name
+                  id: 1
+                  initials: initials
+                  last_activity: '2024-01-15T09:30:00Z'
+                  last_name: last_name
+                  lse_fields:
+                    email_notification_settings: email_notification_settings
+                    invite_expired: invite_expired
+                    invite_expired_at: invite_expired_at
+                  org_membership:
+                    - active: active
+                      organization_id: 1
+                      role: role
+                  pause: pause
+                  phone: phone
+                  username: username
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

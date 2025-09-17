@@ -8,26 +8,16 @@ service:
       path: /api/storages/s3/
       method: GET
       auth: true
-      docs: >
-
-        You can connect your S3 bucket to Label Studio as a source storage or
-        target storage. Use this API request to get a list of all Google import
-        (source) storage connections for a specific project. 
-
-
-        The project ID can be found in the URL when viewing the project in Label
-        Studio, or you can retrieve all project IDs using [List all
-        projects](../projects/list). 
-
-
-        For more information about working with external storage, see [Sync data
-        from external storage](https://labelstud.io/guide/storage).
+      docs: Get a list of all S3 import storage connections.
       source:
         openapi: openapi/openapi.yaml
-      display-name: List import storages
+      display-name: List S3 import storage
       request:
         name: S3ListRequest
         query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
           project:
             type: optional<integer>
             docs: Project ID
@@ -37,103 +27,47 @@ service:
       examples:
         - response:
             body:
-              - id: 1
-                type: type
-                synchronizable: true
-                presign: true
-                last_sync: '2024-01-15T09:30:00Z'
-                last_sync_count: 1
-                last_sync_job: last_sync_job
-                status: initialized
-                traceback: traceback
-                meta:
-                  key: value
-                title: title
-                description: description
-                created_at: '2024-01-15T09:30:00Z'
-                bucket: bucket
-                prefix: prefix
-                regex_filter: regex_filter
-                use_blob_urls: true
-                aws_access_key_id: aws_access_key_id
+              - aws_access_key_id: aws_access_key_id
                 aws_secret_access_key: aws_secret_access_key
                 aws_session_token: aws_session_token
                 aws_sse_kms_key_id: aws_sse_kms_key_id
+                bucket: bucket
+                created_at: '2024-01-15T09:30:00Z'
+                description: description
+                id: 1
+                last_sync: '2024-01-15T09:30:00Z'
+                last_sync_count: 1
+                last_sync_job: last_sync_job
+                meta:
+                  key: value
+                prefix: prefix
+                presign: true
+                presign_ttl: 1
+                project: 1
+                recursive_scan: true
+                regex_filter: regex_filter
                 region_name: region_name
                 s3_endpoint: s3_endpoint
-                presign_ttl: 1
-                recursive_scan: true
-                project: 1
+                status: initialized
+                synchronizable: true
+                title: title
+                traceback: traceback
+                type: type
+                use_blob_urls: true
       audiences:
         - public
     create:
       path: /api/storages/s3/
       method: POST
       auth: true
-      docs: >
-
-        Create a new source storage connection to a S3 bucket. 
-
-
-        For information about the required fields and prerequisites, see [Amazon
-        S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio
-        documentation. 
-
-
-        <Info>Ensure you configure CORS before adding cloud storage. This
-        ensures you will be able to see the content of the data rather than just
-        a link.</Info>
-
-
-        <Tip>After you add the storage, you should validate the connection
-        before attempting to sync your data. Your data will not be imported
-        until you [sync your connection](sync).</Tip>
+      docs: Create new S3 import storage
       source:
         openapi: openapi/openapi.yaml
-      display-name: Create import storage
+      display-name: Create new S3 storage
       request:
         name: S3CreateRequest
         body:
           properties:
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
-              default: false
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for download
-              default: true
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
-            recursive_scan:
-              type: optional<boolean>
-              docs: Scan recursively
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            bucket:
-              type: optional<string>
-              docs: S3 bucket name
-            prefix:
-              type: optional<string>
-              docs: S3 bucket prefix
             aws_access_key_id:
               type: optional<string>
               docs: AWS_ACCESS_KEY_ID
@@ -146,47 +80,95 @@ service:
             aws_sse_kms_key_id:
               type: optional<string>
               docs: AWS SSE KMS Key ID
+            bucket:
+              type: optional<string>
+              docs: S3 bucket name
+            description:
+              type: optional<string>
+              docs: Storage description
+            prefix:
+              type: optional<string>
+              docs: S3 bucket prefix
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+              default: true
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
+            project:
+              type: optional<integer>
+              docs: Project ID
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
             region_name:
               type: optional<string>
               docs: AWS Region
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
+            title:
+              type: optional<string>
+              docs: Storage title
+              validation:
+                maxLength: 2048
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
         content-type: application/json
       response:
         docs: ''
-        type: S3CreateResponse
+        type: root.S3ImportStorage
       examples:
         - request: {}
           response:
             body:
-              regex_filter: regex_filter
-              use_blob_urls: true
-              presign: true
-              presign_ttl: 1
-              recursive_scan: true
-              title: title
-              description: description
-              project: 1
-              bucket: bucket
-              prefix: prefix
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
+              id: 1
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              presign: true
+              presign_ttl: 1
+              project: 1
+              recursive_scan: true
+              regex_filter: regex_filter
               region_name: region_name
               s3_endpoint: s3_endpoint
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
     validate:
       path: /api/storages/s3/validate
       method: POST
       auth: true
-      docs: >
-
-        Validate a specific S3 import storage connection. This is useful to
-        ensure that the storage configuration settings are correct and
-        operational before attempting to import data.
+      docs: Validate a specific S3 import storage connection.
       source:
         openapi: openapi/openapi.yaml
       display-name: Validate import storage
@@ -194,48 +176,6 @@ service:
         name: S3ValidateRequest
         body:
           properties:
-            id:
-              type: optional<integer>
-              docs: Storage ID. If set, storage with specified ID will be updated
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
-              default: false
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for download
-              default: true
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
-            recursive_scan:
-              type: optional<boolean>
-              docs: Scan recursively
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            bucket:
-              type: optional<string>
-              docs: S3 bucket name
-            prefix:
-              type: optional<string>
-              docs: S3 bucket prefix
             aws_access_key_id:
               type: optional<string>
               docs: AWS_ACCESS_KEY_ID
@@ -248,12 +188,56 @@ service:
             aws_sse_kms_key_id:
               type: optional<string>
               docs: AWS SSE KMS Key ID
+            bucket:
+              type: optional<string>
+              docs: S3 bucket name
+            description:
+              type: optional<string>
+              docs: Storage description
+            id:
+              type: optional<integer>
+              docs: Storage ID. If set, storage with specified ID will be updated
+            prefix:
+              type: optional<string>
+              docs: S3 bucket prefix
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+              default: true
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
+            project:
+              type: optional<integer>
+              docs: Project ID
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
             region_name:
               type: optional<string>
               docs: AWS Region
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
+            title:
+              type: optional<string>
+              docs: Storage title
+              validation:
+                maxLength: 2048
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
         content-type: application/json
       examples:
         - request: {}
@@ -263,21 +247,11 @@ service:
       path: /api/storages/s3/{id}
       method: GET
       auth: true
-      docs: >
-
-        Get a specific S3 import storage connection. You will need to provide
-        the import storage ID. You can find this using [List import
-        storages](list). 
-
-
-        For more information about working with external storage, see [Sync data
-        from external storage](https://labelstud.io/guide/storage).
+      docs: Get a specific S3 import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this s3 import storage.
+        id: integer
       display-name: Get import storage
       response:
         docs: ''
@@ -287,63 +261,44 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
-              meta:
-                key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
+              id: 1
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              presign: true
+              presign_ttl: 1
+              project: 1
+              recursive_scan: true
+              regex_filter: regex_filter
               region_name: region_name
               s3_endpoint: s3_endpoint
-              presign_ttl: 1
-              recursive_scan: true
-              project: 1
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
     delete:
       path: /api/storages/s3/{id}
       method: DELETE
       auth: true
-      docs: >
-
-        Delete a specific S3 import storage connection. You will need to provide
-        the import storage ID. You can find this using [List import
-        storages](list). 
-
-
-        Deleting a source storage connection does not affect tasks with synced
-        data in Label Studio. The sync process is designed to import new or
-        updated tasks from the connected storage into the project, but it does
-        not track deletions of files from the storage. Therefore, if you remove
-        the external storage connection, the tasks that were created from that
-        storage will remain in the project.
-
-
-        If you want to remove the tasks that were synced from the external
-        storage, you will need to delete them manually from within the Label
-        Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API. 
+      docs: Delete a specific S3 import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this s3 import storage.
+        id: integer
       display-name: Delete import storage
       examples:
         - path-parameters:
@@ -354,65 +309,16 @@ service:
       path: /api/storages/s3/{id}
       method: PATCH
       auth: true
-      docs: >
-
-        Update a specific S3 import storage connection. You will need to provide
-        the import storage ID. You can find this using [List import
-        storages](list). 
-
-
-        For more information about working with external storage, see [Sync data
-        from external storage](https://labelstud.io/guide/storage).
+      docs: Update a specific S3 import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this s3 import storage.
+        id: integer
       display-name: Update import storage
       request:
         name: S3UpdateRequest
         body:
           properties:
-            regex_filter:
-              type: optional<string>
-              docs: >-
-                Cloud storage regex for filtering objects. You must specify it
-                otherwise no objects will be imported.
-            use_blob_urls:
-              type: optional<boolean>
-              docs: >-
-                Interpret objects as BLOBs and generate URLs. For example, if
-                your bucket contains images, you can use this option to generate
-                URLs for these images. If set to False, it will read the content
-                of the file and load it into Label Studio.
-              default: false
-            presign:
-              type: optional<boolean>
-              docs: Presign URLs for download
-              default: true
-            presign_ttl:
-              type: optional<integer>
-              docs: Presign TTL in minutes
-              default: 1
-            recursive_scan:
-              type: optional<boolean>
-              docs: Scan recursively
-            title:
-              type: optional<string>
-              docs: Storage title
-            description:
-              type: optional<string>
-              docs: Storage description
-            project:
-              type: optional<integer>
-              docs: Project ID
-            bucket:
-              type: optional<string>
-              docs: S3 bucket name
-            prefix:
-              type: optional<string>
-              docs: S3 bucket prefix
             aws_access_key_id:
               type: optional<string>
               docs: AWS_ACCESS_KEY_ID
@@ -425,60 +331,97 @@ service:
             aws_sse_kms_key_id:
               type: optional<string>
               docs: AWS SSE KMS Key ID
+            bucket:
+              type: optional<string>
+              docs: S3 bucket name
+            description:
+              type: optional<string>
+              docs: Storage description
+            prefix:
+              type: optional<string>
+              docs: S3 bucket prefix
+            presign:
+              type: optional<boolean>
+              docs: Presign URLs for download
+              default: true
+            presign_ttl:
+              type: optional<integer>
+              docs: Presign TTL in minutes
+              default: 1
+            project:
+              type: optional<integer>
+              docs: Project ID
+            recursive_scan:
+              type: optional<boolean>
+              docs: Scan recursively
+            regex_filter:
+              type: optional<string>
+              docs: >-
+                Cloud storage regex for filtering objects. You must specify it
+                otherwise no objects will be imported.
             region_name:
               type: optional<string>
               docs: AWS Region
             s3_endpoint:
               type: optional<string>
               docs: S3 Endpoint
+            title:
+              type: optional<string>
+              docs: Storage title
+              validation:
+                maxLength: 2048
+            use_blob_urls:
+              type: optional<boolean>
+              docs: >-
+                Interpret objects as BLOBs and generate URLs. For example, if
+                your bucket contains images, you can use this option to generate
+                URLs for these images. If set to False, it will read the content
+                of the file and load it into Label Studio.
+              default: false
         content-type: application/json
       response:
         docs: ''
-        type: S3UpdateResponse
+        type: root.S3ImportStorage
       examples:
         - path-parameters:
             id: 1
           request: {}
           response:
             body:
-              regex_filter: regex_filter
-              use_blob_urls: true
-              presign: true
-              presign_ttl: 1
-              recursive_scan: true
-              title: title
-              description: description
-              project: 1
-              bucket: bucket
-              prefix: prefix
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
+              id: 1
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              presign: true
+              presign_ttl: 1
+              project: 1
+              recursive_scan: true
+              regex_filter: regex_filter
               region_name: region_name
               s3_endpoint: s3_endpoint
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
     sync:
       path: /api/storages/s3/{id}/sync
       method: POST
       auth: true
-      docs: >
-
-        Sync tasks from an S3 import storage connection. You will need to
-        provide the import storage ID. You can find this using [List import
-        storages](list). 
-
-
-        Sync operations with external buckets only go one way. They either
-        create tasks from objects in the bucket (source/import storage) or push
-        annotations to the output bucket (export/target storage). Changing
-        something on the bucket side doesn’t guarantee consistency in results.
-
-
-        <Note>Before proceeding, you should review [How sync operations work -
-        Source storage](https://labelstud.io/guide/storage#Source-storage) to
-        ensure that your data remains secure and private.</Note>
+      docs: Sync tasks from an S3 import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -494,157 +437,34 @@ service:
             id: 1
           response:
             body:
-              id: 1
-              type: type
-              synchronizable: true
-              presign: true
-              last_sync: '2024-01-15T09:30:00Z'
-              last_sync_count: 1
-              last_sync_job: last_sync_job
-              status: initialized
-              traceback: traceback
-              meta:
-                key: value
-              title: title
-              description: description
-              created_at: '2024-01-15T09:30:00Z'
-              bucket: bucket
-              prefix: prefix
-              regex_filter: regex_filter
-              use_blob_urls: true
               aws_access_key_id: aws_access_key_id
               aws_secret_access_key: aws_secret_access_key
               aws_session_token: aws_session_token
               aws_sse_kms_key_id: aws_sse_kms_key_id
+              bucket: bucket
+              created_at: '2024-01-15T09:30:00Z'
+              description: description
+              id: 1
+              last_sync: '2024-01-15T09:30:00Z'
+              last_sync_count: 1
+              last_sync_job: last_sync_job
+              meta:
+                key: value
+              prefix: prefix
+              presign: true
+              presign_ttl: 1
+              project: 1
+              recursive_scan: true
+              regex_filter: regex_filter
               region_name: region_name
               s3_endpoint: s3_endpoint
-              presign_ttl: 1
-              recursive_scan: true
-              project: 1
+              status: initialized
+              synchronizable: true
+              title: title
+              traceback: traceback
+              type: type
+              use_blob_urls: true
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
-types:
-  S3CreateResponse:
-    properties:
-      regex_filter:
-        type: optional<string>
-        docs: >-
-          Cloud storage regex for filtering objects. You must specify it
-          otherwise no objects will be imported.
-      use_blob_urls:
-        type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          bucket contains images, you can use this option to generate URLs for
-          these images. If set to False, it will read the content of the file
-          and load it into Label Studio.
-        default: false
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for download
-        default: true
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in minutes
-        default: 1
-      recursive_scan:
-        type: optional<boolean>
-        docs: Scan recursively
-      title:
-        type: optional<string>
-        docs: Storage title
-      description:
-        type: optional<string>
-        docs: Storage description
-      project:
-        type: optional<integer>
-        docs: Project ID
-      bucket:
-        type: optional<string>
-        docs: S3 bucket name
-      prefix:
-        type: optional<string>
-        docs: S3 bucket prefix
-      aws_access_key_id:
-        type: optional<string>
-        docs: AWS_ACCESS_KEY_ID
-      aws_secret_access_key:
-        type: optional<string>
-        docs: AWS_SECRET_ACCESS_KEY
-      aws_session_token:
-        type: optional<string>
-        docs: AWS_SESSION_TOKEN
-      aws_sse_kms_key_id:
-        type: optional<string>
-        docs: AWS SSE KMS Key ID
-      region_name:
-        type: optional<string>
-        docs: AWS Region
-      s3_endpoint:
-        type: optional<string>
-        docs: S3 Endpoint
-    source:
-      openapi: openapi/openapi.yaml
-  S3UpdateResponse:
-    properties:
-      regex_filter:
-        type: optional<string>
-        docs: >-
-          Cloud storage regex for filtering objects. You must specify it
-          otherwise no objects will be imported.
-      use_blob_urls:
-        type: optional<boolean>
-        docs: >-
-          Interpret objects as BLOBs and generate URLs. For example, if your
-          bucket contains images, you can use this option to generate URLs for
-          these images. If set to False, it will read the content of the file
-          and load it into Label Studio.
-        default: false
-      presign:
-        type: optional<boolean>
-        docs: Presign URLs for download
-        default: true
-      presign_ttl:
-        type: optional<integer>
-        docs: Presign TTL in minutes
-        default: 1
-      recursive_scan:
-        type: optional<boolean>
-        docs: Scan recursively
-      title:
-        type: optional<string>
-        docs: Storage title
-      description:
-        type: optional<string>
-        docs: Storage description
-      project:
-        type: optional<integer>
-        docs: Project ID
-      bucket:
-        type: optional<string>
-        docs: S3 bucket name
-      prefix:
-        type: optional<string>
-        docs: S3 bucket prefix
-      aws_access_key_id:
-        type: optional<string>
-        docs: AWS_ACCESS_KEY_ID
-      aws_secret_access_key:
-        type: optional<string>
-        docs: AWS_SECRET_ACCESS_KEY
-      aws_session_token:
-        type: optional<string>
-        docs: AWS_SESSION_TOKEN
-      aws_sse_kms_key_id:
-        type: optional<string>
-        docs: AWS SSE KMS Key ID
-      region_name:
-        type: optional<string>
-        docs: AWS Region
-      s3_endpoint:
-        type: optional<string>
-        docs: S3 Endpoint
-    source:
-      openapi: openapi/openapi.yaml

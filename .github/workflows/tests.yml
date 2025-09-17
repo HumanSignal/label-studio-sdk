@@ -24,7 +24,7 @@ on:
   workflow_dispatch:
 
 env:
-  POETRY_VERSION: 2.1.2
+  POETRY_VERSION: 2.1.4
 
 jobs:
   run_pytest:
@@ -39,14 +39,14 @@ jobs:
           - ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: "Install poetry"
         run: pipx install "poetry==${{ env.POETRY_VERSION }}"
 
       - name: "Set up Python"
         id: setup_python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'poetry'

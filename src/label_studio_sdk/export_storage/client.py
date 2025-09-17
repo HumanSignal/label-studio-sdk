@@ -2,7 +2,9 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 from .azure.client import AzureClient
+from .azure_spi.client import AzureSpiClient
 from .gcs.client import GcsClient
+from .gcswif.client import GcswifClient
 from .local.client import LocalClient
 from .redis.client import RedisClient
 from .s3.client import S3Client
@@ -10,12 +12,14 @@ from .s3s.client import S3SClient
 import typing
 from ..core.request_options import RequestOptions
 from .types.export_storage_list_types_response_item import ExportStorageListTypesResponseItem
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper
 from .azure.client import AsyncAzureClient
+from .azure_spi.client import AsyncAzureSpiClient
 from .gcs.client import AsyncGcsClient
+from .gcswif.client import AsyncGcswifClient
 from .local.client import AsyncLocalClient
 from .redis.client import AsyncRedisClient
 from .s3.client import AsyncS3Client
@@ -26,7 +30,9 @@ class ExportStorageClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.azure = AzureClient(client_wrapper=self._client_wrapper)
+        self.azure_spi = AzureSpiClient(client_wrapper=self._client_wrapper)
         self.gcs = GcsClient(client_wrapper=self._client_wrapper)
+        self.gcswif = GcswifClient(client_wrapper=self._client_wrapper)
         self.local = LocalClient(client_wrapper=self._client_wrapper)
         self.redis = RedisClient(client_wrapper=self._client_wrapper)
         self.s3 = S3Client(client_wrapper=self._client_wrapper)
@@ -46,7 +52,7 @@ class ExportStorageClient:
         Returns
         -------
         typing.List[ExportStorageListTypesResponseItem]
-
+            List of export storage types
 
         Examples
         --------
@@ -66,7 +72,7 @@ class ExportStorageClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[ExportStorageListTypesResponseItem],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[ExportStorageListTypesResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -81,7 +87,9 @@ class AsyncExportStorageClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
         self.azure = AsyncAzureClient(client_wrapper=self._client_wrapper)
+        self.azure_spi = AsyncAzureSpiClient(client_wrapper=self._client_wrapper)
         self.gcs = AsyncGcsClient(client_wrapper=self._client_wrapper)
+        self.gcswif = AsyncGcswifClient(client_wrapper=self._client_wrapper)
         self.local = AsyncLocalClient(client_wrapper=self._client_wrapper)
         self.redis = AsyncRedisClient(client_wrapper=self._client_wrapper)
         self.s3 = AsyncS3Client(client_wrapper=self._client_wrapper)
@@ -101,7 +109,7 @@ class AsyncExportStorageClient:
         Returns
         -------
         typing.List[ExportStorageListTypesResponseItem]
-
+            List of export storage types
 
         Examples
         --------
@@ -129,7 +137,7 @@ class AsyncExportStorageClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[ExportStorageListTypesResponseItem],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[ExportStorageListTypesResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),

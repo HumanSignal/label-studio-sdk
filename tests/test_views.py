@@ -9,34 +9,36 @@ from .utilities import validate_response
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "id": 1,
-            "filter_group": {
-                "id": 1,
-                "filters": [{"column": "column", "type": "type", "operator": "operator"}],
-                "conjunction": "conjunction",
-            },
             "data": {"key": "value"},
+            "filter_group": {
+                "conjunction": "conjunction",
+                "filters": [{"column": "column", "id": 1, "operator": "operator", "type": "type"}],
+                "id": 1,
+            },
+            "id": 1,
+            "order": 1,
             "ordering": {"key": "value"},
+            "project": 1,
             "selected_items": {"key": "value"},
             "user": 1,
-            "project": 1,
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
-                "id": "integer",
+                "data": None,
                 "filter_group": {
-                    "id": "integer",
-                    "filters": ("list", {0: {"column": None, "type": None, "operator": None}}),
                     "conjunction": None,
+                    "filters": ("list", {0: {"column": None, "id": "integer", "operator": None, "type": None}}),
+                    "id": "integer",
                 },
-                "data": ("dict", {0: (None, None)}),
-                "ordering": ("dict", {0: (None, None)}),
-                "selected_items": ("dict", {0: (None, None)}),
-                "user": "integer",
+                "id": "integer",
+                "order": "integer",
+                "ordering": None,
                 "project": "integer",
+                "selected_items": None,
+                "user": "integer",
             }
         },
     )
@@ -49,36 +51,51 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "filter_group": {
-            "id": 1,
-            "filters": [{"column": "column", "type": "type", "operator": "operator"}],
-            "conjunction": "conjunction",
-        },
         "data": {"key": "value"},
+        "filter_group": {
+            "conjunction": "conjunction",
+            "filters": [{"column": "column", "id": 1, "operator": "operator", "type": "type"}],
+            "id": 1,
+        },
+        "id": 1,
+        "order": 1,
         "ordering": {"key": "value"},
+        "project": 1,
         "selected_items": {"key": "value"},
         "user": 1,
-        "project": 1,
     }
     expected_types: typing.Any = {
-        "id": "integer",
+        "data": None,
         "filter_group": {
-            "id": "integer",
-            "filters": ("list", {0: {"column": None, "type": None, "operator": None}}),
             "conjunction": None,
+            "filters": ("list", {0: {"column": None, "id": "integer", "operator": None, "type": None}}),
+            "id": "integer",
         },
-        "data": ("dict", {0: (None, None)}),
-        "ordering": ("dict", {0: (None, None)}),
-        "selected_items": ("dict", {0: (None, None)}),
-        "user": "integer",
+        "id": "integer",
+        "order": "integer",
+        "ordering": None,
         "project": "integer",
+        "selected_items": None,
+        "user": "integer",
     }
     response = client.views.create()
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.views.create()
     validate_response(async_response, expected_response, expected_types)
+
+
+async def test_update_order(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.views.update_order(ids=[1], project=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+    assert (
+        await async_client.views.update_order(ids=[1], project=1)  # type: ignore[func-returns-value]
+        is None
+    )
 
 
 async def test_delete_all(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
@@ -96,30 +113,32 @@ async def test_delete_all(client: LabelStudio, async_client: AsyncLabelStudio) -
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "filter_group": {
-            "id": 1,
-            "filters": [{"column": "column", "type": "type", "operator": "operator"}],
-            "conjunction": "conjunction",
-        },
         "data": {"key": "value"},
+        "filter_group": {
+            "conjunction": "conjunction",
+            "filters": [{"column": "column", "id": 1, "operator": "operator", "type": "type"}],
+            "id": 1,
+        },
+        "id": 1,
+        "order": 1,
         "ordering": {"key": "value"},
+        "project": 1,
         "selected_items": {"key": "value"},
         "user": 1,
-        "project": 1,
     }
     expected_types: typing.Any = {
-        "id": "integer",
+        "data": None,
         "filter_group": {
-            "id": "integer",
-            "filters": ("list", {0: {"column": None, "type": None, "operator": None}}),
             "conjunction": None,
+            "filters": ("list", {0: {"column": None, "id": "integer", "operator": None, "type": None}}),
+            "id": "integer",
         },
-        "data": ("dict", {0: (None, None)}),
-        "ordering": ("dict", {0: (None, None)}),
-        "selected_items": ("dict", {0: (None, None)}),
-        "user": "integer",
+        "id": "integer",
+        "order": "integer",
+        "ordering": None,
         "project": "integer",
+        "selected_items": None,
+        "user": "integer",
     }
     response = client.views.get(id="id")
     validate_response(response, expected_response, expected_types)
@@ -143,30 +162,32 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "id": 1,
-        "filter_group": {
-            "id": 1,
-            "filters": [{"column": "column", "type": "type", "operator": "operator"}],
-            "conjunction": "conjunction",
-        },
         "data": {"key": "value"},
+        "filter_group": {
+            "conjunction": "conjunction",
+            "filters": [{"column": "column", "id": 1, "operator": "operator", "type": "type"}],
+            "id": 1,
+        },
+        "id": 1,
+        "order": 1,
         "ordering": {"key": "value"},
+        "project": 1,
         "selected_items": {"key": "value"},
         "user": 1,
-        "project": 1,
     }
     expected_types: typing.Any = {
-        "id": "integer",
+        "data": None,
         "filter_group": {
-            "id": "integer",
-            "filters": ("list", {0: {"column": None, "type": None, "operator": None}}),
             "conjunction": None,
+            "filters": ("list", {0: {"column": None, "id": "integer", "operator": None, "type": None}}),
+            "id": "integer",
         },
-        "data": ("dict", {0: (None, None)}),
-        "ordering": ("dict", {0: (None, None)}),
-        "selected_items": ("dict", {0: (None, None)}),
-        "user": "integer",
+        "id": "integer",
+        "order": "integer",
+        "ordering": None,
         "project": "integer",
+        "selected_items": None,
+        "user": "integer",
     }
     response = client.views.update(id="id")
     validate_response(response, expected_response, expected_types)

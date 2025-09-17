@@ -1,63 +1,55 @@
-imports:
-  root: ../__package__.yml
+types:
+  IndicatorsListResponseItem:
+    properties:
+      title: optional<string>
+      values: optional<map<string, unknown>>
+    source:
+      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
   endpoints:
     list:
-      path: /api/inference-runs/{pk}/indicators
+      path: /api/inference-runs/{id}/indicators/
       method: GET
       auth: true
-      docs: |
-        Get key indicators for the Prompt dashboard.
+      docs: Get key indicators for the Prompt dashboard.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        pk:
-          type: integer
-          docs: Inference run ID
+        id: integer
       display-name: Get key indicators
       response:
-        docs: ''
-        type: root.KeyIndicators
+        docs: Key indicators
+        type: list<IndicatorsListResponseItem>
       examples:
         - path-parameters:
-            pk: 1
+            id: 1
           response:
             body:
-              - key: key
-                title: title
-                main_kpi: main_kpi
-                secondary_kpi: secondary_kpi
-                additional_kpis:
-                  - {}
-                extra_kpis:
-                  - {}
+              - title: title
+                values:
+                  key: value
       audiences:
         - public
     get:
-      path: /api/inference-runs/{pk}/indicators/{indicator_key}
+      path: /api/inference-runs/{id}/indicators/{indicator_key}
       method: GET
       auth: true
-      docs: |
-        Get a specific key indicator for the Prompt dashboard.
+      docs: Get a specific key indicator for the Prompt dashboard.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        indicator_key:
-          type: string
-          docs: Key of the indicator
-        pk:
-          type: integer
-          docs: Inference run ID
+        id: integer
+        indicator_key: string
       display-name: Get key indicator
       response:
-        docs: ''
-        type: root.KeyIndicatorValue
+        docs: Key indicator
+        type: root.LseKeyIndicatorValue
       examples:
         - path-parameters:
+            id: 1
             indicator_key: indicator_key
-            pk: 1
           response:
             body:
               title: title
@@ -67,3 +59,5 @@ service:
         - public
   source:
     openapi: openapi/openapi.yaml
+imports:
+  root: ../__package__.yml

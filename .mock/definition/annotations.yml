@@ -1,29 +1,138 @@
 imports:
   root: __package__.yml
+types:
+  AnnotationBulkSerializerWithSelectedItemsRequestLastAction:
+    discriminated: false
+    docs: |-
+      Action which was performed in the last annotation history item
+
+      * `prediction` - Created from prediction
+      * `propagated_annotation` - Created from another annotation
+      * `imported` - Imported
+      * `submitted` - Submitted
+      * `updated` - Updated
+      * `skipped` - Skipped
+      * `accepted` - Accepted
+      * `rejected` - Rejected
+      * `fixed_and_accepted` - Fixed and accepted
+      * `deleted_review` - Deleted review
+    union:
+      - root.LastActionEnum
+      - root.NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  AnnotationsCreateBulkResponseItem:
+    properties:
+      id:
+        type: integer
+        docs: Annotation ID
+    source:
+      openapi: openapi/openapi.yaml
 service:
   auth: false
   base-path: ''
   endpoints:
+    create_bulk:
+      path: /api/annotations/bulk/
+      method: POST
+      auth: true
+      docs: Create multiple annotations at once
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Bulk create annotations
+      request:
+        name: AnnotationBulkSerializerWithSelectedItemsRequest
+        body:
+          properties:
+            bulk_created:
+              type: optional<boolean>
+              docs: Annotation was created in bulk mode
+            completed_by: optional<integer>
+            draft_created_at:
+              type: optional<datetime>
+              docs: Draft creation time
+            ground_truth:
+              type: optional<boolean>
+              docs: This annotation is a Ground Truth (ground_truth)
+            import_id:
+              type: optional<long>
+              docs: >-
+                Original annotation ID that was at the import step or NULL if
+                this annotation wasn't imported
+            last_action:
+              type: >-
+                optional<AnnotationBulkSerializerWithSelectedItemsRequestLastAction>
+              docs: |-
+                Action which was performed in the last annotation history item
+
+                * `prediction` - Created from prediction
+                * `propagated_annotation` - Created from another annotation
+                * `imported` - Imported
+                * `submitted` - Submitted
+                * `updated` - Updated
+                * `skipped` - Skipped
+                * `accepted` - Accepted
+                * `rejected` - Rejected
+                * `fixed_and_accepted` - Fixed and accepted
+                * `deleted_review` - Deleted review
+            last_created_by:
+              type: optional<integer>
+              docs: User who created the last annotation history item
+            lead_time:
+              type: optional<double>
+              docs: How much time it took to annotate the task
+            parent_annotation:
+              type: optional<integer>
+              docs: >-
+                Points to the parent annotation from which this annotation was
+                created
+            parent_prediction:
+              type: optional<integer>
+              docs: Points to the prediction from which this annotation was created
+            project:
+              type: optional<integer>
+              docs: Project ID for this annotation
+            result:
+              type: optional<list<map<string, unknown>>>
+              docs: List of annotation results for the task
+            selected_items: optional<root.SelectedItemsRequest>
+            task:
+              type: optional<integer>
+              docs: Corresponding task for this annotation
+            tasks: optional<list<integer>>
+            unique_id:
+              type: optional<string>
+              validation:
+                minLength: 1
+            updated_by:
+              type: optional<integer>
+              docs: Last user who updated this annotation
+            was_cancelled:
+              type: optional<boolean>
+              docs: User skipped the task
+        content-type: application/json
+      response:
+        docs: Bulk annotations created successfully
+        type: list<AnnotationsCreateBulkResponseItem>
+      examples:
+        - request: {}
+          response:
+            body:
+              - id: 1
+      audiences:
+        - public
     get:
       path: /api/annotations/{id}/
       method: GET
       auth: true
-      docs: >
-
-        Tasks can have multiple annotations. Use this call to retrieve a
-        specific annotation using its ID. 
-
-
-        You can find the ID in the Label Studio UI listed at the top of the
-        annotation in its tab. It is also listed in the History panel when
-        viewing the annotation. Or you can use [Get all task annotations](list)
-        to find all annotation IDs.  
+      docs: >-
+        Retrieve a specific annotation for a task using the annotation result
+        ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this annotation.
+        id: integer
       display-name: Get annotation by its ID
       response:
         docs: Retrieved annotation
@@ -34,66 +143,52 @@ service:
             id: 1
           response:
             body:
+              bulk_created: true
+              completed_by: 1
+              created_ago: created_ago
+              created_at: '2024-01-15T09:30:00Z'
+              created_username: created_username
+              draft_created_at: '2024-01-15T09:30:00Z'
+              ground_truth: false
               id: 1
+              import_id: 1000000
+              last_action: prediction
+              last_created_by: 1
+              lead_time: 10
+              parent_annotation: 1
+              parent_prediction: 1
+              project: 1
               result:
-                - original_width: 1920
-                  original_height: 1080
+                - from_name: bboxes
                   image_rotation: 0
-                  from_name: bboxes
+                  original_height: 1080
+                  original_width: 1920
                   to_name: image
                   type: rectanglelabels
                   value:
-                    x: 20
-                    'y': 30
-                    width: 50
                     height: 60
                     rotation: 0
                     values:
                       rectanglelabels:
                         - Person
-              created_username: created_username
-              created_ago: created_ago
-              completed_by: 1
-              unique_id: unique_id
-              was_cancelled: false
-              ground_truth: false
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              draft_created_at: '2024-01-15T09:30:00Z'
-              lead_time: 10
-              import_id: 1
-              last_action: prediction
+                    width: 50
+                    x: 20
+                    'y': 30
               task: 1
-              project: 1
+              updated_at: '2024-01-15T09:30:00Z'
               updated_by: 1
-              parent_prediction: 1
-              parent_annotation: 1
-              last_created_by: 1
+              was_cancelled: false
       audiences:
         - public
     delete:
       path: /api/annotations/{id}/
       method: DELETE
       auth: true
-      docs: >
-
-        Delete an annotation. 
-
-
-        <Warning>This action can't be undone!</Warning>
-
-
-        You will need to supply the annotation's unique ID. You can find the ID
-        in the Label Studio UI listed at the top of the annotation in its tab.
-        It is also listed in the History panel when viewing the annotation. Or
-        you can use [Get all task annotations](list) to find all annotation
-        IDs.  
+      docs: Delete an annotation. This action can't be undone!
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this annotation.
+        id: integer
       display-name: Delete annotation
       examples:
         - path-parameters:
@@ -104,32 +199,28 @@ service:
       path: /api/annotations/{id}/
       method: PATCH
       auth: true
-      docs: >
-
-        Update attributes for an existing annotation. 
-
-
-        You will need to supply the annotation's unique ID. You can find the ID
-        in the Label Studio UI listed at the top of the annotation in its tab.
-        It is also listed in the History panel when viewing the annotation. Or
-        you can use [Get all task annotations](list) to find all annotation
-        IDs.  
-
-
-        For information about the JSON format used in the result, see [Label
-        Studio JSON format of annotated
-        tasks](https://labelstud.io/guide/export#Label-Studio-JSON-format-of-annotated-tasks).
+      docs: Update existing attributes on an annotation.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this annotation.
-      display-name: Update an annotation
+        id: integer
+      display-name: Update annotation
       request:
         name: AnnotationsUpdateRequest
         body:
           properties:
+            completed_by:
+              type: optional<integer>
+              docs: User ID of the person who created this annotation
+            ground_truth:
+              type: optional<boolean>
+              docs: This annotation is a Ground Truth
+            lead_time:
+              type: optional<double>
+              docs: How much time it took to annotate the task (in seconds)
+            project:
+              type: optional<integer>
+              docs: Project ID for this annotation
             result:
               type: optional<list<map<string, unknown>>>
               docs: >-
@@ -139,24 +230,12 @@ service:
             task:
               type: optional<integer>
               docs: Corresponding task for this annotation
-            project:
-              type: optional<integer>
-              docs: Project ID for this annotation
-            completed_by:
-              type: optional<integer>
-              docs: User ID of the person who created this annotation
             updated_by:
               type: optional<integer>
               docs: Last user who updated this annotation
             was_cancelled:
               type: optional<boolean>
               docs: User skipped the task
-            ground_truth:
-              type: optional<boolean>
-              docs: This annotation is a Ground Truth
-            lead_time:
-              type: optional<double>
-              docs: How much time it took to annotate the task (in seconds)
         content-type: application/json
       response:
         docs: Updated annotation
@@ -166,75 +245,83 @@ service:
           path-parameters:
             id: 1
           request:
+            ground_truth: true
             result:
-              - original_width: 1920
-                original_height: 1080
+              - from_name: bboxes
                 image_rotation: 0
-                from_name: bboxes
+                original_height: 1080
+                original_width: 1920
                 to_name: image
                 type: rectanglelabels
                 value:
-                  x: 20
-                  'y': 30
-                  width: 50
                   height: 60
                   rotation: 0
                   values:
                     rectanglelabels:
                       - Person
+                  width: 50
+                  x: 20
+                  'y': 30
             was_cancelled: false
-            ground_truth: true
           response:
             body:
+              bulk_created: true
+              completed_by: 1
+              created_ago: created_ago
+              created_at: '2024-01-15T09:30:00Z'
+              created_username: created_username
+              draft_created_at: '2024-01-15T09:30:00Z'
+              ground_truth: false
               id: 1
+              import_id: 1000000
+              last_action: prediction
+              last_created_by: 1
+              lead_time: 10
+              parent_annotation: 1
+              parent_prediction: 1
+              project: 1
               result:
-                - original_width: 1920
-                  original_height: 1080
+                - from_name: bboxes
                   image_rotation: 0
-                  from_name: bboxes
+                  original_height: 1080
+                  original_width: 1920
                   to_name: image
                   type: rectanglelabels
                   value:
-                    x: 20
-                    'y': 30
-                    width: 50
                     height: 60
                     rotation: 0
                     values:
                       rectanglelabels:
                         - Person
-              created_username: created_username
-              created_ago: created_ago
-              completed_by: 1
-              unique_id: unique_id
-              was_cancelled: false
-              ground_truth: false
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              draft_created_at: '2024-01-15T09:30:00Z'
-              lead_time: 10
-              import_id: 1
-              last_action: prediction
+                    width: 50
+                    x: 20
+                    'y': 30
               task: 1
-              project: 1
+              updated_at: '2024-01-15T09:30:00Z'
               updated_by: 1
-              parent_prediction: 1
-              parent_annotation: 1
-              last_created_by: 1
+              was_cancelled: false
       audiences:
         - public
+    api_annotations_convert_to_draft_create:
+      path: /api/annotations/{id}/convert-to-draft
+      method: POST
+      auth: true
+      docs: Convert annotation to draft
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Convert annotation to draft
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - internal
     list:
       path: /api/tasks/{id}/annotations/
       method: GET
       auth: true
-      docs: >
-
-        List all annotations for a task.
-
-
-        You will need to supply the task ID. You can find this in Label Studio
-        by opening a task and checking the URL. It is also listed at the top of
-        the labeling interface. Or you can use [Get tasks list](../tasks/list). 
+      docs: List all annotations for a task.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -242,6 +329,12 @@ service:
           type: integer
           docs: Task ID
       display-name: Get all task annotations
+      request:
+        name: AnnotationsListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
       response:
         docs: Annotation
         type: list<root.Annotation>
@@ -251,84 +344,50 @@ service:
             id: 1
           response:
             body:
-              - id: 1
-                result:
-                  - original_width: 1920
-                    original_height: 1080
-                    image_rotation: 0
-                    from_name: bboxes
-                    to_name: image
-                    type: rectanglelabels
-                    value:
-                      x: 20
-                      'y': 30
-                      width: 50
-                      height: 60
-                      rotation: 0
-                      values:
-                        rectanglelabels:
-                          - Person
-                created_username: created_username
-                created_ago: created_ago
+              - bulk_created: true
                 completed_by: 1
-                unique_id: unique_id
-                was_cancelled: false
-                ground_truth: false
+                created_ago: created_ago
                 created_at: '2024-01-15T09:30:00Z'
-                updated_at: '2024-01-15T09:30:00Z'
+                created_username: created_username
                 draft_created_at: '2024-01-15T09:30:00Z'
-                lead_time: 10
-                import_id: 1
+                ground_truth: true
+                id: 1
+                import_id: 1000000
                 last_action: prediction
-                task: 1
-                project: 1
-                updated_by: 1
-                parent_prediction: 1
-                parent_annotation: 1
                 last_created_by: 1
+                lead_time: 1.1
+                parent_annotation: 1
+                parent_prediction: 1
+                project: 1
+                result:
+                  - key: value
+                task: 1
+                updated_at: '2024-01-15T09:30:00Z'
+                updated_by: 1
+                was_cancelled: true
       audiences:
         - public
     create:
       path: /api/tasks/{id}/annotations/
       method: POST
       auth: true
-      docs: >
+      docs: |2-
 
-        Add annotations to a task like an annotator does. 
-
-
-        You will need to supply the task ID. You can find this in Label Studio
-        by opening a task and checking the URL. It is also listed at the top of
-        the labeling interface. Or you can use [Get tasks list](../tasks/list). 
-
-
-
-        The content of the result field depends on your labeling configuration.
-        For example, send the following data as part of your POST 
-
-        request to send an empty annotation with the ID of the user who
-        completed the task:
-
-
-        ```json
-
-        {
-
-        "result": {},
-
-        "was_cancelled": true,
-
-        "ground_truth": true,
-
-        "lead_time": 0,
-
-        "task": 0
-
-        "completed_by": 123
-
-        } 
-
-        ```
+                Add annotations to a task like an annotator does. The content of the result field depends on your 
+                labeling configuration. For example, send the following data as part of your POST 
+                request to send an empty annotation with the ID of the user who completed the task:
+                
+                ```json
+                {
+                "result": {},
+                "was_cancelled": true,
+                "ground_truth": true,
+                "lead_time": 0,
+                "task": 0
+                "completed_by": 123
+                } 
+                ```
+                
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -340,6 +399,18 @@ service:
         name: AnnotationsCreateRequest
         body:
           properties:
+            completed_by:
+              type: optional<integer>
+              docs: User ID of the person who created this annotation
+            ground_truth:
+              type: optional<boolean>
+              docs: This annotation is a Ground Truth
+            lead_time:
+              type: optional<double>
+              docs: How much time it took to annotate the task (in seconds)
+            project:
+              type: optional<integer>
+              docs: Project ID for this annotation
             result:
               type: optional<list<map<string, unknown>>>
               docs: >-
@@ -349,24 +420,12 @@ service:
             task:
               type: optional<integer>
               docs: Corresponding task for this annotation
-            project:
-              type: optional<integer>
-              docs: Project ID for this annotation
-            completed_by:
-              type: optional<integer>
-              docs: User ID of the person who created this annotation
             updated_by:
               type: optional<integer>
               docs: Last user who updated this annotation
             was_cancelled:
               type: optional<boolean>
               docs: User skipped the task
-            ground_truth:
-              type: optional<boolean>
-              docs: This annotation is a Ground Truth
-            lead_time:
-              type: optional<double>
-              docs: How much time it took to annotate the task (in seconds)
         content-type: application/json
       response:
         docs: Created annotation
@@ -376,115 +435,62 @@ service:
           path-parameters:
             id: 1
           request:
+            ground_truth: true
             result:
-              - original_width: 1920
-                original_height: 1080
+              - from_name: bboxes
                 image_rotation: 0
-                from_name: bboxes
+                original_height: 1080
+                original_width: 1920
                 to_name: image
                 type: rectanglelabels
                 value:
-                  x: 20
-                  'y': 30
-                  width: 50
                   height: 60
                   rotation: 0
                   values:
                     rectanglelabels:
                       - Person
+                  width: 50
+                  x: 20
+                  'y': 30
             was_cancelled: false
-            ground_truth: true
           response:
             body:
+              bulk_created: true
+              completed_by: 1
+              created_ago: created_ago
+              created_at: '2024-01-15T09:30:00Z'
+              created_username: created_username
+              draft_created_at: '2024-01-15T09:30:00Z'
+              ground_truth: false
               id: 1
+              import_id: 1000000
+              last_action: prediction
+              last_created_by: 1
+              lead_time: 10
+              parent_annotation: 1
+              parent_prediction: 1
+              project: 1
               result:
-                - original_width: 1920
-                  original_height: 1080
+                - from_name: bboxes
                   image_rotation: 0
-                  from_name: bboxes
+                  original_height: 1080
+                  original_width: 1920
                   to_name: image
                   type: rectanglelabels
                   value:
-                    x: 20
-                    'y': 30
-                    width: 50
                     height: 60
                     rotation: 0
                     values:
                       rectanglelabels:
                         - Person
-              created_username: created_username
-              created_ago: created_ago
-              completed_by: 1
-              unique_id: unique_id
-              was_cancelled: false
-              ground_truth: false
-              created_at: '2024-01-15T09:30:00Z'
-              updated_at: '2024-01-15T09:30:00Z'
-              draft_created_at: '2024-01-15T09:30:00Z'
-              lead_time: 10
-              import_id: 1
-              last_action: prediction
+                    width: 50
+                    x: 20
+                    'y': 30
               task: 1
-              project: 1
+              updated_at: '2024-01-15T09:30:00Z'
               updated_by: 1
-              parent_prediction: 1
-              parent_annotation: 1
-              last_created_by: 1
-      audiences:
-        - public
-    createBulk:
-      path: /api/annotations/bulk
-      method: POST
-      auth: true
-      docs: |
-        Create multiple annotations for specific tasks in a bulk operation.
-      source:
-        openapi: openapi/openapi.yaml
-      display-name: Create annotations in bulk
-      request:
-        name: AnnotationsCreateBulkRequest
-        body:
-          properties:
-            tasks: optional<list<integer>>
-            selectedItems: optional<AnnotationsCreateBulkRequestSelectedItems>
-            lead_time: optional<double>
-            project: optional<integer>
-            result: optional<map<string, unknown>>
-        content-type: application/json
-      response:
-        docs: Annotations created successfully
-        type: list<AnnotationsCreateBulkResponseItem>
-      examples:
-        - request: {}
-          response:
-            body:
-              - id: 1
+              was_cancelled: false
       audiences:
         - public
   source:
     openapi: openapi/openapi.yaml
-types:
-  AnnotationsCreateBulkRequestSelectedItems:
-    properties:
-      all:
-        type: optional<boolean>
-        docs: >
-          Indicates whether to apply the operation to all tasks. If true, this
-          overrides any included or excluded lists.
-      included:
-        type: optional<list<integer>>
-        docs: |
-          An explicit list of task IDs to include.
-      excluded:
-        type: optional<list<integer>>
-        docs: |
-          An explicit list of task IDs to exclude.
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
-  AnnotationsCreateBulkResponseItem:
-    properties:
-      id: optional<integer>
-    source:
-      openapi: openapi/openapi.yaml

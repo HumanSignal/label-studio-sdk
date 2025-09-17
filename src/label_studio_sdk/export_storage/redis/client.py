@@ -4,12 +4,10 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.redis_export_storage import RedisExportStorage
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from .types.redis_create_response import RedisCreateResponse
 from ...core.jsonable_encoder import jsonable_encoder
-from .types.redis_update_response import RedisUpdateResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -21,18 +19,20 @@ class RedisClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[RedisExportStorage]:
         """
-
-        You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis export (target) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a list of all Redis export storage connections.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         project : typing.Optional[int]
             Project ID
 
@@ -57,6 +57,7 @@ class RedisClient:
             "api/storages/export/redis",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -65,7 +66,7 @@ class RedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[RedisExportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[RedisExportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -78,60 +79,55 @@ class RedisClient:
     def create(
         self,
         *,
-        db: typing.Optional[int] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RedisCreateResponse:
+    ) -> RedisExportStorage:
         """
-
-        Create a new target storage connection to Redis.
-
-        For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation.
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
+        Create a new Redis export storage connection to store annotations.
 
         Parameters
         ----------
-        db : typing.Optional[int]
-            Database ID of database to use
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled.
 
-        title : typing.Optional[str]
-            Storage title
+        db : typing.Optional[int]
+            Database ID of database to use
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
 
         path : typing.Optional[str]
             Storage prefix (optional)
 
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisCreateResponse
+        RedisExportStorage
 
 
         Examples
@@ -147,15 +143,15 @@ class RedisClient:
             "api/storages/export/redis",
             method="POST",
             json={
-                "db": db,
                 "can_delete_objects": can_delete_objects,
-                "title": title,
+                "db": db,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -166,9 +162,9 @@ class RedisClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RedisCreateResponse,
-                    parse_obj_as(
-                        type_=RedisCreateResponse,  # type: ignore
+                    RedisExportStorage,
+                    construct_type(
+                        type_=RedisExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -180,53 +176,52 @@ class RedisClient:
     def validate(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        db: typing.Optional[int] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
-        Validate a specific Redis export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+        Validate a specific Redis export storage connection.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
 
         db : typing.Optional[int]
             Database ID of database to use
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Storage prefix (optional)
 
         host : typing.Optional[str]
             Server Host IP (optional)
 
-        port : typing.Optional[str]
-            Server Port (optional)
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
 
         password : typing.Optional[str]
             Server Password (optional)
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
+        port : typing.Optional[str]
+            Server Port (optional)
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -248,16 +243,16 @@ class RedisClient:
             "api/storages/export/redis/validate",
             method="POST",
             json={
-                "id": id,
-                "db": db,
                 "can_delete_objects": can_delete_objects,
-                "title": title,
+                "db": db,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
+                "id": id,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -275,15 +270,11 @@ class RedisClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
         """
-
-        Get a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific Redis export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis export storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -313,7 +304,7 @@ class RedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -325,15 +316,11 @@ class RedisClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific Redis export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis export storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -370,61 +357,57 @@ class RedisClient:
         self,
         id: int,
         *,
-        db: typing.Optional[int] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RedisUpdateResponse:
+    ) -> RedisExportStorage:
         """
-
-        Update a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific Redis export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis export storage.
-
-        db : typing.Optional[int]
-            Database ID of database to use
 
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled.
 
-        title : typing.Optional[str]
-            Storage title
+        db : typing.Optional[int]
+            Database ID of database to use
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
 
         path : typing.Optional[str]
             Storage prefix (optional)
 
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisUpdateResponse
+        RedisExportStorage
 
 
         Examples
@@ -442,15 +425,15 @@ class RedisClient:
             f"api/storages/export/redis/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "db": db,
                 "can_delete_objects": can_delete_objects,
-                "title": title,
+                "db": db,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -461,9 +444,9 @@ class RedisClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RedisUpdateResponse,
-                    parse_obj_as(
-                        type_=RedisUpdateResponse,  # type: ignore
+                    RedisExportStorage,
+                    construct_type(
+                        type_=RedisExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -474,12 +457,7 @@ class RedisClient:
 
     def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
         """
-
-        Sync tasks to an Redis export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.
-
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        Sync tasks from a Redis export storage connection.
 
         Parameters
         ----------
@@ -513,7 +491,7 @@ class RedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -529,18 +507,20 @@ class AsyncRedisClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[RedisExportStorage]:
         """
-
-        You can connect your Redis database to Label Studio as a source storage or target storage. Use this API request to get a list of all Redis export (target) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a list of all Redis export storage connections.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         project : typing.Optional[int]
             Project ID
 
@@ -573,6 +553,7 @@ class AsyncRedisClient:
             "api/storages/export/redis",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -581,7 +562,7 @@ class AsyncRedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[RedisExportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[RedisExportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -594,60 +575,55 @@ class AsyncRedisClient:
     async def create(
         self,
         *,
-        db: typing.Optional[int] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RedisCreateResponse:
+    ) -> RedisExportStorage:
         """
-
-        Create a new target storage connection to Redis.
-
-        For information about the required fields and prerequisites, see [Redis database](https://labelstud.io/guide/storage#Redis-database) in the Label Studio documentation.
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be exported until you [sync your connection](sync).</Tip>
+        Create a new Redis export storage connection to store annotations.
 
         Parameters
         ----------
-        db : typing.Optional[int]
-            Database ID of database to use
-
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled.
 
-        title : typing.Optional[str]
-            Storage title
+        db : typing.Optional[int]
+            Database ID of database to use
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
 
         path : typing.Optional[str]
             Storage prefix (optional)
 
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisCreateResponse
+        RedisExportStorage
 
 
         Examples
@@ -671,15 +647,15 @@ class AsyncRedisClient:
             "api/storages/export/redis",
             method="POST",
             json={
-                "db": db,
                 "can_delete_objects": can_delete_objects,
-                "title": title,
+                "db": db,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -690,9 +666,9 @@ class AsyncRedisClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RedisCreateResponse,
-                    parse_obj_as(
-                        type_=RedisCreateResponse,  # type: ignore
+                    RedisExportStorage,
+                    construct_type(
+                        type_=RedisExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -704,53 +680,52 @@ class AsyncRedisClient:
     async def validate(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        db: typing.Optional[int] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
+        id: typing.Optional[int] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
-        Validate a specific Redis export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+        Validate a specific Redis export storage connection.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled.
 
         db : typing.Optional[int]
             Database ID of database to use
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        path : typing.Optional[str]
-            Storage prefix (optional)
 
         host : typing.Optional[str]
             Server Host IP (optional)
 
-        port : typing.Optional[str]
-            Server Port (optional)
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
 
         password : typing.Optional[str]
             Server Password (optional)
+
+        path : typing.Optional[str]
+            Storage prefix (optional)
+
+        port : typing.Optional[str]
+            Server Port (optional)
+
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -780,16 +755,16 @@ class AsyncRedisClient:
             "api/storages/export/redis/validate",
             method="POST",
             json={
-                "id": id,
-                "db": db,
                 "can_delete_objects": can_delete_objects,
-                "title": title,
+                "db": db,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
+                "id": id,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -807,15 +782,11 @@ class AsyncRedisClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
         """
-
-        Get a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific Redis export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis export storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -853,7 +824,7 @@ class AsyncRedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -865,15 +836,11 @@ class AsyncRedisClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        Deleting an export/target storage connection does not affect tasks with synced data in Label Studio. If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific Redis export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis export storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -918,61 +885,57 @@ class AsyncRedisClient:
         self,
         id: int,
         *,
-        db: typing.Optional[int] = OMIT,
         can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
+        db: typing.Optional[int] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        path: typing.Optional[str] = OMIT,
         host: typing.Optional[str] = OMIT,
-        port: typing.Optional[str] = OMIT,
         password: typing.Optional[str] = OMIT,
+        path: typing.Optional[str] = OMIT,
+        port: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RedisUpdateResponse:
+    ) -> RedisExportStorage:
         """
-
-        Update a specific Redis export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific Redis export storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this redis export storage.
-
-        db : typing.Optional[int]
-            Database ID of database to use
 
         can_delete_objects : typing.Optional[bool]
             Deletion from storage enabled.
 
-        title : typing.Optional[str]
-            Storage title
+        db : typing.Optional[int]
+            Database ID of database to use
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        host : typing.Optional[str]
+            Server Host IP (optional)
+
+        password : typing.Optional[str]
+            Server Password (optional)
 
         path : typing.Optional[str]
             Storage prefix (optional)
 
-        host : typing.Optional[str]
-            Server Host IP (optional)
-
         port : typing.Optional[str]
             Server Port (optional)
 
-        password : typing.Optional[str]
-            Server Password (optional)
+        project : typing.Optional[int]
+            Project ID
+
+        title : typing.Optional[str]
+            Storage title
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        RedisUpdateResponse
+        RedisExportStorage
 
 
         Examples
@@ -998,15 +961,15 @@ class AsyncRedisClient:
             f"api/storages/export/redis/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "db": db,
                 "can_delete_objects": can_delete_objects,
-                "title": title,
+                "db": db,
                 "description": description,
-                "project": project,
-                "path": path,
                 "host": host,
-                "port": port,
                 "password": password,
+                "path": path,
+                "port": port,
+                "project": project,
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -1017,9 +980,9 @@ class AsyncRedisClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RedisUpdateResponse,
-                    parse_obj_as(
-                        type_=RedisUpdateResponse,  # type: ignore
+                    RedisExportStorage,
+                    construct_type(
+                        type_=RedisExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1030,12 +993,7 @@ class AsyncRedisClient:
 
     async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> RedisExportStorage:
         """
-
-        Sync tasks to an Redis export/target storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
-
-        Sync operations with external databases only go one way. They either create tasks from objects in the database (source/import storage) or push annotations to the output database (export/target storage). Changing something on the database side doesn’t guarantee consistency in results.
-
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        Sync tasks from a Redis export storage connection.
 
         Parameters
         ----------
@@ -1077,7 +1035,7 @@ class AsyncRedisClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     RedisExportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=RedisExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),

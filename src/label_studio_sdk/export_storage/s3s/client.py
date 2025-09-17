@@ -3,10 +3,12 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.s3s_export_storage import S3SExportStorage
-from ...core.pydantic_utilities import parse_obj_as
+from ...types.lse_s3export_storage import LseS3ExportStorage
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+import datetime as dt
+from ...types.status_c5a_enum import StatusC5AEnum
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.client_wrapper import AsyncClientWrapper
 
@@ -19,18 +21,20 @@ class S3SClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[S3SExportStorage]:
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[LseS3ExportStorage]:
         """
-
-        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all S3 export (target) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a list of all S3 export storage connections that were set up with IAM role access.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         project : typing.Optional[int]
             Project ID
 
@@ -39,7 +43,7 @@ class S3SClient:
 
         Returns
         -------
-        typing.List[S3SExportStorage]
+        typing.List[LseS3ExportStorage]
 
 
         Examples
@@ -55,6 +59,7 @@ class S3SClient:
             "api/storages/export/s3s",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -62,9 +67,9 @@ class S3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[S3SExportStorage],
-                    parse_obj_as(
-                        type_=typing.List[S3SExportStorage],  # type: ignore
+                    typing.List[LseS3ExportStorage],
+                    construct_type(
+                        type_=typing.List[LseS3ExportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -76,49 +81,85 @@ class S3SClient:
     def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> S3SExportStorage:
+    ) -> LseS3ExportStorage:
         """
-
-        Create a new target storage connection to a S3 bucket with IAM role access.
-
-        For information about the required fields and prerequisites, see [Amazon S3](https://docs.humansignal.com/guide/storage#Set-up-an-S3-connection-with-IAM-role-access) in the Label Studio documentation.
+        Create an S3 export storage connection with IAM role access to store annotations.
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+        project : int
+            A unique integer value identifying this project.
 
-        title : typing.Optional[str]
-            Storage title
+        role_arn : str
+            AWS RoleArn
 
-        description : typing.Optional[str]
-            Storage description
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
 
-        project : typing.Optional[int]
-            Project ID
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
 
         bucket : typing.Optional[str]
             S3 bucket name
 
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        external_id : typing.Optional[str]
-            AWS External ID
-
-        role_arn : typing.Optional[str]
-            AWS Role ARN
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -126,12 +167,25 @@ class S3SClient:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SExportStorage
+        LseS3ExportStorage
 
 
         Examples
@@ -141,25 +195,39 @@ class S3SClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.s3s.create()
+        client.export_storage.s3s.create(
+            project=1,
+            role_arn="role_arn",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/storages/export/s3s",
             method="POST",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
                 "bucket": bucket,
-                "prefix": prefix,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "external_id": external_id,
-                "role_arn": role_arn,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
+                "project": project,
+                "regex_filter": regex_filter,
                 "region_name": region_name,
+                "role_arn": role_arn,
                 "s3_endpoint": s3endpoint,
-            },
-            headers={
-                "content-type": "application/json",
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             request_options=request_options,
             omit=OMIT,
@@ -167,9 +235,9 @@ class S3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SExportStorage,
-                    parse_obj_as(
-                        type_=S3SExportStorage,  # type: ignore
+                    LseS3ExportStorage,
+                    construct_type(
+                        type_=LseS3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -178,22 +246,181 @@ class S3SClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SExportStorage:
+    def validate(
+        self,
+        *,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
-
-        Get a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+        Validate a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
         ----------
-        id : int
-            Export storage ID
+        project : int
+            A unique integer value identifying this project.
+
+        role_arn : str
+            AWS RoleArn
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SExportStorage
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.export_storage.s3s.validate(
+            project=1,
+            role_arn="role_arn",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/storages/export/s3s/validate",
+            method="POST",
+            json={
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "external_id": external_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
+                "project": project,
+                "regex_filter": regex_filter,
+                "region_name": region_name,
+                "role_arn": role_arn,
+                "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ExportStorage:
+        """
+        Get a specific S3 export storage connection that was set up with IAM role access.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseS3ExportStorage
 
 
         Examples
@@ -215,9 +442,9 @@ class S3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SExportStorage,
-                    parse_obj_as(
-                        type_=S3SExportStorage,  # type: ignore
+                    LseS3ExportStorage,
+                    construct_type(
+                        type_=LseS3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -228,13 +455,11 @@ class S3SClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+        Delete a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
         ----------
         id : int
-            Export storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -271,63 +496,113 @@ class S3SClient:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> S3SExportStorage:
+    ) -> LseS3ExportStorage:
         """
-
-        Update a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+        Update a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
         ----------
         id : int
-            Export storage ID
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
 
-        title : typing.Optional[str]
-            Storage title
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
 
-        description : typing.Optional[str]
-            Storage description
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
 
-        project : typing.Optional[int]
-            Project ID
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
 
         bucket : typing.Optional[str]
             S3 bucket name
 
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        external_id : typing.Optional[str]
-            AWS External ID
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
 
-        role_arn : typing.Optional[str]
-            AWS Role ARN
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
 
+        role_arn : typing.Optional[str]
+            AWS RoleArn
+
         s3endpoint : typing.Optional[str]
             S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SExportStorage
+        LseS3ExportStorage
 
 
         Examples
@@ -345,16 +620,30 @@ class S3SClient:
             f"api/storages/export/s3s/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
                 "bucket": bucket,
-                "prefix": prefix,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "external_id": external_id,
-                "role_arn": role_arn,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
+                "project": project,
+                "regex_filter": regex_filter,
                 "region_name": region_name,
+                "role_arn": role_arn,
                 "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -365,9 +654,9 @@ class S3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SExportStorage,
-                    parse_obj_as(
-                        type_=S3SExportStorage,  # type: ignore
+                    LseS3ExportStorage,
+                    construct_type(
+                        type_=LseS3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -376,63 +665,21 @@ class S3SClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(
-        self,
-        *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ExportStorage:
         """
-
-        Validate a specific S3 export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+        Sync tasks from an S3 export storage.
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        external_id : typing.Optional[str]
-            AWS External ID
-
-        role_arn : typing.Optional[str]
-            AWS Role ARN
-
-        region_name : typing.Optional[str]
-            AWS Region
-
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        LseS3ExportStorage
+
 
         Examples
         --------
@@ -441,32 +688,24 @@ class S3SClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.export_storage.s3s.validate()
+        client.export_storage.s3s.sync(
+            id=1,
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/export/s3s/validate",
+            f"api/storages/export/s3s/{jsonable_encoder(id)}/sync",
             method="POST",
-            json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "external_id": external_id,
-                "role_arn": role_arn,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
-            },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    LseS3ExportStorage,
+                    construct_type(
+                        type_=LseS3ExportStorage,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -478,18 +717,20 @@ class AsyncS3SClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[S3SExportStorage]:
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[LseS3ExportStorage]:
         """
-
-        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all S3 export (target) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a list of all S3 export storage connections that were set up with IAM role access.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         project : typing.Optional[int]
             Project ID
 
@@ -498,7 +739,7 @@ class AsyncS3SClient:
 
         Returns
         -------
-        typing.List[S3SExportStorage]
+        typing.List[LseS3ExportStorage]
 
 
         Examples
@@ -522,6 +763,7 @@ class AsyncS3SClient:
             "api/storages/export/s3s",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -529,9 +771,9 @@ class AsyncS3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[S3SExportStorage],
-                    parse_obj_as(
-                        type_=typing.List[S3SExportStorage],  # type: ignore
+                    typing.List[LseS3ExportStorage],
+                    construct_type(
+                        type_=typing.List[LseS3ExportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -543,49 +785,85 @@ class AsyncS3SClient:
     async def create(
         self,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> S3SExportStorage:
+    ) -> LseS3ExportStorage:
         """
-
-        Create a new target storage connection to a S3 bucket with IAM role access.
-
-        For information about the required fields and prerequisites, see [Amazon S3](https://docs.humansignal.com/guide/storage#Set-up-an-S3-connection-with-IAM-role-access) in the Label Studio documentation.
+        Create an S3 export storage connection with IAM role access to store annotations.
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+        project : int
+            A unique integer value identifying this project.
 
-        title : typing.Optional[str]
-            Storage title
+        role_arn : str
+            AWS RoleArn
 
-        description : typing.Optional[str]
-            Storage description
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
 
-        project : typing.Optional[int]
-            Project ID
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
 
         bucket : typing.Optional[str]
             S3 bucket name
 
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        external_id : typing.Optional[str]
-            AWS External ID
-
-        role_arn : typing.Optional[str]
-            AWS Role ARN
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -593,12 +871,25 @@ class AsyncS3SClient:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SExportStorage
+        LseS3ExportStorage
 
 
         Examples
@@ -613,7 +904,10 @@ class AsyncS3SClient:
 
 
         async def main() -> None:
-            await client.export_storage.s3s.create()
+            await client.export_storage.s3s.create(
+                project=1,
+                role_arn="role_arn",
+            )
 
 
         asyncio.run(main())
@@ -622,19 +916,30 @@ class AsyncS3SClient:
             "api/storages/export/s3s",
             method="POST",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
                 "bucket": bucket,
-                "prefix": prefix,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "external_id": external_id,
-                "role_arn": role_arn,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
+                "project": project,
+                "regex_filter": regex_filter,
                 "region_name": region_name,
+                "role_arn": role_arn,
                 "s3_endpoint": s3endpoint,
-            },
-            headers={
-                "content-type": "application/json",
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             request_options=request_options,
             omit=OMIT,
@@ -642,9 +947,9 @@ class AsyncS3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SExportStorage,
-                    parse_obj_as(
-                        type_=S3SExportStorage,  # type: ignore
+                    LseS3ExportStorage,
+                    construct_type(
+                        type_=LseS3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -653,22 +958,189 @@ class AsyncS3SClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SExportStorage:
+    async def validate(
+        self,
+        *,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
-
-        Get a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+        Validate a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
         ----------
-        id : int
-            Export storage ID
+        project : int
+            A unique integer value identifying this project.
+
+        role_arn : str
+            AWS RoleArn
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SExportStorage
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.export_storage.s3s.validate(
+                project=1,
+                role_arn="role_arn",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/storages/export/s3s/validate",
+            method="POST",
+            json={
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
+                "external_id": external_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
+                "project": project,
+                "regex_filter": regex_filter,
+                "region_name": region_name,
+                "role_arn": role_arn,
+                "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ExportStorage:
+        """
+        Get a specific S3 export storage connection that was set up with IAM role access.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseS3ExportStorage
 
 
         Examples
@@ -698,9 +1170,9 @@ class AsyncS3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SExportStorage,
-                    parse_obj_as(
-                        type_=S3SExportStorage,  # type: ignore
+                    LseS3ExportStorage,
+                    construct_type(
+                        type_=LseS3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -711,13 +1183,11 @@ class AsyncS3SClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+        Delete a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
         ----------
         id : int
-            Export storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -762,63 +1232,113 @@ class AsyncS3SClient:
         self,
         id: int,
         *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
         bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
+        can_delete_objects: typing.Optional[bool] = OMIT,
+        description: typing.Optional[str] = OMIT,
         external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> S3SExportStorage:
+    ) -> LseS3ExportStorage:
         """
-
-        Update a specific S3 export storage connection. You will need to provide the export storage ID. You can find this using [List export storages](list).
+        Update a specific S3 export storage connection that was set up with IAM role access.
 
         Parameters
         ----------
         id : int
-            Export storage ID
 
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
 
-        title : typing.Optional[str]
-            Storage title
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
 
-        description : typing.Optional[str]
-            Storage description
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
 
-        project : typing.Optional[int]
-            Project ID
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
 
         bucket : typing.Optional[str]
             S3 bucket name
 
+        can_delete_objects : typing.Optional[bool]
+            Deletion from storage enabled
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        external_id : typing.Optional[str]
-            AWS External ID
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
 
-        role_arn : typing.Optional[str]
-            AWS Role ARN
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
 
+        role_arn : typing.Optional[str]
+            AWS RoleArn
+
         s3endpoint : typing.Optional[str]
             S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SExportStorage
+        LseS3ExportStorage
 
 
         Examples
@@ -844,16 +1364,30 @@ class AsyncS3SClient:
             f"api/storages/export/s3s/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
                 "bucket": bucket,
-                "prefix": prefix,
+                "can_delete_objects": can_delete_objects,
+                "description": description,
                 "external_id": external_id,
-                "role_arn": role_arn,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
+                "project": project,
+                "regex_filter": regex_filter,
                 "region_name": region_name,
+                "role_arn": role_arn,
                 "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -864,9 +1398,9 @@ class AsyncS3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SExportStorage,
-                    parse_obj_as(
-                        type_=S3SExportStorage,  # type: ignore
+                    LseS3ExportStorage,
+                    construct_type(
+                        type_=LseS3ExportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -875,63 +1409,21 @@ class AsyncS3SClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(
-        self,
-        *,
-        can_delete_objects: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ExportStorage:
         """
-
-        Validate a specific S3 export storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to export data.
+        Sync tasks from an S3 export storage.
 
         Parameters
         ----------
-        can_delete_objects : typing.Optional[bool]
-            Deletion from storage enabled.
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        external_id : typing.Optional[str]
-            AWS External ID
-
-        role_arn : typing.Optional[str]
-            AWS Role ARN
-
-        region_name : typing.Optional[str]
-            AWS Region
-
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        LseS3ExportStorage
+
 
         Examples
         --------
@@ -945,35 +1437,27 @@ class AsyncS3SClient:
 
 
         async def main() -> None:
-            await client.export_storage.s3s.validate()
+            await client.export_storage.s3s.sync(
+                id=1,
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/export/s3s/validate",
+            f"api/storages/export/s3s/{jsonable_encoder(id)}/sync",
             method="POST",
-            json={
-                "can_delete_objects": can_delete_objects,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "external_id": external_id,
-                "role_arn": role_arn,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
-            },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
-            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    LseS3ExportStorage,
+                    construct_type(
+                        type_=LseS3ExportStorage,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)

@@ -7,29 +7,8 @@ from ..utilities import validate_response
 
 
 async def test_list_formats(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = [
-        {
-            "name": "JSON",
-            "title": "title",
-            "description": "description",
-            "link": "link",
-            "tags": ["tags"],
-            "disabled": True,
-        }
-    ]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = (
-        "list",
-        {
-            0: {
-                "name": None,
-                "title": None,
-                "description": None,
-                "link": None,
-                "tags": ("list", {0: None}),
-                "disabled": None,
-            }
-        },
-    )
+    expected_response: typing.Any = ["string"]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = ("list", {0: None})
     response = client.projects.exports.list_formats(id=1)
     validate_response(response, expected_response, expected_types)
 
@@ -40,166 +19,168 @@ async def test_list_formats(client: LabelStudio, async_client: AsyncLabelStudio)
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "title": "title",
-            "id": 1,
-            "created_by": {
-                "id": 1,
-                "first_name": "first_name",
-                "last_name": "last_name",
-                "email": "email",
-                "avatar": "avatar",
-            },
-            "created_at": "2024-01-15T09:30:00Z",
-            "finished_at": "2024-01-15T09:30:00Z",
-            "status": "created",
-            "md5": "md5",
+            "converted_formats": [{"export_type": "export_type", "id": 1}],
             "counters": {"key": "value"},
-            "converted_formats": [{"export_type": "export_type"}],
+            "created_at": "2024-01-15T09:30:00Z",
+            "created_by": {
+                "avatar": "avatar",
+                "email": "email",
+                "first_name": "first_name",
+                "id": 1,
+                "last_name": "last_name",
+            },
+            "finished_at": "2024-01-15T09:30:00Z",
+            "id": 1,
+            "md5": "md5",
+            "status": "created",
+            "title": "title",
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
-                "title": None,
-                "id": "integer",
-                "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+                "converted_formats": ("list", {0: {"export_type": None, "id": "integer"}}),
+                "counters": None,
                 "created_at": "datetime",
+                "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
                 "finished_at": "datetime",
-                "status": None,
+                "id": "integer",
                 "md5": None,
-                "counters": ("dict", {0: (None, None)}),
-                "converted_formats": ("list", {0: {"export_type": None}}),
+                "status": None,
+                "title": None,
             }
         },
     )
-    response = client.projects.exports.list(project_id=1)
+    response = client.projects.exports.list(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.exports.list(project_id=1)
+    async_response = await async_client.projects.exports.list(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "title": "title",
-        "id": 1,
-        "created_by": {
-            "id": 1,
-            "first_name": "first_name",
-            "last_name": "last_name",
-            "email": "email",
-            "avatar": "avatar",
-        },
-        "created_at": "2024-01-15T09:30:00Z",
-        "finished_at": "2024-01-15T09:30:00Z",
-        "status": "created",
-        "md5": "md5",
+        "annotation_filter_options": {"ground_truth": True, "reviewed": "only", "skipped": True, "usual": True},
+        "converted_formats": [{"export_type": "export_type", "id": 1, "status": "created", "traceback": "traceback"}],
         "counters": {"key": "value"},
-        "converted_formats": [{"id": 1, "status": "created", "export_type": "export_type", "traceback": "traceback"}],
-        "task_filter_options": {
-            "view": 1,
-            "skipped": "skipped",
-            "finished": "finished",
-            "annotated": "annotated",
-            "only_with_annotations": True,
+        "created_at": "2024-01-15T09:30:00Z",
+        "created_by": {
+            "avatar": "avatar",
+            "email": "email",
+            "first_name": "first_name",
+            "id": 1,
+            "last_name": "last_name",
         },
-        "annotation_filter_options": {"usual": True, "ground_truth": True, "skipped": True},
+        "finished_at": "2024-01-15T09:30:00Z",
+        "id": 1,
+        "md5": "md5",
         "serialization_options": {
-            "drafts": {"only_id": True},
-            "predictions": {"only_id": True},
-            "include_annotation_history": True,
             "annotations__completed_by": {"only_id": True},
+            "drafts": {"only_id": True},
+            "include_annotation_history": True,
             "interpolate_key_frames": True,
+            "predictions": {"only_id": True},
         },
+        "status": "created",
+        "task_filter_options": {
+            "annotated": "only",
+            "finished": "only",
+            "only_with_annotations": True,
+            "reviewed": "only",
+            "skipped": "only",
+            "view": 1,
+        },
+        "title": "title",
     }
     expected_types: typing.Any = {
-        "title": None,
-        "id": "integer",
-        "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "annotation_filter_options": {"ground_truth": None, "reviewed": None, "skipped": None, "usual": None},
+        "converted_formats": ("list", {0: {"export_type": None, "id": "integer", "status": None, "traceback": None}}),
+        "counters": None,
         "created_at": "datetime",
+        "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
         "finished_at": "datetime",
-        "status": None,
+        "id": "integer",
         "md5": None,
-        "counters": ("dict", {0: (None, None)}),
-        "converted_formats": ("list", {0: {"id": "integer", "status": None, "export_type": None, "traceback": None}}),
-        "task_filter_options": {
-            "view": "integer",
-            "skipped": None,
-            "finished": None,
-            "annotated": None,
-            "only_with_annotations": None,
-        },
-        "annotation_filter_options": {"usual": None, "ground_truth": None, "skipped": None},
         "serialization_options": {
-            "drafts": {"only_id": None},
-            "predictions": {"only_id": None},
-            "include_annotation_history": None,
             "annotations__completed_by": {"only_id": None},
+            "drafts": {"only_id": None},
+            "include_annotation_history": None,
             "interpolate_key_frames": None,
+            "predictions": {"only_id": None},
         },
+        "status": None,
+        "task_filter_options": {
+            "annotated": None,
+            "finished": None,
+            "only_with_annotations": None,
+            "reviewed": None,
+            "skipped": None,
+            "view": "integer",
+        },
+        "title": None,
     }
-    response = client.projects.exports.create(project_id=1)
+    response = client.projects.exports.create(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.exports.create(project_id=1)
+    async_response = await async_client.projects.exports.create(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "title": "title",
-        "id": 1,
-        "created_by": {
-            "id": 1,
-            "first_name": "first_name",
-            "last_name": "last_name",
-            "email": "email",
-            "avatar": "avatar",
-        },
-        "created_at": "2024-01-15T09:30:00Z",
-        "finished_at": "2024-01-15T09:30:00Z",
-        "status": "created",
-        "md5": "md5",
+        "converted_formats": [{"export_type": "export_type", "id": 1, "status": "created", "traceback": "traceback"}],
         "counters": {"key": "value"},
-        "converted_formats": [{"id": 1, "status": "created", "export_type": "export_type", "traceback": "traceback"}],
+        "created_at": "2024-01-15T09:30:00Z",
+        "created_by": {
+            "avatar": "avatar",
+            "email": "email",
+            "first_name": "first_name",
+            "id": 1,
+            "last_name": "last_name",
+        },
+        "finished_at": "2024-01-15T09:30:00Z",
+        "id": 1,
+        "md5": "md5",
+        "status": "created",
+        "title": "title",
     }
     expected_types: typing.Any = {
-        "title": None,
-        "id": "integer",
-        "created_by": {"id": "integer", "first_name": None, "last_name": None, "email": None, "avatar": None},
+        "converted_formats": ("list", {0: {"export_type": None, "id": "integer", "status": None, "traceback": None}}),
+        "counters": None,
         "created_at": "datetime",
+        "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
         "finished_at": "datetime",
-        "status": None,
+        "id": "integer",
         "md5": None,
-        "counters": ("dict", {0: (None, None)}),
-        "converted_formats": ("list", {0: {"id": "integer", "status": None, "export_type": None, "traceback": None}}),
+        "status": None,
+        "title": None,
     }
-    response = client.projects.exports.get(project_id=1, export_pk="export_pk")
+    response = client.projects.exports.get(export_pk=1, id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.exports.get(project_id=1, export_pk="export_pk")
+    async_response = await async_client.projects.exports.get(export_pk=1, id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.projects.exports.delete(project_id=1, export_pk="export_pk")  # type: ignore[func-returns-value]
+        client.projects.exports.delete(export_pk=1, id=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.projects.exports.delete(project_id=1, export_pk="export_pk")  # type: ignore[func-returns-value]
+        await async_client.projects.exports.delete(export_pk=1, id=1)  # type: ignore[func-returns-value]
         is None
     )
 
 
 async def test_convert(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"export_type": "JSON", "converted_format": 1}
-    expected_types: typing.Any = {"export_type": None, "converted_format": "integer"}
-    response = client.projects.exports.convert(project_id=1, export_pk="export_pk")
+    expected_response: typing.Any = {"converted_format": 1, "export_type": "export_type"}
+    expected_types: typing.Any = {"converted_format": "integer", "export_type": None}
+    response = client.projects.exports.convert(export_pk=1, id=1, export_type="export_type")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.projects.exports.convert(project_id=1, export_pk="export_pk")
+    async_response = await async_client.projects.exports.convert(export_pk=1, id=1, export_type="export_type")
     validate_response(async_response, expected_response, expected_types)

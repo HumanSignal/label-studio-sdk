@@ -2,30 +2,27 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from .indicators.client import IndicatorsClient
 from .versions.client import VersionsClient
 from .runs.client import RunsClient
-from .indicators.client import IndicatorsClient
 from ..core.request_options import RequestOptions
-from ..types.prompt import Prompt
-from ..core.pydantic_utilities import parse_obj_as
+from ..types.batch_failed_predictions import BatchFailedPredictions
+from ..core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
-from ..types.prompt_created_by import PromptCreatedBy
-import datetime as dt
-from ..types.prompt_organization import PromptOrganization
-from ..types.prompt_associated_projects_item import PromptAssociatedProjectsItem
+from ..types.batch_predictions import BatchPredictions
+from ..types.model_interface_serializer_get import ModelInterfaceSerializerGet
+from ..types.user_simple_request import UserSimpleRequest
+from ..types.skill_name_enum import SkillNameEnum
+from ..types.model_interface import ModelInterface
 from ..core.serialization import convert_and_respect_annotation_metadata
+from .types.prompts_compatible_projects_request_project_type import PromptsCompatibleProjectsRequestProjectType
+from ..types.paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from ..core.jsonable_encoder import jsonable_encoder
-from .types.prompts_batch_predictions_request_results_item import PromptsBatchPredictionsRequestResultsItem
-from .types.prompts_batch_predictions_response import PromptsBatchPredictionsResponse
-from .types.prompts_batch_failed_predictions_request_failed_predictions_item import (
-    PromptsBatchFailedPredictionsRequestFailedPredictionsItem,
-)
-from .types.prompts_batch_failed_predictions_response import PromptsBatchFailedPredictionsResponse
 from ..core.client_wrapper import AsyncClientWrapper
+from .indicators.client import AsyncIndicatorsClient
 from .versions.client import AsyncVersionsClient
 from .runs.client import AsyncRunsClient
-from .indicators.client import AsyncIndicatorsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -34,22 +31,175 @@ OMIT = typing.cast(typing.Any, ...)
 class PromptsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.indicators = IndicatorsClient(client_wrapper=self._client_wrapper)
         self.versions = VersionsClient(client_wrapper=self._client_wrapper)
         self.runs = RunsClient(client_wrapper=self._client_wrapper)
-        self.indicators = IndicatorsClient(client_wrapper=self._client_wrapper)
 
-    def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Prompt]:
+    def batch_failed_predictions(
+        self,
+        *,
+        failed_predictions: typing.Sequence[typing.Optional[typing.Any]],
+        modelrun_id: int,
+        num_failed_predictions: typing.Optional[int] = None,
+        job_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BatchFailedPredictions:
         """
-        Get a list of prompts.
+        Create a new batch of failed predictions.
 
         Parameters
         ----------
+        failed_predictions : typing.Sequence[typing.Optional[typing.Any]]
+
+        modelrun_id : int
+
+        num_failed_predictions : typing.Optional[int]
+            Number of failed predictions being sent (for telemetry only, has no effect)
+
+        job_id : typing.Optional[str]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[Prompt]
+        BatchFailedPredictions
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.batch_failed_predictions(
+            failed_predictions=[],
+            modelrun_id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/model-run/batch-failed-predictions",
+            method="POST",
+            params={
+                "num_failed_predictions": num_failed_predictions,
+            },
+            json={
+                "failed_predictions": failed_predictions,
+                "job_id": job_id,
+                "modelrun_id": modelrun_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    BatchFailedPredictions,
+                    construct_type(
+                        type_=BatchFailedPredictions,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def batch_predictions(
+        self,
+        *,
+        modelrun_id: int,
+        results: typing.Sequence[typing.Optional[typing.Any]],
+        num_predictions: typing.Optional[int] = None,
+        job_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BatchPredictions:
+        """
+        Create a new batch prediction.
+
+        Parameters
+        ----------
+        modelrun_id : int
+
+        results : typing.Sequence[typing.Optional[typing.Any]]
+
+        num_predictions : typing.Optional[int]
+            Number of predictions being sent (for telemetry only, has no effect)
+
+        job_id : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BatchPredictions
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.batch_predictions(
+            modelrun_id=1,
+            results=[],
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/model-run/batch-predictions",
+            method="POST",
+            params={
+                "num_predictions": num_predictions,
+            },
+            json={
+                "job_id": job_id,
+                "modelrun_id": modelrun_id,
+                "results": results,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    BatchPredictions,
+                    construct_type(
+                        type_=BatchPredictions,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def list(
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ModelInterfaceSerializerGet]:
+        """
+        List all prompts.
+
+        Parameters
+        ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ModelInterfaceSerializerGet]
 
 
         Examples
@@ -64,14 +214,17 @@ class PromptsClient:
         _response = self._client_wrapper.httpx_client.request(
             "api/prompts/",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[Prompt],
-                    parse_obj_as(
-                        type_=typing.List[Prompt],  # type: ignore
+                    typing.List[ModelInterfaceSerializerGet],
+                    construct_type(
+                        type_=typing.List[ModelInterfaceSerializerGet],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -84,58 +237,45 @@ class PromptsClient:
         self,
         *,
         title: str,
-        input_fields: typing.Sequence[str],
-        output_classes: typing.Sequence[str],
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
         description: typing.Optional[str] = OMIT,
-        created_by: typing.Optional[PromptCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
-        organization: typing.Optional[PromptOrganization] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]] = OMIT,
-        skill_name: typing.Optional[str] = OMIT,
+        input_fields: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Prompt:
+    ) -> ModelInterface:
         """
         Create a new prompt.
 
         Parameters
         ----------
         title : str
-            Title of the prompt
+            Model name
 
-        input_fields : typing.Sequence[str]
-            List of input fields
+        associated_projects : typing.Optional[typing.Sequence[int]]
 
-        output_classes : typing.Sequence[str]
-            List of output classes
+        created_by : typing.Optional[UserSimpleRequest]
+            User who created Dataset
 
         description : typing.Optional[str]
-            Description of the prompt
+            Model description
 
-        created_by : typing.Optional[PromptCreatedBy]
-            User ID of the creator of the prompt
+        input_fields : typing.Optional[typing.Optional[typing.Any]]
 
-        created_at : typing.Optional[dt.datetime]
-            Date and time the prompt was created
+        organization : typing.Optional[int]
 
-        updated_at : typing.Optional[dt.datetime]
-            Date and time the prompt was last updated
+        output_classes : typing.Optional[typing.Optional[typing.Any]]
 
-        organization : typing.Optional[PromptOrganization]
-            Organization ID of the prompt
-
-        associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
-            List of associated projects IDs or objects
-
-        skill_name : typing.Optional[str]
-            Name of the skill
+        skill_name : typing.Optional[SkillNameEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Prompt
+        ModelInterface
 
 
         Examples
@@ -147,32 +287,22 @@ class PromptsClient:
         )
         client.prompts.create(
             title="title",
-            input_fields=["input_fields"],
-            output_classes=["output_classes"],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "api/prompts/",
             method="POST",
             json={
-                "title": title,
-                "description": description,
+                "associated_projects": associated_projects,
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptCreatedBy, direction="write"
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "created_at": created_at,
-                "updated_at": updated_at,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptOrganization, direction="write"
-                ),
+                "description": description,
                 "input_fields": input_fields,
+                "organization": organization,
                 "output_classes": output_classes,
-                "associated_projects": convert_and_respect_annotation_metadata(
-                    object_=associated_projects,
-                    annotation=typing.Sequence[PromptAssociatedProjectsItem],
-                    direction="write",
-                ),
                 "skill_name": skill_name,
+                "title": title,
             },
             request_options=request_options,
             omit=OMIT,
@@ -180,9 +310,9 @@ class PromptsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Prompt,
-                    parse_obj_as(
-                        type_=Prompt,  # type: ignore
+                    ModelInterface,
+                    construct_type(
+                        type_=ModelInterface,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -191,21 +321,88 @@ class PromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Prompt:
+    def compatible_projects(
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        project_type: typing.Optional[PromptsCompatibleProjectsRequestProjectType] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedAllRolesProjectListList:
         """
-        Get a prompt by ID.
+        Retrieve a list of compatible project for prompt.
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        project_type : typing.Optional[PromptsCompatibleProjectsRequestProjectType]
+            Skill to filter by
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Prompt
+        PaginatedAllRolesProjectListList
+
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.prompts.compatible_projects()
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/prompts/compatible-projects",
+            method="GET",
+            params={
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "project_type": project_type,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PaginatedAllRolesProjectListList,
+                    construct_type(
+                        type_=PaginatedAllRolesProjectListList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> ModelInterfaceSerializerGet:
+        """
+        Retrieve a specific prompt.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelInterfaceSerializerGet
 
 
         Examples
@@ -216,20 +413,20 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.get(
-            id=1,
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(id)}/",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Prompt,
-                    parse_obj_as(
-                        type_=Prompt,  # type: ignore
+                    ModelInterfaceSerializerGet,
+                    construct_type(
+                        type_=ModelInterfaceSerializerGet,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -238,14 +435,13 @@ class PromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a prompt by ID.
+        Delete a prompt by ID
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -262,11 +458,11 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.delete(
-            id=1,
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -280,64 +476,50 @@ class PromptsClient:
 
     def update(
         self,
-        id: int,
+        id: str,
         *,
-        title: str,
-        input_fields: typing.Sequence[str],
-        output_classes: typing.Sequence[str],
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
         description: typing.Optional[str] = OMIT,
-        created_by: typing.Optional[PromptCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
-        organization: typing.Optional[PromptOrganization] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]] = OMIT,
-        skill_name: typing.Optional[str] = OMIT,
+        input_fields: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Prompt:
+    ) -> ModelInterface:
         """
-        Update a prompt by ID.
+        Update a specific prompt by ID.
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        id : str
 
-        title : str
-            Title of the prompt
+        associated_projects : typing.Optional[typing.Sequence[int]]
 
-        input_fields : typing.Sequence[str]
-            List of input fields
-
-        output_classes : typing.Sequence[str]
-            List of output classes
+        created_by : typing.Optional[UserSimpleRequest]
+            User who created Dataset
 
         description : typing.Optional[str]
-            Description of the prompt
+            Model description
 
-        created_by : typing.Optional[PromptCreatedBy]
-            User ID of the creator of the prompt
+        input_fields : typing.Optional[typing.Optional[typing.Any]]
 
-        created_at : typing.Optional[dt.datetime]
-            Date and time the prompt was created
+        organization : typing.Optional[int]
 
-        updated_at : typing.Optional[dt.datetime]
-            Date and time the prompt was last updated
+        output_classes : typing.Optional[typing.Optional[typing.Any]]
 
-        organization : typing.Optional[PromptOrganization]
-            Organization ID of the prompt
+        skill_name : typing.Optional[SkillNameEnum]
 
-        associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
-            List of associated projects IDs or objects
-
-        skill_name : typing.Optional[str]
-            Name of the skill
+        title : typing.Optional[str]
+            Model name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Prompt
+        ModelInterface
 
 
         Examples
@@ -348,103 +530,23 @@ class PromptsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.update(
-            id=1,
-            title="title",
-            input_fields=["input_fields"],
-            output_classes=["output_classes"],
+            id="id",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "title": title,
-                "description": description,
+                "associated_projects": associated_projects,
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptCreatedBy, direction="write"
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "created_at": created_at,
-                "updated_at": updated_at,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptOrganization, direction="write"
-                ),
+                "description": description,
                 "input_fields": input_fields,
+                "organization": organization,
                 "output_classes": output_classes,
-                "associated_projects": convert_and_respect_annotation_metadata(
-                    object_=associated_projects,
-                    annotation=typing.Sequence[PromptAssociatedProjectsItem],
-                    direction="write",
-                ),
                 "skill_name": skill_name,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Prompt,
-                    parse_obj_as(
-                        type_=Prompt,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def batch_predictions(
-        self,
-        *,
-        num_predictions: typing.Optional[int] = None,
-        modelrun_id: typing.Optional[int] = OMIT,
-        results: typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> PromptsBatchPredictionsResponse:
-        """
-        Create a new batch prediction.
-
-        Parameters
-        ----------
-        num_predictions : typing.Optional[int]
-            Number of predictions being sent
-
-        modelrun_id : typing.Optional[int]
-            Model Run ID to associate the prediction with
-
-        results : typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PromptsBatchPredictionsResponse
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.prompts.batch_predictions()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/model-run/batch-predictions",
-            method="POST",
-            params={
-                "num_predictions": num_predictions,
-            },
-            json={
-                "modelrun_id": modelrun_id,
-                "results": convert_and_respect_annotation_metadata(
-                    object_=results,
-                    annotation=typing.Sequence[PromptsBatchPredictionsRequestResultsItem],
-                    direction="write",
-                ),
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -455,83 +557,9 @@ class PromptsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    PromptsBatchPredictionsResponse,
-                    parse_obj_as(
-                        type_=PromptsBatchPredictionsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def batch_failed_predictions(
-        self,
-        *,
-        num_failed_predictions: typing.Optional[int] = None,
-        modelrun_id: typing.Optional[int] = OMIT,
-        failed_predictions: typing.Optional[
-            typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
-        ] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> PromptsBatchFailedPredictionsResponse:
-        """
-        Create a new batch of failed predictions.
-
-        Parameters
-        ----------
-        num_failed_predictions : typing.Optional[int]
-            Number of failed predictions being sent
-
-        modelrun_id : typing.Optional[int]
-            Model Run ID where the failed predictions came from
-
-        failed_predictions : typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PromptsBatchFailedPredictionsResponse
-
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.prompts.batch_failed_predictions()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/model-run/batch-failed-predictions",
-            method="POST",
-            params={
-                "num_failed_predictions": num_failed_predictions,
-            },
-            json={
-                "modelrun_id": modelrun_id,
-                "failed_predictions": convert_and_respect_annotation_metadata(
-                    object_=failed_predictions,
-                    annotation=typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem],
-                    direction="write",
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    PromptsBatchFailedPredictionsResponse,
-                    parse_obj_as(
-                        type_=PromptsBatchFailedPredictionsResponse,  # type: ignore
+                    ModelInterface,
+                    construct_type(
+                        type_=ModelInterface,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -544,22 +572,191 @@ class PromptsClient:
 class AsyncPromptsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+        self.indicators = AsyncIndicatorsClient(client_wrapper=self._client_wrapper)
         self.versions = AsyncVersionsClient(client_wrapper=self._client_wrapper)
         self.runs = AsyncRunsClient(client_wrapper=self._client_wrapper)
-        self.indicators = AsyncIndicatorsClient(client_wrapper=self._client_wrapper)
 
-    async def list(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[Prompt]:
+    async def batch_failed_predictions(
+        self,
+        *,
+        failed_predictions: typing.Sequence[typing.Optional[typing.Any]],
+        modelrun_id: int,
+        num_failed_predictions: typing.Optional[int] = None,
+        job_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BatchFailedPredictions:
         """
-        Get a list of prompts.
+        Create a new batch of failed predictions.
 
         Parameters
         ----------
+        failed_predictions : typing.Sequence[typing.Optional[typing.Any]]
+
+        modelrun_id : int
+
+        num_failed_predictions : typing.Optional[int]
+            Number of failed predictions being sent (for telemetry only, has no effect)
+
+        job_id : typing.Optional[str]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        typing.List[Prompt]
+        BatchFailedPredictions
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.batch_failed_predictions(
+                failed_predictions=[],
+                modelrun_id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/model-run/batch-failed-predictions",
+            method="POST",
+            params={
+                "num_failed_predictions": num_failed_predictions,
+            },
+            json={
+                "failed_predictions": failed_predictions,
+                "job_id": job_id,
+                "modelrun_id": modelrun_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    BatchFailedPredictions,
+                    construct_type(
+                        type_=BatchFailedPredictions,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def batch_predictions(
+        self,
+        *,
+        modelrun_id: int,
+        results: typing.Sequence[typing.Optional[typing.Any]],
+        num_predictions: typing.Optional[int] = None,
+        job_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BatchPredictions:
+        """
+        Create a new batch prediction.
+
+        Parameters
+        ----------
+        modelrun_id : int
+
+        results : typing.Sequence[typing.Optional[typing.Any]]
+
+        num_predictions : typing.Optional[int]
+            Number of predictions being sent (for telemetry only, has no effect)
+
+        job_id : typing.Optional[str]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BatchPredictions
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.batch_predictions(
+                modelrun_id=1,
+                results=[],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/model-run/batch-predictions",
+            method="POST",
+            params={
+                "num_predictions": num_predictions,
+            },
+            json={
+                "job_id": job_id,
+                "modelrun_id": modelrun_id,
+                "results": results,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    BatchPredictions,
+                    construct_type(
+                        type_=BatchPredictions,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def list(
+        self, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ModelInterfaceSerializerGet]:
+        """
+        List all prompts.
+
+        Parameters
+        ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ModelInterfaceSerializerGet]
 
 
         Examples
@@ -582,14 +779,17 @@ class AsyncPromptsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "api/prompts/",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[Prompt],
-                    parse_obj_as(
-                        type_=typing.List[Prompt],  # type: ignore
+                    typing.List[ModelInterfaceSerializerGet],
+                    construct_type(
+                        type_=typing.List[ModelInterfaceSerializerGet],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -602,58 +802,45 @@ class AsyncPromptsClient:
         self,
         *,
         title: str,
-        input_fields: typing.Sequence[str],
-        output_classes: typing.Sequence[str],
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
         description: typing.Optional[str] = OMIT,
-        created_by: typing.Optional[PromptCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
-        organization: typing.Optional[PromptOrganization] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]] = OMIT,
-        skill_name: typing.Optional[str] = OMIT,
+        input_fields: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Prompt:
+    ) -> ModelInterface:
         """
         Create a new prompt.
 
         Parameters
         ----------
         title : str
-            Title of the prompt
+            Model name
 
-        input_fields : typing.Sequence[str]
-            List of input fields
+        associated_projects : typing.Optional[typing.Sequence[int]]
 
-        output_classes : typing.Sequence[str]
-            List of output classes
+        created_by : typing.Optional[UserSimpleRequest]
+            User who created Dataset
 
         description : typing.Optional[str]
-            Description of the prompt
+            Model description
 
-        created_by : typing.Optional[PromptCreatedBy]
-            User ID of the creator of the prompt
+        input_fields : typing.Optional[typing.Optional[typing.Any]]
 
-        created_at : typing.Optional[dt.datetime]
-            Date and time the prompt was created
+        organization : typing.Optional[int]
 
-        updated_at : typing.Optional[dt.datetime]
-            Date and time the prompt was last updated
+        output_classes : typing.Optional[typing.Optional[typing.Any]]
 
-        organization : typing.Optional[PromptOrganization]
-            Organization ID of the prompt
-
-        associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
-            List of associated projects IDs or objects
-
-        skill_name : typing.Optional[str]
-            Name of the skill
+        skill_name : typing.Optional[SkillNameEnum]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Prompt
+        ModelInterface
 
 
         Examples
@@ -670,8 +857,6 @@ class AsyncPromptsClient:
         async def main() -> None:
             await client.prompts.create(
                 title="title",
-                input_fields=["input_fields"],
-                output_classes=["output_classes"],
             )
 
 
@@ -681,24 +866,16 @@ class AsyncPromptsClient:
             "api/prompts/",
             method="POST",
             json={
-                "title": title,
-                "description": description,
+                "associated_projects": associated_projects,
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptCreatedBy, direction="write"
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "created_at": created_at,
-                "updated_at": updated_at,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptOrganization, direction="write"
-                ),
+                "description": description,
                 "input_fields": input_fields,
+                "organization": organization,
                 "output_classes": output_classes,
-                "associated_projects": convert_and_respect_annotation_metadata(
-                    object_=associated_projects,
-                    annotation=typing.Sequence[PromptAssociatedProjectsItem],
-                    direction="write",
-                ),
                 "skill_name": skill_name,
+                "title": title,
             },
             request_options=request_options,
             omit=OMIT,
@@ -706,9 +883,9 @@ class AsyncPromptsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Prompt,
-                    parse_obj_as(
-                        type_=Prompt,  # type: ignore
+                    ModelInterface,
+                    construct_type(
+                        type_=ModelInterface,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -717,21 +894,98 @@ class AsyncPromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Prompt:
+    async def compatible_projects(
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        project_type: typing.Optional[PromptsCompatibleProjectsRequestProjectType] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PaginatedAllRolesProjectListList:
         """
-        Get a prompt by ID.
+        Retrieve a list of compatible project for prompt.
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
+        page : typing.Optional[int]
+            A page number within the paginated result set.
+
+        page_size : typing.Optional[int]
+            Number of results to return per page.
+
+        project_type : typing.Optional[PromptsCompatibleProjectsRequestProjectType]
+            Skill to filter by
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Prompt
+        PaginatedAllRolesProjectListList
+
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.prompts.compatible_projects()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/prompts/compatible-projects",
+            method="GET",
+            params={
+                "ordering": ordering,
+                "page": page,
+                "page_size": page_size,
+                "project_type": project_type,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    PaginatedAllRolesProjectListList,
+                    construct_type(
+                        type_=PaginatedAllRolesProjectListList,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> ModelInterfaceSerializerGet:
+        """
+        Retrieve a specific prompt.
+
+        Parameters
+        ----------
+        id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ModelInterfaceSerializerGet
 
 
         Examples
@@ -747,23 +1001,23 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.get(
-                id=1,
+                id="id",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(id)}/",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Prompt,
-                    parse_obj_as(
-                        type_=Prompt,  # type: ignore
+                    ModelInterfaceSerializerGet,
+                    construct_type(
+                        type_=ModelInterfaceSerializerGet,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -772,14 +1026,13 @@ class AsyncPromptsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a prompt by ID.
+        Delete a prompt by ID
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        id : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -801,14 +1054,14 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.delete(
-                id=1,
+                id="id",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(id)}/",
             method="DELETE",
             request_options=request_options,
         )
@@ -822,64 +1075,50 @@ class AsyncPromptsClient:
 
     async def update(
         self,
-        id: int,
+        id: str,
         *,
-        title: str,
-        input_fields: typing.Sequence[str],
-        output_classes: typing.Sequence[str],
+        associated_projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        created_by: typing.Optional[UserSimpleRequest] = OMIT,
         description: typing.Optional[str] = OMIT,
-        created_by: typing.Optional[PromptCreatedBy] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        updated_at: typing.Optional[dt.datetime] = OMIT,
-        organization: typing.Optional[PromptOrganization] = OMIT,
-        associated_projects: typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]] = OMIT,
-        skill_name: typing.Optional[str] = OMIT,
+        input_fields: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        organization: typing.Optional[int] = OMIT,
+        output_classes: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        skill_name: typing.Optional[SkillNameEnum] = OMIT,
+        title: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Prompt:
+    ) -> ModelInterface:
         """
-        Update a prompt by ID.
+        Update a specific prompt by ID.
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        id : str
 
-        title : str
-            Title of the prompt
+        associated_projects : typing.Optional[typing.Sequence[int]]
 
-        input_fields : typing.Sequence[str]
-            List of input fields
-
-        output_classes : typing.Sequence[str]
-            List of output classes
+        created_by : typing.Optional[UserSimpleRequest]
+            User who created Dataset
 
         description : typing.Optional[str]
-            Description of the prompt
+            Model description
 
-        created_by : typing.Optional[PromptCreatedBy]
-            User ID of the creator of the prompt
+        input_fields : typing.Optional[typing.Optional[typing.Any]]
 
-        created_at : typing.Optional[dt.datetime]
-            Date and time the prompt was created
+        organization : typing.Optional[int]
 
-        updated_at : typing.Optional[dt.datetime]
-            Date and time the prompt was last updated
+        output_classes : typing.Optional[typing.Optional[typing.Any]]
 
-        organization : typing.Optional[PromptOrganization]
-            Organization ID of the prompt
+        skill_name : typing.Optional[SkillNameEnum]
 
-        associated_projects : typing.Optional[typing.Sequence[PromptAssociatedProjectsItem]]
-            List of associated projects IDs or objects
-
-        skill_name : typing.Optional[str]
-            Name of the skill
+        title : typing.Optional[str]
+            Model name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Prompt
+        ModelInterface
 
 
         Examples
@@ -895,114 +1134,26 @@ class AsyncPromptsClient:
 
         async def main() -> None:
             await client.prompts.update(
-                id=1,
-                title="title",
-                input_fields=["input_fields"],
-                output_classes=["output_classes"],
+                id="id",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}",
+            f"api/prompts/{jsonable_encoder(id)}/",
             method="PATCH",
             json={
-                "title": title,
-                "description": description,
+                "associated_projects": associated_projects,
                 "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=PromptCreatedBy, direction="write"
+                    object_=created_by, annotation=UserSimpleRequest, direction="write"
                 ),
-                "created_at": created_at,
-                "updated_at": updated_at,
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=PromptOrganization, direction="write"
-                ),
+                "description": description,
                 "input_fields": input_fields,
+                "organization": organization,
                 "output_classes": output_classes,
-                "associated_projects": convert_and_respect_annotation_metadata(
-                    object_=associated_projects,
-                    annotation=typing.Sequence[PromptAssociatedProjectsItem],
-                    direction="write",
-                ),
                 "skill_name": skill_name,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    Prompt,
-                    parse_obj_as(
-                        type_=Prompt,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def batch_predictions(
-        self,
-        *,
-        num_predictions: typing.Optional[int] = None,
-        modelrun_id: typing.Optional[int] = OMIT,
-        results: typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> PromptsBatchPredictionsResponse:
-        """
-        Create a new batch prediction.
-
-        Parameters
-        ----------
-        num_predictions : typing.Optional[int]
-            Number of predictions being sent
-
-        modelrun_id : typing.Optional[int]
-            Model Run ID to associate the prediction with
-
-        results : typing.Optional[typing.Sequence[PromptsBatchPredictionsRequestResultsItem]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PromptsBatchPredictionsResponse
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.prompts.batch_predictions()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/model-run/batch-predictions",
-            method="POST",
-            params={
-                "num_predictions": num_predictions,
-            },
-            json={
-                "modelrun_id": modelrun_id,
-                "results": convert_and_respect_annotation_metadata(
-                    object_=results,
-                    annotation=typing.Sequence[PromptsBatchPredictionsRequestResultsItem],
-                    direction="write",
-                ),
+                "title": title,
             },
             headers={
                 "content-type": "application/json",
@@ -1013,91 +1164,9 @@ class AsyncPromptsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    PromptsBatchPredictionsResponse,
-                    parse_obj_as(
-                        type_=PromptsBatchPredictionsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def batch_failed_predictions(
-        self,
-        *,
-        num_failed_predictions: typing.Optional[int] = None,
-        modelrun_id: typing.Optional[int] = OMIT,
-        failed_predictions: typing.Optional[
-            typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]
-        ] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> PromptsBatchFailedPredictionsResponse:
-        """
-        Create a new batch of failed predictions.
-
-        Parameters
-        ----------
-        num_failed_predictions : typing.Optional[int]
-            Number of failed predictions being sent
-
-        modelrun_id : typing.Optional[int]
-            Model Run ID where the failed predictions came from
-
-        failed_predictions : typing.Optional[typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem]]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        PromptsBatchFailedPredictionsResponse
-
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.prompts.batch_failed_predictions()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/model-run/batch-failed-predictions",
-            method="POST",
-            params={
-                "num_failed_predictions": num_failed_predictions,
-            },
-            json={
-                "modelrun_id": modelrun_id,
-                "failed_predictions": convert_and_respect_annotation_metadata(
-                    object_=failed_predictions,
-                    annotation=typing.Sequence[PromptsBatchFailedPredictionsRequestFailedPredictionsItem],
-                    direction="write",
-                ),
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    PromptsBatchFailedPredictionsResponse,
-                    parse_obj_as(
-                        type_=PromptsBatchFailedPredictionsResponse,  # type: ignore
+                    ModelInterface,
+                    construct_type(
+                        type_=ModelInterface,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

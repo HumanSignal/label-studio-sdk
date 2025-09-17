@@ -3,12 +3,12 @@
 from ...core.client_wrapper import SyncClientWrapper
 import typing
 from ...core.request_options import RequestOptions
-from ...types.key_indicators import KeyIndicators
+from .types.indicators_list_response_item import IndicatorsListResponseItem
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.key_indicator_value import KeyIndicatorValue
+from ...types.lse_key_indicator_value import LseKeyIndicatorValue
 from ...core.client_wrapper import AsyncClientWrapper
 
 
@@ -16,22 +16,23 @@ class IndicatorsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> KeyIndicators:
+    def list(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[IndicatorsListResponseItem]:
         """
         Get key indicators for the Prompt dashboard.
 
         Parameters
         ----------
-        pk : int
-            Inference run ID
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        KeyIndicators
-
+        typing.List[IndicatorsListResponseItem]
+            Key indicators
 
         Examples
         --------
@@ -41,20 +42,20 @@ class IndicatorsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.indicators.list(
-            pk=1,
+            id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/inference-runs/{jsonable_encoder(pk)}/indicators",
+            f"api/inference-runs/{jsonable_encoder(id)}/indicators/",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    KeyIndicators,
-                    parse_obj_as(
-                        type_=KeyIndicators,  # type: ignore
+                    typing.List[IndicatorsListResponseItem],
+                    construct_type(
+                        type_=typing.List[IndicatorsListResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -64,26 +65,24 @@ class IndicatorsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, indicator_key: str, pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> KeyIndicatorValue:
+        self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LseKeyIndicatorValue:
         """
         Get a specific key indicator for the Prompt dashboard.
 
         Parameters
         ----------
-        indicator_key : str
-            Key of the indicator
+        id : int
 
-        pk : int
-            Inference run ID
+        indicator_key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        KeyIndicatorValue
-
+        LseKeyIndicatorValue
+            Key indicator
 
         Examples
         --------
@@ -93,21 +92,21 @@ class IndicatorsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.indicators.get(
+            id=1,
             indicator_key="indicator_key",
-            pk=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/inference-runs/{jsonable_encoder(pk)}/indicators/{jsonable_encoder(indicator_key)}",
+            f"api/inference-runs/{jsonable_encoder(id)}/indicators/{jsonable_encoder(indicator_key)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    KeyIndicatorValue,
-                    parse_obj_as(
-                        type_=KeyIndicatorValue,  # type: ignore
+                    LseKeyIndicatorValue,
+                    construct_type(
+                        type_=LseKeyIndicatorValue,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -121,22 +120,23 @@ class AsyncIndicatorsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(self, pk: int, *, request_options: typing.Optional[RequestOptions] = None) -> KeyIndicators:
+    async def list(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[IndicatorsListResponseItem]:
         """
         Get key indicators for the Prompt dashboard.
 
         Parameters
         ----------
-        pk : int
-            Inference run ID
+        id : int
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        KeyIndicators
-
+        typing.List[IndicatorsListResponseItem]
+            Key indicators
 
         Examples
         --------
@@ -151,23 +151,23 @@ class AsyncIndicatorsClient:
 
         async def main() -> None:
             await client.prompts.indicators.list(
-                pk=1,
+                id=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/inference-runs/{jsonable_encoder(pk)}/indicators",
+            f"api/inference-runs/{jsonable_encoder(id)}/indicators/",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    KeyIndicators,
-                    parse_obj_as(
-                        type_=KeyIndicators,  # type: ignore
+                    typing.List[IndicatorsListResponseItem],
+                    construct_type(
+                        type_=typing.List[IndicatorsListResponseItem],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -177,26 +177,24 @@ class AsyncIndicatorsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, indicator_key: str, pk: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> KeyIndicatorValue:
+        self, id: int, indicator_key: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> LseKeyIndicatorValue:
         """
         Get a specific key indicator for the Prompt dashboard.
 
         Parameters
         ----------
-        indicator_key : str
-            Key of the indicator
+        id : int
 
-        pk : int
-            Inference run ID
+        indicator_key : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        KeyIndicatorValue
-
+        LseKeyIndicatorValue
+            Key indicator
 
         Examples
         --------
@@ -211,24 +209,24 @@ class AsyncIndicatorsClient:
 
         async def main() -> None:
             await client.prompts.indicators.get(
+                id=1,
                 indicator_key="indicator_key",
-                pk=1,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/inference-runs/{jsonable_encoder(pk)}/indicators/{jsonable_encoder(indicator_key)}",
+            f"api/inference-runs/{jsonable_encoder(id)}/indicators/{jsonable_encoder(indicator_key)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    KeyIndicatorValue,
-                    parse_obj_as(
-                        type_=KeyIndicatorValue,  # type: ignore
+                    LseKeyIndicatorValue,
+                    construct_type(
+                        type_=LseKeyIndicatorValue,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

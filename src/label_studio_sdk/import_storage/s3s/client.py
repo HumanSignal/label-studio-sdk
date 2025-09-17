@@ -3,10 +3,12 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.s3s_import_storage import S3SImportStorage
-from ...core.pydantic_utilities import parse_obj_as
+from ...types.lse_s3import_storage import LseS3ImportStorage
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+import datetime as dt
+from ...types.status_c5a_enum import StatusC5AEnum
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.client_wrapper import AsyncClientWrapper
 
@@ -19,18 +21,20 @@ class S3SClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[S3SImportStorage]:
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[LseS3ImportStorage]:
         """
-
-        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get list of all S3 import storage connections set up with IAM role access.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         project : typing.Optional[int]
             Project ID
 
@@ -39,7 +43,7 @@ class S3SClient:
 
         Returns
         -------
-        typing.List[S3SImportStorage]
+        typing.List[LseS3ImportStorage]
 
 
         Examples
@@ -52,9 +56,10 @@ class S3SClient:
         client.import_storage.s3s.list()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/s3s",
+            "api/storages/s3s/",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -62,9 +67,9 @@ class S3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[S3SImportStorage],
-                    parse_obj_as(
-                        type_=typing.List[S3SImportStorage],  # type: ignore
+                    typing.List[LseS3ImportStorage],
+                    construct_type(
+                        type_=typing.List[LseS3ImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -76,69 +81,92 @@ class S3SClient:
     def create(
         self,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> S3SImportStorage:
+    ) -> LseS3ImportStorage:
         """
-
-        Create a new source storage connection to a S3 bucket.
-
-        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
-
-        <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        Create S3 import storage with IAM role access.
 
         Parameters
         ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        project : int
+            A unique integer value identifying this project.
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        role_arn : str
+            AWS RoleArn
 
-        presign : typing.Optional[bool]
-            Presign URLs for download
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
 
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
 
-        recursive_scan : typing.Optional[bool]
-            Scan recursively
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
 
         bucket : typing.Optional[str]
             S3 bucket name
 
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        external_id : typing.Optional[str]
-            AWS External ID
+        presign : typing.Optional[bool]
 
-        role_arn : typing.Optional[str]
-            AWS Role ARN
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -146,12 +174,25 @@ class S3SClient:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SImportStorage
+        LseS3ImportStorage
 
 
         Examples
@@ -161,29 +202,41 @@ class S3SClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.s3s.create()
+        client.import_storage.s3s.create(
+            project=1,
+            role_arn="role_arn",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/s3s",
+            "api/storages/s3s/",
             method="POST",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "description": description,
+                "external_id": external_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
-                "title": title,
-                "description": description,
                 "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "external_id": external_id,
-                "role_arn": role_arn,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
                 "region_name": region_name,
+                "role_arn": role_arn,
                 "s3_endpoint": s3endpoint,
-            },
-            headers={
-                "content-type": "application/json",
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             request_options=request_options,
             omit=OMIT,
@@ -191,9 +244,9 @@ class S3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SImportStorage,
-                    parse_obj_as(
-                        type_=S3SImportStorage,  # type: ignore
+                    LseS3ImportStorage,
+                    construct_type(
+                        type_=LseS3ImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -202,22 +255,190 @@ class S3SClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SImportStorage:
+    def validate(
+        self,
+        *,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
-
-        Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Validate a specific S3 import storage connection that was set up with IAM role access.
 
         Parameters
         ----------
-        id : int
-            Import storage ID
+        project : int
+            A unique integer value identifying this project.
+
+        role_arn : str
+            AWS RoleArn
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        presign : typing.Optional[bool]
+
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SImportStorage
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.import_storage.s3s.validate(
+            project=1,
+            role_arn="role_arn",
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/storages/s3s/validate",
+            method="POST",
+            json={
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "description": description,
+                "external_id": external_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "project": project,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
+                "region_name": region_name,
+                "role_arn": role_arn,
+                "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ImportStorage:
+        """
+        Get a specific S3 import storage connection that was set up with IAM role access.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseS3ImportStorage
 
 
         Examples
@@ -239,9 +460,9 @@ class S3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SImportStorage,
-                    parse_obj_as(
-                        type_=S3SImportStorage,  # type: ignore
+                    LseS3ImportStorage,
+                    construct_type(
+                        type_=LseS3ImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -252,17 +473,11 @@ class S3SClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific S3 import storage connection that was set up with IAM role access.
 
         Parameters
         ----------
         id : int
-            Import storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -299,81 +514,120 @@ class S3SClient:
         self,
         id: int,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> S3SImportStorage:
+    ) -> LseS3ImportStorage:
         """
-
-        Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific S3 import storage connection that was set up with IAM role access.
 
         Parameters
         ----------
         id : int
-            Import storage ID
 
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
 
-        presign : typing.Optional[bool]
-            Presign URLs for download
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
 
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        recursive_scan : typing.Optional[bool]
-            Scan recursively
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
 
         bucket : typing.Optional[str]
             S3 bucket name
 
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        external_id : typing.Optional[str]
-            AWS External ID
+        presign : typing.Optional[bool]
 
-        role_arn : typing.Optional[str]
-            AWS Role ARN
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
 
+        role_arn : typing.Optional[str]
+            AWS RoleArn
+
         s3endpoint : typing.Optional[str]
             S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SImportStorage
+        LseS3ImportStorage
 
 
         Examples
@@ -391,20 +645,32 @@ class S3SClient:
             f"api/storages/s3s/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "description": description,
+                "external_id": external_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
-                "title": title,
-                "description": description,
                 "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "external_id": external_id,
-                "role_arn": role_arn,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
                 "region_name": region_name,
+                "role_arn": role_arn,
                 "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -415,9 +681,9 @@ class S3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SImportStorage,
-                    parse_obj_as(
-                        type_=S3SImportStorage,  # type: ignore
+                    LseS3ImportStorage,
+                    construct_type(
+                        type_=LseS3ImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -426,138 +692,20 @@ class S3SClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def validate(
-        self,
-        *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ImportStorage:
         """
-
-        Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
-
-        Parameters
-        ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        presign : typing.Optional[bool]
-            Presign URLs for download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        recursive_scan : typing.Optional[bool]
-            Scan recursively
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        external_id : typing.Optional[str]
-            AWS External ID
-
-        role_arn : typing.Optional[str]
-            AWS Role ARN
-
-        region_name : typing.Optional[str]
-            AWS Region
-
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.import_storage.s3s.validate()
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "api/storages/s3s/validate",
-            method="POST",
-            json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "presign": presign,
-                "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "external_id": external_id,
-                "role_arn": role_arn,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SImportStorage:
-        """
-
-        Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Sync tasks from an S3 import storage connection that was set up with IAM role access.
 
         Parameters
         ----------
         id : int
-            Storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SImportStorage
+        LseS3ImportStorage
 
 
         Examples
@@ -579,9 +727,9 @@ class S3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SImportStorage,
-                    parse_obj_as(
-                        type_=S3SImportStorage,  # type: ignore
+                    LseS3ImportStorage,
+                    construct_type(
+                        type_=LseS3ImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -596,18 +744,20 @@ class AsyncS3SClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[S3SImportStorage]:
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.List[LseS3ImportStorage]:
         """
-
-        You can connect your S3 bucket to Label Studio as a source storage or target storage. Use this API request to get a list of all Google import (source) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get list of all S3 import storage connections set up with IAM role access.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         project : typing.Optional[int]
             Project ID
 
@@ -616,7 +766,7 @@ class AsyncS3SClient:
 
         Returns
         -------
-        typing.List[S3SImportStorage]
+        typing.List[LseS3ImportStorage]
 
 
         Examples
@@ -637,9 +787,10 @@ class AsyncS3SClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/s3s",
+            "api/storages/s3s/",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -647,9 +798,9 @@ class AsyncS3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[S3SImportStorage],
-                    parse_obj_as(
-                        type_=typing.List[S3SImportStorage],  # type: ignore
+                    typing.List[LseS3ImportStorage],
+                    construct_type(
+                        type_=typing.List[LseS3ImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -661,69 +812,92 @@ class AsyncS3SClient:
     async def create(
         self,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> S3SImportStorage:
+    ) -> LseS3ImportStorage:
         """
-
-        Create a new source storage connection to a S3 bucket.
-
-        For information about the required fields and prerequisites, see [Amazon S3](https://labelstud.io/guide/storage#Amazon-S3) in the Label Studio documentation.
-
-        <Info>Ensure you configure CORS before adding cloud storage. This ensures you will be able to see the content of the data rather than just a link.</Info>
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        Create S3 import storage with IAM role access.
 
         Parameters
         ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        project : int
+            A unique integer value identifying this project.
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        role_arn : str
+            AWS RoleArn
 
-        presign : typing.Optional[bool]
-            Presign URLs for download
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
 
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
 
-        recursive_scan : typing.Optional[bool]
-            Scan recursively
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
 
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
 
         bucket : typing.Optional[str]
             S3 bucket name
 
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        external_id : typing.Optional[str]
-            AWS External ID
+        presign : typing.Optional[bool]
 
-        role_arn : typing.Optional[str]
-            AWS Role ARN
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
@@ -731,12 +905,25 @@ class AsyncS3SClient:
         s3endpoint : typing.Optional[str]
             S3 Endpoint
 
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SImportStorage
+        LseS3ImportStorage
 
 
         Examples
@@ -751,32 +938,44 @@ class AsyncS3SClient:
 
 
         async def main() -> None:
-            await client.import_storage.s3s.create()
+            await client.import_storage.s3s.create(
+                project=1,
+                role_arn="role_arn",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/s3s",
+            "api/storages/s3s/",
             method="POST",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "description": description,
+                "external_id": external_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
-                "title": title,
-                "description": description,
                 "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "external_id": external_id,
-                "role_arn": role_arn,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
                 "region_name": region_name,
+                "role_arn": role_arn,
                 "s3_endpoint": s3endpoint,
-            },
-            headers={
-                "content-type": "application/json",
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             request_options=request_options,
             omit=OMIT,
@@ -784,9 +983,9 @@ class AsyncS3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SImportStorage,
-                    parse_obj_as(
-                        type_=S3SImportStorage,  # type: ignore
+                    LseS3ImportStorage,
+                    construct_type(
+                        type_=LseS3ImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -795,22 +994,198 @@ class AsyncS3SClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SImportStorage:
+    async def validate(
+        self,
+        *,
+        project: int,
+        role_arn: str,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
+        presign: typing.Optional[bool] = OMIT,
+        presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
+        region_name: typing.Optional[str] = OMIT,
+        s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
-
-        Get a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Validate a specific S3 import storage connection that was set up with IAM role access.
 
         Parameters
         ----------
-        id : int
-            Import storage ID
+        project : int
+            A unique integer value identifying this project.
+
+        role_arn : str
+            AWS RoleArn
+
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
+
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
+
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
+
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
+
+        bucket : typing.Optional[str]
+            S3 bucket name
+
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
+        prefix : typing.Optional[str]
+            S3 bucket prefix
+
+        presign : typing.Optional[bool]
+
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
+
+        region_name : typing.Optional[str]
+            AWS Region
+
+        s3endpoint : typing.Optional[str]
+            S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SImportStorage
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.import_storage.s3s.validate(
+                project=1,
+                role_arn="role_arn",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/storages/s3s/validate",
+            method="POST",
+            json={
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "description": description,
+                "external_id": external_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
+                "presign": presign,
+                "presign_ttl": presign_ttl,
+                "project": project,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
+                "region_name": region_name,
+                "role_arn": role_arn,
+                "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ImportStorage:
+        """
+        Get a specific S3 import storage connection that was set up with IAM role access.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        LseS3ImportStorage
 
 
         Examples
@@ -840,9 +1215,9 @@ class AsyncS3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SImportStorage,
-                    parse_obj_as(
-                        type_=S3SImportStorage,  # type: ignore
+                    LseS3ImportStorage,
+                    construct_type(
+                        type_=LseS3ImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -853,17 +1228,11 @@ class AsyncS3SClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific S3 import storage connection that was set up with IAM role access.
 
         Parameters
         ----------
         id : int
-            Import storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -908,81 +1277,120 @@ class AsyncS3SClient:
         self,
         id: int,
         *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
+        aws_access_key_id: typing.Optional[str] = OMIT,
+        aws_secret_access_key: typing.Optional[str] = OMIT,
+        aws_session_token: typing.Optional[str] = OMIT,
+        aws_sse_kms_key_id: typing.Optional[str] = OMIT,
+        bucket: typing.Optional[str] = OMIT,
+        description: typing.Optional[str] = OMIT,
+        external_id: typing.Optional[str] = OMIT,
+        last_sync: typing.Optional[dt.datetime] = OMIT,
+        last_sync_count: typing.Optional[int] = OMIT,
+        last_sync_job: typing.Optional[str] = OMIT,
+        legacy_auth: typing.Optional[bool] = OMIT,
+        meta: typing.Optional[typing.Optional[typing.Any]] = OMIT,
+        prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
         project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
+        regex_filter: typing.Optional[str] = OMIT,
         region_name: typing.Optional[str] = OMIT,
+        role_arn: typing.Optional[str] = OMIT,
         s3endpoint: typing.Optional[str] = OMIT,
+        status: typing.Optional[StatusC5AEnum] = OMIT,
+        synchronizable: typing.Optional[bool] = OMIT,
+        title: typing.Optional[str] = OMIT,
+        traceback: typing.Optional[str] = OMIT,
+        use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> S3SImportStorage:
+    ) -> LseS3ImportStorage:
         """
-
-        Update a specific S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific S3 import storage connection that was set up with IAM role access.
 
         Parameters
         ----------
         id : int
-            Import storage ID
 
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
+        aws_access_key_id : typing.Optional[str]
+            AWS_ACCESS_KEY_ID
 
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
+        aws_secret_access_key : typing.Optional[str]
+            AWS_SECRET_ACCESS_KEY
 
-        presign : typing.Optional[bool]
-            Presign URLs for download
+        aws_session_token : typing.Optional[str]
+            AWS_SESSION_TOKEN
 
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        recursive_scan : typing.Optional[bool]
-            Scan recursively
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
+        aws_sse_kms_key_id : typing.Optional[str]
+            AWS SSE KMS Key ID
 
         bucket : typing.Optional[str]
             S3 bucket name
 
+        description : typing.Optional[str]
+            Cloud storage description
+
+        external_id : typing.Optional[str]
+            AWS ExternalId
+
+        last_sync : typing.Optional[dt.datetime]
+            Last sync finished time
+
+        last_sync_count : typing.Optional[int]
+            Count of tasks synced last time
+
+        last_sync_job : typing.Optional[str]
+            Last sync job ID
+
+        legacy_auth : typing.Optional[bool]
+
+        meta : typing.Optional[typing.Optional[typing.Any]]
+
         prefix : typing.Optional[str]
             S3 bucket prefix
 
-        external_id : typing.Optional[str]
-            AWS External ID
+        presign : typing.Optional[bool]
 
-        role_arn : typing.Optional[str]
-            AWS Role ARN
+        presign_ttl : typing.Optional[int]
+            Presigned URLs TTL (in minutes)
+
+        project : typing.Optional[int]
+            A unique integer value identifying this project.
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
+        regex_filter : typing.Optional[str]
+            Cloud storage regex for filtering objects
 
         region_name : typing.Optional[str]
             AWS Region
 
+        role_arn : typing.Optional[str]
+            AWS RoleArn
+
         s3endpoint : typing.Optional[str]
             S3 Endpoint
+
+        status : typing.Optional[StatusC5AEnum]
+
+        synchronizable : typing.Optional[bool]
+
+        title : typing.Optional[str]
+            Cloud storage title
+
+        traceback : typing.Optional[str]
+            Traceback report for the last failed sync
+
+        use_blob_urls : typing.Optional[bool]
+            Interpret objects as BLOBs and generate URLs
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SImportStorage
+        LseS3ImportStorage
 
 
         Examples
@@ -1008,20 +1416,32 @@ class AsyncS3SClient:
             f"api/storages/s3s/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
+                "aws_access_key_id": aws_access_key_id,
+                "aws_secret_access_key": aws_secret_access_key,
+                "aws_session_token": aws_session_token,
+                "aws_sse_kms_key_id": aws_sse_kms_key_id,
+                "bucket": bucket,
+                "description": description,
+                "external_id": external_id,
+                "last_sync": last_sync,
+                "last_sync_count": last_sync_count,
+                "last_sync_job": last_sync_job,
+                "legacy_auth": legacy_auth,
+                "meta": meta,
+                "prefix": prefix,
                 "presign": presign,
                 "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
-                "title": title,
-                "description": description,
                 "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "external_id": external_id,
-                "role_arn": role_arn,
+                "recursive_scan": recursive_scan,
+                "regex_filter": regex_filter,
                 "region_name": region_name,
+                "role_arn": role_arn,
                 "s3_endpoint": s3endpoint,
+                "status": status,
+                "synchronizable": synchronizable,
+                "title": title,
+                "traceback": traceback,
+                "use_blob_urls": use_blob_urls,
             },
             headers={
                 "content-type": "application/json",
@@ -1032,9 +1452,9 @@ class AsyncS3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SImportStorage,
-                    parse_obj_as(
-                        type_=S3SImportStorage,  # type: ignore
+                    LseS3ImportStorage,
+                    construct_type(
+                        type_=LseS3ImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1043,146 +1463,20 @@ class AsyncS3SClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def validate(
-        self,
-        *,
-        regex_filter: typing.Optional[str] = OMIT,
-        use_blob_urls: typing.Optional[bool] = OMIT,
-        presign: typing.Optional[bool] = OMIT,
-        presign_ttl: typing.Optional[int] = OMIT,
-        recursive_scan: typing.Optional[bool] = OMIT,
-        title: typing.Optional[str] = OMIT,
-        description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
-        bucket: typing.Optional[str] = OMIT,
-        prefix: typing.Optional[str] = OMIT,
-        external_id: typing.Optional[str] = OMIT,
-        role_arn: typing.Optional[str] = OMIT,
-        region_name: typing.Optional[str] = OMIT,
-        s3endpoint: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> None:
+    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LseS3ImportStorage:
         """
-
-        Validate a specific S3 import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
-
-        Parameters
-        ----------
-        regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects. You must specify it otherwise no objects will be imported.
-
-        use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs. For example, if your bucket contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
-
-        presign : typing.Optional[bool]
-            Presign URLs for download
-
-        presign_ttl : typing.Optional[int]
-            Presign TTL in minutes
-
-        recursive_scan : typing.Optional[bool]
-            Scan recursively
-
-        title : typing.Optional[str]
-            Storage title
-
-        description : typing.Optional[str]
-            Storage description
-
-        project : typing.Optional[int]
-            Project ID
-
-        bucket : typing.Optional[str]
-            S3 bucket name
-
-        prefix : typing.Optional[str]
-            S3 bucket prefix
-
-        external_id : typing.Optional[str]
-            AWS External ID
-
-        role_arn : typing.Optional[str]
-            AWS Role ARN
-
-        region_name : typing.Optional[str]
-            AWS Region
-
-        s3endpoint : typing.Optional[str]
-            S3 Endpoint
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.import_storage.s3s.validate()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/s3s/validate",
-            method="POST",
-            json={
-                "regex_filter": regex_filter,
-                "use_blob_urls": use_blob_urls,
-                "presign": presign,
-                "presign_ttl": presign_ttl,
-                "recursive_scan": recursive_scan,
-                "title": title,
-                "description": description,
-                "project": project,
-                "bucket": bucket,
-                "prefix": prefix,
-                "external_id": external_id,
-                "role_arn": role_arn,
-                "region_name": region_name,
-                "s3_endpoint": s3endpoint,
-            },
-            headers={
-                "content-type": "application/json",
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> S3SImportStorage:
-        """
-
-        Sync tasks from an S3 import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
+        Sync tasks from an S3 import storage connection that was set up with IAM role access.
 
         Parameters
         ----------
         id : int
-            Storage ID
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        S3SImportStorage
+        LseS3ImportStorage
 
 
         Examples
@@ -1212,9 +1506,9 @@ class AsyncS3SClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    S3SImportStorage,
-                    parse_obj_as(
-                        type_=S3SImportStorage,  # type: ignore
+                    LseS3ImportStorage,
+                    construct_type(
+                        type_=LseS3ImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

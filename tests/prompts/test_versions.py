@@ -6,275 +6,358 @@ import typing
 from ..utilities import validate_response
 
 
+async def test_get_default_version_name(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.prompts.versions.get_default_version_name(id=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+    assert (
+        await async_client.prompts.versions.get_default_version_name(id=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "title": "title",
-            "parent_model": 1,
+            "created_at": "2024-01-15T09:30:00Z",
+            "created_by": {
+                "avatar": "avatar",
+                "email": "email",
+                "first_name": "first_name",
+                "id": 1,
+                "last_name": "last_name",
+            },
+            "id": 1,
             "model_provider_connection": 1,
+            "organization": 1,
+            "parent_model": 1,
             "prompt": "prompt",
             "provider": "OpenAI",
             "provider_model_id": "provider_model_id",
-            "created_by": 1,
-            "created_at": "2024-01-15T09:30:00Z",
+            "score": "score",
+            "title": "title",
             "updated_at": "2024-01-15T09:30:00Z",
-            "organization": 1,
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
-                "title": None,
-                "parent_model": "integer",
+                "created_at": "datetime",
+                "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
+                "id": "integer",
                 "model_provider_connection": "integer",
+                "organization": "integer",
+                "parent_model": "integer",
                 "prompt": None,
                 "provider": None,
                 "provider_model_id": None,
-                "created_by": "integer",
-                "created_at": "datetime",
+                "score": None,
+                "title": None,
                 "updated_at": "datetime",
-                "organization": "integer",
             }
         },
     )
-    response = client.prompts.versions.list(id=1)
+    response = client.prompts.versions.list(prompt_id_=1, prompt_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.list(id=1)
+    async_response = await async_client.prompts.versions.list(prompt_id_=1, prompt_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "title": "title",
-        "parent_model": 1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "created_by": {
+            "avatar": "avatar",
+            "email": "email",
+            "first_name": "first_name",
+            "id": 1,
+            "last_name": "last_name",
+        },
+        "id": 1,
         "model_provider_connection": 1,
+        "organization": 1,
+        "parent_model": 1,
         "prompt": "prompt",
         "provider": "OpenAI",
         "provider_model_id": "provider_model_id",
-        "created_by": 1,
-        "created_at": "2024-01-15T09:30:00Z",
+        "score": "score",
+        "title": "title",
         "updated_at": "2024-01-15T09:30:00Z",
-        "organization": 1,
     }
     expected_types: typing.Any = {
-        "title": None,
-        "parent_model": "integer",
+        "created_at": "datetime",
+        "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
+        "id": "integer",
         "model_provider_connection": "integer",
+        "organization": "integer",
+        "parent_model": "integer",
         "prompt": None,
         "provider": None,
         "provider_model_id": None,
-        "created_by": "integer",
-        "created_at": "datetime",
+        "score": None,
+        "title": None,
         "updated_at": "datetime",
-        "organization": "integer",
     }
-    response = client.prompts.versions.create(id=1)
+    response = client.prompts.versions.create(
+        prompt_id=1, prompt="prompt", provider_model_id="provider_model_id", title="title"
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.create(id=1)
+    async_response = await async_client.prompts.versions.create(
+        prompt_id=1, prompt="prompt", provider_model_id="provider_model_id", title="title"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "title": "title",
-        "parent_model": 1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "created_by": {
+            "avatar": "avatar",
+            "email": "email",
+            "first_name": "first_name",
+            "id": 1,
+            "last_name": "last_name",
+        },
+        "id": 1,
         "model_provider_connection": 1,
+        "organization": 1,
+        "parent_model": 1,
         "prompt": "prompt",
         "provider": "OpenAI",
         "provider_model_id": "provider_model_id",
-        "created_by": 1,
-        "created_at": "2024-01-15T09:30:00Z",
+        "score": "score",
+        "title": "title",
         "updated_at": "2024-01-15T09:30:00Z",
-        "organization": 1,
     }
     expected_types: typing.Any = {
-        "title": None,
-        "parent_model": "integer",
+        "created_at": "datetime",
+        "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
+        "id": "integer",
         "model_provider_connection": "integer",
+        "organization": "integer",
+        "parent_model": "integer",
         "prompt": None,
         "provider": None,
         "provider_model_id": None,
-        "created_by": "integer",
-        "created_at": "datetime",
+        "score": None,
+        "title": None,
         "updated_at": "datetime",
-        "organization": "integer",
     }
-    response = client.prompts.versions.get(id=1, version_id=1)
+    response = client.prompts.versions.get(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.get(id=1, version_id=1)
+    async_response = await async_client.prompts.versions.get(prompt_id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.prompts.versions.delete(id=1, version_id=1)  # type: ignore[func-returns-value]
+        client.prompts.versions.delete(prompt_id=1, version_id=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.prompts.versions.delete(id=1, version_id=1)  # type: ignore[func-returns-value]
+        await async_client.prompts.versions.delete(prompt_id=1, version_id=1)  # type: ignore[func-returns-value]
         is None
     )
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "title": "title",
-        "parent_model": 1,
+        "created_at": "2024-01-15T09:30:00Z",
+        "created_by": {
+            "avatar": "avatar",
+            "email": "email",
+            "first_name": "first_name",
+            "id": 1,
+            "last_name": "last_name",
+        },
+        "id": 1,
         "model_provider_connection": 1,
+        "organization": 1,
+        "parent_model": 1,
         "prompt": "prompt",
         "provider": "OpenAI",
         "provider_model_id": "provider_model_id",
-        "created_by": 1,
-        "created_at": "2024-01-15T09:30:00Z",
+        "score": "score",
+        "title": "title",
         "updated_at": "2024-01-15T09:30:00Z",
-        "organization": 1,
     }
     expected_types: typing.Any = {
-        "title": None,
-        "parent_model": "integer",
+        "created_at": "datetime",
+        "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
+        "id": "integer",
         "model_provider_connection": "integer",
+        "organization": "integer",
+        "parent_model": "integer",
         "prompt": None,
         "provider": None,
         "provider_model_id": None,
-        "created_by": "integer",
-        "created_at": "datetime",
+        "score": None,
+        "title": None,
         "updated_at": "datetime",
-        "organization": "integer",
     }
-    response = client.prompts.versions.update(id=1, version_id=1)
+    response = client.prompts.versions.update(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.update(id=1, version_id=1)
+    async_response = await async_client.prompts.versions.update(prompt_id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_cost_estimate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "prompt_cost_usd": "prompt_cost_usd",
         "completion_cost_usd": "completion_cost_usd",
-        "total_cost_usd": "total_cost_usd",
-        "is_error": True,
-        "error_type": "error_type",
         "error_message": "error_message",
+        "error_type": "error_type",
+        "is_error": True,
+        "prompt_cost_usd": "prompt_cost_usd",
+        "total_cost_usd": "total_cost_usd",
     }
     expected_types: typing.Any = {
-        "prompt_cost_usd": None,
         "completion_cost_usd": None,
-        "total_cost_usd": None,
-        "is_error": None,
-        "error_type": None,
         "error_message": None,
+        "error_type": None,
+        "is_error": None,
+        "prompt_cost_usd": None,
+        "total_cost_usd": None,
     }
-    response = client.prompts.versions.cost_estimate(prompt_id=1, version_id=1, project_id=1, project_subset=1)
+    response = client.prompts.versions.cost_estimate(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.cost_estimate(
-        prompt_id=1, version_id=1, project_id=1, project_subset=1
-    )
+    async_response = await async_client.prompts.versions.cost_estimate(prompt_id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get_refined_prompt(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "title": "title",
-        "reasoning": "reasoning",
-        "prompt": "prompt",
-        "refinement_job_id": "refinement_job_id",
-        "refinement_status": "Pending",
-        "total_cost": "total_cost",
         "previous_version": {
-            "title": "title",
-            "parent_model": 1,
+            "created_at": "2024-01-15T09:30:00Z",
+            "created_by": {
+                "avatar": "avatar",
+                "email": "email",
+                "first_name": "first_name",
+                "id": 1,
+                "last_name": "last_name",
+            },
+            "id": 1,
             "model_provider_connection": 1,
+            "organization": 1,
+            "parent_model": 1,
             "prompt": "prompt",
             "provider": "OpenAI",
             "provider_model_id": "provider_model_id",
-            "created_by": 1,
-            "created_at": "2024-01-15T09:30:00Z",
+            "score": "score",
+            "title": "title",
             "updated_at": "2024-01-15T09:30:00Z",
-            "organization": 1,
         },
+        "prompt": "prompt",
+        "reasoning": "reasoning",
+        "refinement_job_id": "refinement_job_id",
+        "refinement_status": "refinement_status",
+        "title": "title",
+        "total_cost": "total_cost",
     }
     expected_types: typing.Any = {
-        "title": None,
-        "reasoning": None,
-        "prompt": None,
-        "refinement_job_id": None,
-        "refinement_status": None,
-        "total_cost": None,
         "previous_version": {
-            "title": None,
-            "parent_model": "integer",
+            "created_at": "datetime",
+            "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
+            "id": "integer",
             "model_provider_connection": "integer",
+            "organization": "integer",
+            "parent_model": "integer",
             "prompt": None,
             "provider": None,
             "provider_model_id": None,
-            "created_by": "integer",
-            "created_at": "datetime",
+            "score": None,
+            "title": None,
             "updated_at": "datetime",
-            "organization": "integer",
         },
+        "prompt": None,
+        "reasoning": None,
+        "refinement_job_id": None,
+        "refinement_status": None,
+        "title": None,
+        "total_cost": None,
     }
-    response = client.prompts.versions.get_refined_prompt(
-        prompt_id=1, version_id=1, refinement_job_id="refinement_job_id"
-    )
+    response = client.prompts.versions.get_refined_prompt(prompt_id=1, version_id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.get_refined_prompt(
-        prompt_id=1, version_id=1, refinement_job_id="refinement_job_id"
-    )
+    async_response = await async_client.prompts.versions.get_refined_prompt(prompt_id=1, version_id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_refine_prompt(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "title": "title",
-        "reasoning": "reasoning",
-        "prompt": "prompt",
-        "refinement_job_id": "refinement_job_id",
-        "refinement_status": "Pending",
-        "total_cost": "total_cost",
         "previous_version": {
-            "title": "title",
-            "parent_model": 1,
+            "created_at": "2024-01-15T09:30:00Z",
+            "created_by": {
+                "avatar": "avatar",
+                "email": "email",
+                "first_name": "first_name",
+                "id": 1,
+                "last_name": "last_name",
+            },
+            "id": 1,
             "model_provider_connection": 1,
+            "organization": 1,
+            "parent_model": 1,
             "prompt": "prompt",
             "provider": "OpenAI",
             "provider_model_id": "provider_model_id",
-            "created_by": 1,
-            "created_at": "2024-01-15T09:30:00Z",
+            "score": "score",
+            "title": "title",
             "updated_at": "2024-01-15T09:30:00Z",
-            "organization": 1,
         },
+        "prompt": "prompt",
+        "reasoning": "reasoning",
+        "refinement_job_id": "refinement_job_id",
+        "refinement_status": "refinement_status",
+        "title": "title",
+        "total_cost": "total_cost",
     }
     expected_types: typing.Any = {
-        "title": None,
-        "reasoning": None,
-        "prompt": None,
-        "refinement_job_id": None,
-        "refinement_status": None,
-        "total_cost": None,
         "previous_version": {
-            "title": None,
-            "parent_model": "integer",
+            "created_at": "datetime",
+            "created_by": {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None},
+            "id": "integer",
             "model_provider_connection": "integer",
+            "organization": "integer",
+            "parent_model": "integer",
             "prompt": None,
             "provider": None,
             "provider_model_id": None,
-            "created_by": "integer",
-            "created_at": "datetime",
+            "score": None,
+            "title": None,
             "updated_at": "datetime",
-            "organization": "integer",
         },
+        "prompt": None,
+        "reasoning": None,
+        "refinement_job_id": None,
+        "refinement_status": None,
+        "title": None,
+        "total_cost": None,
     }
-    response = client.prompts.versions.refine_prompt(prompt_id=1, version_id=1)
+    response = client.prompts.versions.refine_prompt(
+        prompt_id=1,
+        version_id=1,
+        project_id=1,
+        teacher_model_name="teacher_model_name",
+        teacher_model_provider_connection_id=1,
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.prompts.versions.refine_prompt(prompt_id=1, version_id=1)
+    async_response = await async_client.prompts.versions.refine_prompt(
+        prompt_id=1,
+        version_id=1,
+        project_id=1,
+        teacher_model_name="teacher_model_name",
+        teacher_model_provider_connection_id=1,
+    )
     validate_response(async_response, expected_response, expected_types)

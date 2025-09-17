@@ -4,17 +4,13 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from .types.runs_list_request_project_subset import RunsListRequestProjectSubset
 from ...core.request_options import RequestOptions
-from ...types.inference_run import InferenceRun
+from ...types.model_run import ModelRun
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.inference_run_project_subset import InferenceRunProjectSubset
-from ...types.inference_run_organization import InferenceRunOrganization
-from ...types.inference_run_created_by import InferenceRunCreatedBy
-from ...types.inference_run_status import InferenceRunStatus
 import datetime as dt
-from ...core.serialization import convert_and_respect_annotation_metadata
+from ...types.project_subset_enum import ProjectSubsetEnum
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -27,28 +23,34 @@ class RunsClient:
 
     def list(
         self,
-        id: int,
+        prompt_id: int,
         version_id: int,
         *,
-        project: int,
-        project_subset: RunsListRequestProjectSubset,
+        ordering: typing.Optional[str] = None,
+        parent_model: typing.Optional[int] = None,
+        project: typing.Optional[int] = None,
+        project_subset: typing.Optional[RunsListRequestProjectSubset] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> InferenceRun:
+    ) -> typing.List[ModelRun]:
         """
-        Get information (status, etadata, etc) about an existing inference run
+        Get information (status, metadata, etc) about an existing inference run
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        prompt_id : int
 
         version_id : int
-            Prompt Version ID
 
-        project : int
-            The ID of the project that this Interence Run makes predictions on
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
-        project_subset : RunsListRequestProjectSubset
+        parent_model : typing.Optional[int]
+            The ID of the parent model for this Inference Run
+
+        project : typing.Optional[int]
+            The ID of the project this Inference Run makes predictions on
+
+        project_subset : typing.Optional[RunsListRequestProjectSubset]
             Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
 
         request_options : typing.Optional[RequestOptions]
@@ -56,8 +58,8 @@ class RunsClient:
 
         Returns
         -------
-        InferenceRun
-            Success
+        typing.List[ModelRun]
+
 
         Examples
         --------
@@ -67,16 +69,16 @@ class RunsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.runs.list(
-            id=1,
+            prompt_id=1,
             version_id=1,
-            project=1,
-            project_subset="All",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
             method="GET",
             params={
+                "ordering": ordering,
+                "parent_model": parent_model,
                 "project": project,
                 "project_subset": project_subset,
             },
@@ -85,9 +87,9 @@ class RunsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    InferenceRun,
-                    parse_obj_as(
-                        type_=InferenceRun,  # type: ignore
+                    typing.List[ModelRun],
+                    construct_type(
+                        type_=typing.List[ModelRun],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -98,61 +100,51 @@ class RunsClient:
 
     def create(
         self,
-        id: int,
+        prompt_id: int,
         version_id: int,
         *,
         project: int,
-        project_subset: InferenceRunProjectSubset,
-        organization: typing.Optional[InferenceRunOrganization] = OMIT,
-        model_version: typing.Optional[int] = OMIT,
-        created_by: typing.Optional[InferenceRunCreatedBy] = OMIT,
-        status: typing.Optional[InferenceRunStatus] = OMIT,
         job_id: typing.Optional[str] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        triggered_at: typing.Optional[dt.datetime] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
-        completed_at: typing.Optional[dt.datetime] = OMIT,
+        project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
+        total_correct_predictions: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        total_tasks: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> InferenceRun:
+    ) -> ModelRun:
         """
         Run a prompt inference.
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        prompt_id : int
 
         version_id : int
-            Prompt Version ID
 
         project : int
 
-        project_subset : InferenceRunProjectSubset
-
-        organization : typing.Optional[InferenceRunOrganization]
-
-        model_version : typing.Optional[int]
-
-        created_by : typing.Optional[InferenceRunCreatedBy]
-
-        status : typing.Optional[InferenceRunStatus]
-
         job_id : typing.Optional[str]
+            Job ID for inference job for a ModelRun e.g. Adala job ID
 
-        created_at : typing.Optional[dt.datetime]
-
-        triggered_at : typing.Optional[dt.datetime]
+        organization : typing.Optional[int]
 
         predictions_updated_at : typing.Optional[dt.datetime]
 
-        completed_at : typing.Optional[dt.datetime]
+        project_subset : typing.Optional[ProjectSubsetEnum]
+
+        total_correct_predictions : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        total_tasks : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        InferenceRun
+        ModelRun
 
 
         Examples
@@ -163,31 +155,26 @@ class RunsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.runs.create(
-            id=1,
+            prompt_id=1,
             version_id=1,
             project=1,
-            project_subset="All",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
             method="POST",
             json={
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=InferenceRunOrganization, direction="write"
-                ),
-                "project": project,
-                "model_version": model_version,
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=InferenceRunCreatedBy, direction="write"
-                ),
-                "project_subset": project_subset,
-                "status": status,
                 "job_id": job_id,
-                "created_at": created_at,
-                "triggered_at": triggered_at,
+                "organization": organization,
                 "predictions_updated_at": predictions_updated_at,
-                "completed_at": completed_at,
+                "project": project,
+                "project_subset": project_subset,
+                "total_correct_predictions": total_correct_predictions,
+                "total_predictions": total_predictions,
+                "total_tasks": total_tasks,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -195,9 +182,9 @@ class RunsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    InferenceRun,
-                    parse_obj_as(
-                        type_=InferenceRun,  # type: ignore
+                    ModelRun,
+                    construct_type(
+                        type_=ModelRun,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -213,28 +200,34 @@ class AsyncRunsClient:
 
     async def list(
         self,
-        id: int,
+        prompt_id: int,
         version_id: int,
         *,
-        project: int,
-        project_subset: RunsListRequestProjectSubset,
+        ordering: typing.Optional[str] = None,
+        parent_model: typing.Optional[int] = None,
+        project: typing.Optional[int] = None,
+        project_subset: typing.Optional[RunsListRequestProjectSubset] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> InferenceRun:
+    ) -> typing.List[ModelRun]:
         """
-        Get information (status, etadata, etc) about an existing inference run
+        Get information (status, metadata, etc) about an existing inference run
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        prompt_id : int
 
         version_id : int
-            Prompt Version ID
 
-        project : int
-            The ID of the project that this Interence Run makes predictions on
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
 
-        project_subset : RunsListRequestProjectSubset
+        parent_model : typing.Optional[int]
+            The ID of the parent model for this Inference Run
+
+        project : typing.Optional[int]
+            The ID of the project this Inference Run makes predictions on
+
+        project_subset : typing.Optional[RunsListRequestProjectSubset]
             Defines which tasks are operated on (e.g. HasGT will only operate on tasks with a ground truth annotation, but All will operate on all records)
 
         request_options : typing.Optional[RequestOptions]
@@ -242,8 +235,8 @@ class AsyncRunsClient:
 
         Returns
         -------
-        InferenceRun
-            Success
+        typing.List[ModelRun]
+
 
         Examples
         --------
@@ -258,19 +251,19 @@ class AsyncRunsClient:
 
         async def main() -> None:
             await client.prompts.runs.list(
-                id=1,
+                prompt_id=1,
                 version_id=1,
-                project=1,
-                project_subset="All",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
             method="GET",
             params={
+                "ordering": ordering,
+                "parent_model": parent_model,
                 "project": project,
                 "project_subset": project_subset,
             },
@@ -279,9 +272,9 @@ class AsyncRunsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    InferenceRun,
-                    parse_obj_as(
-                        type_=InferenceRun,  # type: ignore
+                    typing.List[ModelRun],
+                    construct_type(
+                        type_=typing.List[ModelRun],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -292,61 +285,51 @@ class AsyncRunsClient:
 
     async def create(
         self,
-        id: int,
+        prompt_id: int,
         version_id: int,
         *,
         project: int,
-        project_subset: InferenceRunProjectSubset,
-        organization: typing.Optional[InferenceRunOrganization] = OMIT,
-        model_version: typing.Optional[int] = OMIT,
-        created_by: typing.Optional[InferenceRunCreatedBy] = OMIT,
-        status: typing.Optional[InferenceRunStatus] = OMIT,
         job_id: typing.Optional[str] = OMIT,
-        created_at: typing.Optional[dt.datetime] = OMIT,
-        triggered_at: typing.Optional[dt.datetime] = OMIT,
+        organization: typing.Optional[int] = OMIT,
         predictions_updated_at: typing.Optional[dt.datetime] = OMIT,
-        completed_at: typing.Optional[dt.datetime] = OMIT,
+        project_subset: typing.Optional[ProjectSubsetEnum] = OMIT,
+        total_correct_predictions: typing.Optional[int] = OMIT,
+        total_predictions: typing.Optional[int] = OMIT,
+        total_tasks: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> InferenceRun:
+    ) -> ModelRun:
         """
         Run a prompt inference.
 
         Parameters
         ----------
-        id : int
-            Prompt ID
+        prompt_id : int
 
         version_id : int
-            Prompt Version ID
 
         project : int
 
-        project_subset : InferenceRunProjectSubset
-
-        organization : typing.Optional[InferenceRunOrganization]
-
-        model_version : typing.Optional[int]
-
-        created_by : typing.Optional[InferenceRunCreatedBy]
-
-        status : typing.Optional[InferenceRunStatus]
-
         job_id : typing.Optional[str]
+            Job ID for inference job for a ModelRun e.g. Adala job ID
 
-        created_at : typing.Optional[dt.datetime]
-
-        triggered_at : typing.Optional[dt.datetime]
+        organization : typing.Optional[int]
 
         predictions_updated_at : typing.Optional[dt.datetime]
 
-        completed_at : typing.Optional[dt.datetime]
+        project_subset : typing.Optional[ProjectSubsetEnum]
+
+        total_correct_predictions : typing.Optional[int]
+
+        total_predictions : typing.Optional[int]
+
+        total_tasks : typing.Optional[int]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        InferenceRun
+        ModelRun
 
 
         Examples
@@ -362,34 +345,29 @@ class AsyncRunsClient:
 
         async def main() -> None:
             await client.prompts.runs.create(
-                id=1,
+                prompt_id=1,
                 version_id=1,
                 project=1,
-                project_subset="All",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
+            f"api/prompts/{jsonable_encoder(prompt_id)}/versions/{jsonable_encoder(version_id)}/inference-runs",
             method="POST",
             json={
-                "organization": convert_and_respect_annotation_metadata(
-                    object_=organization, annotation=InferenceRunOrganization, direction="write"
-                ),
-                "project": project,
-                "model_version": model_version,
-                "created_by": convert_and_respect_annotation_metadata(
-                    object_=created_by, annotation=InferenceRunCreatedBy, direction="write"
-                ),
-                "project_subset": project_subset,
-                "status": status,
                 "job_id": job_id,
-                "created_at": created_at,
-                "triggered_at": triggered_at,
+                "organization": organization,
                 "predictions_updated_at": predictions_updated_at,
-                "completed_at": completed_at,
+                "project": project,
+                "project_subset": project_subset,
+                "total_correct_predictions": total_correct_predictions,
+                "total_predictions": total_predictions,
+                "total_tasks": total_tasks,
+            },
+            headers={
+                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
@@ -397,9 +375,9 @@ class AsyncRunsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    InferenceRun,
-                    parse_obj_as(
-                        type_=InferenceRun,  # type: ignore
+                    ModelRun,
+                    construct_type(
+                        type_=ModelRun,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

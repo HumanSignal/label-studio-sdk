@@ -1,0 +1,52 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    api_projects_members_pauses_update:
+      path: /api/projects/{project_pk}/members/{user_pk}/pauses/{id}/
+      method: PUT
+      auth: true
+      docs: Overwrite a pause entry by ID.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+        project_pk: integer
+        user_pk: integer
+      display-name: Put pause
+      request:
+        body: root.PauseRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.Pause
+      examples:
+        - path-parameters:
+            id: id
+            project_pk: 1
+            user_pk: 1
+          request:
+            reason: MANUAL
+          response:
+            body:
+              created_at: '2024-01-15T09:30:00Z'
+              deleted_at: '2024-01-15T09:30:00Z'
+              deleted_by: 1
+              id: 1
+              paused_by:
+                avatar: avatar
+                email: email
+                first_name: first_name
+                id: 1
+                last_name: last_name
+              project: 1
+              reason: MANUAL
+              updated_at: '2024-01-15T09:30:00Z'
+              user: 1
+              verbose_reason: verbose_reason
+      audiences:
+        - internal
+  source:
+    openapi: openapi/openapi.yaml

@@ -4,12 +4,10 @@ import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.local_files_import_storage import LocalFilesImportStorage
-from ...core.pydantic_utilities import parse_obj_as
+from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from .types.local_create_response import LocalCreateResponse
 from ...core.jsonable_encoder import jsonable_encoder
-from .types.local_update_response import LocalUpdateResponse
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -21,18 +19,20 @@ class LocalClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[LocalFilesImportStorage]:
         """
-
-        If you have local files that you want to add to Label Studio from a specific directory, you can set up a specific local directory on the machine where LS is running as source or target storage. Use this API request to get a list of all local file import (source) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a list of all local file import storage connections.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         project : typing.Optional[int]
             Project ID
 
@@ -57,6 +57,7 @@ class LocalClient:
             "api/storages/localfiles/",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -65,7 +66,7 @@ class LocalClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[LocalFilesImportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[LocalFilesImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -78,38 +79,33 @@ class LocalClient:
     def create(
         self,
         *,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LocalCreateResponse:
+    ) -> LocalFilesImportStorage:
         """
-
-        Create a new source storage connection to a local file directory.
-
-        For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage) in the Label Studio documentation.
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        Create a new local file import storage connection.
 
         Parameters
         ----------
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
 
         path : typing.Optional[str]
             Path to local directory
 
+        project : typing.Optional[int]
+            Project ID
+
         regex_filter : typing.Optional[str]
             Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
 
         use_blob_urls : typing.Optional[bool]
             Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
@@ -119,7 +115,7 @@ class LocalClient:
 
         Returns
         -------
-        LocalCreateResponse
+        LocalFilesImportStorage
 
 
         Examples
@@ -135,11 +131,11 @@ class LocalClient:
             "api/storages/localfiles/",
             method="POST",
             json={
-                "title": title,
                 "description": description,
-                "project": project,
                 "path": path,
+                "project": project,
                 "regex_filter": regex_filter,
+                "title": title,
                 "use_blob_urls": use_blob_urls,
             },
             headers={
@@ -151,9 +147,9 @@ class LocalClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    LocalCreateResponse,
-                    parse_obj_as(
-                        type_=LocalCreateResponse,  # type: ignore
+                    LocalFilesImportStorage,
+                    construct_type(
+                        type_=LocalFilesImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -165,38 +161,37 @@ class LocalClient:
     def validate(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        id: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
-        Validate a specific local file import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+        Validate a specific local file import storage connection.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
 
         path : typing.Optional[str]
             Path to local directory
 
+        project : typing.Optional[int]
+            Project ID
+
         regex_filter : typing.Optional[str]
             Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
 
         use_blob_urls : typing.Optional[bool]
             Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
@@ -221,12 +216,12 @@ class LocalClient:
             "api/storages/localfiles/validate",
             method="POST",
             json={
-                "id": id,
-                "title": title,
                 "description": description,
-                "project": project,
+                "id": id,
                 "path": path,
+                "project": project,
                 "regex_filter": regex_filter,
+                "title": title,
                 "use_blob_urls": use_blob_urls,
             },
             headers={
@@ -245,15 +240,11 @@ class LocalClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LocalFilesImportStorage:
         """
-
-        Get a specific local file import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific local file import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this local files import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -283,7 +274,7 @@ class LocalClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LocalFilesImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=LocalFilesImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -295,17 +286,11 @@ class LocalClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific local file import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this local files import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -342,39 +327,35 @@ class LocalClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LocalUpdateResponse:
+    ) -> LocalFilesImportStorage:
         """
-
-        Update a specific local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific local file import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this local files import storage.
-
-        title : typing.Optional[str]
-            Storage title
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
-
         path : typing.Optional[str]
             Path to local directory
 
+        project : typing.Optional[int]
+            Project ID
+
         regex_filter : typing.Optional[str]
             Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
 
         use_blob_urls : typing.Optional[bool]
             Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
@@ -384,7 +365,7 @@ class LocalClient:
 
         Returns
         -------
-        LocalUpdateResponse
+        LocalFilesImportStorage
 
 
         Examples
@@ -402,11 +383,11 @@ class LocalClient:
             f"api/storages/localfiles/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "title": title,
                 "description": description,
-                "project": project,
                 "path": path,
+                "project": project,
                 "regex_filter": regex_filter,
+                "title": title,
                 "use_blob_urls": use_blob_urls,
             },
             headers={
@@ -418,9 +399,9 @@ class LocalClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    LocalUpdateResponse,
-                    parse_obj_as(
-                        type_=LocalUpdateResponse,  # type: ignore
+                    LocalFilesImportStorage,
+                    construct_type(
+                        type_=LocalFilesImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -431,12 +412,7 @@ class LocalClient:
 
     def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LocalFilesImportStorage:
         """
-
-        Sync tasks from a local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Sync operations with external sources only go one way. They either create tasks from objects in the source directory (source/import storage) or push annotations to the output directory (export/target storage). Changing something on the local file side doesn’t guarantee consistency in results.
-
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        Sync tasks from a local file import storage connection.
 
         Parameters
         ----------
@@ -471,7 +447,7 @@ class LocalClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LocalFilesImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=LocalFilesImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -487,18 +463,20 @@ class AsyncLocalClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, project: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        ordering: typing.Optional[str] = None,
+        project: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[LocalFilesImportStorage]:
         """
-
-        If you have local files that you want to add to Label Studio from a specific directory, you can set up a specific local directory on the machine where LS is running as source or target storage. Use this API request to get a list of all local file import (source) storage connections for a specific project.
-
-        The project ID can be found in the URL when viewing the project in Label Studio, or you can retrieve all project IDs using [List all projects](../projects/list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a list of all local file import storage connections.
 
         Parameters
         ----------
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         project : typing.Optional[int]
             Project ID
 
@@ -531,6 +509,7 @@ class AsyncLocalClient:
             "api/storages/localfiles/",
             method="GET",
             params={
+                "ordering": ordering,
                 "project": project,
             },
             request_options=request_options,
@@ -539,7 +518,7 @@ class AsyncLocalClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     typing.List[LocalFilesImportStorage],
-                    parse_obj_as(
+                    construct_type(
                         type_=typing.List[LocalFilesImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
@@ -552,38 +531,33 @@ class AsyncLocalClient:
     async def create(
         self,
         *,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LocalCreateResponse:
+    ) -> LocalFilesImportStorage:
         """
-
-        Create a new source storage connection to a local file directory.
-
-        For information about the required fields and prerequisites, see [Local storage](https://labelstud.io/guide/storage#Local-storage) in the Label Studio documentation.
-
-        <Tip>After you add the storage, you should validate the connection before attempting to sync your data. Your data will not be imported until you [sync your connection](sync).</Tip>
+        Create a new local file import storage connection.
 
         Parameters
         ----------
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
-
-        project : typing.Optional[int]
-            Project ID
 
         path : typing.Optional[str]
             Path to local directory
 
+        project : typing.Optional[int]
+            Project ID
+
         regex_filter : typing.Optional[str]
             Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
 
         use_blob_urls : typing.Optional[bool]
             Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
@@ -593,7 +567,7 @@ class AsyncLocalClient:
 
         Returns
         -------
-        LocalCreateResponse
+        LocalFilesImportStorage
 
 
         Examples
@@ -617,11 +591,11 @@ class AsyncLocalClient:
             "api/storages/localfiles/",
             method="POST",
             json={
-                "title": title,
                 "description": description,
-                "project": project,
                 "path": path,
+                "project": project,
                 "regex_filter": regex_filter,
+                "title": title,
                 "use_blob_urls": use_blob_urls,
             },
             headers={
@@ -633,9 +607,9 @@ class AsyncLocalClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    LocalCreateResponse,
-                    parse_obj_as(
-                        type_=LocalCreateResponse,  # type: ignore
+                    LocalFilesImportStorage,
+                    construct_type(
+                        type_=LocalFilesImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -647,38 +621,37 @@ class AsyncLocalClient:
     async def validate(
         self,
         *,
-        id: typing.Optional[int] = OMIT,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
+        id: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-
-        Validate a specific local file import storage connection. This is useful to ensure that the storage configuration settings are correct and operational before attempting to import data.
+        Validate a specific local file import storage connection.
 
         Parameters
         ----------
-        id : typing.Optional[int]
-            Storage ID. If set, storage with specified ID will be updated
-
-        title : typing.Optional[str]
-            Storage title
-
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
+        id : typing.Optional[int]
+            Storage ID. If set, storage with specified ID will be updated
 
         path : typing.Optional[str]
             Path to local directory
 
+        project : typing.Optional[int]
+            Project ID
+
         regex_filter : typing.Optional[str]
             Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
 
         use_blob_urls : typing.Optional[bool]
             Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
@@ -711,12 +684,12 @@ class AsyncLocalClient:
             "api/storages/localfiles/validate",
             method="POST",
             json={
-                "id": id,
-                "title": title,
                 "description": description,
-                "project": project,
+                "id": id,
                 "path": path,
+                "project": project,
                 "regex_filter": regex_filter,
+                "title": title,
                 "use_blob_urls": use_blob_urls,
             },
             headers={
@@ -735,15 +708,11 @@ class AsyncLocalClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> LocalFilesImportStorage:
         """
-
-        Get a specific local file import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Get a specific local file import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this local files import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -781,7 +750,7 @@ class AsyncLocalClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LocalFilesImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=LocalFilesImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -793,17 +762,11 @@ class AsyncLocalClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-
-        Delete a specific local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Deleting a source storage connection does not affect tasks with synced data in Label Studio. The sync process is designed to import new or updated tasks from the connected storage into the project, but it does not track deletions of files from the storage. Therefore, if you remove the external storage connection, the tasks that were created from that storage will remain in the project.
-
-        If you want to remove the tasks that were synced from the external storage, you will need to delete them manually from within the Label Studio UI or use the [Delete tasks](../../tasks/delete-all-tasks) API.
+        Delete a specific local file import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this local files import storage.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -848,39 +811,35 @@ class AsyncLocalClient:
         self,
         id: int,
         *,
-        title: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
-        project: typing.Optional[int] = OMIT,
         path: typing.Optional[str] = OMIT,
+        project: typing.Optional[int] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        title: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> LocalUpdateResponse:
+    ) -> LocalFilesImportStorage:
         """
-
-        Update a specific local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        For more information about working with external storage, see [Sync data from external storage](https://labelstud.io/guide/storage).
+        Update a specific local file import storage connection.
 
         Parameters
         ----------
         id : int
-            A unique integer value identifying this local files import storage.
-
-        title : typing.Optional[str]
-            Storage title
 
         description : typing.Optional[str]
             Storage description
 
-        project : typing.Optional[int]
-            Project ID
-
         path : typing.Optional[str]
             Path to local directory
 
+        project : typing.Optional[int]
+            Project ID
+
         regex_filter : typing.Optional[str]
             Regex for filtering objects
+
+        title : typing.Optional[str]
+            Storage title
 
         use_blob_urls : typing.Optional[bool]
             Interpret objects as BLOBs and generate URLs. For example, if your directory contains images, you can use this option to generate URLs for these images. If set to False, it will read the content of the file and load it into Label Studio.
@@ -890,7 +849,7 @@ class AsyncLocalClient:
 
         Returns
         -------
-        LocalUpdateResponse
+        LocalFilesImportStorage
 
 
         Examples
@@ -916,11 +875,11 @@ class AsyncLocalClient:
             f"api/storages/localfiles/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "title": title,
                 "description": description,
-                "project": project,
                 "path": path,
+                "project": project,
                 "regex_filter": regex_filter,
+                "title": title,
                 "use_blob_urls": use_blob_urls,
             },
             headers={
@@ -932,9 +891,9 @@ class AsyncLocalClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    LocalUpdateResponse,
-                    parse_obj_as(
-                        type_=LocalUpdateResponse,  # type: ignore
+                    LocalFilesImportStorage,
+                    construct_type(
+                        type_=LocalFilesImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -947,12 +906,7 @@ class AsyncLocalClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> LocalFilesImportStorage:
         """
-
-        Sync tasks from a local import storage connection. You will need to provide the import storage ID. You can find this using [List import storages](list).
-
-        Sync operations with external sources only go one way. They either create tasks from objects in the source directory (source/import storage) or push annotations to the output directory (export/target storage). Changing something on the local file side doesn’t guarantee consistency in results.
-
-        <Note>Before proceeding, you should review [How sync operations work - Source storage](https://labelstud.io/guide/storage#Source-storage) to ensure that your data remains secure and private.</Note>
+        Sync tasks from a local file import storage connection.
 
         Parameters
         ----------
@@ -995,7 +949,7 @@ class AsyncLocalClient:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
                     LocalFilesImportStorage,
-                    parse_obj_as(
+                    construct_type(
                         type_=LocalFilesImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),

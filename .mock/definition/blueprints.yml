@@ -1,0 +1,90 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      path: /api/blueprints/
+      method: POST
+      auth: true
+      docs: Create a new blueprint
+      source:
+        openapi: openapi/openapi.yaml
+      display-name: Create blueprint
+      request:
+        name: BlueprintRequest
+        body:
+          properties:
+            created_by: optional<integer>
+            description:
+              type: optional<string>
+              docs: Project description
+            label_config:
+              type: optional<string>
+              docs: Labeling configuration in XML format
+            project: integer
+            title:
+              type: optional<string>
+              docs: Blueprint name. Must be between 3 and 50 characters long.
+              validation:
+                maxLength: 50
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.Blueprint
+      examples:
+        - request:
+            project: 1
+          response:
+            body:
+              created_at: '2024-01-15T09:30:00Z'
+              created_by: 1
+              description: description
+              id: 1
+              label_config: label_config
+              project: 1
+              share_id: share_id
+              short_url: short_url
+              title: title
+              updated_at: '2024-01-15T09:30:00Z'
+      audiences:
+        - public
+    delete:
+      path: /api/blueprints/{id}/
+      method: DELETE
+      auth: true
+      docs: Delete a blueprint by ID
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: string
+      display-name: Delete blueprint
+      examples:
+        - path-parameters:
+            id: id
+      audiences:
+        - public
+    api_blueprints_create_project_retrieve:
+      path: /api/blueprints/{share_id}/create-project
+      method: GET
+      auth: true
+      docs: >-
+        Create a new project from an existing blueprint. On success, user is
+        redirected to the new project with a 302.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        share_id:
+          type: string
+          docs: Blueprint share ID
+      display-name: Create project from blueprint
+      errors:
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            share_id: share_id
+      audiences:
+        - internal
+  source:
+    openapi: openapi/openapi.yaml
