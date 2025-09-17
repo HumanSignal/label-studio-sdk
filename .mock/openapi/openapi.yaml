@@ -7486,6 +7486,60 @@ paths:
         - public
       x-fern-sdk-group-name: projects
       x-fern-sdk-method-name: import_tasks
+  /api/projects/{id}/import/predictions:
+    post:
+      description: Import model predictions for tasks in the specified project.
+      operationId: api_projects_import_predictions_create
+      parameters:
+        - description: A unique integer value identifying this project.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/PredictionRequest'
+              type: array
+          application/x-www-form-urlencoded:
+            schema:
+              items:
+                $ref: '#/components/schemas/PredictionRequest'
+              type: array
+          multipart/form-data:
+            schema:
+              items:
+                $ref: '#/components/schemas/PredictionRequest'
+              type: array
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                description: Import result
+                properties:
+                  created:
+                    description: Number of predictions created
+                    title: created
+                    type: integer
+                title: Predictions import response
+                type: object
+          description: Predictions successfully imported
+        '400':
+          description: Bad Request
+      security:
+        - Token: []
+      summary: Import predictions
+      tags:
+        - Import
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: projects
+      x-fern-sdk-method-name: import_predictions
   /api/projects/{id}/imports/{import_pk}/:
     get:
       description: Return data related to async project import operation
