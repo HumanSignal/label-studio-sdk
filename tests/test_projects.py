@@ -4,7 +4,6 @@ from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
 import typing
 from .utilities import validate_response
-from label_studio_sdk import PredictionRequest
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
@@ -494,18 +493,6 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.projects.import_tasks(id=1, request=[])
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_import_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"created": 1}
-    expected_types: typing.Any = {"created": "integer"}
-    response = client.projects.import_predictions(id=1, request=[PredictionRequest(result=[{"key": "value"}], task=1)])
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.import_predictions(
-        id=1, request=[PredictionRequest(result=[{"key": "value"}], task=1)]
-    )
     validate_response(async_response, expected_response, expected_types)
 
 

@@ -6,7 +6,6 @@ from .types import (
     PatchedLseProjectUpdateRequestSampling,
     PatchedLseProjectUpdateRequestSkipQueue,
     ProjectsDuplicateResponse,
-    ProjectsImportPredictionsResponse,
     ProjectsImportTasksResponse,
     ProjectsListRequestFilter,
 )
@@ -59,7 +58,6 @@ __all__ = [
     "PatchedLseProjectUpdateRequestSampling",
     "PatchedLseProjectUpdateRequestSkipQueue",
     "ProjectsDuplicateResponse",
-    "ProjectsImportPredictionsResponse",
     "ProjectsImportTasksResponse",
     "ProjectsListRequestFilter",
     "StatsIaaResponse",

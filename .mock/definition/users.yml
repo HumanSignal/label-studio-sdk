@@ -237,6 +237,7 @@ service:
                   organization_id: 1
                   role: role
               pause: pause
+              permissions: permissions
               phone: phone
               username: username
       audiences:

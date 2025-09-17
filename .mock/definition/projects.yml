@@ -74,14 +74,6 @@ types:
         docs: Number of tasks added
     source:
       openapi: openapi/openapi.yaml
-  ProjectsImportPredictionsResponse:
-    docs: Import result
-    properties:
-      created:
-        type: optional<integer>
-        docs: Number of predictions created
-    source:
-      openapi: openapi/openapi.yaml
   ApiProjectsProjectExtraParamsRetrieveResponse:
     docs: Create or change annotator weights for statistics
     properties:
@@ -1001,38 +993,6 @@ service:
                 - found_formats
               predictions_count: 1
               task_count: 1
-      audiences:
-        - public
-    import_predictions:
-      path: /api/projects/{id}/import/predictions
-      method: POST
-      auth: true
-      docs: Import model predictions for tasks in the specified project.
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        id:
-          type: integer
-          docs: A unique integer value identifying this project.
-      display-name: Import predictions
-      request:
-        body: list<root.PredictionRequest>
-        content-type: application/json
-      response:
-        docs: Predictions successfully imported
-        type: ProjectsImportPredictionsResponse
-      errors:
-        - root.BadRequestError
-      examples:
-        - path-parameters:
-            id: 1
-          request:
-            - result:
-                - key: value
-              task: 1
-          response:
-            body:
-              created: 1
       audiences:
         - public
     api_projects_members_create:

@@ -162,6 +162,7 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         },
         "org_membership": [{"active": "active", "organization_id": 1, "role": "role"}],
         "pause": "pause",
+        "permissions": "permissions",
         "phone": "phone",
         "username": "username",
     }
@@ -196,6 +197,7 @@ async def test_whoami(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         },
         "org_membership": ("list", {0: {"active": None, "organization_id": "integer", "role": None}}),
         "pause": None,
+        "permissions": None,
         "phone": None,
         "username": None,
     }
