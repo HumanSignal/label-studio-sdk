@@ -1,0 +1,233 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /api/organizations/{id}/organization-permissions
+      method: GET
+      auth: true
+      docs: >-
+        List all organization-level permission overrides for a given
+        organization.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: List organization permission overrides
+      request:
+        name: PermissionsListRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.OrganizationPermission>
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              - default_role: default_role
+                id: 1
+                label: label
+                options: options
+                organization: 1
+                permission: permission
+                roles:
+                  - OW
+                tooltip: tooltip
+      audiences:
+        - public
+    create:
+      path: /api/organizations/{id}/organization-permissions
+      method: POST
+      auth: true
+      docs: >-
+        Create a new organization-level permission override for a given
+        organization.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Create organization permission override
+      request:
+        body: root.OrganizationPermissionRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.OrganizationPermission
+      errors:
+        - root.BadRequestError
+        - root.ForbiddenError
+      examples:
+        - path-parameters:
+            id: 1
+          request:
+            permission: permission
+          response:
+            body:
+              default_role: default_role
+              id: 1
+              label: label
+              options: options
+              organization: 1
+              permission: permission
+              roles:
+                - OW
+              tooltip: tooltip
+      audiences:
+        - public
+    get:
+      path: /api/organizations/{id}/organization-permissions/{permission}
+      method: GET
+      auth: true
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+        permission: string
+      display-name: Retrieve organization permission override
+      response:
+        docs: ''
+        type: root.OrganizationPermission
+      errors:
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: 1
+            permission: permission
+          response:
+            body:
+              default_role: default_role
+              id: 1
+              label: label
+              options: options
+              organization: 1
+              permission: permission
+              roles:
+                - OW
+              tooltip: tooltip
+      audiences:
+        - public
+    replace:
+      path: /api/organizations/{id}/organization-permissions/{permission}
+      method: PUT
+      auth: true
+      docs: >-
+        Replace the organization-level permission override for a given
+        permission key.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id:
+          type: integer
+          docs: A unique integer value identifying this organization.
+        permission:
+          type: string
+          docs: Permission key to update within the organization.
+      display-name: Replace organization permission override
+      request:
+        body: root.OrganizationPermissionRequest
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.OrganizationPermission
+      errors:
+        - root.BadRequestError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: 1
+            permission: permission
+          request:
+            permission: permission
+          response:
+            body:
+              default_role: default_role
+              id: 1
+              label: label
+              options: options
+              organization: 1
+              permission: permission
+              roles:
+                - OW
+              tooltip: tooltip
+      audiences:
+        - public
+    delete:
+      path: /api/organizations/{id}/organization-permissions/{permission}
+      method: DELETE
+      auth: true
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+        permission: string
+      display-name: Delete organization permission override
+      errors:
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: 1
+            permission: permission
+      audiences:
+        - public
+    update:
+      path: /api/organizations/{id}/organization-permissions/{permission}
+      method: PATCH
+      auth: true
+      docs: >-
+        Partially update the organization-level permission override for a given
+        permission key.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+        permission: string
+      display-name: Update organization permission override
+      request:
+        name: PatchedOrganizationPermissionRequest
+        body:
+          properties:
+            permission:
+              type: optional<string>
+              name: patchedOrganizationPermissionRequestPermission
+            roles:
+              type: optional<list<root.Role9E7Enum>>
+              docs: >-
+                Explicit roles that have this permission within the
+                organization.
+        content-type: application/json
+      response:
+        docs: ''
+        type: root.OrganizationPermission
+      errors:
+        - root.BadRequestError
+        - root.ForbiddenError
+        - root.NotFoundError
+      examples:
+        - path-parameters:
+            id: 1
+            permission: permission
+          request: {}
+          response:
+            body:
+              default_role: default_role
+              id: 1
+              label: label
+              options: options
+              organization: 1
+              permission: permission
+              roles:
+                - OW
+              tooltip: tooltip
+      audiences:
+        - public
+  source:
+    openapi: openapi/openapi.yaml

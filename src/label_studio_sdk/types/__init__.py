@@ -49,7 +49,6 @@ from .count_limit import CountLimit
 from .custom_scripts_editable_by_enum import CustomScriptsEditableByEnum
 from .default_role import DefaultRole
 from .default_role_custom_scripts_editable_by import DefaultRoleCustomScriptsEditableBy
-from .default_role_enum import DefaultRoleEnum
 from .edition_enum import EditionEnum
 from .export import Export
 from .file_upload import FileUpload
@@ -139,6 +138,8 @@ from .organization_id import OrganizationId
 from .organization_invite import OrganizationInvite
 from .organization_member import OrganizationMember
 from .organization_membership import OrganizationMembership
+from .organization_permission import OrganizationPermission
+from .organization_permission_request import OrganizationPermissionRequest
 from .paginated_all_roles_project_list_list import PaginatedAllRolesProjectListList
 from .paginated_annotation_history_list import PaginatedAnnotationHistoryList
 from .paginated_lse_organization_member_list_list import PaginatedLseOrganizationMemberListList
@@ -271,7 +272,6 @@ __all__ = [
     "CustomScriptsEditableByEnum",
     "DefaultRole",
     "DefaultRoleCustomScriptsEditableBy",
-    "DefaultRoleEnum",
     "EditionEnum",
     "Export",
     "FileUpload",
@@ -361,6 +361,8 @@ __all__ = [
     "OrganizationInvite",
     "OrganizationMember",
     "OrganizationMembership",
+    "OrganizationPermission",
+    "OrganizationPermissionRequest",
     "PaginatedAllRolesProjectListList",
     "PaginatedAnnotationHistoryList",
     "PaginatedLseOrganizationMemberListList",

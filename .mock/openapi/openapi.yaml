@@ -5449,6 +5449,259 @@ paths:
         - organizations
         - members
       x-fern-sdk-method-name: get
+  /api/organizations/{id}/organization-permissions:
+    get:
+      description: List all organization-level permission overrides for a given organization.
+      operationId: api_organizations_organization_permissions_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrganizationPermission'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: List organization permission overrides
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: list
+    post:
+      description: Create a new organization-level permission override for a given organization.
+      operationId: api_organizations_organization_permissions_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationPermission'
+          description: ''
+        '400':
+          description: Bad Request
+        '403':
+          description: Permission Denied
+      security:
+        - Token: []
+      summary: Create organization permission override
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: create
+  /api/organizations/{id}/organization-permissions/{permission}:
+    delete:
+      operationId: api_organizations_organization_permissions_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: permission
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted
+        '403':
+          description: Permission Denied
+        '404':
+          description: Permission not found for organization
+      security:
+        - Token: []
+      summary: Delete organization permission override
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: delete
+    get:
+      operationId: api_organizations_organization_permissions_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: permission
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationPermission'
+          description: ''
+        '403':
+          description: Permission Denied
+        '404':
+          description: Permission not found for organization
+      security:
+        - Token: []
+      summary: Retrieve organization permission override
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: get
+    patch:
+      description: Partially update the organization-level permission override for a given permission key.
+      operationId: api_organizations_organization_permissions_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: permission
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationPermissionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationPermissionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationPermissionRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationPermission'
+          description: ''
+        '400':
+          description: Bad Request
+        '403':
+          description: Permission Denied
+        '404':
+          description: Permission not found for organization
+      security:
+        - Token: []
+      summary: Update organization permission override
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: update
+    put:
+      description: Replace the organization-level permission override for a given permission key.
+      operationId: api_organizations_organization_permissions_update
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Permission key to update within the organization.
+          in: path
+          name: permission
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationPermission'
+          description: ''
+        '400':
+          description: Bad Request
+        '403':
+          description: Permission Denied
+        '404':
+          description: Permission not found for organization
+      security:
+        - Token: []
+      summary: Replace organization permission override
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: replace
   /api/organizations/{id}/set-default-role:
     patch:
       description: Update the default role for members of a specific organization.
@@ -19806,7 +20059,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/DefaultRoleEnum'
+            - $ref: '#/components/schemas/Role9e7Enum'
           description: |-
             Default membership role for invited users
 
@@ -19848,24 +20101,6 @@ components:
       required:
         - organization
       type: object
-    DefaultRoleEnum:
-      description: |-
-        * `OW` - Owner
-        * `AD` - Administrator
-        * `MA` - Manager
-        * `RE` - Reviewer
-        * `AN` - Annotator
-        * `DI` - Deactivated
-        * `NO` - Not Activated
-      enum:
-        - OW
-        - AD
-        - MA
-        - RE
-        - AN
-        - DI
-        - 'NO'
-      type: string
     EditionEnum:
       description: |-
         * `Community` - Community
@@ -21685,7 +21920,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/DefaultRoleEnum'
+            - $ref: '#/components/schemas/Role9e7Enum'
           description: |-
             Default membership role for invited users
 
@@ -24778,6 +25013,57 @@ components:
       required:
         - role
       type: object
+    OrganizationPermission:
+      properties:
+        default_role:
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        label:
+          readOnly: true
+          type: string
+        options:
+          readOnly: true
+          type: string
+        organization:
+          readOnly: true
+          type: integer
+        permission:
+          maxLength: 255
+          type: string
+        roles:
+          description: Explicit roles that have this permission within the organization.
+          items:
+            $ref: '#/components/schemas/Role9e7Enum'
+          type: array
+        tooltip:
+          readOnly: true
+          type: string
+      required:
+        - default_role
+        - id
+        - label
+        - options
+        - organization
+        - permission
+        - tooltip
+      type: object
+    OrganizationPermissionRequest:
+      properties:
+        permission:
+          maxLength: 255
+          minLength: 1
+          type: string
+        roles:
+          description: Explicit roles that have this permission within the organization.
+          items:
+            $ref: '#/components/schemas/Role9e7Enum'
+          type: array
+      required:
+        - permission
+      type: object
     PaginatedAllRolesProjectListList:
       properties:
         count:
@@ -25659,7 +25945,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/DefaultRoleEnum'
+            - $ref: '#/components/schemas/Role9e7Enum'
           description: |-
             Default membership role for invited users
 
@@ -26633,6 +26919,18 @@ components:
           $ref: '#/components/schemas/Role9e7Enum'
         user_id:
           type: integer
+      type: object
+    PatchedOrganizationPermissionRequest:
+      properties:
+        permission:
+          maxLength: 255
+          minLength: 1
+          type: string
+        roles:
+          description: Explicit roles that have this permission within the organization.
+          items:
+            $ref: '#/components/schemas/Role9e7Enum'
+          type: array
       type: object
     PatchedPauseRequest:
       description: |-
