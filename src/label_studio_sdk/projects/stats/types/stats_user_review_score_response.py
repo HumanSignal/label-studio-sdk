@@ -2,15 +2,15 @@
 
 from ....core.unchecked_base_model import UncheckedBaseModel
 import typing
-import pydantic
+from .stats_user_review_score_response_performance_score import StatsUserReviewScoreResponsePerformanceScore
+from .stats_user_review_score_response_review_score import StatsUserReviewScoreResponseReviewScore
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class StatsUserReviewScoreResponse(UncheckedBaseModel):
-    review_score: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Average review score for the user
-    """
+    performance_score: typing.Optional[StatsUserReviewScoreResponsePerformanceScore] = None
+    review_score: typing.Optional[StatsUserReviewScoreResponseReviewScore] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

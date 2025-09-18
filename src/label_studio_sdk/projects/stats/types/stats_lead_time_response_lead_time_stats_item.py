@@ -2,15 +2,29 @@
 
 from ....core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .stats_data_filters_response_user_filters import StatsDataFiltersResponseUserFilters
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class StatsDataFiltersResponse(UncheckedBaseModel):
-    user_filters: typing.Optional[StatsDataFiltersResponseUserFilters] = pydantic.Field(default=None)
+class StatsLeadTimeResponseLeadTimeStatsItem(UncheckedBaseModel):
+    mean_time: typing.Optional[float] = pydantic.Field(default=None)
     """
-    Data filter statistics by user and model
+    Average lead time for the user
+    """
+
+    median_time: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Median lead time for the user
+    """
+
+    sum_lead_time: typing.Optional[float] = pydantic.Field(default=None)
+    """
+    Total lead time for the user
+    """
+
+    user_id: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    User ID
     """
 
     if IS_PYDANTIC_V2:

@@ -2,12 +2,13 @@
 
 from ....core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .stats_lead_time_response_lead_time_stats_item import StatsLeadTimeResponseLeadTimeStatsItem
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class StatsLeadTimeResponse(UncheckedBaseModel):
-    lead_time: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(default=None)
+    lead_time_stats: typing.Optional[typing.List[StatsLeadTimeResponseLeadTimeStatsItem]] = pydantic.Field(default=None)
     """
     Lead time statistics including mean, median, and distribution
     """

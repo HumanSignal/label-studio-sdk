@@ -8301,12 +8301,6 @@ paths:
           required: true
           schema:
             type: integer
-        - description: Calculate agreement per label
-          in: query
-          name: per_label
-          schema:
-            default: false
-            type: boolean
         - in: path
           name: user_id
           required: true
@@ -8350,8 +8344,24 @@ paths:
             application/json:
               schema:
                 properties:
-                  filters:
-                    description: Data filter statistics by user
+                  user_filters:
+                    description: Data filter statistics by user and model
+                    properties:
+                      stats:
+                        description: List of filter configurations for users and models
+                        items:
+                          additionalProperties:
+                            description: Filter configurations (finished, skipped, accepted, rejected, gt, predictions, review_score)
+                            type: object
+                          properties:
+                            id:
+                              description: User ID or model version identifier (e.g., "model:1.0")
+                              type: string
+                          type: object
+                        type: array
+                      tasks_with_annotations:
+                        description: Default filter tab for tasks with annotations
+                        type: object
                     type: object
                 type: object
           description: User data filter statistics
@@ -8422,9 +8432,24 @@ paths:
             application/json:
               schema:
                 properties:
-                  lead_time:
+                  lead_time_stats:
                     description: Lead time statistics including mean, median, and distribution
-                    type: object
+                    items:
+                      properties:
+                        mean_time:
+                          description: Average lead time for the user
+                          type: number
+                        median_time:
+                          description: Median lead time for the user
+                          type: number
+                        sum_lead_time:
+                          description: Total lead time for the user
+                          type: number
+                        user_id:
+                          description: User ID
+                          type: integer
+                      type: object
+                    type: array
                 type: object
           description: Lead time statistics
       security:
@@ -8975,6 +9000,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Calculate agreement per label
+          in: query
+          name: per_label
+          schema:
+            type: boolean
         - in: path
           name: user_pk
           required: true
@@ -8987,8 +9017,13 @@ paths:
               schema:
                 properties:
                   average_prediction_agreement_per_user:
-                    description: Average prediction agreement score for the user (0-1)
-                    type: number
+                    oneOf:
+                      - description: Average prediction agreement score for the user (0-1) when per_label=False
+                        type: number
+                      - additionalProperties:
+                          type: number
+                        description: Average prediction agreement score per label for the user (0-1) when per_label=True
+                        type: object
                 type: object
           description: Individual user prediction agreement statistics
       security:
@@ -9012,6 +9047,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Calculate agreement per label
+          in: query
+          name: per_label
+          schema:
+            type: boolean
         - in: path
           name: user_pk
           required: true
@@ -9023,9 +9063,22 @@ paths:
             application/json:
               schema:
                 properties:
+                  performance_score:
+                    oneOf:
+                      - description: Performance score for the user when per_label=False
+                        type: number
+                      - additionalProperties:
+                          type: number
+                        description: Performance score per label for the user when per_label=True
+                        type: object
                   review_score:
-                    description: Average review score for the user
-                    type: number
+                    oneOf:
+                      - description: Average review score for the user when per_label=False
+                        type: number
+                      - additionalProperties:
+                          type: number
+                        description: Average review score per label for the user when per_label=True
+                        type: object
                 type: object
           description: Individual user review score statistics
       security:
@@ -9049,6 +9102,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Calculate agreement per label
+          in: query
+          name: per_label
+          schema:
+            type: boolean
         - in: path
           name: user_pk
           required: true
@@ -9061,8 +9119,14 @@ paths:
               schema:
                 properties:
                   agreement:
-                    description: Ground truth agreement score for the user (0-1)
-                    type: number
+                    oneOf:
+                      - description: Ground truth agreement score for the user (0-1) when per_label=False
+                        type: number
+                      - additionalProperties:
+                          description: Agreement score for specific label (0-1)
+                          type: number
+                        description: Ground truth agreement scores per label when per_label=True
+                        type: object
                 type: object
           description: Individual user ground truth agreement statistics
       security:

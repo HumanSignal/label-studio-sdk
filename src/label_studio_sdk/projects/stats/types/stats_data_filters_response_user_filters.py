@@ -2,15 +2,26 @@
 
 from ....core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .stats_data_filters_response_user_filters import StatsDataFiltersResponseUserFilters
+from .stats_data_filters_response_user_filters_stats_item import StatsDataFiltersResponseUserFiltersStatsItem
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class StatsDataFiltersResponse(UncheckedBaseModel):
-    user_filters: typing.Optional[StatsDataFiltersResponseUserFilters] = pydantic.Field(default=None)
+class StatsDataFiltersResponseUserFilters(UncheckedBaseModel):
     """
     Data filter statistics by user and model
+    """
+
+    stats: typing.Optional[typing.List[StatsDataFiltersResponseUserFiltersStatsItem]] = pydantic.Field(default=None)
+    """
+    List of filter configurations for users and models
+    """
+
+    tasks_with_annotations: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = pydantic.Field(
+        default=None
+    )
+    """
+    Default filter tab for tasks with annotations
     """
 
     if IS_PYDANTIC_V2:

@@ -97,12 +97,7 @@ class StatsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def agreement_annotator(
-        self,
-        id: int,
-        user_id: int,
-        *,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: int, user_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsAgreementAnnotatorResponse:
         """
         Get agreement statistics for a specific annotator within a project.
@@ -112,9 +107,6 @@ class StatsClient:
         id : int
 
         user_id : int
-
-        per_label : typing.Optional[bool]
-            Calculate agreement per label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -139,9 +131,6 @@ class StatsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/stats/agreement_annotator/{jsonable_encoder(user_id)}",
             method="GET",
-            params={
-                "per_label": per_label,
-            },
             request_options=request_options,
         )
         try:
@@ -425,7 +414,12 @@ class StatsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def user_prediction_agreement(
-        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserPredictionAgreementResponse:
         """
         Get prediction agreement statistics for a specific user within a project.
@@ -435,6 +429,9 @@ class StatsClient:
         id : int
 
         user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -459,6 +456,9 @@ class StatsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/prediction",
             method="GET",
+            params={
+                "per_label": per_label,
+            },
             request_options=request_options,
         )
         try:
@@ -476,7 +476,12 @@ class StatsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def user_review_score(
-        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserReviewScoreResponse:
         """
         Get review score statistics for a specific user within a project.
@@ -486,6 +491,9 @@ class StatsClient:
         id : int
 
         user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -510,6 +518,9 @@ class StatsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/review_score",
             method="GET",
+            params={
+                "per_label": per_label,
+            },
             request_options=request_options,
         )
         try:
@@ -527,7 +538,12 @@ class StatsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def user_ground_truth_agreement(
-        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserGroundTruthAgreementResponse:
         """
         Get ground truth agreement statistics for a specific user within a project.
@@ -537,6 +553,9 @@ class StatsClient:
         id : int
 
         user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -561,6 +580,9 @@ class StatsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/users/{jsonable_encoder(user_pk)}/stats/agreement-groundtruth",
             method="GET",
+            params={
+                "per_label": per_label,
+            },
             request_options=request_options,
         )
         try:
@@ -664,12 +686,7 @@ class AsyncStatsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def agreement_annotator(
-        self,
-        id: int,
-        user_id: int,
-        *,
-        per_label: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, id: int, user_id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> StatsAgreementAnnotatorResponse:
         """
         Get agreement statistics for a specific annotator within a project.
@@ -679,9 +696,6 @@ class AsyncStatsClient:
         id : int
 
         user_id : int
-
-        per_label : typing.Optional[bool]
-            Calculate agreement per label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -714,9 +728,6 @@ class AsyncStatsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/stats/agreement_annotator/{jsonable_encoder(user_id)}",
             method="GET",
-            params={
-                "per_label": per_label,
-            },
             request_options=request_options,
         )
         try:
@@ -1042,7 +1053,12 @@ class AsyncStatsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def user_prediction_agreement(
-        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserPredictionAgreementResponse:
         """
         Get prediction agreement statistics for a specific user within a project.
@@ -1052,6 +1068,9 @@ class AsyncStatsClient:
         id : int
 
         user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1084,6 +1103,9 @@ class AsyncStatsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/prediction",
             method="GET",
+            params={
+                "per_label": per_label,
+            },
             request_options=request_options,
         )
         try:
@@ -1101,7 +1123,12 @@ class AsyncStatsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def user_review_score(
-        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserReviewScoreResponse:
         """
         Get review score statistics for a specific user within a project.
@@ -1111,6 +1138,9 @@ class AsyncStatsClient:
         id : int
 
         user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1143,6 +1173,9 @@ class AsyncStatsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/user-stats/{jsonable_encoder(user_pk)}/review_score",
             method="GET",
+            params={
+                "per_label": per_label,
+            },
             request_options=request_options,
         )
         try:
@@ -1160,7 +1193,12 @@ class AsyncStatsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def user_ground_truth_agreement(
-        self, id: int, user_pk: int, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        id: int,
+        user_pk: int,
+        *,
+        per_label: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> StatsUserGroundTruthAgreementResponse:
         """
         Get ground truth agreement statistics for a specific user within a project.
@@ -1170,6 +1208,9 @@ class AsyncStatsClient:
         id : int
 
         user_pk : int
+
+        per_label : typing.Optional[bool]
+            Calculate agreement per label
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1202,6 +1243,9 @@ class AsyncStatsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/users/{jsonable_encoder(user_pk)}/stats/agreement-groundtruth",
             method="GET",
+            params={
+                "per_label": per_label,
+            },
             request_options=request_options,
         )
         try:

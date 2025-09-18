@@ -2,17 +2,15 @@
 
 from ....core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .stats_user_prediction_agreement_response_average_prediction_agreement_per_user import (
-    StatsUserPredictionAgreementResponseAveragePredictionAgreementPerUser,
-)
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class StatsUserPredictionAgreementResponse(UncheckedBaseModel):
-    average_prediction_agreement_per_user: typing.Optional[
-        StatsUserPredictionAgreementResponseAveragePredictionAgreementPerUser
-    ] = None
+class StatsDataFiltersResponseUserFiltersStatsItem(UncheckedBaseModel):
+    id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    User ID or model version identifier (e.g., "model:1.0")
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -27451,14 +27451,6 @@ client.projects.stats.agreement_annotator(
 <dl>
 <dd>
 
-**per_label:** `typing.Optional[bool]` — Calculate agreement per label
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -27914,6 +27906,14 @@ client.projects.stats.user_prediction_agreement(
 <dl>
 <dd>
 
+**per_label:** `typing.Optional[bool]` — Calculate agreement per label
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -27993,6 +27993,14 @@ client.projects.stats.user_review_score(
 <dl>
 <dd>
 
+**per_label:** `typing.Optional[bool]` — Calculate agreement per label
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -28065,6 +28073,14 @@ client.projects.stats.user_ground_truth_agreement(
 <dd>
 
 **user_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_label:** `typing.Optional[bool]` — Calculate agreement per label
     
 </dd>
 </dl>

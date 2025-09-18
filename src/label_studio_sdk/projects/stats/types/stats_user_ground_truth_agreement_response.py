@@ -2,15 +2,13 @@
 
 from ....core.unchecked_base_model import UncheckedBaseModel
 import typing
-import pydantic
+from .stats_user_ground_truth_agreement_response_agreement import StatsUserGroundTruthAgreementResponseAgreement
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
+import pydantic
 
 
 class StatsUserGroundTruthAgreementResponse(UncheckedBaseModel):
-    agreement: typing.Optional[float] = pydantic.Field(default=None)
-    """
-    Ground truth agreement score for the user (0-1)
-    """
+    agreement: typing.Optional[StatsUserGroundTruthAgreementResponseAgreement] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -40,8 +40,10 @@ async def test_agreement_annotator(client: LabelStudio, async_client: AsyncLabel
 
 
 async def test_data_filters(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"filters": {"key": "value"}}
-    expected_types: typing.Any = {"filters": ("dict", {0: (None, None)})}
+    expected_response: typing.Any = {"user_filters": {"stats": [{}], "tasks_with_annotations": {"key": "value"}}}
+    expected_types: typing.Any = {
+        "user_filters": {"stats": ("list", {0: {}}), "tasks_with_annotations": ("dict", {0: (None, None)})}
+    }
     response = client.projects.stats.data_filters(id=1)
     validate_response(response, expected_response, expected_types)
 
@@ -60,8 +62,15 @@ async def test_finished_tasks(client: LabelStudio, async_client: AsyncLabelStudi
 
 
 async def test_lead_time(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"lead_time": {"key": "value"}}
-    expected_types: typing.Any = {"lead_time": ("dict", {0: (None, None)})}
+    expected_response: typing.Any = {
+        "lead_time_stats": [{"mean_time": 1.1, "median_time": 1.1, "sum_lead_time": 1.1, "user_id": 1}]
+    }
+    expected_types: typing.Any = {
+        "lead_time_stats": (
+            "list",
+            {0: {"mean_time": None, "median_time": None, "sum_lead_time": None, "user_id": "integer"}},
+        )
+    }
     response = client.projects.stats.lead_time(id=1)
     validate_response(response, expected_response, expected_types)
 
@@ -100,8 +109,8 @@ async def test_user_prediction_agreement(client: LabelStudio, async_client: Asyn
 
 
 async def test_user_review_score(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"review_score": 1.1}
-    expected_types: typing.Any = {"review_score": None}
+    expected_response: typing.Any = {"performance_score": 1.1, "review_score": 1.1}
+    expected_types: typing.Any = {"performance_score": None, "review_score": None}
     response = client.projects.stats.user_review_score(id=1, user_pk=1)
     validate_response(response, expected_response, expected_types)
 
