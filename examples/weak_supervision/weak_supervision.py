@@ -4,6 +4,7 @@ The newer versions v1.0 and above still support the functionalities of the old v
 [`label_studio_sdk._legacy`](../../README.md) in your script.
 """
 
+import os
 import random
 import re
 
@@ -11,10 +12,7 @@ import pandas as pd
 
 from label_studio_sdk.client import LabelStudio
 
-ls = LabelStudio(
-    base_url="http://localhost:8080", api_key="a5cbf446c3233bc3950ae244cdece0a49c8d2696"
-)
-
+ls = LabelStudio(base_url=os.getenv('LABEL_STUDIO_URL', 'http://localhost:8080'), api_key=os.getenv('LABEL_STUDIO_API_KEY'))
 
 project = ls.projects.create(
     title="Weak Supervision example with SDK",
