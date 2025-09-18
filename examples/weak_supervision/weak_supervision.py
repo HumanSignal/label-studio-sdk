@@ -9,15 +9,14 @@ import re
 
 import pandas as pd
 
-from label_studio_sdk import Client
+from label_studio_sdk.client import LabelStudio
 
-ls = Client(
-    url="http://localhost:8080", api_key="d6f8a2622d39e9d89ff0dfef1a80ad877f4ee9e3"
+ls = LabelStudio(
+    base_url="http://localhost:8080", api_key="REDACTED"
 )
-ls.check_connection()
 
 
-project = ls.start_project(
+project = ls.projects.create(
     title="Weak Supervision example with SDK",
     label_config="""
     <View>
@@ -36,7 +35,10 @@ project = ls.start_project(
 
 
 tasks = pd.read_csv("data/amazon_cells_labelled.tsv", sep="\t").to_dict("records")
-tasks_ids = project.import_tasks(tasks)
+tasks_ids = [
+    ls.tasks.create(project=project.id, data=task).id
+    for task in tasks
+]
 
 
 # Noisy programmatic labelers
@@ -71,13 +73,19 @@ for label_regex, label in label_ops.items():
                 }
             )
 
-project.create_predictions(predictions)
+for pr in predictions:
+    ls.predictions.create(
+        task=pr["task"],
+        result=pr["result"],
+        score=float(pr["score"]),
+        model_version=pr["model_version"],
+    )
 
 
-model_versions = project.get_model_versions()
+model_versions = ls.projects.get(id=project.id).model_version
 
-# check model version stats
-pd.Series(project.get_predictions_coverage(), name="Coverage")
+# Predictions coverage helpers are not exposed in v2 SDK. Skipping.
 
 
-print(project.create_annotations_from_predictions(model_versions=list(model_versions)))
+# Auto-creating annotations from predictions isn't supported in OSS SDK v2.
+# Blocker: requires enterprise workflow endpoints. Skipping.

@@ -49,56 +49,50 @@ import shutil
 import logging
 
 from tqdm import tqdm
-from label_studio_sdk import Client
+from label_studio_sdk.client import LabelStudio
+import os
 from label_studio_sdk.converter import Converter
 from label_studio_sdk._extensions.label_studio_tools.core.utils.io import get_local_path
 
 
-LABEL_STUDIO_URL = 'https://app.humansignal.com'  # Change to your Label Studio URL
-LABEL_STUDIO_API_KEY = 'api-key'  # Replace with your API Key
-PROJECT_ID = 116031  # Replace with your Project ID
+LABEL_STUDIO_URL = os.getenv('LABEL_STUDIO_URL', 'http://localhost:8080')
+LABEL_STUDIO_API_KEY = os.getenv('LABEL_STUDIO_API_KEY')
+PROJECT_ID = int(os.getenv('PROJECT_ID', '1'))
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] [%(module)s] - %(message)s')
 
 
-def prepare_export(project):
+def prepare_export_v2(ls: LabelStudio, project_id: int, view_id: int | None = None):
     logger.info("Creating export snapshot for project.")
-    export_result = project.export_snapshot_create(title='YOLO Export Snapshot')
-    export_id = export_result['id']
-    logger.info(f"Export snapshot created with ID: {export_id}")
+    create_kwargs = {"title": "YOLO Export Snapshot"}
+    if view_id is not None:
+        create_kwargs["task_filter_options"] = {"view": view_id}
 
-    logger.info("Waiting for export snapshot to be ready.")
-    while project.export_snapshot_status(export_id).is_in_progress():
-        time.sleep(1.0)
+    data = ls.projects.exports.as_json(project_id, create_kwargs=create_kwargs)
 
-    logger.info("Downloading export snapshot in JSON format.")
-    status, snapshot_path = project.export_snapshot_download(export_id, export_type='JSON')
-    if status != 200:
-        logger.error(f"Failed to download export snapshot: {status}")
-        raise Exception(f"Failed to download export snapshot: {status}")
-
-    logger.info(f"Export snapshot downloaded successfully to {snapshot_path}.")
-    with open(snapshot_path, 'r') as f:
-        exported_tasks = json.load(f)
-
-    return snapshot_path, exported_tasks
+    snapshot_path = os.path.abspath(f"project_{project_id}_yolo_export.json")
+    with open(snapshot_path, "w", encoding="utf-8") as f:
+        json.dump(data, f)
+    logger.info(f"Export snapshot saved to {snapshot_path}.")
+    return snapshot_path, data
 
 
 def run(url: str, api_key: str, project_id: int):
     logger.info("Connecting to Label Studio.")
-    ls = Client(url=url, api_key=api_key)
-    ls.check_connection()
+    ls = LabelStudio(base_url=url, api_key=api_key)
     logger.info("Connected to Label Studio successfully.")
 
     logger.info(f"Retrieving project with ID: {project_id}.")
-    project = ls.get_project(project_id)
+    project = ls.projects.get(id=project_id)
 
     logger.info("Downloading export snapshot and loading exported tasks.")
-    snapshot_path, exported_tasks = prepare_export(project)
+    views = ls.views.list(project=project_id)
+    view_id = views[0].id if views else None
+    snapshot_path, exported_tasks = prepare_export_v2(ls, project_id, view_id)
 
     logger.info("Initializing Converter with labeling config.")
-    label_config = project.params['label_config']
+    label_config = project.label_config
     converter = Converter(config=label_config, project_dir=os.path.dirname(snapshot_path), download_resources=False)
 
     logger.info("Converting to YOLO format.")
