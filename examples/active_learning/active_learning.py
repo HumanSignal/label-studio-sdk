@@ -47,7 +47,7 @@ else:
         )
 
 
-# Note: Some OSS versions don't support setting sampling to UNCERTAINTY; skip this step.
+ls.projects.update(id=project.id, sampling="Uncertainty sampling")
 
 
 labels_map = {"Positive": 0, "Negative": 1, "Neutral": 2}
