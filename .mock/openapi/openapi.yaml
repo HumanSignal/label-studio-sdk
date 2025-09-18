@@ -6268,6 +6268,22 @@ paths:
       description: Returns a list of projects with their counts. For example, task_number which is the total task number in project
       operationId: api_projects_counts_list
       parameters:
+        - description: Project filter setting. One of 'all', 'pinned_only', 'exclude_pinned'.
+          in: query
+          name: filter
+          schema:
+            default: all
+            type: string
+        - description: Filter id by in list
+          in: query
+          name: ids
+          schema:
+            type: string
+        - description: Comma-separated list of fields to include
+          in: query
+          name: include
+          schema:
+            type: string
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
@@ -6286,6 +6302,21 @@ paths:
           required: false
           schema:
             type: integer
+        - description: Search term for project title and description
+          in: query
+          name: search
+          schema:
+            type: string
+        - description: Filter title by contains (case-insensitive)
+          in: query
+          name: title
+          schema:
+            type: string
+        - description: Filter workspaces by exact match
+          in: query
+          name: workspaces
+          schema:
+            type: number
       responses:
         '200':
           content:
@@ -6295,9 +6326,13 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: List project's counts
+      summary: List projects' counts
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: projects
+      x-fern-sdk-method-name: list_counts
   /api/projects/roles/:
     get:
       description: "\n        List project roles for requested IDs for the current user\n        "
@@ -7451,6 +7486,60 @@ paths:
         - public
       x-fern-sdk-group-name: projects
       x-fern-sdk-method-name: import_tasks
+  /api/projects/{id}/import/predictions:
+    post:
+      description: Import model predictions for tasks in the specified project.
+      operationId: api_projects_import_predictions_create
+      parameters:
+        - description: A unique integer value identifying this project.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/PredictionRequest'
+              type: array
+          application/x-www-form-urlencoded:
+            schema:
+              items:
+                $ref: '#/components/schemas/PredictionRequest'
+              type: array
+          multipart/form-data:
+            schema:
+              items:
+                $ref: '#/components/schemas/PredictionRequest'
+              type: array
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                description: Import result
+                properties:
+                  created:
+                    description: Number of predictions created
+                    title: created
+                    type: integer
+                title: Predictions import response
+                type: object
+          description: Predictions successfully imported
+        '400':
+          description: Bad Request
+      security:
+        - Token: []
+      summary: Import predictions
+      tags:
+        - Import
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: projects
+      x-fern-sdk-method-name: import_predictions
   /api/projects/{id}/imports/{import_pk}/:
     get:
       description: Return data related to async project import operation
@@ -29835,6 +29924,11 @@ components:
         pause:
           readOnly: true
           type: string
+        permissions:
+          items:
+            type: string
+          readOnly: true
+          type: array
         phone:
           maxLength: 256
           type: string
@@ -29850,6 +29944,7 @@ components:
         - lse_fields
         - org_membership
         - pause
+        - permissions
         - username
       type: object
     Workspace:
