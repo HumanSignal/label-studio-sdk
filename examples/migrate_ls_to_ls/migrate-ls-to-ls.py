@@ -14,6 +14,7 @@ import logging
 import os
 import time
 
+import os
 from label_studio_sdk import Client
 from label_studio_sdk._legacy.users import User
 from label_studio_sdk.data_manager import Filters, Operator, Type, Column
@@ -401,29 +402,29 @@ def run():
         "--src-url",
         dest="src_url",
         type=str,
-        default="",
-        help="Source Label Studio instance",
+        default=os.getenv("LABEL_STUDIO_URL", ""),
+        help="Source Label Studio instance (default from LABEL_STUDIO_URL)",
     )
     parser.add_argument(
         "--src-key",
         dest="src_key",
         type=str,
-        default="",
-        help="Source Label Studio token, it should be owner or administrator token",
+        default=os.getenv("LABEL_STUDIO_API_KEY", ""),
+        help="Source Label Studio token (default from LABEL_STUDIO_API_KEY)",
     )
     parser.add_argument(
         "--dst-url",
         dest="dst_url",
         type=str,
-        default="",
-        help="Destination Label Studio instance",
+        default=os.getenv("DEST_LABEL_STUDIO_URL", ""),
+        help="Destination Label Studio instance (default from DEST_LABEL_STUDIO_URL)",
     )
     parser.add_argument(
         "--dst-key",
         dest="dst_key",
         type=str,
-        default="",
-        help="Destination Label Studio token, it should be owner or administrator token",
+        default=os.getenv("DEST_LABEL_STUDIO_API_KEY", ""),
+        help="Destination Label Studio token (default from DEST_LABEL_STUDIO_API_KEY)",
     )
     parser.add_argument(
         "--project-ids",

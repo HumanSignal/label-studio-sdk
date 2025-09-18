@@ -5,7 +5,7 @@ import numpy as np
 import rasterio
 from shapely.geometry import Polygon
 from label_studio_sdk.client import LabelStudio
-from label_studio_sdk import Client, Project
+import os
 from label_studio_sdk.data_manager import Filters, Column, Operator, Type
 
 
@@ -14,7 +14,7 @@ def _filter_tasks(last_poll_time: datetime):
     Build filters for client to poll for tasks
     """
     filters = Filters.create(
-        "and",  # need 'and' instead of 'or' evfen if we had only 1 filter
+        "and",  # need 'and' instead of 'or' even if we had only 1 filter
         [
             # task updated since the last poll
             Filters.item(
@@ -54,21 +54,7 @@ def poll_for_completed_tasks_new(
             # fields=['image', 'annotations'],
         )
         yield from tasks
-        time.sleep(freq_seconds)
-
-
-def poll_for_completed_tasks_old(project: Project, freq_seconds: int) -> list:
-    """
-    Every n seconds, yield all tasks that have been updated since the last poll.
-    Uses label_studio_sdk < 1.0.0
-    """
-    while True:
-        print("polling")
-        last_poll_time = datetime.now(timezone.utc) - timedelta(seconds=freq_seconds)
-        filters = _filter_tasks(last_poll_time)
-        tasks = project.get_tasks(filters=filters)
-        yield from tasks
-        time.sleep(freq_seconds)
+        time.sleep(freq_sec)
 
 
 def calculate_distances(source_img_path, annot):
@@ -151,15 +137,15 @@ def _bugfix_task_columns_old(project):
 
 
 if __name__ == "__main__":
-    url = "http://localhost:8080"
-    api_key = "cca56ca8fc0d511a87bbc63f5857b9a7a8f14c23"
-    project_id = 5
+    url = os.getenv("LABEL_STUDIO_URL", "http://localhost:8080")
+    api_key = os.getenv("LABEL_STUDIO_API_KEY")
+    project_id = int(os.getenv("LABEL_STUDIO_PROJECT_ID", "1"))
 
     # poll frequency
     freq_seconds = 1
 
-    # new sdk is waiting on: https://github.com/HumanSignal/label-studio/pull/6012
-    use_new_sdk = False
+    # Use new SDK path only
+    use_new_sdk = True
 
     def _lookup_source_image_path(annotated_image_path: str) -> str:
         """
@@ -173,34 +159,15 @@ if __name__ == "__main__":
             print("unknown annotated image path ", annotated_image_path)
             return annotated_image_path
 
-    if use_new_sdk:
-        # new SDK client (version >= 1.0.0)
-        ls = LabelStudio(base_url=url, api_key=api_key)
-        for task in poll_for_completed_tasks_new(ls, project_id, freq_seconds):
-            # assume that the most recent annotation is the one that was updated
-            # can check annot['updated_at'] and annot['created_at'] to confirm
-            annot = task.annotations[0]
-            source_image_path = _lookup_source_image_path(task.data["image"])
-            distances = calculate_distances(source_image_path, annot)
-            new_data = task.data
-            new_data.update(distances)
-            ls.tasks.update(id=task.id, data=new_data)
-            print("updated task", task.id)
-    else:
-        # old SDK client (version < 1.0.0)
-        client = Client(url=url, api_key=api_key)
-        client.check_connection()
-        project = client.get_project(project_id)
-
-        _bugfix_task_columns_old(project)
-
-        for task in poll_for_completed_tasks_old(project, freq_seconds):
-            # assume that the most recent annotation is the one that was updated
-            # can check annot['updated_at'] and annot['created_at'] to confirm
-            annot = task["annotations"][0]
-            source_image_path = _lookup_source_image_path(task["data"]["image"])
-            distances = calculate_distances(source_image_path, annot)
-            new_data = task["data"]
-            new_data.update(distances)
-            project.update_task(task_id=task["id"], data=new_data)
-            print("updated task", task["id"])
+    # new SDK client (version >= 1.0.0)
+    ls = LabelStudio(base_url=url, api_key=api_key)
+    for task in poll_for_completed_tasks_new(ls, project_id, freq_seconds):
+        # assume that the most recent annotation is the one that was updated
+        # can check annot['updated_at'] and annot['created_at'] to confirm
+        annot = task.annotations[0]
+        source_image_path = _lookup_source_image_path(task.data["image"])
+        distances = calculate_distances(source_image_path, annot)
+        new_data = task.data
+        new_data.update(distances)
+        ls.tasks.update(id=task.id, data=new_data)
+        print("updated task", task.id)

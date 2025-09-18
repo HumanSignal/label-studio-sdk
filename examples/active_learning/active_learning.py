@@ -11,33 +11,43 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
-from label_studio_sdk import Client
-from label_studio_sdk._legacy.project import ProjectSampling
+from label_studio_sdk.client import LabelStudio
+import os
 
-LABEL_STUDIO_URL = "http://localhost:8080"
-API_KEY = "91b3b61589784ed069b138eae3d5a5fe1e909f57"
-
-
-ls = Client(url=LABEL_STUDIO_URL, api_key=API_KEY)
-ls.check_connection()
+LABEL_STUDIO_URL = os.getenv("LABEL_STUDIO_URL", "http://localhost:8080")
+API_KEY = os.getenv("LABEL_STUDIO_API_KEY")
 
 
-project = ls.start_project(
-    title="AL Project Created from SDK",
-    label_config="""
-    <View>
-    <Text name="text" value="$text"/>
-    <Choices name="sentiment" toName="text" choice="single" showInLine="true">
-        <Choice value="Positive"/>
-        <Choice value="Negative"/>
-        <Choice value="Neutral"/>
-    </Choices>
-    </View>
-    """,
-)
+ls = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=API_KEY)
 
 
-project.set_sampling(ProjectSampling.UNCERTAINTY)
+# Use existing project if provided, else reuse by title, else create
+env_pid = os.getenv("LABEL_STUDIO_PROJECT_ID")
+project = None
+if env_pid:
+    project = ls.projects.get(id=int(env_pid))
+else:
+    for p in ls.projects.list():
+        if getattr(p, "title", "") == "AL Project Created from SDK":
+            project = p
+            break
+    if project is None:
+        project = ls.projects.create(
+            title="AL Project Created from SDK",
+            label_config="""
+            <View>
+            <Text name="text" value="$text"/>
+            <Choices name="sentiment" toName="text" choice="single" showInLine="true">
+                <Choice value="Positive"/>
+                <Choice value="Negative"/>
+                <Choice value="Neutral"/>
+            </Choices>
+            </View>
+            """,
+        )
+
+
+# Note: Some OSS versions don't support setting sampling to UNCERTAINTY; skip this step.
 
 
 labels_map = {"Positive": 0, "Negative": 1, "Neutral": 2}
@@ -64,7 +74,12 @@ def get_model_predictions(model, input_texts):
     return [inv_labels_map[i] for i in predicted_label_indices], predicted_scores
 
 
-labeled_tasks = project.get_labeled_tasks()
+# Fetch tasks and filter those with annotations (OSS may ignore only_annotated)
+all_tasks_full = list(ls.tasks.list(project=project.id, fields='all'))
+labeled_tasks = [t.model_dump() for t in all_tasks_full if getattr(t, "annotations", None)]
+if not labeled_tasks:
+    print(f'No labeled tasks found in project "{project.title}" (id={project.id}).')
+    raise SystemExit(0)
 texts, labels = [], []
 for labeled_task in labeled_tasks:
     texts.append(labeled_task["data"]["text"])
@@ -75,24 +90,22 @@ model = get_model()
 train_model(model, texts, labels)
 
 
-unlabeled_tasks_ids = project.get_unlabeled_tasks_ids()
-batch_ids = random.sample(unlabeled_tasks_ids, 10)
-unlabeled_tasks = project.get_tasks(selected_ids=batch_ids)
+all_tasks = list(ls.tasks.list(project=project.id, fields='task_only'))
+annotated_ids = {t["id"] for t in labeled_tasks}
+unlabeled_tasks = [t for t in all_tasks if t.id not in annotated_ids]
+batch = random.sample(unlabeled_tasks, min(10, len(unlabeled_tasks)))
 
 
-texts = [task["data"]["text"] for task in unlabeled_tasks]
+texts = [task.data["text"] for task in batch]
 pred_labels, pred_scores = get_model_predictions(model, texts)
 
 
 model_version = f"model_{len(labeled_tasks)}"
 
 
-predictions = []
-for task, pred_label, pred_score in zip(unlabeled_tasks, pred_labels, pred_scores):
-    project.create_prediction(
-        task_id=task["id"],
-        # alternatively you can use a simple form here:
-        # result=pred_label,
+for task, pred_label, pred_score in zip(batch, pred_labels, pred_scores):
+    ls.predictions.create(
+        task=task.id,
         result=[
             {
                 "from_name": "sentiment",
@@ -101,9 +114,9 @@ for task, pred_label, pred_score in zip(unlabeled_tasks, pred_labels, pred_score
                 "value": {"choices": [pred_label]},
             }
         ],
-        score=pred_score,
+        score=float(pred_score),
         model_version=model_version,
     )
 
 
-project.set_model_version(model_version)
+ls.projects.update(id=project.id, model_version=model_version)
