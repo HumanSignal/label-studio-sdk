@@ -117,6 +117,9 @@ service:
           page_size:
             type: optional<integer>
             docs: Number of results to return per page.
+          parent_model:
+            type: optional<integer>
+            docs: The ID of the parent model (ModelInterface) for this Inference Run
           project_subset:
             type: optional<string>
             docs: The project subset to retrieve tasks for

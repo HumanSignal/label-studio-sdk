@@ -195,6 +195,7 @@ class PromptsClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        parent_model: typing.Optional[int] = None,
         project_subset: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedProjectSubsetTasksResponseList:
@@ -221,6 +222,9 @@ class PromptsClient:
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        parent_model : typing.Optional[int]
+            The ID of the parent model (ModelInterface) for this Inference Run
 
         project_subset : typing.Optional[str]
             The project subset to retrieve tasks for
@@ -253,6 +257,7 @@ class PromptsClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "parent_model": parent_model,
                 "project_subset": project_subset,
             },
             request_options=request_options,
@@ -907,6 +912,7 @@ class AsyncPromptsClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        parent_model: typing.Optional[int] = None,
         project_subset: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedProjectSubsetTasksResponseList:
@@ -933,6 +939,9 @@ class AsyncPromptsClient:
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        parent_model : typing.Optional[int]
+            The ID of the parent model (ModelInterface) for this Inference Run
 
         project_subset : typing.Optional[str]
             The project subset to retrieve tasks for
@@ -973,6 +982,7 @@ class AsyncPromptsClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "parent_model": parent_model,
                 "project_subset": project_subset,
             },
             request_options=request_options,
