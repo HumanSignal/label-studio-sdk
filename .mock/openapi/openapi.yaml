@@ -24334,10 +24334,15 @@ components:
             - $ref: '#/components/schemas/LseFields'
           readOnly: true
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         pause:
           readOnly: true
           type: string
@@ -24355,6 +24360,7 @@ components:
         - last_activity
         - lse_fields
         - org_membership
+        - organization_membership
         - pause
         - username
       type: object
@@ -24407,10 +24413,15 @@ components:
           maxLength: 256
           type: string
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         phone:
           maxLength: 256
           type: string
@@ -24424,6 +24435,7 @@ components:
         - initials
         - last_activity
         - org_membership
+        - organization_membership
         - username
       type: object
     LseUserOrganizationMemberList:
@@ -25497,10 +25509,15 @@ components:
             - $ref: '#/components/schemas/LseFields'
           readOnly: true
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         pause:
           readOnly: true
           type: string
@@ -25521,6 +25538,7 @@ components:
         - last_activity
         - lse_fields
         - org_membership
+        - organization_membership
         - pause
         - project_role
         - username
@@ -30340,10 +30358,15 @@ components:
             - $ref: '#/components/schemas/WhoAmILseFields'
           readOnly: true
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         pause:
           readOnly: true
           type: string
@@ -30366,6 +30389,7 @@ components:
         - last_activity
         - lse_fields
         - org_membership
+        - organization_membership
         - pause
         - permissions
         - username

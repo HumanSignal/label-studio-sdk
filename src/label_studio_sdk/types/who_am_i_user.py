@@ -35,6 +35,7 @@ class WhoAmIUser(UncheckedBaseModel):
     last_name: typing.Optional[str] = None
     lse_fields: WhoAmILseFields
     org_membership: typing.List[OrganizationMembership]
+    organization_membership: OrganizationMembership
     pause: str
     permissions: typing.List[str]
     phone: typing.Optional[str] = None

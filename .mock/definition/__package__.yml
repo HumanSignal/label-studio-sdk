@@ -5183,7 +5183,10 @@ types:
         validation:
           maxLength: 256
       lse_fields: LseFields
-      org_membership: list<OrganizationMembership>
+      org_membership:
+        type: list<OrganizationMembership>
+        availability: deprecated
+      organization_membership: OrganizationMembership
       pause: string
       phone:
         type: optional<string>
@@ -5228,7 +5231,10 @@ types:
         type: optional<string>
         validation:
           maxLength: 256
-      org_membership: list<OrganizationMembership>
+      org_membership:
+        type: list<OrganizationMembership>
+        availability: deprecated
+      organization_membership: OrganizationMembership
       phone:
         type: optional<string>
         validation:
@@ -5885,7 +5891,10 @@ types:
         validation:
           maxLength: 256
       lse_fields: LseFields
-      org_membership: list<OrganizationMembership>
+      org_membership:
+        type: list<OrganizationMembership>
+        availability: deprecated
+      organization_membership: OrganizationMembership
       pause: string
       phone:
         type: optional<string>
@@ -7951,7 +7960,10 @@ types:
         validation:
           maxLength: 256
       lse_fields: WhoAmILseFields
-      org_membership: list<OrganizationMembership>
+      org_membership:
+        type: list<OrganizationMembership>
+        availability: deprecated
+      organization_membership: OrganizationMembership
       pause: string
       permissions: list<string>
       phone:
