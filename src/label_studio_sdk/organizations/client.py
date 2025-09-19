@@ -4,6 +4,7 @@ import typing
 from ..core.client_wrapper import SyncClientWrapper
 from .invites.client import InvitesClient
 from .members.client import MembersClient
+from .permissions.client import PermissionsClient
 from ..core.request_options import RequestOptions
 from ..types.organization_invite import OrganizationInvite
 from ..core.unchecked_base_model import construct_type
@@ -19,12 +20,13 @@ import datetime as dt
 from .types.patched_default_role_request_custom_scripts_editable_by import (
     PatchedDefaultRoleRequestCustomScriptsEditableBy,
 )
-from ..types.default_role_enum import DefaultRoleEnum
+from ..types.role9e7enum import Role9E7Enum
 from ..types.default_role import DefaultRole
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.client_wrapper import AsyncClientWrapper
 from .invites.client import AsyncInvitesClient
 from .members.client import AsyncMembersClient
+from .permissions.client import AsyncPermissionsClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -35,6 +37,7 @@ class OrganizationsClient:
         self._client_wrapper = client_wrapper
         self.invites = InvitesClient(client_wrapper=self._client_wrapper)
         self.members = MembersClient(client_wrapper=self._client_wrapper)
+        self.permissions = PermissionsClient(client_wrapper=self._client_wrapper)
 
     def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationInvite:
         """
@@ -306,7 +309,7 @@ class OrganizationsClient:
         annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
         custom_scripts_editable_by: typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy] = OMIT,
         custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        default_role: typing.Optional[DefaultRoleEnum] = OMIT,
+        default_role: typing.Optional[Role9E7Enum] = OMIT,
         email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_domains: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
@@ -336,7 +339,7 @@ class OrganizationsClient:
         custom_scripts_enabled_at : typing.Optional[dt.datetime]
             Set to current time to enabled custom scripts for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts.
 
-        default_role : typing.Optional[DefaultRoleEnum]
+        default_role : typing.Optional[Role9E7Enum]
             Default membership role for invited users
 
             * `OW` - Owner
@@ -433,6 +436,7 @@ class AsyncOrganizationsClient:
         self._client_wrapper = client_wrapper
         self.invites = AsyncInvitesClient(client_wrapper=self._client_wrapper)
         self.members = AsyncMembersClient(client_wrapper=self._client_wrapper)
+        self.permissions = AsyncPermissionsClient(client_wrapper=self._client_wrapper)
 
     async def reset_token(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationInvite:
         """
@@ -736,7 +740,7 @@ class AsyncOrganizationsClient:
         annotator_reviewer_firewall_enabled_at: typing.Optional[dt.datetime] = OMIT,
         custom_scripts_editable_by: typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy] = OMIT,
         custom_scripts_enabled_at: typing.Optional[dt.datetime] = OMIT,
-        default_role: typing.Optional[DefaultRoleEnum] = OMIT,
+        default_role: typing.Optional[Role9E7Enum] = OMIT,
         email_notification_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_domains: typing.Optional[typing.Optional[typing.Any]] = OMIT,
         embed_settings: typing.Optional[typing.Optional[typing.Any]] = OMIT,
@@ -766,7 +770,7 @@ class AsyncOrganizationsClient:
         custom_scripts_enabled_at : typing.Optional[dt.datetime]
             Set to current time to enabled custom scripts for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts.
 
-        default_role : typing.Optional[DefaultRoleEnum]
+        default_role : typing.Optional[Role9E7Enum]
             Default membership role for invited users
 
             * `OW` - Owner
