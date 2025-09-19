@@ -4987,7 +4987,7 @@ Set the minimum user role that can edit custom scripts in the UI.
 <dl>
 <dd>
 
-**default_role:** `typing.Optional[DefaultRoleEnum]` 
+**default_role:** `typing.Optional[Role9E7Enum]` 
 
 Default membership role for invited users
 
@@ -26622,7 +26622,7 @@ client.organizations.permissions.create(
 <dl>
 <dd>
 
-**roles:** `typing.Optional[typing.Sequence[RolesEnum]]` — Explicit roles that have this permission within the organization.
+**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Explicit roles that have this permission within the organization.
     
 </dd>
 </dl>
@@ -26861,7 +26861,7 @@ client.organizations.permissions.replace(
 <dl>
 <dd>
 
-**roles:** `typing.Optional[typing.Sequence[RolesEnum]]` — Explicit roles that have this permission within the organization.
+**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Explicit roles that have this permission within the organization.
     
 </dd>
 </dl>
@@ -27021,7 +27021,7 @@ client.organizations.permissions.update(
 <dl>
 <dd>
 
-**roles:** `typing.Optional[typing.Sequence[RolesEnum]]` — Explicit roles that have this permission within the organization.
+**roles:** `typing.Optional[typing.Sequence[Role9E7Enum]]` — Explicit roles that have this permission within the organization.
     
 </dd>
 </dl>

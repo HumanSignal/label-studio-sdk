@@ -71,11 +71,11 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_get_options(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
-        {"default_role": "OW", "label": "label", "options": ["OW"], "permission": "permission", "tooltip": "tooltip"}
+        {"default": "OW", "label": "label", "options": ["OW"], "permission": "permission", "tooltip": "tooltip"}
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
-        {0: {"default_role": None, "label": None, "options": ("list", {0: None}), "permission": None, "tooltip": None}},
+        {0: {"default": None, "label": None, "options": ("list", {0: None}), "permission": None, "tooltip": None}},
     )
     response = client.organizations.permissions.get_options(id=1)
     validate_response(response, expected_response, expected_types)

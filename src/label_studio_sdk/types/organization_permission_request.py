@@ -2,14 +2,14 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .roles_enum import RolesEnum
+from .role9e7enum import Role9E7Enum
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class OrganizationPermissionRequest(UncheckedBaseModel):
     permission: str
-    roles: typing.Optional[typing.List[RolesEnum]] = pydantic.Field(default=None)
+    roles: typing.Optional[typing.List[Role9E7Enum]] = pydantic.Field(default=None)
     """
     Explicit roles that have this permission within the organization.
     """

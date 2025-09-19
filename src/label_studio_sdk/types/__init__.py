@@ -44,14 +44,13 @@ from .comment import Comment
 from .comment_request import CommentRequest
 from .comment_serializer_with_expanded_user import CommentSerializerWithExpandedUser
 from .configurable_permission_option import ConfigurablePermissionOption
-from .configurable_permission_option_default_role import ConfigurablePermissionOptionDefaultRole
+from .configurable_permission_option_default import ConfigurablePermissionOptionDefault
 from .converted_format import ConvertedFormat
 from .converted_format_request import ConvertedFormatRequest
 from .count_limit import CountLimit
 from .custom_scripts_editable_by_enum import CustomScriptsEditableByEnum
 from .default_role import DefaultRole
 from .default_role_custom_scripts_editable_by import DefaultRoleCustomScriptsEditableBy
-from .default_role_enum import DefaultRoleEnum
 from .edition_enum import EditionEnum
 from .export import Export
 from .file_upload import FileUpload
@@ -136,7 +135,6 @@ from .model_run import ModelRun
 from .model_run_status_enum import ModelRunStatusEnum
 from .null_enum import NullEnum
 from .onboarding_state_enum import OnboardingStateEnum
-from .options_enum import OptionsEnum
 from .organization_billing import OrganizationBilling
 from .organization_id import OrganizationId
 from .organization_invite import OrganizationInvite
@@ -186,7 +184,6 @@ from .review_settings_review_criteria import ReviewSettingsReviewCriteria
 from .reviewed_enum import ReviewedEnum
 from .role9e7enum import Role9E7Enum
 from .role_based_task import RoleBasedTask
-from .roles_enum import RolesEnum
 from .s3export_storage import S3ExportStorage
 from .s3import_storage import S3ImportStorage
 from .saml_settings import SamlSettings
@@ -272,14 +269,13 @@ __all__ = [
     "CommentRequest",
     "CommentSerializerWithExpandedUser",
     "ConfigurablePermissionOption",
-    "ConfigurablePermissionOptionDefaultRole",
+    "ConfigurablePermissionOptionDefault",
     "ConvertedFormat",
     "ConvertedFormatRequest",
     "CountLimit",
     "CustomScriptsEditableByEnum",
     "DefaultRole",
     "DefaultRoleCustomScriptsEditableBy",
-    "DefaultRoleEnum",
     "EditionEnum",
     "Export",
     "FileUpload",
@@ -364,7 +360,6 @@ __all__ = [
     "ModelRunStatusEnum",
     "NullEnum",
     "OnboardingStateEnum",
-    "OptionsEnum",
     "OrganizationBilling",
     "OrganizationId",
     "OrganizationInvite",
@@ -414,7 +409,6 @@ __all__ = [
     "ReviewedEnum",
     "Role9E7Enum",
     "RoleBasedTask",
-    "RolesEnum",
     "S3ExportStorage",
     "S3ImportStorage",
     "SamlSettings",

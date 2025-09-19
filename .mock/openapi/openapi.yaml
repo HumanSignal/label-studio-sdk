@@ -19567,16 +19567,16 @@ components:
       type: object
     ConfigurablePermissionOption:
       properties:
-        default_role:
+        default:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/DefaultRoleEnum'
+            - $ref: '#/components/schemas/Role9e7Enum'
             - $ref: '#/components/schemas/NullEnum'
         label:
           type: string
         options:
           items:
-            $ref: '#/components/schemas/OptionsEnum'
+            $ref: '#/components/schemas/Role9e7Enum'
           type: array
         permission:
           type: string
@@ -20232,7 +20232,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/DefaultRoleEnum'
+            - $ref: '#/components/schemas/Role9e7Enum'
           description: |-
             Default membership role for invited users
 
@@ -20274,24 +20274,6 @@ components:
       required:
         - organization
       type: object
-    DefaultRoleEnum:
-      description: |-
-        * `OW` - Owner
-        * `AD` - Administrator
-        * `MA` - Manager
-        * `RE` - Reviewer
-        * `AN` - Annotator
-        * `DI` - Deactivated
-        * `NO` - Not Activated
-      enum:
-        - OW
-        - AD
-        - MA
-        - RE
-        - AN
-        - DI
-        - 'NO'
-      type: string
     EditionEnum:
       description: |-
         * `Community` - Community
@@ -22111,7 +22093,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/DefaultRoleEnum'
+            - $ref: '#/components/schemas/Role9e7Enum'
           description: |-
             Default membership role for invited users
 
@@ -25107,24 +25089,6 @@ components:
         - in_app_guidance
         - complete
       type: string
-    OptionsEnum:
-      description: |-
-        * `OW` - Owner
-        * `AD` - Administrator
-        * `MA` - Manager
-        * `RE` - Reviewer
-        * `AN` - Annotator
-        * `DI` - Deactivated
-        * `NO` - Not Activated
-      enum:
-        - OW
-        - AD
-        - MA
-        - RE
-        - AN
-        - DI
-        - 'NO'
-      type: string
     OrganizationBilling:
       properties:
         manual_role_management:
@@ -25245,7 +25209,7 @@ components:
         roles:
           description: Explicit roles that have this permission within the organization.
           items:
-            $ref: '#/components/schemas/RolesEnum'
+            $ref: '#/components/schemas/Role9e7Enum'
           type: array
         tooltip:
           readOnly: true
@@ -25268,7 +25232,7 @@ components:
         roles:
           description: Explicit roles that have this permission within the organization.
           items:
-            $ref: '#/components/schemas/RolesEnum'
+            $ref: '#/components/schemas/Role9e7Enum'
           type: array
       required:
         - permission
@@ -26154,7 +26118,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/DefaultRoleEnum'
+            - $ref: '#/components/schemas/Role9e7Enum'
           description: |-
             Default membership role for invited users
 
@@ -27138,7 +27102,7 @@ components:
         roles:
           description: Explicit roles that have this permission within the organization.
           items:
-            $ref: '#/components/schemas/RolesEnum'
+            $ref: '#/components/schemas/Role9e7Enum'
           type: array
       type: object
     PatchedPauseRequest:
@@ -28807,24 +28771,6 @@ components:
         - $ref: '#/components/schemas/LseTask'
         - $ref: '#/components/schemas/LseTaskSerializerForReviewers'
         - $ref: '#/components/schemas/LseTaskSerializerForAnnotators'
-    RolesEnum:
-      description: |-
-        * `OW` - Owner
-        * `AD` - Administrator
-        * `MA` - Manager
-        * `RE` - Reviewer
-        * `AN` - Annotator
-        * `DI` - Deactivated
-        * `NO` - Not Activated
-      enum:
-        - OW
-        - AD
-        - MA
-        - RE
-        - AN
-        - DI
-        - 'NO'
-      type: string
     S3DatasetStorage:
       properties:
         aws_access_key_id:

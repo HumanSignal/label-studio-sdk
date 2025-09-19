@@ -1620,19 +1620,19 @@ types:
         docs: Last updated time
     source:
       openapi: openapi/openapi.yaml
-  ConfigurablePermissionOptionDefaultRole:
+  ConfigurablePermissionOptionDefault:
     discriminated: false
     union:
-      - DefaultRoleEnum
+      - Role9E7Enum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
     inline: true
   ConfigurablePermissionOption:
     properties:
-      default_role: optional<ConfigurablePermissionOptionDefaultRole>
+      default: optional<ConfigurablePermissionOptionDefault>
       label: optional<string>
-      options: list<OptionsEnum>
+      options: list<Role9E7Enum>
       permission: string
       tooltip: optional<string>
     source:
@@ -2177,7 +2177,7 @@ types:
           occurs, contact the LEAP team for assistance with enabling custom
           scripts.
       default_role:
-        type: optional<DefaultRoleEnum>
+        type: optional<Role9E7Enum>
         docs: |-
           Default membership role for invited users
 
@@ -2209,25 +2209,6 @@ types:
         docs: >-
           Set to current time to prevent creating or editing annotations in
           quick view.
-    source:
-      openapi: openapi/openapi.yaml
-  DefaultRoleEnum:
-    enum:
-      - OW
-      - AD
-      - MA
-      - RE
-      - AN
-      - DI
-      - 'NO'
-    docs: |-
-      * `OW` - Owner
-      * `AD` - Administrator
-      * `MA` - Manager
-      * `RE` - Reviewer
-      * `AN` - Annotator
-      * `DI` - Deactivated
-      * `NO` - Not Activated
     source:
       openapi: openapi/openapi.yaml
   EditionEnum:
@@ -3621,7 +3602,7 @@ types:
           * `MA` - Manager
       custom_scripts_enabled: string
       default_role:
-        type: optional<DefaultRoleEnum>
+        type: optional<Role9E7Enum>
         docs: |-
           Default membership role for invited users
 
@@ -5648,25 +5629,6 @@ types:
       * `complete` - Complete
     source:
       openapi: openapi/openapi.yaml
-  OptionsEnum:
-    enum:
-      - OW
-      - AD
-      - MA
-      - RE
-      - AN
-      - DI
-      - 'NO'
-    docs: |-
-      * `OW` - Owner
-      * `AD` - Administrator
-      * `MA` - Manager
-      * `RE` - Reviewer
-      * `AN` - Annotator
-      * `DI` - Deactivated
-      * `NO` - Not Activated
-    source:
-      openapi: openapi/openapi.yaml
   OrganizationBilling:
     properties:
       manual_role_management: string
@@ -5746,7 +5708,7 @@ types:
         validation:
           maxLength: 255
       roles:
-        type: optional<list<RolesEnum>>
+        type: optional<list<Role9E7Enum>>
         docs: Explicit roles that have this permission within the organization.
       tooltip: string
     source:
@@ -5759,7 +5721,7 @@ types:
           minLength: 1
           maxLength: 255
       roles:
-        type: optional<list<RolesEnum>>
+        type: optional<list<Role9E7Enum>>
         docs: Explicit roles that have this permission within the organization.
     source:
       openapi: openapi/openapi.yaml
@@ -6920,25 +6882,6 @@ types:
       - LseTask
       - LseTaskSerializerForReviewers
       - LseTaskSerializerForAnnotators
-    source:
-      openapi: openapi/openapi.yaml
-  RolesEnum:
-    enum:
-      - OW
-      - AD
-      - MA
-      - RE
-      - AN
-      - DI
-      - 'NO'
-    docs: |-
-      * `OW` - Owner
-      * `AD` - Administrator
-      * `MA` - Manager
-      * `RE` - Reviewer
-      * `AN` - Annotator
-      * `DI` - Deactivated
-      * `NO` - Not Activated
     source:
       openapi: openapi/openapi.yaml
   S3DatasetStorage:

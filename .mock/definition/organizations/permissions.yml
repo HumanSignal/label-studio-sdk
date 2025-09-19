@@ -106,7 +106,7 @@ service:
             id: 1
           response:
             body:
-              - default_role: OW
+              - default: OW
                 label: label
                 options:
                   - OW
@@ -233,7 +233,7 @@ service:
               type: optional<string>
               name: patchedOrganizationPermissionRequestPermission
             roles:
-              type: optional<list<root.RolesEnum>>
+              type: optional<list<root.Role9E7Enum>>
               docs: >-
                 Explicit roles that have this permission within the
                 organization.
