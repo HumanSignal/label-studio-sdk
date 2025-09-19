@@ -29982,7 +29982,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.versions.list(
-    prompt_id_=1,
     prompt_id=1,
 )
 
@@ -30000,15 +29999,7 @@ client.prompts.versions.list(
 <dl>
 <dd>
 
-**prompt_id_:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt_id:** `int` — A unique integer value identifying the model ID to list versions for.
+**prompt_id:** `int` 
     
 </dd>
 </dl>

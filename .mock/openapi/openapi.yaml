@@ -9768,12 +9768,6 @@ paths:
           required: true
           schema:
             type: integer
-        - description: A unique integer value identifying the model ID to list versions for.
-          in: query
-          name: prompt_id
-          required: true
-          schema:
-            type: integer
       responses:
         '200':
           content:
