@@ -6963,6 +6963,14 @@ client.prompts.subset_tasks(
 <dl>
 <dd>
 
+**parent_model:** `typing.Optional[int]` — The ID of the parent model (ModelInterface) for this Inference Run
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **project_subset:** `typing.Optional[str]` — The project subset to retrieve tasks for
     
 </dd>

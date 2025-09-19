@@ -13,6 +13,7 @@ from ..core.api_error import ApiError
 from ..types.batch_predictions import BatchPredictions
 from ..types.paginated_project_subset_tasks_response_list import PaginatedProjectSubsetTasksResponseList
 from ..core.jsonable_encoder import jsonable_encoder
+from ..errors.bad_request_error import BadRequestError
 from ..types.project_subset_item import ProjectSubsetItem
 from ..types.model_interface_serializer_get import ModelInterfaceSerializerGet
 from ..types.user_simple_request import UserSimpleRequest
@@ -194,6 +195,7 @@ class PromptsClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        parent_model: typing.Optional[int] = None,
         project_subset: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedProjectSubsetTasksResponseList:
@@ -220,6 +222,9 @@ class PromptsClient:
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        parent_model : typing.Optional[int]
+            The ID of the parent model (ModelInterface) for this Inference Run
 
         project_subset : typing.Optional[str]
             The project subset to retrieve tasks for
@@ -252,6 +257,7 @@ class PromptsClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "parent_model": parent_model,
                 "project_subset": project_subset,
             },
             request_options=request_options,
@@ -264,6 +270,16 @@ class PromptsClient:
                         type_=PaginatedProjectSubsetTasksResponseList,  # type: ignore
                         object_=_response.json(),
                     ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -896,6 +912,7 @@ class AsyncPromptsClient:
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        parent_model: typing.Optional[int] = None,
         project_subset: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedProjectSubsetTasksResponseList:
@@ -922,6 +939,9 @@ class AsyncPromptsClient:
 
         page_size : typing.Optional[int]
             Number of results to return per page.
+
+        parent_model : typing.Optional[int]
+            The ID of the parent model (ModelInterface) for this Inference Run
 
         project_subset : typing.Optional[str]
             The project subset to retrieve tasks for
@@ -962,6 +982,7 @@ class AsyncPromptsClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "parent_model": parent_model,
                 "project_subset": project_subset,
             },
             request_options=request_options,
@@ -974,6 +995,16 @@ class AsyncPromptsClient:
                         type_=PaginatedProjectSubsetTasksResponseList,  # type: ignore
                         object_=_response.json(),
                     ),
+                )
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    typing.cast(
+                        typing.Optional[typing.Any],
+                        construct_type(
+                            type_=typing.Optional[typing.Any],  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
                 )
             _response_json = _response.json()
         except JSONDecodeError:
