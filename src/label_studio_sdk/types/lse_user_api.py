@@ -33,6 +33,7 @@ class LseUserApi(UncheckedBaseModel):
     last_activity: dt.datetime
     last_name: typing.Optional[str] = None
     org_membership: typing.List[OrganizationMembership]
+    organization_membership: OrganizationMembership
     phone: typing.Optional[str] = None
     username: str
 
