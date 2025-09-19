@@ -7,12 +7,17 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class StatsFinishedTasksResponse(UncheckedBaseModel):
-    finished_tasks: typing.Optional[int] = pydantic.Field(default=None)
+    finished: typing.Optional[int] = pydantic.Field(default=None)
     """
     Number of finished tasks
     """
 
-    progress: typing.Optional[float] = pydantic.Field(default=None)
+    id: typing.Optional[int] = pydantic.Field(default=None)
+    """
+    User ID
+    """
+
+    progress: typing.Optional[int] = pydantic.Field(default=None)
     """
     Progress percentage (0-100)
     """

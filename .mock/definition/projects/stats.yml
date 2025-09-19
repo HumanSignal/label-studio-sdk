@@ -97,11 +97,14 @@ types:
       openapi: openapi/openapi.yaml
   StatsFinishedTasksResponse:
     properties:
-      finished_tasks:
+      finished:
         type: optional<integer>
         docs: Number of finished tasks
+      id:
+        type: optional<integer>
+        docs: User ID
       progress:
-        type: optional<double>
+        type: optional<integer>
         docs: Progress percentage (0-100)
     source:
       openapi: openapi/openapi.yaml
@@ -376,8 +379,9 @@ service:
             id: 1
           response:
             body:
-              finished_tasks: 1
-              progress: 1.1
+              finished: 1
+              id: 1
+              progress: 1
       audiences:
         - public
     lead_time:

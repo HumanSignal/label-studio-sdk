@@ -8397,12 +8397,15 @@ paths:
             application/json:
               schema:
                 properties:
-                  finished_tasks:
+                  finished:
                     description: Number of finished tasks
+                    type: integer
+                  id:
+                    description: User ID
                     type: integer
                   progress:
                     description: Progress percentage (0-100)
-                    type: number
+                    type: integer
                 type: object
           description: Finished tasks statistics
       security:

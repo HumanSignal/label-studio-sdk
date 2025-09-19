@@ -52,8 +52,8 @@ async def test_data_filters(client: LabelStudio, async_client: AsyncLabelStudio)
 
 
 async def test_finished_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {"finished_tasks": 1, "progress": 1.1}
-    expected_types: typing.Any = {"finished_tasks": "integer", "progress": None}
+    expected_response: typing.Any = {"finished": 1, "id": 1, "progress": 1}
+    expected_types: typing.Any = {"finished": "integer", "id": "integer", "progress": "integer"}
     response = client.projects.stats.finished_tasks(id=1)
     validate_response(response, expected_response, expected_types)
 
