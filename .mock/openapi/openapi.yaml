@@ -9469,11 +9469,6 @@ paths:
           required: false
           schema:
             type: integer
-        - description: The ID of the parent model (ModelInterface) for this Inference Run
-          in: query
-          name: parent_model
-          schema:
-            type: integer
         - in: path
           name: project_pk
           required: true
@@ -9491,8 +9486,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/PaginatedProjectSubsetTasksResponseList'
           description: ''
-        '400':
-          description: Bad request - missing parent_model
       security:
         - Token: []
       summary: Get Project Subset Task List with Predictions and Accuracy details
