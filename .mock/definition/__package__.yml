@@ -1620,6 +1620,23 @@ types:
         docs: Last updated time
     source:
       openapi: openapi/openapi.yaml
+  ConfigurablePermissionOptionDefault:
+    discriminated: false
+    union:
+      - Role9E7Enum
+      - NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  ConfigurablePermissionOption:
+    properties:
+      default: optional<ConfigurablePermissionOptionDefault>
+      label: optional<string>
+      options: list<Role9E7Enum>
+      permission: string
+      tooltip: optional<string>
+    source:
+      openapi: openapi/openapi.yaml
   ConvertedFormat:
     properties:
       export_type:
@@ -2160,7 +2177,7 @@ types:
           occurs, contact the LEAP team for assistance with enabling custom
           scripts.
       default_role:
-        type: optional<DefaultRoleEnum>
+        type: optional<Role9E7Enum>
         docs: |-
           Default membership role for invited users
 
@@ -2192,25 +2209,6 @@ types:
         docs: >-
           Set to current time to prevent creating or editing annotations in
           quick view.
-    source:
-      openapi: openapi/openapi.yaml
-  DefaultRoleEnum:
-    enum:
-      - OW
-      - AD
-      - MA
-      - RE
-      - AN
-      - DI
-      - 'NO'
-    docs: |-
-      * `OW` - Owner
-      * `AD` - Administrator
-      * `MA` - Manager
-      * `RE` - Reviewer
-      * `AN` - Annotator
-      * `DI` - Deactivated
-      * `NO` - Not Activated
     source:
       openapi: openapi/openapi.yaml
   EditionEnum:
@@ -3604,7 +3602,7 @@ types:
           * `MA` - Manager
       custom_scripts_enabled: string
       default_role:
-        type: optional<DefaultRoleEnum>
+        type: optional<Role9E7Enum>
         docs: |-
           Default membership role for invited users
 
@@ -5702,6 +5700,35 @@ types:
         type: string
         validation:
           minLength: 1
+    source:
+      openapi: openapi/openapi.yaml
+  OrganizationPermission:
+    properties:
+      default_role: string
+      id: integer
+      label: string
+      options: string
+      organization: integer
+      permission:
+        type: string
+        validation:
+          maxLength: 255
+      roles:
+        type: optional<list<Role9E7Enum>>
+        docs: Explicit roles that have this permission within the organization.
+      tooltip: string
+    source:
+      openapi: openapi/openapi.yaml
+  OrganizationPermissionRequest:
+    properties:
+      permission:
+        type: string
+        validation:
+          minLength: 1
+          maxLength: 255
+      roles:
+        type: optional<list<Role9E7Enum>>
+        docs: Explicit roles that have this permission within the organization.
     source:
       openapi: openapi/openapi.yaml
   PaginatedAllRolesProjectListList:
