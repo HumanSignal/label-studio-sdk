@@ -4,6 +4,7 @@ from label_studio_sdk import LabelStudio
 from label_studio_sdk import AsyncLabelStudio
 import typing
 from .utilities import validate_response
+from label_studio_sdk import PredictionRequest
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
@@ -111,6 +112,65 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.projects.create()
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_list_counts(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {
+        "count": 123,
+        "next": "http://api.example.org/accounts/?page=4",
+        "previous": "http://api.example.org/accounts/?page=2",
+        "results": [
+            {
+                "finished_task_number": 1,
+                "ground_truth_number": 1,
+                "id": 1,
+                "num_tasks_with_annotations": "num_tasks_with_annotations",
+                "queue_done": "queue_done",
+                "queue_left": "queue_left",
+                "queue_total": "queue_total",
+                "rejected": "rejected",
+                "review_total_tasks": "review_total_tasks",
+                "reviewed_number": "reviewed_number",
+                "skipped_annotations_number": "skipped_annotations_number",
+                "task_number": 1,
+                "total_annotations_number": "total_annotations_number",
+                "total_predictions_number": 1,
+                "useful_annotation_number": "useful_annotation_number",
+            }
+        ],
+    }
+    expected_types: typing.Any = {
+        "count": "integer",
+        "next": None,
+        "previous": None,
+        "results": (
+            "list",
+            {
+                0: {
+                    "finished_task_number": "integer",
+                    "ground_truth_number": "integer",
+                    "id": "integer",
+                    "num_tasks_with_annotations": None,
+                    "queue_done": None,
+                    "queue_left": None,
+                    "queue_total": None,
+                    "rejected": None,
+                    "review_total_tasks": None,
+                    "reviewed_number": None,
+                    "skipped_annotations_number": None,
+                    "task_number": "integer",
+                    "total_annotations_number": None,
+                    "total_predictions_number": "integer",
+                    "useful_annotation_number": None,
+                }
+            },
+        ),
+    }
+    response = client.projects.list_counts()
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.list_counts()
     validate_response(async_response, expected_response, expected_types)
 
 
@@ -434,6 +494,18 @@ async def test_import_tasks(client: LabelStudio, async_client: AsyncLabelStudio)
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.projects.import_tasks(id=1, request=[])
+    validate_response(async_response, expected_response, expected_types)
+
+
+async def test_import_predictions(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = {"created": 1}
+    expected_types: typing.Any = {"created": "integer"}
+    response = client.projects.import_predictions(id=1, request=[PredictionRequest(result=[{"key": "value"}], task=1)])
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.import_predictions(
+        id=1, request=[PredictionRequest(result=[{"key": "value"}], task=1)]
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
