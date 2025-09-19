@@ -1,55 +1,56 @@
 """
-**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34). 
-The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
-[`label_studio_sdk._legacy`](../README.md) in your script.
+Export a snapshot with tasks filtered by the first available view using SDK 2.0+
+
+- Uses post-1.0 client: from label_studio_sdk.client import LabelStudio
+- Mirrors getting-started: ls = LabelStudio(base_url=..., api_key=...)
+- Community Edition supports synchronous export via ls.projects.exports.download_sync
+  but we use the higher-level helper ls.projects.exports.as_json which handles
+  Enterprise vs Community differences automatically.
 """
 
 import os
-import time
+from pathlib import Path
 
-from label_studio_sdk import Client
+from label_studio_sdk.client import LabelStudio
 
 LABEL_STUDIO_URL = os.getenv("LABEL_STUDIO_URL", default="http://localhost:8080")
 API_KEY = os.getenv("LABEL_STUDIO_API_KEY")
-PROJECT_ID = int(os.getenv("LABEL_STUDIO_PROJECT_ID"))
+PROJECT_ID = int(os.getenv("LABEL_STUDIO_PROJECT_ID", "1"))
 
-# connect to Label Studio
-ls = Client(url=LABEL_STUDIO_URL, api_key=API_KEY)
-ls.check_connection()
 
-# init new project
-"""project = ls.start_project(
-    title='Export SDK Snapshot test',
-    label_config='''
-    <View>
-        <Image name="image" value="$image"/>
-        <RectangleLabels name="objects" toName="image">
-            <Choice value="Airplane"/>
-            <Choice value="Car"/>
-        </RectangleLabels>
-    </View>
-    ''',
-)"""
-# get existing project
-project = ls.get_project(PROJECT_ID)
+def main() -> None:
+    ls = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=API_KEY)
 
-# get the first tab
-views = project.get_views()
-task_filter_options = {"view": views[0]["id"]} if views else {}
+    # Ensure project exists and try to use the first view as a filter (if any)
+    _ = ls.projects.get(id=PROJECT_ID)
+    views = ls.views.list(project=PROJECT_ID)
+    task_filter_options = {"view": views[0].id} if views else None
 
-# create new export snapshot
-export_result = project.export_snapshot_create(
-    title="Export SDK Snapshot", task_filter_options=task_filter_options
-)
-assert "id" in export_result
-export_id = export_result["id"]
+    # Create export snapshot and download JSON
+    out_dir = Path(".")
+    out_dir.mkdir(parents=True, exist_ok=True)
 
-# wait until snapshot is ready
-while project.export_snapshot_status(export_id).is_in_progress():
-    time.sleep(1.0)
+    # If a view exists, pass it via create_kwargs. Otherwise export all annotated tasks.
+    create_kwargs = {
+        "title": "Export SDK Snapshot",
+        "task_filter_options": task_filter_options,
+    }
+    # Remove None to avoid sending it
+    create_kwargs = {k: v for k, v in create_kwargs.items() if v is not None}
 
-# download snapshot file
-status, file_name = project.export_snapshot_download(export_id, export_type="JSON")
-assert status == 200
-assert file_name is not None
-print(f"Status of the export is {status}.\nFile name is {file_name}")
+    data = ls.projects.exports.as_json(
+        PROJECT_ID,
+        create_kwargs=create_kwargs,
+        download_kwargs={"export_type": "JSON"},
+    )
+
+    out_path = out_dir / f"project_{PROJECT_ID}_export.json"
+    with open(out_path, "w", encoding="utf-8") as f:
+        import json
+
+        json.dump(data, f)
+    print(f"Export completed. File saved to: {out_path}")
+
+
+if __name__ == "__main__":
+    main()
