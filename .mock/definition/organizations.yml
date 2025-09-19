@@ -200,7 +200,7 @@ service:
                 will be raised. If this occurs, contact the LEAP team for
                 assistance with enabling custom scripts.
             default_role:
-              type: optional<root.Role9E7Enum>
+              type: optional<root.DefaultRoleEnum>
               docs: |-
                 Default membership role for invited users
 

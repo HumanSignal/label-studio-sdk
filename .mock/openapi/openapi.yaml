@@ -5533,16 +5533,28 @@ paths:
   /api/organizations/{id}/permissions/options:
     get:
       description: Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
-      operationId: api_organizations_permissions_options_retrieve
+      operationId: api_organizations_permissions_options_list
       parameters:
         - in: path
           name: id
           required: true
           schema:
             type: integer
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ConfigurablePermissionOption'
+                type: array
+          description: ''
       security:
         - Token: []
       summary: Get configurable permissions options
@@ -19553,6 +19565,27 @@ components:
         - task
         - updated_at
       type: object
+    ConfigurablePermissionOption:
+      properties:
+        default_role:
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/DefaultRoleEnum'
+            - $ref: '#/components/schemas/NullEnum'
+        label:
+          type: string
+        options:
+          items:
+            $ref: '#/components/schemas/OptionsEnum'
+          type: array
+        permission:
+          type: string
+        tooltip:
+          type: string
+      required:
+        - options
+        - permission
+      type: object
     ConvertedFormat:
       properties:
         export_type:
@@ -20199,7 +20232,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
+            - $ref: '#/components/schemas/DefaultRoleEnum'
           description: |-
             Default membership role for invited users
 
@@ -20241,6 +20274,24 @@ components:
       required:
         - organization
       type: object
+    DefaultRoleEnum:
+      description: |-
+        * `OW` - Owner
+        * `AD` - Administrator
+        * `MA` - Manager
+        * `RE` - Reviewer
+        * `AN` - Annotator
+        * `DI` - Deactivated
+        * `NO` - Not Activated
+      enum:
+        - OW
+        - AD
+        - MA
+        - RE
+        - AN
+        - DI
+        - 'NO'
+      type: string
     EditionEnum:
       description: |-
         * `Community` - Community
@@ -22060,7 +22111,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
+            - $ref: '#/components/schemas/DefaultRoleEnum'
           description: |-
             Default membership role for invited users
 
@@ -25056,6 +25107,24 @@ components:
         - in_app_guidance
         - complete
       type: string
+    OptionsEnum:
+      description: |-
+        * `OW` - Owner
+        * `AD` - Administrator
+        * `MA` - Manager
+        * `RE` - Reviewer
+        * `AN` - Annotator
+        * `DI` - Deactivated
+        * `NO` - Not Activated
+      enum:
+        - OW
+        - AD
+        - MA
+        - RE
+        - AN
+        - DI
+        - 'NO'
+      type: string
     OrganizationBilling:
       properties:
         manual_role_management:
@@ -25176,7 +25245,7 @@ components:
         roles:
           description: Explicit roles that have this permission within the organization.
           items:
-            $ref: '#/components/schemas/Role9e7Enum'
+            $ref: '#/components/schemas/RolesEnum'
           type: array
         tooltip:
           readOnly: true
@@ -25199,7 +25268,7 @@ components:
         roles:
           description: Explicit roles that have this permission within the organization.
           items:
-            $ref: '#/components/schemas/Role9e7Enum'
+            $ref: '#/components/schemas/RolesEnum'
           type: array
       required:
         - permission
@@ -26085,7 +26154,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
+            - $ref: '#/components/schemas/DefaultRoleEnum'
           description: |-
             Default membership role for invited users
 
@@ -27069,7 +27138,7 @@ components:
         roles:
           description: Explicit roles that have this permission within the organization.
           items:
-            $ref: '#/components/schemas/Role9e7Enum'
+            $ref: '#/components/schemas/RolesEnum'
           type: array
       type: object
     PatchedPauseRequest:
@@ -28738,6 +28807,24 @@ components:
         - $ref: '#/components/schemas/LseTask'
         - $ref: '#/components/schemas/LseTaskSerializerForReviewers'
         - $ref: '#/components/schemas/LseTaskSerializerForAnnotators'
+    RolesEnum:
+      description: |-
+        * `OW` - Owner
+        * `AD` - Administrator
+        * `MA` - Manager
+        * `RE` - Reviewer
+        * `AN` - Annotator
+        * `DI` - Deactivated
+        * `NO` - Not Activated
+      enum:
+        - OW
+        - AD
+        - MA
+        - RE
+        - AN
+        - DI
+        - 'NO'
+      type: string
     S3DatasetStorage:
       properties:
         aws_access_key_id:

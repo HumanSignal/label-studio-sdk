@@ -8,9 +8,10 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.role9e7enum import Role9E7Enum
+from ...types.roles_enum import RolesEnum
 from ...errors.bad_request_error import BadRequestError
 from ...errors.forbidden_error import ForbiddenError
+from ...types.configurable_permission_option import ConfigurablePermissionOption
 from ...errors.not_found_error import NotFoundError
 from ...core.client_wrapper import AsyncClientWrapper
 
@@ -81,7 +82,7 @@ class PermissionsClient:
         id: int,
         *,
         permission: str,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[RolesEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -93,7 +94,7 @@ class PermissionsClient:
 
         permission : str
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[RolesEnum]]
             Explicit roles that have this permission within the organization.
 
         request_options : typing.Optional[RequestOptions]
@@ -160,7 +161,9 @@ class PermissionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_options(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def get_options(
+        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ConfigurablePermissionOption]:
         """
         Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
 
@@ -168,12 +171,16 @@ class PermissionsClient:
         ----------
         id : int
 
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        typing.List[ConfigurablePermissionOption]
+
 
         Examples
         --------
@@ -189,11 +196,20 @@ class PermissionsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/organizations/{jsonable_encoder(id)}/permissions/options",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    typing.List[ConfigurablePermissionOption],
+                    construct_type(
+                        type_=typing.List[ConfigurablePermissionOption],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -274,7 +290,7 @@ class PermissionsClient:
         permission_: str,
         *,
         permission: str,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[RolesEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -290,7 +306,7 @@ class PermissionsClient:
 
         permission : str
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[RolesEnum]]
             Explicit roles that have this permission within the organization.
 
         request_options : typing.Optional[RequestOptions]
@@ -434,7 +450,7 @@ class PermissionsClient:
         permission: str,
         *,
         patched_organization_permission_request_permission: typing.Optional[str] = OMIT,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[RolesEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -448,7 +464,7 @@ class PermissionsClient:
 
         patched_organization_permission_request_permission : typing.Optional[str]
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[RolesEnum]]
             Explicit roles that have this permission within the organization.
 
         request_options : typing.Optional[RequestOptions]
@@ -600,7 +616,7 @@ class AsyncPermissionsClient:
         id: int,
         *,
         permission: str,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[RolesEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -612,7 +628,7 @@ class AsyncPermissionsClient:
 
         permission : str
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[RolesEnum]]
             Explicit roles that have this permission within the organization.
 
         request_options : typing.Optional[RequestOptions]
@@ -687,7 +703,9 @@ class AsyncPermissionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_options(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def get_options(
+        self, id: int, *, ordering: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[ConfigurablePermissionOption]:
         """
         Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
 
@@ -695,12 +713,16 @@ class AsyncPermissionsClient:
         ----------
         id : int
 
+        ordering : typing.Optional[str]
+            Which field to use when ordering the results.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        None
+        typing.List[ConfigurablePermissionOption]
+
 
         Examples
         --------
@@ -724,11 +746,20 @@ class AsyncPermissionsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/organizations/{jsonable_encoder(id)}/permissions/options",
             method="GET",
+            params={
+                "ordering": ordering,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
-                return
+                return typing.cast(
+                    typing.List[ConfigurablePermissionOption],
+                    construct_type(
+                        type_=typing.List[ConfigurablePermissionOption],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -817,7 +848,7 @@ class AsyncPermissionsClient:
         permission_: str,
         *,
         permission: str,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[RolesEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -833,7 +864,7 @@ class AsyncPermissionsClient:
 
         permission : str
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[RolesEnum]]
             Explicit roles that have this permission within the organization.
 
         request_options : typing.Optional[RequestOptions]
@@ -995,7 +1026,7 @@ class AsyncPermissionsClient:
         permission: str,
         *,
         patched_organization_permission_request_permission: typing.Optional[str] = OMIT,
-        roles: typing.Optional[typing.Sequence[Role9E7Enum]] = OMIT,
+        roles: typing.Optional[typing.Sequence[RolesEnum]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> OrganizationPermission:
         """
@@ -1009,7 +1040,7 @@ class AsyncPermissionsClient:
 
         patched_organization_permission_request_permission : typing.Optional[str]
 
-        roles : typing.Optional[typing.Sequence[Role9E7Enum]]
+        roles : typing.Optional[typing.Sequence[RolesEnum]]
             Explicit roles that have this permission within the organization.
 
         request_options : typing.Optional[RequestOptions]

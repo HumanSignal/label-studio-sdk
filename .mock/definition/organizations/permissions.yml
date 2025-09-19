@@ -92,9 +92,26 @@ service:
       path-parameters:
         id: integer
       display-name: Get configurable permissions options
+      request:
+        name: PermissionsGetOptionsRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.ConfigurablePermissionOption>
       examples:
         - path-parameters:
             id: 1
+          response:
+            body:
+              - default_role: OW
+                label: label
+                options:
+                  - OW
+                permission: permission
+                tooltip: tooltip
       audiences:
         - public
     get:
@@ -216,7 +233,7 @@ service:
               type: optional<string>
               name: patchedOrganizationPermissionRequestPermission
             roles:
-              type: optional<list<root.Role9E7Enum>>
+              type: optional<list<root.RolesEnum>>
               docs: >-
                 Explicit roles that have this permission within the
                 organization.
