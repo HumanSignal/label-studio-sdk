@@ -84,6 +84,100 @@ service:
                 - key: value
       audiences:
         - public
+    subset_tasks:
+      path: /api/projects/{project_pk}/subset-tasks
+      method: GET
+      auth: true
+      docs: |2-
+
+                Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
+                
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        project_pk: integer
+      display-name: Get Project Subset Task List with Predictions and Accuracy details
+      request:
+        name: PromptsSubsetTasksRequest
+        query-parameters:
+          include_total:
+            type: optional<boolean>
+            docs: >-
+              If true (default), includes task_count in response; if false,
+              omits it.
+          model_run:
+            type: optional<integer>
+            docs: A unique ID of a ModelRun
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+          page:
+            type: optional<integer>
+            docs: A page number within the paginated result set.
+          page_size:
+            type: optional<integer>
+            docs: Number of results to return per page.
+          parent_model:
+            type: optional<integer>
+            docs: The ID of the parent model (ModelInterface) for this Inference Run
+          project_subset:
+            type: optional<string>
+            docs: The project subset to retrieve tasks for
+      response:
+        docs: ''
+        type: root.PaginatedProjectSubsetTasksResponseList
+      errors:
+        - root.BadRequestError
+      examples:
+        - path-parameters:
+            project_pk: 1
+          response:
+            body:
+              count: 123
+              next: http://api.example.org/accounts/?page=4
+              previous: http://api.example.org/accounts/?page=2
+              results:
+                - next_cursor: next_cursor
+                  previous_cursor: previous_cursor
+                  task_count: 1
+                  task_result_list:
+                    - data:
+                        key: value
+      audiences:
+        - public
+    subsets:
+      path: /api/projects/{project_pk}/subsets
+      method: GET
+      auth: true
+      docs: |2-
+
+                Provides list of available subsets for a project along with count of tasks in each subset
+                
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        project_pk: integer
+      display-name: Get available subsets of a project (for prompts usage)
+      request:
+        name: PromptsSubsetsRequest
+        query-parameters:
+          ordering:
+            type: optional<string>
+            docs: Which field to use when ordering the results.
+      response:
+        docs: ''
+        type: list<root.ProjectSubsetItem>
+      examples:
+        - path-parameters:
+            project_pk: 1
+          response:
+            body:
+              - columns_schema:
+                  - key: value
+                count: 1
+                subset: subset
+      audiences:
+        - public
     list:
       path: /api/prompts/
       method: GET
@@ -491,24 +585,6 @@ service:
               updated_at: '2024-01-15T09:30:00Z'
       audiences:
         - internal
-    api_prompts_versions_inference_runs_cancel_create:
-      path: >-
-        /api/prompts/{prompt_id}/versions/{version_id}/inference-runs/{inference_run_id}/cancel
-      method: POST
-      auth: true
-      docs: Cancel the inference run for the given api
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        inference_run_id: integer
-        prompt_id: integer
-        version_id: integer
-      display-name: Cancel Inference Run API
-      examples:
-        - path-parameters:
-            inference_run_id: 1
-            prompt_id: 1
-            version_id: 1
   source:
     openapi: openapi/openapi.yaml
 types:
