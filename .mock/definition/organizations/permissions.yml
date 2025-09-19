@@ -5,7 +5,7 @@ service:
   base-path: ''
   endpoints:
     list:
-      path: /api/organizations/{id}/organization-permissions
+      path: /api/organizations/{id}/permissions
       method: GET
       auth: true
       docs: >-
@@ -42,7 +42,7 @@ service:
       audiences:
         - public
     create:
-      path: /api/organizations/{id}/organization-permissions
+      path: /api/organizations/{id}/permissions
       method: POST
       auth: true
       docs: >-
@@ -80,8 +80,25 @@ service:
               tooltip: tooltip
       audiences:
         - public
+    get_options:
+      path: /api/organizations/{id}/permissions/options
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve the list of configurable permission options (label, tooltip,
+        default role and allowed roles).
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get configurable permissions options
+      examples:
+        - path-parameters:
+            id: 1
+      audiences:
+        - public
     get:
-      path: /api/organizations/{id}/organization-permissions/{permission}
+      path: /api/organizations/{id}/permissions/{permission}
       method: GET
       auth: true
       source:
@@ -114,7 +131,7 @@ service:
       audiences:
         - public
     replace:
-      path: /api/organizations/{id}/organization-permissions/{permission}
+      path: /api/organizations/{id}/permissions/{permission}
       method: PUT
       auth: true
       docs: >-
@@ -160,7 +177,7 @@ service:
       audiences:
         - public
     delete:
-      path: /api/organizations/{id}/organization-permissions/{permission}
+      path: /api/organizations/{id}/permissions/{permission}
       method: DELETE
       auth: true
       source:
@@ -179,7 +196,7 @@ service:
       audiences:
         - public
     update:
-      path: /api/organizations/{id}/organization-permissions/{permission}
+      path: /api/organizations/{id}/permissions/{permission}
       method: PATCH
       auth: true
       docs: >-

@@ -55,7 +55,7 @@ class PermissionsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions",
+            f"api/organizations/{jsonable_encoder(id)}/permissions",
             method="GET",
             params={
                 "ordering": ordering,
@@ -117,7 +117,7 @@ class PermissionsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions",
+            f"api/organizations/{jsonable_encoder(id)}/permissions",
             method="POST",
             json={
                 "permission": permission,
@@ -160,6 +160,45 @@ class PermissionsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_options(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.permissions.get_options(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/organizations/{jsonable_encoder(id)}/permissions/options",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
     def get(
         self, id: int, permission: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> OrganizationPermission:
@@ -191,7 +230,7 @@ class PermissionsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
             method="GET",
             request_options=request_options,
         )
@@ -276,7 +315,7 @@ class PermissionsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions/{jsonable_encoder(permission_)}",
+            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission_)}",
             method="PUT",
             json={
                 "permission": permission,
@@ -357,7 +396,7 @@ class PermissionsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -433,7 +472,7 @@ class PermissionsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
             method="PATCH",
             json={
                 "permission": patched_organization_permission_request_permission,
@@ -535,7 +574,7 @@ class AsyncPermissionsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions",
+            f"api/organizations/{jsonable_encoder(id)}/permissions",
             method="GET",
             params={
                 "ordering": ordering,
@@ -605,7 +644,7 @@ class AsyncPermissionsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions",
+            f"api/organizations/{jsonable_encoder(id)}/permissions",
             method="POST",
             json={
                 "permission": permission,
@@ -643,6 +682,53 @@ class AsyncPermissionsClient:
                         ),
                     )
                 )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_options(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.organizations.permissions.get_options(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/organizations/{jsonable_encoder(id)}/permissions/options",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -687,7 +773,7 @@ class AsyncPermissionsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
             method="GET",
             request_options=request_options,
         )
@@ -780,7 +866,7 @@ class AsyncPermissionsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions/{jsonable_encoder(permission_)}",
+            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission_)}",
             method="PUT",
             json={
                 "permission": permission,
@@ -871,7 +957,7 @@ class AsyncPermissionsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -955,7 +1041,7 @@ class AsyncPermissionsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/organizations/{jsonable_encoder(id)}/organization-permissions/{jsonable_encoder(permission)}",
+            f"api/organizations/{jsonable_encoder(id)}/permissions/{jsonable_encoder(permission)}",
             method="PATCH",
             json={
                 "permission": patched_organization_permission_request_permission,

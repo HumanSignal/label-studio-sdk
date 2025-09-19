@@ -69,6 +69,19 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
+async def test_get_options(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    # Type ignore to avoid mypy complaining about the function not being meant to return a value
+    assert (
+        client.organizations.permissions.get_options(id=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+    assert (
+        await async_client.organizations.permissions.get_options(id=1)  # type: ignore[func-returns-value]
+        is None
+    )
+
+
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
         "default_role": "default_role",
