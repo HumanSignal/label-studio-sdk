@@ -12,6 +12,7 @@
 import os
 import sys
 from label_studio_sdk.client import LabelStudio
+from label_studio_sdk.core.api_error import ApiError
 
 
 def main():
@@ -71,16 +72,22 @@ def main():
     }
     selected_items = {"all": True}
 
-    resp = ls.projects.assignments.bulk_assign(
-        id=project_id,
-        type=assignment_type,  # 'AN' or 'RE'
-        users=[user.id],  # list of user IDs
-        selected_items=selected_items,  # apply to all tasks matching filters, or you can pass here specific task IDs
-        filters=filters,  # Inner ID in (0, 100)
-    )
+    try:
+        resp = ls.projects.assignments.bulk_assign(
+            id=project_id,
+            type=assignment_type,  # 'AN' or 'RE'
+            users=[user.id],  # list of user IDs
+            selected_items=selected_items,  # apply to all tasks matching filters, or you can pass here specific task IDs
+            filters=filters,  # Inner ID in (0, 100)
+        )
 
-    # Simple summary
-    print(f"Bulk assignment done: {resp}")
+        # Simple summary
+        print(f"Bulk assignment done: {resp}")
+    except ApiError as e:
+        print(
+            "Assignments API not available on this instance (Enterprise only). "
+            "Skipping bulk assignment. Error: " + str(e)
+        )
 
 
 if __name__ == "__main__":

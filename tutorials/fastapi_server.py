@@ -9,12 +9,15 @@ from label_studio_sdk.client import AsyncLabelStudio
 app = FastAPI()
 
 # Initialize the async client with the API key and project ID from running Label Studio app
-# Remember to set LABEL_STUDIO_API_KEY and LABEL_STUDIO_PROJECT_ID environment variables
+# Remember to set LABEL_STUDIO_URL, LABEL_STUDIO_API_KEY and LABEL_STUDIO_PROJECT_ID environment variables
 client = AsyncLabelStudio(
-    base_url="http://localhost:8080",
+    base_url=os.getenv("LABEL_STUDIO_URL", "http://localhost:8080"),
     api_key=os.getenv("LABEL_STUDIO_API_KEY"),
 )
-project_id = int(os.getenv("LABEL_STUDIO_PROJECT_ID"))
+project_id_env = os.getenv("LABEL_STUDIO_PROJECT_ID")
+if not project_id_env:
+    raise RuntimeError("LABEL_STUDIO_PROJECT_ID env var is required")
+project_id = int(project_id_env)
 
 
 # Some dummy input data
