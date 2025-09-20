@@ -133,7 +133,7 @@ project = client.projects.create(
 )
 
 # (Optional) validate the config to catch mistakes early
-clint.projects.validate_label_config(id=project.id, label_config=label_config)
+client.projects.validate_label_config(id=project.id, label_config=label_config)
 
 # Create a single task
 task = client.tasks.create(
