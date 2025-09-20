@@ -24,9 +24,9 @@ poetry add label-studio-sdk
 # Usage
 
 ```python
-from label_studio_sdk.client import LabelStudio
+from label_studio_sdk import LabelStudio
 
-ls = LabelStudio(
+client = LabelStudio(
     base_url='YOUR_LABEL_STUDIO_URL',  
     api_key="YOUR_API_KEY",
 )
@@ -106,9 +106,10 @@ from label_studio_sdk._legacy import Project
 # Example: Create a new project with tasks
 
 ```python
-from label_studio_sdk.client import LabelStudio
+# Import the SDK and the client module
+from label_studio_sdk import LabelStudio
 
-ls = LabelStudio(
+client = LabelStudio(
     base_url="http://localhost:8080",   # <-- put your LS URL here
     api_key="YOUR_API_KEY",             # <-- put your API key here
 )
@@ -126,23 +127,23 @@ label_config = """
 """
 
 # Create project
-project = ls.projects.create(
+project = client.projects.create(
     title="Sentiment Classification",
     label_config=label_config
 )
 
 # (Optional) validate the config to catch mistakes early
-ls.projects.validate_label_config(id=project.id, label_config=label_config)
+clint.projects.validate_label_config(id=project.id, label_config=label_config)
 
 # Create a single task
-task = ls.tasks.create(
+task = client.tasks.create(
     project=project.id,
     data={"text": "Label Studio is the best!"}  # 'text' matches value="$text"
 )
 print(f"Created task id: {task.id}")
 
 # Or create multiple tasks at once
-ls.projects.import_tasks(
+client.projects.import_tasks(
     id=project.id,
     request=[
         {"text": "I love Label Studio"},
