@@ -10058,12 +10058,6 @@ paths:
           required: true
           schema:
             type: integer
-        - description: A unique integer value identifying the model ID to list versions for.
-          in: query
-          name: prompt_id
-          required: true
-          schema:
-            type: integer
       responses:
         '200':
           content:
@@ -18891,6 +18885,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18986,6 +18984,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -25817,6 +25819,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
