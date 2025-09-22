@@ -35,7 +35,6 @@ class PaginatedProjectMember(UncheckedBaseModel):
     last_name: typing.Optional[str] = None
     lse_fields: LseFields
     org_membership: typing.List[OrganizationMembership]
-    organization_membership: OrganizationMembership
     pause: str
     phone: typing.Optional[str] = None
     project_role: str

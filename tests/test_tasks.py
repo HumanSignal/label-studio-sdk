@@ -81,29 +81,20 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "annotations": "annotations",
         "annotations_ids": "annotations_ids",
         "annotations_results": "annotations_results",
-        "annotators": [1, 1],
+        "annotators": [1],
         "annotators_count": 1,
         "avg_lead_time": 1.1,
         "cancelled_annotations": 1,
-        "comment_authors": [{"comment_authors": {"key": "value"}}, {"comment_authors": {"key": "value"}}],
+        "comment_authors": [{"key": "value"}],
         "comment_authors_count": 1,
-        "comment_count": 2147483647,
+        "comment_count": 1,
         "comments": "comments",
         "completed_at": "2024-01-15T09:30:00Z",
         "created_at": "2024-01-15T09:30:00Z",
-        "data": {"key": "value"},
+        "data": {"image": "https://example.com/image.jpg", "text": "Hello, world!"},
         "draft_exists": True,
         "drafts": [
-            {
-                "created_at": "2024-01-15T09:30:00Z",
-                "result": [{"result": {"key": "value"}}, {"result": {"key": "value"}}],
-                "updated_at": "2024-01-15T09:30:00Z",
-            },
-            {
-                "created_at": "2024-01-15T09:30:00Z",
-                "result": [{"result": {"key": "value"}}, {"result": {"key": "value"}}],
-                "updated_at": "2024-01-15T09:30:00Z",
-            },
+            {"created_at": "2024-01-15T09:30:00Z", "result": [{"key": "value"}], "updated_at": "2024-01-15T09:30:00Z"}
         ],
         "file_upload": "file_upload",
         "ground_truth": True,
@@ -112,46 +103,35 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "is_labeled": True,
         "last_comment_updated_at": "2024-01-15T09:30:00Z",
         "meta": {"key": "value"},
-        "overlap": 2147483647,
+        "overlap": 1,
         "predictions": [
             {
                 "created_at": "2024-01-15T09:30:00Z",
-                "model": {"model": {"key": "value"}},
-                "model_run": {"model_run": {"key": "value"}},
+                "model": {"key": "value"},
+                "model_run": {"key": "value"},
                 "model_version": "model_version",
                 "project": 1,
-                "result": [{"result": {"key": "value"}}, {"result": {"key": "value"}}],
+                "result": [{"key": "value"}],
                 "score": 1.1,
                 "task": 1,
                 "updated_at": "2024-01-15T09:30:00Z",
-            },
-            {
-                "created_at": "2024-01-15T09:30:00Z",
-                "model": {"model": {"key": "value"}},
-                "model_run": {"model_run": {"key": "value"}},
-                "model_version": "model_version",
-                "project": 1,
-                "result": [{"result": {"key": "value"}}, {"result": {"key": "value"}}],
-                "score": 1.1,
-                "task": 1,
-                "updated_at": "2024-01-15T09:30:00Z",
-            },
+            }
         ],
         "predictions_model_versions": "predictions_model_versions",
         "predictions_results": "predictions_results",
         "predictions_score": 1.1,
         "project": 1,
         "reviewed": True,
-        "reviewers": [{"reviewers": {"key": "value"}}, {"reviewers": {"key": "value"}}],
+        "reviewers": [{"key": "value"}],
         "reviewers_count": 1,
         "reviews_accepted": 1,
         "reviews_rejected": 1,
         "storage_filename": "storage_filename",
         "total_annotations": 1,
         "total_predictions": 1,
-        "unresolved_comment_count": 2147483647,
+        "unresolved_comment_count": 1,
         "updated_at": "2024-01-15T09:30:00Z",
-        "updated_by": [{"updated_by": {"key": "value"}}, {"updated_by": {"key": "value"}}],
+        "updated_by": [{"key": "value"}],
     }
     expected_types: typing.Any = {
         "agreement": None,
@@ -159,11 +139,11 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "annotations": None,
         "annotations_ids": None,
         "annotations_results": None,
-        "annotators": ("list", {0: "integer", 1: "integer"}),
+        "annotators": ("list", {0: "integer"}),
         "annotators_count": "integer",
         "avg_lead_time": None,
         "cancelled_annotations": "integer",
-        "comment_authors": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
+        "comment_authors": ("list", {0: ("dict", {0: (None, None)})}),
         "comment_authors_count": "integer",
         "comment_count": "integer",
         "comments": None,
@@ -176,14 +156,9 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             {
                 0: {
                     "created_at": "datetime",
-                    "result": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
+                    "result": ("list", {0: ("dict", {0: (None, None)})}),
                     "updated_at": "datetime",
-                },
-                1: {
-                    "created_at": "datetime",
-                    "result": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
-                    "updated_at": "datetime",
-                },
+                }
             },
         ),
         "file_upload": None,
@@ -203,22 +178,11 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
                     "model_run": ("dict", {0: (None, None)}),
                     "model_version": None,
                     "project": "integer",
-                    "result": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
+                    "result": ("list", {0: ("dict", {0: (None, None)})}),
                     "score": None,
                     "task": "integer",
                     "updated_at": "datetime",
-                },
-                1: {
-                    "created_at": "datetime",
-                    "model": ("dict", {0: (None, None)}),
-                    "model_run": ("dict", {0: (None, None)}),
-                    "model_version": None,
-                    "project": "integer",
-                    "result": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
-                    "score": None,
-                    "task": "integer",
-                    "updated_at": "datetime",
-                },
+                }
             },
         ),
         "predictions_model_versions": None,
@@ -226,7 +190,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "predictions_score": None,
         "project": "integer",
         "reviewed": None,
-        "reviewers": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
+        "reviewers": ("list", {0: ("dict", {0: (None, None)})}),
         "reviewers_count": "integer",
         "reviews_accepted": "integer",
         "reviews_rejected": "integer",
@@ -235,12 +199,14 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "total_predictions": "integer",
         "unresolved_comment_count": "integer",
         "updated_at": "datetime",
-        "updated_by": ("list", {0: ("dict", {0: (None, None)}), 1: ("dict", {0: (None, None)})}),
+        "updated_by": ("list", {0: ("dict", {0: (None, None)})}),
     }
-    response = client.tasks.create(data={"key": "value"})
+    response = client.tasks.create(data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.tasks.create(data={"key": "value"})
+    async_response = await async_client.tasks.create(
+        data={"image": "https://example.com/image.jpg", "text": "Hello, world!"}, project=1
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
