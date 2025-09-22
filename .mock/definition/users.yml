@@ -35,6 +35,10 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               phone: phone
               username: username
       audiences:
@@ -109,6 +113,10 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               phone: phone
               username: username
       audiences:
@@ -236,6 +244,10 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               pause: pause
               permissions:
                 - permissions
@@ -280,6 +292,10 @@ service:
                   - active: active
                     organization_id: 1
                     role: role
+                organization_membership:
+                  active: active
+                  organization_id: 1
+                  role: role
                 phone: phone
                 username: username
       audiences:
@@ -362,6 +378,10 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               pause: pause
               phone: phone
               username: username
@@ -418,6 +438,10 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               pause: pause
               phone: phone
               username: username
@@ -535,6 +559,10 @@ service:
                 - active: active
                   organization_id: 1
                   role: role
+              organization_membership:
+                active: active
+                organization_id: 1
+                role: role
               pause: pause
               phone: phone
               username: username
