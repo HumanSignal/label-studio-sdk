@@ -49,7 +49,7 @@ service:
               title: title
               updated_at: '2024-01-15T09:30:00Z'
       audiences:
-        - internal
+        - public
     delete:
       path: /api/blueprints/{id}/
       method: DELETE
@@ -64,7 +64,7 @@ service:
         - path-parameters:
             id: id
       audiences:
-        - internal
+        - public
     api_blueprints_create_project_retrieve:
       path: /api/blueprints/{share_id}/create-project
       method: GET

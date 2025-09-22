@@ -62,8 +62,9 @@ class VersionsClient:
 
     def list(
         self,
-        prompt_id: int,
+        prompt_id_: int,
         *,
+        prompt_id: int,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ThirdPartyModelVersion]:
@@ -72,7 +73,10 @@ class VersionsClient:
 
         Parameters
         ----------
+        prompt_id_ : int
+
         prompt_id : int
+            A unique integer value identifying the model ID to list versions for.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -93,14 +97,16 @@ class VersionsClient:
             api_key="YOUR_API_KEY",
         )
         client.prompts.versions.list(
+            prompt_id_=1,
             prompt_id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions",
+            f"api/prompts/{jsonable_encoder(prompt_id_)}/versions",
             method="GET",
             params={
                 "ordering": ordering,
+                "prompt_id": prompt_id,
             },
             request_options=request_options,
         )
@@ -668,8 +674,9 @@ class AsyncVersionsClient:
 
     async def list(
         self,
-        prompt_id: int,
+        prompt_id_: int,
         *,
+        prompt_id: int,
         ordering: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ThirdPartyModelVersion]:
@@ -678,7 +685,10 @@ class AsyncVersionsClient:
 
         Parameters
         ----------
+        prompt_id_ : int
+
         prompt_id : int
+            A unique integer value identifying the model ID to list versions for.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -704,6 +714,7 @@ class AsyncVersionsClient:
 
         async def main() -> None:
             await client.prompts.versions.list(
+                prompt_id_=1,
                 prompt_id=1,
             )
 
@@ -711,10 +722,11 @@ class AsyncVersionsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/prompts/{jsonable_encoder(prompt_id)}/versions",
+            f"api/prompts/{jsonable_encoder(prompt_id_)}/versions",
             method="GET",
             params={
                 "ordering": ordering,
+                "prompt_id": prompt_id,
             },
             request_options=request_options,
         )

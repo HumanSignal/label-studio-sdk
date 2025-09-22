@@ -876,7 +876,7 @@ paths:
       tags:
         - Blueprints
       x-fern-audiences:
-        - internal
+        - public
       x-fern-sdk-group-name: blueprints
       x-fern-sdk-method-name: create
   /api/blueprints/{id}/:
@@ -898,7 +898,7 @@ paths:
       tags:
         - Blueprints
       x-fern-audiences:
-        - internal
+        - public
       x-fern-sdk-group-name: blueprints
       x-fern-sdk-method-name: delete
   /api/blueprints/{share_id}/create-project:
@@ -10058,6 +10058,12 @@ paths:
           required: true
           schema:
             type: integer
+        - description: A unique integer value identifying the model ID to list versions for.
+          in: query
+          name: prompt_id
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -18885,10 +18891,6 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
-        recursive_scan:
-          description: Perform recursive scan
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18984,10 +18986,6 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
-        recursive_scan:
-          description: Perform recursive scan
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -25819,10 +25817,6 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
-        recursive_scan:
-          description: Perform recursive scan
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
