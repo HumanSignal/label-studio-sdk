@@ -20072,6 +20072,14 @@ client.import_storage.azure_spi.create(
 <dl>
 <dd>
 
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
@@ -20295,6 +20303,14 @@ client.import_storage.azure_spi.validate(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
     
 </dd>
 </dl>
@@ -20673,6 +20689,14 @@ client.import_storage.azure_spi.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan
     
 </dd>
 </dl>
@@ -30547,7 +30571,6 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.prompts.versions.list(
-    prompt_id_=1,
     prompt_id=1,
 )
 
@@ -30565,15 +30588,7 @@ client.prompts.versions.list(
 <dl>
 <dd>
 
-**prompt_id_:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**prompt_id:** `int` — A unique integer value identifying the model ID to list versions for.
+**prompt_id:** `int` 
     
 </dd>
 </dl>
