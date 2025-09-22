@@ -876,7 +876,7 @@ paths:
       tags:
         - Blueprints
       x-fern-audiences:
-        - public
+        - internal
       x-fern-sdk-group-name: blueprints
       x-fern-sdk-method-name: create
   /api/blueprints/{id}/:
@@ -898,7 +898,7 @@ paths:
       tags:
         - Blueprints
       x-fern-audiences:
-        - public
+        - internal
       x-fern-sdk-group-name: blueprints
       x-fern-sdk-method-name: delete
   /api/blueprints/{share_id}/create-project:
