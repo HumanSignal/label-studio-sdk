@@ -11118,6 +11118,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -11333,6 +11334,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -11863,6 +11865,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -12078,6 +12081,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -12576,6 +12580,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -13667,6 +13672,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -14227,6 +14233,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -15363,6 +15370,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
