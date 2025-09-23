@@ -9,341 +9,339 @@ from ..utilities import validate_response
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "account_name": "account_name",
-            "client_id": "client_id",
-            "client_secret": "client_secret",
-            "container": "container",
+            "can_delete_objects": True,
+            "catalog": "catalog",
             "created_at": "2024-01-15T09:30:00Z",
             "description": "description",
+            "host": "host",
             "id": 1,
             "last_sync": "2024-01-15T09:30:00Z",
             "last_sync_count": 1,
             "last_sync_job": "last_sync_job",
             "meta": {"key": "value"},
             "prefix": "prefix",
-            "presign": True,
-            "presign_ttl": 1,
             "project": 1,
-            "recursive_scan": True,
             "regex_filter": "regex_filter",
+            "request_timeout_s": 1,
+            "schema": "schema",
             "status": "initialized",
+            "stream_chunk_bytes": 1,
             "synchronizable": True,
-            "tenant_id": "tenant_id",
             "title": "title",
             "traceback": "traceback",
             "type": "type",
             "use_blob_urls": True,
-            "user_delegation_key": "user_delegation_key",
+            "verify_tls": True,
+            "volume": "volume",
         }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
         {
             0: {
-                "account_name": None,
-                "client_id": None,
-                "client_secret": None,
-                "container": None,
+                "can_delete_objects": None,
+                "catalog": None,
                 "created_at": "datetime",
                 "description": None,
+                "host": None,
                 "id": "integer",
                 "last_sync": "datetime",
                 "last_sync_count": "integer",
                 "last_sync_job": None,
                 "meta": None,
                 "prefix": None,
-                "presign": None,
-                "presign_ttl": "integer",
                 "project": "integer",
-                "recursive_scan": None,
                 "regex_filter": None,
+                "request_timeout_s": "integer",
+                "schema": None,
                 "status": None,
+                "stream_chunk_bytes": "integer",
                 "synchronizable": None,
-                "tenant_id": None,
                 "title": None,
                 "traceback": None,
                 "type": None,
                 "use_blob_urls": None,
-                "user_delegation_key": None,
+                "verify_tls": None,
+                "volume": None,
             }
         },
     )
-    response = client.import_storage.azure_spi.list()
+    response = client.export_storage.databricks.list()
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.import_storage.azure_spi.list()
+    async_response = await async_client.export_storage.databricks.list()
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "account_name": "account_name",
-        "client_id": "client_id",
-        "client_secret": "client_secret",
-        "container": "container",
+        "can_delete_objects": True,
+        "catalog": "catalog",
         "created_at": "2024-01-15T09:30:00Z",
         "description": "description",
+        "host": "host",
         "id": 1,
         "last_sync": "2024-01-15T09:30:00Z",
         "last_sync_count": 1,
         "last_sync_job": "last_sync_job",
         "meta": {"key": "value"},
         "prefix": "prefix",
-        "presign": True,
-        "presign_ttl": 1,
         "project": 1,
-        "recursive_scan": True,
         "regex_filter": "regex_filter",
+        "request_timeout_s": 1,
+        "schema": "schema",
         "status": "initialized",
+        "stream_chunk_bytes": 1,
         "synchronizable": True,
-        "tenant_id": "tenant_id",
         "title": "title",
         "traceback": "traceback",
         "type": "type",
         "use_blob_urls": True,
-        "user_delegation_key": "user_delegation_key",
+        "verify_tls": True,
+        "volume": "volume",
     }
     expected_types: typing.Any = {
-        "account_name": None,
-        "client_id": None,
-        "client_secret": None,
-        "container": None,
+        "can_delete_objects": None,
+        "catalog": None,
         "created_at": "datetime",
         "description": None,
+        "host": None,
         "id": "integer",
         "last_sync": "datetime",
         "last_sync_count": "integer",
         "last_sync_job": None,
         "meta": None,
         "prefix": None,
-        "presign": None,
-        "presign_ttl": "integer",
         "project": "integer",
-        "recursive_scan": None,
         "regex_filter": None,
+        "request_timeout_s": "integer",
+        "schema": None,
         "status": None,
+        "stream_chunk_bytes": "integer",
         "synchronizable": None,
-        "tenant_id": None,
         "title": None,
         "traceback": None,
         "type": None,
         "use_blob_urls": None,
-        "user_delegation_key": None,
+        "verify_tls": None,
+        "volume": None,
     }
-    response = client.import_storage.azure_spi.create(project=1)
+    response = client.export_storage.databricks.create(
+        catalog="catalog", host="host", project=1, schema="schema", volume="volume"
+    )
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.import_storage.azure_spi.create(project=1)
+    async_response = await async_client.export_storage.databricks.create(
+        catalog="catalog", host="host", project=1, schema="schema", volume="volume"
+    )
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_validate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.import_storage.azure_spi.validate(project=1)  # type: ignore[func-returns-value]
+        client.export_storage.databricks.validate(
+            catalog="catalog", host="host", project=1, schema="schema", volume="volume"
+        )  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.import_storage.azure_spi.validate(project=1)  # type: ignore[func-returns-value]
+        await async_client.export_storage.databricks.validate(
+            catalog="catalog", host="host", project=1, schema="schema", volume="volume"
+        )  # type: ignore[func-returns-value]
         is None
     )
 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "account_name": "account_name",
-        "client_id": "client_id",
-        "client_secret": "client_secret",
-        "container": "container",
+        "can_delete_objects": True,
+        "catalog": "catalog",
         "created_at": "2024-01-15T09:30:00Z",
         "description": "description",
+        "host": "host",
         "id": 1,
         "last_sync": "2024-01-15T09:30:00Z",
         "last_sync_count": 1,
         "last_sync_job": "last_sync_job",
         "meta": {"key": "value"},
         "prefix": "prefix",
-        "presign": True,
-        "presign_ttl": 1,
         "project": 1,
-        "recursive_scan": True,
         "regex_filter": "regex_filter",
+        "request_timeout_s": 1,
+        "schema": "schema",
         "status": "initialized",
+        "stream_chunk_bytes": 1,
         "synchronizable": True,
-        "tenant_id": "tenant_id",
         "title": "title",
         "traceback": "traceback",
         "type": "type",
         "use_blob_urls": True,
-        "user_delegation_key": "user_delegation_key",
+        "verify_tls": True,
+        "volume": "volume",
     }
     expected_types: typing.Any = {
-        "account_name": None,
-        "client_id": None,
-        "client_secret": None,
-        "container": None,
+        "can_delete_objects": None,
+        "catalog": None,
         "created_at": "datetime",
         "description": None,
+        "host": None,
         "id": "integer",
         "last_sync": "datetime",
         "last_sync_count": "integer",
         "last_sync_job": None,
         "meta": None,
         "prefix": None,
-        "presign": None,
-        "presign_ttl": "integer",
         "project": "integer",
-        "recursive_scan": None,
         "regex_filter": None,
+        "request_timeout_s": "integer",
+        "schema": None,
         "status": None,
+        "stream_chunk_bytes": "integer",
         "synchronizable": None,
-        "tenant_id": None,
         "title": None,
         "traceback": None,
         "type": None,
         "use_blob_urls": None,
-        "user_delegation_key": None,
+        "verify_tls": None,
+        "volume": None,
     }
-    response = client.import_storage.azure_spi.get(id=1)
+    response = client.export_storage.databricks.get(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.import_storage.azure_spi.get(id=1)
+    async_response = await async_client.export_storage.databricks.get(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.import_storage.azure_spi.delete(id=1)  # type: ignore[func-returns-value]
+        client.export_storage.databricks.delete(id=1)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.import_storage.azure_spi.delete(id=1)  # type: ignore[func-returns-value]
+        await async_client.export_storage.databricks.delete(id=1)  # type: ignore[func-returns-value]
         is None
     )
 
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "account_name": "account_name",
-        "client_id": "client_id",
-        "client_secret": "client_secret",
-        "container": "container",
+        "can_delete_objects": True,
+        "catalog": "catalog",
         "created_at": "2024-01-15T09:30:00Z",
         "description": "description",
+        "host": "host",
         "id": 1,
         "last_sync": "2024-01-15T09:30:00Z",
         "last_sync_count": 1,
         "last_sync_job": "last_sync_job",
         "meta": {"key": "value"},
         "prefix": "prefix",
-        "presign": True,
-        "presign_ttl": 1,
         "project": 1,
-        "recursive_scan": True,
         "regex_filter": "regex_filter",
+        "request_timeout_s": 1,
+        "schema": "schema",
         "status": "initialized",
+        "stream_chunk_bytes": 1,
         "synchronizable": True,
-        "tenant_id": "tenant_id",
         "title": "title",
         "traceback": "traceback",
         "type": "type",
         "use_blob_urls": True,
-        "user_delegation_key": "user_delegation_key",
+        "verify_tls": True,
+        "volume": "volume",
     }
     expected_types: typing.Any = {
-        "account_name": None,
-        "client_id": None,
-        "client_secret": None,
-        "container": None,
+        "can_delete_objects": None,
+        "catalog": None,
         "created_at": "datetime",
         "description": None,
+        "host": None,
         "id": "integer",
         "last_sync": "datetime",
         "last_sync_count": "integer",
         "last_sync_job": None,
         "meta": None,
         "prefix": None,
-        "presign": None,
-        "presign_ttl": "integer",
         "project": "integer",
-        "recursive_scan": None,
         "regex_filter": None,
+        "request_timeout_s": "integer",
+        "schema": None,
         "status": None,
+        "stream_chunk_bytes": "integer",
         "synchronizable": None,
-        "tenant_id": None,
         "title": None,
         "traceback": None,
         "type": None,
         "use_blob_urls": None,
-        "user_delegation_key": None,
+        "verify_tls": None,
+        "volume": None,
     }
-    response = client.import_storage.azure_spi.update(id=1)
+    response = client.export_storage.databricks.update(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.import_storage.azure_spi.update(id=1)
+    async_response = await async_client.export_storage.databricks.update(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_sync(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "account_name": "account_name",
-        "client_id": "client_id",
-        "client_secret": "client_secret",
-        "container": "container",
+        "can_delete_objects": True,
+        "catalog": "catalog",
         "created_at": "2024-01-15T09:30:00Z",
         "description": "description",
+        "host": "host",
         "id": 1,
         "last_sync": "2024-01-15T09:30:00Z",
         "last_sync_count": 1,
         "last_sync_job": "last_sync_job",
         "meta": {"key": "value"},
         "prefix": "prefix",
-        "presign": True,
-        "presign_ttl": 1,
         "project": 1,
-        "recursive_scan": True,
         "regex_filter": "regex_filter",
+        "request_timeout_s": 1,
+        "schema": "schema",
         "status": "initialized",
+        "stream_chunk_bytes": 1,
         "synchronizable": True,
-        "tenant_id": "tenant_id",
         "title": "title",
         "traceback": "traceback",
         "type": "type",
         "use_blob_urls": True,
-        "user_delegation_key": "user_delegation_key",
+        "verify_tls": True,
+        "volume": "volume",
     }
     expected_types: typing.Any = {
-        "account_name": None,
-        "client_id": None,
-        "client_secret": None,
-        "container": None,
+        "can_delete_objects": None,
+        "catalog": None,
         "created_at": "datetime",
         "description": None,
+        "host": None,
         "id": "integer",
         "last_sync": "datetime",
         "last_sync_count": "integer",
         "last_sync_job": None,
         "meta": None,
         "prefix": None,
-        "presign": None,
-        "presign_ttl": "integer",
         "project": "integer",
-        "recursive_scan": None,
         "regex_filter": None,
+        "request_timeout_s": "integer",
+        "schema": None,
         "status": None,
+        "stream_chunk_bytes": "integer",
         "synchronizable": None,
-        "tenant_id": None,
         "title": None,
         "traceback": None,
         "type": None,
         "use_blob_urls": None,
-        "user_delegation_key": None,
+        "verify_tls": None,
+        "volume": None,
     }
-    response = client.import_storage.azure_spi.sync(id=1)
+    response = client.export_storage.databricks.sync(id=1)
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.import_storage.azure_spi.sync(id=1)
+    async_response = await async_client.export_storage.databricks.sync(id=1)
     validate_response(async_response, expected_response, expected_types)

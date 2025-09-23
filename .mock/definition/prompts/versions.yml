@@ -33,18 +33,11 @@ service:
           ordering:
             type: optional<string>
             docs: Which field to use when ordering the results.
-          prompt_id:
-            type: integer
-            docs: >-
-              A unique integer value identifying the model ID to list versions
-              for.
       response:
         docs: ''
         type: list<root.ThirdPartyModelVersion>
       examples:
         - path-parameters:
-            prompt_id: 1
-          query-parameters:
             prompt_id: 1
           response:
             body:

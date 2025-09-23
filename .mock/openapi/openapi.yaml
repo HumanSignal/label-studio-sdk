@@ -876,7 +876,7 @@ paths:
       tags:
         - Blueprints
       x-fern-audiences:
-        - public
+        - internal
       x-fern-sdk-group-name: blueprints
       x-fern-sdk-method-name: create
   /api/blueprints/{id}/:
@@ -898,7 +898,7 @@ paths:
       tags:
         - Blueprints
       x-fern-audiences:
-        - public
+        - internal
       x-fern-sdk-group-name: blueprints
       x-fern-sdk-method-name: delete
   /api/blueprints/{share_id}/create-project:
@@ -10092,12 +10092,6 @@ paths:
           required: true
           schema:
             type: integer
-        - description: A unique integer value identifying the model ID to list versions for.
-          in: query
-          name: prompt_id
-          required: true
-          schema:
-            type: integer
       responses:
         '200':
           content:
@@ -11168,6 +11162,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -11377,7 +11372,7 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/databricks/:
     get:
-      description: List Databricks Files import storage connections.
+      description: Get list of all Databricks Files import storage connections.
       operationId: api_storages_databricks_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -11386,6 +11381,11 @@ paths:
           required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -11397,9 +11397,15 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get Databricks import storages
+      summary: List Databricks import storages
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: list
     post:
       description: Create a Databricks Files import storage connection.
       operationId: api_storages_databricks_create
@@ -11427,6 +11433,12 @@ paths:
       summary: Create Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: create
   /api/storages/databricks/validate:
     post:
       description: Validate a specific Databricks Files import storage connection.
@@ -11444,17 +11456,19 @@ paths:
               $ref: '#/components/schemas/DatabricksImportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DatabricksImportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: validate
   /api/storages/databricks/{id}:
     delete:
       description: Delete a specific Databricks Files import storage connection.
@@ -11473,8 +11487,14 @@ paths:
       summary: Delete Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: delete
     get:
-      description: Retrieve a specific Databricks Files import storage connection.
+      description: Get a specific Databricks Files import storage connection.
       operationId: api_storages_databricks_retrieve
       parameters:
         - in: path
@@ -11494,6 +11514,12 @@ paths:
       summary: Get Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific Databricks Files import storage connection.
       operationId: api_storages_databricks_partial_update
@@ -11526,6 +11552,12 @@ paths:
       summary: Update Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: update
   /api/storages/databricks/{id}/sync:
     post:
       description: Sync tasks from a Databricks Files import storage.
@@ -11536,18 +11568,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DatabricksImportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/DatabricksImportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/DatabricksImportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -11560,6 +11580,12 @@ paths:
       summary: Sync Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: sync
   /api/storages/export:
     get:
       description: Retrieve a list of the export storages of all types with their IDs.
@@ -11883,6 +11909,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -12092,7 +12119,7 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/export/databricks:
     get:
-      description: List Databricks Files export storage connections.
+      description: Get a list of all Databricks Files export storage connections.
       operationId: api_storages_export_databricks_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -12101,6 +12128,11 @@ paths:
           required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -12112,9 +12144,15 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get Databricks export storages
+      summary: List Databricks export storages
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: list
     post:
       description: Create a Databricks Files export storage connection.
       operationId: api_storages_export_databricks_create
@@ -12142,6 +12180,12 @@ paths:
       summary: Create Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: create
   /api/storages/export/databricks/validate:
     post:
       description: Validate a specific Databricks Files export storage connection.
@@ -12159,17 +12203,19 @@ paths:
               $ref: '#/components/schemas/DatabricksExportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DatabricksExportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: validate
   /api/storages/export/databricks/{id}:
     delete:
       description: Delete a specific Databricks Files export storage connection.
@@ -12188,8 +12234,14 @@ paths:
       summary: Delete Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: delete
     get:
-      description: Retrieve a specific Databricks Files export storage connection.
+      description: Get a specific Databricks Files export storage connection.
       operationId: api_storages_export_databricks_retrieve
       parameters:
         - in: path
@@ -12209,6 +12261,12 @@ paths:
       summary: Get Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific Databricks Files export storage connection.
       operationId: api_storages_export_databricks_partial_update
@@ -12241,6 +12299,12 @@ paths:
       summary: Update Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: update
   /api/storages/export/databricks/{id}/sync:
     post:
       description: Export annotations to a Databricks Files storage.
@@ -12251,18 +12315,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DatabricksExportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/DatabricksExportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/DatabricksExportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -12275,6 +12327,12 @@ paths:
       summary: Sync Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: sync
   /api/storages/export/gcs:
     get:
       description: Get a list of all GCS export storage connections.
@@ -12566,6 +12624,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -13657,6 +13716,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -14217,6 +14277,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -15353,6 +15414,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -18935,6 +18997,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -19030,6 +19096,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -24385,10 +24455,15 @@ components:
             - $ref: '#/components/schemas/LseFields'
           readOnly: true
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         pause:
           readOnly: true
           type: string
@@ -24406,6 +24481,7 @@ components:
         - last_activity
         - lse_fields
         - org_membership
+        - organization_membership
         - pause
         - username
       type: object
@@ -24458,10 +24534,15 @@ components:
           maxLength: 256
           type: string
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         phone:
           maxLength: 256
           type: string
@@ -24475,6 +24556,7 @@ components:
         - initials
         - last_activity
         - org_membership
+        - organization_membership
         - username
       type: object
     LseUserOrganizationMemberList:
@@ -25548,10 +25630,15 @@ components:
             - $ref: '#/components/schemas/LseFields'
           readOnly: true
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         pause:
           readOnly: true
           type: string
@@ -25572,6 +25659,7 @@ components:
         - last_activity
         - lse_fields
         - org_membership
+        - organization_membership
         - pause
         - project_role
         - username
@@ -25873,6 +25961,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -30470,10 +30562,15 @@ components:
             - $ref: '#/components/schemas/WhoAmILseFields'
           readOnly: true
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         pause:
           readOnly: true
           type: string
@@ -30496,6 +30593,7 @@ components:
         - last_activity
         - lse_fields
         - org_membership
+        - organization_membership
         - pause
         - permissions
         - username

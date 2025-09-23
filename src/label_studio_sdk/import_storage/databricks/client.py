@@ -3,7 +3,7 @@
 import typing
 from ...core.client_wrapper import SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...types.azure_service_principal_import_storage import AzureServicePrincipalImportStorage
+from ...types.databricks_import_storage import DatabricksImportStorage
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
@@ -16,7 +16,7 @@ from ...core.client_wrapper import AsyncClientWrapper
 OMIT = typing.cast(typing.Any, ...)
 
 
-class AzureSpiClient:
+class DatabricksClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -26,9 +26,9 @@ class AzureSpiClient:
         ordering: typing.Optional[str] = None,
         project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[AzureServicePrincipalImportStorage]:
+    ) -> typing.List[DatabricksImportStorage]:
         """
-        Get list of all Azure import storage connections set up with Service Principal authentication.
+        Get list of all Databricks Files import storage connections.
 
         Parameters
         ----------
@@ -43,7 +43,7 @@ class AzureSpiClient:
 
         Returns
         -------
-        typing.List[AzureServicePrincipalImportStorage]
+        typing.List[DatabricksImportStorage]
 
 
         Examples
@@ -53,10 +53,10 @@ class AzureSpiClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure_spi.list()
+        client.import_storage.databricks.list()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/azure_spi/",
+            "api/storages/databricks/",
             method="GET",
             params={
                 "ordering": ordering,
@@ -67,9 +67,9 @@ class AzureSpiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[AzureServicePrincipalImportStorage],
+                    typing.List[DatabricksImportStorage],
                     construct_type(
-                        type_=typing.List[AzureServicePrincipalImportStorage],  # type: ignore
+                        type_=typing.List[DatabricksImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -81,11 +81,11 @@ class AzureSpiClient:
     def create(
         self,
         *,
+        catalog: str,
+        host: str,
         project: int,
-        account_name: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
+        schema: str,
+        volume: str,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -96,34 +96,36 @@ class AzureSpiClient:
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureServicePrincipalImportStorage:
+    ) -> DatabricksImportStorage:
         """
-        Create Azure import storage with Service Principal authentication.
+        Create a Databricks Files import storage connection.
 
         Parameters
         ----------
+        catalog : str
+            UC catalog name
+
+        host : str
+            Databricks workspace base URL (https://...)
+
         project : int
             A unique integer value identifying this project.
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
+        schema : str
+            UC schema name
 
-        client_id : typing.Optional[str]
-            Azure Blob Service Principal Client ID
-
-        client_secret : typing.Optional[str]
-            Azure Blob Service Principal Client Secret
-
-        container : typing.Optional[str]
-            Azure blob container
+        volume : str
+            UC volume name
 
         description : typing.Optional[str]
             Cloud storage description
@@ -140,44 +142,48 @@ class AzureSpiClient:
         meta : typing.Optional[typing.Optional[typing.Any]]
 
         prefix : typing.Optional[str]
-            Azure blob prefix name
+            Path under the volume
 
         presign : typing.Optional[bool]
+            Presign not supported; always proxied
 
         presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
+            Unused for Databricks; kept for compatibility
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
 
         status : typing.Optional[StatusC5AEnum]
 
-        synchronizable : typing.Optional[bool]
+        stream_chunk_bytes : typing.Optional[int]
 
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
             Cloud storage title
+
+        token : typing.Optional[str]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+            Generate blob URLs in tasks
 
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureServicePrincipalImportStorage
+        DatabricksImportStorage
 
 
         Examples
@@ -187,19 +193,21 @@ class AzureSpiClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure_spi.create(
+        client.import_storage.databricks.create(
+            catalog="catalog",
+            host="host",
             project=1,
+            schema="schema",
+            volume="volume",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/azure_spi/",
+            "api/storages/databricks/",
             method="POST",
             json={
-                "account_name": account_name,
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "container": container,
+                "catalog": catalog,
                 "description": description,
+                "host": host,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
@@ -210,13 +218,17 @@ class AzureSpiClient:
                 "project": project,
                 "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "request_timeout_s": request_timeout_s,
+                "schema": schema,
                 "status": status,
+                "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
                 "title": title,
+                "token": token,
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
-                "user_delegation_key": user_delegation_key,
+                "verify_tls": verify_tls,
+                "volume": volume,
             },
             request_options=request_options,
             omit=OMIT,
@@ -224,9 +236,9 @@ class AzureSpiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureServicePrincipalImportStorage,
+                    DatabricksImportStorage,
                     construct_type(
-                        type_=AzureServicePrincipalImportStorage,  # type: ignore
+                        type_=DatabricksImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -238,11 +250,11 @@ class AzureSpiClient:
     def validate(
         self,
         *,
+        catalog: str,
+        host: str,
         project: int,
-        account_name: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
+        schema: str,
+        volume: str,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -253,34 +265,36 @@ class AzureSpiClient:
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Validate a specific Azure import storage connection that was set up with Service Principal authentication.
+        Validate a specific Databricks Files import storage connection.
 
         Parameters
         ----------
+        catalog : str
+            UC catalog name
+
+        host : str
+            Databricks workspace base URL (https://...)
+
         project : int
             A unique integer value identifying this project.
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
+        schema : str
+            UC schema name
 
-        client_id : typing.Optional[str]
-            Azure Blob Service Principal Client ID
-
-        client_secret : typing.Optional[str]
-            Azure Blob Service Principal Client Secret
-
-        container : typing.Optional[str]
-            Azure blob container
+        volume : str
+            UC volume name
 
         description : typing.Optional[str]
             Cloud storage description
@@ -297,37 +311,41 @@ class AzureSpiClient:
         meta : typing.Optional[typing.Optional[typing.Any]]
 
         prefix : typing.Optional[str]
-            Azure blob prefix name
+            Path under the volume
 
         presign : typing.Optional[bool]
+            Presign not supported; always proxied
 
         presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
+            Unused for Databricks; kept for compatibility
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
 
         status : typing.Optional[StatusC5AEnum]
 
-        synchronizable : typing.Optional[bool]
+        stream_chunk_bytes : typing.Optional[int]
 
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
             Cloud storage title
+
+        token : typing.Optional[str]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+            Generate blob URLs in tasks
 
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -343,19 +361,21 @@ class AzureSpiClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure_spi.validate(
+        client.import_storage.databricks.validate(
+            catalog="catalog",
+            host="host",
             project=1,
+            schema="schema",
+            volume="volume",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "api/storages/azure_spi/validate",
+            "api/storages/databricks/validate",
             method="POST",
             json={
-                "account_name": account_name,
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "container": container,
+                "catalog": catalog,
                 "description": description,
+                "host": host,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
@@ -366,13 +386,17 @@ class AzureSpiClient:
                 "project": project,
                 "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "request_timeout_s": request_timeout_s,
+                "schema": schema,
                 "status": status,
+                "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
                 "title": title,
+                "token": token,
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
-                "user_delegation_key": user_delegation_key,
+                "verify_tls": verify_tls,
+                "volume": volume,
             },
             request_options=request_options,
             omit=OMIT,
@@ -385,11 +409,9 @@ class AzureSpiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureServicePrincipalImportStorage:
+    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> DatabricksImportStorage:
         """
-        Get a specific Azure import storage connection that was set up with Service Principal authentication.
+        Get a specific Databricks Files import storage connection.
 
         Parameters
         ----------
@@ -400,7 +422,7 @@ class AzureSpiClient:
 
         Returns
         -------
-        AzureServicePrincipalImportStorage
+        DatabricksImportStorage
 
 
         Examples
@@ -410,21 +432,21 @@ class AzureSpiClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure_spi.get(
+        client.import_storage.databricks.get(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/azure_spi/{jsonable_encoder(id)}",
+            f"api/storages/databricks/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureServicePrincipalImportStorage,
+                    DatabricksImportStorage,
                     construct_type(
-                        type_=AzureServicePrincipalImportStorage,  # type: ignore
+                        type_=DatabricksImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -435,7 +457,7 @@ class AzureSpiClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific Azure import storage connection that was set up with Service Principal authentication.
+        Delete a specific Databricks Files import storage connection.
 
         Parameters
         ----------
@@ -455,12 +477,12 @@ class AzureSpiClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure_spi.delete(
+        client.import_storage.databricks.delete(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/azure_spi/{jsonable_encoder(id)}",
+            f"api/storages/databricks/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -476,11 +498,9 @@ class AzureSpiClient:
         self,
         id: int,
         *,
-        account_name: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
+        catalog: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
@@ -491,36 +511,34 @@ class AzureSpiClient:
         project: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        schema: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
+        volume: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureServicePrincipalImportStorage:
+    ) -> DatabricksImportStorage:
         """
-        Update a specific Azure import storage connection that was set up with Service Principal authentication.
+        Update a specific Databricks Files import storage connection.
 
         Parameters
         ----------
         id : int
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        client_id : typing.Optional[str]
-            Azure Blob Service Principal Client ID
-
-        client_secret : typing.Optional[str]
-            Azure Blob Service Principal Client Secret
-
-        container : typing.Optional[str]
-            Azure blob container
+        catalog : typing.Optional[str]
+            UC catalog name
 
         description : typing.Optional[str]
             Cloud storage description
+
+        host : typing.Optional[str]
+            Databricks workspace base URL (https://...)
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -534,12 +552,13 @@ class AzureSpiClient:
         meta : typing.Optional[typing.Optional[typing.Any]]
 
         prefix : typing.Optional[str]
-            Azure blob prefix name
+            Path under the volume
 
         presign : typing.Optional[bool]
+            Presign not supported; always proxied
 
         presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
+            Unused for Databricks; kept for compatibility
 
         project : typing.Optional[int]
             A unique integer value identifying this project.
@@ -548,33 +567,42 @@ class AzureSpiClient:
             Perform recursive scan
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
+
+        schema : typing.Optional[str]
+            UC schema name
 
         status : typing.Optional[StatusC5AEnum]
 
-        synchronizable : typing.Optional[bool]
+        stream_chunk_bytes : typing.Optional[int]
 
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
             Cloud storage title
+
+        token : typing.Optional[str]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+            Generate blob URLs in tasks
 
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
+
+        volume : typing.Optional[str]
+            UC volume name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureServicePrincipalImportStorage
+        DatabricksImportStorage
 
 
         Examples
@@ -584,19 +612,17 @@ class AzureSpiClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure_spi.update(
+        client.import_storage.databricks.update(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/azure_spi/{jsonable_encoder(id)}",
+            f"api/storages/databricks/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "account_name": account_name,
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "container": container,
+                "catalog": catalog,
                 "description": description,
+                "host": host,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
@@ -607,13 +633,17 @@ class AzureSpiClient:
                 "project": project,
                 "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "request_timeout_s": request_timeout_s,
+                "schema": schema,
                 "status": status,
+                "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
                 "title": title,
+                "token": token,
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
-                "user_delegation_key": user_delegation_key,
+                "verify_tls": verify_tls,
+                "volume": volume,
             },
             headers={
                 "content-type": "application/json",
@@ -624,9 +654,9 @@ class AzureSpiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureServicePrincipalImportStorage,
+                    DatabricksImportStorage,
                     construct_type(
-                        type_=AzureServicePrincipalImportStorage,  # type: ignore
+                        type_=DatabricksImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -635,11 +665,9 @@ class AzureSpiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def sync(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureServicePrincipalImportStorage:
+    def sync(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> DatabricksImportStorage:
         """
-        Sync tasks from an Azure import storage connection that was set up with Service Principal authentication.
+        Sync tasks from a Databricks Files import storage.
 
         Parameters
         ----------
@@ -650,7 +678,7 @@ class AzureSpiClient:
 
         Returns
         -------
-        AzureServicePrincipalImportStorage
+        DatabricksImportStorage
 
 
         Examples
@@ -660,21 +688,21 @@ class AzureSpiClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.import_storage.azure_spi.sync(
+        client.import_storage.databricks.sync(
             id=1,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/storages/azure_spi/{jsonable_encoder(id)}/sync",
+            f"api/storages/databricks/{jsonable_encoder(id)}/sync",
             method="POST",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureServicePrincipalImportStorage,
+                    DatabricksImportStorage,
                     construct_type(
-                        type_=AzureServicePrincipalImportStorage,  # type: ignore
+                        type_=DatabricksImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -684,7 +712,7 @@ class AzureSpiClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
 
-class AsyncAzureSpiClient:
+class AsyncDatabricksClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -694,9 +722,9 @@ class AsyncAzureSpiClient:
         ordering: typing.Optional[str] = None,
         project: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.List[AzureServicePrincipalImportStorage]:
+    ) -> typing.List[DatabricksImportStorage]:
         """
-        Get list of all Azure import storage connections set up with Service Principal authentication.
+        Get list of all Databricks Files import storage connections.
 
         Parameters
         ----------
@@ -711,7 +739,7 @@ class AsyncAzureSpiClient:
 
         Returns
         -------
-        typing.List[AzureServicePrincipalImportStorage]
+        typing.List[DatabricksImportStorage]
 
 
         Examples
@@ -726,13 +754,13 @@ class AsyncAzureSpiClient:
 
 
         async def main() -> None:
-            await client.import_storage.azure_spi.list()
+            await client.import_storage.databricks.list()
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/azure_spi/",
+            "api/storages/databricks/",
             method="GET",
             params={
                 "ordering": ordering,
@@ -743,9 +771,9 @@ class AsyncAzureSpiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    typing.List[AzureServicePrincipalImportStorage],
+                    typing.List[DatabricksImportStorage],
                     construct_type(
-                        type_=typing.List[AzureServicePrincipalImportStorage],  # type: ignore
+                        type_=typing.List[DatabricksImportStorage],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -757,11 +785,11 @@ class AsyncAzureSpiClient:
     async def create(
         self,
         *,
+        catalog: str,
+        host: str,
         project: int,
-        account_name: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
+        schema: str,
+        volume: str,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -772,34 +800,36 @@ class AsyncAzureSpiClient:
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureServicePrincipalImportStorage:
+    ) -> DatabricksImportStorage:
         """
-        Create Azure import storage with Service Principal authentication.
+        Create a Databricks Files import storage connection.
 
         Parameters
         ----------
+        catalog : str
+            UC catalog name
+
+        host : str
+            Databricks workspace base URL (https://...)
+
         project : int
             A unique integer value identifying this project.
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
+        schema : str
+            UC schema name
 
-        client_id : typing.Optional[str]
-            Azure Blob Service Principal Client ID
-
-        client_secret : typing.Optional[str]
-            Azure Blob Service Principal Client Secret
-
-        container : typing.Optional[str]
-            Azure blob container
+        volume : str
+            UC volume name
 
         description : typing.Optional[str]
             Cloud storage description
@@ -816,44 +846,48 @@ class AsyncAzureSpiClient:
         meta : typing.Optional[typing.Optional[typing.Any]]
 
         prefix : typing.Optional[str]
-            Azure blob prefix name
+            Path under the volume
 
         presign : typing.Optional[bool]
+            Presign not supported; always proxied
 
         presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
+            Unused for Databricks; kept for compatibility
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
 
         status : typing.Optional[StatusC5AEnum]
 
-        synchronizable : typing.Optional[bool]
+        stream_chunk_bytes : typing.Optional[int]
 
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
             Cloud storage title
+
+        token : typing.Optional[str]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+            Generate blob URLs in tasks
 
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureServicePrincipalImportStorage
+        DatabricksImportStorage
 
 
         Examples
@@ -868,22 +902,24 @@ class AsyncAzureSpiClient:
 
 
         async def main() -> None:
-            await client.import_storage.azure_spi.create(
+            await client.import_storage.databricks.create(
+                catalog="catalog",
+                host="host",
                 project=1,
+                schema="schema",
+                volume="volume",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/azure_spi/",
+            "api/storages/databricks/",
             method="POST",
             json={
-                "account_name": account_name,
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "container": container,
+                "catalog": catalog,
                 "description": description,
+                "host": host,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
@@ -894,13 +930,17 @@ class AsyncAzureSpiClient:
                 "project": project,
                 "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "request_timeout_s": request_timeout_s,
+                "schema": schema,
                 "status": status,
+                "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
                 "title": title,
+                "token": token,
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
-                "user_delegation_key": user_delegation_key,
+                "verify_tls": verify_tls,
+                "volume": volume,
             },
             request_options=request_options,
             omit=OMIT,
@@ -908,9 +948,9 @@ class AsyncAzureSpiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureServicePrincipalImportStorage,
+                    DatabricksImportStorage,
                     construct_type(
-                        type_=AzureServicePrincipalImportStorage,  # type: ignore
+                        type_=DatabricksImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -922,11 +962,11 @@ class AsyncAzureSpiClient:
     async def validate(
         self,
         *,
+        catalog: str,
+        host: str,
         project: int,
-        account_name: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
+        schema: str,
+        volume: str,
         description: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
@@ -937,34 +977,36 @@ class AsyncAzureSpiClient:
         presign_ttl: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Validate a specific Azure import storage connection that was set up with Service Principal authentication.
+        Validate a specific Databricks Files import storage connection.
 
         Parameters
         ----------
+        catalog : str
+            UC catalog name
+
+        host : str
+            Databricks workspace base URL (https://...)
+
         project : int
             A unique integer value identifying this project.
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
+        schema : str
+            UC schema name
 
-        client_id : typing.Optional[str]
-            Azure Blob Service Principal Client ID
-
-        client_secret : typing.Optional[str]
-            Azure Blob Service Principal Client Secret
-
-        container : typing.Optional[str]
-            Azure blob container
+        volume : str
+            UC volume name
 
         description : typing.Optional[str]
             Cloud storage description
@@ -981,37 +1023,41 @@ class AsyncAzureSpiClient:
         meta : typing.Optional[typing.Optional[typing.Any]]
 
         prefix : typing.Optional[str]
-            Azure blob prefix name
+            Path under the volume
 
         presign : typing.Optional[bool]
+            Presign not supported; always proxied
 
         presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
+            Unused for Databricks; kept for compatibility
 
         recursive_scan : typing.Optional[bool]
             Perform recursive scan
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
 
         status : typing.Optional[StatusC5AEnum]
 
-        synchronizable : typing.Optional[bool]
+        stream_chunk_bytes : typing.Optional[int]
 
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
             Cloud storage title
+
+        token : typing.Optional[str]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+            Generate blob URLs in tasks
 
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1032,22 +1078,24 @@ class AsyncAzureSpiClient:
 
 
         async def main() -> None:
-            await client.import_storage.azure_spi.validate(
+            await client.import_storage.databricks.validate(
+                catalog="catalog",
+                host="host",
                 project=1,
+                schema="schema",
+                volume="volume",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "api/storages/azure_spi/validate",
+            "api/storages/databricks/validate",
             method="POST",
             json={
-                "account_name": account_name,
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "container": container,
+                "catalog": catalog,
                 "description": description,
+                "host": host,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
@@ -1058,13 +1106,17 @@ class AsyncAzureSpiClient:
                 "project": project,
                 "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "request_timeout_s": request_timeout_s,
+                "schema": schema,
                 "status": status,
+                "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
                 "title": title,
+                "token": token,
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
-                "user_delegation_key": user_delegation_key,
+                "verify_tls": verify_tls,
+                "volume": volume,
             },
             request_options=request_options,
             omit=OMIT,
@@ -1077,11 +1129,9 @@ class AsyncAzureSpiClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(
-        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureServicePrincipalImportStorage:
+    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> DatabricksImportStorage:
         """
-        Get a specific Azure import storage connection that was set up with Service Principal authentication.
+        Get a specific Databricks Files import storage connection.
 
         Parameters
         ----------
@@ -1092,7 +1142,7 @@ class AsyncAzureSpiClient:
 
         Returns
         -------
-        AzureServicePrincipalImportStorage
+        DatabricksImportStorage
 
 
         Examples
@@ -1107,7 +1157,7 @@ class AsyncAzureSpiClient:
 
 
         async def main() -> None:
-            await client.import_storage.azure_spi.get(
+            await client.import_storage.databricks.get(
                 id=1,
             )
 
@@ -1115,16 +1165,16 @@ class AsyncAzureSpiClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/azure_spi/{jsonable_encoder(id)}",
+            f"api/storages/databricks/{jsonable_encoder(id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureServicePrincipalImportStorage,
+                    DatabricksImportStorage,
                     construct_type(
-                        type_=AzureServicePrincipalImportStorage,  # type: ignore
+                        type_=DatabricksImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1135,7 +1185,7 @@ class AsyncAzureSpiClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Delete a specific Azure import storage connection that was set up with Service Principal authentication.
+        Delete a specific Databricks Files import storage connection.
 
         Parameters
         ----------
@@ -1160,7 +1210,7 @@ class AsyncAzureSpiClient:
 
 
         async def main() -> None:
-            await client.import_storage.azure_spi.delete(
+            await client.import_storage.databricks.delete(
                 id=1,
             )
 
@@ -1168,7 +1218,7 @@ class AsyncAzureSpiClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/azure_spi/{jsonable_encoder(id)}",
+            f"api/storages/databricks/{jsonable_encoder(id)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -1184,11 +1234,9 @@ class AsyncAzureSpiClient:
         self,
         id: int,
         *,
-        account_name: typing.Optional[str] = OMIT,
-        client_id: typing.Optional[str] = OMIT,
-        client_secret: typing.Optional[str] = OMIT,
-        container: typing.Optional[str] = OMIT,
+        catalog: typing.Optional[str] = OMIT,
         description: typing.Optional[str] = OMIT,
+        host: typing.Optional[str] = OMIT,
         last_sync: typing.Optional[dt.datetime] = OMIT,
         last_sync_count: typing.Optional[int] = OMIT,
         last_sync_job: typing.Optional[str] = OMIT,
@@ -1199,36 +1247,34 @@ class AsyncAzureSpiClient:
         project: typing.Optional[int] = OMIT,
         recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
+        request_timeout_s: typing.Optional[int] = OMIT,
+        schema: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
+        stream_chunk_bytes: typing.Optional[int] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
-        tenant_id: typing.Optional[str] = OMIT,
         title: typing.Optional[str] = OMIT,
+        token: typing.Optional[str] = OMIT,
         traceback: typing.Optional[str] = OMIT,
         use_blob_urls: typing.Optional[bool] = OMIT,
-        user_delegation_key: typing.Optional[str] = OMIT,
+        verify_tls: typing.Optional[bool] = OMIT,
+        volume: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AzureServicePrincipalImportStorage:
+    ) -> DatabricksImportStorage:
         """
-        Update a specific Azure import storage connection that was set up with Service Principal authentication.
+        Update a specific Databricks Files import storage connection.
 
         Parameters
         ----------
         id : int
 
-        account_name : typing.Optional[str]
-            Azure Blob account name
-
-        client_id : typing.Optional[str]
-            Azure Blob Service Principal Client ID
-
-        client_secret : typing.Optional[str]
-            Azure Blob Service Principal Client Secret
-
-        container : typing.Optional[str]
-            Azure blob container
+        catalog : typing.Optional[str]
+            UC catalog name
 
         description : typing.Optional[str]
             Cloud storage description
+
+        host : typing.Optional[str]
+            Databricks workspace base URL (https://...)
 
         last_sync : typing.Optional[dt.datetime]
             Last sync finished time
@@ -1242,12 +1288,13 @@ class AsyncAzureSpiClient:
         meta : typing.Optional[typing.Optional[typing.Any]]
 
         prefix : typing.Optional[str]
-            Azure blob prefix name
+            Path under the volume
 
         presign : typing.Optional[bool]
+            Presign not supported; always proxied
 
         presign_ttl : typing.Optional[int]
-            Presigned URLs TTL (in minutes)
+            Unused for Databricks; kept for compatibility
 
         project : typing.Optional[int]
             A unique integer value identifying this project.
@@ -1256,33 +1303,42 @@ class AsyncAzureSpiClient:
             Perform recursive scan
 
         regex_filter : typing.Optional[str]
-            Cloud storage regex for filtering objects
+            Regex for filtering objects
+
+        request_timeout_s : typing.Optional[int]
+
+        schema : typing.Optional[str]
+            UC schema name
 
         status : typing.Optional[StatusC5AEnum]
 
-        synchronizable : typing.Optional[bool]
+        stream_chunk_bytes : typing.Optional[int]
 
-        tenant_id : typing.Optional[str]
-            Azure Tenant ID
+        synchronizable : typing.Optional[bool]
 
         title : typing.Optional[str]
             Cloud storage title
+
+        token : typing.Optional[str]
 
         traceback : typing.Optional[str]
             Traceback report for the last failed sync
 
         use_blob_urls : typing.Optional[bool]
-            Interpret objects as BLOBs and generate URLs
+            Generate blob URLs in tasks
 
-        user_delegation_key : typing.Optional[str]
-            User Delegation Key (Backend)
+        verify_tls : typing.Optional[bool]
+            Verify TLS certificates
+
+        volume : typing.Optional[str]
+            UC volume name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AzureServicePrincipalImportStorage
+        DatabricksImportStorage
 
 
         Examples
@@ -1297,7 +1353,7 @@ class AsyncAzureSpiClient:
 
 
         async def main() -> None:
-            await client.import_storage.azure_spi.update(
+            await client.import_storage.databricks.update(
                 id=1,
             )
 
@@ -1305,14 +1361,12 @@ class AsyncAzureSpiClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/azure_spi/{jsonable_encoder(id)}",
+            f"api/storages/databricks/{jsonable_encoder(id)}",
             method="PATCH",
             json={
-                "account_name": account_name,
-                "client_id": client_id,
-                "client_secret": client_secret,
-                "container": container,
+                "catalog": catalog,
                 "description": description,
+                "host": host,
                 "last_sync": last_sync,
                 "last_sync_count": last_sync_count,
                 "last_sync_job": last_sync_job,
@@ -1323,13 +1377,17 @@ class AsyncAzureSpiClient:
                 "project": project,
                 "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
+                "request_timeout_s": request_timeout_s,
+                "schema": schema,
                 "status": status,
+                "stream_chunk_bytes": stream_chunk_bytes,
                 "synchronizable": synchronizable,
-                "tenant_id": tenant_id,
                 "title": title,
+                "token": token,
                 "traceback": traceback,
                 "use_blob_urls": use_blob_urls,
-                "user_delegation_key": user_delegation_key,
+                "verify_tls": verify_tls,
+                "volume": volume,
             },
             headers={
                 "content-type": "application/json",
@@ -1340,9 +1398,9 @@ class AsyncAzureSpiClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureServicePrincipalImportStorage,
+                    DatabricksImportStorage,
                     construct_type(
-                        type_=AzureServicePrincipalImportStorage,  # type: ignore
+                        type_=DatabricksImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1353,9 +1411,9 @@ class AsyncAzureSpiClient:
 
     async def sync(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AzureServicePrincipalImportStorage:
+    ) -> DatabricksImportStorage:
         """
-        Sync tasks from an Azure import storage connection that was set up with Service Principal authentication.
+        Sync tasks from a Databricks Files import storage.
 
         Parameters
         ----------
@@ -1366,7 +1424,7 @@ class AsyncAzureSpiClient:
 
         Returns
         -------
-        AzureServicePrincipalImportStorage
+        DatabricksImportStorage
 
 
         Examples
@@ -1381,7 +1439,7 @@ class AsyncAzureSpiClient:
 
 
         async def main() -> None:
-            await client.import_storage.azure_spi.sync(
+            await client.import_storage.databricks.sync(
                 id=1,
             )
 
@@ -1389,16 +1447,16 @@ class AsyncAzureSpiClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/storages/azure_spi/{jsonable_encoder(id)}/sync",
+            f"api/storages/databricks/{jsonable_encoder(id)}/sync",
             method="POST",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    AzureServicePrincipalImportStorage,
+                    DatabricksImportStorage,
                     construct_type(
-                        type_=AzureServicePrincipalImportStorage,  # type: ignore
+                        type_=DatabricksImportStorage,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
