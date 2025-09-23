@@ -2,14 +2,14 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
+from .configurable_permission_option_default import ConfigurablePermissionOptionDefault
 from .role9e7enum import Role9E7Enum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class ConfigurablePermissionOption(UncheckedBaseModel):
-    default: typing.List[Role9E7Enum]
-    group: typing.Optional[str] = None
+    default: typing.Optional[ConfigurablePermissionOptionDefault] = None
     label: typing.Optional[str] = None
     options: typing.List[Role9E7Enum]
     permission: str

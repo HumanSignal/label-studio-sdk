@@ -30,13 +30,10 @@ service:
             id: 1
           response:
             body:
-              - default:
-                  - OW
-                group: group
+              - default_role: default_role
                 id: 1
                 label: label
-                options:
-                  - OW
+                options: options
                 organization: 1
                 permission: permission
                 roles:
@@ -72,13 +69,10 @@ service:
             permission: permission
           response:
             body:
-              default:
-                - OW
-              group: group
+              default_role: default_role
               id: 1
               label: label
-              options:
-                - OW
+              options: options
               organization: 1
               permission: permission
               roles:
@@ -112,9 +106,7 @@ service:
             id: 1
           response:
             body:
-              - default:
-                  - OW
-                group: group
+              - default: OW
                 label: label
                 options:
                   - OW
@@ -144,13 +136,10 @@ service:
             permission: permission
           response:
             body:
-              default:
-                - OW
-              group: group
+              default_role: default_role
               id: 1
               label: label
-              options:
-                - OW
+              options: options
               organization: 1
               permission: permission
               roles:
@@ -193,13 +182,10 @@ service:
             permission: permission
           response:
             body:
-              default:
-                - OW
-              group: group
+              default_role: default_role
               id: 1
               label: label
-              options:
-                - OW
+              options: options
               organization: 1
               permission: permission
               roles:
@@ -266,13 +252,10 @@ service:
           request: {}
           response:
             body:
-              default:
-                - OW
-              group: group
+              default_role: default_role
               id: 1
               label: label
-              options:
-                - OW
+              options: options
               organization: 1
               permission: permission
               roles:

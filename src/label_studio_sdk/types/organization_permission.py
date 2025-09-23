@@ -2,19 +2,16 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import typing
-from .default165enum import Default165Enum
-from .options165enum import Options165Enum
 from .role9e7enum import Role9E7Enum
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class OrganizationPermission(UncheckedBaseModel):
-    default: typing.List[Default165Enum]
-    group: typing.Optional[str] = None
+    default_role: str
     id: int
-    label: typing.Optional[str] = None
-    options: typing.List[Options165Enum]
+    label: str
+    options: str
     organization: int
     permission: str
     roles: typing.Optional[typing.List[Role9E7Enum]] = pydantic.Field(default=None)
@@ -22,7 +19,7 @@ class OrganizationPermission(UncheckedBaseModel):
     Explicit roles that have this permission within the organization.
     """
 
-    tooltip: typing.Optional[str] = None
+    tooltip: str
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

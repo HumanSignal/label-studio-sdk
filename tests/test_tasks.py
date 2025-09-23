@@ -91,7 +91,7 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "comments": "comments",
         "completed_at": "2024-01-15T09:30:00Z",
         "created_at": "2024-01-15T09:30:00Z",
-        "data": {"image": "https://example.com/image.jpg", "text": "Hello, world!"},
+        "data": {"key": "value"},
         "draft_exists": True,
         "drafts": [
             {"created_at": "2024-01-15T09:30:00Z", "result": [{"key": "value"}], "updated_at": "2024-01-15T09:30:00Z"}

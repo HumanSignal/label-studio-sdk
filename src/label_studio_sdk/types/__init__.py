@@ -43,15 +43,11 @@ from .comment import Comment
 from .comment_request import CommentRequest
 from .comment_serializer_with_expanded_user import CommentSerializerWithExpandedUser
 from .configurable_permission_option import ConfigurablePermissionOption
+from .configurable_permission_option_default import ConfigurablePermissionOptionDefault
 from .converted_format import ConvertedFormat
 from .converted_format_request import ConvertedFormatRequest
 from .count_limit import CountLimit
 from .custom_scripts_editable_by_enum import CustomScriptsEditableByEnum
-from .databricks_export_storage import DatabricksExportStorage
-from .databricks_export_storage_request import DatabricksExportStorageRequest
-from .databricks_import_storage import DatabricksImportStorage
-from .databricks_import_storage_request import DatabricksImportStorageRequest
-from .default165enum import Default165Enum
 from .default_role import DefaultRole
 from .default_role_custom_scripts_editable_by import DefaultRoleCustomScriptsEditableBy
 from .edition_enum import EditionEnum
@@ -138,7 +134,6 @@ from .model_run import ModelRun
 from .model_run_status_enum import ModelRunStatusEnum
 from .null_enum import NullEnum
 from .onboarding_state_enum import OnboardingStateEnum
-from .options165enum import Options165Enum
 from .organization_billing import OrganizationBilling
 from .organization_id import OrganizationId
 from .organization_invite import OrganizationInvite
@@ -272,15 +267,11 @@ __all__ = [
     "CommentRequest",
     "CommentSerializerWithExpandedUser",
     "ConfigurablePermissionOption",
+    "ConfigurablePermissionOptionDefault",
     "ConvertedFormat",
     "ConvertedFormatRequest",
     "CountLimit",
     "CustomScriptsEditableByEnum",
-    "DatabricksExportStorage",
-    "DatabricksExportStorageRequest",
-    "DatabricksImportStorage",
-    "DatabricksImportStorageRequest",
-    "Default165Enum",
     "DefaultRole",
     "DefaultRoleCustomScriptsEditableBy",
     "EditionEnum",
@@ -367,7 +358,6 @@ __all__ = [
     "ModelRunStatusEnum",
     "NullEnum",
     "OnboardingStateEnum",
-    "Options165Enum",
     "OrganizationBilling",
     "OrganizationId",
     "OrganizationInvite",
