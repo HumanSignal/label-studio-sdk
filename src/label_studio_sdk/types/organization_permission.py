@@ -8,7 +8,8 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class OrganizationPermission(UncheckedBaseModel):
-    default_role: str
+    default: str
+    group: str
     id: int
     label: str
     options: str

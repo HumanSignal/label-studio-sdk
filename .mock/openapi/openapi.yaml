@@ -19638,10 +19638,11 @@ components:
     ConfigurablePermissionOption:
       properties:
         default:
-          nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          items:
+            $ref: '#/components/schemas/Role9e7Enum'
+          type: array
+        group:
+          type: string
         label:
           type: string
         options:
@@ -19653,6 +19654,7 @@ components:
         tooltip:
           type: string
       required:
+        - default
         - options
         - permission
       type: object
@@ -25270,7 +25272,10 @@ components:
       type: object
     OrganizationPermission:
       properties:
-        default_role:
+        default:
+          readOnly: true
+          type: string
+        group:
           readOnly: true
           type: string
         id:
@@ -25297,7 +25302,8 @@ components:
           readOnly: true
           type: string
       required:
-        - default_role
+        - default
+        - group
         - id
         - label
         - options

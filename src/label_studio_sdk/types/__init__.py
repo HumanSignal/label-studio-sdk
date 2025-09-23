@@ -43,7 +43,6 @@ from .comment import Comment
 from .comment_request import CommentRequest
 from .comment_serializer_with_expanded_user import CommentSerializerWithExpandedUser
 from .configurable_permission_option import ConfigurablePermissionOption
-from .configurable_permission_option_default import ConfigurablePermissionOptionDefault
 from .converted_format import ConvertedFormat
 from .converted_format_request import ConvertedFormatRequest
 from .count_limit import CountLimit
@@ -271,7 +270,6 @@ __all__ = [
     "CommentRequest",
     "CommentSerializerWithExpandedUser",
     "ConfigurablePermissionOption",
-    "ConfigurablePermissionOptionDefault",
     "ConvertedFormat",
     "ConvertedFormatRequest",
     "CountLimit",

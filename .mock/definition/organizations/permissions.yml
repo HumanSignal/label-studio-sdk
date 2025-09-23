@@ -30,7 +30,8 @@ service:
             id: 1
           response:
             body:
-              - default_role: default_role
+              - default: default
+                group: group
                 id: 1
                 label: label
                 options: options
@@ -69,7 +70,8 @@ service:
             permission: permission
           response:
             body:
-              default_role: default_role
+              default: default
+              group: group
               id: 1
               label: label
               options: options
@@ -106,7 +108,9 @@ service:
             id: 1
           response:
             body:
-              - default: OW
+              - default:
+                  - OW
+                group: group
                 label: label
                 options:
                   - OW
@@ -136,7 +140,8 @@ service:
             permission: permission
           response:
             body:
-              default_role: default_role
+              default: default
+              group: group
               id: 1
               label: label
               options: options
@@ -182,7 +187,8 @@ service:
             permission: permission
           response:
             body:
-              default_role: default_role
+              default: default
+              group: group
               id: 1
               label: label
               options: options
@@ -252,7 +258,8 @@ service:
           request: {}
           response:
             body:
-              default_role: default_role
+              default: default
+              group: group
               id: 1
               label: label
               options: options

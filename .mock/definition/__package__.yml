@@ -1626,17 +1626,10 @@ types:
         docs: Last updated time
     source:
       openapi: openapi/openapi.yaml
-  ConfigurablePermissionOptionDefault:
-    discriminated: false
-    union:
-      - Role9E7Enum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   ConfigurablePermissionOption:
     properties:
-      default: optional<ConfigurablePermissionOptionDefault>
+      default: list<Role9E7Enum>
+      group: optional<string>
       label: optional<string>
       options: list<Role9E7Enum>
       permission: string
@@ -5710,7 +5703,8 @@ types:
       openapi: openapi/openapi.yaml
   OrganizationPermission:
     properties:
-      default_role: string
+      default: string
+      group: string
       id: integer
       label: string
       options: string

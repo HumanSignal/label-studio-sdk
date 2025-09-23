@@ -9,7 +9,8 @@ from ..utilities import validate_response
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "default_role": "default_role",
+            "default": "default",
+            "group": "group",
             "id": 1,
             "label": "label",
             "options": "options",
@@ -23,7 +24,8 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         "list",
         {
             0: {
-                "default_role": None,
+                "default": None,
+                "group": None,
                 "id": "integer",
                 "label": None,
                 "options": None,
@@ -43,7 +45,8 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "default_role": "default_role",
+        "default": "default",
+        "group": "group",
         "id": 1,
         "label": "label",
         "options": "options",
@@ -53,7 +56,8 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "tooltip": "tooltip",
     }
     expected_types: typing.Any = {
-        "default_role": None,
+        "default": None,
+        "group": None,
         "id": "integer",
         "label": None,
         "options": None,
@@ -71,11 +75,27 @@ async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_get_options(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
-        {"default": "OW", "label": "label", "options": ["OW"], "permission": "permission", "tooltip": "tooltip"}
+        {
+            "default": ["OW"],
+            "group": "group",
+            "label": "label",
+            "options": ["OW"],
+            "permission": "permission",
+            "tooltip": "tooltip",
+        }
     ]
     expected_types: typing.Tuple[typing.Any, typing.Any] = (
         "list",
-        {0: {"default": None, "label": None, "options": ("list", {0: None}), "permission": None, "tooltip": None}},
+        {
+            0: {
+                "default": ("list", {0: None}),
+                "group": None,
+                "label": None,
+                "options": ("list", {0: None}),
+                "permission": None,
+                "tooltip": None,
+            }
+        },
     )
     response = client.organizations.permissions.get_options(id=1)
     validate_response(response, expected_response, expected_types)
@@ -86,7 +106,8 @@ async def test_get_options(client: LabelStudio, async_client: AsyncLabelStudio) 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "default_role": "default_role",
+        "default": "default",
+        "group": "group",
         "id": 1,
         "label": "label",
         "options": "options",
@@ -96,7 +117,8 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "tooltip": "tooltip",
     }
     expected_types: typing.Any = {
-        "default_role": None,
+        "default": None,
+        "group": None,
         "id": "integer",
         "label": None,
         "options": None,
@@ -114,7 +136,8 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
 
 async def test_replace(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "default_role": "default_role",
+        "default": "default",
+        "group": "group",
         "id": 1,
         "label": "label",
         "options": "options",
@@ -124,7 +147,8 @@ async def test_replace(client: LabelStudio, async_client: AsyncLabelStudio) -> N
         "tooltip": "tooltip",
     }
     expected_types: typing.Any = {
-        "default_role": None,
+        "default": None,
+        "group": None,
         "id": "integer",
         "label": None,
         "options": None,
@@ -157,7 +181,8 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "default_role": "default_role",
+        "default": "default",
+        "group": "group",
         "id": 1,
         "label": "label",
         "options": "options",
@@ -167,7 +192,8 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
         "tooltip": "tooltip",
     }
     expected_types: typing.Any = {
-        "default_role": None,
+        "default": None,
+        "group": None,
         "id": "integer",
         "label": None,
         "options": None,
