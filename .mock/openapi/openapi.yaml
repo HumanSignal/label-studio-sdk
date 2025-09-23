@@ -19638,10 +19638,11 @@ components:
     ConfigurablePermissionOption:
       properties:
         default:
-          nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/Role9e7Enum'
-            - $ref: '#/components/schemas/NullEnum'
+          items:
+            $ref: '#/components/schemas/Role9e7Enum'
+          type: array
+        group:
+          type: string
         label:
           type: string
         options:
@@ -19653,6 +19654,7 @@ components:
         tooltip:
           type: string
       required:
+        - default
         - options
         - permission
       type: object
@@ -20278,6 +20280,16 @@ components:
       required:
         - dataset
       type: object
+    Default165Enum:
+      enum:
+        - OW
+        - AD
+        - MA
+        - RE
+        - AN
+        - DI
+        - 'NO'
+      type: string
     DefaultRole:
       properties:
         annotator_reviewer_firewall_enabled_at:
@@ -25171,6 +25183,16 @@ components:
         - in_app_guidance
         - complete
       type: string
+    Options165Enum:
+      enum:
+        - OW
+        - AD
+        - MA
+        - RE
+        - AN
+        - DI
+        - 'NO'
+      type: string
     OrganizationBilling:
       properties:
         manual_role_management:
@@ -25270,18 +25292,27 @@ components:
       type: object
     OrganizationPermission:
       properties:
-        default_role:
+        default:
+          items:
+            $ref: '#/components/schemas/Default165Enum'
+          readOnly: true
+          type: array
+        group:
+          nullable: true
           readOnly: true
           type: string
         id:
           readOnly: true
           type: integer
         label:
+          nullable: true
           readOnly: true
           type: string
         options:
+          items:
+            $ref: '#/components/schemas/Options165Enum'
           readOnly: true
-          type: string
+          type: array
         organization:
           readOnly: true
           type: integer
@@ -25294,10 +25325,12 @@ components:
             $ref: '#/components/schemas/Role9e7Enum'
           type: array
         tooltip:
+          nullable: true
           readOnly: true
           type: string
       required:
-        - default_role
+        - default
+        - group
         - id
         - label
         - options
