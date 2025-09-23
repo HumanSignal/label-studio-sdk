@@ -9,11 +9,11 @@ from ..utilities import validate_response
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {
-            "default": "default",
+            "default": ["OW"],
             "group": "group",
             "id": 1,
             "label": "label",
-            "options": "options",
+            "options": ["OW"],
             "organization": 1,
             "permission": "permission",
             "roles": ["OW"],
@@ -24,11 +24,11 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
         "list",
         {
             0: {
-                "default": None,
+                "default": ("list", {0: None}),
                 "group": None,
                 "id": "integer",
                 "label": None,
-                "options": None,
+                "options": ("list", {0: None}),
                 "organization": "integer",
                 "permission": None,
                 "roles": ("list", {0: None}),
@@ -45,22 +45,22 @@ async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> Non
 
 async def test_create(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "default": "default",
+        "default": ["OW"],
         "group": "group",
         "id": 1,
         "label": "label",
-        "options": "options",
+        "options": ["OW"],
         "organization": 1,
         "permission": "permission",
         "roles": ["OW"],
         "tooltip": "tooltip",
     }
     expected_types: typing.Any = {
-        "default": None,
+        "default": ("list", {0: None}),
         "group": None,
         "id": "integer",
         "label": None,
-        "options": None,
+        "options": ("list", {0: None}),
         "organization": "integer",
         "permission": None,
         "roles": ("list", {0: None}),
@@ -106,22 +106,22 @@ async def test_get_options(client: LabelStudio, async_client: AsyncLabelStudio) 
 
 async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "default": "default",
+        "default": ["OW"],
         "group": "group",
         "id": 1,
         "label": "label",
-        "options": "options",
+        "options": ["OW"],
         "organization": 1,
         "permission": "permission",
         "roles": ["OW"],
         "tooltip": "tooltip",
     }
     expected_types: typing.Any = {
-        "default": None,
+        "default": ("list", {0: None}),
         "group": None,
         "id": "integer",
         "label": None,
-        "options": None,
+        "options": ("list", {0: None}),
         "organization": "integer",
         "permission": None,
         "roles": ("list", {0: None}),
@@ -136,22 +136,22 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
 
 async def test_replace(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "default": "default",
+        "default": ["OW"],
         "group": "group",
         "id": 1,
         "label": "label",
-        "options": "options",
+        "options": ["OW"],
         "organization": 1,
         "permission": "permission",
         "roles": ["OW"],
         "tooltip": "tooltip",
     }
     expected_types: typing.Any = {
-        "default": None,
+        "default": ("list", {0: None}),
         "group": None,
         "id": "integer",
         "label": None,
-        "options": None,
+        "options": ("list", {0: None}),
         "organization": "integer",
         "permission": None,
         "roles": ("list", {0: None}),
@@ -181,22 +181,22 @@ async def test_delete(client: LabelStudio, async_client: AsyncLabelStudio) -> No
 
 async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {
-        "default": "default",
+        "default": ["OW"],
         "group": "group",
         "id": 1,
         "label": "label",
-        "options": "options",
+        "options": ["OW"],
         "organization": 1,
         "permission": "permission",
         "roles": ["OW"],
         "tooltip": "tooltip",
     }
     expected_types: typing.Any = {
-        "default": None,
+        "default": ("list", {0: None}),
         "group": None,
         "id": "integer",
         "label": None,
-        "options": None,
+        "options": ("list", {0: None}),
         "organization": "integer",
         "permission": None,
         "roles": ("list", {0: None}),

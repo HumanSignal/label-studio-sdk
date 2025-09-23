@@ -30,11 +30,13 @@ service:
             id: 1
           response:
             body:
-              - default: default
+              - default:
+                  - OW
                 group: group
                 id: 1
                 label: label
-                options: options
+                options:
+                  - OW
                 organization: 1
                 permission: permission
                 roles:
@@ -70,11 +72,13 @@ service:
             permission: permission
           response:
             body:
-              default: default
+              default:
+                - OW
               group: group
               id: 1
               label: label
-              options: options
+              options:
+                - OW
               organization: 1
               permission: permission
               roles:
@@ -140,11 +144,13 @@ service:
             permission: permission
           response:
             body:
-              default: default
+              default:
+                - OW
               group: group
               id: 1
               label: label
-              options: options
+              options:
+                - OW
               organization: 1
               permission: permission
               roles:
@@ -187,11 +193,13 @@ service:
             permission: permission
           response:
             body:
-              default: default
+              default:
+                - OW
               group: group
               id: 1
               label: label
-              options: options
+              options:
+                - OW
               organization: 1
               permission: permission
               roles:
@@ -258,11 +266,13 @@ service:
           request: {}
           response:
             body:
-              default: default
+              default:
+                - OW
               group: group
               id: 1
               label: label
-              options: options
+              options:
+                - OW
               organization: 1
               permission: permission
               roles:

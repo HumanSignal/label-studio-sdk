@@ -2138,6 +2138,17 @@ types:
         docs: User who made this view
     source:
       openapi: openapi/openapi.yaml
+  Default165Enum:
+    enum:
+      - OW
+      - AD
+      - MA
+      - RE
+      - AN
+      - DI
+      - 'NO'
+    source:
+      openapi: openapi/openapi.yaml
   DefaultRoleCustomScriptsEditableBy:
     discriminated: false
     docs: |-
@@ -5634,6 +5645,17 @@ types:
       * `complete` - Complete
     source:
       openapi: openapi/openapi.yaml
+  Options165Enum:
+    enum:
+      - OW
+      - AD
+      - MA
+      - RE
+      - AN
+      - DI
+      - 'NO'
+    source:
+      openapi: openapi/openapi.yaml
   OrganizationBilling:
     properties:
       manual_role_management: string
@@ -5703,11 +5725,11 @@ types:
       openapi: openapi/openapi.yaml
   OrganizationPermission:
     properties:
-      default: string
-      group: string
+      default: list<Default165Enum>
+      group: optional<string>
       id: integer
-      label: string
-      options: string
+      label: optional<string>
+      options: list<Options165Enum>
       organization: integer
       permission:
         type: string
@@ -5716,7 +5738,7 @@ types:
       roles:
         type: optional<list<Role9E7Enum>>
         docs: Explicit roles that have this permission within the organization.
-      tooltip: string
+      tooltip: optional<string>
     source:
       openapi: openapi/openapi.yaml
   OrganizationPermissionRequest:
