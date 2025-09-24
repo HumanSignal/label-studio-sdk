@@ -1,11 +1,13 @@
 import typing
 from typing_extensions import Annotated
+
 from .client import ProjectsClient, AsyncProjectsClient
 from pydantic import model_validator, validator, Field, ConfigDict
 from label_studio_sdk._extensions.pager_ext import SyncPagerExt, AsyncPagerExt, T
 from label_studio_sdk.types.project import Project
 from label_studio_sdk.label_interface import LabelInterface
 from .exports.client_ext import ExportsClientExt, AsyncExportsClientExt
+from .stats.client_ext import StatsClientExt, AsyncStatsClientExt
 
 from ..core import RequestOptions
 
@@ -21,6 +23,7 @@ class ProjectsClientExt(ProjectsClient):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.exports = ExportsClientExt(client_wrapper=self._client_wrapper)
+        self.stats = StatsClientExt(client_wrapper=self._client_wrapper)
 
     def list(self, **kwargs) -> SyncPagerExt[T]:
         return SyncPagerExt.from_sync_pager(super().list(**kwargs))
@@ -38,6 +41,7 @@ class AsyncProjectsClientExt(AsyncProjectsClient):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.exports = AsyncExportsClientExt(client_wrapper=self._client_wrapper)
+        self.stats = AsyncStatsClientExt(client_wrapper=self._client_wrapper)
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> ProjectExt:
         return ProjectExt(**dict(await super().get(id, request_options=request_options)))

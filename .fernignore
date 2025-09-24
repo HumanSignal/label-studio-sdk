@@ -12,6 +12,7 @@ src/label_studio_sdk/client.py
 src/label_studio_sdk/tasks/client_ext.py
 src/label_studio_sdk/projects/client_ext.py
 src/label_studio_sdk/projects/exports/client_ext.py
+src/label_studio_sdk/projects/stats/client_ext.py
 src/label_studio_sdk/tokens/client_ext.py
 src/label_studio_sdk/core/client_wrapper.py
 
