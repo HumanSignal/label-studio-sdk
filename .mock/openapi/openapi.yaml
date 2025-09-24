@@ -6901,7 +6901,7 @@ paths:
       x-fern-sdk-method-name: list_for_project
   /api/projects/{id}/annotators/:
     get:
-      description: Return users who have submitted annotations in the specified project.
+      description: Return unique users who have submitted annotations in the specified project.
       operationId: api_projects_annotators_retrieve
       parameters:
         - in: path
@@ -6920,13 +6920,13 @@ paths:
           description: List of annotator users
       security:
         - Token: []
-      summary: List annotators for project
+      summary: List unique annotators for project
       tags:
         - Projects
       x-fern-audiences:
         - public
       x-fern-sdk-group-name: projects
-      x-fern-sdk-method-name: annotators
+      x-fern-sdk-method-name: list_unique_annotators
   /api/projects/{id}/aws-custom-function:
     get:
       description: Get the AWS Lambda code for the custom metric configured for this project.

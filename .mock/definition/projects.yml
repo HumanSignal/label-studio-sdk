@@ -840,16 +840,18 @@ service:
               workspace_title: workspace_title
       audiences:
         - public
-    annotators:
+    list_unique_annotators:
       path: /api/projects/{id}/annotators/
       method: GET
       auth: true
-      docs: Return users who have submitted annotations in the specified project.
+      docs: >-
+        Return unique users who have submitted annotations in the specified
+        project.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
         id: integer
-      display-name: List annotators for project
+      display-name: List unique annotators for project
       response:
         docs: List of annotator users
         type: list<root.UserSimple>

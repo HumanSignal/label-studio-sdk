@@ -800,11 +800,11 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def annotators(
+    def list_unique_annotators(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[UserSimple]:
         """
-        Return users who have submitted annotations in the specified project.
+        Return unique users who have submitted annotations in the specified project.
 
         Parameters
         ----------
@@ -825,7 +825,7 @@ class ProjectsClient:
         client = LabelStudio(
             api_key="YOUR_API_KEY",
         )
-        client.projects.annotators(
+        client.projects.list_unique_annotators(
             id=1,
         )
         """
@@ -1998,11 +1998,11 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def annotators(
+    async def list_unique_annotators(
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[UserSimple]:
         """
-        Return users who have submitted annotations in the specified project.
+        Return unique users who have submitted annotations in the specified project.
 
         Parameters
         ----------
@@ -2028,7 +2028,7 @@ class AsyncProjectsClient:
 
 
         async def main() -> None:
-            await client.projects.annotators(
+            await client.projects.list_unique_annotators(
                 id=1,
             )
 

@@ -9432,7 +9432,7 @@ client.projects.update(
 </dl>
 </details>
 
-<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">annotators</a>(...)</code></summary>
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list_unique_annotators</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -9444,7 +9444,7 @@ client.projects.update(
 <dl>
 <dd>
 
-Return users who have submitted annotations in the specified project.
+Return unique users who have submitted annotations in the specified project.
 </dd>
 </dl>
 </dd>
@@ -9464,7 +9464,7 @@ from label_studio_sdk import LabelStudio
 client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
-client.projects.annotators(
+client.projects.list_unique_annotators(
     id=1,
 )
 
