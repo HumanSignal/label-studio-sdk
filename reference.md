@@ -10415,7 +10415,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.tasks.create(
-    data={"key": "value"},
+    data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
+    project=1,
 )
 
 ```
@@ -10948,41 +10949,41 @@ client.tasks.update(
 
 
     Create a new task event to track user interactions and system events during annotation.
-    
+
     This endpoint is designed to receive events from the frontend labeling interface to enable
     accurate lead time calculation and detailed annotation analytics.
-    
+
     ## Event Types
-    
+
     **Core Annotation Events:**
     - `annotation_loaded` - When annotation interface is loaded
     - `annotation_submitted` - When annotation is submitted
     - `annotation_updated` - When annotation is modified
     - `annotation_reviewed` - When annotation is reviewed
-    
+
     **User Activity Events:**
     - `visibility_change` - When page visibility changes (tab switch, minimize)
     - `idle_detected` - When user goes idle
     - `idle_resumed` - When user returns from idle
-    
+
     **Interaction Events:**
     - `region_finished_drawing` - When annotation region is completed
     - `region_deleted` - When annotation regions are removed
     - `hotkey_pressed` - When keyboard shortcuts are used
-    
+
     **Media Events:**
     - `video_playback_start/end` - Video playback control
     - `audio_playback_start/end` - Audio playback control
     - `video_scrub` - Video timeline scrubbing
-    
+
     ## Usage
-    
+
     Events are automatically associated with the task specified in the URL path.
     The current user is automatically set as the actor. Project and organization
     are derived from the task context.
-    
+
     ## Example Request
-    
+
     ```json
     {
         "event_key": "annotation_loaded",
