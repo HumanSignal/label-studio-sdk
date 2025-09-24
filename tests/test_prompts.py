@@ -26,56 +26,6 @@ async def test_batch_predictions(client: LabelStudio, async_client: AsyncLabelSt
     validate_response(async_response, expected_response, expected_types)
 
 
-async def test_subset_tasks(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = {
-        "count": 123,
-        "next": "http://api.example.org/accounts/?page=4",
-        "previous": "http://api.example.org/accounts/?page=2",
-        "results": [
-            {
-                "next_cursor": "next_cursor",
-                "previous_cursor": "previous_cursor",
-                "task_count": 1,
-                "task_result_list": [{"data": {"key": "value"}}],
-            }
-        ],
-    }
-    expected_types: typing.Any = {
-        "count": "integer",
-        "next": None,
-        "previous": None,
-        "results": (
-            "list",
-            {
-                0: {
-                    "next_cursor": None,
-                    "previous_cursor": None,
-                    "task_count": "integer",
-                    "task_result_list": ("list", {0: {"data": ("dict", {0: (None, None)})}}),
-                }
-            },
-        ),
-    }
-    response = client.prompts.subset_tasks(project_pk=1)
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.prompts.subset_tasks(project_pk=1)
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_subsets(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = [{"columns_schema": [{"key": "value"}], "count": 1, "subset": "subset"}]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = (
-        "list",
-        {0: {"columns_schema": ("list", {0: ("dict", {0: (None, None)})}), "count": "integer", "subset": None}},
-    )
-    response = client.prompts.subsets(project_pk=1)
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.prompts.subsets(project_pk=1)
-    validate_response(async_response, expected_response, expected_types)
-
-
 async def test_list_(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = [
         {

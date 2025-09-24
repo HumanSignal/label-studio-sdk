@@ -1490,11 +1490,6 @@ types:
       * `Yearly` - Yearly
     source:
       openapi: openapi/openapi.yaml
-  CancelModelRunResponse:
-    properties:
-      detail: string
-    source:
-      openapi: openapi/openapi.yaml
   ChildFilter:
     properties:
       column:
@@ -5934,20 +5929,6 @@ types:
           maxLength: 256
     source:
       openapi: openapi/openapi.yaml
-  PaginatedProjectSubsetTasksResponseList:
-    properties:
-      count: integer
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: list<ProjectSubsetTasksResponse>
-    source:
-      openapi: openapi/openapi.yaml
   PaginatedRoleBasedTaskList:
     properties:
       tasks: list<RoleBasedTask>
@@ -6435,33 +6416,6 @@ types:
       * `All` - All
       * `HasGT` - HasGT
       * `Sample` - Sample
-    source:
-      openapi: openapi/openapi.yaml
-  ProjectSubsetItem:
-    properties:
-      columns_schema: optional<list<map<string, unknown>>>
-      count: integer
-      subset: string
-    source:
-      openapi: openapi/openapi.yaml
-  ProjectSubsetTaskItem:
-    properties:
-      data: map<string, unknown>
-      error: optional<map<string, unknown>>
-      ground_truth: optional<map<string, unknown>>
-      id: optional<integer>
-      prediction: optional<map<string, unknown>>
-      score: optional<double>
-    source:
-      openapi: openapi/openapi.yaml
-  ProjectSubsetTasksResponse:
-    properties:
-      next_cursor: optional<string>
-      previous_cursor: optional<string>
-      task_count:
-        type: optional<integer>
-        docs: Present only when include_total=true
-      task_result_list: list<ProjectSubsetTaskItem>
     source:
       openapi: openapi/openapi.yaml
   ProjectTemplate:

@@ -30,6 +30,7 @@ from ..types.review_settings_request import ReviewSettingsRequest
 from .types.patched_lse_project_update_request_sampling import PatchedLseProjectUpdateRequestSampling
 from .types.patched_lse_project_update_request_skip_queue import PatchedLseProjectUpdateRequestSkipQueue
 from ..types.lse_project_update import LseProjectUpdate
+from ..types.user_simple import UserSimple
 from ..types.mode_enum import ModeEnum
 from .types.projects_duplicate_response import ProjectsDuplicateResponse
 from ..types.import_api_request import ImportApiRequest
@@ -791,6 +792,54 @@ class ProjectsClient:
                     LseProjectUpdate,
                     construct_type(
                         type_=LseProjectUpdate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    def annotators(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[UserSimple]:
+        """
+        Return users who have submitted annotations in the specified project.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[UserSimple]
+            List of annotator users
+
+        Examples
+        --------
+        from label_studio_sdk import LabelStudio
+
+        client = LabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+        client.projects.annotators(
+            id=1,
+        )
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/annotators/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[UserSimple],
+                    construct_type(
+                        type_=typing.List[UserSimple],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1941,6 +1990,62 @@ class AsyncProjectsClient:
                     LseProjectUpdate,
                     construct_type(
                         type_=LseProjectUpdate,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def annotators(
+        self, id: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[UserSimple]:
+        """
+        Return users who have submitted annotations in the specified project.
+
+        Parameters
+        ----------
+        id : int
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[UserSimple]
+            List of annotator users
+
+        Examples
+        --------
+        import asyncio
+
+        from label_studio_sdk import AsyncLabelStudio
+
+        client = AsyncLabelStudio(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.projects.annotators(
+                id=1,
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/projects/{jsonable_encoder(id)}/annotators/",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return typing.cast(
+                    typing.List[UserSimple],
+                    construct_type(
+                        type_=typing.List[UserSimple],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -305,79 +305,6 @@ service:
       response:
         docs: ''
         type: root.LseTask
-      examples:
-        - name: Create Task
-          request:
-            data:
-              image: https://example.com/image.jpg
-              text: Hello, world!
-            project: 1
-          response:
-            body:
-              agreement: agreement
-              agreement_selected: agreement_selected
-              annotations: annotations
-              annotations_ids: annotations_ids
-              annotations_results: annotations_results
-              annotators:
-                - 1
-              annotators_count: 1
-              avg_lead_time: 1.1
-              cancelled_annotations: 1
-              comment_authors:
-                - key: value
-              comment_authors_count: 1
-              comment_count: 1
-              comments: comments
-              completed_at: '2024-01-15T09:30:00Z'
-              created_at: '2024-01-15T09:30:00Z'
-              data:
-                key: value
-              draft_exists: true
-              drafts:
-                - created_at: '2024-01-15T09:30:00Z'
-                  result:
-                    - key: value
-                  updated_at: '2024-01-15T09:30:00Z'
-              file_upload: file_upload
-              ground_truth: true
-              id: 1
-              inner_id: 1
-              is_labeled: true
-              last_comment_updated_at: '2024-01-15T09:30:00Z'
-              meta:
-                key: value
-              overlap: 1
-              predictions:
-                - created_at: '2024-01-15T09:30:00Z'
-                  model:
-                    key: value
-                  model_run:
-                    key: value
-                  model_version: model_version
-                  project: 1
-                  result:
-                    - key: value
-                  score: 1.1
-                  task: 1
-                  updated_at: '2024-01-15T09:30:00Z'
-              predictions_model_versions: predictions_model_versions
-              predictions_results: predictions_results
-              predictions_score: 1.1
-              project: 1
-              reviewed: true
-              reviewers:
-                - key: value
-              reviewers_count: 1
-              reviews_accepted: 1
-              reviews_rejected: 1
-              storage_filename: storage_filename
-              total_annotations: 1
-              total_predictions: 1
-              unresolved_comment_count: 1
-              updated_at: '2024-01-15T09:30:00Z'
-              updated_by:
-                - key: value
       audiences:
         - public
     get:
@@ -629,41 +556,41 @@ service:
       docs: |2-
 
             Create a new task event to track user interactions and system events during annotation.
-
+            
             This endpoint is designed to receive events from the frontend labeling interface to enable
             accurate lead time calculation and detailed annotation analytics.
-
+            
             ## Event Types
-
+            
             **Core Annotation Events:**
             - `annotation_loaded` - When annotation interface is loaded
             - `annotation_submitted` - When annotation is submitted
             - `annotation_updated` - When annotation is modified
             - `annotation_reviewed` - When annotation is reviewed
-
+            
             **User Activity Events:**
             - `visibility_change` - When page visibility changes (tab switch, minimize)
             - `idle_detected` - When user goes idle
             - `idle_resumed` - When user returns from idle
-
+            
             **Interaction Events:**
             - `region_finished_drawing` - When annotation region is completed
             - `region_deleted` - When annotation regions are removed
             - `hotkey_pressed` - When keyboard shortcuts are used
-
+            
             **Media Events:**
             - `video_playback_start/end` - Video playback control
             - `audio_playback_start/end` - Audio playback control
             - `video_scrub` - Video timeline scrubbing
-
+            
             ## Usage
-
+            
             Events are automatically associated with the task specified in the URL path.
             The current user is automatically set as the actor. Project and organization
             are derived from the task context.
-
+            
             ## Example Request
-
+            
             ```json
             {
                 "event_key": "annotation_loaded",

@@ -372,8 +372,7 @@ class TasksClient:
             api_key="YOUR_API_KEY",
         )
         client.tasks.create(
-            data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
-            project=1,
+            data={"key": "value"},
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -1204,11 +1203,7 @@ class AsyncTasksClient:
 
         async def main() -> None:
             await client.tasks.create(
-                data={
-                    "image": "https://example.com/image.jpg",
-                    "text": "Hello, world!",
-                },
-                project=1,
+                data={"key": "value"},
             )
 
 

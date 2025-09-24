@@ -459,6 +459,21 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(async_response, expected_response, expected_types)
 
 
+async def test_annotators(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
+    expected_response: typing.Any = [
+        {"avatar": "avatar", "email": "email", "first_name": "first_name", "id": 1, "last_name": "last_name"}
+    ]
+    expected_types: typing.Tuple[typing.Any, typing.Any] = (
+        "list",
+        {0: {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None}},
+    )
+    response = client.projects.annotators(id=1)
+    validate_response(response, expected_response, expected_types)
+
+    async_response = await async_client.projects.annotators(id=1)
+    validate_response(async_response, expected_response, expected_types)
+
+
 async def test_duplicate(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     expected_response: typing.Any = {"id": 1}
     expected_types: typing.Any = {"id": "integer"}
