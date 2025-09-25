@@ -6,7 +6,7 @@ from label_studio_sdk._extensions.pager_ext import SyncPagerExt, AsyncPagerExt, 
 from label_studio_sdk.types.lse_project_response import LseProjectResponse
 from label_studio_sdk.label_interface import LabelInterface
 from .exports.client_ext import ExportsClientExt, AsyncExportsClientExt
-
+from ..core.unchecked_base_model import construct_type
 from ..core import RequestOptions
 
 
@@ -28,7 +28,13 @@ class ProjectsClientExt(ProjectsClient):
     list.__doc__ = ProjectsClient.list.__doc__
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> ProjectExt:
-        return ProjectExt(**dict(super().get(id, request_options=request_options)))
+        return typing.cast(
+            ProjectExt,
+            construct_type(
+                type_=ProjectExt,  # type: ignore
+                object_=super().get(id, request_options=request_options).model_dump(),
+            ),
+        )
 
     get.__doc__ = ProjectsClient.get.__doc__
 
@@ -40,7 +46,13 @@ class AsyncProjectsClientExt(AsyncProjectsClient):
         self.exports = AsyncExportsClientExt(client_wrapper=self._client_wrapper)
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> ProjectExt:
-        return ProjectExt(**dict(await super().get(id, request_options=request_options)))
+        return typing.cast(
+            ProjectExt,
+            construct_type(
+                type_=ProjectExt,  # type: ignore
+                object_=(await super().get(id, request_options=request_options)).model_dump(),
+            ),
+        )
 
     get.__doc__ = AsyncProjectsClient.get.__doc__
 
