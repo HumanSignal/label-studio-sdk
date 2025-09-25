@@ -522,6 +522,7 @@ service:
                 show_instruction: true
                 show_unused_data_columns_to_reviewers: true
               reviewer_queue_total: reviewer_queue_total
+              sampling: Sequential sampling
               show_annotation_history: true
               show_collab_predictions: true
               show_ground_truth_first: true

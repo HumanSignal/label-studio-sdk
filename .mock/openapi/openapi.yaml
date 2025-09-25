@@ -18504,7 +18504,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -24135,6 +24135,12 @@ components:
           description: Project ID for this task
           nullable: true
           type: integer
+        review_time:
+          description: |-
+            Calculate total review time for this task from MetricInTimeBucket records.
+            Returns time in seconds.
+          readOnly: true
+          type: integer
         reviewed:
           type: boolean
         reviewers:
@@ -24194,6 +24200,7 @@ components:
         - predictions
         - predictions_model_versions
         - predictions_results
+        - review_time
         - reviewers
         - reviewers_count
         - storage_filename
@@ -24668,6 +24675,12 @@ components:
           description: Project ID for this task
           nullable: true
           type: integer
+        review_time:
+          description: |-
+            Calculate total review time for this task from MetricInTimeBucket records.
+            Returns time in seconds.
+          readOnly: true
+          type: integer
         reviewed:
           type: boolean
         reviewers:
@@ -24727,6 +24740,7 @@ components:
         - predictions
         - predictions_model_versions
         - predictions_results
+        - review_time
         - reviewers
         - reviewers_count
         - storage_filename
@@ -29548,7 +29562,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator

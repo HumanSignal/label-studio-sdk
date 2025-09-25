@@ -206,6 +206,7 @@ service:
                   predictions_results: predictions_results
                   predictions_score: 1.1
                   project: 1
+                  review_time: 1
                   reviewed: true
                   reviewers:
                     - key: value
@@ -365,6 +366,7 @@ service:
               predictions_results: predictions_results
               predictions_score: 1.1
               project: 1
+              review_time: 1
               reviewed: true
               reviewers:
                 - key: value
@@ -453,6 +455,7 @@ service:
               predictions_results: predictions_results
               predictions_score: 1.1
               project: 1
+              review_time: 1
               reviewed: true
               reviewers:
                 - key: value
@@ -607,6 +610,7 @@ service:
               predictions_results: predictions_results
               predictions_score: 1.1
               project: 1
+              review_time: 1
               reviewed: true
               reviewers:
                 - key: value
