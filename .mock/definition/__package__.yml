@@ -4722,6 +4722,13 @@ types:
       project:
         type: optional<integer>
         docs: Project ID for this task
+      review_time:
+        type: integer
+        docs: >-
+          Calculate total review time for this task from MetricInTimeBucket
+          records.
+
+          Returns time in seconds.
       reviewed: optional<boolean>
       reviewers: list<map<string, unknown>>
       reviewers_count: integer
@@ -5169,6 +5176,13 @@ types:
       project:
         type: optional<integer>
         docs: Project ID for this task
+      review_time:
+        type: integer
+        docs: >-
+          Calculate total review time for this task from MetricInTimeBucket
+          records.
+
+          Returns time in seconds.
       reviewed: optional<boolean>
       reviewers: list<map<string, unknown>>
       reviewers_count: integer

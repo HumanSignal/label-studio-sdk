@@ -23889,6 +23889,12 @@ components:
           description: Project ID for this task
           nullable: true
           type: integer
+        review_time:
+          description: |-
+            Calculate total review time for this task from MetricInTimeBucket records.
+            Returns time in seconds.
+          readOnly: true
+          type: integer
         reviewed:
           type: boolean
         reviewers:
@@ -23948,6 +23954,7 @@ components:
         - predictions
         - predictions_model_versions
         - predictions_results
+        - review_time
         - reviewers
         - reviewers_count
         - storage_filename
@@ -24422,6 +24429,12 @@ components:
           description: Project ID for this task
           nullable: true
           type: integer
+        review_time:
+          description: |-
+            Calculate total review time for this task from MetricInTimeBucket records.
+            Returns time in seconds.
+          readOnly: true
+          type: integer
         reviewed:
           type: boolean
         reviewers:
@@ -24481,6 +24494,7 @@ components:
         - predictions
         - predictions_model_versions
         - predictions_results
+        - review_time
         - reviewers
         - reviewers_count
         - storage_filename
@@ -29737,9 +29751,16 @@ components:
             minLength: 1
             type: string
           type: array
+        projects:
+          items:
+            type: integer
+          type: array
         role:
-          minLength: 1
-          type: string
+          $ref: '#/components/schemas/Role9e7Enum'
+        workspaces:
+          items:
+            type: integer
+          type: array
       required:
         - emails
         - role

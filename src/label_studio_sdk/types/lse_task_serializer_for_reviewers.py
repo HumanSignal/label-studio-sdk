@@ -85,6 +85,12 @@ class LseTaskSerializerForReviewers(UncheckedBaseModel):
     Project ID for this task
     """
 
+    review_time: int = pydantic.Field()
+    """
+    Calculate total review time for this task from MetricInTimeBucket records.
+    Returns time in seconds.
+    """
+
     reviewed: typing.Optional[bool] = None
     reviewers: typing.List[typing.Dict[str, typing.Optional[typing.Any]]]
     reviewers_count: int

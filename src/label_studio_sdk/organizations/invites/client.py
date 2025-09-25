@@ -8,6 +8,7 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.forbidden_error import ForbiddenError
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
+from ...types.role9e7enum import Role9E7Enum
 from ...core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -117,7 +118,13 @@ class InvitesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def send_email(
-        self, *, emails: typing.Sequence[str], role: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        emails: typing.Sequence[str],
+        role: Role9E7Enum,
+        projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Send email with invite to organization
@@ -126,7 +133,11 @@ class InvitesClient:
         ----------
         emails : typing.Sequence[str]
 
-        role : str
+        role : Role9E7Enum
+
+        projects : typing.Optional[typing.Sequence[int]]
+
+        workspaces : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -144,7 +155,7 @@ class InvitesClient:
         )
         client.organizations.invites.send_email(
             emails=["emails"],
-            role="role",
+            role="OW",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -152,7 +163,9 @@ class InvitesClient:
             method="POST",
             json={
                 "emails": emails,
+                "projects": projects,
                 "role": role,
+                "workspaces": workspaces,
             },
             headers={
                 "content-type": "application/json",
@@ -298,7 +311,13 @@ class AsyncInvitesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def send_email(
-        self, *, emails: typing.Sequence[str], role: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        emails: typing.Sequence[str],
+        role: Role9E7Enum,
+        projects: typing.Optional[typing.Sequence[int]] = OMIT,
+        workspaces: typing.Optional[typing.Sequence[int]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Send email with invite to organization
@@ -307,7 +326,11 @@ class AsyncInvitesClient:
         ----------
         emails : typing.Sequence[str]
 
-        role : str
+        role : Role9E7Enum
+
+        projects : typing.Optional[typing.Sequence[int]]
+
+        workspaces : typing.Optional[typing.Sequence[int]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -330,7 +353,7 @@ class AsyncInvitesClient:
         async def main() -> None:
             await client.organizations.invites.send_email(
                 emails=["emails"],
-                role="role",
+                role="OW",
             )
 
 
@@ -341,7 +364,9 @@ class AsyncInvitesClient:
             method="POST",
             json={
                 "emails": emails,
+                "projects": projects,
                 "role": role,
+                "workspaces": workspaces,
             },
             headers={
                 "content-type": "application/json",
