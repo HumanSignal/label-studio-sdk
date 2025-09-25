@@ -48,7 +48,6 @@ service:
                 presign: true
                 presign_ttl: 1
                 project: 1
-                recursive_scan: true
                 regex_filter: regex_filter
                 status: initialized
                 synchronizable: true
@@ -96,7 +95,6 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
-              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -161,7 +159,6 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
-              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -258,9 +255,6 @@ service:
             project:
               type: optional<integer>
               docs: A unique integer value identifying this project.
-            recursive_scan:
-              type: optional<boolean>
-              docs: Perform recursive scan over the bucket content
             regex_filter:
               type: optional<string>
               docs: Cloud storage regex for filtering objects
@@ -308,7 +302,6 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
-              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -357,7 +350,6 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
-              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true

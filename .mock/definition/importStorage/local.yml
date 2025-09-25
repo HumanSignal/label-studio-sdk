@@ -37,7 +37,6 @@ service:
                   key: value
                 path: path
                 project: 1
-                recursive_scan: true
                 regex_filter: regex_filter
                 status: initialized
                 synchronizable: true
@@ -102,7 +101,6 @@ service:
                 key: value
               path: path
               project: 1
-              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -185,7 +183,6 @@ service:
                 key: value
               path: path
               project: 1
-              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -269,7 +266,6 @@ service:
                 key: value
               path: path
               project: 1
-              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -309,7 +305,6 @@ service:
                 key: value
               path: path
               project: 1
-              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true

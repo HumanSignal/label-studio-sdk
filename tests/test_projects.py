@@ -350,8 +350,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "require_comment_on_reject": True,
             "review_criteria": "all",
             "review_only_manual_assignments": True,
-            "review_task_limit_percent": "review_task_limit_percent",
-            "sampling": "task_id",
             "show_agreement_to_reviewers": True,
             "show_data_manager_to_reviewers": True,
             "show_instruction": True,
@@ -428,8 +426,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
             "require_comment_on_reject": None,
             "review_criteria": None,
             "review_only_manual_assignments": None,
-            "review_task_limit_percent": None,
-            "sampling": None,
             "show_agreement_to_reviewers": None,
             "show_data_manager_to_reviewers": None,
             "show_instruction": None,
@@ -460,21 +456,6 @@ async def test_update(client: LabelStudio, async_client: AsyncLabelStudio) -> No
     validate_response(response, expected_response, expected_types)
 
     async_response = await async_client.projects.update(id=1)
-    validate_response(async_response, expected_response, expected_types)
-
-
-async def test_list_unique_annotators(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
-    expected_response: typing.Any = [
-        {"avatar": "avatar", "email": "email", "first_name": "first_name", "id": 1, "last_name": "last_name"}
-    ]
-    expected_types: typing.Tuple[typing.Any, typing.Any] = (
-        "list",
-        {0: {"avatar": None, "email": None, "first_name": None, "id": "integer", "last_name": None}},
-    )
-    response = client.projects.list_unique_annotators(id=1)
-    validate_response(response, expected_response, expected_types)
-
-    async_response = await async_client.projects.list_unique_annotators(id=1)
     validate_response(async_response, expected_response, expected_types)
 
 

@@ -447,7 +447,7 @@ types:
   ProjectRequestSampling:
     discriminated: false
     union:
-      - root.SamplingDe5Enum
+      - root.SamplingEnum
       - root.NullEnum
     source:
       openapi: openapi/openapi.yaml

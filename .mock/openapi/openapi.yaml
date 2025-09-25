@@ -6899,34 +6899,6 @@ paths:
         - public
       x-fern-sdk-group-name: annotation_history
       x-fern-sdk-method-name: list_for_project
-  /api/projects/{id}/annotators/:
-    get:
-      description: Return unique users who have submitted annotations in the specified project.
-      operationId: api_projects_annotators_retrieve
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/UserSimple'
-                type: array
-          description: List of annotator users
-      security:
-        - Token: []
-      summary: List unique annotators for project
-      tags:
-        - Projects
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name: projects
-      x-fern-sdk-method-name: list_unique_annotators
   /api/projects/{id}/aws-custom-function:
     get:
       description: Get the AWS Lambda code for the custom metric configured for this project.
@@ -9759,11 +9731,6 @@ paths:
       description: "\n        Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.\n        "
       operationId: api_projects_subset_tasks_list
       parameters:
-        - description: If true (default), includes task_count in response; if false, omits it.
-          in: query
-          name: include_total
-          schema:
-            type: boolean
         - description: A unique ID of a ModelRun
           in: query
           name: model_run
@@ -9787,11 +9754,6 @@ paths:
           required: false
           schema:
             type: integer
-        - description: The ID of the parent model (ModelInterface) for this Inference Run
-          in: query
-          name: parent_model
-          schema:
-            type: integer
         - in: path
           name: project_pk
           required: true
@@ -9804,11 +9766,7 @@ paths:
             type: string
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedProjectSubsetTasksResponseList'
-          description: ''
+          description: Project subset task list
         '400':
           description: Bad request - missing parent_model
       security:
@@ -9816,21 +9774,11 @@ paths:
       summary: Get Project Subset Task List with Predictions and Accuracy details
       tags:
         - Projects
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name: prompts
-      x-fern-sdk-method-name: subset_tasks
   /api/projects/{project_pk}/subsets:
     get:
       description: "\n        Provides list of available subsets for a project along with count of tasks in each subset\n        "
-      operationId: api_projects_subsets_list
+      operationId: api_projects_subsets_retrieve
       parameters:
-        - description: Which field to use when ordering the results.
-          in: query
-          name: ordering
-          required: false
-          schema:
-            type: string
         - in: path
           name: project_pk
           required: true
@@ -9838,22 +9786,12 @@ paths:
             type: integer
       responses:
         '200':
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/ProjectSubsetItem'
-                type: array
-          description: ''
+          description: No response body
       security:
         - Token: []
       summary: Get available subsets of a project (for prompts usage)
       tags:
         - Projects
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name: prompts
-      x-fern-sdk-method-name: subsets
   /api/prompts/:
     get:
       description: List all prompts.
@@ -10481,23 +10419,13 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CancelModelRunResponse'
-          description: ''
+        '201':
+          description: No response body
       security:
         - Token: []
       summary: Cancel Inference Run API
       tags:
         - Prompts
-      x-fern-audiences:
-        - public
-      x-fern-sdk-group-name:
-        - prompts
-        - runs
-      x-fern-sdk-method-name: cancel
   /api/prompts/{prompt_id}/versions/{version_id}/refine:
     get:
       description: Get the refined prompt based on the `refinement_job_id`.
@@ -17773,7 +17701,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/SamplingEnum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -18569,10 +18497,6 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the container content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18673,10 +18597,6 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the container content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18768,10 +18688,6 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the container content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -19507,13 +19423,6 @@ components:
         - Monthly
         - Yearly
       type: string
-    CancelModelRunResponse:
-      properties:
-        detail:
-          type: string
-      required:
-        - detail
-      type: object
     CheckMatchingFunctionRequestRequest:
       properties:
         code:
@@ -20715,10 +20624,6 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the bucket content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -20810,10 +20715,6 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the bucket content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -20988,10 +20889,6 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the bucket content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -21293,10 +21190,6 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the bucket content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -21397,10 +21290,6 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the bucket content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -21990,10 +21879,6 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the directory content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Regex for filtering objects
           nullable: true
@@ -22537,7 +22422,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/SamplingEnum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -22817,7 +22702,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/SamplingEnum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -22975,7 +22860,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/SamplingEnum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -23181,7 +23066,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/SamplingEnum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -25770,29 +25655,6 @@ components:
         - project_role
         - username
       type: object
-    PaginatedProjectSubsetTasksResponseList:
-      properties:
-        count:
-          example: 123
-          type: integer
-        next:
-          example: http://api.example.org/accounts/?page=4
-          format: uri
-          nullable: true
-          type: string
-        previous:
-          example: http://api.example.org/accounts/?page=2
-          format: uri
-          nullable: true
-          type: string
-        results:
-          items:
-            $ref: '#/components/schemas/ProjectSubsetTasksResponse'
-          type: array
-      required:
-        - count
-        - results
-      type: object
     PaginatedRoleBasedTaskList:
       properties:
         tasks:
@@ -25904,10 +25766,6 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the container content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -26496,10 +26354,6 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the bucket content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -26681,10 +26535,6 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
-        recursive_scan:
-          description: Perform recursive scan over the bucket content
-          nullable: true
-          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -26924,7 +26774,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/SamplingEnum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -27989,7 +27839,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/SamplingEnum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -28395,7 +28245,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/SamplingEnum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -28498,62 +28348,6 @@ components:
         - HasGT
         - Sample
       type: string
-    ProjectSubsetItem:
-      properties:
-        columns_schema:
-          items:
-            additionalProperties: {}
-            type: object
-          type: array
-        count:
-          type: integer
-        subset:
-          type: string
-      required:
-        - count
-        - subset
-      type: object
-    ProjectSubsetTaskItem:
-      properties:
-        data:
-          additionalProperties: {}
-          type: object
-        error:
-          additionalProperties: {}
-          type: object
-        ground_truth:
-          additionalProperties: {}
-          type: object
-        id:
-          type: integer
-        prediction:
-          additionalProperties: {}
-          type: object
-        score:
-          format: double
-          nullable: true
-          type: number
-      required:
-        - data
-      type: object
-    ProjectSubsetTasksResponse:
-      properties:
-        next_cursor:
-          nullable: true
-          type: string
-        previous_cursor:
-          nullable: true
-          type: string
-        task_count:
-          description: Present only when include_total=true
-          type: integer
-        task_result_list:
-          items:
-            $ref: '#/components/schemas/ProjectSubsetTaskItem'
-          type: array
-      required:
-        - task_result_list
-      type: object
     ProjectTemplate:
       properties:
         assignment_settings:
@@ -28998,23 +28792,6 @@ components:
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
-        review_task_limit_percent:
-          description: Percent of tasks to include in review stream (0-100). Null/0 disables.
-          format: decimal
-          nullable: true
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          type: string
-        sampling:
-          description: |-
-            Task sampling strategy in the review stream (by task id or random)
-
-            * `task_id` - By Task ID
-            * `random` - Random
-          nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -29075,23 +28852,6 @@ components:
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
-        review_task_limit_percent:
-          description: Percent of tasks to include in review stream (0-100). Null/0 disables.
-          format: decimal
-          nullable: true
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-          type: string
-        sampling:
-          description: |-
-            Task sampling strategy in the review stream (by task id or random)
-
-            * `task_id` - By Task ID
-            * `random` - Random
-          nullable: true
-          oneOf:
-            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
-            - $ref: '#/components/schemas/BlankEnum'
-            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -29106,14 +28866,6 @@ components:
           nullable: true
           type: boolean
       type: object
-    ReviewSettingsSamplingEnum:
-      description: |-
-        * `task_id` - By Task ID
-        * `random` - Random
-      enum:
-        - task_id
-        - random
-      type: string
     ReviewedEnum:
       description: |-
         * `only` - only
@@ -29643,7 +29395,7 @@ components:
             type: array
           type: array
       type: object
-    SamplingDe5Enum:
+    SamplingEnum:
       description: |-
         * `Sequential sampling` - Tasks are ordered by Data manager ordering
         * `Uniform sampling` - Tasks are chosen randomly
@@ -29737,9 +29489,16 @@ components:
             minLength: 1
             type: string
           type: array
+        projects:
+          items:
+            type: integer
+          type: array
         role:
-          minLength: 1
-          type: string
+          $ref: '#/components/schemas/Role9e7Enum'
+        workspaces:
+          items:
+            type: integer
+          type: array
       required:
         - emails
         - role

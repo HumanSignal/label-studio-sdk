@@ -165,7 +165,7 @@ types:
   AllRolesProjectListSampling:
     discriminated: false
     union:
-      - SamplingDe5Enum
+      - SamplingEnum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -885,9 +885,6 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
-      recursive_scan:
-        type: optional<boolean>
-        docs: Perform recursive scan over the container content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -964,9 +961,6 @@ types:
         validation:
           min: 0
           max: 32767
-      recursive_scan:
-        type: optional<boolean>
-        docs: Perform recursive scan over the container content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -1040,9 +1034,6 @@ types:
         validation:
           min: 0
           max: 32767
-      recursive_scan:
-        type: optional<boolean>
-        docs: Perform recursive scan over the container content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -1497,11 +1488,6 @@ types:
     docs: |-
       * `Monthly` - Monthly
       * `Yearly` - Yearly
-    source:
-      openapi: openapi/openapi.yaml
-  CancelModelRunResponse:
-    properties:
-      detail: string
     source:
       openapi: openapi/openapi.yaml
   ChildFilter:
@@ -2427,9 +2413,6 @@ types:
         validation:
           min: 0
           max: 32767
-      recursive_scan:
-        type: optional<boolean>
-        docs: Perform recursive scan over the bucket content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -2503,9 +2486,6 @@ types:
         validation:
           min: 0
           max: 32767
-      recursive_scan:
-        type: optional<boolean>
-        docs: Perform recursive scan over the bucket content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -2642,9 +2622,6 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
-      recursive_scan:
-        type: optional<boolean>
-        docs: Perform recursive scan over the bucket content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -2875,9 +2852,6 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
-      recursive_scan:
-        type: optional<boolean>
-        docs: Perform recursive scan over the bucket content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -2957,9 +2931,6 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
-      recursive_scan:
-        type: optional<boolean>
-        docs: Perform recursive scan over the bucket content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -3347,9 +3318,6 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
-      recursive_scan:
-        type: optional<boolean>
-        docs: Perform recursive scan over the directory content
       regex_filter:
         type: optional<string>
         docs: Regex for filtering objects
@@ -3684,7 +3652,7 @@ types:
   LseProjectSampling:
     discriminated: false
     union:
-      - SamplingDe5Enum
+      - SamplingEnum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -3919,7 +3887,7 @@ types:
   LseProjectCreateSampling:
     discriminated: false
     union:
-      - SamplingDe5Enum
+      - SamplingEnum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -4082,7 +4050,7 @@ types:
   LseProjectUpdateSampling:
     discriminated: false
     union:
-      - SamplingDe5Enum
+      - SamplingEnum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -5961,20 +5929,6 @@ types:
           maxLength: 256
     source:
       openapi: openapi/openapi.yaml
-  PaginatedProjectSubsetTasksResponseList:
-    properties:
-      count: integer
-      next:
-        type: optional<string>
-        validation:
-          format: uri
-      previous:
-        type: optional<string>
-        validation:
-          format: uri
-      results: list<ProjectSubsetTasksResponse>
-    source:
-      openapi: openapi/openapi.yaml
   PaginatedRoleBasedTaskList:
     properties:
       tasks: list<RoleBasedTask>
@@ -6135,7 +6089,7 @@ types:
   ProjectSampling:
     discriminated: false
     union:
-      - SamplingDe5Enum
+      - SamplingEnum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -6462,33 +6416,6 @@ types:
       * `All` - All
       * `HasGT` - HasGT
       * `Sample` - Sample
-    source:
-      openapi: openapi/openapi.yaml
-  ProjectSubsetItem:
-    properties:
-      columns_schema: optional<list<map<string, unknown>>>
-      count: integer
-      subset: string
-    source:
-      openapi: openapi/openapi.yaml
-  ProjectSubsetTaskItem:
-    properties:
-      data: map<string, unknown>
-      error: optional<map<string, unknown>>
-      ground_truth: optional<map<string, unknown>>
-      id: optional<integer>
-      prediction: optional<map<string, unknown>>
-      score: optional<double>
-    source:
-      openapi: openapi/openapi.yaml
-  ProjectSubsetTasksResponse:
-    properties:
-      next_cursor: optional<string>
-      previous_cursor: optional<string>
-      task_count:
-        type: optional<integer>
-        docs: Present only when include_total=true
-      task_result_list: list<ProjectSubsetTaskItem>
     source:
       openapi: openapi/openapi.yaml
   ProjectTemplate:
@@ -6823,20 +6750,6 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
-  ReviewSettingsSampling:
-    discriminated: false
-    docs: |-
-      Task sampling strategy in the review stream (by task id or random)
-
-      * `task_id` - By Task ID
-      * `random` - Random
-    union:
-      - ReviewSettingsSamplingEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   ReviewSettings:
     properties:
       anonymize_annotations:
@@ -6872,18 +6785,6 @@ types:
       review_only_manual_assignments:
         type: optional<boolean>
         docs: When set True, review queue is built only from manually assigned tasks
-      review_task_limit_percent:
-        type: optional<string>
-        docs: Percent of tasks to include in review stream (0-100). Null/0 disables.
-        validation:
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-      sampling:
-        type: optional<ReviewSettingsSampling>
-        docs: |-
-          Task sampling strategy in the review stream (by task id or random)
-
-          * `task_id` - By Task ID
-          * `random` - Random
       show_agreement_to_reviewers:
         type: optional<boolean>
         docs: Show the agreement column to reviewers
@@ -6928,20 +6829,6 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
-  ReviewSettingsRequestSampling:
-    discriminated: false
-    docs: |-
-      Task sampling strategy in the review stream (by task id or random)
-
-      * `task_id` - By Task ID
-      * `random` - Random
-    union:
-      - ReviewSettingsSamplingEnum
-      - BlankEnum
-      - NullEnum
-    source:
-      openapi: openapi/openapi.yaml
-    inline: true
   ReviewSettingsRequest:
     properties:
       anonymize_annotations:
@@ -6975,18 +6862,6 @@ types:
       review_only_manual_assignments:
         type: optional<boolean>
         docs: When set True, review queue is built only from manually assigned tasks
-      review_task_limit_percent:
-        type: optional<string>
-        docs: Percent of tasks to include in review stream (0-100). Null/0 disables.
-        validation:
-          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
-      sampling:
-        type: optional<ReviewSettingsRequestSampling>
-        docs: |-
-          Task sampling strategy in the review stream (by task id or random)
-
-          * `task_id` - By Task ID
-          * `random` - Random
       show_agreement_to_reviewers:
         type: optional<boolean>
         docs: Show the agreement column to reviewers
@@ -7001,15 +6876,6 @@ types:
         docs: >-
           If true, Data Manager shows all task.data columns to reviewers; if
           false, hides columns not referenced by the label interface
-    source:
-      openapi: openapi/openapi.yaml
-  ReviewSettingsSamplingEnum:
-    enum:
-      - task_id
-      - random
-    docs: |-
-      * `task_id` - By Task ID
-      * `random` - Random
     source:
       openapi: openapi/openapi.yaml
   ReviewedEnum:
@@ -7405,7 +7271,7 @@ types:
       workspaces_groups: optional<list<list<string>>>
     source:
       openapi: openapi/openapi.yaml
-  SamplingDe5Enum:
+  SamplingEnum:
     enum:
       - value: Sequential sampling
         name: SequentialSampling

@@ -32,11 +32,11 @@ async def test_revoke_invite(client: LabelStudio, async_client: AsyncLabelStudio
 async def test_send_email(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.organizations.invites.send_email(emails=["emails"], role="role")  # type: ignore[func-returns-value]
+        client.organizations.invites.send_email(emails=["emails"], role="OW")  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.organizations.invites.send_email(emails=["emails"], role="role")  # type: ignore[func-returns-value]
+        await async_client.organizations.invites.send_email(emails=["emails"], role="OW")  # type: ignore[func-returns-value]
         is None
     )
