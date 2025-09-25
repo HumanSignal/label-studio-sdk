@@ -7,7 +7,6 @@ from .patched_lse_project_update_request_skip_queue import PatchedLseProjectUpda
 from .projects_duplicate_response import ProjectsDuplicateResponse
 from .projects_import_predictions_response import ProjectsImportPredictionsResponse
 from .projects_import_tasks_response import ProjectsImportTasksResponse
-from .projects_list_request_filter import ProjectsListRequestFilter
 
 __all__ = [
     "LseProjectCreateRequestSampling",
@@ -17,5 +16,4 @@ __all__ = [
     "ProjectsDuplicateResponse",
     "ProjectsImportPredictionsResponse",
     "ProjectsImportTasksResponse",
-    "ProjectsListRequestFilter",
 ]

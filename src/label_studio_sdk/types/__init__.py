@@ -16,6 +16,9 @@ from .annotation_request import AnnotationRequest
 from .annotation_request_last_action import AnnotationRequestLastAction
 from .annotation_review import AnnotationReview
 from .annotation_review_request import AnnotationReviewRequest
+from .annotator_project import AnnotatorProject
+from .annotator_project_sampling import AnnotatorProjectSampling
+from .annotator_project_skip_queue import AnnotatorProjectSkipQueue
 from .assignment_settings import AssignmentSettings
 from .assignment_settings_label_stream_task_distribution import AssignmentSettingsLabelStreamTaskDistribution
 from .assignment_settings_request import AssignmentSettingsRequest
@@ -160,7 +163,6 @@ from .pause import Pause
 from .pause_request import PauseRequest
 from .prediction import Prediction
 from .prediction_request import PredictionRequest
-from .project import Project
 from .project_group import ProjectGroup
 from .project_group_request import ProjectGroupRequest
 from .project_group_role_enum import ProjectGroupRoleEnum
@@ -168,8 +170,6 @@ from .project_import import ProjectImport
 from .project_label_config import ProjectLabelConfig
 from .project_label_config_request import ProjectLabelConfigRequest
 from .project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRolesRequest
-from .project_sampling import ProjectSampling
-from .project_skip_queue import ProjectSkipQueue
 from .project_subset_enum import ProjectSubsetEnum
 from .project_subset_item import ProjectSubsetItem
 from .project_subset_task_item import ProjectSubsetTaskItem
@@ -194,7 +194,11 @@ from .review_settings_review_criteria import ReviewSettingsReviewCriteria
 from .review_settings_sampling import ReviewSettingsSampling
 from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
 from .reviewed_enum import ReviewedEnum
+from .reviewer_project import ReviewerProject
+from .reviewer_project_sampling import ReviewerProjectSampling
+from .reviewer_project_skip_queue import ReviewerProjectSkipQueue
 from .role9e7enum import Role9E7Enum
+from .role_based_project import RoleBasedProject
 from .role_based_task import RoleBasedTask
 from .s3export_storage import S3ExportStorage
 from .s3import_storage import S3ImportStorage
@@ -255,6 +259,9 @@ __all__ = [
     "AnnotationRequestLastAction",
     "AnnotationReview",
     "AnnotationReviewRequest",
+    "AnnotatorProject",
+    "AnnotatorProjectSampling",
+    "AnnotatorProjectSkipQueue",
     "AssignmentSettings",
     "AssignmentSettingsLabelStreamTaskDistribution",
     "AssignmentSettingsRequest",
@@ -397,7 +404,6 @@ __all__ = [
     "PauseRequest",
     "Prediction",
     "PredictionRequest",
-    "Project",
     "ProjectGroup",
     "ProjectGroupRequest",
     "ProjectGroupRoleEnum",
@@ -405,8 +411,6 @@ __all__ = [
     "ProjectLabelConfig",
     "ProjectLabelConfigRequest",
     "ProjectMemberBulkAssignRolesRequest",
-    "ProjectSampling",
-    "ProjectSkipQueue",
     "ProjectSubsetEnum",
     "ProjectSubsetItem",
     "ProjectSubsetTaskItem",
@@ -431,7 +435,11 @@ __all__ = [
     "ReviewSettingsSampling",
     "ReviewSettingsSamplingEnum",
     "ReviewedEnum",
+    "ReviewerProject",
+    "ReviewerProjectSampling",
+    "ReviewerProjectSkipQueue",
     "Role9E7Enum",
+    "RoleBasedProject",
     "RoleBasedTask",
     "S3ExportStorage",
     "S3ImportStorage",
