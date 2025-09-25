@@ -885,6 +885,9 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan over the container content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -961,6 +964,9 @@ types:
         validation:
           min: 0
           max: 32767
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan over the container content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -1034,6 +1040,9 @@ types:
         validation:
           min: 0
           max: 32767
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan over the container content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -2418,6 +2427,9 @@ types:
         validation:
           min: 0
           max: 32767
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan over the bucket content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -2491,6 +2503,9 @@ types:
         validation:
           min: 0
           max: 32767
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan over the bucket content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -2627,6 +2642,9 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan over the bucket content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -2857,6 +2875,9 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan over the bucket content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -2936,6 +2957,9 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan over the bucket content
       regex_filter:
         type: optional<string>
         docs: Cloud storage regex for filtering objects
@@ -3323,6 +3347,9 @@ types:
       project:
         type: integer
         docs: A unique integer value identifying this project.
+      recursive_scan:
+        type: optional<boolean>
+        docs: Perform recursive scan over the directory content
       regex_filter:
         type: optional<string>
         docs: Regex for filtering objects

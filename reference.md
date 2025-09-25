@@ -24042,6 +24042,14 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
@@ -24273,6 +24281,14 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -24659,6 +24675,14 @@ client.import_storage.gcswif.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
