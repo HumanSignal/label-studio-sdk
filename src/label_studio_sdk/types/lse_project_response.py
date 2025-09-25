@@ -192,8 +192,8 @@ class LseProjectResponse(UncheckedBaseModel):
     """
 
     total_annotations_number: int
-    total_predictions_number: str
-    useful_annotation_number: str
+    total_predictions_number: typing.Optional[int] = None
+    useful_annotation_number: typing.Optional[int] = None
     workspace: str
     workspace_title: str
 

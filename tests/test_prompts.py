@@ -240,7 +240,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                 "title": "title",
                 "total_annotations_number": "total_annotations_number",
                 "total_predictions_number": 1,
-                "useful_annotation_number": "useful_annotation_number",
+                "useful_annotation_number": 1,
                 "workspace": "workspace",
                 "workspace_title": "workspace_title",
             }
@@ -325,7 +325,7 @@ async def test_compatible_projects(client: LabelStudio, async_client: AsyncLabel
                     "title": None,
                     "total_annotations_number": None,
                     "total_predictions_number": "integer",
-                    "useful_annotation_number": None,
+                    "useful_annotation_number": "integer",
                     "workspace": None,
                     "workspace_title": None,
                 }

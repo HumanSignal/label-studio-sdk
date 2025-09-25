@@ -183,7 +183,7 @@ class AllRolesProjectList(UncheckedBaseModel):
 
     total_annotations_number: str
     total_predictions_number: int
-    useful_annotation_number: str
+    useful_annotation_number: typing.Optional[int] = None
     workspace: str
     workspace_title: str
 
