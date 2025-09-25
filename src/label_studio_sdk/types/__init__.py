@@ -188,8 +188,11 @@ from .review_settings import ReviewSettings
 from .review_settings_request import ReviewSettingsRequest
 from .review_settings_request_requeue_rejected_tasks_mode import ReviewSettingsRequestRequeueRejectedTasksMode
 from .review_settings_request_review_criteria import ReviewSettingsRequestReviewCriteria
+from .review_settings_request_sampling import ReviewSettingsRequestSampling
 from .review_settings_requeue_rejected_tasks_mode import ReviewSettingsRequeueRejectedTasksMode
 from .review_settings_review_criteria import ReviewSettingsReviewCriteria
+from .review_settings_sampling import ReviewSettingsSampling
+from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
 from .reviewed_enum import ReviewedEnum
 from .role9e7enum import Role9E7Enum
 from .role_based_task import RoleBasedTask
@@ -197,7 +200,7 @@ from .s3export_storage import S3ExportStorage
 from .s3import_storage import S3ImportStorage
 from .saml_settings import SamlSettings
 from .saml_settings_update import SamlSettingsUpdate
-from .sampling_enum import SamplingEnum
+from .sampling_de5enum import SamplingDe5Enum
 from .scim_settings import ScimSettings
 from .scim_settings_update import ScimSettingsUpdate
 from .scope_enum import ScopeEnum
@@ -422,8 +425,11 @@ __all__ = [
     "ReviewSettingsRequest",
     "ReviewSettingsRequestRequeueRejectedTasksMode",
     "ReviewSettingsRequestReviewCriteria",
+    "ReviewSettingsRequestSampling",
     "ReviewSettingsRequeueRejectedTasksMode",
     "ReviewSettingsReviewCriteria",
+    "ReviewSettingsSampling",
+    "ReviewSettingsSamplingEnum",
     "ReviewedEnum",
     "Role9E7Enum",
     "RoleBasedTask",
@@ -431,7 +437,7 @@ __all__ = [
     "S3ImportStorage",
     "SamlSettings",
     "SamlSettingsUpdate",
-    "SamplingEnum",
+    "SamplingDe5Enum",
     "ScimSettings",
     "ScimSettingsUpdate",
     "ScopeEnum",

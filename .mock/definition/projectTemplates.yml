@@ -357,6 +357,8 @@ service:
                 require_comment_on_reject: true
                 review_criteria: all
                 review_only_manual_assignments: true
+                review_task_limit_percent: review_task_limit_percent
+                sampling: task_id
                 show_agreement_to_reviewers: true
                 show_data_manager_to_reviewers: true
                 show_instruction: true

@@ -165,7 +165,7 @@ types:
   AllRolesProjectListSampling:
     discriminated: false
     union:
-      - SamplingEnum
+      - SamplingDe5Enum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -3657,7 +3657,7 @@ types:
   LseProjectSampling:
     discriminated: false
     union:
-      - SamplingEnum
+      - SamplingDe5Enum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -3892,7 +3892,7 @@ types:
   LseProjectCreateSampling:
     discriminated: false
     union:
-      - SamplingEnum
+      - SamplingDe5Enum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -4055,7 +4055,7 @@ types:
   LseProjectUpdateSampling:
     discriminated: false
     union:
-      - SamplingEnum
+      - SamplingDe5Enum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -6108,7 +6108,7 @@ types:
   ProjectSampling:
     discriminated: false
     union:
-      - SamplingEnum
+      - SamplingDe5Enum
       - NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -6796,6 +6796,20 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
+  ReviewSettingsSampling:
+    discriminated: false
+    docs: |-
+      Task sampling strategy in the review stream (by task id or random)
+
+      * `task_id` - By Task ID
+      * `random` - Random
+    union:
+      - ReviewSettingsSamplingEnum
+      - BlankEnum
+      - NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   ReviewSettings:
     properties:
       anonymize_annotations:
@@ -6831,6 +6845,18 @@ types:
       review_only_manual_assignments:
         type: optional<boolean>
         docs: When set True, review queue is built only from manually assigned tasks
+      review_task_limit_percent:
+        type: optional<string>
+        docs: Percent of tasks to include in review stream (0-100). Null/0 disables.
+        validation:
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+      sampling:
+        type: optional<ReviewSettingsSampling>
+        docs: |-
+          Task sampling strategy in the review stream (by task id or random)
+
+          * `task_id` - By Task ID
+          * `random` - Random
       show_agreement_to_reviewers:
         type: optional<boolean>
         docs: Show the agreement column to reviewers
@@ -6875,6 +6901,20 @@ types:
     source:
       openapi: openapi/openapi.yaml
     inline: true
+  ReviewSettingsRequestSampling:
+    discriminated: false
+    docs: |-
+      Task sampling strategy in the review stream (by task id or random)
+
+      * `task_id` - By Task ID
+      * `random` - Random
+    union:
+      - ReviewSettingsSamplingEnum
+      - BlankEnum
+      - NullEnum
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
   ReviewSettingsRequest:
     properties:
       anonymize_annotations:
@@ -6908,6 +6948,18 @@ types:
       review_only_manual_assignments:
         type: optional<boolean>
         docs: When set True, review queue is built only from manually assigned tasks
+      review_task_limit_percent:
+        type: optional<string>
+        docs: Percent of tasks to include in review stream (0-100). Null/0 disables.
+        validation:
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+      sampling:
+        type: optional<ReviewSettingsRequestSampling>
+        docs: |-
+          Task sampling strategy in the review stream (by task id or random)
+
+          * `task_id` - By Task ID
+          * `random` - Random
       show_agreement_to_reviewers:
         type: optional<boolean>
         docs: Show the agreement column to reviewers
@@ -6922,6 +6974,15 @@ types:
         docs: >-
           If true, Data Manager shows all task.data columns to reviewers; if
           false, hides columns not referenced by the label interface
+    source:
+      openapi: openapi/openapi.yaml
+  ReviewSettingsSamplingEnum:
+    enum:
+      - task_id
+      - random
+    docs: |-
+      * `task_id` - By Task ID
+      * `random` - Random
     source:
       openapi: openapi/openapi.yaml
   ReviewedEnum:
@@ -7317,7 +7378,7 @@ types:
       workspaces_groups: optional<list<list<string>>>
     source:
       openapi: openapi/openapi.yaml
-  SamplingEnum:
+  SamplingDe5Enum:
     enum:
       - value: Sequential sampling
         name: SequentialSampling

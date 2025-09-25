@@ -17773,7 +17773,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -22501,7 +22501,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -22781,7 +22781,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -22939,7 +22939,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -23145,7 +23145,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -26876,7 +26876,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -27941,7 +27941,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -28347,7 +28347,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -28950,6 +28950,23 @@ components:
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
+        review_task_limit_percent:
+          description: Percent of tasks to include in review stream (0-100). Null/0 disables.
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          type: string
+        sampling:
+          description: |-
+            Task sampling strategy in the review stream (by task id or random)
+
+            * `task_id` - By Task ID
+            * `random` - Random
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -29010,6 +29027,23 @@ components:
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
+        review_task_limit_percent:
+          description: Percent of tasks to include in review stream (0-100). Null/0 disables.
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          type: string
+        sampling:
+          description: |-
+            Task sampling strategy in the review stream (by task id or random)
+
+            * `task_id` - By Task ID
+            * `random` - Random
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -29024,6 +29058,14 @@ components:
           nullable: true
           type: boolean
       type: object
+    ReviewSettingsSamplingEnum:
+      description: |-
+        * `task_id` - By Task ID
+        * `random` - Random
+      enum:
+        - task_id
+        - random
+      type: string
     ReviewedEnum:
       description: |-
         * `only` - only
@@ -29553,7 +29595,7 @@ components:
             type: array
           type: array
       type: object
-    SamplingEnum:
+    SamplingDe5Enum:
       description: |-
         * `Sequential sampling` - Tasks are ordered by Data manager ordering
         * `Uniform sampling` - Tasks are chosen randomly
