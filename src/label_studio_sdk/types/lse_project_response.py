@@ -7,18 +7,17 @@ import pydantic
 import datetime as dt
 from .user_simple import UserSimple
 from .review_settings import ReviewSettings
-from .annotator_project_sampling import AnnotatorProjectSampling
-from .annotator_project_skip_queue import AnnotatorProjectSkipQueue
+from .lse_project_response_sampling import LseProjectResponseSampling
+from .lse_project_response_skip_queue import LseProjectResponseSkipQueue
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
-class AnnotatorProject(UncheckedBaseModel):
+class LseProjectResponse(UncheckedBaseModel):
     """
-    Serializer get numbers from project queryset annotation,
-    make sure, that you use correct one(Project.objects.with_counts())
+    Serializer for project response, combining all the serializers for different roles. Don't use it except for Spectacular/Fern definitions.
     """
 
-    allow_stream: str
+    allow_stream: bool
     annotation_limit_count: typing.Optional[int] = None
     annotation_limit_percent: typing.Optional[str] = None
     annotator_evaluation_minimum_score: typing.Optional[str] = None
@@ -115,7 +114,7 @@ class AnnotatorProject(UncheckedBaseModel):
     Machine learning model version
     """
 
-    num_tasks_with_annotations: str
+    num_tasks_with_annotations: int
     organization: typing.Optional[int] = None
     overlap_cohort_percentage: typing.Optional[int] = None
     parsed_label_config: typing.Optional[typing.Any] = None
@@ -126,11 +125,11 @@ class AnnotatorProject(UncheckedBaseModel):
     """
 
     prompts: str
-    queue_done: str
-    queue_left: str
-    queue_total: str
-    ready: str
-    rejected: str
+    queue_done: int
+    queue_left: int
+    queue_total: int
+    ready: bool
+    rejected: int
     require_comment_on_skip: typing.Optional[bool] = None
     reveal_preannotations_interactively: typing.Optional[bool] = pydantic.Field(default=None)
     """
@@ -138,8 +137,10 @@ class AnnotatorProject(UncheckedBaseModel):
     """
 
     review_settings: ReviewSettings
-    reviewer_queue_total: str
-    sampling: typing.Optional[AnnotatorProjectSampling] = None
+    review_total_tasks: int
+    reviewed_number: int
+    reviewer_queue_total: int
+    sampling: typing.Optional[LseProjectResponseSampling] = None
     show_annotation_history: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Show annotation history to annotator
@@ -163,8 +164,8 @@ class AnnotatorProject(UncheckedBaseModel):
     """
 
     show_unused_data_columns_to_annotators: typing.Optional[bool] = None
-    skip_queue: typing.Optional[AnnotatorProjectSkipQueue] = None
-    skipped_annotations_number: str
+    skip_queue: typing.Optional[LseProjectResponseSkipQueue] = None
+    skipped_annotations_number: int
     start_training_on_annotation_update: bool = pydantic.Field()
     """
     Start model training after any annotations are submitted or updated
@@ -190,7 +191,7 @@ class AnnotatorProject(UncheckedBaseModel):
     Project name. Must be between 3 and 50 characters long.
     """
 
-    total_annotations_number: str
+    total_annotations_number: int
     total_predictions_number: str
     useful_annotation_number: str
     workspace: str

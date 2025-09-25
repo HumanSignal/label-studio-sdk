@@ -19,13 +19,13 @@ class LseProjectCounts(UncheckedBaseModel):
     """
 
     id: int
-    num_tasks_with_annotations: str
-    queue_done: str
-    queue_left: str
+    num_tasks_with_annotations: int
+    queue_done: int
+    queue_left: int
     queue_total: str
-    rejected: str
-    review_total_tasks: str
-    reviewed_number: str
+    rejected: int
+    review_total_tasks: int
+    reviewed_number: int
     skipped_annotations_number: str
     task_number: int = pydantic.Field()
     """

@@ -22,7 +22,7 @@ from .types.lse_project_create_request_skip_queue import LseProjectCreateRequest
 from ..types.lse_project_create import LseProjectCreate
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.paginated_lse_project_counts_list import PaginatedLseProjectCountsList
-from ..types.role_based_project import RoleBasedProject
+from ..types.lse_project_response import LseProjectResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.assignment_settings_request import AssignmentSettingsRequest
 from ..types.review_settings_request import ReviewSettingsRequest
@@ -474,7 +474,7 @@ class ProjectsClient:
         *,
         members_limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RoleBasedProject:
+    ) -> LseProjectResponse:
         """
         Retrieve information about a project by project ID.
 
@@ -490,8 +490,8 @@ class ProjectsClient:
 
         Returns
         -------
-        RoleBasedProject
-            Project information
+        LseProjectResponse
+            Project information. Not all fields are available for all roles.
 
         Examples
         --------
@@ -515,9 +515,9 @@ class ProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RoleBasedProject,
+                    LseProjectResponse,
                     construct_type(
-                        type_=RoleBasedProject,  # type: ignore
+                        type_=LseProjectResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1673,7 +1673,7 @@ class AsyncProjectsClient:
         *,
         members_limit: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> RoleBasedProject:
+    ) -> LseProjectResponse:
         """
         Retrieve information about a project by project ID.
 
@@ -1689,8 +1689,8 @@ class AsyncProjectsClient:
 
         Returns
         -------
-        RoleBasedProject
-            Project information
+        LseProjectResponse
+            Project information. Not all fields are available for all roles.
 
         Examples
         --------
@@ -1722,9 +1722,9 @@ class AsyncProjectsClient:
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    RoleBasedProject,
+                    LseProjectResponse,
                     construct_type(
-                        type_=RoleBasedProject,  # type: ignore
+                        type_=LseProjectResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

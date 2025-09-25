@@ -293,7 +293,7 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - allow_stream: allow_stream
+                - allow_stream: true
                   annotation_limit_count: 1
                   annotation_limit_percent: annotation_limit_percent
                   annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
@@ -337,7 +337,7 @@ service:
                   members_count: 1
                   min_annotations_to_start_training: 1
                   model_version: model_version
-                  num_tasks_with_annotations: num_tasks_with_annotations
+                  num_tasks_with_annotations: 1
                   organization: 1
                   overlap_cohort_percentage: 1
                   parsed_label_config:
@@ -345,19 +345,19 @@ service:
                   pause_on_failed_annotator_evaluation: true
                   pinned_at: '2024-01-15T09:30:00Z'
                   prompts: prompts
-                  queue_done: queue_done
-                  queue_left: queue_left
+                  queue_done: 1
+                  queue_left: 1
                   queue_total: queue_total
-                  ready: ready
-                  rejected: rejected
+                  ready: true
+                  rejected: 1
                   require_comment_on_skip: true
                   reveal_preannotations_interactively: true
                   review_settings:
                     id: 1
                     requeue_rejected_tasks_to_annotator: true
-                  review_total_tasks: review_total_tasks
-                  reviewed_number: reviewed_number
-                  reviewer_queue_total: reviewer_queue_total
+                  review_total_tasks: 1
+                  reviewed_number: 1
+                  reviewer_queue_total: 1
                   sampling: Sequential sampling
                   show_annotation_history: true
                   show_collab_predictions: true

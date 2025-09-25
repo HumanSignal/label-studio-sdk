@@ -4,4 +4,4 @@ import typing
 from .sampling_de5enum import SamplingDe5Enum
 from .null_enum import NullEnum
 
-ReviewerProjectSampling = typing.Union[SamplingDe5Enum, NullEnum]
+LseProjectResponseSampling = typing.Union[SamplingDe5Enum, NullEnum]

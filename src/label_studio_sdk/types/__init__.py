@@ -16,9 +16,6 @@ from .annotation_request import AnnotationRequest
 from .annotation_request_last_action import AnnotationRequestLastAction
 from .annotation_review import AnnotationReview
 from .annotation_review_request import AnnotationReviewRequest
-from .annotator_project import AnnotatorProject
-from .annotator_project_sampling import AnnotatorProjectSampling
-from .annotator_project_skip_queue import AnnotatorProjectSkipQueue
 from .assignment_settings import AssignmentSettings
 from .assignment_settings_label_stream_task_distribution import AssignmentSettingsLabelStreamTaskDistribution
 from .assignment_settings_request import AssignmentSettingsRequest
@@ -94,6 +91,9 @@ from .lse_project_counts import LseProjectCounts
 from .lse_project_create import LseProjectCreate
 from .lse_project_create_sampling import LseProjectCreateSampling
 from .lse_project_create_skip_queue import LseProjectCreateSkipQueue
+from .lse_project_response import LseProjectResponse
+from .lse_project_response_sampling import LseProjectResponseSampling
+from .lse_project_response_skip_queue import LseProjectResponseSkipQueue
 from .lse_project_sampling import LseProjectSampling
 from .lse_project_skip_queue import LseProjectSkipQueue
 from .lse_project_update import LseProjectUpdate
@@ -194,11 +194,7 @@ from .review_settings_review_criteria import ReviewSettingsReviewCriteria
 from .review_settings_sampling import ReviewSettingsSampling
 from .review_settings_sampling_enum import ReviewSettingsSamplingEnum
 from .reviewed_enum import ReviewedEnum
-from .reviewer_project import ReviewerProject
-from .reviewer_project_sampling import ReviewerProjectSampling
-from .reviewer_project_skip_queue import ReviewerProjectSkipQueue
 from .role9e7enum import Role9E7Enum
-from .role_based_project import RoleBasedProject
 from .role_based_task import RoleBasedTask
 from .s3export_storage import S3ExportStorage
 from .s3import_storage import S3ImportStorage
@@ -259,9 +255,6 @@ __all__ = [
     "AnnotationRequestLastAction",
     "AnnotationReview",
     "AnnotationReviewRequest",
-    "AnnotatorProject",
-    "AnnotatorProjectSampling",
-    "AnnotatorProjectSkipQueue",
     "AssignmentSettings",
     "AssignmentSettingsLabelStreamTaskDistribution",
     "AssignmentSettingsRequest",
@@ -335,6 +328,9 @@ __all__ = [
     "LseProjectCreate",
     "LseProjectCreateSampling",
     "LseProjectCreateSkipQueue",
+    "LseProjectResponse",
+    "LseProjectResponseSampling",
+    "LseProjectResponseSkipQueue",
     "LseProjectSampling",
     "LseProjectSkipQueue",
     "LseProjectUpdate",
@@ -435,11 +431,7 @@ __all__ = [
     "ReviewSettingsSampling",
     "ReviewSettingsSamplingEnum",
     "ReviewedEnum",
-    "ReviewerProject",
-    "ReviewerProjectSampling",
-    "ReviewerProjectSkipQueue",
     "Role9E7Enum",
-    "RoleBasedProject",
     "RoleBasedTask",
     "S3ExportStorage",
     "S3ImportStorage",

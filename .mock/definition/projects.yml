@@ -70,7 +70,7 @@ service:
               next: http://api.example.org/accounts/?page=4
               previous: http://api.example.org/accounts/?page=2
               results:
-                - allow_stream: allow_stream
+                - allow_stream: true
                   annotation_limit_count: 1
                   annotation_limit_percent: annotation_limit_percent
                   annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
@@ -114,7 +114,7 @@ service:
                   members_count: 1
                   min_annotations_to_start_training: 1
                   model_version: model_version
-                  num_tasks_with_annotations: num_tasks_with_annotations
+                  num_tasks_with_annotations: 1
                   organization: 1
                   overlap_cohort_percentage: 1
                   parsed_label_config:
@@ -122,19 +122,19 @@ service:
                   pause_on_failed_annotator_evaluation: true
                   pinned_at: '2024-01-15T09:30:00Z'
                   prompts: prompts
-                  queue_done: queue_done
-                  queue_left: queue_left
+                  queue_done: 1
+                  queue_left: 1
                   queue_total: queue_total
-                  ready: ready
-                  rejected: rejected
+                  ready: true
+                  rejected: 1
                   require_comment_on_skip: true
                   reveal_preannotations_interactively: true
                   review_settings:
                     id: 1
                     requeue_rejected_tasks_to_annotator: true
-                  review_total_tasks: review_total_tasks
-                  reviewed_number: reviewed_number
-                  reviewer_queue_total: reviewer_queue_total
+                  review_total_tasks: 1
+                  reviewed_number: 1
+                  reviewer_queue_total: 1
                   sampling: Sequential sampling
                   show_annotation_history: true
                   show_collab_predictions: true
@@ -389,13 +389,13 @@ service:
                 - finished_task_number: 1
                   ground_truth_number: 1
                   id: 1
-                  num_tasks_with_annotations: num_tasks_with_annotations
-                  queue_done: queue_done
-                  queue_left: queue_left
+                  num_tasks_with_annotations: 1
+                  queue_done: 1
+                  queue_left: 1
                   queue_total: queue_total
-                  rejected: rejected
-                  review_total_tasks: review_total_tasks
-                  reviewed_number: reviewed_number
+                  rejected: 1
+                  review_total_tasks: 1
+                  reviewed_number: 1
                   skipped_annotations_number: skipped_annotations_number
                   task_number: 1
                   total_annotations_number: total_annotations_number
@@ -439,14 +439,14 @@ service:
             default: 10
             docs: Maximum number of members to return
       response:
-        docs: Project information
-        type: root.RoleBasedProject
+        docs: Project information. Not all fields are available for all roles.
+        type: root.LseProjectResponse
       examples:
         - path-parameters:
             id: 1
           response:
             body:
-              allow_stream: allow_stream
+              allow_stream: true
               annotation_limit_count: 1
               annotation_limit_percent: annotation_limit_percent
               annotator_evaluation_minimum_score: annotator_evaluation_minimum_score
@@ -489,7 +489,7 @@ service:
               members_count: 1
               min_annotations_to_start_training: 1
               model_version: model_version
-              num_tasks_with_annotations: num_tasks_with_annotations
+              num_tasks_with_annotations: 1
               organization: 1
               overlap_cohort_percentage: 1
               parsed_label_config:
@@ -497,11 +497,11 @@ service:
               pause_on_failed_annotator_evaluation: true
               pinned_at: '2024-01-15T09:30:00Z'
               prompts: prompts
-              queue_done: queue_done
-              queue_left: queue_left
-              queue_total: queue_total
-              ready: ready
-              rejected: rejected
+              queue_done: 1
+              queue_left: 1
+              queue_total: 1
+              ready: true
+              rejected: 1
               require_comment_on_skip: true
               reveal_preannotations_interactively: true
               review_settings:
@@ -521,7 +521,9 @@ service:
                 show_data_manager_to_reviewers: true
                 show_instruction: true
                 show_unused_data_columns_to_reviewers: true
-              reviewer_queue_total: reviewer_queue_total
+              review_total_tasks: 1
+              reviewed_number: 1
+              reviewer_queue_total: 1
               sampling: Sequential sampling
               show_annotation_history: true
               show_collab_predictions: true
@@ -531,13 +533,13 @@ service:
               show_skip_button: true
               show_unused_data_columns_to_annotators: true
               skip_queue: REQUEUE_FOR_ME
-              skipped_annotations_number: skipped_annotations_number
+              skipped_annotations_number: 1
               start_training_on_annotation_update: true
               task_data_login: task_data_login
               task_data_password: task_data_password
               task_number: 1
               title: title
-              total_annotations_number: total_annotations_number
+              total_annotations_number: 1
               total_predictions_number: total_predictions_number
               useful_annotation_number: useful_annotation_number
               workspace: workspace

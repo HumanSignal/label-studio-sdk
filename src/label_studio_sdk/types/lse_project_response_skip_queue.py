@@ -4,4 +4,4 @@ import typing
 from .skip_queue_enum import SkipQueueEnum
 from .null_enum import NullEnum
 
-ReviewerProjectSkipQueue = typing.Union[SkipQueueEnum, NullEnum]
+LseProjectResponseSkipQueue = typing.Union[SkipQueueEnum, NullEnum]
