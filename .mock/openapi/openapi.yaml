@@ -9759,6 +9759,11 @@ paths:
       description: "\n        Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.\n        "
       operationId: api_projects_subset_tasks_list
       parameters:
+        - description: If true (default), includes task_count in response; if false, omits it.
+          in: query
+          name: include_total
+          schema:
+            type: boolean
         - description: A unique ID of a ModelRun
           in: query
           name: model_run
@@ -9782,6 +9787,11 @@ paths:
           required: false
           schema:
             type: integer
+        - description: The ID of the parent model (ModelInterface) for this Inference Run
+          in: query
+          name: parent_model
+          schema:
+            type: integer
         - in: path
           name: project_pk
           required: true
@@ -9794,7 +9804,11 @@ paths:
             type: string
       responses:
         '200':
-          description: Project subset task list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProjectSubsetTasksResponseList'
+          description: ''
         '400':
           description: Bad request - missing parent_model
       security:
@@ -9802,11 +9816,21 @@ paths:
       summary: Get Project Subset Task List with Predictions and Accuracy details
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: subset_tasks
   /api/projects/{project_pk}/subsets:
     get:
       description: "\n        Provides list of available subsets for a project along with count of tasks in each subset\n        "
-      operationId: api_projects_subsets_retrieve
+      operationId: api_projects_subsets_list
       parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
         - in: path
           name: project_pk
           required: true
@@ -9814,12 +9838,22 @@ paths:
             type: integer
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectSubsetItem'
+                type: array
+          description: ''
       security:
         - Token: []
       summary: Get available subsets of a project (for prompts usage)
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: subsets
   /api/prompts/:
     get:
       description: List all prompts.
@@ -10447,13 +10481,23 @@ paths:
           schema:
             type: integer
       responses:
-        '201':
-          description: No response body
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelModelRunResponse'
+          description: ''
       security:
         - Token: []
       summary: Cancel Inference Run API
       tags:
         - Prompts
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - prompts
+        - runs
+      x-fern-sdk-method-name: cancel
   /api/prompts/{prompt_id}/versions/{version_id}/refine:
     get:
       description: Get the refined prompt based on the `refinement_job_id`.
@@ -15742,6 +15786,15 @@ paths:
       requestBody:
         content:
           application/json:
+            examples:
+              CreateTask:
+                description: Example of Create Task
+                summary: Create Task
+                value:
+                  data:
+                    image: https://example.com/image.jpg
+                    text: Hello, world!
+                  project: 1
             schema:
               $ref: '#/components/schemas/LseTaskRequest'
           application/x-www-form-urlencoded:
@@ -16041,7 +16094,7 @@ paths:
       x-fern-sdk-method-name: create
   /api/tasks/{id}/events/:
     post:
-      description: "\n    Create a new task event to track user interactions and system events during annotation.\n    \n    This endpoint is designed to receive events from the frontend labeling interface to enable\n    accurate lead time calculation and detailed annotation analytics.\n    \n    ## Event Types\n    \n    **Core Annotation Events:**\n    - `annotation_loaded` - When annotation interface is loaded\n    - `annotation_submitted` - When annotation is submitted\n    - `annotation_updated` - When annotation is modified\n    - `annotation_reviewed` - When annotation is reviewed\n    \n    **User Activity Events:**\n    - `visibility_change` - When page visibility changes (tab switch, minimize)\n    - `idle_detected` - When user goes idle\n    - `idle_resumed` - When user returns from idle\n    \n    **Interaction Events:**\n    - `region_finished_drawing` - When annotation region is completed\n    - `region_deleted` - When annotation regions are removed\n    - `hotkey_pressed` - When keyboard shortcuts are used\n    \n    **Media Events:**\n    - `video_playback_start/end` - Video playback control\n    - `audio_playback_start/end` - Audio playback control\n    - `video_scrub` - Video timeline scrubbing\n    \n    ## Usage\n    \n    Events are automatically associated with the task specified in the URL path.\n    The current user is automatically set as the actor. Project and organization\n    are derived from the task context.\n    \n    ## Example Request\n    \n    ```json\n    {\n        \"event_key\": \"annotation_loaded\",\n        \"event_time\": \"2024-01-15T10:30:00Z\",\n        \"annotation\": 123,\n        \"meta\": {\n            \"annotation_count\": 5,\n            \"estimated_time\": 300\n        }\n    }\n    ```\n    "
+      description: "\n    Create a new task event to track user interactions and system events during annotation.\n\n    This endpoint is designed to receive events from the frontend labeling interface to enable\n    accurate lead time calculation and detailed annotation analytics.\n\n    ## Event Types\n\n    **Core Annotation Events:**\n    - `annotation_loaded` - When annotation interface is loaded\n    - `annotation_submitted` - When annotation is submitted\n    - `annotation_updated` - When annotation is modified\n    - `annotation_reviewed` - When annotation is reviewed\n\n    **User Activity Events:**\n    - `visibility_change` - When page visibility changes (tab switch, minimize)\n    - `idle_detected` - When user goes idle\n    - `idle_resumed` - When user returns from idle\n\n    **Interaction Events:**\n    - `region_finished_drawing` - When annotation region is completed\n    - `region_deleted` - When annotation regions are removed\n    - `hotkey_pressed` - When keyboard shortcuts are used\n\n    **Media Events:**\n    - `video_playback_start/end` - Video playback control\n    - `audio_playback_start/end` - Audio playback control\n    - `video_scrub` - Video timeline scrubbing\n\n    ## Usage\n\n    Events are automatically associated with the task specified in the URL path.\n    The current user is automatically set as the actor. Project and organization\n    are derived from the task context.\n\n    ## Example Request\n\n    ```json\n    {\n        \"event_key\": \"annotation_loaded\",\n        \"event_time\": \"2024-01-15T10:30:00Z\",\n        \"annotation\": 123,\n        \"meta\": {\n            \"annotation_count\": 5,\n            \"estimated_time\": 300\n        }\n    }\n    ```\n    "
       operationId: api_tasks_events_create
       parameters:
         - description: Task ID to associate the event with
@@ -19442,6 +19495,13 @@ components:
         - Monthly
         - Yearly
       type: string
+    CancelModelRunResponse:
+      properties:
+        detail:
+          type: string
+      required:
+        - detail
+      type: object
     CheckMatchingFunctionRequestRequest:
       properties:
         code:
@@ -25674,6 +25734,29 @@ components:
         - project_role
         - username
       type: object
+    PaginatedProjectSubsetTasksResponseList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/ProjectSubsetTasksResponse'
+          type: array
+      required:
+        - count
+        - results
+      type: object
     PaginatedRoleBasedTaskList:
       properties:
         tasks:
@@ -28367,6 +28450,62 @@ components:
         - HasGT
         - Sample
       type: string
+    ProjectSubsetItem:
+      properties:
+        columns_schema:
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+        count:
+          type: integer
+        subset:
+          type: string
+      required:
+        - count
+        - subset
+      type: object
+    ProjectSubsetTaskItem:
+      properties:
+        data:
+          additionalProperties: {}
+          type: object
+        error:
+          additionalProperties: {}
+          type: object
+        ground_truth:
+          additionalProperties: {}
+          type: object
+        id:
+          type: integer
+        prediction:
+          additionalProperties: {}
+          type: object
+        score:
+          format: double
+          nullable: true
+          type: number
+      required:
+        - data
+      type: object
+    ProjectSubsetTasksResponse:
+      properties:
+        next_cursor:
+          nullable: true
+          type: string
+        previous_cursor:
+          nullable: true
+          type: string
+        task_count:
+          description: Present only when include_total=true
+          type: integer
+        task_result_list:
+          items:
+            $ref: '#/components/schemas/ProjectSubsetTaskItem'
+          type: array
+      required:
+        - task_result_list
+      type: object
     ProjectTemplate:
       properties:
         assignment_settings:

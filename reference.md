@@ -6690,6 +6690,214 @@ client.prompts.batch_predictions(
 </dl>
 </details>
 
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">subset_tasks</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+        Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.subset_tasks(
+    project_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_total:** `typing.Optional[bool]` — If true (default), includes task_count in response; if false, omits it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_run:** `typing.Optional[int]` — A unique ID of a ModelRun
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — A page number within the paginated result set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_model:** `typing.Optional[int]` — The ID of the parent model (ModelInterface) for this Inference Run
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_subset:** `typing.Optional[str]` — The project subset to retrieve tasks for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">subsets</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+        Provides list of available subsets for a project along with count of tasks in each subset
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.subsets(
+    project_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
@@ -10277,7 +10485,8 @@ client = LabelStudio(
     api_key="YOUR_API_KEY",
 )
 client.tasks.create(
-    data={"key": "value"},
+    data={"image": "https://example.com/image.jpg", "text": "Hello, world!"},
+    project=1,
 )
 
 ```
@@ -10810,41 +11019,41 @@ client.tasks.update(
 
 
     Create a new task event to track user interactions and system events during annotation.
-    
+
     This endpoint is designed to receive events from the frontend labeling interface to enable
     accurate lead time calculation and detailed annotation analytics.
-    
+
     ## Event Types
-    
+
     **Core Annotation Events:**
     - `annotation_loaded` - When annotation interface is loaded
     - `annotation_submitted` - When annotation is submitted
     - `annotation_updated` - When annotation is modified
     - `annotation_reviewed` - When annotation is reviewed
-    
+
     **User Activity Events:**
     - `visibility_change` - When page visibility changes (tab switch, minimize)
     - `idle_detected` - When user goes idle
     - `idle_resumed` - When user returns from idle
-    
+
     **Interaction Events:**
     - `region_finished_drawing` - When annotation region is completed
     - `region_deleted` - When annotation regions are removed
     - `hotkey_pressed` - When keyboard shortcuts are used
-    
+
     **Media Events:**
     - `video_playback_start/end` - Video playback control
     - `audio_playback_start/end` - Audio playback control
     - `video_scrub` - Video timeline scrubbing
-    
+
     ## Usage
-    
+
     Events are automatically associated with the task specified in the URL path.
     The current user is automatically set as the actor. Project and organization
     are derived from the task context.
-    
+
     ## Example Request
-    
+
     ```json
     {
         "event_key": "annotation_loaded",
@@ -33554,6 +33763,94 @@ client.prompts.runs.create(
 <dd>
 
 **total_tasks:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.runs.<a href="src/label_studio_sdk/prompts/runs/client.py">cancel</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancel the inference run for the given api
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.runs.cancel(
+    inference_run_id=1,
+    prompt_id=1,
+    version_id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inference_run_id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt_id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `int` 
     
 </dd>
 </dl>
