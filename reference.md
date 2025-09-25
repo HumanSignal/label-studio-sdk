@@ -9640,6 +9640,76 @@ client.projects.update(
 </dl>
 </details>
 
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list_unique_annotators</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Return unique users who have submitted annotations in the specified project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.list_unique_annotators(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">duplicate</a>(...)</code></summary>
 <dl>
 <dd>
@@ -23972,6 +24042,14 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
@@ -24203,6 +24281,14 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -24589,6 +24675,14 @@ client.import_storage.gcswif.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>

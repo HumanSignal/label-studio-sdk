@@ -6899,6 +6899,34 @@ paths:
         - public
       x-fern-sdk-group-name: annotation_history
       x-fern-sdk-method-name: list_for_project
+  /api/projects/{id}/annotators/:
+    get:
+      description: Return unique users who have submitted annotations in the specified project.
+      operationId: api_projects_annotators_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserSimple'
+                type: array
+          description: List of annotator users
+      security:
+        - Token: []
+      summary: List unique annotators for project
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: projects
+      x-fern-sdk-method-name: list_unique_annotators
   /api/projects/{id}/aws-custom-function:
     get:
       description: Get the AWS Lambda code for the custom metric configured for this project.
@@ -17745,7 +17773,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -18541,6 +18569,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the container content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18641,6 +18673,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the container content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18732,6 +18768,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the container content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -20675,6 +20715,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -20766,6 +20810,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -20940,6 +20988,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -21241,6 +21293,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -21341,6 +21397,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -21930,6 +21990,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the directory content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Regex for filtering objects
           nullable: true
@@ -22473,7 +22537,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -22753,7 +22817,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -22911,7 +22975,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -23117,7 +23181,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -25840,6 +25904,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the container content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -26428,6 +26496,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -26609,6 +26681,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -26848,7 +26924,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -27913,7 +27989,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -28319,7 +28395,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -28922,6 +28998,23 @@ components:
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
+        review_task_limit_percent:
+          description: Percent of tasks to include in review stream (0-100). Null/0 disables.
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          type: string
+        sampling:
+          description: |-
+            Task sampling strategy in the review stream (by task id or random)
+
+            * `task_id` - By Task ID
+            * `random` - Random
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -28982,6 +29075,23 @@ components:
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
+        review_task_limit_percent:
+          description: Percent of tasks to include in review stream (0-100). Null/0 disables.
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          type: string
+        sampling:
+          description: |-
+            Task sampling strategy in the review stream (by task id or random)
+
+            * `task_id` - By Task ID
+            * `random` - Random
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -28996,6 +29106,14 @@ components:
           nullable: true
           type: boolean
       type: object
+    ReviewSettingsSamplingEnum:
+      description: |-
+        * `task_id` - By Task ID
+        * `random` - Random
+      enum:
+        - task_id
+        - random
+      type: string
     ReviewedEnum:
       description: |-
         * `only` - only
@@ -29525,7 +29643,7 @@ components:
             type: array
           type: array
       type: object
-    SamplingEnum:
+    SamplingDe5Enum:
       description: |-
         * `Sequential sampling` - Tasks are ordered by Data manager ordering
         * `Uniform sampling` - Tasks are chosen randomly
