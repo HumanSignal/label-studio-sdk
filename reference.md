@@ -6690,6 +6690,214 @@ client.prompts.batch_predictions(
 </dl>
 </details>
 
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">subset_tasks</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+        Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.subset_tasks(
+    project_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_total:** `typing.Optional[bool]` — If true (default), includes task_count in response; if false, omits it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_run:** `typing.Optional[int]` — A unique ID of a ModelRun
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — A page number within the paginated result set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` — Number of results to return per page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_model:** `typing.Optional[int]` — The ID of the parent model (ModelInterface) for this Inference Run
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**project_subset:** `typing.Optional[str]` — The project subset to retrieve tasks for
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">subsets</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+
+        Provides list of available subsets for a project along with count of tasks in each subset
+        
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.subsets(
+    project_pk=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**project_pk:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ordering:** `typing.Optional[str]` — Which field to use when ordering the results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.prompts.<a href="src/label_studio_sdk/prompts/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
@@ -9413,6 +9621,76 @@ client.projects.update(
 <dd>
 
 **workspace:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.<a href="src/label_studio_sdk/projects/client.py">list_unique_annotators</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Return unique users who have submitted annotations in the specified project.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.list_unique_annotators(
+    id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
     
 </dd>
 </dl>
@@ -23764,6 +24042,14 @@ client.import_storage.gcswif.create(
 <dl>
 <dd>
 
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **regex_filter:** `typing.Optional[str]` — Cloud storage regex for filtering objects
     
 </dd>
@@ -23995,6 +24281,14 @@ client.import_storage.gcswif.validate(
 <dd>
 
 **presign_ttl:** `typing.Optional[int]` — Presigned URLs TTL (in minutes)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -24381,6 +24675,14 @@ client.import_storage.gcswif.update(
 <dd>
 
 **project:** `typing.Optional[int]` — A unique integer value identifying this project.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recursive_scan:** `typing.Optional[bool]` — Perform recursive scan over the bucket content
     
 </dd>
 </dl>
@@ -33501,6 +33803,94 @@ client.prompts.runs.create(
 <dd>
 
 **total_tasks:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.prompts.runs.<a href="src/label_studio_sdk/prompts/runs/client.py">cancel</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancel the inference run for the given api
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.prompts.runs.cancel(
+    inference_run_id=1,
+    prompt_id=1,
+    version_id=1,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inference_run_id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**prompt_id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version_id:** `int` 
     
 </dd>
 </dl>

@@ -44,6 +44,7 @@ service:
                 prefix: prefix
                 presign: true
                 presign_ttl: 1
+                recursive_scan: true
                 regex_filter: regex_filter
                 status: initialized
                 synced: true
@@ -90,6 +91,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true
@@ -138,6 +140,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true
@@ -184,6 +187,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true
@@ -229,6 +233,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true
@@ -313,6 +318,9 @@ service:
               validation:
                 min: 0
                 max: 32767
+            recursive_scan:
+              type: optional<boolean>
+              docs: Perform recursive scan over the bucket content
             regex_filter:
               type: optional<string>
               docs: Cloud storage regex for filtering objects
@@ -361,6 +369,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true
@@ -426,6 +435,7 @@ service:
               prefix: prefix
               presign: true
               presign_ttl: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synced: true

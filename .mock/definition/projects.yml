@@ -9,7 +9,7 @@ types:
   LseProjectCreateRequestSampling:
     discriminated: false
     union:
-      - root.SamplingEnum
+      - root.SamplingDe5Enum
       - root.NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -25,7 +25,7 @@ types:
   PatchedLseProjectUpdateRequestSampling:
     discriminated: false
     union:
-      - root.SamplingEnum
+      - root.SamplingDe5Enum
       - root.NullEnum
     source:
       openapi: openapi/openapi.yaml
@@ -814,6 +814,8 @@ service:
                 require_comment_on_reject: true
                 review_criteria: all
                 review_only_manual_assignments: true
+                review_task_limit_percent: review_task_limit_percent
+                sampling: task_id
                 show_agreement_to_reviewers: true
                 show_data_manager_to_reviewers: true
                 show_instruction: true
@@ -838,6 +840,33 @@ service:
               useful_annotation_number: 1
               workspace: 1
               workspace_title: workspace_title
+      audiences:
+        - public
+    list_unique_annotators:
+      path: /api/projects/{id}/annotators/
+      method: GET
+      auth: true
+      docs: >-
+        Return unique users who have submitted annotations in the specified
+        project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: List unique annotators for project
+      response:
+        docs: List of annotator users
+        type: list<root.UserSimple>
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              - avatar: avatar
+                email: email
+                first_name: first_name
+                id: 1
+                last_name: last_name
       audiences:
         - public
     duplicate:
@@ -1287,57 +1316,5 @@ service:
               label_config: label_config
       audiences:
         - public
-    api_projects_subset_tasks_list:
-      path: /api/projects/{project_pk}/subset-tasks
-      method: GET
-      auth: true
-      docs: |2-
-
-                Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.
-                
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        project_pk: integer
-      display-name: Get Project Subset Task List with Predictions and Accuracy details
-      request:
-        name: ApiProjectsSubsetTasksListRequest
-        query-parameters:
-          model_run:
-            type: optional<integer>
-            docs: A unique ID of a ModelRun
-          ordering:
-            type: optional<string>
-            docs: Which field to use when ordering the results.
-          page:
-            type: optional<integer>
-            docs: A page number within the paginated result set.
-          page_size:
-            type: optional<integer>
-            docs: Number of results to return per page.
-          project_subset:
-            type: optional<string>
-            docs: The project subset to retrieve tasks for
-      errors:
-        - root.BadRequestError
-      examples:
-        - path-parameters:
-            project_pk: 1
-    api_projects_subsets_retrieve:
-      path: /api/projects/{project_pk}/subsets
-      method: GET
-      auth: true
-      docs: |2-
-
-                Provides list of available subsets for a project along with count of tasks in each subset
-                
-      source:
-        openapi: openapi/openapi.yaml
-      path-parameters:
-        project_pk: integer
-      display-name: Get available subsets of a project (for prompts usage)
-      examples:
-        - path-parameters:
-            project_pk: 1
   source:
     openapi: openapi/openapi.yaml
