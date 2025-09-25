@@ -150,7 +150,7 @@ service:
                   title: title
                   total_annotations_number: total_annotations_number
                   total_predictions_number: 1
-                  useful_annotation_number: useful_annotation_number
+                  useful_annotation_number: 1
                   workspace: workspace
                   workspace_title: workspace_title
       audiences:
@@ -400,7 +400,7 @@ service:
                   task_number: 1
                   total_annotations_number: total_annotations_number
                   total_predictions_number: 1
-                  useful_annotation_number: useful_annotation_number
+                  useful_annotation_number: 1
       audiences:
         - public
     api_projects_validate_create:
@@ -540,8 +540,8 @@ service:
               task_number: 1
               title: title
               total_annotations_number: 1
-              total_predictions_number: total_predictions_number
-              useful_annotation_number: useful_annotation_number
+              total_predictions_number: 1
+              useful_annotation_number: 1
               workspace: workspace
               workspace_title: workspace_title
       audiences:

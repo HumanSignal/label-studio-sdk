@@ -2,8 +2,8 @@
 
 from ..core.unchecked_base_model import UncheckedBaseModel
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class LseProjectCounts(UncheckedBaseModel):
@@ -34,7 +34,7 @@ class LseProjectCounts(UncheckedBaseModel):
 
     total_annotations_number: str
     total_predictions_number: int
-    useful_annotation_number: str
+    useful_annotation_number: typing.Optional[int] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -343,7 +343,7 @@ types:
           maxLength: 50
       total_annotations_number: string
       total_predictions_number: integer
-      useful_annotation_number: string
+      useful_annotation_number: optional<integer>
       workspace: string
       workspace_title: string
     source:
@@ -3913,7 +3913,7 @@ types:
         docs: Total task number in project
       total_annotations_number: string
       total_predictions_number: integer
-      useful_annotation_number: string
+      useful_annotation_number: optional<integer>
     source:
       openapi: openapi/openapi.yaml
   LseProjectCreateSampling:
@@ -4269,8 +4269,8 @@ types:
           minLength: 3
           maxLength: 50
       total_annotations_number: integer
-      total_predictions_number: string
-      useful_annotation_number: string
+      total_predictions_number: optional<integer>
+      useful_annotation_number: optional<integer>
       workspace: string
       workspace_title: string
     source:

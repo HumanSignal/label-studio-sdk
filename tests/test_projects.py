@@ -136,7 +136,7 @@ async def test_list_counts(client: LabelStudio, async_client: AsyncLabelStudio) 
                 "task_number": 1,
                 "total_annotations_number": "total_annotations_number",
                 "total_predictions_number": 1,
-                "useful_annotation_number": "useful_annotation_number",
+                "useful_annotation_number": 1,
             }
         ],
     }
@@ -162,7 +162,7 @@ async def test_list_counts(client: LabelStudio, async_client: AsyncLabelStudio) 
                     "task_number": "integer",
                     "total_annotations_number": None,
                     "total_predictions_number": "integer",
-                    "useful_annotation_number": None,
+                    "useful_annotation_number": "integer",
                 }
             },
         ),
@@ -266,8 +266,8 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "task_number": 1,
         "title": "title",
         "total_annotations_number": 1,
-        "total_predictions_number": "total_predictions_number",
-        "useful_annotation_number": "useful_annotation_number",
+        "total_predictions_number": 1,
+        "useful_annotation_number": 1,
         "workspace": "workspace",
         "workspace_title": "workspace_title",
     }
@@ -356,8 +356,8 @@ async def test_get(client: LabelStudio, async_client: AsyncLabelStudio) -> None:
         "task_number": "integer",
         "title": None,
         "total_annotations_number": "integer",
-        "total_predictions_number": None,
-        "useful_annotation_number": None,
+        "total_predictions_number": "integer",
+        "useful_annotation_number": "integer",
         "workspace": None,
         "workspace_title": None,
     }

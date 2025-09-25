@@ -17788,8 +17788,9 @@ components:
           readOnly: true
           type: integer
         useful_annotation_number:
+          nullable: true
           readOnly: true
-          type: string
+          type: integer
         workspace:
           readOnly: true
           type: string
@@ -22652,8 +22653,9 @@ components:
           readOnly: true
           type: integer
         useful_annotation_number:
+          nullable: true
           readOnly: true
-          type: string
+          type: integer
       required:
         - finished_task_number
         - ground_truth_number
@@ -23235,11 +23237,13 @@ components:
           readOnly: true
           type: integer
         total_predictions_number:
+          nullable: true
           readOnly: true
-          type: string
+          type: integer
         useful_annotation_number:
+          nullable: true
           readOnly: true
-          type: string
+          type: integer
         workspace:
           readOnly: true
           type: string
