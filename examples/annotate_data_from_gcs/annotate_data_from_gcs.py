@@ -1,15 +1,8 @@
-"""
-Note: This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
-The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
-[`label_studio_sdk._legacy`](../../README.md) in your script.
-"""
-
 import os
 
 from google.cloud import storage as google_storage
 
-from label_studio_sdk.client import LabelStudio
-import os
+from label_studio_sdk import LabelStudio
 
 BUCKET_NAME = "my-bucket"  # specify your bucket name here
 GOOGLE_APPLICATION_CREDENTIALS = (
@@ -44,23 +37,16 @@ project = ls.projects.create(
 )
 
 
-"""
-BLOCKER: For v2, connecting GCS import storage should be done via
-ls.import_storage.gcs.create(project=project.id, bucket=..., google_application_credentials=..., regex_filter=...)
-However, this script requires valid GCS credentials and a real bucket.
-Without these, we cannot create or sync storage. Leaving instructions only.
-"""
-# Example (uncomment with real credentials):
-# ls.import_storage.gcs.create(
-#     project=project.id,
-#     bucket=BUCKET_NAME,
-#     google_application_credentials=open(GOOGLE_APPLICATION_CREDENTIALS, 'r').read(),
-#     use_blob_urls=True,
-#     presign=True,
-#     presign_ttl=15,
-#     title="GCS storage",
-#     regex_filter=".*",
-# )
+ls.import_storage.gcs.create(
+    project=project.id,
+    bucket=BUCKET_NAME,
+    google_application_credentials=open(GOOGLE_APPLICATION_CREDENTIALS, 'r').read(),
+    use_blob_urls=True,
+    presign=True,
+    presign_ttl=15,
+    title="GCS storage",
+    regex_filter=".*",
+)
 
 
 # Importing via tasks list still works without storage
