@@ -1,14 +1,8 @@
-"""
-Note: This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
-The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
-[`label_studio_sdk._legacy`](../../README.md) in your script.
-"""
-
 import os
 
 from google.cloud import storage as google_storage
 
-from label_studio_sdk import Client
+from label_studio_sdk import LabelStudio
 
 BUCKET_NAME = "my-bucket"  # specify your bucket name here
 GOOGLE_APPLICATION_CREDENTIALS = (
@@ -23,14 +17,13 @@ for filename in bucket.list_blobs():
     tasks.append({"image": f"gs://{BUCKET_NAME}/{filename}"})
 
 
-LABEL_STUDIO_URL = "http://localhost:8080"
-API_KEY = "91b3b61589784ed069b138eae3d5a5fe1e909f57"
+LABEL_STUDIO_URL = os.getenv("LABEL_STUDIO_URL", "http://localhost:8080")
+API_KEY = os.getenv("LABEL_STUDIO_API_KEY")
 
-ls = Client(url=LABEL_STUDIO_URL, api_key=API_KEY)
-ls.check_connection()
+ls = LabelStudio(base_url=LABEL_STUDIO_URL, api_key=API_KEY)
 
 
-project = ls.start_project(
+project = ls.projects.create(
     title="Image Annotation Project from SDK",
     label_config="""
     <View>
@@ -44,9 +37,18 @@ project = ls.start_project(
 )
 
 
-project.connect_google_import_storage(
-    bucket=BUCKET_NAME, google_application_credentials=GOOGLE_APPLICATION_CREDENTIALS
+ls.import_storage.gcs.create(
+    project=project.id,
+    bucket=BUCKET_NAME,
+    google_application_credentials=open(GOOGLE_APPLICATION_CREDENTIALS, 'r').read(),
+    use_blob_urls=True,
+    presign=True,
+    presign_ttl=15,
+    title="GCS storage",
+    regex_filter=".*",
 )
 
 
-project.import_tasks(tasks)
+# Importing via tasks list still works without storage
+for t in tasks:
+    ls.tasks.create(project=project.id, data=t)
