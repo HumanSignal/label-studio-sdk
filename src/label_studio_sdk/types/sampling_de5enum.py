@@ -2,6 +2,6 @@
 
 import typing
 
-SamplingEnum = typing.Union[
+SamplingDe5Enum = typing.Union[
     typing.Literal["Sequential sampling", "Uniform sampling", "Uncertainty sampling"], typing.Any
 ]

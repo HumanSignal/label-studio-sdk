@@ -876,7 +876,7 @@ paths:
       tags:
         - Blueprints
       x-fern-audiences:
-        - public
+        - internal
       x-fern-sdk-group-name: blueprints
       x-fern-sdk-method-name: create
   /api/blueprints/{id}/:
@@ -898,7 +898,7 @@ paths:
       tags:
         - Blueprints
       x-fern-audiences:
-        - public
+        - internal
       x-fern-sdk-group-name: blueprints
       x-fern-sdk-method-name: delete
   /api/blueprints/{share_id}/create-project:
@@ -5449,6 +5449,296 @@ paths:
         - organizations
         - members
       x-fern-sdk-method-name: get
+  /api/organizations/{id}/permissions:
+    get:
+      description: List all organization-level permission overrides for a given organization.
+      operationId: api_organizations_permissions_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OrganizationPermission'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: List organization permission overrides
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: list
+    post:
+      description: Create a new organization-level permission override for a given organization.
+      operationId: api_organizations_permissions_create
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationPermission'
+          description: ''
+        '400':
+          description: Bad Request
+        '403':
+          description: Permission Denied
+      security:
+        - Token: []
+      summary: Create organization permission override
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: create
+  /api/organizations/{id}/permissions/options:
+    get:
+      description: Retrieve the list of configurable permission options (label, tooltip, default role and allowed roles).
+      operationId: api_organizations_permissions_options_list
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ConfigurablePermissionOption'
+                type: array
+          description: ''
+      security:
+        - Token: []
+      summary: Get configurable permissions options
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: get_options
+  /api/organizations/{id}/permissions/{permission}:
+    delete:
+      operationId: api_organizations_permissions_destroy
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: permission
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted
+        '403':
+          description: Permission Denied
+        '404':
+          description: Permission not found for organization
+      security:
+        - Token: []
+      summary: Delete organization permission override
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: delete
+    get:
+      operationId: api_organizations_permissions_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: permission
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationPermission'
+          description: ''
+        '403':
+          description: Permission Denied
+        '404':
+          description: Permission not found for organization
+      security:
+        - Token: []
+      summary: Retrieve organization permission override
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: get
+    patch:
+      description: Partially update the organization-level permission override for a given permission key.
+      operationId: api_organizations_permissions_partial_update
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - in: path
+          name: permission
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationPermissionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationPermissionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedOrganizationPermissionRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationPermission'
+          description: ''
+        '400':
+          description: Bad Request
+        '403':
+          description: Permission Denied
+        '404':
+          description: Permission not found for organization
+      security:
+        - Token: []
+      summary: Update organization permission override
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: update
+    put:
+      description: Replace the organization-level permission override for a given permission key.
+      operationId: api_organizations_permissions_update
+      parameters:
+        - description: A unique integer value identifying this organization.
+          in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+        - description: Permission key to update within the organization.
+          in: path
+          name: permission
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationPermissionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationPermission'
+          description: ''
+        '400':
+          description: Bad Request
+        '403':
+          description: Permission Denied
+        '404':
+          description: Permission not found for organization
+      security:
+        - Token: []
+      summary: Replace organization permission override
+      tags:
+        - Organizations
+        - Permissions
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - organizations
+        - permissions
+      x-fern-sdk-method-name: replace
   /api/organizations/{id}/set-default-role:
     patch:
       description: Update the default role for members of a specific organization.
@@ -6166,12 +6456,9 @@ paths:
           in: query
           name: filter
           schema:
-            enum:
-              - all
-              - exclude_pinned
-              - pinned_only
+            default: all
             type: string
-        - description: ids
+        - description: Filter id by in list
           in: query
           name: ids
           schema:
@@ -6181,7 +6468,7 @@ paths:
           name: include
           schema:
             type: string
-        - description: Maximum number of members to return.
+        - description: Maximum number of members to return
           in: query
           name: members_limit
           schema:
@@ -6190,6 +6477,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: A page number within the paginated result set.
@@ -6204,16 +6492,21 @@ paths:
           required: false
           schema:
             type: integer
-        - description: title
+        - description: Search term for project title and description
+          in: query
+          name: search
+          schema:
+            type: string
+        - description: Filter title by contains (case-insensitive)
           in: query
           name: title
           schema:
             type: string
-        - description: workspaces
+        - description: Filter workspaces by exact match
           in: query
           name: workspaces
           schema:
-            type: integer
+            type: number
       responses:
         '200':
           content:
@@ -6268,7 +6561,7 @@ paths:
       description: Returns a list of projects with their counts. For example, task_number which is the total task number in project
       operationId: api_projects_counts_list
       parameters:
-        - description: Project filter setting. One of 'all', 'pinned_only', 'exclude_pinned'.
+        - description: Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
           in: query
           name: filter
           schema:
@@ -6279,7 +6572,7 @@ paths:
           name: ids
           schema:
             type: string
-        - description: Comma-separated list of fields to include
+        - description: 'Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.'
           in: query
           name: include
           schema:
@@ -6468,64 +6761,19 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Maximum number of members to return
+          in: query
+          name: members_limit
+          schema:
+            default: 10
+            type: integer
       responses:
         '200':
           content:
             application/json:
-              examples:
-                Response:
-                  summary: response
-                  value:
-                    color: '#FF0000'
-                    config_has_control_tags: true
-                    control_weights: {}
-                    created_at: '2023-08-24T14:15:22Z'
-                    created_by:
-                      email: manager@humansignal.com
-                      first_name: Jo
-                      id: 1
-                      last_name: Doe
-                    description: My first project
-                    enable_empty_annotation: true
-                    evaluate_predictions_automatically: false
-                    expert_instruction: Label all cats
-                    finished_task_number: 10
-                    ground_truth_number: 5
-                    id: 1
-                    is_draft: false
-                    is_published: true
-                    label_config: <View>[...]</View>
-                    maximum_annotations: 1
-                    min_annotations_to_start_training: 0
-                    model_version: 1.0.0
-                    num_tasks_with_annotations: 10
-                    organization: 1
-                    overlap_cohort_percentage: 100
-                    parsed_label_config: '{"tag": {...}}'
-                    pinned_at: '2023-08-24T14:15:22Z'
-                    queue_done: 100
-                    queue_total: 10
-                    reveal_preannotations_interactively: true
-                    sampling: Sequential sampling
-                    show_annotation_history: true
-                    show_collab_predictions: true
-                    show_ground_truth_first: true
-                    show_instruction: true
-                    show_overlap_first: true
-                    show_skip_button: true
-                    skip_queue: REQUEUE_FOR_ME
-                    skipped_annotations_number: 0
-                    start_training_on_annotation_update: true
-                    task_data_login: user
-                    task_data_password: secret
-                    task_number: 100
-                    title: My project
-                    total_annotations_number: 10
-                    total_predictions_number: 0
-                    useful_annotation_number: 10
               schema:
-                $ref: '#/components/schemas/Project'
-          description: Project information
+                $ref: '#/components/schemas/LseProjectResponse'
+          description: Project information. Not all fields are available for all roles.
       security:
         - Token: []
       summary: Get project by ID
@@ -6543,6 +6791,12 @@ paths:
           name: id
           required: true
           schema:
+            type: integer
+        - description: Maximum number of members to return
+          in: query
+          name: members_limit
+          schema:
+            default: 10
             type: integer
       requestBody:
         content:
@@ -6609,6 +6863,34 @@ paths:
         - public
       x-fern-sdk-group-name: annotation_history
       x-fern-sdk-method-name: list_for_project
+  /api/projects/{id}/annotators/:
+    get:
+      description: Return unique users who have submitted annotations in the specified project.
+      operationId: api_projects_annotators_retrieve
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserSimple'
+                type: array
+          description: List of annotator users
+      security:
+        - Token: []
+      summary: List unique annotators for project
+      tags:
+        - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: projects
+      x-fern-sdk-method-name: list_unique_annotators
   /api/projects/{id}/aws-custom-function:
     get:
       description: Get the AWS Lambda code for the custom metric configured for this project.
@@ -8301,12 +8583,6 @@ paths:
           required: true
           schema:
             type: integer
-        - description: Calculate agreement per label
-          in: query
-          name: per_label
-          schema:
-            default: false
-            type: boolean
         - in: path
           name: user_id
           required: true
@@ -8328,6 +8604,12 @@ paths:
       summary: Get individual annotator agreement stats
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: agreement_annotator
   /api/projects/{id}/stats/data_filter:
     get:
       description: Get statistics about user data filters and their usage within a project.
@@ -8344,8 +8626,24 @@ paths:
             application/json:
               schema:
                 properties:
-                  filters:
-                    description: Data filter statistics by user
+                  user_filters:
+                    description: Data filter statistics by user and model
+                    properties:
+                      stats:
+                        description: List of filter configurations for users and models
+                        items:
+                          additionalProperties:
+                            description: Filter configurations (finished, skipped, accepted, rejected, gt, predictions, review_score)
+                            type: object
+                          properties:
+                            id:
+                              description: User ID or model version identifier (e.g., "model:1.0")
+                              type: string
+                          type: object
+                        type: array
+                      tasks_with_annotations:
+                        description: Default filter tab for tasks with annotations
+                        type: object
                     type: object
                 type: object
           description: User data filter statistics
@@ -8354,6 +8652,12 @@ paths:
       summary: Get user data filter statistics
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: data_filters
   /api/projects/{id}/stats/finished:
     get:
       description: Get statistics about finished tasks for a project.
@@ -8375,12 +8679,15 @@ paths:
             application/json:
               schema:
                 properties:
-                  finished_tasks:
+                  finished:
                     description: Number of finished tasks
+                    type: integer
+                  id:
+                    description: User ID
                     type: integer
                   progress:
                     description: Progress percentage (0-100)
-                    type: number
+                    type: integer
                 type: object
           description: Finished tasks statistics
       security:
@@ -8388,6 +8695,12 @@ paths:
       summary: Get finished tasks statistics
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: finished_tasks
   /api/projects/{id}/stats/lead_time:
     get:
       description: Get lead time statistics across the project, including average annotation time.
@@ -8404,9 +8717,24 @@ paths:
             application/json:
               schema:
                 properties:
-                  lead_time:
+                  lead_time_stats:
                     description: Lead time statistics including mean, median, and distribution
-                    type: object
+                    items:
+                      properties:
+                        mean_time:
+                          description: Average lead time for the user
+                          type: number
+                        median_time:
+                          description: Median lead time for the user
+                          type: number
+                        sum_lead_time:
+                          description: Total lead time for the user
+                          type: number
+                        user_id:
+                          description: User ID
+                          type: integer
+                      type: object
+                    type: array
                 type: object
           description: Lead time statistics
       security:
@@ -8414,6 +8742,12 @@ paths:
       summary: Get lead time statistics
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: lead_time
   /api/projects/{id}/stats/total_agreement:
     get:
       description: |-
@@ -8935,6 +9269,12 @@ paths:
       summary: Start stats recalculation
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: update_stats
   /api/projects/{id}/user-stats/{user_pk}/prediction:
     get:
       description: Get prediction agreement statistics for a specific user within a project.
@@ -8945,6 +9285,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Calculate agreement per label
+          in: query
+          name: per_label
+          schema:
+            type: boolean
         - in: path
           name: user_pk
           required: true
@@ -8957,8 +9302,13 @@ paths:
               schema:
                 properties:
                   average_prediction_agreement_per_user:
-                    description: Average prediction agreement score for the user (0-1)
-                    type: number
+                    oneOf:
+                      - description: Average prediction agreement score for the user (0-1) when per_label=False
+                        type: number
+                      - additionalProperties:
+                          type: number
+                        description: Average prediction agreement score per label for the user (0-1) when per_label=True
+                        type: object
                 type: object
           description: Individual user prediction agreement statistics
       security:
@@ -8966,6 +9316,12 @@ paths:
       summary: Get individual user prediction agreement
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: user_prediction_agreement
   /api/projects/{id}/user-stats/{user_pk}/review_score:
     get:
       description: Get review score statistics for a specific user within a project.
@@ -8976,6 +9332,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Calculate agreement per label
+          in: query
+          name: per_label
+          schema:
+            type: boolean
         - in: path
           name: user_pk
           required: true
@@ -8987,9 +9348,22 @@ paths:
             application/json:
               schema:
                 properties:
+                  performance_score:
+                    oneOf:
+                      - description: Performance score for the user when per_label=False
+                        type: number
+                      - additionalProperties:
+                          type: number
+                        description: Performance score per label for the user when per_label=True
+                        type: object
                   review_score:
-                    description: Average review score for the user
-                    type: number
+                    oneOf:
+                      - description: Average review score for the user when per_label=False
+                        type: number
+                      - additionalProperties:
+                          type: number
+                        description: Average review score per label for the user when per_label=True
+                        type: object
                 type: object
           description: Individual user review score statistics
       security:
@@ -8997,6 +9371,12 @@ paths:
       summary: Get individual user review scores
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: user_review_score
   /api/projects/{id}/users/{user_pk}/stats/agreement-groundtruth:
     get:
       description: Get ground truth agreement statistics for a specific user within a project.
@@ -9007,6 +9387,11 @@ paths:
           required: true
           schema:
             type: integer
+        - description: Calculate agreement per label
+          in: query
+          name: per_label
+          schema:
+            type: boolean
         - in: path
           name: user_pk
           required: true
@@ -9019,8 +9404,14 @@ paths:
               schema:
                 properties:
                   agreement:
-                    description: Ground truth agreement score for the user (0-1)
-                    type: number
+                    oneOf:
+                      - description: Ground truth agreement score for the user (0-1) when per_label=False
+                        type: number
+                      - additionalProperties:
+                          description: Agreement score for specific label (0-1)
+                          type: number
+                        description: Ground truth agreement scores per label when per_label=True
+                        type: object
                 type: object
           description: Individual user ground truth agreement statistics
       security:
@@ -9028,6 +9419,12 @@ paths:
       summary: Get individual user ground truth agreement
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: user_ground_truth_agreement
   /api/projects/{id}/validate/:
     post:
       description: Determine whether the label configuration for a specific project is valid.
@@ -9326,6 +9723,11 @@ paths:
       description: "\n        Provides list of tasks, based on project subset. Includes predictions for tasks. For the 'HasGT' subset, accuracy metrics will also be provided.\n        "
       operationId: api_projects_subset_tasks_list
       parameters:
+        - description: If true (default), includes task_count in response; if false, omits it.
+          in: query
+          name: include_total
+          schema:
+            type: boolean
         - description: A unique ID of a ModelRun
           in: query
           name: model_run
@@ -9349,6 +9751,11 @@ paths:
           required: false
           schema:
             type: integer
+        - description: The ID of the parent model (ModelInterface) for this Inference Run
+          in: query
+          name: parent_model
+          schema:
+            type: integer
         - in: path
           name: project_pk
           required: true
@@ -9361,7 +9768,11 @@ paths:
             type: string
       responses:
         '200':
-          description: Project subset task list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProjectSubsetTasksResponseList'
+          description: ''
         '400':
           description: Bad request - missing parent_model
       security:
@@ -9369,11 +9780,21 @@ paths:
       summary: Get Project Subset Task List with Predictions and Accuracy details
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: subset_tasks
   /api/projects/{project_pk}/subsets:
     get:
       description: "\n        Provides list of available subsets for a project along with count of tasks in each subset\n        "
-      operationId: api_projects_subsets_retrieve
+      operationId: api_projects_subsets_list
       parameters:
+        - description: Which field to use when ordering the results.
+          in: query
+          name: ordering
+          required: false
+          schema:
+            type: string
         - in: path
           name: project_pk
           required: true
@@ -9381,12 +9802,22 @@ paths:
             type: integer
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ProjectSubsetItem'
+                type: array
+          description: ''
       security:
         - Token: []
       summary: Get available subsets of a project (for prompts usage)
       tags:
         - Projects
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name: prompts
+      x-fern-sdk-method-name: subsets
   /api/prompts/:
     get:
       description: List all prompts.
@@ -9649,12 +10080,6 @@ paths:
           schema:
             type: string
         - in: path
-          name: prompt_id
-          required: true
-          schema:
-            type: integer
-        - description: A unique integer value identifying the model ID to list versions for.
-          in: query
           name: prompt_id
           required: true
           schema:
@@ -10020,13 +10445,23 @@ paths:
           schema:
             type: integer
       responses:
-        '201':
-          description: No response body
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelModelRunResponse'
+          description: ''
       security:
         - Token: []
       summary: Cancel Inference Run API
       tags:
         - Prompts
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - prompts
+        - runs
+      x-fern-sdk-method-name: cancel
   /api/prompts/{prompt_id}/versions/{version_id}/refine:
     get:
       description: Get the refined prompt based on the `refinement_job_id`.
@@ -10719,6 +11154,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -10928,7 +11364,7 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/databricks/:
     get:
-      description: List Databricks Files import storage connections.
+      description: Get list of all Databricks Files import storage connections.
       operationId: api_storages_databricks_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -10937,6 +11373,11 @@ paths:
           required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -10948,9 +11389,15 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get Databricks import storages
+      summary: List Databricks import storages
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: list
     post:
       description: Create a Databricks Files import storage connection.
       operationId: api_storages_databricks_create
@@ -10978,6 +11425,12 @@ paths:
       summary: Create Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: create
   /api/storages/databricks/validate:
     post:
       description: Validate a specific Databricks Files import storage connection.
@@ -10995,17 +11448,19 @@ paths:
               $ref: '#/components/schemas/DatabricksImportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DatabricksImportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: validate
   /api/storages/databricks/{id}:
     delete:
       description: Delete a specific Databricks Files import storage connection.
@@ -11024,8 +11479,14 @@ paths:
       summary: Delete Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: delete
     get:
-      description: Retrieve a specific Databricks Files import storage connection.
+      description: Get a specific Databricks Files import storage connection.
       operationId: api_storages_databricks_retrieve
       parameters:
         - in: path
@@ -11045,6 +11506,12 @@ paths:
       summary: Get Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific Databricks Files import storage connection.
       operationId: api_storages_databricks_partial_update
@@ -11077,6 +11544,12 @@ paths:
       summary: Update Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: update
   /api/storages/databricks/{id}/sync:
     post:
       description: Sync tasks from a Databricks Files import storage.
@@ -11087,18 +11560,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DatabricksImportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/DatabricksImportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/DatabricksImportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -11111,6 +11572,12 @@ paths:
       summary: Sync Databricks import storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - import_storage
+        - databricks
+      x-fern-sdk-method-name: sync
   /api/storages/export:
     get:
       description: Retrieve a list of the export storages of all types with their IDs.
@@ -11434,6 +11901,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -11643,7 +12111,7 @@ paths:
       x-fern-sdk-method-name: sync
   /api/storages/export/databricks:
     get:
-      description: List Databricks Files export storage connections.
+      description: Get a list of all Databricks Files export storage connections.
       operationId: api_storages_export_databricks_list
       parameters:
         - description: Which field to use when ordering the results.
@@ -11652,6 +12120,11 @@ paths:
           required: false
           schema:
             type: string
+        - description: Project ID
+          in: query
+          name: project
+          schema:
+            type: integer
       responses:
         '200':
           content:
@@ -11663,9 +12136,15 @@ paths:
           description: ''
       security:
         - Token: []
-      summary: Get Databricks export storages
+      summary: List Databricks export storages
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: list
     post:
       description: Create a Databricks Files export storage connection.
       operationId: api_storages_export_databricks_create
@@ -11693,6 +12172,12 @@ paths:
       summary: Create Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: create
   /api/storages/export/databricks/validate:
     post:
       description: Validate a specific Databricks Files export storage connection.
@@ -11710,17 +12195,19 @@ paths:
               $ref: '#/components/schemas/DatabricksExportStorageRequest'
         required: true
       responses:
-        '201':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DatabricksExportStorage'
-          description: ''
+        '200':
+          description: Validation successful
       security:
         - Token: []
       summary: Validate Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: validate
   /api/storages/export/databricks/{id}:
     delete:
       description: Delete a specific Databricks Files export storage connection.
@@ -11739,8 +12226,14 @@ paths:
       summary: Delete Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: delete
     get:
-      description: Retrieve a specific Databricks Files export storage connection.
+      description: Get a specific Databricks Files export storage connection.
       operationId: api_storages_export_databricks_retrieve
       parameters:
         - in: path
@@ -11760,6 +12253,12 @@ paths:
       summary: Get Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: get
     patch:
       description: Update a specific Databricks Files export storage connection.
       operationId: api_storages_export_databricks_partial_update
@@ -11792,6 +12291,12 @@ paths:
       summary: Update Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: update
   /api/storages/export/databricks/{id}/sync:
     post:
       description: Export annotations to a Databricks Files storage.
@@ -11802,18 +12307,6 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DatabricksExportStorageRequest'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/DatabricksExportStorageRequest'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/DatabricksExportStorageRequest'
-        required: true
       responses:
         '200':
           content:
@@ -11826,6 +12319,12 @@ paths:
       summary: Sync Databricks export storage
       tags:
         - 'Storage: Databricks Files'
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - export_storage
+        - databricks
+      x-fern-sdk-method-name: sync
   /api/storages/export/gcs:
     get:
       description: Get a list of all GCS export storage connections.
@@ -12117,6 +12616,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -13208,6 +13708,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -13768,6 +14269,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -14904,6 +15406,7 @@ paths:
         - description: Which field to use when ordering the results.
           in: query
           name: ordering
+          required: false
           schema:
             type: string
         - description: Project ID
@@ -15247,6 +15750,15 @@ paths:
       requestBody:
         content:
           application/json:
+            examples:
+              CreateTask:
+                description: Example of Create Task
+                summary: Create Task
+                value:
+                  data:
+                    image: https://example.com/image.jpg
+                    text: Hello, world!
+                  project: 1
             schema:
               $ref: '#/components/schemas/LseTaskRequest'
           application/x-www-form-urlencoded:
@@ -15546,7 +16058,7 @@ paths:
       x-fern-sdk-method-name: create
   /api/tasks/{id}/events/:
     post:
-      description: "\n    Create a new task event to track user interactions and system events during annotation.\n    \n    This endpoint is designed to receive events from the frontend labeling interface to enable\n    accurate lead time calculation and detailed annotation analytics.\n    \n    ## Event Types\n    \n    **Core Annotation Events:**\n    - `annotation_loaded` - When annotation interface is loaded\n    - `annotation_submitted` - When annotation is submitted\n    - `annotation_updated` - When annotation is modified\n    - `annotation_reviewed` - When annotation is reviewed\n    \n    **User Activity Events:**\n    - `visibility_change` - When page visibility changes (tab switch, minimize)\n    - `idle_detected` - When user goes idle\n    - `idle_resumed` - When user returns from idle\n    \n    **Interaction Events:**\n    - `region_finished_drawing` - When annotation region is completed\n    - `region_deleted` - When annotation regions are removed\n    - `hotkey_pressed` - When keyboard shortcuts are used\n    \n    **Media Events:**\n    - `video_playback_start/end` - Video playback control\n    - `audio_playback_start/end` - Audio playback control\n    - `video_scrub` - Video timeline scrubbing\n    \n    ## Usage\n    \n    Events are automatically associated with the task specified in the URL path.\n    The current user is automatically set as the actor. Project and organization\n    are derived from the task context.\n    \n    ## Example Request\n    \n    ```json\n    {\n        \"event_key\": \"annotation_loaded\",\n        \"event_time\": \"2024-01-15T10:30:00Z\",\n        \"annotation\": 123,\n        \"meta\": {\n            \"annotation_count\": 5,\n            \"estimated_time\": 300\n        }\n    }\n    ```\n    "
+      description: "\n    Create a new task event to track user interactions and system events during annotation.\n\n    This endpoint is designed to receive events from the frontend labeling interface to enable\n    accurate lead time calculation and detailed annotation analytics.\n\n    ## Event Types\n\n    **Core Annotation Events:**\n    - `annotation_loaded` - When annotation interface is loaded\n    - `annotation_submitted` - When annotation is submitted\n    - `annotation_updated` - When annotation is modified\n    - `annotation_reviewed` - When annotation is reviewed\n\n    **User Activity Events:**\n    - `visibility_change` - When page visibility changes (tab switch, minimize)\n    - `idle_detected` - When user goes idle\n    - `idle_resumed` - When user returns from idle\n\n    **Interaction Events:**\n    - `region_finished_drawing` - When annotation region is completed\n    - `region_deleted` - When annotation regions are removed\n    - `hotkey_pressed` - When keyboard shortcuts are used\n\n    **Media Events:**\n    - `video_playback_start/end` - Video playback control\n    - `audio_playback_start/end` - Audio playback control\n    - `video_scrub` - Video timeline scrubbing\n\n    ## Usage\n\n    Events are automatically associated with the task specified in the URL path.\n    The current user is automatically set as the actor. Project and organization\n    are derived from the task context.\n\n    ## Example Request\n\n    ```json\n    {\n        \"event_key\": \"annotation_loaded\",\n        \"event_time\": \"2024-01-15T10:30:00Z\",\n        \"annotation\": 123,\n        \"meta\": {\n            \"annotation_count\": 5,\n            \"estimated_time\": 300\n        }\n    }\n    ```\n    "
       operationId: api_tasks_events_create
       parameters:
         - description: Task ID to associate the event with
@@ -17037,7 +17549,7 @@ components:
       properties:
         allow_stream:
           readOnly: true
-          type: string
+          type: boolean
         annotation_limit_count:
           minimum: 1
           nullable: true
@@ -17167,7 +17679,7 @@ components:
           type: string
         num_tasks_with_annotations:
           readOnly: true
-          type: string
+          type: integer
         organization:
           nullable: true
           type: integer
@@ -17192,19 +17704,19 @@ components:
           type: string
         queue_done:
           readOnly: true
-          type: string
+          type: integer
         queue_left:
           readOnly: true
-          type: string
+          type: integer
         queue_total:
           readOnly: true
           type: string
         ready:
           readOnly: true
-          type: string
+          type: boolean
         rejected:
           readOnly: true
-          type: string
+          type: integer
         require_comment_on_skip:
           default: false
           type: boolean
@@ -17215,17 +17727,17 @@ components:
           $ref: '#/components/schemas/ReviewSettings'
         review_total_tasks:
           readOnly: true
-          type: string
+          type: integer
         reviewed_number:
           readOnly: true
-          type: string
+          type: integer
         reviewer_queue_total:
           readOnly: true
-          type: string
+          type: integer
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -17276,8 +17788,9 @@ components:
           readOnly: true
           type: integer
         useful_annotation_number:
+          nullable: true
           readOnly: true
-          type: string
+          type: integer
         workspace:
           readOnly: true
           type: string
@@ -18021,6 +18534,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the container content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18121,6 +18638,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the container content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18212,6 +18733,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the container content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18486,6 +19011,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18581,6 +19110,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -18939,6 +19472,13 @@ components:
         - Monthly
         - Yearly
       type: string
+    CancelModelRunResponse:
+      properties:
+        detail:
+          type: string
+      required:
+        - detail
+      type: object
     CheckMatchingFunctionRequestRequest:
       properties:
         code:
@@ -19159,6 +19699,29 @@ components:
         - resolved_at
         - task
         - updated_at
+      type: object
+    ConfigurablePermissionOption:
+      properties:
+        default:
+          items:
+            $ref: '#/components/schemas/Role9e7Enum'
+          type: array
+        group:
+          type: string
+        label:
+          type: string
+        options:
+          items:
+            $ref: '#/components/schemas/Role9e7Enum'
+          type: array
+        permission:
+          type: string
+        tooltip:
+          type: string
+      required:
+        - default
+        - options
+        - permission
       type: object
     ConvertedFormat:
       properties:
@@ -19782,6 +20345,16 @@ components:
       required:
         - dataset
       type: object
+    Default165Enum:
+      enum:
+        - OW
+        - AD
+        - MA
+        - RE
+        - AN
+        - DI
+        - 'NO'
+      type: string
     DefaultRole:
       properties:
         annotator_reviewer_firewall_enabled_at:
@@ -19806,7 +20379,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/DefaultRoleEnum'
+            - $ref: '#/components/schemas/Role9e7Enum'
           description: |-
             Default membership role for invited users
 
@@ -19848,24 +20421,6 @@ components:
       required:
         - organization
       type: object
-    DefaultRoleEnum:
-      description: |-
-        * `OW` - Owner
-        * `AD` - Administrator
-        * `MA` - Manager
-        * `RE` - Reviewer
-        * `AN` - Annotator
-        * `DI` - Deactivated
-        * `NO` - Not Activated
-      enum:
-        - OW
-        - AD
-        - MA
-        - RE
-        - AN
-        - DI
-        - 'NO'
-      type: string
     EditionEnum:
       description: |-
         * `Community` - Community
@@ -20125,6 +20680,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -20216,6 +20775,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -20390,6 +20953,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -20691,6 +21258,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -20791,6 +21362,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -21380,6 +21955,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the directory content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Regex for filtering objects
           nullable: true
@@ -21685,7 +22264,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/DefaultRoleEnum'
+            - $ref: '#/components/schemas/Role9e7Enum'
           description: |-
             Default membership role for invited users
 
@@ -21923,7 +22502,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -22041,25 +22620,25 @@ components:
           type: integer
         num_tasks_with_annotations:
           readOnly: true
-          type: string
+          type: integer
         queue_done:
           readOnly: true
-          type: string
+          type: integer
         queue_left:
           readOnly: true
-          type: string
+          type: integer
         queue_total:
           readOnly: true
           type: string
         rejected:
           readOnly: true
-          type: string
+          type: integer
         review_total_tasks:
           readOnly: true
-          type: string
+          type: integer
         reviewed_number:
           readOnly: true
-          type: string
+          type: integer
         skipped_annotations_number:
           readOnly: true
           type: string
@@ -22074,8 +22653,9 @@ components:
           readOnly: true
           type: integer
         useful_annotation_number:
+          nullable: true
           readOnly: true
-          type: string
+          type: integer
       required:
         - finished_task_number
         - ground_truth_number
@@ -22203,7 +22783,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -22361,7 +22941,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -22412,6 +22992,296 @@ components:
         use_kappa:
           description: If categorical variables are used in labeling (e.g. choices), Cohen's Kappa statistic is computed to measure inter-rater reliability instead of basic agreement
           type: boolean
+      type: object
+    LseProjectResponse:
+      description: Serializer for project response, combining all the serializers for different roles. Don't use it except for Spectacular/Fern definitions.
+      properties:
+        allow_stream:
+          readOnly: true
+          type: boolean
+        annotation_limit_count:
+          minimum: 1
+          nullable: true
+          type: integer
+        annotation_limit_percent:
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          type: string
+        annotator_evaluation_minimum_score:
+          default: '95.00'
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          type: string
+        annotator_evaluation_minimum_tasks:
+          default: 10
+          minimum: 0
+          nullable: true
+          type: integer
+        assignment_settings:
+          $ref: '#/components/schemas/AssignmentSettings'
+        color:
+          maxLength: 16
+          nullable: true
+          type: string
+        comment_classification_config:
+          type: string
+        config_has_control_tags:
+          description: Flag to detect is project ready for labeling
+          readOnly: true
+          type: boolean
+        config_suitable_for_bulk_annotation:
+          description: Flag to detect is project ready for bulk annotation
+          readOnly: true
+          type: boolean
+        control_weights:
+          description: 'Dict of weights for each control tag in metric calculation. Each control tag (e.g. label or choice) will have it''s own key in control weight dict with weight for each label and overall weight.For example, if bounding box annotation with control tag named my_bbox should be included with 0.33 weight in agreement calculation, and the first label Car should be twice more important than Airplaine, then you have to need the specify: {''my_bbox'': {''type'': ''RectangleLabels'', ''labels'': {''Car'': 1.0, ''Airplaine'': 0.5}, ''overall'': 0.33}'
+          nullable: true
+        created_at:
+          format: date-time
+          readOnly: true
+          type: string
+        created_by:
+          allOf:
+            - $ref: '#/components/schemas/UserSimple'
+          description: Project owner
+        custom_script:
+          type: string
+        custom_task_lock_ttl:
+          description: TTL in seconds for task reservations, on new and existing tasks
+          maximum: 86400
+          minimum: 1
+          nullable: true
+          type: integer
+        data_types:
+          nullable: true
+          readOnly: true
+        description:
+          description: Project description
+          nullable: true
+          type: string
+        duplication_done:
+          default: false
+          type: boolean
+        duplication_status:
+          type: string
+        enable_empty_annotation:
+          description: Allow annotators to submit empty annotations
+          type: boolean
+        evaluate_predictions_automatically:
+          description: Retrieve and display predictions when loading a task
+          type: boolean
+        expert_instruction:
+          description: Labeling instructions in HTML format
+          nullable: true
+          type: string
+        finished_task_number:
+          description: Finished tasks
+          readOnly: true
+          type: integer
+        ground_truth_number:
+          description: Honeypot annotation number in project
+          readOnly: true
+          type: integer
+        id:
+          readOnly: true
+          type: integer
+        is_draft:
+          description: Whether or not the project is in the middle of being created
+          type: boolean
+        is_published:
+          description: Whether or not the project is published to annotators
+          title: Published
+          type: boolean
+        label_config:
+          description: Label config in XML format. See more about it in documentation
+          nullable: true
+          type: string
+        maximum_annotations:
+          description: Maximum number of annotations for one task. If the number of annotations per task is equal or greater to this value, the task is completed (is_labeled=True)
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Maximum annotation number
+          type: integer
+        members:
+          readOnly: true
+          type: string
+        members_count:
+          readOnly: true
+          type: integer
+        min_annotations_to_start_training:
+          description: Minimum number of completed tasks after which model training is started
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        model_version:
+          description: Machine learning model version
+          nullable: true
+          type: string
+        num_tasks_with_annotations:
+          readOnly: true
+          type: integer
+        organization:
+          nullable: true
+          type: integer
+        overlap_cohort_percentage:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        parsed_label_config:
+          description: JSON-formatted labeling configuration
+          readOnly: true
+        pause_on_failed_annotator_evaluation:
+          default: false
+          nullable: true
+          type: boolean
+        pinned_at:
+          description: Pinned date and time
+          format: date-time
+          nullable: true
+          type: string
+        prompts:
+          readOnly: true
+          type: string
+        queue_done:
+          readOnly: true
+          type: integer
+        queue_left:
+          readOnly: true
+          type: integer
+        queue_total:
+          readOnly: true
+          type: integer
+        ready:
+          readOnly: true
+          type: boolean
+        rejected:
+          readOnly: true
+          type: integer
+        require_comment_on_skip:
+          default: false
+          type: boolean
+        reveal_preannotations_interactively:
+          description: Reveal pre-annotations interactively
+          type: boolean
+        review_settings:
+          $ref: '#/components/schemas/ReviewSettings'
+        review_total_tasks:
+          readOnly: true
+          type: integer
+        reviewed_number:
+          readOnly: true
+          type: integer
+        reviewer_queue_total:
+          readOnly: true
+          type: integer
+        sampling:
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/SamplingDe5Enum'
+            - $ref: '#/components/schemas/NullEnum'
+        show_annotation_history:
+          description: Show annotation history to annotator
+          type: boolean
+        show_collab_predictions:
+          description: If set, the annotator can view model predictions
+          title: Show predictions to annotator
+          type: boolean
+        show_ground_truth_first:
+          type: boolean
+        show_instruction:
+          description: Show instructions to the annotator before they start
+          type: boolean
+        show_overlap_first:
+          type: boolean
+        show_skip_button:
+          description: Show a skip button in interface and allow annotators to skip the task
+          type: boolean
+        show_unused_data_columns_to_annotators:
+          nullable: true
+          type: boolean
+        skip_queue:
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/SkipQueueEnum'
+            - $ref: '#/components/schemas/NullEnum'
+        skipped_annotations_number:
+          readOnly: true
+          type: integer
+        start_training_on_annotation_update:
+          description: Start model training after any annotations are submitted or updated
+          readOnly: true
+          type: boolean
+        task_data_login:
+          description: 'Task data credentials: login'
+          maxLength: 256
+          nullable: true
+          type: string
+        task_data_password:
+          description: 'Task data credentials: password'
+          maxLength: 256
+          nullable: true
+          type: string
+        task_number:
+          description: Total task number in project
+          readOnly: true
+          type: integer
+        title:
+          description: Project name. Must be between 3 and 50 characters long.
+          maxLength: 50
+          minLength: 3
+          nullable: true
+          type: string
+        total_annotations_number:
+          readOnly: true
+          type: integer
+        total_predictions_number:
+          nullable: true
+          readOnly: true
+          type: integer
+        useful_annotation_number:
+          nullable: true
+          readOnly: true
+          type: integer
+        workspace:
+          readOnly: true
+          type: string
+        workspace_title:
+          readOnly: true
+          type: string
+      required:
+        - allow_stream
+        - assignment_settings
+        - config_has_control_tags
+        - config_suitable_for_bulk_annotation
+        - created_at
+        - data_types
+        - finished_task_number
+        - ground_truth_number
+        - id
+        - members
+        - members_count
+        - num_tasks_with_annotations
+        - parsed_label_config
+        - prompts
+        - queue_done
+        - queue_left
+        - queue_total
+        - ready
+        - rejected
+        - review_settings
+        - review_total_tasks
+        - reviewed_number
+        - reviewer_queue_total
+        - skipped_annotations_number
+        - start_training_on_annotation_update
+        - task_number
+        - total_annotations_number
+        - total_predictions_number
+        - useful_annotation_number
+        - workspace
+        - workspace_title
       type: object
     LseProjectUpdate:
       description: |-
@@ -22567,7 +23437,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -23275,6 +24145,12 @@ components:
           description: Project ID for this task
           nullable: true
           type: integer
+        review_time:
+          description: |-
+            Calculate total review time for this task from MetricInTimeBucket records.
+            Returns time in seconds.
+          readOnly: true
+          type: integer
         reviewed:
           type: boolean
         reviewers:
@@ -23334,6 +24210,7 @@ components:
         - predictions
         - predictions_model_versions
         - predictions_results
+        - review_time
         - reviewers
         - reviewers_count
         - storage_filename
@@ -23808,6 +24685,12 @@ components:
           description: Project ID for this task
           nullable: true
           type: integer
+        review_time:
+          description: |-
+            Calculate total review time for this task from MetricInTimeBucket records.
+            Returns time in seconds.
+          readOnly: true
+          type: integer
         reviewed:
           type: boolean
         reviewers:
@@ -23867,6 +24750,7 @@ components:
         - predictions
         - predictions_model_versions
         - predictions_results
+        - review_time
         - reviewers
         - reviewers_count
         - storage_filename
@@ -23926,10 +24810,15 @@ components:
             - $ref: '#/components/schemas/LseFields'
           readOnly: true
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         pause:
           readOnly: true
           type: string
@@ -23947,6 +24836,7 @@ components:
         - last_activity
         - lse_fields
         - org_membership
+        - organization_membership
         - pause
         - username
       type: object
@@ -23999,10 +24889,15 @@ components:
           maxLength: 256
           type: string
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         phone:
           maxLength: 256
           type: string
@@ -24016,6 +24911,7 @@ components:
         - initials
         - last_activity
         - org_membership
+        - organization_membership
         - username
       type: object
     LseUserOrganizationMemberList:
@@ -24681,6 +25577,16 @@ components:
         - in_app_guidance
         - complete
       type: string
+    Options165Enum:
+      enum:
+        - OW
+        - AD
+        - MA
+        - RE
+        - AN
+        - DI
+        - 'NO'
+      type: string
     OrganizationBilling:
       properties:
         manual_role_management:
@@ -24777,6 +25683,68 @@ components:
           type: string
       required:
         - role
+      type: object
+    OrganizationPermission:
+      properties:
+        default:
+          items:
+            $ref: '#/components/schemas/Default165Enum'
+          readOnly: true
+          type: array
+        group:
+          nullable: true
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        label:
+          nullable: true
+          readOnly: true
+          type: string
+        options:
+          items:
+            $ref: '#/components/schemas/Options165Enum'
+          readOnly: true
+          type: array
+        organization:
+          readOnly: true
+          type: integer
+        permission:
+          maxLength: 255
+          type: string
+        roles:
+          description: Explicit roles that have this permission within the organization.
+          items:
+            $ref: '#/components/schemas/Role9e7Enum'
+          type: array
+        tooltip:
+          nullable: true
+          readOnly: true
+          type: string
+      required:
+        - default
+        - group
+        - id
+        - label
+        - options
+        - organization
+        - permission
+        - tooltip
+      type: object
+    OrganizationPermissionRequest:
+      properties:
+        permission:
+          maxLength: 255
+          minLength: 1
+          type: string
+        roles:
+          description: Explicit roles that have this permission within the organization.
+          items:
+            $ref: '#/components/schemas/Role9e7Enum'
+          type: array
+      required:
+        - permission
       type: object
     PaginatedAllRolesProjectListList:
       properties:
@@ -25038,10 +26006,15 @@ components:
             - $ref: '#/components/schemas/LseFields'
           readOnly: true
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         pause:
           readOnly: true
           type: string
@@ -25062,9 +26035,33 @@ components:
         - last_activity
         - lse_fields
         - org_membership
+        - organization_membership
         - pause
         - project_role
         - username
+      type: object
+    PaginatedProjectSubsetTasksResponseList:
+      properties:
+        count:
+          example: 123
+          type: integer
+        next:
+          example: http://api.example.org/accounts/?page=4
+          format: uri
+          nullable: true
+          type: string
+        previous:
+          example: http://api.example.org/accounts/?page=2
+          format: uri
+          nullable: true
+          type: string
+        results:
+          items:
+            $ref: '#/components/schemas/ProjectSubsetTasksResponse'
+          type: array
+      required:
+        - count
+        - results
       type: object
     PaginatedRoleBasedTaskList:
       properties:
@@ -25177,6 +26174,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the container content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -25340,6 +26341,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -25659,7 +26664,7 @@ components:
           type: string
         default_role:
           allOf:
-            - $ref: '#/components/schemas/DefaultRoleEnum'
+            - $ref: '#/components/schemas/Role9e7Enum'
           description: |-
             Default membership role for invited users
 
@@ -25761,6 +26766,10 @@ components:
           maximum: 32767
           minimum: 0
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -25942,6 +26951,10 @@ components:
         project:
           description: A unique integer value identifying this project.
           type: integer
+        recursive_scan:
+          description: Perform recursive scan over the bucket content
+          nullable: true
+          type: boolean
         regex_filter:
           description: Cloud storage regex for filtering objects
           nullable: true
@@ -26181,7 +27194,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -26633,6 +27646,18 @@ components:
           $ref: '#/components/schemas/Role9e7Enum'
         user_id:
           type: integer
+      type: object
+    PatchedOrganizationPermissionRequest:
+      properties:
+        permission:
+          maxLength: 255
+          minLength: 1
+          type: string
+        roles:
+          description: Explicit roles that have this permission within the organization.
+          items:
+            $ref: '#/components/schemas/Role9e7Enum'
+          type: array
       type: object
     PatchedPauseRequest:
       description: |-
@@ -27234,7 +28259,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -27640,7 +28665,7 @@ components:
         sampling:
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/SamplingEnum'
+            - $ref: '#/components/schemas/SamplingDe5Enum'
             - $ref: '#/components/schemas/NullEnum'
         show_annotation_history:
           description: Show annotation history to annotator
@@ -27743,6 +28768,62 @@ components:
         - HasGT
         - Sample
       type: string
+    ProjectSubsetItem:
+      properties:
+        columns_schema:
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+        count:
+          type: integer
+        subset:
+          type: string
+      required:
+        - count
+        - subset
+      type: object
+    ProjectSubsetTaskItem:
+      properties:
+        data:
+          additionalProperties: {}
+          type: object
+        error:
+          additionalProperties: {}
+          type: object
+        ground_truth:
+          additionalProperties: {}
+          type: object
+        id:
+          type: integer
+        prediction:
+          additionalProperties: {}
+          type: object
+        score:
+          format: double
+          nullable: true
+          type: number
+      required:
+        - data
+      type: object
+    ProjectSubsetTasksResponse:
+      properties:
+        next_cursor:
+          nullable: true
+          type: string
+        previous_cursor:
+          nullable: true
+          type: string
+        task_count:
+          description: Present only when include_total=true
+          type: integer
+        task_result_list:
+          items:
+            $ref: '#/components/schemas/ProjectSubsetTaskItem'
+          type: array
+      required:
+        - task_result_list
+      type: object
     ProjectTemplate:
       properties:
         assignment_settings:
@@ -28187,6 +29268,23 @@ components:
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
+        review_task_limit_percent:
+          description: Percent of tasks to include in review stream (0-100). Null/0 disables.
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          type: string
+        sampling:
+          description: |-
+            Task sampling strategy in the review stream (by task id or random)
+
+            * `task_id` - By Task ID
+            * `random` - Random
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -28247,6 +29345,23 @@ components:
         review_only_manual_assignments:
           description: When set True, review queue is built only from manually assigned tasks
           type: boolean
+        review_task_limit_percent:
+          description: Percent of tasks to include in review stream (0-100). Null/0 disables.
+          format: decimal
+          nullable: true
+          pattern: ^-?\d{0,3}(?:\.\d{0,2})?$
+          type: string
+        sampling:
+          description: |-
+            Task sampling strategy in the review stream (by task id or random)
+
+            * `task_id` - By Task ID
+            * `random` - Random
+          nullable: true
+          oneOf:
+            - $ref: '#/components/schemas/ReviewSettingsSamplingEnum'
+            - $ref: '#/components/schemas/BlankEnum'
+            - $ref: '#/components/schemas/NullEnum'
         show_agreement_to_reviewers:
           description: Show the agreement column to reviewers
           type: boolean
@@ -28261,6 +29376,14 @@ components:
           nullable: true
           type: boolean
       type: object
+    ReviewSettingsSamplingEnum:
+      description: |-
+        * `task_id` - By Task ID
+        * `random` - Random
+      enum:
+        - task_id
+        - random
+      type: string
     ReviewedEnum:
       description: |-
         * `only` - only
@@ -28790,7 +29913,7 @@ components:
             type: array
           type: array
       type: object
-    SamplingEnum:
+    SamplingDe5Enum:
       description: |-
         * `Sequential sampling` - Tasks are ordered by Data manager ordering
         * `Uniform sampling` - Tasks are chosen randomly
@@ -29869,10 +30992,15 @@ components:
             - $ref: '#/components/schemas/WhoAmILseFields'
           readOnly: true
         org_membership:
+          deprecated: true
           items:
             $ref: '#/components/schemas/OrganizationMembership'
           readOnly: true
           type: array
+        organization_membership:
+          allOf:
+            - $ref: '#/components/schemas/OrganizationMembership'
+          readOnly: true
         pause:
           readOnly: true
           type: string
@@ -29895,6 +31023,7 @@ components:
         - last_activity
         - lse_fields
         - org_membership
+        - organization_membership
         - pause
         - permissions
         - username

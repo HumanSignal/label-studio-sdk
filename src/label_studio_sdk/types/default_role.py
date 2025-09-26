@@ -5,7 +5,7 @@ import typing
 import datetime as dt
 import pydantic
 from .default_role_custom_scripts_editable_by import DefaultRoleCustomScriptsEditableBy
-from .default_role_enum import DefaultRoleEnum
+from .role9e7enum import Role9E7Enum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -28,7 +28,7 @@ class DefaultRole(UncheckedBaseModel):
     Set to current time to enabled custom scripts for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts.
     """
 
-    default_role: typing.Optional[DefaultRoleEnum] = pydantic.Field(default=None)
+    default_role: typing.Optional[Role9E7Enum] = pydantic.Field(default=None)
     """
     Default membership role for invited users
     

@@ -94,6 +94,7 @@ class AzureSpiClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -145,6 +146,9 @@ class AzureSpiClient:
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan
 
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
@@ -204,6 +208,7 @@ class AzureSpiClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,
@@ -246,6 +251,7 @@ class AzureSpiClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -297,6 +303,9 @@ class AzureSpiClient:
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan
 
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
@@ -355,6 +364,7 @@ class AzureSpiClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,
@@ -479,6 +489,7 @@ class AzureSpiClient:
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -532,6 +543,9 @@ class AzureSpiClient:
 
         project : typing.Optional[int]
             A unique integer value identifying this project.
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan
 
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
@@ -591,6 +605,7 @@ class AzureSpiClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,
@@ -755,6 +770,7 @@ class AsyncAzureSpiClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -806,6 +822,9 @@ class AsyncAzureSpiClient:
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan
 
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
@@ -873,6 +892,7 @@ class AsyncAzureSpiClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,
@@ -915,6 +935,7 @@ class AsyncAzureSpiClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -966,6 +987,9 @@ class AsyncAzureSpiClient:
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan
 
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
@@ -1032,6 +1056,7 @@ class AsyncAzureSpiClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,
@@ -1172,6 +1197,7 @@ class AsyncAzureSpiClient:
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -1225,6 +1251,9 @@ class AsyncAzureSpiClient:
 
         project : typing.Optional[int]
             A unique integer value identifying this project.
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan
 
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
@@ -1292,6 +1321,7 @@ class AsyncAzureSpiClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,

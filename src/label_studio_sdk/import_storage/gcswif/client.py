@@ -97,6 +97,7 @@ class GcswifClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -156,6 +157,9 @@ class GcswifClient:
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
 
@@ -211,6 +215,7 @@ class GcswifClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,
@@ -254,6 +259,7 @@ class GcswifClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -313,6 +319,9 @@ class GcswifClient:
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
 
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
 
@@ -367,6 +376,7 @@ class GcswifClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,
@@ -490,6 +500,7 @@ class GcswifClient:
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -551,6 +562,9 @@ class GcswifClient:
         project : typing.Optional[int]
             A unique integer value identifying this project.
 
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
+
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
 
@@ -606,6 +620,7 @@ class GcswifClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,
@@ -769,6 +784,7 @@ class AsyncGcswifClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -827,6 +843,9 @@ class AsyncGcswifClient:
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
@@ -891,6 +910,7 @@ class AsyncGcswifClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,
@@ -934,6 +954,7 @@ class AsyncGcswifClient:
         prefix: typing.Optional[str] = OMIT,
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -992,6 +1013,9 @@ class AsyncGcswifClient:
 
         presign_ttl : typing.Optional[int]
             Presigned URLs TTL (in minutes)
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
@@ -1055,6 +1079,7 @@ class AsyncGcswifClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,
@@ -1194,6 +1219,7 @@ class AsyncGcswifClient:
         presign: typing.Optional[bool] = OMIT,
         presign_ttl: typing.Optional[int] = OMIT,
         project: typing.Optional[int] = OMIT,
+        recursive_scan: typing.Optional[bool] = OMIT,
         regex_filter: typing.Optional[str] = OMIT,
         status: typing.Optional[StatusC5AEnum] = OMIT,
         synchronizable: typing.Optional[bool] = OMIT,
@@ -1254,6 +1280,9 @@ class AsyncGcswifClient:
 
         project : typing.Optional[int]
             A unique integer value identifying this project.
+
+        recursive_scan : typing.Optional[bool]
+            Perform recursive scan over the bucket content
 
         regex_filter : typing.Optional[str]
             Cloud storage regex for filtering objects
@@ -1318,6 +1347,7 @@ class AsyncGcswifClient:
                 "presign": presign,
                 "presign_ttl": presign_ttl,
                 "project": project,
+                "recursive_scan": recursive_scan,
                 "regex_filter": regex_filter,
                 "status": status,
                 "synchronizable": synchronizable,

@@ -61,6 +61,77 @@ types:
         docs: List of users in the matrix
     source:
       openapi: openapi/openapi.yaml
+  StatsAgreementAnnotatorResponse:
+    properties:
+      Agreement_per_annotator:
+        type: optional<double>
+        docs: Agreement score for the annotator (0-1)
+    source:
+      openapi: openapi/openapi.yaml
+  StatsDataFiltersResponseUserFiltersStatsItem:
+    properties:
+      id:
+        type: optional<string>
+        docs: User ID or model version identifier (e.g., "model:1.0")
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsDataFiltersResponseUserFilters:
+    docs: Data filter statistics by user and model
+    properties:
+      stats:
+        type: optional<list<StatsDataFiltersResponseUserFiltersStatsItem>>
+        docs: List of filter configurations for users and models
+      tasks_with_annotations:
+        type: optional<map<string, unknown>>
+        docs: Default filter tab for tasks with annotations
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsDataFiltersResponse:
+    properties:
+      user_filters:
+        type: optional<StatsDataFiltersResponseUserFilters>
+        docs: Data filter statistics by user and model
+    source:
+      openapi: openapi/openapi.yaml
+  StatsFinishedTasksResponse:
+    properties:
+      finished:
+        type: optional<integer>
+        docs: Number of finished tasks
+      id:
+        type: optional<integer>
+        docs: User ID
+      progress:
+        type: optional<integer>
+        docs: Progress percentage (0-100)
+    source:
+      openapi: openapi/openapi.yaml
+  StatsLeadTimeResponseLeadTimeStatsItem:
+    properties:
+      mean_time:
+        type: optional<double>
+        docs: Average lead time for the user
+      median_time:
+        type: optional<double>
+        docs: Median lead time for the user
+      sum_lead_time:
+        type: optional<double>
+        docs: Total lead time for the user
+      user_id:
+        type: optional<integer>
+        docs: User ID
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsLeadTimeResponse:
+    properties:
+      lead_time_stats:
+        type: optional<list<StatsLeadTimeResponseLeadTimeStatsItem>>
+        docs: Lead time statistics including mean, median, and distribution
+    source:
+      openapi: openapi/openapi.yaml
   StatsTotalAgreementResponseZero:
     properties:
       total_agreement: optional<double>
@@ -78,6 +149,67 @@ types:
     union:
       - StatsTotalAgreementResponseZero
       - StatsTotalAgreementResponseOne
+    source:
+      openapi: openapi/openapi.yaml
+  StatsUserPredictionAgreementResponseAveragePredictionAgreementPerUser:
+    discriminated: false
+    union:
+      - type: double
+        docs: >-
+          Average prediction agreement score for the user (0-1) when
+          per_label=False
+      - type: map<string, double>
+        docs: >-
+          Average prediction agreement score per label for the user (0-1) when
+          per_label=True
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsUserPredictionAgreementResponse:
+    properties:
+      average_prediction_agreement_per_user: >-
+        optional<StatsUserPredictionAgreementResponseAveragePredictionAgreementPerUser>
+    source:
+      openapi: openapi/openapi.yaml
+  StatsUserReviewScoreResponsePerformanceScore:
+    discriminated: false
+    union:
+      - type: double
+        docs: Performance score for the user when per_label=False
+      - type: map<string, double>
+        docs: Performance score per label for the user when per_label=True
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsUserReviewScoreResponseReviewScore:
+    discriminated: false
+    union:
+      - type: double
+        docs: Average review score for the user when per_label=False
+      - type: map<string, double>
+        docs: Average review score per label for the user when per_label=True
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsUserReviewScoreResponse:
+    properties:
+      performance_score: optional<StatsUserReviewScoreResponsePerformanceScore>
+      review_score: optional<StatsUserReviewScoreResponseReviewScore>
+    source:
+      openapi: openapi/openapi.yaml
+  StatsUserGroundTruthAgreementResponseAgreement:
+    discriminated: false
+    union:
+      - type: double
+        docs: Ground truth agreement score for the user (0-1) when per_label=False
+      - type: map<string, double>
+        docs: Ground truth agreement scores per label when per_label=True
+    source:
+      openapi: openapi/openapi.yaml
+    inline: true
+  StatsUserGroundTruthAgreementResponse:
+    properties:
+      agreement: optional<StatsUserGroundTruthAgreementResponseAgreement>
     source:
       openapi: openapi/openapi.yaml
 service:
@@ -175,6 +307,110 @@ service:
                   id: 2
       audiences:
         - public
+    agreement_annotator:
+      path: /api/projects/{id}/stats/agreement_annotator/{user_id}
+      method: GET
+      auth: true
+      docs: Get agreement statistics for a specific annotator within a project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+        user_id: integer
+      display-name: Get individual annotator agreement stats
+      response:
+        docs: Individual annotator agreement statistics
+        type: StatsAgreementAnnotatorResponse
+      examples:
+        - path-parameters:
+            id: 1
+            user_id: 1
+          response:
+            body:
+              Agreement_per_annotator: 1.1
+      audiences:
+        - public
+    data_filters:
+      path: /api/projects/{id}/stats/data_filter
+      method: GET
+      auth: true
+      docs: Get statistics about user data filters and their usage within a project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get user data filter statistics
+      response:
+        docs: User data filter statistics
+        type: StatsDataFiltersResponse
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              user_filters:
+                stats:
+                  - {}
+                tasks_with_annotations:
+                  key: value
+      audiences:
+        - public
+    finished_tasks:
+      path: /api/projects/{id}/stats/finished
+      method: GET
+      auth: true
+      docs: Get statistics about finished tasks for a project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get finished tasks statistics
+      request:
+        name: StatsFinishedTasksRequest
+        query-parameters:
+          user_pk:
+            type: optional<integer>
+            docs: User ID to filter statistics by (optional)
+      response:
+        docs: Finished tasks statistics
+        type: StatsFinishedTasksResponse
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              finished: 1
+              id: 1
+              progress: 1
+      audiences:
+        - public
+    lead_time:
+      path: /api/projects/{id}/stats/lead_time
+      method: GET
+      auth: true
+      docs: >-
+        Get lead time statistics across the project, including average
+        annotation time.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Get lead time statistics
+      response:
+        docs: Lead time statistics
+        type: StatsLeadTimeResponse
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              lead_time_stats:
+                - mean_time: 1.1
+                  median_time: 1.1
+                  sum_lead_time: 1.1
+                  user_id: 1
+      audiences:
+        - public
     total_agreement:
       path: /api/projects/{id}/stats/total_agreement
       method: GET
@@ -206,6 +442,125 @@ service:
           response:
             body:
               total_agreement: 1.1
+      audiences:
+        - public
+    update_stats:
+      path: /api/projects/{id}/update-stats
+      method: GET
+      auth: true
+      docs: Start stats recalculation for given project
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+      display-name: Start stats recalculation
+      request:
+        name: StatsUpdateStatsRequest
+        query-parameters:
+          stat_type:
+            type: optional<string>
+            docs: 'Stat type to recalculate. Possible values: label, stats'
+      response:
+        docs: Successful response returns job id
+        type: map<string, unknown>
+      examples:
+        - path-parameters:
+            id: 1
+          response:
+            body:
+              key: value
+      audiences:
+        - public
+    user_prediction_agreement:
+      path: /api/projects/{id}/user-stats/{user_pk}/prediction
+      method: GET
+      auth: true
+      docs: >-
+        Get prediction agreement statistics for a specific user within a
+        project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+        user_pk: integer
+      display-name: Get individual user prediction agreement
+      request:
+        name: StatsUserPredictionAgreementRequest
+        query-parameters:
+          per_label:
+            type: optional<boolean>
+            docs: Calculate agreement per label
+      response:
+        docs: Individual user prediction agreement statistics
+        type: StatsUserPredictionAgreementResponse
+      examples:
+        - path-parameters:
+            id: 1
+            user_pk: 1
+          response:
+            body:
+              average_prediction_agreement_per_user: 1.1
+      audiences:
+        - public
+    user_review_score:
+      path: /api/projects/{id}/user-stats/{user_pk}/review_score
+      method: GET
+      auth: true
+      docs: Get review score statistics for a specific user within a project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+        user_pk: integer
+      display-name: Get individual user review scores
+      request:
+        name: StatsUserReviewScoreRequest
+        query-parameters:
+          per_label:
+            type: optional<boolean>
+            docs: Calculate agreement per label
+      response:
+        docs: Individual user review score statistics
+        type: StatsUserReviewScoreResponse
+      examples:
+        - path-parameters:
+            id: 1
+            user_pk: 1
+          response:
+            body:
+              performance_score: 1.1
+              review_score: 1.1
+      audiences:
+        - public
+    user_ground_truth_agreement:
+      path: /api/projects/{id}/users/{user_pk}/stats/agreement-groundtruth
+      method: GET
+      auth: true
+      docs: >-
+        Get ground truth agreement statistics for a specific user within a
+        project.
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+        user_pk: integer
+      display-name: Get individual user ground truth agreement
+      request:
+        name: StatsUserGroundTruthAgreementRequest
+        query-parameters:
+          per_label:
+            type: optional<boolean>
+            docs: Calculate agreement per label
+      response:
+        docs: Individual user ground truth agreement statistics
+        type: StatsUserGroundTruthAgreementResponse
+      examples:
+        - path-parameters:
+            id: 1
+            user_pk: 1
+          response:
+            body:
+              agreement: 1.1
       audiences:
         - public
   source:

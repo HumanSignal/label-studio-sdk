@@ -6,7 +6,7 @@ import datetime as dt
 import typing
 from .lse_organization_custom_scripts_editable_by import LseOrganizationCustomScriptsEditableBy
 import pydantic
-from .default_role_enum import DefaultRoleEnum
+from .role9e7enum import Role9E7Enum
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -22,7 +22,7 @@ class LseOrganization(UncheckedBaseModel):
     """
 
     custom_scripts_enabled: str
-    default_role: typing.Optional[DefaultRoleEnum] = pydantic.Field(default=None)
+    default_role: typing.Optional[Role9E7Enum] = pydantic.Field(default=None)
     """
     Default membership role for invited users
     

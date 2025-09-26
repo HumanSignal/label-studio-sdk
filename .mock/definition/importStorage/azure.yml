@@ -42,6 +42,7 @@ service:
                 presign: true
                 presign_ttl: 1
                 project: 1
+                recursive_scan: true
                 regex_filter: regex_filter
                 status: initialized
                 synchronizable: true
@@ -130,6 +131,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -236,6 +238,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -343,6 +346,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
@@ -387,6 +391,7 @@ service:
               presign: true
               presign_ttl: 1
               project: 1
+              recursive_scan: true
               regex_filter: regex_filter
               status: initialized
               synchronizable: true
