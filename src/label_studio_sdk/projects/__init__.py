@@ -8,7 +8,6 @@ from .types import (
     ProjectsDuplicateResponse,
     ProjectsImportPredictionsResponse,
     ProjectsImportTasksResponse,
-    ProjectsListRequestFilter,
 )
 from . import assignments, exports, members, metrics, pauses, stats
 from .assignments import (
@@ -75,7 +74,6 @@ __all__ = [
     "ProjectsDuplicateResponse",
     "ProjectsImportPredictionsResponse",
     "ProjectsImportTasksResponse",
-    "ProjectsListRequestFilter",
     "StatsAgreementAnnotatorResponse",
     "StatsDataFiltersResponse",
     "StatsDataFiltersResponseUserFilters",
