@@ -8594,7 +8594,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**filter:** `typing.Optional[ProjectsListRequestFilter]` — Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
+**filter:** `typing.Optional[str]` — Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
     
 </dd>
 </dl>
@@ -8602,7 +8602,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**ids:** `typing.Optional[str]` — ids
+**ids:** `typing.Optional[str]` — Filter id by in list
     
 </dd>
 </dl>
@@ -8618,7 +8618,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**members_limit:** `typing.Optional[int]` — Maximum number of members to return.
+**members_limit:** `typing.Optional[int]` — Maximum number of members to return
     
 </dd>
 </dl>
@@ -8650,7 +8650,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**title:** `typing.Optional[str]` — title
+**search:** `typing.Optional[str]` — Search term for project title and description
     
 </dd>
 </dl>
@@ -8658,7 +8658,15 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**workspaces:** `typing.Optional[int]` — workspaces
+**title:** `typing.Optional[str]` — Filter title by contains (case-insensitive)
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspaces:** `typing.Optional[float]` — Filter workspaces by exact match
     
 </dd>
 </dl>
@@ -9018,7 +9026,7 @@ client.projects.list_counts()
 <dl>
 <dd>
 
-**filter:** `typing.Optional[str]` — Project filter setting. One of 'all', 'pinned_only', 'exclude_pinned'.
+**filter:** `typing.Optional[str]` — Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
     
 </dd>
 </dl>
@@ -9034,7 +9042,7 @@ client.projects.list_counts()
 <dl>
 <dd>
 
-**include:** `typing.Optional[str]` — Comma-separated list of fields to include
+**include:** `typing.Optional[str]` — Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
     
 </dd>
 </dl>
@@ -9153,6 +9161,14 @@ client.projects.get(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**members_limit:** `typing.Optional[int]` — Maximum number of members to return
     
 </dd>
 </dl>
@@ -9293,6 +9309,14 @@ client.projects.update(
 <dd>
 
 **id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**members_limit:** `typing.Optional[int]` — Maximum number of members to return
     
 </dd>
 </dl>
