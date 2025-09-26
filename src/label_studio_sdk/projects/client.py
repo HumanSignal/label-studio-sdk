@@ -8,7 +8,6 @@ from .metrics.client import MetricsClient
 from .stats.client import StatsClient
 from .assignments.client import AssignmentsClient
 from .pauses.client import PausesClient
-from .types.projects_list_request_filter import ProjectsListRequestFilter
 from ..core.request_options import RequestOptions
 from ..core.pagination import SyncPager
 from ..types.all_roles_project_list import AllRolesProjectList
@@ -23,7 +22,7 @@ from .types.lse_project_create_request_skip_queue import LseProjectCreateRequest
 from ..types.lse_project_create import LseProjectCreate
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..types.paginated_lse_project_counts_list import PaginatedLseProjectCountsList
-from ..types.project import Project
+from ..types.lse_project_response import LseProjectResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..types.assignment_settings_request import AssignmentSettingsRequest
 from ..types.review_settings_request import ReviewSettingsRequest
@@ -65,15 +64,16 @@ class ProjectsClient:
     def list(
         self,
         *,
-        filter: typing.Optional[ProjectsListRequestFilter] = None,
+        filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
         members_limit: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
-        workspaces: typing.Optional[int] = None,
+        workspaces: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[AllRolesProjectList]:
         """
@@ -81,17 +81,17 @@ class ProjectsClient:
 
         Parameters
         ----------
-        filter : typing.Optional[ProjectsListRequestFilter]
+        filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            ids
+            Filter id by in list
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
 
         members_limit : typing.Optional[int]
-            Maximum number of members to return.
+            Maximum number of members to return
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -102,11 +102,14 @@ class ProjectsClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        title : typing.Optional[str]
-            title
+        search : typing.Optional[str]
+            Search term for project title and description
 
-        workspaces : typing.Optional[int]
-            workspaces
+        title : typing.Optional[str]
+            Filter title by contains (case-insensitive)
+
+        workspaces : typing.Optional[float]
+            Filter workspaces by exact match
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -142,6 +145,7 @@ class ProjectsClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "search": search,
                 "title": title,
                 "workspaces": workspaces,
             },
@@ -165,6 +169,7 @@ class ProjectsClient:
                     ordering=ordering,
                     page=page + 1,
                     page_size=page_size,
+                    search=search,
                     title=title,
                     workspaces=workspaces,
                     request_options=request_options,
@@ -390,13 +395,13 @@ class ProjectsClient:
         Parameters
         ----------
         filter : typing.Optional[str]
-            Project filter setting. One of 'all', 'pinned_only', 'exclude_pinned'.
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
             Filter id by in list
 
         include : typing.Optional[str]
-            Comma-separated list of fields to include
+            Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -463,7 +468,13 @@ class ProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
+    def get(
+        self,
+        id: int,
+        *,
+        members_limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseProjectResponse:
         """
         Retrieve information about a project by project ID.
 
@@ -471,13 +482,16 @@ class ProjectsClient:
         ----------
         id : int
 
+        members_limit : typing.Optional[int]
+            Maximum number of members to return
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Project
-            Project information
+        LseProjectResponse
+            Project information. Not all fields are available for all roles.
 
         Examples
         --------
@@ -493,14 +507,17 @@ class ProjectsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/",
             method="GET",
+            params={
+                "members_limit": members_limit,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Project,
+                    LseProjectResponse,
                     construct_type(
-                        type_=Project,  # type: ignore
+                        type_=LseProjectResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -552,6 +569,7 @@ class ProjectsClient:
         self,
         id: int,
         *,
+        members_limit: typing.Optional[int] = None,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
@@ -601,6 +619,9 @@ class ProjectsClient:
         Parameters
         ----------
         id : int
+
+        members_limit : typing.Optional[int]
+            Maximum number of members to return
 
         annotation_limit_count : typing.Optional[int]
 
@@ -727,6 +748,9 @@ class ProjectsClient:
         _response = self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/",
             method="PATCH",
+            params={
+                "members_limit": members_limit,
+            },
             json={
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,
@@ -1215,15 +1239,16 @@ class AsyncProjectsClient:
     async def list(
         self,
         *,
-        filter: typing.Optional[ProjectsListRequestFilter] = None,
+        filter: typing.Optional[str] = None,
         ids: typing.Optional[str] = None,
         include: typing.Optional[str] = None,
         members_limit: typing.Optional[int] = None,
         ordering: typing.Optional[str] = None,
         page: typing.Optional[int] = None,
         page_size: typing.Optional[int] = None,
+        search: typing.Optional[str] = None,
         title: typing.Optional[str] = None,
-        workspaces: typing.Optional[int] = None,
+        workspaces: typing.Optional[float] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[AllRolesProjectList]:
         """
@@ -1231,17 +1256,17 @@ class AsyncProjectsClient:
 
         Parameters
         ----------
-        filter : typing.Optional[ProjectsListRequestFilter]
+        filter : typing.Optional[str]
             Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
-            ids
+            Filter id by in list
 
         include : typing.Optional[str]
             Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
 
         members_limit : typing.Optional[int]
-            Maximum number of members to return.
+            Maximum number of members to return
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -1252,11 +1277,14 @@ class AsyncProjectsClient:
         page_size : typing.Optional[int]
             Number of results to return per page.
 
-        title : typing.Optional[str]
-            title
+        search : typing.Optional[str]
+            Search term for project title and description
 
-        workspaces : typing.Optional[int]
-            workspaces
+        title : typing.Optional[str]
+            Filter title by contains (case-insensitive)
+
+        workspaces : typing.Optional[float]
+            Filter workspaces by exact match
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1300,6 +1328,7 @@ class AsyncProjectsClient:
                 "ordering": ordering,
                 "page": page,
                 "page_size": page_size,
+                "search": search,
                 "title": title,
                 "workspaces": workspaces,
             },
@@ -1323,6 +1352,7 @@ class AsyncProjectsClient:
                     ordering=ordering,
                     page=page + 1,
                     page_size=page_size,
+                    search=search,
                     title=title,
                     workspaces=workspaces,
                     request_options=request_options,
@@ -1556,13 +1586,13 @@ class AsyncProjectsClient:
         Parameters
         ----------
         filter : typing.Optional[str]
-            Project filter setting. One of 'all', 'pinned_only', 'exclude_pinned'.
+            Filter projects by pinned status. Use 'pinned_only' to return only pinned projects, 'exclude_pinned' to return only non-pinned projects, or 'all' to return all projects.
 
         ids : typing.Optional[str]
             Filter id by in list
 
         include : typing.Optional[str]
-            Comma-separated list of fields to include
+            Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
 
         ordering : typing.Optional[str]
             Which field to use when ordering the results.
@@ -1637,7 +1667,13 @@ class AsyncProjectsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Project:
+    async def get(
+        self,
+        id: int,
+        *,
+        members_limit: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> LseProjectResponse:
         """
         Retrieve information about a project by project ID.
 
@@ -1645,13 +1681,16 @@ class AsyncProjectsClient:
         ----------
         id : int
 
+        members_limit : typing.Optional[int]
+            Maximum number of members to return
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Project
-            Project information
+        LseProjectResponse
+            Project information. Not all fields are available for all roles.
 
         Examples
         --------
@@ -1675,14 +1714,17 @@ class AsyncProjectsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/",
             method="GET",
+            params={
+                "members_limit": members_limit,
+            },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 return typing.cast(
-                    Project,
+                    LseProjectResponse,
                     construct_type(
-                        type_=Project,  # type: ignore
+                        type_=LseProjectResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1742,6 +1784,7 @@ class AsyncProjectsClient:
         self,
         id: int,
         *,
+        members_limit: typing.Optional[int] = None,
         annotation_limit_count: typing.Optional[int] = OMIT,
         annotation_limit_percent: typing.Optional[str] = OMIT,
         annotator_evaluation_minimum_score: typing.Optional[str] = OMIT,
@@ -1791,6 +1834,9 @@ class AsyncProjectsClient:
         Parameters
         ----------
         id : int
+
+        members_limit : typing.Optional[int]
+            Maximum number of members to return
 
         annotation_limit_count : typing.Optional[int]
 
@@ -1925,6 +1971,9 @@ class AsyncProjectsClient:
         _response = await self._client_wrapper.httpx_client.request(
             f"api/projects/{jsonable_encoder(id)}/",
             method="PATCH",
+            params={
+                "members_limit": members_limit,
+            },
             json={
                 "annotation_limit_count": annotation_limit_count,
                 "annotation_limit_percent": annotation_limit_percent,

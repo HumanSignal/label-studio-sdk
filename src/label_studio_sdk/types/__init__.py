@@ -91,6 +91,9 @@ from .lse_project_counts import LseProjectCounts
 from .lse_project_create import LseProjectCreate
 from .lse_project_create_sampling import LseProjectCreateSampling
 from .lse_project_create_skip_queue import LseProjectCreateSkipQueue
+from .lse_project_response import LseProjectResponse
+from .lse_project_response_sampling import LseProjectResponseSampling
+from .lse_project_response_skip_queue import LseProjectResponseSkipQueue
 from .lse_project_sampling import LseProjectSampling
 from .lse_project_skip_queue import LseProjectSkipQueue
 from .lse_project_update import LseProjectUpdate
@@ -160,7 +163,6 @@ from .pause import Pause
 from .pause_request import PauseRequest
 from .prediction import Prediction
 from .prediction_request import PredictionRequest
-from .project import Project
 from .project_group import ProjectGroup
 from .project_group_request import ProjectGroupRequest
 from .project_group_role_enum import ProjectGroupRoleEnum
@@ -168,8 +170,6 @@ from .project_import import ProjectImport
 from .project_label_config import ProjectLabelConfig
 from .project_label_config_request import ProjectLabelConfigRequest
 from .project_member_bulk_assign_roles_request import ProjectMemberBulkAssignRolesRequest
-from .project_sampling import ProjectSampling
-from .project_skip_queue import ProjectSkipQueue
 from .project_subset_enum import ProjectSubsetEnum
 from .project_subset_item import ProjectSubsetItem
 from .project_subset_task_item import ProjectSubsetTaskItem
@@ -328,6 +328,9 @@ __all__ = [
     "LseProjectCreate",
     "LseProjectCreateSampling",
     "LseProjectCreateSkipQueue",
+    "LseProjectResponse",
+    "LseProjectResponseSampling",
+    "LseProjectResponseSkipQueue",
     "LseProjectSampling",
     "LseProjectSkipQueue",
     "LseProjectUpdate",
@@ -397,7 +400,6 @@ __all__ = [
     "PauseRequest",
     "Prediction",
     "PredictionRequest",
-    "Project",
     "ProjectGroup",
     "ProjectGroupRequest",
     "ProjectGroupRoleEnum",
@@ -405,8 +407,6 @@ __all__ = [
     "ProjectLabelConfig",
     "ProjectLabelConfigRequest",
     "ProjectMemberBulkAssignRolesRequest",
-    "ProjectSampling",
-    "ProjectSkipQueue",
     "ProjectSubsetEnum",
     "ProjectSubsetItem",
     "ProjectSubsetTaskItem",
