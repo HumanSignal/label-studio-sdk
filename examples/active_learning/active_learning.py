@@ -1,9 +1,3 @@
-"""
-**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34). 
-The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
-[`label_studio_sdk._legacy`](../../README.md) in your script.
-"""
-
 import random
 
 import numpy as np
@@ -11,7 +5,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
-from label_studio_sdk.client import LabelStudio
+from label_studio_sdk import LabelStudio
 import os
 
 LABEL_STUDIO_URL = os.getenv("LABEL_STUDIO_URL", "http://localhost:8080")
