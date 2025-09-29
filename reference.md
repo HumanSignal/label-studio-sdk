@@ -8610,7 +8610,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**include:** `typing.Optional[str]` — Comma-separated list of fields to include
+**include:** `typing.Optional[str]` — Comma-separated list of count fields to include in the response to optimize performance. Available fields: task_number, finished_task_number, total_predictions_number, total_annotations_number, num_tasks_with_annotations, useful_annotation_number, ground_truth_number, skipped_annotations_number. If not specified, all count fields are included.
     
 </dd>
 </dl>
