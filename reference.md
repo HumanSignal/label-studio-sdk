@@ -28315,7 +28315,7 @@ client = LabelStudio(
 )
 client.organizations.invites.send_email(
     emails=["emails"],
-    role="role",
+    role="OW",
 )
 
 ```
@@ -28340,7 +28340,23 @@ client.organizations.invites.send_email(
 <dl>
 <dd>
 
-**role:** `str` 
+**role:** `Role9E7Enum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**projects:** `typing.Optional[typing.Sequence[int]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspaces:** `typing.Optional[typing.Sequence[int]]` 
     
 </dd>
 </dl>

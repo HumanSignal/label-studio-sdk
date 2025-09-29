@@ -30007,9 +30007,16 @@ components:
             minLength: 1
             type: string
           type: array
+        projects:
+          items:
+            type: integer
+          type: array
         role:
-          minLength: 1
-          type: string
+          $ref: '#/components/schemas/Role9e7Enum'
+        workspaces:
+          items:
+            type: integer
+          type: array
       required:
         - emails
         - role

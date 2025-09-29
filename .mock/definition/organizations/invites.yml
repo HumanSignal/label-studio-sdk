@@ -59,10 +59,9 @@ service:
         body:
           properties:
             emails: list<string>
-            role:
-              type: string
-              validation:
-                minLength: 1
+            projects: optional<list<integer>>
+            role: root.Role9E7Enum
+            workspaces: optional<list<integer>>
         content-type: application/json
       errors:
         - root.ForbiddenError
@@ -70,7 +69,7 @@ service:
         - request:
             emails:
               - emails
-            role: role
+            role: OW
       audiences:
         - public
   source:
