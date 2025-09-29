@@ -8,7 +8,14 @@ service:
       path: /api/workspaces/{id}/memberships/
       method: GET
       auth: true
-      docs: Get a list of all members in a specific workspace.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a list of all members in a specific workspace.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -58,7 +65,14 @@ service:
       path: /api/workspaces/{id}/memberships/
       method: POST
       auth: true
-      docs: Add a new workspace member by user ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Add a new workspace member by user ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -94,6 +108,12 @@ service:
       method: DELETE
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Remove a specific member by ID from a workspace. This endpoint expects
         an object like `{"user_id": 123}`.
       source:

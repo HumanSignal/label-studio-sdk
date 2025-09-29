@@ -9,6 +9,12 @@ service:
       method: GET
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List all workspaces for your organization. Workspaces in Label Studio
         let you organize your projects and users into separate spaces. This is
         useful for managing different teams, departments, or projects within
@@ -46,6 +52,12 @@ service:
       method: POST
       auth: true
       docs: >-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Create a new workspace. Workspaces in Label Studio let you organize your
         projects and users into separate spaces. This is useful for managing
         different teams, departments, or projects within your organization. For
@@ -99,7 +111,14 @@ service:
       path: /api/workspaces/{id}/
       method: GET
       auth: true
-      docs: Retrieve details for a specific workspace by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve details for a specific workspace by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -126,7 +145,14 @@ service:
       path: /api/workspaces/{id}/
       method: DELETE
       auth: true
-      docs: Delete a specific workspace by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific workspace by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -141,7 +167,14 @@ service:
       path: /api/workspaces/{id}/
       method: PATCH
       auth: true
-      docs: Update settings for a specific workspace by ID.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update settings for a specific workspace by ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -193,7 +226,14 @@ service:
       path: /api/workspaces/{id}/projects/
       method: GET
       auth: true
-      docs: Retrieve a list of all projects in a specific workspace.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Retrieve a list of all projects in a specific workspace.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -262,7 +302,14 @@ service:
       path: /api/workspaces/{id}/projects/
       method: POST
       auth: true
-      docs: Create a project in a specific workspace.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a project in a specific workspace.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -432,7 +479,14 @@ service:
       path: /api/workspaces/{id}/projects/
       method: DELETE
       auth: true
-      docs: Delete projects from a specific workspace.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete projects from a specific workspace.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
