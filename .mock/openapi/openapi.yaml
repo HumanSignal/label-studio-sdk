@@ -16917,15 +16917,13 @@ paths:
         - internal
   /api/workspaces/:
     get:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         List all workspaces for your organization. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
       operationId: api_workspaces_list
       parameters:
@@ -16959,15 +16957,13 @@ paths:
       x-fern-sdk-group-name: workspaces
       x-fern-sdk-method-name: list
     post:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Create a new workspace. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
       operationId: api_workspaces_create
       requestBody:
@@ -17000,15 +16996,13 @@ paths:
       x-fern-sdk-method-name: create
   /api/workspaces/{id}/:
     delete:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Delete a specific workspace by ID.
       operationId: api_workspaces_destroy
       parameters:
@@ -17030,15 +17024,13 @@ paths:
       x-fern-sdk-group-name: workspaces
       x-fern-sdk-method-name: delete
     get:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Retrieve details for a specific workspace by ID.
       operationId: api_workspaces_retrieve
       parameters:
@@ -17064,15 +17056,13 @@ paths:
       x-fern-sdk-group-name: workspaces
       x-fern-sdk-method-name: get
     patch:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Update settings for a specific workspace by ID.
       operationId: api_workspaces_partial_update
       parameters:
@@ -17110,15 +17100,13 @@ paths:
       x-fern-sdk-method-name: update
   /api/workspaces/{id}/memberships/:
     delete:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
       operationId: api_workspaces_memberships_destroy
       parameters:
@@ -17142,15 +17130,13 @@ paths:
         - members
       x-fern-sdk-method-name: delete
     get:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Get a list of all members in a specific workspace.
       operationId: api_workspaces_memberships_retrieve
       parameters:
@@ -17180,15 +17166,13 @@ paths:
         - members
       x-fern-sdk-method-name: list
     post:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Add a new workspace member by user ID.
       operationId: api_workspaces_memberships_create
       parameters:
@@ -17229,15 +17213,13 @@ paths:
       x-fern-sdk-method-name: create
   /api/workspaces/{id}/memberships/bulk/:
     delete:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Unassign workspace members in bulk. Allows the same request body as bulk assign.
       operationId: api_workspaces_memberships_bulk_destroy
       parameters:
@@ -17269,15 +17251,13 @@ paths:
         - bulk
       x-fern-sdk-method-name: delete
     post:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Assign workspace members in bulk.
       operationId: api_workspaces_memberships_bulk_create
       parameters:
@@ -17322,15 +17302,13 @@ paths:
       x-fern-sdk-method-name: post
   /api/workspaces/{id}/memberships/paginated/:
     get:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Retrieve the members for a specific workspace.
       operationId: api_workspaces_memberships_paginated_list
       parameters:
@@ -17386,15 +17364,13 @@ paths:
       x-fern-sdk-method-name: list
   /api/workspaces/{id}/projects/:
     delete:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Delete projects from a specific workspace.
       operationId: api_workspaces_projects_destroy
       parameters:
@@ -17412,15 +17388,13 @@ paths:
       tags:
         - Workspaces
     get:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Retrieve a list of all projects in a specific workspace.
       operationId: api_workspaces_projects_retrieve
       parameters:
@@ -17442,15 +17416,13 @@ paths:
       tags:
         - Workspaces
     post:
-      description: |2-
-
-            <Card
-                href="https://humansignal.com/goenterprise"
-            >
-                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
-                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+      description: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
             </Card>
-
         Create a project in a specific workspace.
       operationId: api_workspaces_projects_create
       parameters:
