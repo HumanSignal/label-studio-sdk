@@ -17,7 +17,13 @@ service:
       path: /api/workspaces/{id}/memberships/bulk/
       method: POST
       auth: true
-      docs: Assign workspace members in bulk.
+      docs: >-
+        <Note>This endpoint is not available in Label Studio Community Edition.
+        To learn more about Label Studio Enterprise, click
+        [here](https://humansignal.com/platform/).</Note>
+
+
+        Assign workspace members in bulk.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -49,6 +55,11 @@ service:
       method: DELETE
       auth: true
       docs: >-
+        <Note>This endpoint is not available in Label Studio Community Edition.
+        To learn more about Label Studio Enterprise, click
+        [here](https://humansignal.com/platform/).</Note>
+
+
         Unassign workspace members in bulk. Allows the same request body as bulk
         assign.
       source:

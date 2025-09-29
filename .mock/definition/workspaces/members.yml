@@ -8,7 +8,13 @@ service:
       path: /api/workspaces/{id}/memberships/
       method: GET
       auth: true
-      docs: Get a list of all members in a specific workspace.
+      docs: >-
+        <Note>This endpoint is not available in Label Studio Community Edition.
+        To learn more about Label Studio Enterprise, click
+        [here](https://humansignal.com/platform/).</Note>
+
+
+        Get a list of all members in a specific workspace.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -58,7 +64,13 @@ service:
       path: /api/workspaces/{id}/memberships/
       method: POST
       auth: true
-      docs: Add a new workspace member by user ID.
+      docs: >-
+        <Note>This endpoint is not available in Label Studio Community Edition.
+        To learn more about Label Studio Enterprise, click
+        [here](https://humansignal.com/platform/).</Note>
+
+
+        Add a new workspace member by user ID.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -94,6 +106,11 @@ service:
       method: DELETE
       auth: true
       docs: >-
+        <Note>This endpoint is not available in Label Studio Community Edition.
+        To learn more about Label Studio Enterprise, click
+        [here](https://humansignal.com/platform/).</Note>
+
+
         Remove a specific member by ID from a workspace. This endpoint expects
         an object like `{"user_id": 123}`.
       source:

@@ -29,6 +29,8 @@ class PaginatedClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[LseUser]:
         """
+        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
         Retrieve the members for a specific workspace.
 
         Parameters
@@ -124,6 +126,8 @@ class AsyncPaginatedClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[LseUser]:
         """
+        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
         Retrieve the members for a specific workspace.
 
         Parameters

@@ -12344,6 +12344,8 @@ client.webhooks.update(
 <dl>
 <dd>
 
+<Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
 List all workspaces for your organization. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 </dd>
 </dl>
@@ -12419,6 +12421,8 @@ client.workspaces.list()
 
 <dl>
 <dd>
+
+<Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
 
 Create a new workspace. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 </dd>
@@ -12522,6 +12526,8 @@ client.workspaces.create(
 <dl>
 <dd>
 
+<Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
 Retrieve details for a specific workspace by ID.
 </dd>
 </dl>
@@ -12592,6 +12598,8 @@ client.workspaces.get(
 <dl>
 <dd>
 
+<Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
 Delete a specific workspace by ID.
 </dd>
 </dl>
@@ -12661,6 +12669,8 @@ client.workspaces.delete(
 
 <dl>
 <dd>
+
+<Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
 
 Update settings for a specific workspace by ID.
 </dd>
@@ -34257,6 +34267,8 @@ client.sso.scim.update(
 <dl>
 <dd>
 
+<Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
 Get a list of all members in a specific workspace.
 </dd>
 </dl>
@@ -34326,6 +34338,8 @@ client.workspaces.members.list(
 
 <dl>
 <dd>
+
+<Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
 
 Add a new workspace member by user ID.
 </dd>
@@ -34414,6 +34428,8 @@ client.workspaces.members.create(
 <dl>
 <dd>
 
+<Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
 Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
 </dd>
 </dl>
@@ -34484,6 +34500,8 @@ client.workspaces.members.delete(
 
 <dl>
 <dd>
+
+<Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
 
 Assign workspace members in bulk.
 </dd>
@@ -34580,6 +34598,8 @@ client.workspaces.members.bulk.post(
 <dl>
 <dd>
 
+<Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
 Unassign workspace members in bulk. Allows the same request body as bulk assign.
 </dd>
 </dl>
@@ -34650,6 +34670,8 @@ client.workspaces.members.bulk.delete(
 
 <dl>
 <dd>
+
+<Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
 
 Retrieve the members for a specific workspace.
 </dd>
