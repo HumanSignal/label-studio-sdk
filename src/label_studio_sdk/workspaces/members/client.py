@@ -29,7 +29,13 @@ class MembersClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[WorkspaceMemberList]:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Get a list of all members in a specific workspace.
 
@@ -84,7 +90,13 @@ class MembersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceMemberCreate:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Add a new workspace member by user ID.
 
@@ -147,7 +159,13 @@ class MembersClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
 
@@ -197,7 +215,13 @@ class AsyncMembersClient:
         self, id: int, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[WorkspaceMemberList]:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Get a list of all members in a specific workspace.
 
@@ -260,7 +284,13 @@ class AsyncMembersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> WorkspaceMemberCreate:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Add a new workspace member by user ID.
 
@@ -331,7 +361,13 @@ class AsyncMembersClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
 

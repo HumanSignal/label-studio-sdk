@@ -29,7 +29,13 @@ class BulkClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkPostResponse:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Assign workspace members in bulk.
 
@@ -93,7 +99,13 @@ class BulkClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BulkDeleteResponse:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Unassign workspace members in bulk. Allows the same request body as bulk assign.
 
@@ -154,7 +166,13 @@ class AsyncBulkClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> BulkPostResponse:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Assign workspace members in bulk.
 
@@ -226,7 +244,13 @@ class AsyncBulkClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> BulkDeleteResponse:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Unassign workspace members in bulk. Allows the same request body as bulk assign.
 

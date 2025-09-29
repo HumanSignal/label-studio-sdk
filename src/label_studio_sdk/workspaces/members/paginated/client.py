@@ -29,7 +29,13 @@ class PaginatedClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[LseUser]:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Retrieve the members for a specific workspace.
 
@@ -126,7 +132,13 @@ class AsyncPaginatedClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[LseUser]:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Retrieve the members for a specific workspace.
 

@@ -29,7 +29,13 @@ class WorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Workspace]:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         List all workspaces for your organization. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 
@@ -92,7 +98,13 @@ class WorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Create a new workspace. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 
@@ -163,7 +175,13 @@ class WorkspacesClient:
 
     def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Workspace:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Retrieve details for a specific workspace by ID.
 
@@ -211,7 +229,13 @@ class WorkspacesClient:
 
     def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Delete a specific workspace by ID.
 
@@ -262,7 +286,13 @@ class WorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Update settings for a specific workspace by ID.
 
@@ -347,7 +377,13 @@ class AsyncWorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Workspace]:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         List all workspaces for your organization. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 
@@ -418,7 +454,13 @@ class AsyncWorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Create a new workspace. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 
@@ -497,7 +539,13 @@ class AsyncWorkspacesClient:
 
     async def get(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> Workspace:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Retrieve details for a specific workspace by ID.
 
@@ -553,7 +601,13 @@ class AsyncWorkspacesClient:
 
     async def delete(self, id: int, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Delete a specific workspace by ID.
 
@@ -612,7 +666,13 @@ class AsyncWorkspacesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Workspace:
         """
-        <Note>This endpoint is not available in Label Studio Community Edition. To learn more about Label Studio Enterprise, click [here](https://humansignal.com/platform/).</Note>
+
+            <Card
+                href="https://humansignal.com/goenterprise"
+            >
+                <img src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/><br>
+                This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+            </Card>
 
         Update settings for a specific workspace by ID.
 
