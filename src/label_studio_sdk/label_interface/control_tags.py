@@ -503,8 +503,8 @@ class ControlTag(LabelStudioTag):
 
 
 class SpanSelection(BaseModel):
-    start: Union[int, str]
-    end: Union[int, str]
+    start: Union[float, int, str]
+    end: Union[float, int, str]
 
 
 class SpanSelectionOffsets(SpanSelection):
@@ -561,6 +561,7 @@ class LabelsTag(ControlTag):
     _label_attr_name: str = "labels"
     _value_class: Type[LabelsValue] = LabelsValue
 
+
     def to_json_schema(self):
         """
         Converts the current LabelsTag instance into a JSON Schema.
@@ -572,16 +573,20 @@ class LabelsTag(ControlTag):
             "type": "array",
             "items": {
                 "type": "object",
-                "required": ["start", "end", "labels"],
+                "required": ["labels"],
                 "properties": {
                     "start": {
-                        "type": "integer",
+                        "oneOf": [
+                            {"type": "integer", "minimum": 0},
+                            {"type": "number", "minimum": 0}
+                        ],
                         # TODO: this is incompatible with the OpenAI API using PredictedOutputs
-                        "minimum": 0
                     },
                     "end": {
-                        "type": "integer",
-                        "minimum": 0
+                        "oneOf": [
+                            {"type": "integer", "minimum": 0},
+                            {"type": "number", "minimum": 0}
+                        ]
                     },
                     "labels": {
                         "type": "array",
