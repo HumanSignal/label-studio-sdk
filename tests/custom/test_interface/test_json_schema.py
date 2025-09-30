@@ -86,15 +86,19 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
                     "description": "Labels and span indices for txt",
                     "items": {
                         "type": "object",
-                        "required": ["start", "end", "labels"],
+                        "required": ["labels"],
                         "properties": {
                             "start": {
-                                "type": "integer",
-                                "minimum": 0
+                                "oneOf": [
+                                    {"type": "integer", "minimum": 0},
+                                    {"type": "number", "minimum": 0}
+                                ]
                             },
                             "end": {
-                                "type": "integer",
-                                "minimum": 0
+                                "oneOf": [
+                                    {"type": "integer", "minimum": 0},
+                                    {"type": "number", "minimum": 0}
+                                ]
                             },
                             "labels": {
                                 "type": "array",
