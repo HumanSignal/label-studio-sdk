@@ -573,7 +573,7 @@ class LabelsTag(ControlTag):
             "type": "array",
             "items": {
                 "type": "object",
-                "required": ["labels"],
+                "required": ["start", "end", "labels"],
                 "properties": {
                     "start": {
                         "oneOf": [
@@ -783,7 +783,7 @@ class VideoRectangleTag(ControlTag):
     
     
 class NumberValue(BaseModel):
-    number: int = Field(..., ge=0)
+    number: float = Field(..., ge=0)
     
 
 class NumberTag(ControlTag):
