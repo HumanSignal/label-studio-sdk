@@ -86,7 +86,7 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
                     "description": "Labels and span indices for txt",
                     "items": {
                         "type": "object",
-                        "required": ["labels"],
+                        "required": ["start", "end", "labels"],
                         "properties": {
                             "start": {
                                 "oneOf": [
