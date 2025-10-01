@@ -12344,6 +12344,12 @@ client.webhooks.update(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 List all workspaces for your organization. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 </dd>
 </dl>
@@ -12420,6 +12426,12 @@ client.workspaces.list()
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Create a new workspace. Workspaces in Label Studio let you organize your projects and users into separate spaces. This is useful for managing different teams, departments, or projects within your organization. For more information, see the [Workspaces documentation](https://docs.humansignal.com/workspaces).
 </dd>
 </dl>
@@ -12522,6 +12534,12 @@ client.workspaces.create(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Retrieve details for a specific workspace by ID.
 </dd>
 </dl>
@@ -12592,6 +12610,12 @@ client.workspaces.get(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Delete a specific workspace by ID.
 </dd>
 </dl>
@@ -12662,6 +12686,12 @@ client.workspaces.delete(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Update settings for a specific workspace by ID.
 </dd>
 </dl>
@@ -28315,7 +28345,7 @@ client = LabelStudio(
 )
 client.organizations.invites.send_email(
     emails=["emails"],
-    role="role",
+    role="OW",
 )
 
 ```
@@ -28340,7 +28370,23 @@ client.organizations.invites.send_email(
 <dl>
 <dd>
 
-**role:** `str` 
+**role:** `Role9E7Enum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**projects:** `typing.Optional[typing.Sequence[int]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**workspaces:** `typing.Optional[typing.Sequence[int]]` 
     
 </dd>
 </dl>
@@ -34241,6 +34287,12 @@ client.sso.scim.update(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Get a list of all members in a specific workspace.
 </dd>
 </dl>
@@ -34311,6 +34363,12 @@ client.workspaces.members.list(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Add a new workspace member by user ID.
 </dd>
 </dl>
@@ -34398,6 +34456,12 @@ client.workspaces.members.create(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Remove a specific member by ID from a workspace. This endpoint expects an object like `{"user_id": 123}`.
 </dd>
 </dl>
@@ -34469,6 +34533,12 @@ client.workspaces.members.delete(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Assign workspace members in bulk.
 </dd>
 </dl>
@@ -34564,6 +34634,12 @@ client.workspaces.members.bulk.post(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Unassign workspace members in bulk. Allows the same request body as bulk assign.
 </dd>
 </dl>
@@ -34635,6 +34711,12 @@ client.workspaces.members.bulk.delete(
 <dl>
 <dd>
 
+<Card href="https://humansignal.com/goenterprise">
+        <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+        <p style="margin-top: 10px; font-size: 14px;">
+            This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+        </p>
+    </Card>
 Retrieve the members for a specific workspace.
 </dd>
 </dl>

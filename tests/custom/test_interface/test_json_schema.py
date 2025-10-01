@@ -89,12 +89,16 @@ from label_studio_sdk._extensions.label_studio_tools.core.utils.json_schema impo
                         "required": ["start", "end", "labels"],
                         "properties": {
                             "start": {
-                                "type": "integer",
-                                "minimum": 0
+                                "oneOf": [
+                                    {"type": "integer", "minimum": 0},
+                                    {"type": "number", "minimum": 0}
+                                ]
                             },
                             "end": {
-                                "type": "integer",
-                                "minimum": 0
+                                "oneOf": [
+                                    {"type": "integer", "minimum": 0},
+                                    {"type": "number", "minimum": 0}
+                                ]
                             },
                             "labels": {
                                 "type": "array",
