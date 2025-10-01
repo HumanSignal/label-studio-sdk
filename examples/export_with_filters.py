@@ -1,7 +1,4 @@
-""" Export tasks filtered by inner_id range using SDK 2.0+
-
-For OSS, export snapshots with filters require a saved view. As a portable alternative,
-we paginate tasks with a filters query and save them as JSON.
+""" Export tasks filtered by inner_id range
 """
 
 import json
@@ -38,17 +35,37 @@ filters = Filters.create(
     ],
 )
 
-print('Export started ...')
 ls = LabelStudio(base_url=host, api_key=api_key)
 
-# Paginate tasks with filters
-paged = ls.tasks.list(project=project_id, fields='all', query=json.dumps({'filters': filters}))
-tasks = [t.model_dump(mode="json") for t in paged]
+# Create a view using this filter
 
-out_dir = Path('exported')
+view = ls.views.create(project=project_id, data={'filters': filters})
+
+# Create export snapshot and download JSON
+out_dir = Path("exported/")
 out_dir.mkdir(parents=True, exist_ok=True)
-out_file = out_dir / f'project_{project_id}_inner_id_{start_id}_{end_id}.json'
-with open(out_file, 'w', encoding='utf-8') as f:
-    json.dump(tasks, f)
 
-print(f"Export file saved as: {out_file}")
+create_kwargs = {
+    "title": "Export SDK Snapshot",
+    "task_filter_options": {'view': view.id},
+}
+print('creating snapshot...')
+snapshot = ls.projects.exports.create(
+    project_id,
+    **create_kwargs,
+)
+
+# wait for snapshot to finish
+# can also poll it
+import time
+time.sleep(5)
+
+data_iter = ls.projects.exports.download(export_pk=snapshot.id, id=project_id, export_type='JSON')
+
+out_path = out_dir / f"project_{project_id}_export.json"
+with open(out_path, "wb") as f:
+    for data in data_iter:
+        f.write(data)
+
+print(f"Export completed. File saved to: {out_path}")
+

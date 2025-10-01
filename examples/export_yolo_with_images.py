@@ -63,19 +63,26 @@ logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] [%(module)s] - %(message)s')
 
 
-def prepare_export_v2(ls: LabelStudio, project_id: int, view_id: int | None = None):
+def prepare_export(ls: LabelStudio, project_id: int, view_id: int | None = None):
     logger.info("Creating export snapshot for project.")
     create_kwargs = {"title": "YOLO Export Snapshot"}
     if view_id is not None:
         create_kwargs["task_filter_options"] = {"view": view_id}
 
-    data = ls.projects.exports.as_json(project_id, create_kwargs=create_kwargs)
+    export = ls.projects.exports.create(project_id, **create_kwargs)
+    while export.status == 'in_progress':
+        time.sleep(3)
+        export = ls.projects.exports.get(id=project_id, export_pk=export.id)
+    data_iter = ls.projects.exports.download(id=project_id, export_pk=export.id, export_type='JSON')
 
     snapshot_path = os.path.abspath(f"project_{project_id}_yolo_export.json")
-    with open(snapshot_path, "w", encoding="utf-8") as f:
-        json.dump(data, f)
+    with open(snapshot_path, "wb") as f:
+        for data in data_iter:
+            f.write(data)
+    with open(snapshot_path) as f:
+        exported_tasks = json.load(f)
     logger.info(f"Export snapshot saved to {snapshot_path}.")
-    return snapshot_path, data
+    return snapshot_path, exported_tasks
 
 
 def run(url: str, api_key: str, project_id: int):
@@ -89,7 +96,7 @@ def run(url: str, api_key: str, project_id: int):
     logger.info("Downloading export snapshot and loading exported tasks.")
     views = ls.views.list(project=project_id)
     view_id = views[0].id if views else None
-    snapshot_path, exported_tasks = prepare_export_v2(ls, project_id, view_id)
+    snapshot_path, exported_tasks = prepare_export(ls, project_id, view_id)
 
     logger.info("Initializing Converter with labeling config.")
     label_config = project.label_config

@@ -1,11 +1,5 @@
 """
-Export a snapshot with tasks filtered by the first available view using SDK 2.0+
-
-- Uses post-1.0 client: from label_studio_sdk.client import LabelStudio
-- Mirrors getting-started: ls = LabelStudio(base_url=..., api_key=...)
-- Community Edition supports synchronous export via ls.projects.exports.download_sync
-  but we use the higher-level helper ls.projects.exports.as_json which handles
-  Enterprise vs Community differences automatically.
+Export a snapshot with tasks filtered by the first available view
 """
 
 import os
@@ -41,7 +35,6 @@ def main() -> None:
     data = ls.projects.exports.as_json(
         PROJECT_ID,
         create_kwargs=create_kwargs,
-        download_kwargs={"export_type": "JSON"},
     )
 
     out_path = out_dir / f"project_{PROJECT_ID}_export.json"

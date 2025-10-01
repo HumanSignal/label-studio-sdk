@@ -81,9 +81,3 @@ for pr in predictions:
 
 
 model_versions = ls.projects.get(id=project.id).model_version
-
-# Predictions coverage helpers are not exposed in v2 SDK. Skipping.
-
-
-# Auto-creating annotations from predictions isn't supported in OSS SDK v2.
-# Blocker: requires enterprise workflow endpoints. Skipping.
