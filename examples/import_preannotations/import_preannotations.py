@@ -1,7 +1,3 @@
-"""
-Ported to SDK 2.0+: uses LabelStudio client and v2 endpoints.
-"""
-
 # Import tasks with pre-annotations (predictions) using SDK,
 # then calculate agreement scores (accuracy) per tasks.
 
@@ -65,8 +61,6 @@ bulk_with_predictions = [
         ],
     },
 ]
-# The v2 bulk import expects a list of dicts under request=[...].
-# When passing predictions, include them under "predictions" as part of the task object.
 ls.projects.import_tasks(
     id=project.id,
     request=[
@@ -76,7 +70,6 @@ ls.projects.import_tasks(
 )
 
 
-# Bulk import data with preannotated_from_fields-like behavior using predictions creation afterwards
 bulk_simple = [
     {
         "image": "https://data.heartex.net/open-images/train_0/mini/0045dd96bf73936c.jpg",
@@ -111,12 +104,7 @@ for task in ls.tasks.list(project=project.id, fields="task_only"):
         )
 
 
-import os
-if os.path.exists("data/images.csv"):
-    pd.read_csv("data/images.csv")
-    # CSV import via SDK v2 is not provided directly; parse and create tasks + predictions as above.
-else:
-    print("data/images.csv not found; skipping CSV demo step")
+pd.read_csv("data/images.csv")
 
 
 task_ids = [t.id for t in ls.tasks.list(project=project.id, fields='task_only')]
@@ -154,10 +142,8 @@ for pr in predictions:
     )
 
 
-# Agreement: use SDK stats endpoint instead of deprecated evalme
-print("Agreement (SDK):")
 try:
-    # NOTE: total_agreement may be available only in LSE; OSS may return 404/204
+    # NOTE: total_agreement available only in LSE
     agreement = ls.projects.stats.total_agreement(id=project.id)
     print(agreement.model_dump(mode="json"))
 except Exception as e:

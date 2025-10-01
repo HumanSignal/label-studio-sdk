@@ -35,7 +35,7 @@ def _filter_tasks(last_poll_time: datetime):
     return filters
 
 
-def poll_for_completed_tasks_new(
+def poll_for_completed_tasks(
     ls: LabelStudio, project_id: int, freq_sec: int
 ) -> list:
     """
@@ -49,9 +49,8 @@ def poll_for_completed_tasks_new(
         tasks = ls.tasks.list(
             project=project_id,
             query=json.dumps({"filters": filters}),
-            # can't use fields='all' because of maybe-nonexistent task fields
-            fields="all",
-            # fields=['image', 'annotations'],
+            only_annotated=True,
+            resolve_uri=False,  # to lookup file name in cloud storage
         )
         yield from tasks
         time.sleep(freq_sec)
@@ -62,9 +61,9 @@ def calculate_distances(source_img_path, annot):
     Calculate properties of the polygon annotation in geographic coordinates given by the georeferenced TIFF source image the polygon was drawn on.
     """
     try:
-        width = annot["result"][0]["original_width"]
-        height = annot["result"][0]["original_height"]
-        points = annot["result"][0]["value"]["points"]
+        width = annot.result[0]["original_width"]
+        height = annot.result[0]["original_height"]
+        points = annot.result[0]["value"]["points"]
 
         # convert relative coordinates to pixel coordinates
         points_pxl = [(x / 100 * width, y / 100 * height) for x, y in points]
@@ -103,39 +102,6 @@ def calculate_distances(source_img_path, annot):
         }
 
 
-def _bugfix_task_columns_old(project):
-    """
-    Using the old SDK client, due to our workaround providing extra task columns and uploading single images instead of full task objects, PATCH /api/tasks/<id> requests will not complete correctly until the task has those columns populated.
-    """
-    # look for tasks with missing values
-    old_tasks = project.get_tasks()
-    default_values = {
-        "perimeter_m": 0,
-        "area_m2": 0,
-        "major_axis_m": 0,
-        "minor_axis_m": 0,
-    }
-    tasks_to_recreate = []
-    for task in old_tasks:
-        for k in default_values:
-            if k not in task["data"]:
-                tasks_to_recreate.append(task)
-                break
-    # instead of updating tasks, need to delete and recreate tasks
-    if tasks_to_recreate:
-        _ = project.delete_tasks(task_ids=[task["id"] for task in tasks_to_recreate])
-        new_task_data = [
-            {
-                "data": {
-                    **default_values,
-                    "image": task["data"]["image"],
-                }
-            }
-            for task in tasks_to_recreate
-        ]
-        _ = project.import_tasks(new_task_data)
-
-
 if __name__ == "__main__":
     url = os.getenv("LABEL_STUDIO_URL", "http://localhost:8080")
     api_key = os.getenv("LABEL_STUDIO_API_KEY")
@@ -159,12 +125,11 @@ if __name__ == "__main__":
             print("unknown annotated image path ", annotated_image_path)
             return annotated_image_path
 
-    # new SDK client (version >= 1.0.0)
     ls = LabelStudio(base_url=url, api_key=api_key)
-    for task in poll_for_completed_tasks_new(ls, project_id, freq_seconds):
+    for task in poll_for_completed_tasks(ls, project_id, freq_seconds):
         # assume that the most recent annotation is the one that was updated
-        # can check annot['updated_at'] and annot['created_at'] to confirm
-        annot = task.annotations[0]
+        # can check annot.updated_at and annot.created_at to confirm
+        annot = ls.annotations.list(id=task.id)[0]
         source_image_path = _lookup_source_image_path(task.data["image"])
         distances = calculate_distances(source_image_path, annot)
         new_data = task.data

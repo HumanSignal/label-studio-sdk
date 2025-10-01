@@ -1,9 +1,5 @@
 """ This script runs every 10 seconds and assigns users to a new batch of tasks filtered by the specified column.
 
-**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34).
-The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
-[`label_studio_sdk._legacy`](../../README.md) in your script.
-
 Advanced notes:
     1. Don't forget to enable Manual mode in Annotation settings
     2. Be careful when adding email users: users who are not members of the project or workspace will break Data Manager
@@ -21,14 +17,15 @@ Demo video:
 import math
 import time
 
-import label_studio_sdk
+import os
+from label_studio_sdk import LabelStudio
 from label_studio_sdk.data_manager import Filters, Column, Operator, Type
 
 
 class BatchAssigner:
     def __init__(self, host, api_key, project_id):
-        self.ls = label_studio_sdk.Client(url=host, api_key=api_key)
-        self.project = self.ls.get_project(id=project_id)
+        self.ls = LabelStudio(base_url=host, api_key=api_key)
+        self.project = self.ls.projects.get(id=project_id)
 
     def get_tasks(self, filter_column, filter_value, page, page_size):
         """Get tasks with filter by column and page number"""
@@ -43,14 +40,13 @@ class BatchAssigner:
                 )
             ],
         )
-        return self.project.get_paginated_tasks(
-            filters=filters, page=page, page_size=page_size, only_ids=True
-        )
+        return self.ls.tasks.list(project=self.project.id, query=filters, fields='id', page_size=page_size, page=page)
 
     def get_page_total(self, filter_column, filter_value, page_size):
         """Total page number for tasks with filter by column and specified page size"""
         result = self.get_tasks(filter_column, filter_value, 1, page_size)
-        return math.ceil(result["total"] / float(page_size))
+        breakpoint()
+        return math.ceil(result.total / float(page_size))
 
     def get_user_ids(self, emails):
         """Get user IDs by email and preserve the order
@@ -60,7 +56,7 @@ class BatchAssigner:
         """
         # get all users
         user_ids = []
-        users = self.ls.get_users()
+        users = self.ls.users.list()
         for email in emails:
             for user in users:
                 if email == user.email:
@@ -101,9 +97,7 @@ class BatchAssigner:
             "users": user_ids,
             "selectedItems": {"all": False, "included": task_ids},
         }
-        self.ls.make_request(
-            "post", f"/api/projects/{self.project.id}/tasks/assignees", json=body
-        )
+        self.ls.make_request("post", f"/api/projects/{self.project.id}/tasks/assignees", json=body)
         print(
             f"Users {user_ids} were assigned to {len(task_ids)} tasks "
             f"from id={task_ids[0]} to id={task_ids[-1]}"
@@ -112,14 +106,14 @@ class BatchAssigner:
 
 
 def start():
-    host = "http://localhost:8000"
-    api_key = "e0b7751e84a059b0accaf14392e5e9fd4abe3de7"
-    project_id = 182
+    host = os.getenv("LABEL_STUDIO_URL", "http://localhost:8080")
+    api_key = os.getenv("LABEL_STUDIO_API_KEY", "")
+    project_id = int(os.getenv("LABEL_STUDIO_PROJECT_ID", "182"))
 
     filter_column = "shortname"
     filter_value = "opossum"
     page_size = 10
-    emails = ["makseq@gmail.com", "test@test.ru"]
+    emails = os.getenv("LABEL_STUDIO_ASSIGN_EMAILS", "user1@example.com,user2@example.com").split(",")
 
     assigner = BatchAssigner(host, api_key, project_id)
 
