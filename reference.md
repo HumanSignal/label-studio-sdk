@@ -30153,6 +30153,271 @@ client.projects.metrics.update(
 </details>
 
 ## Projects Stats
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">model_version_annotator_agreement</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Overall agreement between a given model version's predictions and all annotators on overlapping tasks.
+Computed as the average of per-annotator agreement vs this model version over annotators who overlap on at least one task.
+Mirrors IAA per annotator, but one side is the model.
+:return: {"agreement": float[0..1]}
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.stats.model_version_annotator_agreement(
+    id=1,
+    model_version="model_version",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_version:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">model_version_ground_truth_agreement</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Ground truth agreement for annotations that match predictions of a specific model version.
+This mirrors gt_per_user_agreement but filters stats by tasks where predictions have given model_version.
+:return: {"agreement": float[0..1]}
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.stats.model_version_ground_truth_agreement(
+    id=1,
+    model_version="model_version",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_version:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_label:** `typing.Optional[bool]` — Calculate agreement per label
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">model_version_prediction_agreement</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Mean agreement between the given model version and all other model versions in the project.
+
+Computed as the average of pairwise model-to-model agreement scores from PredictionPairStats where either
+prediction pair's model_version_from or model_version_to equals the provided model_version.
+
+When per_label=true, returns a mapping of label -> average agreement across the same set of pairs.
+
+:return: {"average_prediction_agreement_per_model": float[0..1] | {label: float[0..1]}}
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from label_studio_sdk import LabelStudio
+
+client = LabelStudio(
+    api_key="YOUR_API_KEY",
+)
+client.projects.stats.model_version_prediction_agreement(
+    id=1,
+    model_version="model_version",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**model_version:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**per_label:** `typing.Optional[bool]` — Calculate agreement per label
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.projects.stats.<a href="src/label_studio_sdk/projects/stats/client.py">iaa</a>(...)</code></summary>
 <dl>
 <dd>

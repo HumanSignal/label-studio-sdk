@@ -1,4 +1,19 @@
 types:
+  StatsModelVersionAnnotatorAgreementResponse:
+    properties:
+      agreement: optional<double>
+    source:
+      openapi: openapi/openapi.yaml
+  StatsModelVersionGroundTruthAgreementResponse:
+    properties:
+      agreement: optional<double>
+    source:
+      openapi: openapi/openapi.yaml
+  StatsModelVersionPredictionAgreementResponse:
+    properties:
+      average_prediction_agreement_per_model: optional<double>
+    source:
+      openapi: openapi/openapi.yaml
   StatsIaaResponseIaa:
     discriminated: false
     docs: >-
@@ -216,6 +231,122 @@ service:
   auth: false
   base-path: ''
   endpoints:
+    model_version_annotator_agreement:
+      path: /api/projects/{id}/model-stats/{model_version}/agreement
+      method: GET
+      auth: true
+      docs: >-
+        Overall agreement between a given model version's predictions and all
+        annotators on overlapping tasks.
+
+        Computed as the average of per-annotator agreement vs this model version
+        over annotators who overlap on at least one task.
+
+        Mirrors IAA per annotator, but one side is the model.
+
+        :return: {"agreement": float[0..1]}
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+        model_version: string
+      display-name: Get model-version overall agreement vs annotators
+      response:
+        docs: Model-version overall agreement vs annotators
+        type: StatsModelVersionAnnotatorAgreementResponse
+      examples:
+        - path-parameters:
+            id: 1
+            model_version: model_version
+          response:
+            body:
+              agreement: 1.1
+      audiences:
+        - public
+    model_version_ground_truth_agreement:
+      path: /api/projects/{id}/model-stats/{model_version}/agreement-groundtruth
+      method: GET
+      auth: true
+      docs: >-
+        Ground truth agreement for annotations that match predictions of a
+        specific model version.
+
+        This mirrors gt_per_user_agreement but filters stats by tasks where
+        predictions have given model_version.
+
+        :return: {"agreement": float[0..1]}
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+        model_version: string
+      display-name: Get model-version ground truth agreement
+      request:
+        name: StatsModelVersionGroundTruthAgreementRequest
+        query-parameters:
+          per_label:
+            type: optional<boolean>
+            default: false
+            docs: Calculate agreement per label
+      response:
+        docs: Model-version ground truth agreement
+        type: StatsModelVersionGroundTruthAgreementResponse
+      examples:
+        - path-parameters:
+            id: 1
+            model_version: model_version
+          response:
+            body:
+              agreement: 1.1
+      audiences:
+        - public
+    model_version_prediction_agreement:
+      path: /api/projects/{id}/model-stats/{model_version}/prediction
+      method: GET
+      auth: true
+      docs: >-
+        Mean agreement between the given model version and all other model
+        versions in the project.
+
+
+        Computed as the average of pairwise model-to-model agreement scores from
+        PredictionPairStats where either
+
+        prediction pair's model_version_from or model_version_to equals the
+        provided model_version.
+
+
+        When per_label=true, returns a mapping of label -> average agreement
+        across the same set of pairs.
+
+
+        :return: {"average_prediction_agreement_per_model": float[0..1] |
+        {label: float[0..1]}}
+      source:
+        openapi: openapi/openapi.yaml
+      path-parameters:
+        id: integer
+        model_version: string
+      display-name: Get model-version prediction agreement
+      request:
+        name: StatsModelVersionPredictionAgreementRequest
+        query-parameters:
+          per_label:
+            type: optional<boolean>
+            default: false
+            docs: Calculate agreement per label
+      response:
+        docs: Model-version prediction agreement
+        type: StatsModelVersionPredictionAgreementResponse
+      examples:
+        - path-parameters:
+            id: 1
+            model_version: model_version
+          response:
+            body:
+              average_prediction_agreement_per_model: 1.1
+      audiences:
+        - public
     iaa:
       path: /api/projects/{id}/stats/IAA
       method: GET

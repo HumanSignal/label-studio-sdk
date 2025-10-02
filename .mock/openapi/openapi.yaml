@@ -8200,6 +8200,12 @@ paths:
       summary: Get model-version overall agreement vs annotators
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: model_version_annotator_agreement
   /api/projects/{id}/model-stats/{model_version}/agreement-groundtruth:
     get:
       description: |-
@@ -8239,6 +8245,12 @@ paths:
       summary: Get model-version ground truth agreement
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: model_version_ground_truth_agreement
   /api/projects/{id}/model-stats/{model_version}/prediction:
     get:
       description: |-
@@ -8283,6 +8295,12 @@ paths:
       summary: Get model-version prediction agreement
       tags:
         - Stats
+      x-fern-audiences:
+        - public
+      x-fern-sdk-group-name:
+        - projects
+        - stats
+      x-fern-sdk-method-name: model_version_prediction_agreement
   /api/projects/{id}/project-extra-params/:
     get:
       description: Retrieve the annotator weights for statistics and Cohen's Kappa for a specific project.
