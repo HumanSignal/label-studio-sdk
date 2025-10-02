@@ -37,6 +37,12 @@ class MembersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedLseOrganizationMemberListList:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve a list of all users and roles in a specific organization.
 
         Parameters
@@ -117,6 +123,12 @@ class MembersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update organization membership or role for a specific user ID.
 
         **User Rotation Best Practices for API Usage**
@@ -329,6 +341,12 @@ class AsyncMembersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedLseOrganizationMemberListList:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Retrieve a list of all users and roles in a specific organization.
 
         Parameters
@@ -417,6 +435,12 @@ class AsyncMembersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> LseOrganizationMemberList:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Update organization membership or role for a specific user ID.
 
         **User Rotation Best Practices for API Usage**

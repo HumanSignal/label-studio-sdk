@@ -25,6 +25,12 @@ class AnnotationHistoryClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[AnnotationHistory]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List annotation history items for an annotation. Annotation history logs all actions performed with annotations, such as: imports, submits, updates, reviews, and more. Users can view annotation history items in the Annotation History panel during labeling.
 
         Parameters
@@ -84,6 +90,12 @@ class AnnotationHistoryClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AnnotationHistoryDeleteResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete all annotation history items for a specific annotation, task or project. This method is available only for users with administrator roles.
 
         Parameters
@@ -147,6 +159,12 @@ class AnnotationHistoryClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedAnnotationHistoryList:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List all annotation history items for the project with pagination.
 
         Parameters
@@ -214,6 +232,12 @@ class AsyncAnnotationHistoryClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[AnnotationHistory]:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List annotation history items for an annotation. Annotation history logs all actions performed with annotations, such as: imports, submits, updates, reviews, and more. Users can view annotation history items in the Annotation History panel during labeling.
 
         Parameters
@@ -281,6 +305,12 @@ class AsyncAnnotationHistoryClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AnnotationHistoryDeleteResponse:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         Delete all annotation history items for a specific annotation, task or project. This method is available only for users with administrator roles.
 
         Parameters
@@ -352,6 +382,12 @@ class AsyncAnnotationHistoryClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PaginatedAnnotationHistoryList:
         """
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
         List all annotation history items for the project with pagination.
 
         Parameters

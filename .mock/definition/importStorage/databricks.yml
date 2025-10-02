@@ -8,7 +8,14 @@ service:
       path: /api/storages/databricks/
       method: GET
       auth: true
-      docs: Get list of all Databricks Files import storage connections.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get list of all Databricks Files import storage connections.
       source:
         openapi: openapi/openapi.yaml
       display-name: List Databricks import storages
@@ -60,7 +67,14 @@ service:
       path: /api/storages/databricks/
       method: POST
       auth: true
-      docs: Create a Databricks Files import storage connection.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Create a Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
       display-name: Create Databricks import storage
@@ -112,7 +126,14 @@ service:
       path: /api/storages/databricks/validate
       method: POST
       auth: true
-      docs: Validate a specific Databricks Files import storage connection.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Validate a specific Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
       display-name: Validate Databricks import storage
@@ -132,7 +153,14 @@ service:
       path: /api/storages/databricks/{id}
       method: GET
       auth: true
-      docs: Get a specific Databricks Files import storage connection.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Get a specific Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -179,7 +207,14 @@ service:
       path: /api/storages/databricks/{id}
       method: DELETE
       auth: true
-      docs: Delete a specific Databricks Files import storage connection.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Delete a specific Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -194,7 +229,14 @@ service:
       path: /api/storages/databricks/{id}
       method: PATCH
       auth: true
-      docs: Update a specific Databricks Files import storage connection.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Update a specific Databricks Files import storage connection.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
@@ -335,7 +377,14 @@ service:
       path: /api/storages/databricks/{id}/sync
       method: POST
       auth: true
-      docs: Sync tasks from a Databricks Files import storage.
+      docs: |-
+        <Card href="https://humansignal.com/goenterprise">
+                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
+                <p style="margin-top: 10px; font-size: 14px;">
+                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
+                </p>
+            </Card>
+        Sync tasks from a Databricks Files import storage.
       source:
         openapi: openapi/openapi.yaml
       path-parameters:
