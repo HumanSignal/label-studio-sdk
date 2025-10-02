@@ -112,7 +112,7 @@ class ProjectTemplatesClient:
         created_by : typing.Optional[int]
 
         custom_script : typing.Optional[str]
-            custom script for projects created from this template
+            custom script (Plugin) for projects created from this template
 
         description : typing.Optional[str]
 
@@ -316,7 +316,7 @@ class ProjectTemplatesClient:
         created_by : typing.Optional[int]
 
         custom_script : typing.Optional[str]
-            custom script for projects created from this template
+            custom script (Plugin) for projects created from this template
 
         description : typing.Optional[str]
 
@@ -579,7 +579,7 @@ class AsyncProjectTemplatesClient:
         created_by : typing.Optional[int]
 
         custom_script : typing.Optional[str]
-            custom script for projects created from this template
+            custom script (Plugin) for projects created from this template
 
         description : typing.Optional[str]
 
@@ -807,7 +807,7 @@ class AsyncProjectTemplatesClient:
         created_by : typing.Optional[int]
 
         custom_script : typing.Optional[str]
-            custom script for projects created from this template
+            custom script (Plugin) for projects created from this template
 
         description : typing.Optional[str]
 
