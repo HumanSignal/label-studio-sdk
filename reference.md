@@ -4597,7 +4597,7 @@ client.organizations.get(
 <dl>
 <dd>
 
-Update organization details including title, embed domains, and custom scripts settings.
+Update organization details including title, embed domains, and Plugins settings.
 </dd>
 </dl>
 </dd>
@@ -4795,7 +4795,7 @@ client.organizations.update_default_role(
 
 **custom_scripts_editable_by:** `typing.Optional[PatchedDefaultRoleRequestCustomScriptsEditableBy]` 
 
-Set the minimum user role that can edit custom scripts in the UI.
+Set the minimum user role that can edit custom scripts (Plugins) in the UI.
 
 * `AD` - Administrator
 * `MA` - Manager
@@ -4806,7 +4806,7 @@ Set the minimum user role that can edit custom scripts in the UI.
 <dl>
 <dd>
 
-**custom_scripts_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to enabled custom scripts for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts.
+**custom_scripts_enabled_at:** `typing.Optional[dt.datetime]` — Set to current time to enable custom scripts (Plugins) for this organization. Can only be enabled if no organization members are active members of any other organizations; otherwise an error will be raised. If this occurs, contact the LEAP team for assistance with enabling custom scripts (Plugins).
     
 </dd>
 </dl>
@@ -8062,7 +8062,7 @@ client.project_templates.create(
 <dl>
 <dd>
 
-**custom_script:** `typing.Optional[str]` — custom script for projects created from this template
+**custom_script:** `typing.Optional[str]` — custom script (Plugin) for projects created from this template
     
 </dd>
 </dl>
@@ -8352,7 +8352,7 @@ client.project_templates.update(
 <dl>
 <dd>
 
-**custom_script:** `typing.Optional[str]` — custom script for projects created from this template
+**custom_script:** `typing.Optional[str]` — custom script (Plugin) for projects created from this template
     
 </dd>
 </dl>

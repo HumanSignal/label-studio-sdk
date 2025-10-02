@@ -15,7 +15,7 @@ class LseOrganization(UncheckedBaseModel):
     created_at: dt.datetime
     custom_scripts_editable_by: typing.Optional[LseOrganizationCustomScriptsEditableBy] = pydantic.Field(default=None)
     """
-    Set the minimum user role that can edit custom scripts in the UI.
+    Set the minimum user role that can edit custom scripts (Plugins) in the UI.
     
     * `AD` - Administrator
     * `MA` - Manager
