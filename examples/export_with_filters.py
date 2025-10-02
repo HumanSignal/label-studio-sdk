@@ -1,25 +1,20 @@
-""" Export a snapshot with tasks filtered by ID range.
-
-**Note:** at this moment it's not possible to export snapshots with filters,
-LS API doesn't support it yet. However, it's achievable by creating a view
-with a filter and then exporting a snapshot using this view.
-This approach is hidden behind the `project.export()` method.
-
-**Note:** This code utilizes functions from an older version of the Label Studio SDK (v0.0.34). 
-The newer versions v1.0 and above still support the functionalities of the old version, but you will need to specify
-[`label_studio_sdk._legacy`](../README.md) in your script.
+""" Export tasks filtered by inner_id range
 """
 
-from label_studio_sdk import Client
+import json
+import os
+from pathlib import Path
+
+from label_studio_sdk.client import LabelStudio
 from label_studio_sdk.data_manager import Filters, Operator, Type, Column
 
 
-# Usage example
-host = 'https://app.heartex.com'
-api_key = '<your_api_key>'
-project_id = 14528
-start_id = 10000
-end_id = 20000
+# Usage example (override via env vars if needed)
+host = os.getenv('LABEL_STUDIO_URL', 'http://localhost:8080')
+api_key = os.getenv('LABEL_STUDIO_API_KEY')
+project_id = int(os.getenv('LABEL_STUDIO_PROJECT_ID', '1'))
+start_id = int(os.getenv('START_INNER_ID', '1'))
+end_id = int(os.getenv('END_INNER_ID', '20000'))
 
 # Create a filter for task ID range
 filters = Filters.create(
@@ -40,10 +35,37 @@ filters = Filters.create(
     ],
 )
 
-print('Export started ...')
-ls = Client(url=host, api_key=api_key)
-project = ls.get_project(project_id)
-result = project.export(filters=filters, export_type="JSON", output_dir='exported')
-print(
-    f"Export file saved as: exported/{result['filename']}, status: {result['status']}, export_id: {result['export_id']}"
+ls = LabelStudio(base_url=host, api_key=api_key)
+
+# Create a view using this filter
+
+view = ls.views.create(project=project_id, data={'filters': filters})
+
+# Create export snapshot and download JSON
+out_dir = Path("exported/")
+out_dir.mkdir(parents=True, exist_ok=True)
+
+create_kwargs = {
+    "title": "Export SDK Snapshot",
+    "task_filter_options": {'view': view.id},
+}
+print('creating snapshot...')
+snapshot = ls.projects.exports.create(
+    project_id,
+    **create_kwargs,
 )
+
+# wait for snapshot to finish
+# can also poll it
+import time
+time.sleep(5)
+
+data_iter = ls.projects.exports.download(export_pk=snapshot.id, id=project_id, export_type='JSON')
+
+out_path = out_dir / f"project_{project_id}_export.json"
+with open(out_path, "wb") as f:
+    for data in data_iter:
+        f.write(data)
+
+print(f"Export completed. File saved to: {out_path}")
+
