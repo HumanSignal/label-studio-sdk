@@ -11,7 +11,7 @@ class ProjectTemplateRequest(UncheckedBaseModel):
     created_by: typing.Optional[int] = None
     custom_script: typing.Optional[str] = pydantic.Field(default=None)
     """
-    custom script for projects created from this template
+    custom script (Plugin) for projects created from this template
     """
 
     description: typing.Optional[str] = None

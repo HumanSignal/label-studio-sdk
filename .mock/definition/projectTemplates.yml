@@ -201,7 +201,7 @@ service:
             created_by: optional<integer>
             custom_script:
               type: optional<string>
-              docs: custom script for projects created from this template
+              docs: custom script (Plugin) for projects created from this template
               validation:
                 minLength: 1
             description:
