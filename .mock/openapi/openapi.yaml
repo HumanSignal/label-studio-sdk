@@ -8254,13 +8254,9 @@ paths:
       x-fern-sdk-method-name: remove
     get:
       description: |-
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
         Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
+
+        Does NOT include annotators. Deprecated; use paginated endpoint.
       operationId: api_projects_members_retrieve
       parameters:
         - in: path
@@ -8288,7 +8284,7 @@ paths:
       tags:
         - Projects
       x-fern-audiences:
-        - public
+        - internal
       x-fern-sdk-group-name:
         - projects
         - members

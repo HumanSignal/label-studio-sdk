@@ -5,12 +5,11 @@ from ...core.client_wrapper import SyncClientWrapper
 from .bulk.client import BulkClient
 from .paginated.client import PaginatedClient
 from ...core.request_options import RequestOptions
-from ...types.lse_user import LseUser
+from ...types.project_member import ProjectMember
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.unchecked_base_model import construct_type
 from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
-from ...types.project_member import ProjectMember
 from ...core.client_wrapper import AsyncClientWrapper
 from .bulk.client import AsyncBulkClient
 from .paginated.client import AsyncPaginatedClient
@@ -24,66 +23,6 @@ class MembersClient:
         self._client_wrapper = client_wrapper
         self.bulk = BulkClient(client_wrapper=self._client_wrapper)
         self.paginated = PaginatedClient(client_wrapper=self._client_wrapper)
-
-    def get(
-        self, id: int, *, user_ids: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[LseUser]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
-
-        Parameters
-        ----------
-        id : int
-
-        user_ids : typing.Optional[str]
-            Comma-separated list of user IDs to include. Example: user_ids=1,2,3
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[LseUser]
-            List of users with membership information
-
-        Examples
-        --------
-        from label_studio_sdk import LabelStudio
-
-        client = LabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-        client.projects.members.get(
-            id=1,
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
-            method="GET",
-            params={
-                "user_ids": user_ids,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[LseUser],
-                    construct_type(
-                        type_=typing.List[LseUser],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def add(self, id: int, *, user: int, request_options: typing.Optional[RequestOptions] = None) -> ProjectMember:
         """
@@ -198,74 +137,6 @@ class AsyncMembersClient:
         self._client_wrapper = client_wrapper
         self.bulk = AsyncBulkClient(client_wrapper=self._client_wrapper)
         self.paginated = AsyncPaginatedClient(client_wrapper=self._client_wrapper)
-
-    async def get(
-        self, id: int, *, user_ids: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.List[LseUser]:
-        """
-        <Card href="https://humansignal.com/goenterprise">
-                <img style="pointer-events: none; margin-left: 0px; margin-right: 0px;" src="https://docs.humansignal.com/images/badge.svg" alt="Label Studio Enterprise badge"/>
-                <p style="margin-top: 10px; font-size: 14px;">
-                    This endpoint is not available in Label Studio Community Edition. [Learn more about Label Studio Enterprise](https://humansignal.com/goenterprise)
-                </p>
-            </Card>
-        Retrieve the members for a specific project. Optionally filter by user IDs (comma-separated).
-
-        Parameters
-        ----------
-        id : int
-
-        user_ids : typing.Optional[str]
-            Comma-separated list of user IDs to include. Example: user_ids=1,2,3
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        typing.List[LseUser]
-            List of users with membership information
-
-        Examples
-        --------
-        import asyncio
-
-        from label_studio_sdk import AsyncLabelStudio
-
-        client = AsyncLabelStudio(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.projects.members.get(
-                id=1,
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"api/projects/{jsonable_encoder(id)}/members/",
-            method="GET",
-            params={
-                "user_ids": user_ids,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return typing.cast(
-                    typing.List[LseUser],
-                    construct_type(
-                        type_=typing.List[LseUser],  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def add(
         self, id: int, *, user: int, request_options: typing.Optional[RequestOptions] = None
